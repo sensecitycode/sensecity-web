@@ -26,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="sense.city"><i class="ion-ios-analytics-outline"></i> sense.city
+                <a class="navbar-brand page-scroll" href="./"><i class="ion-ios-analytics-outline"></i> sense.city
 				<sup style="font-size: 55%">beta</sup></a>
             </div>
         </div>
@@ -219,13 +219,13 @@
 					
 				});
 		
-				$('a.page-scroll').bind('click', function(event) {
+				/*$('a.page-scroll').bind('click', function(event) {
 					var $anchor = $(this);
 					$('html, body').stop().animate({
 						scrollTop: ($($anchor.attr('href')).offset().top - 50)
 					}, 1250, 'easeInOutExpo');
 					event.preventDefault();
-				});
+				});*/
 
 			</script>
 			
