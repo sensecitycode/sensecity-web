@@ -36,7 +36,7 @@
                 <div class="col-lg-12 ">
                     <h2 class="margin-top-0 text-primary text-center">Τι συμβαίνει στη πόλη</h2>
                     <br>                    
-					<div id="map" style="color: black; height:100%;"></div>
+					<div id="map" style="color: black; height:85vh;"></div>
 					<br>					
                 </div>
             </div>
