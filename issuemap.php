@@ -143,8 +143,8 @@
 						//map.addLayer(lightingMarkers);
 						
 						//$.each(msg, function(idx, obj) {
-							var positionlat = obj.loc.coordinates[1];
-							var positionlon = obj.loc.coordinates[0];
+							//var positionlat = obj.loc.coordinates[1];
+							//var positionlon = obj.loc.coordinates[0];
 							
 							if (get_issue === 'light') 
 							{
