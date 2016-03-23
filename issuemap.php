@@ -29,48 +29,9 @@
                 <a class="navbar-brand page-scroll" href="#first"><i class="ion-ios-analytics-outline"></i> sense.city
 				<sup style="font-size: 55%">beta</sup></a>
             </div>
-            <div class="navbar-collapse collapse" id="bs-navbar">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a class="page-scroll" href="#one">Η ΠΟΛΗ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#two">ΣΥΜΜΕΤΟΧΗ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#three">sense.city app</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#four">ΔΕΔΟΜΕΝΑ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#last">ΕΠΙΚΟΙΝΩΝΙΑ</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" data-toggle="modal" title="sense.city @ Πάτρα" href="#aboutModal">Σχετικα</a>
-                    </li>
-                </ul>
-            </div>
         </div>
-    </nav>
-    <header id="first">
-        <div class="header-content">
-            <div class="inner">
-                <h1 class="cursive"><i class="ion-ios-analytics-outline"></i>sense.city</h1>
-                <h4>Συμμετέχω ενεργά στη πόλη μου</h4>
-                <hr>
-                <a href="#one" class="btn btn-primary btn-xl page-scroll">Τι συμβαίνει στη πόλη</a> &nbsp; <a href="#two" class="btn btn-primary btn-xl page-scroll">Πώς συμμετέχω</a>
-            </div>
-        </div>
-        <video autoplay="autoplay" loop="" muted="muted" data-wow-delay="0.5s" poster="https://s3-us-west-2.amazonaws.com/coverr/poster/Traffic-blurred2.jpg" id="video-background">
-			<source type="video/webm" src="http://sense.city/movie.webm" ></source>
-            <source type="video/mp4" src="http://sense.city/movie.mp4" ></source>
-        </video>
-    </header>
-    <section class="bg-primary" id="one">
-        <div class="container">
+    </nav>    
+
             <div class="row">
                 <div class="col-lg-12 ">
                     <h2 class="margin-top-0 text-primary text-center">Τι συμβαίνει στη πόλη</h2>
@@ -79,8 +40,7 @@
 					<br>					
                 </div>
             </div>
-        </div>
-    </section>
+   
     <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
         <div class="modal-content">
