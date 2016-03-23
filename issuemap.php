@@ -30,17 +30,13 @@
 				<sup style="font-size: 55%">beta</sup></a>
             </div>
         </div>
-    </nav>    
-
-            <div class="row">
-                <div class="col-lg-12 ">
-                    <h2 class="margin-top-0 text-primary text-center">Τι συμβαίνει στη πόλη</h2>
-                    <br>                    
-					<div id="map" style="color: black; height:85vh;"></div>
-					<br>					
-                </div>
-            </div>
-   
+    </nav>                
+	<div class="col-lg-12 ">
+		<h2 class="margin-top-0 text-primary text-center">Τι συμβαίνει στη πόλη</h2>
+		<br>                    
+		<div id="map" style="color: black; height:85vh;"></div>
+		<br>					
+	</div>
     <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
         <div class="modal-content">
