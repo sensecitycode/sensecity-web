@@ -155,7 +155,7 @@
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
-								marker.bindPopup("lighting");
+								marker.bindPopup("light");
 								lightingMarkers.addLayer(marker);			
 							}else if (get_issue === 'garbage') 
 							{
@@ -178,7 +178,7 @@
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								roadConstMarkers.addLayer(marker);	
-								marker.bindPopup("road-construction");
+								marker.bindPopup("road");
 							}else if (get_issue === 'plumping') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
