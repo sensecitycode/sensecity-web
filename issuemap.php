@@ -124,7 +124,7 @@
 							case "light":
 								var lightingMarkers = L.layerGroup().addTo(map);
 								break;
-							case "plumbing":
+							case "plumping":
 								var plumpingMarkers = L.layerGroup().addTo(map);
 								break;
 							case "road":
