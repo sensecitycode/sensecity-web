@@ -116,7 +116,7 @@
 						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 						maxZoom: 18, }).addTo(map);
-						var get_issue = <?php echo $_GET["issue"]; ?>;
+						var get_issue = '<?php echo $_GET["issue"]; ?>';
 						switch(get_issue){
 							case "garbage":
 								var garbageMarkers = L.layerGroup().addTo(map);
@@ -143,8 +143,8 @@
 						//map.addLayer(lightingMarkers);
 						
 						//$.each(msg, function(idx, obj) {
-							//var positionlat = obj.loc.coordinates[1];
-							//var positionlon = obj.loc.coordinates[0];
+							var positionlat = obj.loc.coordinates[1];
+							var positionlon = obj.loc.coordinates[0];
 							
 							if (get_issue === 'light') 
 							{
@@ -191,7 +191,7 @@
 								plumpingMarkers.addLayer(marker);
 								
 								marker.bindPopup("plumping");
-							}else
+							}/*else
 							{	
 								var ic = 'smile-o'
 								if (obj.issue === 'neutral')
@@ -212,7 +212,7 @@
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								marker.bindPopup("Garbage");
 								smiliesMarkers.addLayer(marker);
-							}
+							}*/
 							
 
 						//});
