@@ -32,7 +32,7 @@
         </div>
     </nav>                
 	<div class="col-lg-12 ">
-		<h2 class="margin-top-0 text-primary text-center">Τι συμβαίνει στη πόλη</h2>
+		<h2 class="margin-top-0 text-primary text-center">Συμβαίνει στη πόλη</h2>
 		<br>                    
 		<div id="map" style="color: black; height:85vh;"></div>
 		<br>					
@@ -87,24 +87,24 @@
 
 			<script>
 
-			
+			/*
 			
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
 					url: "http://api.sense.city:3000/api/issues",
 					dataType: "json",                
-					success: function(msg){
-						console.log(msg);
+					success: function(msg){*/
+						
 						
 						//var zoom = 13;
 						//var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
 						//var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
 						var count_pos =0;
 						var position = new Array();
-						
-						var positionlat = msg[0].loc.coordinates[1];
-						var positionlon = msg[0].loc.coordinates[0];
+						//
+						var positionlat = <?php echo $_GET["lang"]; ?>;
+						var positionlon = <?php echo $_GET["long"]; ?>;
 						
 						console.log(positionlat);
 						console.log(positionlon);
@@ -116,21 +116,37 @@
 						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 						maxZoom: 18, }).addTo(map);
+						var get_issue = <?php echo $_GET["issue"]; ?>;
+						switch(get_issue){
+							case "garbage":
+								var garbageMarkers = L.layerGroup().addTo(map);
+								break;
+							case "light":
+								var lightingMarkers = L.layerGroup().addTo(map);
+								break;
+							case "plumbing":
+								var plumpingMarkers = L.layerGroup().addTo(map);
+								break;
+							case "road":
+								var roadConstMarkers = L.layerGroup().addTo(map);
+								break;
+							default:
+								break;
+						}
 						
-						var garbageMarkers = L.layerGroup().addTo(map);
-						var lightingMarkers = L.layerGroup().addTo(map);
-						var plumpingMarkers = L.layerGroup().addTo(map);
-						var roadConstMarkers = L.layerGroup().addTo(map);
-						var smiliesMarkers = L.layerGroup().addTo(map);
+						
+						
+						
+						//var smiliesMarkers = L.layerGroup().addTo(map);
 						
 						//map.addLayer(garbageMarkers);
 						//map.addLayer(lightingMarkers);
 						
-						$.each(msg, function(idx, obj) {
-							var positionlat = obj.loc.coordinates[1];
-							var positionlon = obj.loc.coordinates[0];
+						//$.each(msg, function(idx, obj) {
+							//var positionlat = obj.loc.coordinates[1];
+							//var positionlon = obj.loc.coordinates[0];
 							
-							if (obj.issue === 'lighting') 
+							if (get_issue === 'light') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'lightbulb-o',
@@ -141,7 +157,7 @@
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
 								marker.bindPopup("lighting");
 								lightingMarkers.addLayer(marker);			
-							}else if (obj.issue === 'garbage') 
+							}else if (get_issue === 'garbage') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'trash-o',
@@ -152,7 +168,7 @@
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								garbageMarkers.addLayer(marker);								
 								marker.bindPopup("garbage");
-							}else if (obj.issue === 'road-construction') 
+							}else if (get_issue === 'road') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'road',
@@ -163,7 +179,7 @@
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								roadConstMarkers.addLayer(marker);	
 								marker.bindPopup("road-construction");
-							}else if (obj.issue === 'plumping') 
+							}else if (get_issue === 'plumping') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'umbrella',
@@ -199,7 +215,7 @@
 							}
 							
 
-						});
+						//});
 						
 						var overlayMaps = {
 							"Προβλήματα σκουπιδιών": garbageMarkers,
@@ -211,9 +227,14 @@
 							
 						L.control.layers(null, overlayMaps).addTo(map);
 
-					}
+					/*}
 					
 				});
+		*/
+		
+		
+		
+		
 		
 				/*$('a.page-scroll').bind('click', function(event) {
 					var $anchor = $(this);
