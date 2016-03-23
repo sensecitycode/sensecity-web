@@ -26,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#first"><i class="ion-ios-analytics-outline"></i> sense.city
+                <a class="navbar-brand page-scroll" href="sense.city"><i class="ion-ios-analytics-outline"></i> sense.city
 				<sup style="font-size: 55%">beta</sup></a>
             </div>
         </div>
@@ -78,7 +78,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
 	<script src="js/leaflet.awesome-markers.js"></script>
-    <script src="js/scripts.js"></script>
+    <!-- <script src="js/scripts.js"></script> -->
 	
 	 <!-- Bootstrap core JavaScript
     ================================================== -->
