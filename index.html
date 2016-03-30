@@ -498,7 +498,12 @@
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
-								marker.bindPopup("lighting"+obj.image_name);
+								if(obj.image_name === "undefined" || obj.image_name == null){
+									marker.bindPopup(obj.value_desc);
+								}
+								else{
+									marker.bindPopup(obj.value_desc+"<br> <br><img src=\""+obj.image_name+"\" width=\"100\" />");
+								}
 								lightingMarkers.addLayer(marker);			
 							}else if (obj.issue === 'garbage') 
 							{
@@ -509,8 +514,13 @@
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								garbageMarkers.addLayer(marker);								
-								marker.bindPopup("garbage <br> <img src=\""+obj.image_name+"\" width=\"100\" />");
+								garbageMarkers.addLayer(marker);		
+								if(obj.image_name === "undefined" || obj.image_name == null){
+									marker.bindPopup(obj.value_desc);
+								}
+								else{
+									marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
+								}
 							}else if (obj.issue === 'road-construction') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
@@ -521,7 +531,12 @@
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								roadConstMarkers.addLayer(marker);	
-								marker.bindPopup("road-construction"+obj.image_name);
+								if(obj.image_name === "undefined" || obj.image_name == null){
+									marker.bindPopup(obj.value_desc);
+								}
+								else{
+									marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
+								}
 							}else if (obj.issue === 'plumping') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
@@ -533,7 +548,12 @@
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								plumpingMarkers.addLayer(marker);
 								
-								marker.bindPopup("plumping"+obj.image_name);
+								if(obj.image_name === "undefined" || obj.image_name == null){
+									marker.bindPopup(obj.value_desc);
+								}
+								else{
+									marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
+								}
 							}else
 							{	
 								var ic = 'smile-o'
@@ -553,7 +573,7 @@
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								marker.bindPopup("Garbage"+obj.image_name);
+								//marker.bindPopup("Garbage"+obj.image_name);
 								smiliesMarkers.addLayer(marker);
 							}
 							
