@@ -510,7 +510,7 @@
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								garbageMarkers.addLayer(marker);								
-								marker.bindPopup("garbage"+obj.image_name);
+								marker.bindPopup("garbage <br> <img src=\""+obj.image_name+"\" width=\"100\" />");
 							}else if (obj.issue === 'road-construction') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
