@@ -498,7 +498,7 @@
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
-								marker.bindPopup("lighting");
+								marker.bindPopup("lighting"+obj.image_name);
 								lightingMarkers.addLayer(marker);			
 							}else if (obj.issue === 'garbage') 
 							{
@@ -510,7 +510,7 @@
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								garbageMarkers.addLayer(marker);								
-								marker.bindPopup("garbage");
+								marker.bindPopup("garbage"+obj.image_name);
 							}else if (obj.issue === 'road-construction') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
@@ -521,7 +521,7 @@
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								roadConstMarkers.addLayer(marker);	
-								marker.bindPopup("road-construction");
+								marker.bindPopup("road-construction"+obj.image_name);
 							}else if (obj.issue === 'plumping') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
@@ -533,7 +533,7 @@
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								plumpingMarkers.addLayer(marker);
 								
-								marker.bindPopup("plumping");
+								marker.bindPopup("plumping"+obj.image_name);
 							}else
 							{	
 								var ic = 'smile-o'
@@ -553,7 +553,7 @@
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								marker.bindPopup("Garbage");
+								marker.bindPopup("Garbage"+obj.image_name);
 								smiliesMarkers.addLayer(marker);
 							}
 							
