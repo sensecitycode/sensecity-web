@@ -446,16 +446,19 @@
 			<script>
 
 				var newdate = new Date();
+				
+				/*
 				alert(newdate.getFullYear());
 				alert(newdate.getMonth());
 				alert(newdate.getDate());
 				alert(newdate.getDate()-3);
+				*/
 			
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
 					/*url: "http://api.sense.city:3000/api/issues",*/
-					url: "http://api.sense.city:3000/api/issue?startdate=2016-01-22T00:00:00:000Z&enddate=2016-03-28T00:00:00:000Z&coordinates=[21.734574,38.2466395]&distance=15000",
+					url: "http://api.sense.city:3000/api/issue?startdate="+newdate.getFullYear()+"-"+newdate.getMonth()+"-"+(newdate.getDate()-3)+"T00:00:00:000Z&enddate="+newdate.getFullYear()+"-"+newdate.getMonth()+"-"+newdate.getDate()+"T00:00:00:000Z&coordinates=[21.734574,38.2466395]&distance=15000",
 					dataType: "json",                
 					success: function(msg){
 						console.log(msg);
