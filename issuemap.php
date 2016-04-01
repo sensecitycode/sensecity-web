@@ -127,7 +127,7 @@
 							case "plumping":
 								var plumpingMarkers = L.layerGroup().addTo(map);
 								break;
-							case "road":
+							case "road-contructor":
 								var roadConstMarkers = L.layerGroup().addTo(map);
 								break;
 							default:
@@ -191,7 +191,7 @@
 								plumpingMarkers.addLayer(marker);
 								
 								marker.bindPopup("plumping");
-							}/*else
+							}else
 							{	
 								var ic = 'smile-o'
 								if (obj.issue === 'neutral')
@@ -212,7 +212,7 @@
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								marker.bindPopup("Garbage");
 								smiliesMarkers.addLayer(marker);
-							}*/
+							}
 							
 
 						//});
