@@ -122,7 +122,7 @@
 							case "garbage":
 								var garbageMarkers = L.layerGroup().addTo(map);
 								break;
-							case "light":
+							case "lighting":
 								var lightingMarkers = L.layerGroup().addTo(map);
 								break;
 							case "plumping":
