@@ -169,7 +169,7 @@
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								garbageMarkers.addLayer(marker);								
 								marker.bindPopup("garbage");
-							}else if (get_issue === 'road') 
+							}else if (get_issue === 'road-contructor') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'road',
