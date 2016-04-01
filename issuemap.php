@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
 	<script src="js/leaflet.js"></script> 
     <link rel="stylesheet" href="css/styles.css" />
+	
   </head>
   <body>
     <nav id="topNav" class="navbar navbar-default navbar-fixed-top">
@@ -74,7 +75,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
 	<script src="js/leaflet.awesome-markers.js"></script>
-    <!-- <script src="js/scripts.js"></script> -->
+    <script src="js/scripts.js"></script>
 	
 	 <!-- Bootstrap core JavaScript
     ================================================== -->
