@@ -195,10 +195,10 @@
 							}else
 							{	
 								var ic = 'smile-o'
-								if (obj.issue === 'neutral')
+								if (get_issue === 'neutral')
 								{
 										ic = 'meh-o';
-								} else if (obj.issue === 'angry')
+								} else if (get_issue === 'angry')
 								{
 										ic = 'frown-o';
 								}
@@ -211,7 +211,7 @@
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								marker.bindPopup("Garbage");
+								marker.bindPopup("Διάθεση");
 								smiliesMarkers.addLayer(marker);
 							}
 							
