@@ -221,8 +221,8 @@
 							"Προβλήματα σκουπιδιών": garbageMarkers,
 							"Προβλήματα φωτισμού": lightingMarkers,
 							"Προβλήματα ύδρευσης": plumpingMarkers,
-							"Προβλήματα οδοστρώματος": roadConstMarkers/*,
-							"Ανάδραση πολιτών": smiliesMarkers*/
+							"Προβλήματα οδοστρώματος": roadConstMarkers,
+							"Ανάδραση πολιτών": smiliesMarkers
 						};	
 							
 						L.control.layers(null, overlayMaps).addTo(map);
