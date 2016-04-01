@@ -241,7 +241,7 @@
 									}
 									
 									
-									$('#recent_five').append('<div class="col-lg-4 col-md-6 col-sm-12"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #BFAFAF;  height: 100px;  margin-top: 20px; background-color: #756161;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px"/></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px;">'+datediff+'</div><div><a href="http://sense.city/issuemap.php?long='+positionlon+'&lang='+positionlat+'&issue='+obj.issue+'" style="color: #FFFFFF !important;">'+obj.value_desc+'</a></div></div></div></div>');
+									$('#recent_five').append('<a href="http://sense.city/issuemap.php?long='+positionlon+'&lang='+positionlat+'&issue='+obj.issue+'" style="color: #FFFFFF !important;"><div class="col-lg-4 col-md-6 col-sm-12"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #BFAFAF;  height: 100px;  margin-top: 20px; background-color: #756161;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px"/></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px;">'+datediff+'</div><div>'+obj.value_desc+'</div></div></div></div></a>');
 
 								});
 								
