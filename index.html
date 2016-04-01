@@ -649,11 +649,35 @@
 									{
 										image_name = obj.image_name;
 									}
-									console.log("------------------------------------------------------------");
-									console.log(obj.image_name);
-									console.log("------------------------------------------------------------");
+									var issue = '';
+									switch(obj.issue){
+										case 'garbage':
+											issue = 'Πρόβλημα Καθαριότητας';
+											break;
+										case 'lighting':
+											issue = 'Πρόβλημα Φωτισμού';
+											break;
+										case 'plumbing':
+											issue = 'Πρόβλημα Καθαριότητας';
+											break;
+										case 'road-contructor':
+											issue = 'Πρόβλημα Δρόμου/Πεζοδρομίου';
+											break;
+										case 'angry':
+											issue = 'Διάθεση';
+											break;
+										case 'neutral':
+											issue = 'Διάθεση';
+											break;
+										case 'happy':
+											issue = 'Διάθεση';
+											break;
+										default:											
+											issue = '';
+											break;
+									}									
 									
-									$('#recent_five').append('<div class="row" style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #ffffff; height:100px; margin-top:20px;"><div class="col-lg-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px"/></div><div class="col-lg-8"><h3>'+obj.issue+'</h3><div><a href="http://sense.city/issuemap.php?long='+positionlon+'&lang='+positionlat+'&issue='+obj.issue+'" >'+obj.value_desc+'</a></div></div></div>');
+									$('#recent_five').append('<div class="row" style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #ffffff; height:100px; margin-top:20px;"><div class="col-lg-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px"/></div><div class="col-lg-8"><h3>'+issue+'</h3><div><a href="http://sense.city/issuemap.php?long='+positionlon+'&lang='+positionlat+'&issue='+obj.issue+'" >'+obj.value_desc+'</a></div></div></div>');
 
 								});
 									
