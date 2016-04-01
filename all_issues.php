@@ -221,11 +221,11 @@
 											break;
 									}									
 									
-									$('#recent_five').append('<div class="row" style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #ffffff; height:100px; margin-top:20px;"><div class="col-lg-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px"/></div><div class="col-lg-8"><h4>'+issue+'</h4><div><a href="http://sense.city/issuemap.php?long='+positionlon+'&lang='+positionlat+'&issue='+obj.issue+'" style="color: #FFFFFF !important;">'+obj.value_desc+'</a></div></div></div>');
+									$('#recent_five').append('<div class="col-lg-4" style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #ffffff; height:100px; margin-top:20px;"><div class="col-lg-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px"/></div><div class="col-lg-8"><h4>'+issue+'</h4><div><a href="http://sense.city/issuemap.php?long='+positionlon+'&lang='+positionlat+'&issue='+obj.issue+'" style="color: #FFFFFF !important;">'+obj.value_desc+'</a></div></div></div>');
 
 								});
 								
-								$('#recent_five').append('<a href="all_issues.php" style="color:#FFFFFF !important;float: right;">Περισσότερα >></a>');
+								
 							}
 							
 						});
