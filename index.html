@@ -85,7 +85,7 @@
 					<a href="#three" class="btn btn-default btn-xl page-scroll"> Αναφορά προβλήματος</a>
 					</div>
                 </div>
-				<div class="col-lg-4">
+				<div class="col-lg-4" id="recent_five">
 					<br />
 					<script>
 						
@@ -654,19 +654,27 @@
 								console.log(msg);
 								console.log("------------------------------------------------------------");
 								
+								$('#recent_five').append();
 								var count_pos =0;
 								var position = new Array();
-								
+								/*
 								var positionlat = msg[0].loc.coordinates[1];
 								var positionlon = msg[0].loc.coordinates[0];
-								
-								console.log(positionlat);
+								*/
+								/*console.log(positionlat);
 								console.log(positionlon);
-								
+								*/
 								$.each(msg, function(idx, obj) {
+								
+								
 									var positionlat = obj.loc.coordinates[1];
 									var positionlon = obj.loc.coordinates[0];
 									
+									console.log("------------------------------------------------------------");
+									console.log(positionlat+'  -  '+positionlon);
+									console.log("------------------------------------------------------------");
+									
+									$('#recent_five').append('<div class="row">123456</div>');
 
 								});
 									
