@@ -138,7 +138,7 @@
 						
 						
 						
-						//var smiliesMarkers = L.layerGroup().addTo(map);
+						var smiliesMarkers = L.layerGroup().addTo(map);
 						
 						//map.addLayer(garbageMarkers);
 						//map.addLayer(lightingMarkers);
