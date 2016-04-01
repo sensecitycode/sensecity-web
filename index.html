@@ -676,14 +676,10 @@
 									var today = new Date();
 									var create_day = new Date(obj.create_at);
 									
-									console.log(today);
-									console.log("--------------------");
-									console.log(create_day);
-									
-									var seconds = (today.getTime() - create_day.getTime())/1000;
-									console.log("++++++++++++++++++++++++++++++");
-									console.log(seconds);
+																	
+									var seconds = (today.getTime() - create_day.getTime())/1000;									
 									var datediff ='';
+									
 									if(seconds<60){
 										datediff = "πριν από "+seconds+" δευτερόλεπτα";
 									}
