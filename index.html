@@ -473,6 +473,8 @@
 			<script>
 
 				var newdate = new Date();
+				var sart_date = new Date();
+				sart_date.setDate(sart_date.getDate() -3); 
 				
 				/*
 				alert(newdate.getFullYear());
@@ -484,7 +486,7 @@
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
-					url: "http://api.sense.city:3005/api/issue?startdate="+newdate.getFullYear()+"-"+newdate.getMonth()+"-"+(newdate.getDate()-3)+"&enddate="+newdate.getFullYear()+"-"+newdate.getMonth()+"-"+newdate.getDate()+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1",
+					url: "http://api.sense.city:3005/api/issue?startdate="+sart_date+"&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1",
 					dataType: "json",                
 					success: function(msg){
 						console.log(msg);
