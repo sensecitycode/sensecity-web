@@ -484,7 +484,7 @@
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
-					url: "http://api.sense.city:3005/api/issue?startdate="+newdate.getFullYear()+"-"+newdate.getMonth()+"-"+(newdate.getDate()-3)+"T00:00:00:000Z&enddate="+newdate.getFullYear()+"-"+newdate.getMonth()+"-"+newdate.getDate()+"T00:00:00:000Z&coordinates=[21.734574,38.2466395]&distance=15000",
+					url: "http://api.sense.city:3005/api/issue?startdate="+newdate.getFullYear()+"-"+newdate.getMonth()+"-"+(newdate.getDate()-3)+"&enddate="+newdate.getFullYear()+"-"+newdate.getMonth()+"-"+newdate.getDate()+"&coordinates=[21.734574,38.2466395]&distance=15000",
 					dataType: "json",                
 					success: function(msg){
 						console.log(msg);
