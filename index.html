@@ -85,8 +85,42 @@
 					<a href="#three" class="btn btn-default btn-xl page-scroll"> Αναφορά προβλήματος</a>
 					</div>
                 </div>
-				<div class="col-lg-4 ">
+				<div class="col-lg-4">
 					<br />
+					<script>
+						
+						$.ajax({
+							crossDomain: true,
+							type:"GET",
+							url: "http://api.sense.city:3005/api/issue?sort=-1&limit=5",
+							dataType: "json",                
+							success: function(msg){
+								console.log("------------------------------------------------------------");
+								console.log(msg);
+								console.log("------------------------------------------------------------");
+								
+								var count_pos =0;
+								var position = new Array();
+								
+								var positionlat = msg[0].loc.coordinates[1];
+								var positionlon = msg[0].loc.coordinates[0];
+								
+								console.log(positionlat);
+								console.log(positionlon);
+								
+								$.each(msg, function(idx, obj) {
+									var positionlat = obj.loc.coordinates[1];
+									var positionlon = obj.loc.coordinates[0];
+									
+
+								});
+									
+							}
+							
+						});
+				
+					
+					</script>
 					<div class="row" style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #ffffff; height:100px; margin-top:20px;">
 					efef
 					
