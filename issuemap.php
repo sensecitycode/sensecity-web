@@ -147,7 +147,7 @@
 							//var positionlat = obj.loc.coordinates[1];
 							//var positionlon = obj.loc.coordinates[0];
 							
-							if (get_issue === 'light') 
+							if (get_issue === 'lighting') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'lightbulb-o',
