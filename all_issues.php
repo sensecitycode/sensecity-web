@@ -186,7 +186,7 @@
 									var positionlat = obj.loc.coordinates[1];
 									var positionlon = obj.loc.coordinates[0];
 									var image_name;
-									if(obj.image_name==='' || obj.image_name===null || obj.image_name===undefined){
+									if(obj.image_name==='noimage' || obj.image_name==='' || obj.image_name===null || obj.image_name===undefined){
 										image_name = "images/EmptyBox-Phone.png";
 									}
 									else
