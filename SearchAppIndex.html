@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="sense.city" />
+      <!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="generator" content="Codeply">
+
+        <title>sense.city search</title>
+
+        <!-- sidebar css -->
+        <link rel="stylesheet" href="css/sidebar.css">
+
+        <!-- angular dep -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
+
+
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+        <!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" /> -->
+        <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+
+        <!-- Map dependancies -->
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <script src="js/leaflet.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+
+
+
+
+        <!-- Marker icons -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+        <!-- Bootstrap Theme css -->
+        <link rel="stylesheet" href="css/styles.css" />
+
+        <!-- Angular SearchApp dependancies -->
+        <script src="controllers.js"></script>
+        <script src="searchapp.js"></script>
+        <script src="services.js"></script>
+
+
+
+    </head>
+    <body ng-app="searchApp" >
+        <!-- sidebar container -->
+        <div class="container">
+            <div ng-controller="SidebarController" class="sidebar" sidebar-directive="state">
+                <a href="#" id="navigation-toggle" ng-click="toggleState()"><span class="glyphicon glyphicon-menu-hamburger" /></a>
+                <ul class="navigation">
+                    <li class="sidebar-brand">
+                        <a href="#">
+                          <a href="http://sense.city"><i class="ion-ios-analytics-outline"></i> sense.city
+                          <sup style="font-size: 55%">beta</sup></a>
+                        </a>
+                    </li>
+
+                    <form name="SearchForm" ng-controller="searchController">
+                        <li class="navigation-items"> <a href="/">Προβλήματα Πολιτών</a> </li>
+                          <ul>
+                              <input type="radio" ng-model="searchIssue" value="garbage"> Σκουπιδιών<br />
+                              <input type="radio" ng-model="searchIssue" value="lighting"> Φωτισμού<br />
+                              <input type="radio" ng-model="searchIssue" value="plumbing"> Ύδρευσης<br />
+                              <input type="radio" ng-model="searchIssue" value="road-contructor"> Οδοστρώματος<br />
+                          </ul>
+
+                        <li class="navigation-items"> <a href="/">Ανάδραση Πολιτών</a> </li>
+                          <ul>
+                              <input type="radio" ng-model="searchIssue" value="happy"> Χαρούμενος<br />
+                              <input type="radio" ng-model="searchIssue" value="neutral"> Ουδέτερος<br />
+                              <input type="radio" ng-model="searchIssue" value="angry"> Δυσαρεστημένος<br />
+                          </ul>
+
+
+                        <li class="navigation-items"> <a href="/">Ημερομηνία Συμβάντος</a> </li>
+                          <ul>
+                              <label for="startdate">Από:</label>
+                              <input type="date" id="startdate" name="input" ng-model="startISOdate" placeholder="yyyy-MM-dd"><br />
+                              <label for="enddate">Μέχρι:</label>
+                              <input type="date" id="enddate" name="input" ng-model="endISOdate" placeholder="yyyy-MM-dd"><br />
+                          </ul><br />
+                          DEBUGGING:<br />
+                          $scope.searchIssue = {{searchIssue}}<br />
+                          $scope.startdate = {{startdate}}<br />
+                          $scope.enddate = {{enddate}}<br />
+                        <button type="button" class="btn btn-primary" ng-click="submit()">Αναζήτηση</button>
+
+                    </form>
+                </ul>
+
+            </div>
+        </div>
+
+
+        <!-- </section> -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <br />
+                    <h2 class="margin-top-0 text-primary text-center">Αναζήτηση Συμβάντων</h2>
+                    <br>
+                    <p class="text-faded text-center">
+                        Δείτε με μια ματιά εδώ τι έχουν αναφέρει οι υπόλοιποι πολίτες και ποια είναι τα τελευταία συμβάντα στη πόλη!
+                    </p>
+            <div ng-controller="mapController">
+              <leaflet lf-center="center" layers="layers" markers="markers" width="90%" height="550px"></leaflet>
+            </div>
+            <!-- <div id="map" style="color: black; height:550px;"></div> -->
+            <br>
+                </div>
+            </div>
+        </div>
+
+      <!-- </section> -->
+
+    <footer id="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6 col-sm-3 column">
+                    <h4>Πληροφορίες</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="">Products</a></li>
+                        <li><a href="">Services</a></li>
+                        <li><a href="">Benefits</a></li>
+                        <li><a href="">Developers</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-6 col-sm-3 column">
+                    <h4>Σχετικά</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Delivery Information</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-3 column">
+                    <h4>Stay Posted</h4>
+                    <form>
+                        <div class="form-group">
+                          <input type="text" class="form-control" title="No spam, we promise!" placeholder="Tell us your email">
+                        </div>
+                        <div class="form-group">
+                          <button class="btn btn-primary" data-toggle="modal" data-target="#alertModal" type="button">Subscribe for updates</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-xs-12 col-sm-3 text-right">
+                    <h4>Ακολουθήστε μας</h4>
+                    <ul class="list-inline">
+                      <li><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
+                      <li><a rel="nofollow" href="https://www.facebook.com/sensecitybook" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
+                      <li><a rel="nofollow" href="" title="Ιnstagram"><i class="icon-lg ion-social-instagram-outline"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <br/>
+            <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Theme by: Landing Zero by BootstrapZero</a> ©2015 Πανεπιστήμιο Πατρών</span>
+        </div>
+    </footer>
+    <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <img src="//placehold.it/1200x700/222?text=..." id="galleryImage" class="img-responsive" />
+            <p>
+                <br/>
+                <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
+            </p>
+          </div>
+        </div>
+        </div>
+    </div>
+    <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h2 class="text-center">sense.city @ Πάτρα</h2>
+            <h5 class="text-center">
+                Συμμετέχω ενεργά στη πόλη μου
+            </h5>
+            <p class="text-justify">
+               Οι πολίτες είστε οι αισθητήρες της πόλης! Χρησιμοποιώντας τις δικές σας συσκευές επικοινωνίας, είτε μέσω της εφαρμογής sense.city είτε με άλλες συσκευές που αναφέρουν στο sense.city δεδομένα της πόλης, ενημερώνετε τους συμπολίτες και το δήμο για προβλήματα και συμβάντα που συμβαίνουν κάθε στιγμή.
+            </p>
+
+            <br/>
+            <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true"> OK </button>
+          </div>
+        </div>
+        </div>
+    </div>
+    <div id="alertModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h2 class="text-center">Nice Job!</h2>
+            <p class="text-center">You clicked the button, but it doesn't actually go anywhere because this is only a demo.</p>
+            <p class="text-center"><a href="http://www.bootstrapzero.com">Learn more at BootstrapZero</a></p>
+            <br/>
+            <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">OK <i class="ion-android-close"></i></button>
+          </div>
+        </div>
+        </div>
+    </div>
+
+    </body>
+</html>
