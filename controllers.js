@@ -9,54 +9,7 @@ appControllers.controller('SidebarController', ['$scope', function($scope) {
     };
 	
 	
-	var icons = {
-		garbage: {
-			type: 'awesomeMarker',
-				prefix: 'fa',
-				  icon: 'trash-o',
-				  markerColor: 'green'
-				},
-				"road-contructor": {
-				  type: 'awesomeMarker',
-				  prefix: 'fa',
-				  icon: 'road',
-				  markerColor: 'cadetblue'
-				},
-				plumbing: {
-				  type: 'awesomeMarker',
-				  prefix: 'fa',
-				  icon: 'umbrella',
-				  markerColor: 'darkpuple'
-				},
-				lighting: {
-				  type: 'awesomeMarker',
-				  prefix: 'fa',
-				  icon: 'lightbulb-o',
-				  markerColor: 'orange'
-				},
-				angry: {
-				  type: 'awesomeMarker',
-				  prefix: 'fa',
-				  icon: 'frown-o',
-				  markerColor: 'lightgreen',
-				  iconColor: 'darkgreen'
-				},
-				neutral: {
-				  type: 'awesomeMarker',
-				  prefix: 'fa',
-				  icon: 'meh-o',
-				  markerColor: 'lightgreen',
-				  iconColor: 'darkgreen'
-				},
-				happy: {
-				  type: 'awesomeMarker',
-				  prefix: 'fa',
-				  icon: 'smile-o',
-				  markerColor: 'lightgreen',
-				  iconColor: 'darkgreen'
-				}
-
-			  };
+	
 
 			  
 			  
@@ -135,7 +88,54 @@ appControllers.directive('sidebarDirective', function() {
 appControllers.controller('searchController', ['$scope','$location','APIEndPointService','DisplayIssuesService','IssuesSharingService', function($scope,$location,APIEndPointService,DisplayIssuesService,IssuesSharingService) {
 	
 	
-	
+	var icons = {
+		garbage: {
+			type: 'awesomeMarker',
+				prefix: 'fa',
+				  icon: 'trash-o',
+				  markerColor: 'green'
+				},
+				"road-contructor": {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'road',
+				  markerColor: 'cadetblue'
+				},
+				plumbing: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'umbrella',
+				  markerColor: 'darkpuple'
+				},
+				lighting: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'lightbulb-o',
+				  markerColor: 'orange'
+				},
+				angry: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'frown-o',
+				  markerColor: 'lightgreen',
+				  iconColor: 'darkgreen'
+				},
+				neutral: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'meh-o',
+				  markerColor: 'lightgreen',
+				  iconColor: 'darkgreen'
+				},
+				happy: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'smile-o',
+				  markerColor: 'lightgreen',
+				  iconColor: 'darkgreen'
+				}
+
+			  };
 	
     $scope.searchIssue = "garbage";
     var today = new Date();
