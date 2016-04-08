@@ -10,6 +10,29 @@ appControllers.controller('SidebarController', ['$scope', function($scope) {
 	
 	
 	
+	
+	
+	
+
+}]);
+
+appControllers.directive('sidebarDirective', function() {
+    return {
+        link : function(scope, element, attr) {
+            scope.$watch(attr.sidebarDirective, function(newVal) {
+                  if(newVal)
+                  {
+                    element.addClass('show');
+                    return;
+                  }
+                  element.removeClass('show');
+            });
+        }
+    };
+});
+
+appControllers.controller('searchController', ['$scope','$location','APIEndPointService','DisplayIssuesService','IssuesSharingService', function($scope,$location,APIEndPointService,DisplayIssuesService,IssuesSharingService) {
+	
 
 	
 	$scope.center= {
@@ -58,28 +81,6 @@ appControllers.controller('SidebarController', ['$scope', function($scope) {
 			}
 		}
 	};
-	
-	
-	
-
-}]);
-
-appControllers.directive('sidebarDirective', function() {
-    return {
-        link : function(scope, element, attr) {
-            scope.$watch(attr.sidebarDirective, function(newVal) {
-                  if(newVal)
-                  {
-                    element.addClass('show');
-                    return;
-                  }
-                  element.removeClass('show');
-            });
-        }
-    };
-});
-
-appControllers.controller('searchController', ['$scope','$location','APIEndPointService','DisplayIssuesService','IssuesSharingService', function($scope,$location,APIEndPointService,DisplayIssuesService,IssuesSharingService) {
 	
 	
 	var icons = {
