@@ -87,7 +87,28 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
 			<script>
-
+			
+			$.ajax({
+							crossDomain: true,
+							type:"GET",
+							url: "http://api.sense.city:3000/api/issues/"+<?php echo $_GET["issue_id"] ?>,
+							dataType: "json",                
+							success: function(msg){
+							
+								console.log(msg);
+								
+							}
+							
+					});
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			/*
 			
 				$.ajax({
