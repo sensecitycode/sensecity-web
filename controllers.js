@@ -26,6 +26,8 @@ appControllers.directive('sidebarDirective', function() {
 });
 
 appControllers.controller('searchController', ['$scope','$location','APIEndPointService','DisplayIssuesService','IssuesSharingService', function($scope,$location,APIEndPointService,DisplayIssuesService,IssuesSharingService) {
+	
+	console.log("sdfsdfsd");
 	var icons = {
 		garbage: {
 			type: 'awesomeMarker',
