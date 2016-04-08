@@ -18,7 +18,7 @@
 	
   </head>
   <body>
-  <div class="col-lg-12 ">
+  <div class="col-md-12 ">
     <nav id="topNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -58,10 +58,10 @@
         </div>
     </nav>    
 </div>	
-	<div class="col-lg-12 ">
-		<h2 class="margin-top-0 text-primary text-center">Συμβαίνει στη πόλη</h2>
+	<div class="col-md-12 ">		
 		<br>                    
 		<div class="col-lg-8">
+			<h2 class="margin-top-0 text-primary text-center">Συμβαίνει στη πόλη</h2>
 			<div id="map" style="color: black; height:85vh;"></div>
 		</div>
 		<div class="col-lg-4" id="image_div">
