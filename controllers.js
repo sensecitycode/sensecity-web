@@ -60,70 +60,22 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
 		  
 		  console.log($scope.searchissues );
 		  
-		   var icons = {
-    garbage: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'trash-o',
-      markerColor: 'green'
-    },
-    "road-contructor": {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'road',
-      markerColor: 'cadetblue'
-    },
-    plumbing: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'umbrella',
-      markerColor: 'darkpuple'
-    },
-    lighting: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'lightbulb-o',
-      markerColor: 'orange'
-    },
-    angry: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'frown-o',
-      markerColor: 'lightgreen',
-      iconColor: 'darkgreen'
-    },
-    neutral: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'meh-o',
-      markerColor: 'lightgreen',
-      iconColor: 'darkgreen'
-    },
-    happy: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'smile-o',
-      markerColor: 'lightgreen',
-      iconColor: 'darkgreen'
-    }
+		   
 
-  };
-
-
-  $scope.markers = [];
-  
-  angular.forEach($scope.searchissues, function(value,key) {
-	  console.log(value._id);
-      var positionlat = value.loc.coordinates[1];
-      var positionlon = value.loc.coordinates[0];
-      var issue = value.issue;
-      var layer = '';
-      if (issue=="angry"||issue=="neutral"||issue=="happy"){layer = 'reaction';}else{layer = issue;}
-      var message = '';
-      if (value.value_desc){message = value.value_desc;}else{message = 'Μη διαθέσιμη περιγραφή';}
-      var marker = {"layer":""+layer+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+""};
-      this.push(marker);
-  }, $scope.markers);
+			  $scope.markers = [];
+			  
+			  angular.forEach($scope.searchissues, function(value,key) {
+				  console.log(value._id);
+				  var positionlat = value.loc.coordinates[1];
+				  var positionlon = value.loc.coordinates[0];
+				  var issue = value.issue;
+				  var layer = '';
+				  if (issue=="angry"||issue=="neutral"||issue=="happy"){layer = 'reaction';}else{layer = issue;}
+				  var message = '';
+				  if (value.value_desc){message = value.value_desc;}else{message = 'Μη διαθέσιμη περιγραφή';}
+				  var marker = {"layer":""+layer+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+""};
+				  this.push(marker);
+			  }, $scope.markers);
 
 
   
@@ -134,13 +86,69 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
 		
 		
 	
-  $scope.center= {
-      lat: 38.288028,
-      lng: 21.7883104,
-      zoom: 12
-  };
+		  $scope.center= {
+			  lat: 38.288028,
+			  lng: 21.7883104,
+			  zoom: 12
+		  };
 
+		
+		
+		var icons = {
+				garbage: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'trash-o',
+				  markerColor: 'green'
+				},
+				"road-contructor": {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'road',
+				  markerColor: 'cadetblue'
+				},
+				plumbing: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'umbrella',
+				  markerColor: 'darkpuple'
+				},
+				lighting: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'lightbulb-o',
+				  markerColor: 'orange'
+				},
+				angry: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'frown-o',
+				  markerColor: 'lightgreen',
+				  iconColor: 'darkgreen'
+				},
+				neutral: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'meh-o',
+				  markerColor: 'lightgreen',
+				  iconColor: 'darkgreen'
+				},
+				happy: {
+				  type: 'awesomeMarker',
+				  prefix: 'fa',
+				  icon: 'smile-o',
+				  markerColor: 'lightgreen',
+				  iconColor: 'darkgreen'
+				}
 
+			  };
+
+			  
+			  
+			  
+			  
+			  
+			  
   $scope.layers= {
 
       baselayers: {
