@@ -111,17 +111,26 @@
 					issue_value_desc = msg.value_desc;
 					issue_long = msg.loc.coordinates[0];
 					issue_lat = msg.loc.coordinates[1];
-						
-				}
-			});
-			
-			$('#image_div').append('<img src="'+issue_image+'" /><br /><hr><br /><center><h3>issue_name</h3>issue_value_desc</center>');
-				
-				
-				
-			
-				
-				
+					
+					$('#image_div').append('<img src="'+issue_image+'" /><br /><hr><br /><center><h3>issue_name</h3>issue_value_desc</center>');
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 				
 				
 			/*
@@ -265,6 +274,38 @@
 		*/
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+					
+				}
+			});
+			
+			
+				
+				
+				
+			
+				
+				
 		
 		
 		
