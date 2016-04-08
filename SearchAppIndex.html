@@ -51,6 +51,7 @@
         <!-- sidebar container -->
         <div class="container">
             <div ng-controller="SidebarController" class="sidebar" sidebar-directive="state">
+				<div class="col-md-4">
                 <a href="#" id="navigation-toggle" ng-click="toggleState()"><span class="glyphicon glyphicon-menu-hamburger" /></a>
                 <ul class="navigation">
                     <li class="sidebar-brand">
@@ -92,8 +93,13 @@
 
                     </form>
                 </ul>
-
+				</div>
+				<div class="col-md-8">
+				<leaflet lf-center="center" layers="layers" markers="markers" width="90%" height="550px"></leaflet>
+				</div>
             </div>
+			
+			
         </div>
 
 

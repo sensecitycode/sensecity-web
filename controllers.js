@@ -125,7 +125,15 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
       this.push(marker);
   }, $scope.markers);
 
-/*
+
+  
+  
+  
+		  
+	  });
+		
+		
+	
   $scope.center= {
       lat: 38.288028,
       lng: 21.7883104,
@@ -174,13 +182,7 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
               visible:true
           }
       }
-  };*/
-  
-  
-  
-		  
-	  });
-
+  };
 
       // DisplayIssuesService.query($scope.params)
       //     .then(function(issues) {
