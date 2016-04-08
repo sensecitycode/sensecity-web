@@ -11,19 +11,13 @@ appControllers.controller('SidebarController', ['$scope', function($scope) {
 	
 	
 
-			  
-			  
-			  
 	
 	$scope.center= {
 		lat: 38.288028,
 		lng: 21.7883104,
 		zoom: 12
 	};
-
-				  
-			  
-			  
+  
 	$scope.layers= {
 		baselayers: {
 			openStreetMap: {
@@ -192,8 +186,10 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
 				}
 				var marker = {"layer":""+layer1+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+""};
 				$scope.markers.push(marker);
+				
 			}, $scope.markers);
-
+			
+			console.log($scope.markers);
 
   
   
