@@ -28,25 +28,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#first"><i class="ion-ios-analytics-outline"></i> sense.city
+                <a class="navbar-brand page-scroll" href="../#first"><i class="ion-ios-analytics-outline"></i> sense.city
 				<sup style="font-size: 55%">beta</sup></a>
             </div>
             <div class="navbar-collapse collapse" id="bs-navbar">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a class="page-scroll" href="#one">Η ΠΟΛΗ</a>
+                        <a class="page-scroll" href="../#one">Η ΠΟΛΗ</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#two">ΣΥΜΜΕΤΟΧΗ</a>
+                        <a class="page-scroll" href="../#two">ΣΥΜΜΕΤΟΧΗ</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#three">sense.city app</a>
+                        <a class="page-scroll" href="../#three">sense.city app</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#four">ΔΕΔΟΜΕΝΑ</a>
+                        <a class="page-scroll" href="../#four">ΔΕΔΟΜΕΝΑ</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#last">ΕΠΙΚΟΙΝΩΝΙΑ</a>
+                        <a class="page-scroll" href="../#last">ΕΠΙΚΟΙΝΩΝΙΑ</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
