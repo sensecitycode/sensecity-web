@@ -166,7 +166,7 @@
 				$.ajax({
 							crossDomain: true,
 							type:"GET",
-							url: "http://api.sense.city:3000/api/issue?sort=-1&limit=100",
+							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=100",
 							dataType: "json",                
 							success: function(msg){								
 								
