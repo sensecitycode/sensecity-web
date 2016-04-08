@@ -35,7 +35,12 @@
 	<div class="col-lg-12 ">
 		<h2 class="margin-top-0 text-primary text-center">Συμβαίνει στη πόλη</h2>
 		<br>                    
-		<div id="map" style="color: black; height:85vh;"></div>
+		<div class="col-lg-8">
+			<div id="map" style="color: black; height:85vh;"></div>
+		</div>
+		<div class="col-lg-4" id="image_div">
+			
+		</div>
 		<br>					
 	</div>
     <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -101,28 +106,20 @@
 				dataType: "json",                
 				success: function(msg){
 					
-					//issue_image=
-					console.log(msg.image_name);
-					
-					//issue_name=
-					console.log(msg.issue);
-					
-					//issue_value_desc=
-					console.log(msg.value_desc);
-					
-					//issue_long=
-					console.log(msg.loc.coordinates[0]);
-					
-					//issue_lat=
-					console.log(msg.loc.coordinates[1]);
+					issue_image = msg.image_name;
+					issue_name = msg.issue;
+					issue_value_desc = msg.value_desc;
+					issue_long = msg.loc.coordinates[0];
+					issue_lat = msg.loc.coordinates[1];
 						
 				}
 			});
+			
+			$('#image_div').append('<img src="'+issue_image+'" /><br /><hr><br /><center><h3>issue_name</h3>issue_value_desc</center>');
 				
 				
 				
-				
-				
+			
 				
 				
 				
@@ -143,20 +140,15 @@
 						var count_pos =0;
 						var position = new Array();
 						//
-						var positionlat = <?php echo $_GET["lang"]; ?>;
-						var positionlon = <?php echo $_GET["long"]; ?>;
-						
-						console.log(positionlat);
-						console.log(positionlon);
-
-						
+						var positionlat = issue_lat;
+						var positionlon = issue_long;
 						
 						var map = L.map('map').setView( new L.LatLng( positionlat, positionlon ), 12);
 			
 						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 						maxZoom: 18, }).addTo(map);
-						var get_issue = '<?php echo $_GET["issue"]; ?>';
+						var get_issue = issue_name;
 						switch(get_issue){
 							case "garbage":
 								var garbageMarkers = L.layerGroup().addTo(map);
