@@ -50,9 +50,9 @@
     <body ng-app="searchApp" >
         <!-- sidebar container -->
         <div class="container">
-            <div ng-controller="searchController" >
-			
-						<a href="#" id="navigation-toggle" ng-click="toggleState()"><span class="glyphicon glyphicon-menu-hamburger" /></a>
+            <div ng-controller="searchController" class="" sidebar-directive="state">
+				<div class="col-md-4">
+                <a href="#" id="navigation-toggle" ng-click="toggleState()"><span class="glyphicon glyphicon-menu-hamburger" /></a>
                 <ul class="navigation">
                     <li class="sidebar-brand">
                         <a href="#">
@@ -62,7 +62,6 @@
                     </li>
 
                     <form name="SearchForm" >
-						
                         <li class="navigation-items"> <a href="/">Προβλήματα Πολιτών</a> </li>
                           <ul>
                               <input type="radio" ng-model="searchIssue" value="garbage"> Σκουπιδιών<br />
