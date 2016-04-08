@@ -52,6 +52,7 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
       $scope.params = $location.search() ;
       console.log(APIEndPointService.APIURL);
       console.log($scope.params);
+	  
       // console.log($scope.params.startdate);
       // console.log($scope.params.issue);
 
@@ -112,6 +113,7 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
   $scope.markers = [];
   
   angular.forEach($scope.searchissues, function(value,key) {
+	  console.log(value+' ----- '+key);
       var positionlat = value.loc.coordinates[1];
       var positionlon = value.loc.coordinates[0];
       var issue = value.issue;
