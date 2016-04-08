@@ -176,12 +176,12 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
 				var positionlat = value.loc.coordinates[1];
 				var positionlon = value.loc.coordinates[0];
 				var issue = value.issue;
-				var layer = '';
+				var layer1 = '';
 				
 				if (issue=="angry"||issue=="neutral"||issue=="happy"){
-					layer = 'reaction';
+					layer1 = 'reaction';
 				}else{
-					layer = issue;
+					layer1 = issue;
 				}
 				
 				var message = '';
@@ -190,7 +190,7 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
 				}else{
 					message = 'Μη διαθέσιμη περιγραφή';
 				}
-				var marker = {"layer":""+layer+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+""};
+				var marker = {"layer":""+layer1+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+""};
 				console.log(marker);
 				this.push(marker);
 			}, $scope.markers);
