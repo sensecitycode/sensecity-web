@@ -191,8 +191,7 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
 					message = 'Μη διαθέσιμη περιγραφή';
 				}
 				var marker = {"layer":""+layer1+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+""};
-				console.log(marker);
-				this.push(marker);
+				$scope.markers.push(marker);
 			}, $scope.markers);
 
 
