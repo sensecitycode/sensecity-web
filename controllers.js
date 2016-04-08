@@ -55,7 +55,11 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
       // console.log($scope.params.startdate);
       // console.log($scope.params.issue);
 
-      $scope.searchissues = DisplayIssuesService.query($scope.params);
+      $scope.searchissues = DisplayIssuesService.query($scope.params, function(){
+		  
+		  conosle.log($scope.searchissues );
+		  
+	  });
       console.log($scope.searchissues);
 
       // DisplayIssuesService.query($scope.params)
