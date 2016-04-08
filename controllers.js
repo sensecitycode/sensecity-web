@@ -28,6 +28,17 @@ appControllers.directive('sidebarDirective', function() {
 appControllers.controller('searchController', ['$scope','$location','APIEndPointService','DisplayIssuesService','IssuesSharingService', function($scope,$location,APIEndPointService,DisplayIssuesService,IssuesSharingService) {
     $scope.searchIssue = "garbage";
     var today = new Date();
+	
+	/*
+	
+	var _startdate = new Date();
+	_startdate.setDate(_startdate.getDate() -3);         
+	
+	var _enddate = new Date();
+    
+	*/
+	
+	
     $scope.startISOdate = new Date(today - 1000 * 60 * 60 * 24 * 60);
     $scope.endISOdate = today;
     $scope.submit = function() {
@@ -57,6 +68,9 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
       // call service to share search issues with mapController
       IssuesSharingService.share($scope.searchissues);
     };
+	
+	
+	
 }]);
 
 appControllers.controller('mapController', ['$scope','IssuesSharingService', function($scope,IssuesSharingService){
@@ -112,7 +126,7 @@ appControllers.controller('mapController', ['$scope','IssuesSharingService', fun
 
 
   $scope.issues = IssuesSharingService.list();
-  console.log($scope.issues[0]);
+  console.log($scope.issues);
   $scope.markers = [];
   angular.forEach($scope.issues, function(value,key) {
       var positionlat = value.loc.coordinates[1];
