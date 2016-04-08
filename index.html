@@ -450,7 +450,7 @@
 			<script>
 
 				var newdate = new Date();
-				var sart_date = new Date("2016-03-01");
+				var sart_date = new Date();
 				sart_date.setDate(sart_date.getDate() -3); 
 				
 				/*
@@ -463,7 +463,8 @@
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
-					url: "http://api.sense.city:3000/api/issue?startdate="+sart_date+"&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1",
+					/*url: "http://api.sense.city:3000/api/issue?startdate="+sart_date+"&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1",*/
+					url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1",
 					dataType: "json",                
 					success: function(msg){
 						console.log(msg);
