@@ -113,7 +113,7 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
   $scope.markers = [];
   
   angular.forEach($scope.searchissues, function(value,key) {
-	  console.log(value+' ----- '+key);
+	  console.log(value._id);
       var positionlat = value.loc.coordinates[1];
       var positionlon = value.loc.coordinates[0];
       var issue = value.issue;
