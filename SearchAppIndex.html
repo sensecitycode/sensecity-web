@@ -51,7 +51,8 @@
         <!-- sidebar container -->
         <div class="container">
             <div ng-controller="searchController" class="sidebar" sidebar-directive="state">
-				<div class="col-md-4">
+			
+				<div class="col-md-4" ng-controller="SidebarController">
                 <a href="#" id="navigation-toggle" ng-click="toggleState()"><span class="glyphicon glyphicon-menu-hamburger" /></a>
                 <ul class="navigation">
                     <li class="sidebar-brand">
