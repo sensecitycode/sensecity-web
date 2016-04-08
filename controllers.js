@@ -167,26 +167,33 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
       // console.log($scope.params.startdate);
       // console.log($scope.params.issue);
 
-      $scope.searchissues = DisplayIssuesService.query($scope.params, function(){
+		$scope.searchissues = DisplayIssuesService.query($scope.params, function(){
 		  
-		  console.log($scope.searchissues );
 		  
-		   
-
-			  $scope.markers = [];
+			$scope.markers = [];
 			  
-			  angular.forEach($scope.searchissues, function(value,key) {
-				  console.log(value._id);
-				  var positionlat = value.loc.coordinates[1];
-				  var positionlon = value.loc.coordinates[0];
-				  var issue = value.issue;
-				  var layer = '';
-				  if (issue=="angry"||issue=="neutral"||issue=="happy"){layer = 'reaction';}else{layer = issue;}
-				  var message = '';
-				  if (value.value_desc){message = value.value_desc;}else{message = 'Μη διαθέσιμη περιγραφή';}
-				  var marker = {"layer":""+layer+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+""};
-				  this.push(marker);
-			  }, $scope.markers);
+			angular.forEach($scope.searchissues, function(value,key) {				
+				var positionlat = value.loc.coordinates[1];
+				var positionlon = value.loc.coordinates[0];
+				var issue = value.issue;
+				var layer = '';
+				
+				if (issue=="angry"||issue=="neutral"||issue=="happy"){
+					layer = 'reaction';
+				}else{
+					layer = issue;
+				}
+				
+				var message = '';
+				if (value.value_desc){
+					message = value.value_desc;
+				}else{
+					message = 'Μη διαθέσιμη περιγραφή';
+				}
+				var marker = {"layer":""+layer+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+""};
+				console.log(marker);
+				this.push(marker);
+			}, $scope.markers);
 
 
   
