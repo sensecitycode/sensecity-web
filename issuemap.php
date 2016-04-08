@@ -18,6 +18,7 @@
 	
   </head>
   <body>
+  <div class="col-lg-12 ">
     <nav id="topNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -55,7 +56,8 @@
                 </ul>
             </div>
         </div>
-    </nav>              
+    </nav>    
+</div>	
 	<div class="col-lg-12 ">
 		<h2 class="margin-top-0 text-primary text-center">Συμβαίνει στη πόλη</h2>
 		<br>                    
