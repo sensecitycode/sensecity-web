@@ -26,22 +26,10 @@ appControllers.directive('sidebarDirective', function() {
 });
 
 appControllers.controller('searchController', ['$scope','$location','APIEndPointService','DisplayIssuesService','IssuesSharingService', function($scope,$location,APIEndPointService,DisplayIssuesService,IssuesSharingService) {
-	
-	
-	
-	
-		  $scope.center= {
-			  lat: 38.288028,
-			  lng: 21.7883104,
-			  zoom: 12
-		  };
-
-		
-		
-		var icons = {
-				garbage: {
-				  type: 'awesomeMarker',
-				  prefix: 'fa',
+	var icons = {
+		garbage: {
+			type: 'awesomeMarker',
+				prefix: 'fa',
 				  icon: 'trash-o',
 				  markerColor: 'green'
 				},
@@ -90,7 +78,14 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
 			  
 			  
 			  
-			  
+	
+	$scope.center= {
+		lat: 38.288028,
+		lng: 21.7883104,
+		zoom: 12
+	};
+
+				  
 			  
 			  
 	$scope.layers= {
