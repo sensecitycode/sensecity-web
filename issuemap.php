@@ -86,20 +86,38 @@
     <!-- <script src="_js/docs.min.js"></script> -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
-			<script>
+		<script>
+		
+			var issue_image;
+			var issue_name;
+			var issue_value_desc;
+			var issue_long;
+			var issue_lat;
 			
 			$.ajax({
-							crossDomain: true,
-							type:"GET",
-							url: "http://api.sense.city:3000/api/issues/<?php echo $_GET["issue_id"] ?>",
-							dataType: "json",                
-							success: function(msg){
-							
-								console.log(msg);
-								
-							}
-							
-					});
+				crossDomain: true,
+				type:"GET",
+				url: "http://api.sense.city:3000/api/issues/<?php echo $_GET["issue_id"] ?>",
+				dataType: "json",                
+				success: function(msg){
+					
+					//issue_image=
+					console.log(msg.image_name);
+					
+					//issue_name=
+					console.log(msg.issue);
+					
+					//issue_value_desc=
+					console.log(msg.value_desc);
+					
+					//issue_long=
+					console.log(msg.loc.coordinates[0]);
+					
+					//issue_lat=
+					console.log(msg.loc.coordinates[1]);
+						
+				}
+			});
 				
 				
 				
