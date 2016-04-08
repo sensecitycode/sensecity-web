@@ -86,6 +86,26 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
 		
 		
 	
+
+      // DisplayIssuesService.query($scope.params)
+      //     .then(function(issues) {
+      //         $scope.issues=issues;
+      //     });
+      // console.log($scope.issues);
+
+
+      // call service to share search issues with mapController
+      IssuesSharingService.share($scope.searchissues);
+    };
+	
+	
+	
+}]);
+
+
+
+
+
 		  $scope.center= {
 			  lat: 38.288028,
 			  lng: 21.7883104,
@@ -192,20 +212,10 @@ appControllers.controller('searchController', ['$scope','$location','APIEndPoint
       }
   };
 
-      // DisplayIssuesService.query($scope.params)
-      //     .then(function(issues) {
-      //         $scope.issues=issues;
-      //     });
-      // console.log($scope.issues);
 
 
-      // call service to share search issues with mapController
-      IssuesSharingService.share($scope.searchissues);
-    };
-	
-	
-	
-}]);
+
+
 
 appControllers.controller('mapController', ['$scope','IssuesSharingService', function($scope,IssuesSharingService){
   var icons = {
