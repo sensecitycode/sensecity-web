@@ -98,6 +98,7 @@
 			var issue_value_desc;
 			var issue_long;
 			var issue_lat;
+			var issue_name_new;
 			
 			$.ajax({
 				crossDomain: true,
@@ -112,190 +113,128 @@
 					issue_long = msg.loc.coordinates[0];
 					issue_lat = msg.loc.coordinates[1];
 					
-					$('#image_div').append('<center><img src="'+issue_image+'" width="450px" /><br /><hr><br /><h3>'+issue_name+'</h3>'+issue_value_desc+'</center>');
+					switch(issue_name){
+						case "garbage":
+							issue_name_new = "Προβλήματα σκουπιδιών";
+							break;
+						case "lighting":
+							issue_name_new = "Προβλήματα φωτισμού";
+							break;
+						case "plumping":
+							issue_name_new = "Προβλήματα ύδρευσης";
+							break;
+						case "road-contructor":
+							issue_name_new = "Προβλήματα οδοστρώματος";
+							break;
+						default:
+							break;
+					}
+						
+					$('#image_div').append('<center><img src="'+issue_image+'" width="450px" /><br /><hr><br /><h3>'+issue_name_new+'</h3>'+issue_value_desc+'</center>');
 					
+					var count_pos =0;
+					var position = new Array();
 					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-				
-				
-			/*
+					var positionlat = issue_lat;
+					var positionlon = issue_long;
+						
+					var map = L.map('map').setView( new L.LatLng( positionlat, positionlon ), 12);
 			
-				$.ajax({
-					crossDomain: true,
-					type:"GET",
-					url: "http://api.sense.city:3000/api/issues",
-					dataType: "json",                
-					success: function(msg){*/
-						
-						
-						//var zoom = 13;
-						//var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-						//var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
-						var count_pos =0;
-						var position = new Array();
-						//
-						var positionlat = issue_lat;
-						var positionlon = issue_long;
-						
-						var map = L.map('map').setView( new L.LatLng( positionlat, positionlon ), 12);
-			
-						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+					L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 						maxZoom: 18, }).addTo(map);
-						var get_issue = issue_name;
-						switch(get_issue){
-							case "garbage":
-								var garbageMarkers = L.layerGroup().addTo(map);
-								break;
-							case "lighting":
-								var lightingMarkers = L.layerGroup().addTo(map);
-								break;
-							case "plumping":
-								var plumpingMarkers = L.layerGroup().addTo(map);
-								break;
-							case "road-contructor":
-								var roadConstMarkers = L.layerGroup().addTo(map);
-								break;
-							default:
-								break;
+						
+					var get_issue = issue_name;
+					switch(get_issue){
+						case "garbage":
+							var garbageMarkers = L.layerGroup().addTo(map);
+							break;
+						case "lighting":
+							var lightingMarkers = L.layerGroup().addTo(map);
+							break;
+						case "plumping":
+							var plumpingMarkers = L.layerGroup().addTo(map);
+							break;
+						case "road-contructor":
+							var roadConstMarkers = L.layerGroup().addTo(map);
+							break;
+						default:
+							break;
+					}
+						
+					var smiliesMarkers = L.layerGroup().addTo(map);
+					
+					if (get_issue === 'lighting') {
+						var redMarker = L.AwesomeMarkers.icon({
+							icon: 'lightbulb-o',
+							prefix: 'fa',
+							markerColor: 'orange'
+						});
+							  
+						var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
+							marker.bindPopup("light");
+							lightingMarkers.addLayer(marker);			
+					}else if (get_issue === 'garbage') {
+						var redMarker = L.AwesomeMarkers.icon({
+							icon: 'trash-o',
+							prefix: 'fa',
+							markerColor: 'green'
+						});
+								  
+						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+						garbageMarkers.addLayer(marker);								
+						marker.bindPopup("garbage");
+					}else if (get_issue === 'road-contructor') {
+						var redMarker = L.AwesomeMarkers.icon({
+							icon: 'road',
+							prefix: 'fa',
+							markerColor: 'cadetblue'
+						});
+								  
+						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+						roadConstMarkers.addLayer(marker);	
+						marker.bindPopup("road");
+					}else if (get_issue === 'plumping') {
+						var redMarker = L.AwesomeMarkers.icon({
+							icon: 'umbrella',
+							prefix: 'fa',
+							markerColor: 'darkpuple'
+						});
+							  
+						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+						plumpingMarkers.addLayer(marker);
+							
+						marker.bindPopup("plumping");
+					}else {	
+						var ic = 'smile-o'
+						if (get_issue === 'neutral'){
+							ic = 'meh-o';
+						} else if (get_issue === 'angry'){
+							ic = 'frown-o';
 						}
-						
-						
-						
-						
-						var smiliesMarkers = L.layerGroup().addTo(map);
-						
-						//map.addLayer(garbageMarkers);
-						//map.addLayer(lightingMarkers);
-						
-						//$.each(msg, function(idx, obj) {
-							//var positionlat = obj.loc.coordinates[1];
-							//var positionlon = obj.loc.coordinates[0];
+									
+						var redMarker = L.AwesomeMarkers.icon({
+							icon: ic,
+							prefix: 'fa',
+							markerColor: 'lightgreen',
+							iconColor: 'darkgreen'
+						});
+							  
+						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+						marker.bindPopup("Διάθεση");
+						smiliesMarkers.addLayer(marker);
+					}
 							
-							if (get_issue === 'lighting') 
-							{
-								var redMarker = L.AwesomeMarkers.icon({
-									icon: 'lightbulb-o',
-									prefix: 'fa',
-									markerColor: 'orange'
-								  });
-								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
-								marker.bindPopup("light");
-								lightingMarkers.addLayer(marker);			
-							}else if (get_issue === 'garbage') 
-							{
-								var redMarker = L.AwesomeMarkers.icon({
-									icon: 'trash-o',
-									prefix: 'fa',
-									markerColor: 'green'
-								  });
-								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								garbageMarkers.addLayer(marker);								
-								marker.bindPopup("garbage");
-							}else if (get_issue === 'road-contructor') 
-							{
-								var redMarker = L.AwesomeMarkers.icon({
-									icon: 'road',
-									prefix: 'fa',
-									markerColor: 'cadetblue'
-								  });
-								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								roadConstMarkers.addLayer(marker);	
-								marker.bindPopup("road");
-							}else if (get_issue === 'plumping') 
-							{
-								var redMarker = L.AwesomeMarkers.icon({
-									icon: 'umbrella',
-									prefix: 'fa',
-									markerColor: 'darkpuple'
-								  });
-								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								plumpingMarkers.addLayer(marker);
-								
-								marker.bindPopup("plumping");
-							}else
-							{	
-								var ic = 'smile-o'
-								if (get_issue === 'neutral')
-								{
-										ic = 'meh-o';
-								} else if (get_issue === 'angry')
-								{
-										ic = 'frown-o';
-								}
-										
-								var redMarker = L.AwesomeMarkers.icon({
-									icon: ic,
-									prefix: 'fa',
-									markerColor: 'lightgreen',
-									iconColor: 'darkgreen'
-								  });
-								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								marker.bindPopup("Διάθεση");
-								smiliesMarkers.addLayer(marker);
-							}
+					var overlayMaps = {
+						"Προβλήματα σκουπιδιών": garbageMarkers,
+						"Προβλήματα φωτισμού": lightingMarkers,
+						"Προβλήματα ύδρευσης": plumpingMarkers,
+						"Προβλήματα οδοστρώματος": roadConstMarkers,
+						"Ανάδραση πολιτών": smiliesMarkers
+					};	
 							
+					L.control.layers(null, overlayMaps).addTo(map);
 
-						//});
-						
-						var overlayMaps = {
-							"Προβλήματα σκουπιδιών": garbageMarkers,
-							"Προβλήματα φωτισμού": lightingMarkers,
-							"Προβλήματα ύδρευσης": plumpingMarkers,
-							"Προβλήματα οδοστρώματος": roadConstMarkers,
-							"Ανάδραση πολιτών": smiliesMarkers
-						};	
-							
-						L.control.layers(null, overlayMaps).addTo(map);
-
-					/*}
-					
-				});
-		*/
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-					
 				}
 			});
 			
