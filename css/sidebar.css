@@ -60,3 +60,7 @@ body {
     color: #fff;
     background: none;
 }
+
+.leaflet-control-layers {
+display: none;
+}
