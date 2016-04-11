@@ -61,28 +61,28 @@
                         </a>
                     </div>
 
-                    <div class="navigation-items"> <a class="hover">Προβλήματα Πολιτών</a>
-                      <ul ng-model="searchIssue" bs-radio-group>
+                    <div class="navigation-items text-center"> <a>Προβλήματα Πολιτών</a>
+                      <div ng-model="searchIssue" class="text-center" bs-radio-group>
                           <label class="btn btn-default"><i class="fa fa-trash-o"></i> <input type="radio" class="btn btn-default" value="garbage"> Σκουπίδια</label><br />
                           <label class="btn btn-default"><i class="fa fa-lightbulb-o"></i> <input type="radio" class="btn btn-default" value="lighting"> Φωτισμός</label><br />
                           <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="radio" class="btn btn-default" value="plumbing"> Ύδρευση</label><br />
                           <label class="btn btn-default"><i class="fa fa-road"></i> <input type="radio" class="btn btn-default" value="road-contructor"> Οδόστρωμα</label><br />
-                      </ul>
+                      </div>
                     </div>
 
                       <hr>
 
-                      <div class="navigation-items"> <a>Ανάδραση Πολιτών</a>
-                        <ul ng-model="searchIssue" bs-radio-group >
+                      <div class="navigation-items text-center"> <a>Ανάδραση Πολιτών</a>
+                        <div ng-model="searchIssue" bs-radio-group >
                             <label class="btn btn-default"><i class="fa fa-smile-o"></i> <input type="radio" class="btn btn-default" value="happy"> Θετική</label><br />
                             <label class="btn btn-default"><i class="fa fa-meh-o"></i> <input type="radio" class="btn btn-default" value="neutral"> Ουδέτερη</label><br />
                             <label class="btn btn-default"><i class="fa fa-frown-o"></i> <input type="radio" class="btn btn-default" value="angry"> Αρνητική</label><br />
-                        </ul>
+                        </div>
                       </div>
 
                       <hr>
 
-                      <div class="navigation-items"><a> Ημερομηνία Συμβάντος </a>
+                      <div class="navigation-items text-center"><a> Ημερομηνία Συμβάντος </a>
                           <div class="form-group col-md-12 text-center">
                             <i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i>
                             <input type="text" class="form-control text-center" ng-model="startISOdate" data-max-date="today" placeholder="Από" data-date-format="dd-MM-yyyy" autoclose="true" bs-datepicker>
