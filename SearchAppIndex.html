@@ -16,9 +16,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
         <script src="https://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
 
+        <!-- angular strap -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
 
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-        <!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" /> -->
         <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
 
         <!-- Map dependancies -->
@@ -47,62 +49,74 @@
 
 
     </head>
-    <body ng-app="searchApp" >
-
+    <body ng-app="searchApp" ng-controller="mainController" >
         <!-- sidebar container -->
-        <div class="container">
-            <div ng-controller="searchController" class="" sidebar-directive="state">
-				<div class="col-md-4">
-                <a href="#" id="navigation-toggle" ng-click="toggleState()"><span class="glyphicon glyphicon-menu-hamburger" /></a>
-                <ul class="navigation">
-                    <li class="sidebar-brand">
-                        <a href="#">
-                          <a href="http://sense.city"><i class="ion-ios-analytics-outline"></i> sense.city
-                          <sup style="font-size: 55%">beta</sup></a>
+        <div class="container" >
+            <div class="sidebar" sidebar-directive="state" >
+                <a href="#" id="navigation-toggle" ng-mouseenter="toggleState()"><span class="glyphicon glyphicon-menu-hamburger" /></a>
+                <div class="navigation" >
+                    <div class="sidebar-brand">
+                        <a href="http://sense.city"><i class="ion-ios-analytics-outline"></i> sense.city
+                        <sup style="font-size: 55%">beta</sup>
                         </a>
-                    </li>
+                    </div>
 
-                    
-                        <li class="navigation-items"> <a href="/">Προβλήματα Πολιτών</a> </li>
-                          <ul>
-                              <input type="radio" ng-model="searchIssue" value="garbage"> Σκουπιδιών<br />
-                              <input type="radio" ng-model="searchIssue" value="lighting"> Φωτισμού<br />
-                              <input type="radio" ng-model="searchIssue" value="plumbing"> Ύδρευσης<br />
-                              <input type="radio" ng-model="searchIssue" value="road-contructor"> Οδοστρώματος<br />
-                          </ul>
+                    <div class="navigation-items"> <a class="hover">Προβλήματα Πολιτών</a>
+                      <ul ng-model="searchIssue" bs-radio-group>
+                          <label class="btn btn-default"><i class="fa fa-trash-o"></i> <input type="radio" class="btn btn-default" value="garbage"> Σκουπίδια</label><br />
+                          <label class="btn btn-default"><i class="fa fa-lightbulb-o"></i> <input type="radio" class="btn btn-default" value="lighting"> Φωτισμός</label><br />
+                          <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="radio" class="btn btn-default" value="plumbing"> Ύδρευση</label><br />
+                          <label class="btn btn-default"><i class="fa fa-road"></i> <input type="radio" class="btn btn-default" value="road-contructor"> Οδόστρωμα</label><br />
+                      </ul>
+                    </div>
 
-                        <li class="navigation-items"> <a href="/">Ανάδραση Πολιτών</a> </li>
-                          <ul>
-                              <input type="radio" ng-model="searchIssue" value="happy"> Χαρούμενος<br />
-                              <input type="radio" ng-model="searchIssue" value="neutral"> Ουδέτερος<br />
-                              <input type="radio" ng-model="searchIssue" value="angry"> Δυσαρεστημένος<br />
-                          </ul>
+                      <hr>
+
+                      <div class="navigation-items"> <a>Ανάδραση Πολιτών</a>
+                        <ul ng-model="searchIssue" bs-radio-group >
+                            <label class="btn btn-default"><i class="fa fa-smile-o"></i> <input type="radio" class="btn btn-default" value="happy"> Θετική</label><br />
+                            <label class="btn btn-default"><i class="fa fa-meh-o"></i> <input type="radio" class="btn btn-default" value="neutral"> Ουδέτερη</label><br />
+                            <label class="btn btn-default"><i class="fa fa-frown-o"></i> <input type="radio" class="btn btn-default" value="angry"> Αρνητική</label><br />
+                        </ul>
+                      </div>
+
+                      <hr>
+
+                      <div class="navigation-items"><a> Ημερομηνία Συμβάντος </a>
+                          <div class="form-group col-md-12 text-center">
+                            <i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i>
+                            <input type="text" class="form-control text-center" ng-model="startISOdate" data-max-date="today" placeholder="Από" data-date-format="dd-MM-yyyy" autoclose="true" bs-datepicker>
+                            <input type="text" class="form-control text-center" ng-model="endISOdate" data-min-date="{{startISOdate}}" data-max-date="today" placeholder="Έως" data-date-format="dd-MM-yyyy" autoclose="true" bs-datepicker>
+                          </div>
+                      </div>
 
 
-                        <li class="navigation-items"> <a href="/">Ημερομηνία Συμβάντος</a> </li>
-                          <ul>
-                              <label for="startdate">Από:</label>
-                              <input type="date" id="startdate" name="input" ng-model="startISOdate" placeholder="yyyy-MM-dd"><br />
-                              <label for="enddate">Μέχρι:</label>
-                              <input type="date" id="enddate" name="input" ng-model="endISOdate" placeholder="yyyy-MM-dd"><br />
-                          </ul><br />
-                          DEBUGGING:<br />
-                          $scope.searchIssue = {{searchIssue}}<br />
-                          $scope.startdate = {{startdate}}<br />
-                          $scope.enddate = {{enddate}}<br />
-                        <button type="button" class="btn btn-primary" ng-click="submit()">Αναζήτηση</button>
-					
-                </ul>
-				</div>
-				<div class="col-md-8">
-					
-					<leaflet lf-center="center" layers="layers" markers="markers" width="90%" height="550px"></leaflet>
-				</div>
+                      <div class="text-center"><button type="button" class="btn btn-primary" ng-click="submit()">Αναζήτηση</button></div><br />
+
+
+
+                </div>
             </div>
-			
-			
         </div>
 
+
+        <!-- </section> -->
+        <div class="container" >
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <br />
+                    <h2 class="margin-top-0 text-primary text-center">Αναζήτηση Συμβάντων</h2>
+                    <br>
+                    <p class="text-faded text-center">
+                        Δείτε με μια ματιά εδώ τι έχουν αναφέρει οι υπόλοιποι πολίτες και ποια είναι τα τελευταία συμβάντα στη πόλη!
+                    </p>
+            <div>
+              <leaflet lf-center="center" layers="layers" markers="markers" width="95%" height="550px" style="color:black;"></leaflet>
+            </div>
+            <br>
+                </div>
+            </div>
+        </div>
 
       <!-- </section> -->
 
