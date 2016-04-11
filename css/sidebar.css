@@ -4,7 +4,7 @@ body {
 .sidebar {
     position : absolute;
     top : 0;
-    left : -300px;;
+    left : -235px;;
     transition : 100ms left;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -13,7 +13,7 @@ body {
 }
 #navigation-toggle {
         position : absolute;
-        left : 300px;
+        left : 235px;
         /*background : rgba(3,159,244,.95);*/
         background : #9c27b0;
         color : white;
@@ -37,7 +37,7 @@ body {
     line-height : 2em;
     text-decoration : none;
     padding : 10px 30px;
-    width : 300px;
+    width : 235px;
 
 }
 .navigation-items a:hover {
