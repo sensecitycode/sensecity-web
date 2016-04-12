@@ -146,7 +146,7 @@
 						case "lighting":
 							issue_name_new = "Πρόβλημα Φωτισμού";
 							break;
-						case "plumping":
+						case "plumbing":
 							issue_name_new = "Προβλήματα ύδρευσης";
 							break;
 						case "road-contructor":
