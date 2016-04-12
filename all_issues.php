@@ -202,7 +202,7 @@
 											issue = 'Πρόβλημα Φωτισμού';
 											break;
 										case 'plumbing':
-											issue = 'Πρόβλημα Καθαριότητας';
+											issue = 'Προβλήματα ύδρευσης';
 											break;
 										case 'road-contructor':
 											issue = 'Πρόβλημα Δρόμου/Πεζοδρομίου';

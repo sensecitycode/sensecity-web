@@ -141,16 +141,16 @@
 					
 					switch(issue_name){
 						case "garbage":
-							issue_name_new = "Προβλήματα σκουπιδιών";
+							issue_name_new = "Πρόβλημα Καθαριότητας";
 							break;
 						case "lighting":
-							issue_name_new = "Προβλήματα φωτισμού";
+							issue_name_new = "Πρόβλημα Φωτισμού";
 							break;
 						case "plumping":
 							issue_name_new = "Προβλήματα ύδρευσης";
 							break;
 						case "road-contructor":
-							issue_name_new = "Προβλήματα οδοστρώματος";
+							issue_name_new = "Πρόβλημα Δρόμου/Πεζοδρομίου";
 							break;
 						default:
 							break;
