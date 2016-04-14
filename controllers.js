@@ -143,7 +143,7 @@ appControllers.controller('mainController', ['$scope','$location','APIEndPointSe
           console.log($scope.searchissues);
           $scope.markers = [];
           angular.forEach($scope.searchissues, function(value,key) {
-              var issueid = value._id;
+              var issueid = value._id; 
               var issuelink = "http://sense.city/issuemap.php?issue_id="+issueid;
               var positionlat = value.loc.coordinates[1];
               var positionlon = value.loc.coordinates[0];
