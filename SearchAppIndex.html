@@ -53,7 +53,7 @@
         <!-- sidebar container -->
         <div class="container" >
             <div class="sidebar" sidebar-directive="state" >
-                <a href="#" id="navigation-toggle" ng-mouseenter="toggleState()"><span class="glyphicon glyphicon-menu-hamburger" /></a>
+                <a href="#" id="navigation-toggle" ng-click="toggleState()"><span class="glyphicon glyphicon-menu-hamburger" /></a>
                 <div class="navigation" >
                     <div class="sidebar-brand">
                         <a href="http://sense.city"><i class="ion-ios-analytics-outline"></i> sense.city
@@ -62,21 +62,21 @@
                     </div>
 
                     <div class="navigation-items text-center"> <a>Προβλήματα Πολιτών</a>
-                      <div ng-model="searchIssue" class="text-center" bs-radio-group>
-                          <label class="btn btn-default"><i class="fa fa-trash-o"></i> <input type="radio" class="btn btn-default" value="garbage"> Σκουπίδια</label><br />
-                          <label class="btn btn-default"><i class="fa fa-lightbulb-o"></i> <input type="radio" class="btn btn-default" value="lighting"> Φωτισμός</label><br />
-                          <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="radio" class="btn btn-default" value="plumbing"> Ύδρευση</label><br />
-                          <label class="btn btn-default"><i class="fa fa-road"></i> <input type="radio" class="btn btn-default" value="road-contructor"> Οδόστρωμα</label><br />
+                      <div ng-model="searchIssue" class="text-center" bs-checkbox-group>
+                          <label class="btn btn-default"><i class="fa fa-trash-o"></i> <input type="checkbox" class="btn btn-default" value="garbage" > Σκουπίδια</label><br />
+                          <label class="btn btn-default"><i class="fa fa-lightbulb-o"></i> <input type="checkbox" class="btn btn-default" value="lighting"> Φωτισμός</label><br />
+                          <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="checkbox" class="btn btn-default" value="plumbing"> Ύδρευση</label><br />
+                          <label class="btn btn-default"><i class="fa fa-road"></i> <input type="checkbox" class="btn btn-default" value="roadcontructor"> Οδόστρωμα</label><br />
                       </div>
                     </div>
 
                       <hr>
 
                       <div class="navigation-items text-center"> <a>Ανάδραση Πολιτών</a>
-                        <div ng-model="searchIssue" bs-radio-group >
-                            <label class="btn btn-default"><i class="fa fa-smile-o"></i> <input type="radio" class="btn btn-default" value="happy"> Θετική</label><br />
-                            <label class="btn btn-default"><i class="fa fa-meh-o"></i> <input type="radio" class="btn btn-default" value="neutral"> Ουδέτερη</label><br />
-                            <label class="btn btn-default"><i class="fa fa-frown-o"></i> <input type="radio" class="btn btn-default" value="angry"> Αρνητική</label><br />
+                        <div ng-model="searchIssue" bs-checkbox-group >
+                            <label class="btn btn-default"><i class="fa fa-smile-o"></i> <input type="checkbox" class="btn btn-default" value="happy"> Θετική</label><br />
+                            <label class="btn btn-default"><i class="fa fa-meh-o"></i> <input type="checkbox" class="btn btn-default" value="neutral"> Ουδέτερη</label><br />
+                            <label class="btn btn-default"><i class="fa fa-frown-o"></i> <input type="checkbox" class="btn btn-default" value="angry"> Αρνητική</label><br />
                         </div>
                       </div>
 
@@ -91,8 +91,8 @@
                       </div>
 
 
-                      <div class="text-center"><button type="button" class="btn btn-primary" ng-click="submit()">Αναζήτηση</button></div><br />
-
+                      <div class="text-center"><button type="button" class="btn btn-primary" ng-click="submit()">Αναζήτηση</button></div>
+                      <div class="text-center"><button type="button" class="btn btn-primary" ng-click="reset()">Επαναφορά</button></div><br />
 
 
                 </div>
