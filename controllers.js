@@ -140,9 +140,11 @@ appControllers.controller('mainController', ['$scope','$location','APIEndPointSe
         $scope.params = $location.search() ;
 
         $scope.searchissues = DisplayIssuesService.query($scope.params, function(){
-          // console.log($scope.searchissues);
+          console.log($scope.searchissues);
           $scope.markers = [];
           angular.forEach($scope.searchissues, function(value,key) {
+              var issueid = value._id; 
+              var issuelink = "http://sense.city/issuemap.php?issue_id="+issueid;
               var positionlat = value.loc.coordinates[1];
               var positionlon = value.loc.coordinates[0];
               var issue = value.issue;
@@ -158,7 +160,7 @@ appControllers.controller('mainController', ['$scope','$location','APIEndPointSe
               }else{
                 message = 'Μη διαθέσιμη περιγραφή';
               }
-              var marker = {"layer":""+layer+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+""};
+              var marker = {"layer":""+layer+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+"<br><a href="+issuelink+">Δες με!</a>"};
               this.push(marker);
           }, $scope.markers);
         });
