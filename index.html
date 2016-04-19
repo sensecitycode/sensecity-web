@@ -469,7 +469,7 @@
 					crossDomain: true,
 					type:"GET",
 					/*url: "http://api.sense.city:3000/api/issue?startdate="+sart_date+"&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1",*/
-					url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1",
+					url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1&image_field=0",
 					dataType: "json",                
 					success: function(msg){
 						console.log(msg);
@@ -538,7 +538,7 @@
 								}
 								else{
 									//marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
-									//marker.bindPopup(map_images(obj._id));
+									marker.bindPopup(map_images(obj._id));
 								}
 							}else if (obj.issue === 'road-contructor') 
 							{
@@ -715,9 +715,19 @@
 				
 				var issue_id;
 				
-				$("div.leaflet-clickable").click(function() {
-					alert('Hello from Toronto!');
-				});
+				function map_images(issue_id){
+					$.ajax({
+							crossDomain: true,
+							type:"GET",
+							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1",
+							dataType: "json",                
+							success: function(msg){
+							
+								console.log(msg);
+							}
+							
+						});
+				}
 
 			</script>
 			
