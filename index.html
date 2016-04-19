@@ -538,14 +538,7 @@
 								}
 								else{
 									//marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
-									marker.bindPopup($.ajax({
-										crossDomain: true,
-										type:"GET",					
-										url: "http://api.sense.city:3005/api/issue/"+obj._id,
-										dataType: "json",                
-										success: function(msg){
-											console.log(msg);
-										}}));
+									marker.bindPopup(img_issue(obj._id));
 								}
 							}else if (obj.issue === 'road-contructor') 
 							{
@@ -620,6 +613,21 @@
 					
 				});
 		
+				var issue_id;
+				
+				function img_issue(issue_id){
+					$.ajax({
+						crossDomain: true,
+						type:"GET",					
+						url: "http://api.sense.city:3005/api/issue/"+obj._id,
+						dataType: "json",                
+						success: function(msg){
+							console.log(msg);
+						}
+					});
+				}
+				
+				
 				$('a.page-scroll').bind('click', function(event) {
 					var $anchor = $(this);
 					$('html, body').stop().animate({
