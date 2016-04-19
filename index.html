@@ -537,7 +537,15 @@
 									marker.bindPopup(obj.value_desc);
 								}
 								else{
-									marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
+									//marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
+									marker.bindPopup($.ajax({
+										crossDomain: true,
+										type:"GET",					
+										url: "http://api.sense.city:3005/api/issue/"+obj._id,
+										dataType: "json",                
+										success: function(msg){
+											console.log(msg);
+										}}));
 								}
 							}else if (obj.issue === 'road-contructor') 
 							{
