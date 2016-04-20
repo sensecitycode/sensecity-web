@@ -538,9 +538,8 @@
 								else{
 									//marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
 									//marker.bindPopup(img_issue(obj._id));
-									map.on('popupopen', function (e) {
-										alert("dfgdfgfdg");
-									});
+									marker.on('click', onClick);
+										
 								}
 							}else if (obj.issue === 'road-contructor') 
 							{
@@ -626,7 +625,10 @@
 				
 				
 				
-				
+				function onClick(e) {
+					console.log(this.options);
+					window.open(this.options);
+				}
 		
 				var issue_id;
 				
