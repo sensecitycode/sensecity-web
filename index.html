@@ -516,10 +516,26 @@
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
 								if(obj.image_name === "undefined" || obj.image_name == null){
-									marker.bindPopup(obj.value_desc);
+									marker.bindPopup("Loading...");
+									marker.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
 								}
 								else{
-									marker.bindPopup(obj.value_desc+"<br> <br><img src=\""+obj.image_name+"\" width=\"100\" />");
+									marker.bindPopup("Loading...");
+									marker.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
 								}
 								lightingMarkers.addLayer(marker);			
 							}else if (obj.issue === 'garbage') 
@@ -539,7 +555,7 @@
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3005/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
-											popup.setContent("<h3>"+obj.value_desc+"</h3><img src=\""+data+"\" width=\"100\" />");
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
 										});
 									});
@@ -551,7 +567,7 @@
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3005/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
-											popup.setContent("<h3>"+obj.value_desc+"</h3><img src=\""+data+"\" width=\"100\" />");
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
 										});
 									});
@@ -569,10 +585,26 @@
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								roadConstMarkers.addLayer(marker);	
 								if(obj.image_name === "undefined" || obj.image_name == null){
-									marker.bindPopup(obj.value_desc);
+									marker.bindPopup("Loading...");
+									marker.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
 								}
 								else{
-									marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
+									marker.bindPopup("Loading...");
+									marker.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
 								}
 							}else if (obj.issue === 'plumping') 
 							{
@@ -586,10 +618,26 @@
 								plumpingMarkers.addLayer(marker);
 								
 								if(obj.image_name === "undefined" || obj.image_name == null){
-									marker.bindPopup(obj.value_desc);
+									marker.bindPopup("Loading...");
+									marker.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
 								}
 								else{
-									marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
+									marker.bindPopup("Loading...");
+									marker.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
 								}
 							}else
 							{	
