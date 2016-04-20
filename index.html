@@ -534,11 +534,27 @@
 								garbageMarkers.addLayer(marker);		
 								if(obj.image_name === "undefined" || obj.image_name == null){
 									//marker.bindPopup(obj.value_desc);
-									marker.bindPopup(popupContent(obj._id,obj.value_desc));
+									marker.bindPopup("Loading...");
+									marker.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									}
 								}
 								else{
 									//marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
-									marker.bindPopup(popupContent(obj._id,obj.value_desc));
+									marker.bindPopup("Loading...");
+									marker.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									}
 									
 										
 								}
