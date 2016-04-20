@@ -536,8 +536,11 @@
 									marker.bindPopup(obj.value_desc);
 								}
 								else{
-									marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
+									//marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
 									//marker.bindPopup(img_issue(obj._id));
+									map.on('popupopen', function (e) {
+										alert("dfgdfgfdg");
+									});
 								}
 							}else if (obj.issue === 'road-contructor') 
 							{
@@ -610,7 +613,7 @@
 						
 						
 						$(".leaflet-clickable").click(function(){
-							alert('sdfsd');					
+							alert($('#txt_name').val(););					
 						});
 
 					}
