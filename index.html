@@ -628,8 +628,16 @@
 				
 				var popupContent = function(id, desc) {                    
                     
-                        return "<h2>" + id + "</h2>"+desc;
-                    
+					$.ajax({
+						crossDomain: true,
+						type:"GET",
+						url: "http://api.sense.city:3005/api/issue/"+id,
+						dataType: "json",                
+						success: function(msg){
+							console.log(msg);
+							return "<h2>" + desc + "</h2><img src=\""+msg+"\" width=\"100\" />";
+						}
+					});
                 }
 				
 				
