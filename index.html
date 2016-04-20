@@ -533,7 +533,8 @@
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 								garbageMarkers.addLayer(marker);		
 								if(obj.image_name === "undefined" || obj.image_name == null){
-									marker.bindPopup(obj.value_desc);
+									//marker.bindPopup(obj.value_desc);
+									marker.bindPopup(popupContent(obj.id,obj.value_desc));
 								}
 								else{
 									//marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
