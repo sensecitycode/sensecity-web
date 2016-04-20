@@ -539,7 +539,7 @@
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3005/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
-											popup.setContent("<img src=\""+data+"\" width=\"100\" />");
+											popup.setContent("<h3>"+obj.value_desc+"</h3><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
 										});
 									});
@@ -551,7 +551,7 @@
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3005/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
-											popup.setContent("<img src=\""+data+"\" width=\"100\" />");
+											popup.setContent("<h3>"+obj.value_desc+"</h3><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
 										});
 									});
