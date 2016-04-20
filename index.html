@@ -537,8 +537,8 @@
 								}
 								else{
 									//marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
-									//marker.bindPopup(img_issue(obj._id));
-									marker.on('click', onClick);
+									marker.bindPopup(popupContent(obj.id,obj.value_desc));
+									
 										
 								}
 							}else if (obj.issue === 'road-contructor') 
@@ -625,11 +625,15 @@
 				
 				
 				
-				function onClick(e) {
-					console.log(this.options);
-					window.open(this.options);
-				}
-		
+				var popupContent = function(id, desc) {                    
+                    
+                        return "<h2>" + id + "</h2>"+desc;
+                    
+                }
+				
+				
+				
+				
 				var issue_id;
 				
 				function img_issue(issue_id){
