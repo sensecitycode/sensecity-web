@@ -610,7 +610,14 @@
 						L.control.layers(null, overlayMaps).addTo(map);
 
 					}
+					$( document ).ready(function() {		
+							$(".leaflet-clickable").click(function(){
+						
+								alert('sdfsd');
 					
+							});
+						});
+						
 				});
 				
 				
@@ -726,19 +733,14 @@
 
 								});
 								
+								
 								$('#recent_five').append('<a href="all_issues.php" style="color:#FFFFFF !important;float: right;">Περισσότερα >></a>');
 							}
 							
 						});
 				
 				
-						$( document ).ready(function() {		
-							$(".leaflet-clickable").click(function(){
 						
-								alert('sdfsd');
-					
-							});
-						});
 				
 			</script>
 			
