@@ -519,7 +519,7 @@
 									marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
 										var popup = e.target.getPopup();
-										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
 											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
@@ -530,7 +530,7 @@
 									marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
 										var popup = e.target.getPopup();
-										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
 											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
@@ -553,7 +553,7 @@
 									marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
 										var popup = e.target.getPopup();
-										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
 											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
@@ -565,7 +565,7 @@
 									marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
 										var popup = e.target.getPopup();
-										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
 											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
@@ -588,7 +588,7 @@
 									marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
 										var popup = e.target.getPopup();
-										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
 											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
@@ -599,7 +599,7 @@
 									marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
 										var popup = e.target.getPopup();
-										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
 											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
@@ -621,7 +621,7 @@
 									marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
 										var popup = e.target.getPopup();
-										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
 											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
@@ -632,7 +632,7 @@
 									marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
 										var popup = e.target.getPopup();
-										var url="http://api.sense.city:3005/api/issue/"+obj._id;
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
 											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
@@ -737,7 +737,7 @@
 				$.ajax({
 							crossDomain: true,
 							type:"GET",
-							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=5&list_issue=1",
+							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=5&list_issue=1&image_field=0",
 							dataType: "json",                
 							success: function(msg){								
 								
@@ -753,7 +753,7 @@
 								*/
 								$.each(msg, function(idx, obj) {
 								
-									console.log(obj._id);
+									
 									var positionlat = obj.loc.coordinates[1];
 									var positionlon = obj.loc.coordinates[0];
 									var image_name;
@@ -813,7 +813,7 @@
 										datediff = "πριν από "+Math.floor(seconds/86400)+" μέρες";
 									}
 									
-									$('#recent_five').append('<a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="color: #FFFFFF !important;"><div class="row"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #BFAFAF;  height: 100px;  margin-top: 20px; background-color: #756161;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px" style="max-width: 110px;" /></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px;">'+datediff+'</div><div>'+obj.value_desc+'</div></div></div></div></a>');
+									$('#recent_five').append('<a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="color: #FFFFFF !important;"><div class="row"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #BFAFAF;  height: 100px;  margin-top: 20px; background-color: #756161;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="http://api.sense.city:3000/api/issue/'+bj._id+'" height="90px" style="max-width: 110px;" /></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px;">'+datediff+'</div><div>'+obj.value_desc+'</div></div></div></div></a>');
 
 								});
 								
