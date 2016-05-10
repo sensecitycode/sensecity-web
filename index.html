@@ -464,7 +464,15 @@
 				alert(newdate.getDate());
 				alert(newdate.getDate()-3);
 				*/
-			
+				$.ajax({
+					crossDomain: true,
+					type:"GET",
+					url: "http://api.sense.city:3005/fix_point/21.739491441300000/38.245153028099999/2600/data",
+					dataType: "json",                
+					success: function(msg){
+						console.log(msg);
+					}
+				});
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
