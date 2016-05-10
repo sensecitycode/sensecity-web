@@ -464,13 +464,15 @@
 				alert(newdate.getDate());
 				alert(newdate.getDate()-3);
 				*/
+				var fix_points;
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
 					url: "http://api.sense.city:3005/fix_point/21.739491441300000/38.245153028099999/2600/data",
 					dataType: "json",                
 					success: function(msg){
-						console.log(msg);
+						
+						fix_points=msg;
 					}
 				});
 				$.ajax({
@@ -479,7 +481,7 @@
 					url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1&image_field=0",
 					dataType: "json",                
 					success: function(msg){
-						console.log(msg);
+						console.log(fix_points);
 						
 						//var zoom = 13;
 						//var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
