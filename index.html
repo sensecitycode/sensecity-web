@@ -530,10 +530,10 @@
 									markerColor: 'red'
 								  });
 								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
+								var marker1 = L.marker([positionlat, positionlon], {icon: redMarker});					
 								if(obj.image_name === "undefined" || obj.image_name == null){
-									marker.bindPopup("Loading...");
-									marker.on('click', function(e) {
+									marker1.bindPopup("Loading...");
+									marker1.on('click', function(e) {
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
@@ -543,8 +543,8 @@
 									});
 								}
 								else{
-									marker.bindPopup("Loading...");
-									marker.on('click', function(e) {
+									marker1.bindPopup("Loading...");
+									marker1.on('click', function(e) {
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
@@ -553,7 +553,7 @@
 										});
 									});
 								}
-								lightingMarkers.addLayer(marker);			
+								lightingMarkers.addLayer(marker1);			
 							}else if (obj.issue === 'garbage') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
@@ -562,12 +562,12 @@
 									markerColor: 'red'
 								  });
 								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								garbageMarkers.addLayer(marker);		
+								var marker2 = L.marker([positionlat, positionlon], {icon: redMarker});
+										
 								if(obj.image_name === "undefined" || obj.image_name == null){
 									//marker.bindPopup(obj.value_desc);
-									marker.bindPopup("Loading...");
-									marker.on('click', function(e) {
+									marker2.bindPopup("Loading...");
+									marker2.on('click', function(e) {
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
@@ -578,8 +578,8 @@
 								}
 								else{
 									//marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
-									marker.bindPopup("Loading...");
-									marker.on('click', function(e) {
+									marker2.bindPopup("Loading...");
+									marker2.on('click', function(e) {
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
@@ -587,9 +587,10 @@
 											popup.update();
 										});
 									});
-									
-										
+								
 								}
+								garbageMarkers.addLayer(marker2);
+								
 							}else if (obj.issue === 'road-contructor') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
@@ -598,11 +599,11 @@
 									markerColor: 'red'
 								  });
 								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								roadConstMarkers.addLayer(marker);	
+								var marker3 = L.marker([positionlat, positionlon], {icon: redMarker});
+									
 								if(obj.image_name === "undefined" || obj.image_name == null){
-									marker.bindPopup("Loading...");
-									marker.on('click', function(e) {
+									marker3.bindPopup("Loading...");
+									marker3.on('click', function(e) {
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
@@ -612,8 +613,8 @@
 									});
 								}
 								else{
-									marker.bindPopup("Loading...");
-									marker.on('click', function(e) {
+									marker3.bindPopup("Loading...");
+									marker3.on('click', function(e) {
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
@@ -622,6 +623,8 @@
 										});
 									});
 								}
+								roadConstMarkers.addLayer(marker3);
+								
 							}else if (obj.issue === 'plumping') 
 							{
 								var redMarker = L.AwesomeMarkers.icon({
@@ -630,12 +633,12 @@
 									markerColor: 'red'
 								  });
 								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-								plumpingMarkers.addLayer(marker);
+								var marker4 = L.marker([positionlat, positionlon], {icon: redMarker});
+								
 								
 								if(obj.image_name === "undefined" || obj.image_name == null){
-									marker.bindPopup("Loading...");
-									marker.on('click', function(e) {
+									marker4.bindPopup("Loading...");
+									marker4.on('click', function(e) {
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
@@ -645,8 +648,8 @@
 									});
 								}
 								else{
-									marker.bindPopup("Loading...");
-									marker.on('click', function(e) {
+									marker4.bindPopup("Loading...");
+									marker4.on('click', function(e) {
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3000/api/issue/"+obj._id;
 										$.get(url).done(function(data) {
@@ -655,6 +658,8 @@
 										});
 									});
 								}
+								
+								plumpingMarkers.addLayer(marker4);
 							}else
 							{	
 								var ic = 'smile-o';
