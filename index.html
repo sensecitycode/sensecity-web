@@ -670,14 +670,14 @@
 										var color_='orange-dark';
 								}
 										
-								var redMarker = L.AwesomeMarkers.icon({
+								var darkgreenMarker = L.AwesomeMarkers.icon({
 									icon: ic,
 									prefix: 'fa',
 									markerColor: color_,
 									iconColor: 'darkgreen'
 								  });
 								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+								var marker = L.marker([positionlat, positionlon], {icon: darkgreenMarker});
 								//marker.bindPopup("Garbage"+obj.image_name);
 								smiliesMarkers.addLayer(marker);
 							}
@@ -706,8 +706,7 @@
 					dataType: "json",                
 					success: function(msg){
 						
-						$.each(msg, function(idx, obj) {
-							console.log(obj);
+						$.each(msg, function(idx, obj) {							
 						
 							var positionlat = obj.loc.coordinates[1];
 							var positionlon = obj.loc.coordinates[0];
@@ -717,7 +716,8 @@
 								var yelMarker = L.AwesomeMarkers.icon({
 									icon: 'lightbulb-o',
 									prefix: 'fa',
-									markerColor: 'yellow'
+									markerColor: 'yellow',
+									shape:'penta'
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: yelMarker});					
@@ -742,7 +742,8 @@
 								var garbMarker = L.AwesomeMarkers.icon({
 									icon: 'trash-o',
 									prefix: 'fa',
-									markerColor: 'green-dark'
+									markerColor: 'green-dark',
+									shape:'penta'
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: garbMarker});
