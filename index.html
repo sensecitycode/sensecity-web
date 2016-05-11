@@ -444,6 +444,15 @@
 	<script src="js/leaflet.awesome-markers.js"></script>
     <script src="js/scripts.js"></script>
 	
+	
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />
+ 
+	<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js'></script>
+	
+	
+	
+	
 	 <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -471,13 +480,13 @@
 						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 						maxZoom: 18, }).addTo(map);
 						
-						var garbageMarkers = L.layerGroup().addTo(map);
-						var lightingMarkers = L.layerGroup().addTo(map);
-						var plumpingMarkers = L.layerGroup().addTo(map);
-						var roadConstMarkers = L.layerGroup().addTo(map);
-						var smiliesMarkers = L.layerGroup().addTo(map);
-						var kadoiMarkers = L.layerGroup().addTo(map);
-						var fotistikoMarkers = L.layerGroup().addTo(map);
+						var garbageMarkers = L.markerClusterGroup().addTo(map);
+						var lightingMarkers = L.markerClusterGroup().addTo(map);
+						var plumpingMarkers = L.markerClusterGroup().addTo(map);
+						var roadConstMarkers = L.markerClusterGroup().addTo(map);
+						var smiliesMarkers = L.markerClusterGroup().addTo(map);
+						var kadoiMarkers = L.markerClusterGroup().addTo(map);
+						var fotistikoMarkers = L.markerClusterGroup().addTo(map);
 						
 						
 				
