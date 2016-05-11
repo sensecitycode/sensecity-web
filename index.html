@@ -464,18 +464,23 @@
 				alert(newdate.getDate());
 				alert(newdate.getDate()-3);
 				*/
-				var fix_points=new Object();
 				
-				$.ajax({
-					crossDomain: true,
-					type:"GET",
-					url: "http://api.sense.city:3005/fix_point/21.739491441300000/38.245153028099999/2600/data",
-					dataType: "json",                
-					success: function(msg){
+				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 12);
+			
+						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+						maxZoom: 18, }).addTo(map);
 						
-						fix_points=msg;
-					}
-				});
+						var garbageMarkers = L.layerGroup().addTo(map);
+						var lightingMarkers = L.layerGroup().addTo(map);
+						var plumpingMarkers = L.layerGroup().addTo(map);
+						var roadConstMarkers = L.layerGroup().addTo(map);
+						var smiliesMarkers = L.layerGroup().addTo(map);
+						var kadoiMarkers = L.layerGroup().addTo(map);
+						var fotistikoMarkers = L.layerGroup().addTo(map);
+						
+						
+				
 				
 				$.ajax({
 					crossDomain: true,
@@ -483,8 +488,7 @@
 					url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1&image_field=0",
 					dataType: "json",                
 					success: function(msg){
-						console.log("------------------fix_points----------------");
-						console.log(fix_points);
+						
 						
 						//var zoom = 13;
 						//var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
@@ -500,17 +504,7 @@
 
 						
 						
-						var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 12);
-			
-						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-						maxZoom: 18, }).addTo(map);
 						
-						var garbageMarkers = L.layerGroup().addTo(map);
-						var lightingMarkers = L.layerGroup().addTo(map);
-						var plumpingMarkers = L.layerGroup().addTo(map);
-						var roadConstMarkers = L.layerGroup().addTo(map);
-						var smiliesMarkers = L.layerGroup().addTo(map);
 						
 						//map.addLayer(garbageMarkers);
 						//map.addLayer(lightingMarkers);
@@ -676,8 +670,49 @@
 							}
 							
 
+						
 						});
 						
+						
+						var overlayMaps = {
+							"Προβλήματα σκουπιδιών": garbageMarkers,
+							"Προβλήματα φωτισμού": lightingMarkers,
+							"Προβλήματα ύδρευσης": plumpingMarkers,
+							"Προβλήματα οδοστρώματος": roadConstMarkers,
+							"Ανάδραση πολιτών": smiliesMarkers,
+							"Κάδοι": fotistiko,
+							"Φωτισμός": garbage
+						};	
+							
+						//L.control.layers(null, overlayMaps).addTo(map);
+						
+						
+						
+						
+
+						
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+						
+						/*
 						var overlayMaps = {
 							"Προβλήματα σκουπιδιών": garbageMarkers,
 							"Προβλήματα φωτισμού": lightingMarkers,
@@ -687,6 +722,9 @@
 						};	
 							
 						L.control.layers(null, overlayMaps).addTo(map);
+						*/
+						
+						
 						
 						/*
 						$(".leaflet-clickable").click(function(){
@@ -700,6 +738,102 @@
 					
 						
 				});
+				
+				
+				
+				
+				$.ajax({
+					crossDomain: true,
+					type:"GET",
+					url: "http://api.sense.city:3005/fix_point/21.739491441300000/38.245153028099999/2600/data",
+					dataType: "json",                
+					success: function(msg){
+					
+						//console.log("------------------fix_points----------------");
+						//console.log(msg);
+					/*
+						var fotistiko = L.layerGroup().addTo(map);
+						var garbage = L.layerGroup().addTo(map);
+						*/
+						
+						$.each(msg, function(idx, obj) {
+							console.log(obj);
+						
+							var positionlat = obj.loc.coordinates[1];
+							var positionlon = obj.loc.coordinates[0];
+							
+							if (obj.type === 'fotistiko') 
+							{
+								var redMarker = L.AwesomeMarkers.icon({
+									icon: 'lightbulb-o',
+									prefix: 'fa',
+									markerColor: 'orange'
+								  });
+								  
+								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
+								
+									marker.bindPopup("Loading...");
+									marker.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
+								
+								
+								fotistikoMarkers.addLayer(marker);	
+								
+							}
+
+							if (obj.type === 'garbage') 
+							{
+								var redMarker = L.AwesomeMarkers.icon({
+									icon: 'trash-o',
+									prefix: 'fa',
+									markerColor: 'green'
+								  });
+								  
+								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+								//kadoiMarkers.addLayer(marker);		
+								
+									//marker.bindPopup(obj.value_desc);
+									marker.bindPopup("Loading...");
+									marker.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
+								
+								
+								kadoiMarkers.addLayer(marker);
+							}
+							
+							
+							
+						});
+						
+						var overlayMaps = {
+							"Προβλήματα σκουπιδιών": garbageMarkers,
+							"Προβλήματα φωτισμού": lightingMarkers,
+							"Προβλήματα ύδρευσης": plumpingMarkers,
+							"Προβλήματα οδοστρώματος": roadConstMarkers,
+							"Ανάδραση πολιτών": smiliesMarkers,
+							"Κάδοι": fotistiko,
+							"Φωτισμός": garbage
+						};	
+							
+						L.control.layers(null, overlayMaps).addTo(map);
+					}
+				});
+				
+				
+
+				
 				
 				/*
 				
