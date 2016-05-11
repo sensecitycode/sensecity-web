@@ -674,63 +674,7 @@
 						});
 						
 						
-						var overlayMaps = {
-							"Προβλήματα σκουπιδιών": garbageMarkers,
-							"Προβλήματα φωτισμού": lightingMarkers,
-							"Προβλήματα ύδρευσης": plumpingMarkers,
-							"Προβλήματα οδοστρώματος": roadConstMarkers,
-							"Ανάδραση πολιτών": smiliesMarkers,
-							"Κάδοι": fotistiko,
-							"Φωτισμός": garbage
-						};	
-							
-						//L.control.layers(null, overlayMaps).addTo(map);
 						
-						
-						
-						
-
-						
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-						
-						/*
-						var overlayMaps = {
-							"Προβλήματα σκουπιδιών": garbageMarkers,
-							"Προβλήματα φωτισμού": lightingMarkers,
-							"Προβλήματα ύδρευσης": plumpingMarkers,
-							"Προβλήματα οδοστρώματος": roadConstMarkers,
-							"Ανάδραση πολιτών": smiliesMarkers
-						};	
-							
-						L.control.layers(null, overlayMaps).addTo(map);
-						*/
-						
-						
-						
-						/*
-						$(".leaflet-clickable").click(function(){
-												
-						});
-						*/
 						
 					}
 						
@@ -748,13 +692,6 @@
 					url: "http://api.sense.city:3005/fix_point/21.739491441300000/38.245153028099999/2600/data",
 					dataType: "json",                
 					success: function(msg){
-					
-						//console.log("------------------fix_points----------------");
-						//console.log(msg);
-					/*
-						var fotistiko = L.layerGroup().addTo(map);
-						var garbage = L.layerGroup().addTo(map);
-						*/
 						
 						$.each(msg, function(idx, obj) {
 							console.log(obj);
@@ -772,7 +709,7 @@
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
 								
-									marker.bindPopup("Loading...");
+									/*marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3000/api/issue/"+obj._id;
@@ -780,7 +717,7 @@
 											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
 										});
-									});
+									});*/
 								
 								
 								fotistikoMarkers.addLayer(marker);	
@@ -799,7 +736,7 @@
 								//kadoiMarkers.addLayer(marker);		
 								
 									//marker.bindPopup(obj.value_desc);
-									marker.bindPopup("Loading...");
+									/*marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
 										var popup = e.target.getPopup();
 										var url="http://api.sense.city:3000/api/issue/"+obj._id;
@@ -807,7 +744,7 @@
 											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
 											popup.update();
 										});
-									});
+									});*/
 								
 								
 								kadoiMarkers.addLayer(marker);
@@ -817,59 +754,21 @@
 							
 						});
 						
-						var overlayMaps = {
-							"Προβλήματα σκουπιδιών": garbageMarkers,
-							"Προβλήματα φωτισμού": lightingMarkers,
-							"Προβλήματα ύδρευσης": plumpingMarkers,
-							"Προβλήματα οδοστρώματος": roadConstMarkers,
-							"Ανάδραση πολιτών": smiliesMarkers,
-							"Κάδοι": fotistiko,
-							"Φωτισμός": garbage
-						};	
-							
-						L.control.layers(null, overlayMaps).addTo(map);
+						
 					}
 				});
 				
-				
-
-				
-				
-				/*
-				
-				var popupContent = function(id, desc) {                    
-                    alert(id);
-					$.ajax({
-						crossDomain: true,
-						type:"GET",
-						url: "http://api.sense.city:3005/api/issue/"+id,
-						dataType: "json",                
-						success: function(msg){
-							alert("gfsd");
-							console.log(msg);
-							return "<h2>" + desc + "</h2><img src=\""+msg+"\" width=\"100\" />";
-						}
-					});
-                }
-				
-				
-				
-				
-				var issue_id;
-				
-				function img_issue(issue_id){
-					
-					$.ajax({
-						crossDomain: true,
-						type:"GET",					
-						url: "http://api.sense.city:3005/api/issue/"+issue_id,
-						dataType: "json",                
-						success: function(msg){
-							console.log(msg);
-						}
-					});
-				}*/
-				
+				var overlayMaps = {
+					"Προβλήματα σκουπιδιών": garbageMarkers,
+					"Προβλήματα φωτισμού": lightingMarkers,
+					"Προβλήματα ύδρευσης": plumpingMarkers,
+					"Προβλήματα οδοστρώματος": roadConstMarkers,
+					"Ανάδραση πολιτών": smiliesMarkers,
+					"Κάδοι": kadoiMarkers,
+					"Φωτισμός": fotistikoMarkers
+				};	
+							
+				L.control.layers(null, overlayMaps).addTo(map);
 				
 				$('a.page-scroll').bind('click', function(event) {
 					var $anchor = $(this);
@@ -891,13 +790,7 @@
 								$('#recent_five').append();
 								var count_pos =0;
 								var position = new Array();
-								/*
-								var positionlat = msg[0].loc.coordinates[1];
-								var positionlon = msg[0].loc.coordinates[0];
-								*/
-								/*console.log(positionlat);
-								console.log(positionlon);
-								*/
+								
 								$.each(msg, function(idx, obj) {
 								
 									
