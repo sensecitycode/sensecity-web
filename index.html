@@ -527,7 +527,7 @@
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'lightbulb-o',
 									prefix: 'fa',
-									markerColor: 'orange'
+									markerColor: 'red'
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
@@ -559,7 +559,7 @@
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'trash-o',
 									prefix: 'fa',
-									markerColor: 'green'
+									markerColor: 'red'
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
@@ -595,7 +595,7 @@
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'road',
 									prefix: 'fa',
-									markerColor: 'cadetblue'
+									markerColor: 'red'
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
@@ -627,7 +627,7 @@
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'umbrella',
 									prefix: 'fa',
-									markerColor: 'darkpuple'
+									markerColor: 'red'
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
@@ -657,19 +657,23 @@
 								}
 							}else
 							{	
-								var ic = 'smile-o'
+								var ic = 'smile-o';
+								var color_='orange';
+								
 								if (obj.issue === 'neutral')
 								{
 										ic = 'meh-o';
+										var color_='orange-dark';
 								} else if (obj.issue === 'angry')
 								{
 										ic = 'frown-o';
+										var color_='green';
 								}
 										
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: ic,
 									prefix: 'fa',
-									markerColor: 'lightgreen',
+									markerColor: color_,
 									iconColor: 'darkgreen'
 								  });
 								  
@@ -713,7 +717,7 @@
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'lightbulb-o',
 									prefix: 'fa',
-									markerColor: 'orange'
+									markerColor: 'yellow'
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
@@ -738,7 +742,7 @@
 								var redMarker = L.AwesomeMarkers.icon({
 									icon: 'trash-o',
 									prefix: 'fa',
-									markerColor: 'green'
+									markerColor: 'green-dark'
 								  });
 								  
 								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
