@@ -658,16 +658,16 @@
 							}else
 							{	
 								var ic = 'smile-o';
-								var color_='orange';
+								var color_='green';
 								
 								if (obj.issue === 'neutral')
 								{
 										ic = 'meh-o';
-										var color_='orange-dark';
+										var color_='orange';
 								} else if (obj.issue === 'angry')
 								{
 										ic = 'frown-o';
-										var color_='green';
+										var color_='orange-dark';
 								}
 										
 								var redMarker = L.AwesomeMarkers.icon({
@@ -714,13 +714,13 @@
 							
 							if (obj.type === 'fotistiko') 
 							{
-								var redMarker = L.AwesomeMarkers.icon({
+								var yelMarker = L.AwesomeMarkers.icon({
 									icon: 'lightbulb-o',
 									prefix: 'fa',
 									markerColor: 'yellow'
 								  });
 								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
+								var marker = L.marker([positionlat, positionlon], {icon: yelMarker});					
 								
 									/*marker.bindPopup("Loading...");
 									marker.on('click', function(e) {
@@ -739,13 +739,13 @@
 
 							if (obj.type === 'garbage') 
 							{
-								var redMarker = L.AwesomeMarkers.icon({
+								var garbMarker = L.AwesomeMarkers.icon({
 									icon: 'trash-o',
 									prefix: 'fa',
 									markerColor: 'green-dark'
 								  });
 								  
-								var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+								var marker = L.marker([positionlat, positionlon], {icon: garbMarker});
 								//kadoiMarkers.addLayer(marker);		
 								
 									//marker.bindPopup(obj.value_desc);
