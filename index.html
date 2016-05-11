@@ -445,11 +445,12 @@
     <script src="js/scripts.js"></script>
 	
 	
-	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css" />
-    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />
- 
-	<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster.js'></script>
+	<link rel="stylesheet" type="text/css" href="_css/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css" href="_css/MarkerCluster.Default.css" />
+	<link rel="stylesheet" type="text/css" href="css/leaflet.extra-markers.min.css" />
 	
+	<script type='text/javascript' src='js/leaflet.markercluster.js'></script>
+	<script type='text/javascript' src='js/leaflet.extra-markers.min.js'></script>
 	
 	
 	
@@ -718,10 +719,11 @@
 							
 							if (obj.type === 'fotistiko') 
 							{
-								var yelMarker = L.AwesomeMarkers.icon({
-									icon: 'lightbulb-o',
-									prefix: 'fa',
-									markerColor: 'orange'
+								var yelMarker = L.ExtraMarkers.icon({
+									icon: 'fa-lightbulb-o',
+									markerColor: 'yellow',
+									shape: 'square',
+									prefix: 'fa'
 								  });
 								  
 								var marker6 = L.marker([positionlat, positionlon], {icon: yelMarker});					
@@ -743,10 +745,20 @@
 
 							if (obj.type === 'garbage') 
 							{
-								var garbMarker = L.AwesomeMarkers.icon({
-									icon: 'trash-o',
-									prefix: 'fa',
-									markerColor: 'green'
+								console.log(obj.notes[0].ANAKIKLOSI);
+								
+								var garbage_color;
+								
+								if(obj.notes[0].ANAKIKLOSI=='0'){
+									garbage_color = 'green';
+								}else{
+									garbage_color='cyan';
+								}
+								var garbMarker = L.ExtraMarkers.icon({
+									icon: 'fa-trash-o',									
+									markerColor: garbage_color,
+									shape: 'square',
+									prefix: 'fa'
 								  });
 								  
 								var marker7 = L.marker([positionlat, positionlon], {icon: garbMarker});
