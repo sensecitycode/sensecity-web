@@ -13,9 +13,9 @@
 	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/leaflet.css" />
 	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
-	<script src="js/leaflet.js"></script> 
+	<script src="js/leaflet.js"></script>
     <link rel="stylesheet" href="css/styles.css" />
-	
+
   </head>
   <body>
   <div class="col-md-12 ">
@@ -56,18 +56,44 @@
                 </ul>
             </div>
         </div>
-    </nav>    
-</div>	
-	<div class="col-md-12 " style="padding-top:50px;">		
-		<br>                    
+    </nav>
+</div>
+	<div class="col-md-12 " style="padding-top:50px;">
+		<br>
 		<div class="col-lg-8">
 			<h2 class="margin-top-0 text-primary text-center">Συμβαίνει στη πόλη</h2>
 			<div id="map" style="color: black; height:85vh;"></div>
+
+
+
+      <div id="timeline" style="padding-top:20px;" class="text-center">
+        <h2>Εξέλιξη προβλήματος</h2>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:16%">
+            <span class="sr-only">50% Complete</span>
+          </div>
+        </div>
+        <div class="row tasks">
+           <div class="col-sm-4">
+             <p>Δήλωση<br /><span class="submit">(Submit Date)</span></p>
+           </div>
+           <div class="col-sm-4">
+             <p>Ανάθεση<br /><span class="assignment">---</span></p>
+           </div>
+           <div class="col-sm-4">
+             <p>Ολοκληρώθηκε<br /><span class="completion">---</span></p>
+           </div>
+
+         </div>
+      </div>
+
+
+
 		</div>
 		<div class="col-lg-4" id="image_div" style="padding-top:20px;">
-			
+
 		</div>
-		<br>					
+		<br>
 	</div>
     <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -93,21 +119,21 @@
         		<p class="text-justify">
         		   Οι πολίτες είστε οι αισθητήρες της πόλης! Χρησιμοποιώντας τις δικές σας συσκευές επικοινωνίας, είτε μέσω της εφαρμογής sense.city είτε με άλλες συσκευές που αναφέρουν στο sense.city δεδομένα της πόλης, ενημερώνετε τους συμπολίτες και το δήμο για προβλήματα και συμβάντα που συμβαίνουν κάθε στιγμή.
         		</p>
-        		
+
         		<br/>
         		<button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true"> OK </button>
         	</div>
         </div>
         </div>
-    </div>    
+    </div>
     <!--scripts loaded here from cdn for performance -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> 
+     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
 	<script src="js/leaflet.awesome-markers.js"></script>
     <script src="js/scripts.js"></script>
-	
+
 	 <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -118,27 +144,27 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
 		<script>
-		
+
 			var issue_image;
 			var issue_name;
 			var issue_value_desc;
 			var issue_long;
 			var issue_lat;
 			var issue_name_new;
-			
+
 			$.ajax({
 				crossDomain: true,
 				type:"GET",
 				url: "http://api.sense.city:3000/api/issues/<?php echo $_GET["issue_id"] ?>",
-				dataType: "json",                
+				dataType: "json",
 				success: function(msg){
-					
+
 					issue_image = msg.image_name;
 					issue_name = msg.issue;
 					issue_value_desc = msg.value_desc;
 					issue_long = msg.loc.coordinates[0];
 					issue_lat = msg.loc.coordinates[1];
-					
+
 					switch(issue_name){
 						case "garbage":
 							issue_name_new = "Πρόβλημα Καθαριότητας";
@@ -155,21 +181,21 @@
 						default:
 							break;
 					}
-						
+
 					$('#image_div').append('<center><img src="'+issue_image+'" width="450px" /><br /><hr><br /><h3>'+issue_name_new+'</h3>'+issue_value_desc+'</center>');
-					
+
 					var count_pos =0;
 					var position = new Array();
-					
+
 					var positionlat = issue_lat;
 					var positionlon = issue_long;
-						
+
 					var map = L.map('map').setView( new L.LatLng( positionlat, positionlon ), 12);
-			
+
 					L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 						maxZoom: 18, }).addTo(map);
-						
+
 					var get_issue = issue_name;
 					switch(get_issue){
 						case "garbage":
@@ -187,28 +213,28 @@
 						default:
 							break;
 					}
-						
+
 					var smiliesMarkers = L.layerGroup().addTo(map);
-					
+
 					if (get_issue === 'lighting') {
 						var redMarker = L.AwesomeMarkers.icon({
 							icon: 'lightbulb-o',
 							prefix: 'fa',
 							markerColor: 'orange'
 						});
-							  
-						var marker = L.marker([positionlat, positionlon], {icon: redMarker});					
+
+						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 							marker.bindPopup("light");
-							lightingMarkers.addLayer(marker);			
+							lightingMarkers.addLayer(marker);
 					}else if (get_issue === 'garbage') {
 						var redMarker = L.AwesomeMarkers.icon({
 							icon: 'trash-o',
 							prefix: 'fa',
 							markerColor: 'green'
 						});
-								  
+
 						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-						garbageMarkers.addLayer(marker);								
+						garbageMarkers.addLayer(marker);
 						marker.bindPopup("garbage");
 					}else if (get_issue === 'road-contructor') {
 						var redMarker = L.AwesomeMarkers.icon({
@@ -216,9 +242,9 @@
 							prefix: 'fa',
 							markerColor: 'cadetblue'
 						});
-								  
+
 						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-						roadConstMarkers.addLayer(marker);	
+						roadConstMarkers.addLayer(marker);
 						marker.bindPopup("road");
 					}else if (get_issue === 'plumping') {
 						var redMarker = L.AwesomeMarkers.icon({
@@ -226,47 +252,63 @@
 							prefix: 'fa',
 							markerColor: 'darkpuple'
 						});
-							  
+
 						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 						plumpingMarkers.addLayer(marker);
-							
+
 						marker.bindPopup("plumping");
-					}else {	
+					}else {
 						var ic = 'smile-o'
 						if (get_issue === 'neutral'){
 							ic = 'meh-o';
 						} else if (get_issue === 'angry'){
 							ic = 'frown-o';
 						}
-									
+
 						var redMarker = L.AwesomeMarkers.icon({
 							icon: ic,
 							prefix: 'fa',
 							markerColor: 'lightgreen',
 							iconColor: 'darkgreen'
 						});
-							  
+
 						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
 						marker.bindPopup("Διάθεση");
 						smiliesMarkers.addLayer(marker);
 					}
-							
+
 					var overlayMaps = {
 						"Προβλήματα σκουπιδιών": garbageMarkers,
 						"Προβλήματα φωτισμού": lightingMarkers,
 						"Προβλήματα ύδρευσης": plumpingMarkers,
 						"Προβλήματα οδοστρώματος": roadConstMarkers,
 						"Ανάδραση πολιτών": smiliesMarkers
-					};	
-							
+					};
+
 					L.control.layers(null, overlayMaps).addTo(map);
 
 				}
 			});
-			
+
 
 			</script>
-			
+
+
+      <script>
+        var bug_status;
+
+        $.ajax({
+          crossDomain: true,
+          type:"GET",
+          url:'http://nam.ece.upatras.gr/bugzilla/jsonrpc.cgi?method=Bug.get&params=[{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων"}]',
+          dataType: "json",
+          success: function(msg){
+            console.log(msg);
+          }
+        });
+
+      </script>
+
 			<script>
 			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
