@@ -10,11 +10,12 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
     <link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/leaflet.css" />
-	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
-	<script src="js/leaflet.js"></script>
+	  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+    <script src="js/leaflet.js"></script>
     <link rel="stylesheet" href="css/styles.css" />
+    <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
 
   </head>
   <body>
@@ -69,19 +70,19 @@
       <div id="timeline" style="padding-top:20px;" class="text-center">
         <h2>Εξέλιξη προβλήματος</h2>
         <div class="progress">
-          <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:16%">
+          <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
             <span class="sr-only">50% Complete</span>
           </div>
         </div>
         <div class="row tasks">
            <div class="col-sm-4">
-             <p>Δήλωση<br /><span class="submit">(Submit Date)</span></p>
+             <p>Δήλωση<br /><span id="submit"></span></p>
            </div>
            <div class="col-sm-4">
-             <p>Ανάθεση<br /><span class="assignment">---</span></p>
+             <p>Ανάθεση<br /><span id="assignment">---</span></p>
            </div>
            <div class="col-sm-4">
-             <p>Ολοκληρώθηκε<br /><span class="completion">---</span></p>
+             <p>Ολοκληρώθηκε<br /><span id="completion">---</span></p>
            </div>
 
          </div>
@@ -289,8 +290,6 @@
 
 				}
 			});
-
-
 			</script>
 
 
@@ -299,11 +298,117 @@
 
         $.ajax({
           crossDomain: true,
-          type:"GET",
-          url:'http://nam.ece.upatras.gr/bugzilla/jsonrpc.cgi?method=Bug.get&params=[{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων"}]',
+          type:"POST",
+          url:'http://localhost:3001/bugs/search',
           dataType: "json",
+          data:{
+                "method": "Bug.get",
+                "params": [{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων",
+                            "include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution"]}],
+                "id": 1
+              },
           success: function(msg){
-            console.log(msg);
+            // console.log("get");
+            // console.log(msg[0]);
+            moment.locale('el');
+            var local_time_sub = moment(msg[0].creation_time).format('LLL');
+            $('#submit').append(local_time_sub);
+            var width;
+            switch(msg[0].status){
+              case "CONFIRMED":
+                width = "16%";
+                break;
+              case "IN_PROGRESS":
+                width = "50%";
+                break;
+              case "RESOLVED":
+                width = "100%";
+                break;
+            }
+            $( ".progress-bar.progress-bar-striped" ).css( "width",width );
+          }
+        });
+
+
+        $.ajax({
+          crossDomain: true,
+          type:"POST",
+          url:'http://localhost:3001/bugs/search',
+          dataType: "json",
+          data:{
+                "method": "Bug.history",
+                "params": [{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων"}],
+                "id": 1
+              },
+          success: function(msg){
+            // console.log("history");
+            // console.log(msg[0].id);
+            // console.log(msg[0].alias);
+            // console.log(msg[0].history);
+            moment.locale('el');
+
+            for (i = 0; i < msg[0].history.length; i++)
+            {
+              for (j = 0; j <msg[0].history[i].changes.length; j++)
+              {
+                // console.log(msg[0].history[i].changes[j]);
+                if (msg[0].history[i].changes[j].added == "IN_PROGRESS")
+                {
+                  var time_assign = msg[0].history[i].when;
+                  // console.log("time_assign");
+                  // console.log(time_assign);
+                }
+              }
+            }
+
+            if (time_assign != null)
+            {
+              var local_time_assign = moment(time_assign).format('LLL');
+              $('#assignment').replaceWith(local_time_assign);
+            }
+
+            for (i = 0; i < msg[0].history.length; i++)
+            {
+              for (j = 0; j <msg[0].history[i].changes.length; j++)
+              {
+                // console.log(msg[0].history[i].changes[j]);
+                if (msg[0].history[i].changes[j].added == "RESOLVED")
+                {
+                  var time_compl = msg[0].history[i].when;
+                  // console.log("time_compl");
+                  // console.log(time_compl);
+                }
+                if (msg[0].history[i].changes[j].field_name == "resolution")
+                {
+                  var resol = msg[0].history[i].changes[j].added;
+                  // console.log("resol");
+                  // console.log(resol);
+                }
+              }
+            }
+
+            if (time_compl != null)
+            {
+              var local_time_compl = moment(time_compl).format('LLL');
+              switch(resol){
+                case "FIXED":
+                  new_resol = "Αποκατάσταση";
+                  break;
+                case "INVALID":
+                  new_resol = "Μη αποδεκτό";
+                  break;
+                case "WONTFIX":
+                  new_resol = "Μη αποκατάσταση";
+                  break;
+                case "DUPLICATE":
+                  new_resol = "Διπλοεγγραφή";
+                  break;
+              }
+              $('#completion').replaceWith("("+new_resol+")<br />"+local_time_compl);
+            }
+
+
+
           }
         });
 
