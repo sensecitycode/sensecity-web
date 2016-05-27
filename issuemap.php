@@ -299,7 +299,7 @@
         $.ajax({
           crossDomain: true,
           type:"POST",
-          url:'http://localhost:3001/bugs/search',
+          url:'http://api.sense.city:3001/bugs/search',
           dataType: "json",
           data:{
                 "method": "Bug.get",
@@ -333,7 +333,7 @@
         $.ajax({
           crossDomain: true,
           type:"POST",
-          url:'http://localhost:3001/bugs/search',
+          url:'http://api.sense.city:3001/bugs/search',
           dataType: "json",
           data:{
                 "method": "Bug.history",
