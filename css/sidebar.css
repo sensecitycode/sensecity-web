@@ -3,7 +3,7 @@ body {
 }
 .sidebar {
     position : absolute;
-    top : 0;
+    top : 80px;
     left : -235px;;
     transition : 100ms left;
     -webkit-transition: all 0.5s ease;
