@@ -128,12 +128,13 @@
                           <div class="form-group col-md-12 text-center">
                             <i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i>
                             <input type="text" class="form-control text-center" ng-model="startISOdate" data-max-date="today" placeholder="Από" data-date-format="dd-MM-yyyy" autoclose="true" bs-datepicker>
-                            <input type="text" class="form-control text-center" ng-model="endISOdate" data-min-date="{{startISOdate}}" data-max-date="today" placeholder="Έως" data-date-format="dd-MM-yyyy" autoclose="true" bs-datepicker>
+                            <br />
+							<input type="text" class="form-control text-center" ng-model="endISOdate" data-min-date="{{startISOdate}}" data-max-date="today" placeholder="Έως" data-date-format="dd-MM-yyyy" autoclose="true" bs-datepicker>
                           </div>
                       </div>
 
 
-                      <div class="text-center"><button type="button" class="btn btn-primary" ng-click="submit()">Αναζήτηση</button></div>
+                      <div class="text-center"><button type="button" class="btn btn-success" ng-click="submit()">Αναζήτηση</button></div>
                       <div class="text-center"><button type="button" class="btn btn-primary" ng-click="reset()">Επαναφορά</button></div><br />
 
 
