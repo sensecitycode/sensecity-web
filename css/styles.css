@@ -75,7 +75,7 @@ p {
 
 .bg-dark {
     color: #eee;
-    background-color: #636060;
+    background-color: #ABAAAA;
 }
 
 .cursive {
@@ -292,7 +292,10 @@ header .header-content .inner p {
 }
 
 footer {
-    background-color:#2d2d2d;
+    background-color: #ABAAAA;
+    border-color: white;
+        border-top-style: solid;
+    border-top-width: 2px;
 }
 
 @media(min-width:768px) {
