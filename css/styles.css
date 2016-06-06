@@ -511,8 +511,10 @@ fieldset[disabled] .btn-default.active {
 
 .btn {
     border: 0;
-    border-radius: 290px;
+    /*border-radius: 290px;*/
     font-family: 'Helvetica Neue',Arial,sans-serif;
+	width: 127px;
+    margin-bottom: 10px;
 }
 
 .btn-xl {
