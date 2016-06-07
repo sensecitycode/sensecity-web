@@ -215,7 +215,8 @@ footer {
 
     .navbar-default.affix .navbar-header .navbar-brand {
         font-size: 15px;
-        color: #9c27b0;
+        /*color: #9c27b0;*/
+		color: #000000;
         padding: 20px;
         letter-spacing: 1px;
     }
@@ -234,7 +235,8 @@ footer {
 
     .navbar-default.affix .nav > li>a:hover,
     .navbar-default.affix .nav>li>a:focus:hover {
-        color: #9c27b0;
+       /* color: #9c27b0;*/
+	   color:#000000;
     }
 }
 
