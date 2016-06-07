@@ -511,7 +511,6 @@ fieldset[disabled] .btn-default.active {
 
 label.btn {
 	border: 0;
-    border-radius: 0px !important;
     font-family: 'Helvetica Neue',Arial,sans-serif;
 	width: 127px !important;
     margin-bottom: 10px !important;
