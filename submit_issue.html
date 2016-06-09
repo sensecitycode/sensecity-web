@@ -184,7 +184,7 @@
 				};	*/
 				
 				
-				
+				map.removeLayer(newMarker)
 				map.on('click', onClick);
 				
 				
@@ -201,7 +201,6 @@
 									markerColor: 'red'
 								  });
 					
-					newMarker.clearLayers();
 					newMarker = new L.marker(e.latlng, {icon: redMarker}).addTo(map);
 					
 					
