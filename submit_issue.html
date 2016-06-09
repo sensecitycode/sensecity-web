@@ -63,17 +63,21 @@
 
             var cntrposition       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
 
+			var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 12);
+			
+			/*
 			function init()
 			{
+				
                 map = new OpenLayers.Map("Map",{
 					controls: 
 					[
-						/*new OpenLayers.Control.PanZoomBar(),                        
+						new OpenLayers.Control.PanZoomBar(),                        
 						new OpenLayers.Control.LayerSwitcher({}),
 						new OpenLayers.Control.Permalink(),
 						new OpenLayers.Control.MousePosition({}),
 						new OpenLayers.Control.ScaleLine(),
-						new OpenLayers.Control.OverviewMap(),*/
+						new OpenLayers.Control.OverviewMap(),
 					]
 				});
 				
@@ -91,14 +95,17 @@
 
 				click.activate();
 			};
-
-			OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {               
+			*/
+			
+			
+			/*
+			OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
 				defaultHandlerOptions: {
-					/*'single': true,
+					'single': true,
 					'double': false,
 					'pixelTolerance': 0,
 					'stopSingle': false,
-					'stopDouble': false*/
+					'stopDouble': false
 				},
 				initialize: function(options) {
 					this.handlerOptions = OpenLayers.Util.extend(
@@ -120,7 +127,7 @@
 					alert("Hello..."+lonlat1.lon + "  " +lonlat1.lat);
 				}
 
-			});
+			});*/
 		</script>	
 
 
