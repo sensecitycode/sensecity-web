@@ -198,7 +198,14 @@
 					
 					console.log(e.latlng["lat"]);
 					console.log(e.latlng["lng"]);
-					var newMarker = new L.marker(e.latlng, {icon: redIcon}).addTo(map);
+					
+					var redMarker = L.AwesomeMarkers.icon({
+									icon: 'lightbulb-o',
+									prefix: 'fa',
+									markerColor: 'red'
+								  });
+								  
+					var newMarker = new L.marker(e.latlng, {icon: redMarker}).addTo(map);
 					
 					
 					
