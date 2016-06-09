@@ -189,7 +189,8 @@
 					"Κάδοι": kadoiMarkers,
 					"Φωτισμός": fotistikoMarkers
 				};	*/
-							map.on('click', onClick);
+				
+				map.on('click', onClick);
 				
 				
 				
@@ -204,7 +205,8 @@
 									prefix: 'fa',
 									markerColor: 'red'
 								  });
-								  
+					map.removeLayer(marker);
+					
 					var newMarker = new L.marker(e.latlng, {icon: redMarker}).addTo(map);
 					
 					
