@@ -72,24 +72,17 @@
             var cntrposition       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
 
 			var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 12);
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(map);
+
+			L.marker([38.2466395, 21.734574]).addTo(map)
+				.bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+				.openPopup();
 			
 			
 			
 			
-			map.scrollWheelZoom.disable();
-				
-				var overlayMaps = {
-					"Προβλήματα σκουπιδιών": garbageMarkers,
-					"Προβλήματα φωτισμού": lightingMarkers,
-					"Προβλήματα ύδρευσης": plumpingMarkers,
-					"Προβλήματα οδοστρώματος": roadConstMarkers,
-					"Ανάδραση πολιτών": smiliesMarkers,
-					"Κάδοι": kadoiMarkers,
-					"Φωτισμός": fotistikoMarkers
-				};	
-							
-				L.control.layers(null, overlayMaps).addTo(map);
-				
 				
 				
 			/*
