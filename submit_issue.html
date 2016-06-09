@@ -53,7 +53,7 @@
 			var map,vectorLayer,selectMarkerControl,selectedFeature;
 			var lat         =   38.246639;
             var lon         =   21.734573;
-            var zoom        =   11;
+            var zoom        =   15;
 			
 			var curpos = new Array();
 			var position;
@@ -68,12 +68,12 @@
                 map = new OpenLayers.Map("Map",{
 					controls: 
 					[
-						new OpenLayers.Control.PanZoomBar(),                        
+						/*new OpenLayers.Control.PanZoomBar(),                        
 						new OpenLayers.Control.LayerSwitcher({}),
 						new OpenLayers.Control.Permalink(),
 						new OpenLayers.Control.MousePosition({}),
 						new OpenLayers.Control.ScaleLine(),
-						new OpenLayers.Control.OverviewMap(),
+						new OpenLayers.Control.OverviewMap(),*/
 					]
 				});
 				
