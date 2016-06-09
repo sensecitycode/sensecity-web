@@ -196,10 +196,10 @@
 
 				function onClick(e) {
 					
-					console.log(e.latlng);
 					console.log(e.latlng["lat"]);
 					console.log(e.latlng["lng"]);
 					
+					var marker1 = L.marker([e.latlng["lat"], e.latlng["lng"]], {icon: redMarker});
 					
 					
 					
