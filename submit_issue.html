@@ -190,10 +190,10 @@
 					"Φωτισμός": fotistikoMarkers
 				};	*/
 							
-				L.control.layers(null, overlayMaps).addTo(map).on('mouseover', onClick);
+				L.control.layers(null, overlayMaps).on('click', markerOnClick).addTo(map);
 				
 
-				function onClick(e) {
+				function markerOnClick(e) {
 					alert(this.getLatLng());
 				}
 				
