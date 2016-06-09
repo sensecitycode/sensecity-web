@@ -189,11 +189,12 @@
 					"Κάδοι": kadoiMarkers,
 					"Φωτισμός": fotistikoMarkers
 				};	*/
-							
-				L.control.layers(null, overlayMaps).on('click', markerOnClick).addTo(map);
+							map.on('click', onClick);
+				L.control.layers(null, null).addTo(map);
+				
 				
 
-				function markerOnClick(e) {
+				function onClick(e) {
 					alert(this.getLatLng());
 				}
 				
