@@ -165,7 +165,19 @@
 				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 12);
 			
 						
+				map.scrollWheelZoom.disable();
 				
+				var overlayMaps = {
+					"Προβλήματα σκουπιδιών": garbageMarkers,
+					"Προβλήματα φωτισμού": lightingMarkers,
+					"Προβλήματα ύδρευσης": plumpingMarkers,
+					"Προβλήματα οδοστρώματος": roadConstMarkers,
+					"Ανάδραση πολιτών": smiliesMarkers,
+					"Κάδοι": kadoiMarkers,
+					"Φωτισμός": fotistikoMarkers
+				};	
+							
+				L.control.layers(null, overlayMaps).addTo(map);
 						
 				
 			</script>
