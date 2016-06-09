@@ -152,18 +152,10 @@
 
 			<script>
 
-				var newdate = new Date();
-				var sart_date = new Date();
-				sart_date.setDate(sart_date.getDate() -3); 
-				/*
-				alert(newdate.getFullYear());
-				alert(newdate.getMonth());
-				alert(newdate.getDate());
-				alert(newdate.getDate()-3);
-				*/
-				
+		
 				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 12);
-				var markers = new L.FeatureGroup();
+				
+				var newMarker
 				
 				L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -191,7 +183,7 @@
 					"Φωτισμός": fotistikoMarkers
 				};	*/
 				
-				markers.clearLayers();
+				
 				
 				map.on('click', onClick);
 				
@@ -209,8 +201,8 @@
 									markerColor: 'red'
 								  });
 					
-					markers.clearLayers();
-					var newMarker = new L.marker(e.latlng, {icon: redMarker}).addTo(map);
+					newMarker.clearLayers();
+					newMarker = new L.marker(e.latlng, {icon: redMarker}).addTo(map);
 					
 					
 					
