@@ -188,24 +188,36 @@
 		
 		jQuery(document).ready(function(){				
 			// when any option from country list is selected
-			$("select[name='type-issue']").change(function(){					
-				alert("sdfs");
+			$("select[name='type-issue']").change(function(){			
+			
 				// get the selected option value of country
 				var optionValue = $("select[name='type-issue']").val();		
-				alert(optionValue);
+				
 			switch(optionValue){
 			
 				case "garbage":
-					alert("garbage");
+					var select = document.getElementById("issue");
+					var options = ["Χαλασμένος Κάδος", "Γεμάτος Κάδος", "Έλλειψη κάδου", "Άλλο"];
+					for(var i = 0; i < options.length; i++) {
+						var opt = options[i];
+						var el = document.createElement("option");
+						el.textContent = opt;
+						el.value = opt;
+						select.appendChild(el);
+					}
+					
 					break;
 				case "lighting":
-					alert("lighting");
+					
+					
 					break;
 				case "plumbing":
-					alert("lighting");
+					
+					
 					break;
 				case "road-contructor":
-					alert("road-contructor");
+					
+					
 					break;
 			}				
 						
