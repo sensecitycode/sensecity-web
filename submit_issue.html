@@ -65,29 +65,30 @@
 		</div>
 		<div class="col-md-4"> 
 			<div class="form-group">
-				<label for="exampleInputEmail1">Longtitude</label>
-				<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;">Γεωγραφικό Μήκος</label>
+				<input type="text" class="form-control" id="lng" placeholder="Email">
 			</div>
 			<div class="form-group">
-				<label for="exampleInputEmail1">Latitude</label>
-				<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;">Γεωγραφικό Πλάτος</label>
+				<input type="text" class="form-control" id="lat" placeholder="Email">
 			</div>
-			<select class="form-control">
-			  <option>1</option>
-			  <option>2</option>
-			  <option>3</option>
-			  <option>4</option>
-			  <option>5</option>
-			</select>
-			<select class="form-control">
-			  <option>1</option>
-			  <option>2</option>
-			  <option>3</option>
-			  <option>4</option>
-			  <option>5</option>
-			</select>
 			<div class="form-group">
-				<label for="exampleInputFile">File input</label>
+				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;">Τύπος προβλήματος</label>
+				<select id="type-issue" name="type-issue" class="form-control">
+				  <option value="garbage">Σκουπίδια</option>
+				  <option value="lighting">Φωτισμός</option>
+				  <option value="plumbing">Ύδρευση</option>
+				  <option value="road-contructor">Οδόστρωμα</option>				  
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;">Προβλήμα</label>
+				<select id="issue" name="issue" class="form-control">
+				  
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputFile">Φωτογραφία</label>
 				<input type="file" id="exampleInputFile">
 				<p class="help-block">Example block-level help text here.</p>
 			</div>			
@@ -182,8 +183,36 @@
     <!-- <script src="_js/docs.min.js"></script> -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
-			<script>
-
+	<script>
+		
+		
+		jQuery(document).ready(function(){				
+			// when any option from country list is selected
+			jQuery("select[name='type-issue']").change(function(){					
+				
+				// get the selected option value of country
+				var optionValue = jQuery("select[name='country']").val();		
+				
+			switch(optionValue){
+			
+				case "garbage":
+					alert("garbage");
+					break;
+				case "lighting":
+					alert("lighting");
+					break;
+				case "plumbing":
+					alert("lighting");
+					break;
+				case "road-contructor":
+					alert("road-contructor");
+					break;
+			}				
+						
+			});
+		});
+	
+	
 		
 				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 12);
 				
