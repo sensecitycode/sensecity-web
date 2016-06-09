@@ -190,7 +190,7 @@
 					"Φωτισμός": fotistikoMarkers
 				};	*/
 							map.on('click', onClick);
-				L.control.layers(null, null).addTo(map);
+				
 				
 				
 
@@ -198,13 +198,14 @@
 					
 					console.log(e.latlng["lat"]);
 					console.log(e.latlng["lng"]);
+					var newMarker = new L.marker(e.latlng).addTo(map);
 					
-					var marker1 = L.marker([e.latlng["lat"], e.latlng["lng"]], {icon: redMarker});
 					
 					
 					
 				}
 				
+				L.control.layers(null, null).addTo(map);
 			</script>
 			
 			<script>
