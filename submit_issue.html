@@ -163,7 +163,20 @@
 				*/
 				
 				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 12);
-			
+				
+				L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+						maxZoom: 18, }).addTo(map);
+						
+						var garbageMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var lightingMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var plumpingMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var roadConstMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var smiliesMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var kadoiMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var fotistikoMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						
+						
 						
 				map.scrollWheelZoom.disable();
 				
