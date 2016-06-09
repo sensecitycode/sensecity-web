@@ -85,7 +85,7 @@
 			<div class="form-group">
 				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;">Προβλήμα</label>
 				<select id="issue" name="issue" class="form-control">
-					<option value="">Επιλέξτε τύπο προβλήματος</option>
+					<option value="">Επιλέξτε προβλήματος</option>
 				</select>
 			</div>
 			<div class="form-group">
@@ -198,8 +198,8 @@
 			
 				case "garbage":
 					var select = document.getElementById("issue");
-					$('#type-issue').empty();
-					var options = ["Χαλασμένος Κάδος", "Γεμάτος Κάδος", "Έλλειψη κάδου", "Άλλο"];
+					$('#issue').empty();
+					var options = ["Επιλέξτε προβλήματος", "Χαλασμένος Κάδος", "Γεμάτος Κάδος", "Έλλειψη κάδου", "Άλλο"];
 					for(var i = 0; i < options.length; i++) {
 						var opt = options[i];
 						var el = document.createElement("option");
@@ -207,9 +207,13 @@
 						if(i+1 == options.length)
 						{
 							el.value = "other";
-						}else{
+						}else if(i==0){
+							el.value = "";
+						}
+						else{
 							el.value = opt;
 						}
+						
 						
 						select.appendChild(el);
 					}
@@ -217,8 +221,8 @@
 					break;
 				case "lighting":
 					var select = document.getElementById("issue");
-					$('#type-issue').empty();
-					var options = ["Καμμένος Λαμπτήρας", "Σπασμένος Βραχίωνας", "Ανεπαρκής Φωτισμός", "Άλλο"];
+					$('#issue').empty();
+					var options = ["Επιλέξτε προβλήματος", "Καμμένος Λαμπτήρας", "Σπασμένος Βραχίωνας", "Ανεπαρκής Φωτισμός", "Άλλο"];
 					for(var i = 0; i < options.length; i++) {
 						var opt = options[i];
 						var el = document.createElement("option");
@@ -226,9 +230,13 @@
 						if(i+1 == options.length)
 						{
 							el.value = "other";
-						}else{
+						}else if(i==0){
+							el.value = "";
+						}
+						else{
 							el.value = opt;
 						}
+						
 						
 						select.appendChild(el);
 					}
@@ -236,8 +244,8 @@
 					break;
 				case "plumbing":
 					var select = document.getElementById("issue");
-					$('#type-issue').empty();
-					var options = ["Βουλωμένο Φρεάτιο", "Σπασμένο Φρεάτιο", "Άλλο"];
+					$('#issue').empty();
+					var options = ["Επιλέξτε προβλήματος", "Βουλωμένο Φρεάτιο", "Σπασμένο Φρεάτιο", "Άλλο"];
 					for(var i = 0; i < options.length; i++) {
 						var opt = options[i];
 						var el = document.createElement("option");
@@ -245,9 +253,13 @@
 						if(i+1 == options.length)
 						{
 							el.value = "other";
-						}else{
+						}else if(i==0){
+							el.value = "";
+						}
+						else{
 							el.value = opt;
 						}
+						
 						
 						select.appendChild(el);
 					}
@@ -255,8 +267,8 @@
 					break;
 				case "road-contructor":
 					var select = document.getElementById("issue");
-					$('#type-issue').empty();
-					var options = ["Σπασμένες Πλάκες", "Αντικείμενο που εμποδίζει", "Εγκαταλ. Αυτοκίνητο", "Άλλο"];
+					$('#issue').empty();
+					var options = ["Επιλέξτε προβλήματος", "Σπασμένες Πλάκες", "Αντικείμενο που εμποδίζει", "Εγκαταλ. Αυτοκίνητο", "Άλλο"];
 					for(var i = 0; i < options.length; i++) {
 						var opt = options[i];
 						var el = document.createElement("option");
@@ -264,9 +276,13 @@
 						if(i+1 == options.length)
 						{
 							el.value = "other";
-						}else{
+						}else if(i==0){
+							el.value = "";
+						}
+						else{
 							el.value = opt;
 						}
+						
 						
 						select.appendChild(el);
 					}
