@@ -163,6 +163,7 @@
 				*/
 				
 				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 12);
+				var markers = new L.FeatureGroup();
 				
 				L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -190,7 +191,7 @@
 					"Φωτισμός": fotistikoMarkers
 				};	*/
 				
-				map.removeLayer(marker);
+				markers.clearLayers();
 				
 				map.on('click', onClick);
 				
@@ -208,7 +209,7 @@
 									markerColor: 'red'
 								  });
 					
-					
+					markers.clearLayers();
 					var newMarker = new L.marker(e.latlng, {icon: redMarker}).addTo(map);
 					
 					
