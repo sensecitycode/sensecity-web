@@ -272,11 +272,19 @@
 						
 			});
 			
-			var optionValue1 = $("select[name='issue']").val();		
-			if(optionValue1 =="other" )
-			{
-				alert("txt");
-			}
+			
+			
+			
+			
+			$("select[name='issue']").change(function(){		
+				var optionValue1 = $("select[name='issue']").val();		
+					
+				if(optionValue1 =="other" )
+				{
+					alert("txt");
+				}
+			
+			});
 			
 		});
 	
