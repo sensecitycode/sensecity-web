@@ -59,7 +59,7 @@
     </nav>
     
     
-	<div class="container" style="padding-top:150px;">
+	<div class="container" style="padding-top:150px; padding-bottom:30px;">
 		<div class="col-md-8"> 
 			<div id="map" style="color: black; height:550px;"></div>
 		</div>
@@ -90,12 +90,12 @@
 			</div>
 			<div class="form-group" id="other-txt" style="display:none;">
 				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;">Περιγραφή</label>
-				<input type="text" class="form-control" id="lat" placeholder="Γράψτε το πρόβλημα" style="background-color: black;">
+				<input type="text" class="form-control" id="other_description" placeholder="Γράψτε το πρόβλημα" style="background-color: black;">
 			</div>
 			
 			<div class="form-group">
-				<label for="exampleInputFile" style="color: #000000; font-weight: 300;">Φωτογραφία</label>
-				<input type="file" id="exampleInputFile">
+				<label for="input_file" style="color: #000000; font-weight: 300;">Φωτογραφία</label>
+				<input type="file" id="input_file">
 			</div>			
 			<a href="#" id="btnsubmit" class="btn btn-primary" style="background-color: #76a0ff !important;">Αποστολή</a>
 		</div>
@@ -388,6 +388,20 @@
 				
 				
 				
+				
+				$("#btnsubmit").click(function() {
+				
+					
+					console.log($("#lng").val());
+					console.log($("#lat").val()); 
+					console.log($("#type-issue").val());
+					console.log($("#issue").val());
+					console.log($("#other_description").val());
+					console.log($("#input_file").val());
+					
+					
+					
+				});
 				
 				
 			</script>
