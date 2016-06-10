@@ -399,8 +399,8 @@
 					console.log($("#other_description").val());
 					console.log($("#input_file").val());
 					
-					var image = document.getElementById('input_file');
-					function encodeImage(image.src, callback) {
+					var image = $("#input_file").val();
+					function encodeImage(image, callback) {
 						var c = document.createElement('canvas');
 						var ctx = c.getContext("2d");
 						var img = new Image();
