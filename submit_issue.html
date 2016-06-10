@@ -399,10 +399,27 @@
 					console.log($("#other_description").val());
 					console.log($("#input_file").val());
 					
-					var image = document.getElementById('input_file');
-                    image.src = "data:image/jpeg;base64," + image;
 					
-					console.log(image);
+					function EL(id) { return document.getElementById(id); } // Get el by ID helper function
+
+					function readFile() {
+					  if (this.files && this.files[0]) {
+						var FR= new FileReader();
+						FR.onload = function(e) {
+						  EL("img").src       = e.target.result;
+						  EL("b64").innerHTML = e.target.result;
+						  console.log(EL("b64").innerHTML);
+						};       
+						FR.readAsDataURL( this.files[0] );
+					  }
+					}
+					
+					EL("input_file").addEventListener("change", readFile, false);
+					
+					
+					
+					
+					
 					
 				});
 				
