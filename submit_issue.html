@@ -400,26 +400,29 @@
 					console.log($("#input_file").val());
 					
 					
-					function EL(id) { return document.getElementById(id); } // Get el by ID helper function
-
-					function readFile() {
-					  if (this.files && this.files[0]) {
-						var FR= new FileReader();
-						FR.onload = function(e) {
-						  EL("img").src       = e.target.result;
-						  EL("b64").innerHTML = e.target.result;
-						  
-						};       
-						FR.readAsDataURL( this.files[0] );
-					  }
+					function encodeImage(document.getElementById('input_file').src, callback) {
+						var c = document.createElement('canvas');
+						var ctx = c.getContext("2d");
+						var img = new Image();
+						img.onload = function () {
+							c.width = this.width;
+							c.height = this.height;
+							ctx.drawImage(img, 0, 0);
+							var dataURL = c.toDataURL("image/jpeg");
+							callback(dataURL)
+						};
+						img.src = imageUri;
 					}
+
+					encodeImage("/img/logo.png", function (dataURL) {
+						console.log(dataURL) // or do whatever you want with it.
+					})
 					
-					EL("input_file").addEventListener("change", readFile, false);
 					
+					/*var image = document.getElementById('input_file').src;
+                    image.src = "data:image/jpeg;base64," + image;
 					
-					
-					
-					
+					console.log(image.src);*/
 					
 				});
 				
