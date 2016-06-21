@@ -400,51 +400,31 @@
 					console.log($("#input_file").val());
 					
 					
-					
-					
-					var handleFileSelect = function(evt) {
-						var files = evt.target.files;
-						var file = files[0];
 
-						if (files && file) {
-							var reader = new FileReader();
-
-							reader.onload = function(readerEvt) {
-								var binaryString = readerEvt.target.result;
-								console.log(btoa(binaryString));
-							};
-
-							reader.readAsBinaryString(file);
-						}
-					};
-
-					if (window.File && window.FileReader && window.FileList && window.Blob) {
-						document.getElementById('filePicker').addEventListener('change', handleFileSelect, false);
-					} else {
-						alert('The File APIs are not fully supported in this browser.');
-					}
-
-
-
-
-					var image = $("#input_file").val();
-					function encodeImage(imageUri, callback) {
-						var c = document.createElement('canvas');
-						var ctx = c.getContext("2d");
-						var img = new Image();
-						img.onload = function () {
-							c.width = this.width;
-							c.height = this.height;
-							ctx.drawImage(img, 0, 0);
-							var dataURL = c.toDataURL("image/jpeg");
-							callback(dataURL)
+					var filesSelected = document.getElementById("input_file").files;//$("#input_file").val();
+					if (filesSelected.length > 0)
+					{
+						var fileToLoad = filesSelected[0];
+				 
+						var fileReader = new FileReader();
+				 
+						fileReader.onload = function(fileLoadedEvent) 
+						{
+							//var textAreaFileContents = document.getElementById
+						   // (
+						  //      "textAreaFileContents"
+						  // );
+							
+							console.log(fileLoadedEvent.target.result);
+							//textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
+							
 						};
-						img.src = imageUri;
+				 
+						fileReader.readAsDataURL(fileToLoad);
+						//console.log(fileToLoad);
 					}
 
-					encodeImage(image, function (dataURL) {
-						console.log(dataURL) // or do whatever you want with it.
-					})
+					
 					
 					
 					/*var image = document.getElementById('input_file').src;
@@ -454,7 +434,11 @@
 					
 				});
 				
-				
+			
+
+
+
+
 			</script>
 			
 			<script>
