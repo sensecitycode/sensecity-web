@@ -486,7 +486,7 @@
 			
 						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-						maxZoom: 18, }).addTo(map);
+						maxZoom: 10, }).addTo(map);
 						
 						var garbageMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
 						var lightingMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
@@ -715,7 +715,7 @@
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
-					url: "http://api.sense.city:3000/fix_point/21.739491441300000/38.245153028099999/2600/garbage",
+					url: "http://api.sense.city:3000/fix_point/21.739491441300000/38.245153028099999/260/garbage",
 					async:false,
 					dataType: "json",                
 					success: function(msg){
