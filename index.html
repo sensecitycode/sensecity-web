@@ -90,8 +90,8 @@
 					<div id="map" style="color: black; height:550px;"></div>
 					<br>
 					<div class=" text-center">
-						<a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll "> Αναζήτηση</a>
-						<a href="submit_issue.html" class="btn btn-default btn-xl page-scroll"> Αναφορά προβλήματος</a>
+						<a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll "> Αναζήτηση </a>
+						<a href="submit_issue.html" class="btn btn-default btn-xl page-scroll"> Αναφορά προβλήματος </a>
 					</div>
                 </div>
 				<div class="col-lg-4" id="recent_five"></div>
@@ -720,14 +720,14 @@
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
-					url: "http://api.sense.city:3000/fix_point/21.735153/38.246414/700/data",
+					url: "http://api.sense.city:3000/fix_point/21.735153/38.246414/300/data",
 					async:false,
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",                
 					success: function(msg){
 						console.log("start");
 						$.each(msg, function(idx, obj) {							
-						
+							console.log(obj);
 							var positionlat = obj.loc.coordinates[1];
 							var positionlon = obj.loc.coordinates[0];
 							
