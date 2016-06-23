@@ -8,10 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Codeply">
     <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" /> -->
+	
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+	
 	<link rel="stylesheet" href="_css/bootstrap.min.css" />
-    <link href="css/animate.min.css" rel="stylesheet" />
+    <!-- <link href="css/animate.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/ionicons.min.css" />
-	<link href="css/font-awesome.css" rel="stylesheet">
+	<link href="css/font-awesome.css" rel="stylesheet"> -->
 	<link rel="stylesheet" href="css/leaflet.css" />
 	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
 	<script src="js/leaflet.js"></script> 
@@ -482,7 +487,7 @@
 				alert(newdate.getDate()-3);
 				*/
 				
-				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 17);
+				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 16);
 			
 						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -715,7 +720,7 @@
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
-					url: "http://api.sense.city:3000/fix_point/21.735153/38.246414/300/data",
+					url: "http://api.sense.city:3000/fix_point/21.735153/38.246414/700/data",
 					async:false,
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",                
