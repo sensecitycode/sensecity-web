@@ -190,7 +190,7 @@
 
 	<script>
 		
-		
+		var img_base64 = '';
 		jQuery(document).ready(function(){				
 			// when any option from country list is selected
 			$("select[name='type-issue']").change(function(){			
@@ -399,6 +399,13 @@
 					console.log($("#other_description").val());
 					console.log($("#input_file").val());
 					
+					var other_='';
+					
+					if($("#other_description").val() !=''){
+						other_ = $("#other_description").val();
+					}else{
+						other_ = $("#issue").val();
+					}
 					
 
 					var filesSelected = document.getElementById("input_file").files;//$("#input_file").val();
@@ -414,7 +421,7 @@
 						   // (
 						  //      "textAreaFileContents"
 						  // );
-							
+							img_base64 = fileLoadedEvent.target.result;
 							console.log(fileLoadedEvent.target.result);
 							//textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
 							
@@ -424,8 +431,20 @@
 						//console.log(fileToLoad);
 					}
 
+					console.log('{"loc" : { "type" : "Point",  "coordinates" : ['+$("#lng").val()+','+$("#lat").val()+'] }, "issue" : "'+$("#type-issue").val()+'","device_id" : "webapp", "value_desc" : "' + other_ + '","image_name" : "'+img_base64+'" }');
 					
-					
+					$.ajax({
+						crossDomain: true,
+						type:"POST",
+						url: "http://api.sense.city:3000/api/issue",
+						data: '{"loc" : { "type" : "Point",  "coordinates" : ['+$("#lng").val()+','+$("#lat").val()+'] }, "issue" : "'+$("#type-issue").val()+'","device_id" : "webapp", "value_desc" : "' + other_ + '","image_name" : "'+img_base64+'" }',
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",                
+						success: function(msg){
+						
+						
+						}
+					});					
 					
 					/*var image = document.getElementById('input_file').src;
                     image.src = "data:image/jpeg;base64," + image;
