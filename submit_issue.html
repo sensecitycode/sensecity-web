@@ -387,27 +387,7 @@
 				L.control.layers(null).addTo(map);
 				
 				
-				
-				
-				$("#btnsubmit").click(function() {
-				
-					
-					console.log($("#lng").val());
-					console.log($("#lat").val()); 
-					console.log($("#type-issue").val());
-					console.log($("#issue").val());
-					console.log($("#other_description").val());
-					console.log($("#input_file").val());
-					
-					var other_='';
-					
-					if($("#other_description").val() !=''){
-						other_ = $("#other_description").val();
-					}else{
-						other_ = $("#issue").val();
-					}
-					
-					function img_base64(){
+				function img_base64(){
 						var filesSelected = document.getElementById("input_file").files;//$("#input_file").val();
 						if (filesSelected.length > 0)
 						{
@@ -432,11 +412,33 @@
 							//console.log(fileToLoad);
 						}
 					}
+				
+				$("#btnsubmit").click(function() {
+				
 					
-					console.log(img_base64());
+					console.log($("#lng").val());
+					console.log($("#lat").val()); 
+					console.log($("#type-issue").val());
+					console.log($("#issue").val());
+					console.log($("#other_description").val());
+					console.log($("#input_file").val());
+					
+					var other_='';
+					
+					if($("#other_description").val() !=''){
+						other_ = $("#other_description").val();
+					}else{
+						other_ = $("#issue").val();
+					}
 					
 					
-					console.log('{"loc" : { "type" : "Point",  "coordinates" : ['+$("#lng").val()+','+$("#lat").val()+'] }, "issue" : "'+$("#type-issue").val()+'","device_id" : "webapp", "value_desc" : "' + other_ + '","image_name" : "'+img_base64()+'" }');
+					
+					var xxxx='';
+					xxxx = img_base64();
+					console.log(xxxx);
+					
+					
+					console.log('{"loc" : { "type" : "Point",  "coordinates" : ['+$("#lng").val()+','+$("#lat").val()+'] }, "issue" : "'+$("#type-issue").val()+'","device_id" : "webapp", "value_desc" : "' + other_ + '","image_name" : "'+xxxx+'" }');
 					
 					
 					
