@@ -407,31 +407,36 @@
 						other_ = $("#issue").val();
 					}
 					
-
-					var filesSelected = document.getElementById("input_file").files;//$("#input_file").val();
-					if (filesSelected.length > 0)
-					{
-						var fileToLoad = filesSelected[0];
-				 
-						var fileReader = new FileReader();
-				 
-						fileReader.onload = function(fileLoadedEvent) 
+					function img_base64(){
+						var filesSelected = document.getElementById("input_file").files;//$("#input_file").val();
+						if (filesSelected.length > 0)
 						{
-							//var textAreaFileContents = document.getElementById
-						   // (
-						  //      "textAreaFileContents"
-						  // );
-							img_base64 = fileLoadedEvent.target.result;
-							console.log(img_base64);
-							//textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
-							
-						};
-				 
-						fileReader.readAsDataURL(fileToLoad);
-						//console.log(fileToLoad);
+							var fileToLoad = filesSelected[0];
+					 
+							var fileReader = new FileReader();
+					 
+							fileReader.onload = function(fileLoadedEvent) 
+							{
+								//var textAreaFileContents = document.getElementById
+							   // (
+							  //      "textAreaFileContents"
+							  // );
+								img_base64 = fileLoadedEvent.target.result;
+								//console.log(img_base64);
+								//textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
+								
+							};
+					 
+							fileReader.readAsDataURL(fileToLoad);
+							return img_base64;
+							//console.log(fileToLoad);
+						}
 					}
-
-					console.log('{"loc" : { "type" : "Point",  "coordinates" : ['+$("#lng").val()+','+$("#lat").val()+'] }, "issue" : "'+$("#type-issue").val()+'","device_id" : "webapp", "value_desc" : "' + other_ + '","image_name" : "'+img_base64+'" }');
+					
+					console.log(img_base64());
+					
+					
+					console.log('{"loc" : { "type" : "Point",  "coordinates" : ['+$("#lng").val()+','+$("#lat").val()+'] }, "issue" : "'+$("#type-issue").val()+'","device_id" : "webapp", "value_desc" : "' + other_ + '","image_name" : "'+img_base64()+'" }');
 					
 					
 					
