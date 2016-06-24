@@ -20,8 +20,8 @@
   </head>
   <body>
   <div class="col-md-12 ">
-    <nav id="topNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
+    <nav id="topNav" class="navbar navbar-default navbar-fixed-top" style="background-color: rgb(208, 208, 208);">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar">
                     <span class="sr-only">Toggle navigation</span>
