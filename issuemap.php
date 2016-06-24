@@ -19,7 +19,6 @@
 
   </head>
   <body>
-  <div class="col-md-12 ">
     <nav id="topNav" class="navbar navbar-default navbar-fixed-top" style="background-color: rgb(208, 208, 208);">
         <div class="container">
             <div class="navbar-header">
@@ -58,7 +57,7 @@
             </div>
         </div>
     </nav>
-</div>
+
 	<div class="col-md-12 " style="padding-top:50px;">
 		<br>
 		<div class="col-lg-8">
