@@ -9,9 +9,9 @@
     <meta name="generator" content="Codeply">
     <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" /> -->
 	<link rel="stylesheet" href="_css/bootstrap.min.css" />
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ionicons.min.css" />
+	<link href="css/font-awesome.css" rel="stylesheet"> 
 	<link rel="stylesheet" href="css/leaflet.css" />
 	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
 	<script src="js/leaflet.js"></script> 
@@ -90,12 +90,12 @@
 			</div>
 			<div class="form-group" id="other-txt" style="display:none;">
 				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;">Περιγραφή</label>
-				<input type="text" class="form-control" id="other_description" placeholder="Γράψτε το πρόβλημα" style="background-color: black;">
+				<input type="text" class="form-control" id="other_description" placeholder="Γράψτε το πρόβλημα" style="background-color: black;color: #ffffff;">
 			</div>
 			
 			<div class="form-group">
 				<label for="input_file" style="color: #000000; font-weight: 300;">Φωτογραφία</label>
-				<input type="file" id="input_file">
+				<input type="file" id="input_file" style="color: #000000;">
 			</div>			
 			<a href="#" id="btnsubmit" class="btn btn-primary" style="background-color: #76a0ff !important;">Αποστολή</a>
 		</div>
@@ -133,7 +133,7 @@
         <div class="modal-dialog modal-lg">
         <div class="modal-content">
         	<div class="modal-body">
-        		<img src="//placehold.it/1200x700/222?text=..." id="galleryImage" class="img-responsive" />
+        		<!-- <img src="//placehold.it/1200x700/222?text=..." id="galleryImage" class="img-responsive" /> -->
         		<p>
         		    <br/>
         		    <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
@@ -162,10 +162,10 @@
     </div>
     
     <!--scripts loaded here from cdn for performance -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+	<script src="_js/jquery.min.js"></script>
+    <script src="_js/bootstrap.min.js"></script> 
+    <script src="_js/jquery.easing.min.js"></script>
+    <script src="_js/wow.js"></script>
 	<script src="js/leaflet.awesome-markers.js"></script>
     <script src="js/scripts.js"></script>
 	
