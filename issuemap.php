@@ -67,7 +67,7 @@
 
 
 
-      <div id="timeline" style="padding-top:20px;" class="text-center">
+      <div id="timeline" style="padding-top:20px; color:#000;" class="text-center">
         <h2>Εξέλιξη προβλήματος</h2>
         <div class="progress">
           <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
