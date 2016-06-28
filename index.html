@@ -615,14 +615,15 @@
 	/* Carousel Control */
 	.control-box {
 		text-align: right;
-		width: 100%;
+		/*width: 100%;*/
 		position: relative;
 		top: -80px;
+		left: 93%;
     }
 	
 	.control-box1 {
 		text-align: left;
-		width: 100%;
+		/*width: 100%;*/
 		position: relative;
 		top: 70px;
 	}
@@ -664,8 +665,25 @@
 	/* Mobile Only */
 	@media (max-width: 767px) {
 		.page-header, .control-box {
-		text-align: center;
+			text-align: center;
 		} 
+		
+		.control-box {
+			text-align: right !important;
+			/*width: 100%;*/
+			position: relative !important;
+			top: -400px !important;
+			left: 93% !important;
+		}
+	
+		.control-box1 {
+			text-align: left !important;
+			/*width: 100%;*/
+			position: relative !important;
+			top: 298px !important;
+			z-index: 9999999;
+		}
+		
 	}
 
 	@media (max-width: 479px) {
