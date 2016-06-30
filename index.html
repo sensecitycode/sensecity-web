@@ -327,20 +327,6 @@
     <!-- <script src="_js/bootstrap.min.js"></script> -->
     <!-- <script src="_js/docs.min.js"></script> -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 			<script>
 				
@@ -358,12 +344,6 @@
 				var newdate = new Date();
 				var sart_date = new Date();
 				sart_date.setDate(sart_date.getDate() -3); 
-				/*
-				alert(newdate.getFullYear());
-				alert(newdate.getMonth());
-				alert(newdate.getDate());
-				alert(newdate.getDate()-3);
-				*/
 				
 				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 19);
 			
@@ -567,22 +547,10 @@
 								  });
 								  
 								var marker5 = L.marker([positionlat, positionlon], {icon: darkgreenMarker});
-								//marker.bindPopup("Garbage"+obj.image_name);
 								smiliesMarkers.addLayer(marker5);
 							}
-							
-
-						
-						});
-						
-						
-						
-						
+						});	
 					}
-						
-							
-					
-						
 				});
 				
 				
@@ -596,8 +564,7 @@
 					dataType: "json",                
 					success: function(msg){
 						console.log("start");
-						$.each(msg, function(idx, obj) {							
-							console.log(obj);
+						$.each(msg, function(idx, obj) {
 							var positionlat = obj.loc.coordinates[1];
 							var positionlon = obj.loc.coordinates[0];
 							
@@ -634,34 +601,14 @@
 								  });
 								  
 								var marker7 = L.marker([positionlat, positionlon], {icon: garbMarker});
-								//kadoiMarkers.addLayer(marker);		
-								
-									//marker.bindPopup(obj.value_desc);
-									/*marker.bindPopup("Loading...");
-									marker.on('click', function(e) {
-										var popup = e.target.getPopup();
-										var url="http://api.sense.city:3000/api/issue/"+obj._id;
-										$.get(url).done(function(data) {
-											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
-											popup.update();
-										});
-									});*/
-								
 								
 								kadoiMarkers.addLayer(marker7);
 							}
-							
-							
-							
 						});
 						
 						console.log("end");
 					}
 				});
-				
-				
-				
-				
 				
 				map.scrollWheelZoom.disable();
 				
@@ -678,12 +625,6 @@
 				L.control.layers(null, overlayMaps).addTo(map);
 				
 				
-				
-				
-				
-				
-				
-				
 				$('a.page-scroll').bind('click', function(event) {
 					var $anchor = $(this);
 					$('html, body').stop().animate({
@@ -692,113 +633,6 @@
 					event.preventDefault();
 				});
 				
-				
-				/*
-				$.ajax({
-							crossDomain: true,
-							type:"GET",
-							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1",
-							dataType: "json",                
-							success: function(msg){								
-								
-								$('#recent_five').append();
-								var count_slide =0;
-								var position = new Array();
-								var flag_active=0;
-								var html_code='';
-								
-								
-								
-								$.each(msg, function(idx, obj) {
-								
-									if(count_slide%3==0){
-										if(flag_active===0){
-											//$('#recent_five').append('<div class="item active"><ul class="thumbnails">');
-											html_code +='<div class="item active"><ul class="thumbnails">';
-										}else{
-											//$('#recent_five').append('</ul></div><div class="item"><ul class="thumbnails">');
-											html_code +='</ul></div><div class="item"><ul class="thumbnails">';
-										}
-										flag_active++;
-									}
-									
-									var positionlat = obj.loc.coordinates[1];
-									var positionlon = obj.loc.coordinates[0];
-									var image_name;
-									if(obj.image_name==='' || obj.image_name===null || obj.image_name===undefined){
-										image_name = "images/EmptyBox-Phone.png";
-									}
-									else
-									{
-										image_name = obj.image_name;
-									}
-									var issue = '';
-									switch(obj.issue){
-										case 'garbage':
-											issue = 'Πρόβλημα Καθαριότητας';
-											break;
-										case 'lighting':
-											issue = 'Πρόβλημα Φωτισμού';
-											break;
-										case 'plumbing':
-											issue = 'Πρόβλημα Καθαριότητας';
-											break;
-										case 'road-contructor':
-											issue = 'Πρόβλημα Δρόμου/Πεζοδρομίου';
-											break;
-										case 'angry':
-											issue = 'Διάθεση';
-											break;
-										case 'neutral':
-											issue = 'Διάθεση';
-											break;
-										case 'happy':
-											issue = 'Διάθεση';
-											break;
-										default:											
-											issue = '';
-											break;
-									}									
-									
-									var today = new Date();
-									var create_day = new Date(obj.create_at);
-									
-																	
-									var seconds = (today.getTime() - create_day.getTime())/1000;									
-									var datediff ='';
-									
-									console.log(seconds);
-									
-									if(seconds<60){
-										datediff = "πριν από "+seconds+" δευτερόλεπτα";
-									}
-									else if(seconds<3600){
-										datediff = "πριν από "+Math.floor(seconds/60)+" λεπτά";
-									}else if(seconds<86400){
-										datediff = "πριν από "+Math.floor(seconds/3600)+" ώρες";
-									}
-									else{
-										datediff = "πριν από "+Math.floor(seconds/86400)+" μέρες";
-									}
-									
-									//$('#recent_five').append('<a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="color: #FFFFFF !important;"><div class="row"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px dotted rgb(2, 71, 197);  height: 100px;  margin-top: 20px; background-color: #FFFFFF;color:#696969;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px" style="max-width: 110px;" /></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px; color: #696969;">'+datediff+'</div><div>'+obj.value_desc+'</div></div></div></div></a>');
-									//$('#recent_five').append('<li class="col-lg-3"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+'"><div class="thumbnail"><img src="'+image_name+'" alt=""></div><div class="caption"><h4>'+issue+'</h4><p>'+datediff+'</p><p>'+obj.value_desc+'</p></div></a></li>');
-									html_code +='<li class="col-sm-10 col-xs-10 col-lg-4"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+'"><div class="thumbnail col-md-2"><img src="'+image_name+'" alt="" style="height:90px;"></div><div class="caption col-md-8"><p style="font-size:16px;"><b>'+issue+'</b> - <span style="ofnt-size:14px;">'+obj.value_desc+'</span></p><p style="font-size:14px;"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+datediff+'</p></div></a></li>';
-									count_slide++;
-									
-								});
-								
-								$('#recent_five').append('</ul></div>');
-								html_code += '</ul></div>';
-								$('#recent_five').append(html_code);
-								$('#myCarousel').append('<a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">Περισσότερα >></a>');
-							}
-							
-						});
-				
-				*/
-				
-
 				$.ajax({
 							crossDomain: true,
 							type:"GET",
