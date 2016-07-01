@@ -554,7 +554,7 @@
 				});
 				
 				
-				$.getJSON("http://testweb.sense.city/json/all_fix_data_points.json", function(json) {
+				$.getJSON("json/all_fix_data_points.json", function(json) {
 					console.log("start");
 						$.each(json, function(idx, obj) {
 							var positionlat = obj.loc.coordinates[1];
