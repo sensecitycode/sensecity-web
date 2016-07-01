@@ -555,13 +555,57 @@
 				
 				
 				$.getJSON("http://testweb.sense.city/json/all_fix_data_points.json", function(json) {
-					console.log(json); // this will show the info it in firebug console
+					console.log("start");
+						$.each(json, function(idx, obj) {
+							var positionlat = obj.loc.coordinates[1];
+							var positionlon = obj.loc.coordinates[0];
+							
+							if (obj.type === 'fotistiko') 
+							{
+								var yelMarker = L.ExtraMarkers.icon({
+									icon: 'fa-lightbulb-o',
+									markerColor: 'yellow',
+									shape: 'square',
+									prefix: 'fa'
+								  });
+								  
+								var marker6 = L.marker([positionlat, positionlon], {icon: yelMarker});					
+								
+								fotistikoMarkers.addLayer(marker6);	
+								
+							}
+
+							if (obj.type === 'garbage') 
+							{
+								
+								var garbage_color;
+								
+								if(obj.notes[0].ANAKIKLOSI=='0'){
+									garbage_color = 'green';
+								}else{
+									garbage_color='cyan';
+								}
+								var garbMarker = L.ExtraMarkers.icon({
+									icon: 'fa-trash-o',									
+									markerColor: garbage_color,
+									shape: 'square',
+									prefix: 'fa'
+								  });
+								  
+								var marker7 = L.marker([positionlat, positionlon], {icon: garbMarker});
+								
+								kadoiMarkers.addLayer(marker7);
+							}
+						});
+						
+						console.log("end");
+					
 				});
 
 
 				
 				
-
+				/*
 				$.ajax({
 					crossDomain: true,
 					type:"GET",
@@ -616,7 +660,7 @@
 						console.log("end");
 					}
 				});
-				
+				*/
 				map.scrollWheelZoom.disable();
 				
 				var overlayMaps = {
