@@ -357,6 +357,7 @@ appControllers
 							$scope.doCalcLast6Issues();
 							$scope.submitSearchLast30days();
 
+							
 							// set intervals to update
 							var updtime = 60 * 1000; // every 60 secs
 							$interval($scope.doCalcLast6Issues, updtime);
