@@ -378,7 +378,7 @@ textarea {
 
 .feature {
     margin: 50px auto 0;
-    max-width: 400px;
+    /*max-width: 400px;*/
 }
 
 @media(min-width:992px) {
@@ -559,5 +559,5 @@ img::-moz-selection {
 	border-color: #C5C5C5;
     border-style: solid;
     border-width: 1px;
-	background-color: #797979;
+	background-color: #e1e6e6;
 }
