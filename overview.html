@@ -78,13 +78,13 @@
 						<div class="calcItem">
 							<div class="calcValue"
 								ng-class="{calcValuenull: calcValue.value === 'N/A'}"
-								>-</div>
+								>{{calcValueProblemsFrom2016}}</div>
 							<div class="calcValueDescription">Προβλήματα από 1/1/2016</div>
 						</div>
 						<div class="calcItem">
 							<div class="calcValue"
 								ng-class="{calcValuenull: calcValue.value === 'N/A'} "
-								>-</div>
+								>{{calcValueSolutionFrom2016}}</div>
 							<div class="calcValueDescription">Λύσεις από <br/> 1/1/2016</div>
 						</div>
 					</div>
@@ -113,12 +113,13 @@
 								<div class="caption"
 									style="color: #000000; padding-left: 13px; padding-right: 5px; margin-top: -10px;">
 									<p style="font-size: 13px;">
-										<b>{{lastissue.issue}}</b>
+										<b>{{lastissue.issue}}<br />{{lastissue.status}}</b>
 									</p>
 									<p style="font-size: 12px; height: 40px; margin-top: -10px;">{{lastissue.value_desc}}</p>
 									<p style="margin-top: -10px; font-size: 14px;">
 										<i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{lastissue.create_at}}
 									</p>
+
 								</div></a>
 						</div>
 					</div>
