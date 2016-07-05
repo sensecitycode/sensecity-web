@@ -1,1 +1,1 @@
-﻿{"menu_participation":"Συμμετοχή","menu_participation1":"Συμμετοχή"}
+﻿lang = '{"menu_participation":"Συμμετοχή","menu_participation1":"Συμμετοχή1"}';

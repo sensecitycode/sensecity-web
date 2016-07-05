@@ -788,10 +788,10 @@
 					});
 					
 				}else{
+					
 					 $.getJSON("js/lang.js", function(result){
-						$.each(result, function(i, field){
-							$("div").append(field + " ");
-						});
+						var mydata = JSON.parse(result);
+						console.log(mydata);
 					});
 					
 					
