@@ -1,3 +1,3 @@
 ﻿{
-	menu_participation:'Συμμετοχή'
+	menu_participation:"Συμμετοχή"
 }
