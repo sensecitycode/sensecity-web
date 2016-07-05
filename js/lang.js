@@ -1,3 +1,1 @@
-﻿{
-	"menu_participation":"Συμμετοχή"
-}
+﻿{"menu_participation":"Συμμετοχή","menu_participation1":"Συμμετοχή"}
