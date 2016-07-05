@@ -60,13 +60,13 @@ a {
 
 #headertitle {
 	padding: 10px;
-	font-size: 130%;
+	font-size: 160%;
 }
 
 #aside {
 	float: left;
 	height: 100%;
-	width: 165px;
+	width: 151px;
 	background-color: #4787B0;
 	color: white;
 }
@@ -92,7 +92,7 @@ a {
 	width: 140px;
 	height: 140px;
 	padding: 5px;
-	margin: 10px;
+	margin: 5px;
 }
 
 .calcValue {
