@@ -786,14 +786,9 @@
 					$('head').append('<script src="js/lang.js" />');
 					
 				}
-				console.log($('#menu_participation').html());
-				$('#menu_participation').html(lang.menu_participation);// = 'sdfsd';//;
-				console.log(lang.menu_participation);
-				console.log(lang.menu_participation1);
+				
+				change_lang();
 			
-			
-	
-	
 	
 				console.log(localStorage.getItem("language"));
 				var suffix_lang_var = '';
@@ -814,8 +809,7 @@
 					
 					
 					$('head').append('<script src="js/lang.js" />');
-					console.log(lang.menu_participation);
-					console.log(lang.menu_participation1);
+					change_lang();
 					
 					return false;
 				});
@@ -824,8 +818,7 @@
 					localStorage.setItem("language", "en");
 					console.log(localStorage.getItem("language"));
 					$('head').append('<script src="js/lang.en.js" />');
-					console.log(lang.menu_participation);
-					console.log(lang.menu_participation1);
+					change_lang();
 					return false;
 				});
 				
@@ -834,7 +827,14 @@
 				//console.log(localStorage.getItem("language"));
 				
 				
+				function change_lang(){
+					$('#menu_participation').html(lang.menu_participation);
+					$('#menu_contact').html(lang.menu_contact);
+					$('#menu_sensecityapp').html(lang.menu_sensecityapp);
+					$('#menu_data').html(lang.menu_data);
+					$('#menu_about').html(lang.menu_about);
 				
+				}
 				
 			</script>
 			
