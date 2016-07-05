@@ -120,11 +120,11 @@
 							</div>
 							<div class="col-sm-3 col-xs-6 text-center product_div" >
 								<i class="icon-lg ion-social-apple-outline" style="color:#B9B5B5;" title="iOS"></i>
-								<h3 style="color:#B9B5B5;" id="msg_start_now_ios">Συσκευές iOS</h3>
+								<h4 style="color:#B9B5B5;" id="msg_start_now_ios">Συσκευές iOS</h4>
 							</div>
 							<div class="col-sm-3 col-xs-6 text-center product_div" >
 								<i class="icon-lg ion-social-windows-outline" style="color:#B9B5B5;" title="Windows"></i>
-								<h3 style="color:#B9B5B5;" id="msg_start_now_windows">Συσκευές Windows</h3>
+								<h4 style="color:#B9B5B5;" id="msg_start_now_windows">Συσκευές Windows</h4>
 							</div>
 						</div>
                     </div>
@@ -136,7 +136,7 @@
         <div class="container">
             <div class="row"  style="margin-left:0px;margin-right:0px; ">
                 <div class="col-lg-12 text-center">
-                    <h2 class="margin-top-0 text-primary">Πώς συμμετέχω</h2>
+                    <h2 class="margin-top-0 text-primary" id="msg_how_partcipate">Πώς συμμετέχω</h2>
                     <hr class="primary">
                 </div>
             </div>
@@ -146,22 +146,22 @@
                 <div class="col-lg-4 col-md-4 text-center">
                     <div class="feature  wow fadeInUp text-light " data-wow-delay=".5s" > 
                         <i class="icon-lg ion-ios-location-outline" ></i>
-                        <h3>Αναφορά προβλημάτων</h3>
-                        <p class="text-muted">Οι πολίτες είστε οι αισθητήρες της πόλης! Χρησιμοποιώντας τις δικές σας συσκευές επικοινωνίας, είτε μέσω της εφαρμογής sense.city είτε με άλλες συσκευές που αναφέρουν στο sense.city δεδομένα της πόλης, ενημερώνετε τους συμπολίτες και το δήμο για προβλήματα και συμβάντα που συμβαίνουν κάθε στιγμή</p>
+                        <h3 id="msg_anafora_probl">Αναφορά προβλημάτων</h3>
+                        <p class="text-muted" id="msg_anafora_probl_text">Οι πολίτες είστε οι αισθητήρες της πόλης! Χρησιμοποιώντας τις δικές σας συσκευές επικοινωνίας, είτε μέσω της εφαρμογής sense.city είτε με άλλες συσκευές που αναφέρουν στο sense.city δεδομένα της πόλης, ενημερώνετε τους συμπολίτες και το δήμο για προβλήματα και συμβάντα που συμβαίνουν κάθε στιγμή</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 text-center">
                     <div class="feature wow fadeInUp text-light " data-wow-delay="1.5s" >
                         <i class="icon-lg ion-ios-people-outline " ></i>
-                        <h3>Αστική συμμετοχή</h3>
-                        <p class="text-muted">Συμμετέχετε ενεργά στις διαδικασίες και στην επίλυση προβλημάτων που αφορούν τη ζωή σας στη πόλη. Βοηθήστε στην αστική ανάπτυξη και στην καλύτερη σχέση μεταξύ πολιτών και φορέων της πόλης.</p>
+                        <h3 id="msg_astiki_summe">Αστική συμμετοχή</h3>
+                        <p class="text-muted" id="msg_astiki_summe_text">Συμμετέχετε ενεργά στις διαδικασίες και στην επίλυση προβλημάτων που αφορούν τη ζωή σας στη πόλη. Βοηθήστε στην αστική ανάπτυξη και στην καλύτερη σχέση μεταξύ πολιτών και φορέων της πόλης.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 text-center">
                     <div class="feature wow fadeInUp text-light " data-wow-delay="2.5s">
                         <i class="icon-lg ion-ios-lightbulb-outline" ></i>
-                        <h3>Συν-δημιουργία</h3>
-                        <p class="text-muted">Η πλατφόρμα sense.city προσπαθεί να βάλει τα εργαλεία για την ενεργοποίηση των πολιτών, τη δημιουργικότητα, το σχεδιασμό και την επικοινωνία στα χέρια του καθενός και καλεί για συλλογική σκέψη και δράσεις τόσο τους πολίτες όσο και τους φορείς της πόλης.</p>
+                        <h3 id="msg_syn_dimiourg">Συν-δημιουργία</h3>
+                        <p class="text-muted" id="msg_syn_dimiourg_text">Η πλατφόρμα sense.city προσπαθεί να βάλει τα εργαλεία για την ενεργοποίηση των πολιτών, τη δημιουργικότητα, το σχεδιασμό και την επικοινωνία στα χέρια του καθενός και καλεί για συλλογική σκέψη και δράσεις τόσο τους πολίτες όσο και τους φορείς της πόλης.</p>
                     </div>
                 </div>
             </div>
@@ -842,8 +842,13 @@
 					$('#msg_start_now_android').html(lang.msg_start_now_android);
 					$('#msg_start_now_ios').html(lang.msg_start_now_ios);
 					$('#msg_start_now_windows').html(lang.msg_start_now_windows);
-					
-					
+					$('#msg_how_partcipate').html(lang.msg_how_partcipate);
+					$('#msg_anafora_probl').html(lang.msg_anafora_probl);
+					$('#msg_anafora_probl_text').html(lang.msg_anafora_probl_text);
+					$('#msg_astiki_summe').html(lang.msg_astiki_summe);
+					$('#msg_astiki_summe_text').html(lang.msg_astiki_summe_text);
+					$('#msg_syn_dimiourg').html(lang.msg_syn_dimiourg);
+					$('#msg_syn_dimiourg_text').html(lang.msg_syn_dimiourg_text);
 				}
 				
 			</script>
