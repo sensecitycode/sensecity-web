@@ -800,23 +800,32 @@
 				
 				if(localStorage.getItem("language") === 'en'){
 					localStorage.removeItem("language");
-					suffix_lang_var='en';
 					localStorage.setItem("language", "en");
+
 				}else{
 					localStorage.removeItem("language");
-					suffix_lang_var='el';
 					localStorage.setItem("language", "el");
+					$('head').append('<script src="js/lang.js" />');
 				}
 				
 				$('#land_el').click(function() {
 					localStorage.setItem("language", "el");
 					console.log(localStorage.getItem("language"));
+					
+					
+					$('head').append('<script src="js/lang.js" />');
+					console.log(lang.menu_participation);
+					console.log(lang.menu_participation1);
+					
 					return false;
 				});
 				
 				$('#land_en').click(function() {
 					localStorage.setItem("language", "en");
 					console.log(localStorage.getItem("language"));
+					$('head').append('<script src="js/lang.en.js" />');
+					console.log(lang.menu_participation);
+					console.log(lang.menu_participation1);
 					return false;
 				});
 				
