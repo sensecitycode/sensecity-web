@@ -2,7 +2,8 @@ var appServices = angular.module('overviewapp.services', []);
 
 appServices.factory('APIEndPointService', function() {
 	  return {
-		  APIURL: "http://api.sense.city:3000/api/issue"
+		  APIURL: "http://api.sense.city:3000/api/issue",
+			bugzilla: "http://api.sense.city:3001/bugs/search"
 	  };
 });
 
@@ -27,4 +28,18 @@ appServices.factory('DisplayLast6IssuesService', function ( $resource, APIEndPoi
           // isArray: true
         }
     });
+});
+
+appServices.factory('BugService', function ( $resource, APIEndPointService) {
+    return $resource(
+        APIEndPointService.bugzilla,
+        null,
+        {
+          search: {
+            method: 'POST',
+            headers:{'Content-Type':'application/json'},
+            isArray: true
+          }
+        }
+    );
 });

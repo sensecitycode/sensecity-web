@@ -23,11 +23,13 @@ appControllers
 						'APIEndPointService',
 						'DisplayIssuesService',
 						'DisplayLast6IssuesService',
+						'BugService',
 						'cfpLoadingBar',
 						'$interval',
 						function($scope, $q, APIEndPointService,
 								DisplayIssuesService,
-								DisplayLast6IssuesService, cfpLoadingBar,
+								DisplayLast6IssuesService, BugService,
+								cfpLoadingBar,
 								$interval) {
 
 							$scope.lastdatesToCheck = 30;
@@ -281,7 +283,6 @@ appControllers
 																// lastissue.issue="
 																// +
 																// lastissue.issue);
-
 																if (lastissue.image_name === ''
 																		|| lastissue.image_name === null
 																		|| lastissue.image_name === undefined) {
@@ -345,19 +346,59 @@ appControllers
 																			+ " μέρες";
 																}
 																lastissue.create_at = datediff;
+																var bugParams =
+																{
+																    "method": "Bug.get",
+																    "params": [{"ids":lastissue._id,"product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων","include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+																    "id": 1
+																};
+																BugService.search(bugParams, function(result) {
+																		switch (result[0].status) {
+																		 case 'CONFIRMED':
+																			 result.status = 'Ανοιχτό';
+																			 break;
+																		 case 'IN_PROGRESS':
+																			 result.status = 'Σε εκτελέση';
+																			 break;
+																		 case 'RESOLVED':
+																			 result.status = 'Ολοκληρωμένο';
+																			 break;
+																	 }
+																	 lastissue.status = result.status;
+																});
 
 															});
-										}); // query() returns all the last 6
-											// issues
-								
-								
+										});
+										// query() returns all the last 6
+										// issues
+
 									$scope.lastissues = theLastIssues;
 							};
 
+							$scope.doCalcFrom2016 = function() {
+								var problemsParam = {startdate:"2016-05-01",sort:"-1",list_issue:"1",image_field:"0"};
+								DisplayIssuesService.query(problemsParam, function(result) {
+										 $scope.calcValueProblemsFrom2016 = result.length;
+								});
+
+								var solutionsParam =
+								{
+										"method": "Bug.search",
+										"params": [{"product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων","order":"bug_id DESC","status":"RESOLVED","f1":"resolution","o1":"changedafter","v1":"2016-01-01","include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+										"id": 1
+								};
+								BugService.search(solutionsParam, function(result) {
+										 $scope.calcValueSolutionFrom2016 = result.length;
+								});
+
+							};
+
+
 							$scope.doCalcLast6Issues();
 							$scope.submitSearchLast30days();
+							$scope.doCalcFrom2016();
 
-							
+
 							// set intervals to update
 							var updtime = 60 * 1000; // every 60 secs
 							$interval($scope.doCalcLast6Issues, updtime);
