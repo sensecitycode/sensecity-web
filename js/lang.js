@@ -1,1 +1,1 @@
-﻿lang = {menu_participation:"Συμμετοχή",menu_participation1:"Συμμετοχή1"};
+﻿lang = {menu_sensecityapp:"SENSE.CITY APP",menu_participation:"ΣΥΜΜΕΤΟΧΗ",menu_data:"ΔΕΔΟΜΕΝΑ",menu_contact:"ΕΠΙΚΟΙΝΩΝΙΑ",menu_about:"ΣΧΕΤΙΚΑ"};
