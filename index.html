@@ -7,12 +7,7 @@
 	<!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="Codeply">
-    <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" /> -->
-	
-   <!--  <link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" /> 
-	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet"> -->
-	
+    
 	<link rel="stylesheet" href="_css/bootstrap.min.css" />
     <link href="css/animate.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/ionicons.min.css" />
@@ -21,6 +16,7 @@
 	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
 	<script src="js/leaflet.js"></script> 
     <link rel="stylesheet" href="css/styles.css" />
+	
   </head>
   <body>
     <nav id="topNav" class="navbar navbar-default navbar-fixed-top">
@@ -53,7 +49,9 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" data-toggle="modal" title="sense.city @ Πάτρα" href="#aboutModal">Σχετικα</a>
+						<a href="#" style="float:right;padding-left:0px;padding-right:0px;" id="land_el" ><img src="images/flags/el.png" /> </a>&nbsp;&nbsp;
+						<a href="#" style="float:right;padding-left:0px;padding-right:5px;" id="land_en" ><img src="images/flags/en.png" /> </a>
+                        <a class="page-scroll" data-toggle="modal" title="sense.city @ Πάτρα" href="#aboutModal" style="float:right;">Σχετικα</a>
                     </li>
                 </ul>
             </div>
@@ -73,7 +71,7 @@
             <source type="video/mp4" src="http://sense.city/movie.mp4" ></source>
         </video>
     </header>
-	<aside class="bg-dark" style="background-color: rgba(255,255,255,0.9); /*background-image:url('img/apps.png'); background-repeat-x: no-repeat; background-repeat-y: no-repeat;*/" id="three">
+	<aside class="bg-dark" style="background-color: rgba(255,255,255,0.9);" id="three">
         <div class="container text-center">
             <div class="call-to-action">
                 <h2 class="text-primary" style="color:#808080;">Ξεκινήστε τώρα</h2>
@@ -330,12 +328,16 @@
 				$(document).ready(function() {
 					$('.carousel').carousel({
 						interval: 15000
-					})
+					});
+					
+					
+				
+				
 				});
 
   
-  
-  
+				
+  /*
   
 				var newdate = new Date();
 				var sart_date = new Date();
@@ -597,7 +599,7 @@
 						console.log("end");
 					
 				});
-
+*/
 
 				
 				
@@ -657,7 +659,7 @@
 					}
 				});
 				*/
-				map.scrollWheelZoom.disable();
+				/* map.scrollWheelZoom.disable();
 				
 				var overlayMaps = {
 					"Προβλήματα σκουπιδιών": garbageMarkers,
@@ -671,7 +673,7 @@
 							
 				L.control.layers(null, overlayMaps).addTo(map);
 				
-				
+				*/
 				$('a.page-scroll').bind('click', function(event) {
 					var $anchor = $(this);
 					$('html, body').stop().animate({
@@ -680,7 +682,7 @@
 					event.preventDefault();
 				});
 				
-				$.ajax({
+				/*$.ajax({
 							crossDomain: true,
 							type:"GET",
 							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1",
@@ -771,14 +773,72 @@
 							}
 							
 						});
+				*/
+				
+				
+				if(localStorage.getItem("language") === 'en'){
+					var script = document.createElement('script');
+					script.src = "js/lang.en.js";
+					document.head.appendChild(script);
+				}else{
+					jQuery.ajax({
+						  url: "js/lang.js",
+						  dataType: "script",
+						  cache: true
+					}).done(function() {
+							alert('ghfg');
+					});
+					$.getScript( "./js/lang.js", function( data, textStatus, jqxhr ) {
+						console.log( data ); // Data returned
+						console.log( textStatus ); // Success
+						console.log( jqxhr.status ); // 200
+						console.log( "Load was performed." );
+					});
+					
+				}
+						
+			
+			
+	
+	
+	
+				console.log(localStorage.getItem("language"));
+				var suffix_lang_var = '';
+				
+				if(localStorage.getItem("language") === 'en'){
+					localStorage.removeItem("language");
+					suffix_lang_var='en';
+					localStorage.setItem("language", "en");
+				}else{
+					localStorage.removeItem("language");
+					suffix_lang_var='el';
+					localStorage.setItem("language", "el");
+				}
+				
+				$('#land_el').click(function() {
+					localStorage.setItem("language", "el");
+					console.log(localStorage.getItem("language"));
+					return false;
+				});
+				
+				$('#land_en').click(function() {
+					localStorage.setItem("language", "en");
+					console.log(localStorage.getItem("language"));
+					return false;
+				});
 				
 				
 				
+				//console.log(localStorage.getItem("language"));
+				
+				console.log(lang.menu_participation);
+				console.log(lang.menu_participation);
 				
 				
 			</script>
 			
 			<script>
+			/*
 			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -786,7 +846,7 @@
 
 			  ga('create', 'UA-73253016-1', 'auto');
 			  ga('send', 'pageview');
-
+*/
 			</script>
 			
 			<style>
