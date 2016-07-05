@@ -777,7 +777,7 @@
 				
 				
 				if(localStorage.getItem("language") === 'en'){
-					$.getScript( "./js/lang.en.js", function( data, textStatus, jqxhr ) {
+					$.getScript( "js/lang.en.js", function( data, textStatus, jqxhr ) {
 						console.log( data["menu_participation"] ); // Data returned
 						console.log( textStatus ); // Success
 						console.log( jqxhr.status ); // 200
@@ -785,7 +785,7 @@
 					});
 					
 				}else{
-					$.getScript( "./js/lang.js", function( data, textStatus, jqxhr ) {
+					$.getScript( "js/lang.js", function( data, textStatus, jqxhr ) {
 						console.log( data["menu_participation"] ); // Data returned
 						console.log( textStatus ); // Success
 						console.log( jqxhr.status ); // 200
