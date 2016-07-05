@@ -781,7 +781,7 @@
 					
 					$.getScript( "js/lang.en.js", function( data, textStatus, jqxhr ) {
 						var lang = data;
-						console.log( data ); // Data returned
+						console.log( lang ); // Data returned
 						console.log( textStatus ); // Success
 						console.log( jqxhr.status ); // 200
 						console.log( "Load was performed." );
@@ -791,7 +791,7 @@
 					
 					$.getScript( "js/lang.js", function( data, textStatus, jqxhr ) {
 						var lang = data;
-						console.log( data ); // Data returned
+						console.log( lang.menu_participation ); // Data returned
 						console.log( textStatus ); // Success
 						console.log( jqxhr.status ); // 200
 						console.log( "Load was performed." );
