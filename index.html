@@ -777,17 +777,14 @@
 				
 				
 				if(localStorage.getItem("language") === 'en'){
-					var script = document.createElement('script');
-					script.src = "js/lang.en.js";
-					document.head.appendChild(script);
-				}else{
-					jQuery.ajax({
-						  url: "js/lang.js",
-						  dataType: "script",
-						  cache: true
-					}).done(function() {
-							alert('ghfg');
+					$.getScript( "./js/lang.en.js", function( data, textStatus, jqxhr ) {
+						console.log( data ); // Data returned
+						console.log( textStatus ); // Success
+						console.log( jqxhr.status ); // 200
+						console.log( "Load was performed." );
 					});
+					
+				}else{
 					$.getScript( "./js/lang.js", function( data, textStatus, jqxhr ) {
 						console.log( data ); // Data returned
 						console.log( textStatus ); // Success
@@ -831,7 +828,6 @@
 				
 				//console.log(localStorage.getItem("language"));
 				
-				console.log(lang.menu_participation);
 				console.log(lang.menu_participation);
 				
 				
