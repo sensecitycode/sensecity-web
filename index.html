@@ -788,15 +788,12 @@
 					});
 					
 				}else{
-					
-					$.getScript( "js/lang.js", function( data, textStatus, jqxhr ) {						
-						console.log( data ); // Data returned
-						var obj = JSON.parse(data);
-						console.log(obj['menu_participation']);
-						console.log( textStatus ); // Success
-						console.log( jqxhr.status ); // 200
-						console.log( "Load was performed." );
+					 $.getJSON("js/lang.js", function(result){
+						$.each(result, function(i, field){
+							$("div").append(field + " ");
+						});
 					});
+					
 					
 				}
 						
