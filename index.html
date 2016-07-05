@@ -779,13 +779,7 @@
 				if(localStorage.getItem("language") === 'en'){
 				
 					
-					$.getScript( "js/lang.en.js", function( data, textStatus, jqxhr ) {
-						var lang = data;
-						console.log( lang ); // Data returned
-						console.log( textStatus ); // Success
-						console.log( jqxhr.status ); // 200
-						console.log( "Load was performed." );
-					});
+					$('head').append('<script src="js/lang.en.js" />');
 					
 				}else{
 					
@@ -794,7 +788,8 @@
 				}
 				
 				
-				console.log(lang);
+				console.log(lang.menu_participation);
+				console.log(lang.menu_participation1);
 			
 			
 	
