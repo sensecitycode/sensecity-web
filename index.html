@@ -790,8 +790,10 @@
 				}else{
 					
 					$.getScript( "js/lang.js", function( data, textStatus, jqxhr ) {
-						var lang = data;
-						console.log( lang["menu_participation"] ); // Data returned
+						$.each( data, function( key, val ) {
+							console.log( key + "'>" + val );
+						});
+						console.log( data ); // Data returned
 						console.log( textStatus ); // Success
 						console.log( jqxhr.status ); // 200
 						console.log( "Load was performed." );
