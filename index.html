@@ -778,7 +778,7 @@
 				
 				if(localStorage.getItem("language") === 'en'){
 					$.getScript( "./js/lang.en.js", function( data, textStatus, jqxhr ) {
-						console.log( data ); // Data returned
+						console.log( data.menu_participation ); // Data returned
 						console.log( textStatus ); // Success
 						console.log( jqxhr.status ); // 200
 						console.log( "Load was performed." );
@@ -786,7 +786,7 @@
 					
 				}else{
 					$.getScript( "./js/lang.js", function( data, textStatus, jqxhr ) {
-						console.log( data ); // Data returned
+						console.log( data.menu_participation ); // Data returned
 						console.log( textStatus ); // Success
 						console.log( jqxhr.status ); // 200
 						console.log( "Load was performed." );
@@ -828,7 +828,7 @@
 				
 				//console.log(localStorage.getItem("language"));
 				
-				console.log(lang.menu_participation);
+				
 				
 				
 			</script>
