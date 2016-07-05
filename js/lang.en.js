@@ -1,4 +1,4 @@
 {
-	menu_participation:"Participation"
+	"menu_participation":"Participation"
 
 }
