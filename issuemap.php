@@ -337,14 +337,12 @@
 						});
 						
 						
-					}
-			
-			
-			</script>
-
-
-      <script>
-        var bug_status;
+						
+						
+						
+						
+						
+						 var bug_status;
 
         $.ajax({
           crossDomain: true,
@@ -478,8 +476,18 @@
 
           }
         });
+		
+		
+		
+		
+		
+		
+					}
+			
+			
+			</script>
 
-      </script>
+
 
 			<script>
 			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
