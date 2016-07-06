@@ -1,60 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>sense.city</title>
-    <meta name="description" content="sense.city" />
-	<!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="Codeply">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/leaflet.css" />
-	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
-	<script src="js/leaflet.js"></script> 
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <nav id="topNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand page-scroll" href="#first"><i class="ion-ios-analytics-outline"></i> sense.city
-				<sup style="font-size: 55%">beta</sup></a>
-            </div>
-            <div class="navbar-collapse collapse" id="bs-navbar">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a class="page-scroll" href="#one">Η ΠΟΛΗ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#two">ΣΥΜΜΕΤΟΧΗ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#three">sense.city app</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#four">ΔΕΔΟΜΕΝΑ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#last">ΕΠΙΚΟΙΝΩΝΙΑ</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" data-toggle="modal" title="sense.city @ Πάτρα" href="#aboutModal">Σχετικα</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>    
+	<head>
+		<meta charset="utf-8">
+		<title>sense.city</title>
+		<meta name="description" content="sense.city" />
+		<!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Codeply">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+		<link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/leaflet.css" />
+		<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+		<script src="js/leaflet.js"></script> 
+		<link rel="stylesheet" href="css/styles.css" />
+	</head>
+	<body>
+    <div id="container">
+		<div id="header" style="padding-top: 17px; background-color:#000000;height: 61px;">
+			<div>
+				<div id="logo" style="float:left;">
+					<a href="./" style="font-size:1.5em"> <i class="ion-ios-analytics-outline"></i>
+							sense.city <sup style="font-size: 55%">beta</sup></a>
+					<img src="images/patraslogo.jpg" style="width: 51px; margin-top: -21px; margin-bottom: -17px; margin-left: 4px;"> 
+					<img src="images/upatras_logo.png" style="width: 174px; margin-top: -24px; margin-bottom: -17px; margin-left: 4px;"> 
+				</div>
+				<div style="font-size:26px; float:left; width:50%;"><center>Τι συμβαίνει στην πόλη<center></div>
+				<div style="float:left;">
+					<a href="#" style="float:right;padding-left:0px;padding-right:0px;" id="land_el" ><img src="images/flags/el.png" /> </a>&nbsp;&nbsp;
+					<a href="#" style="float:right;padding-left:0px;padding-right:5px;" id="land_en" ><img src="images/flags/en.png" /> </a>
+				</div>
+			</div>
+		</div>
+	</div>
     <section class="bg-primary" id="one">
         <div class="container">
             <div class="row">                
@@ -63,42 +42,20 @@
 				</div>
             </div>
         </div>
-    </section>
-    
-    
-	
-       
-    <footer id="footer">
-        <div class="container-fluid">
+    </section>    
+    <footer id="footer" style="background-color:#D0D0D0;">
+        <div class="container">
             <div class="row">
-                <div class="col-xs-6 col-sm-3 column">
+                <div class="col-xs-12 col-sm-9 column">
                     <h4>Πληροφορίες</h4>
-                    <ul class="list-unstyled">
+                    <ul class="list-inline">
                         <li><a href="">Products</a></li>
                         <li><a href="">Services</a></li>
                         <li><a href="">Benefits</a></li>
                         <li><a href="">Developers</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-6 col-sm-3 column">
-                    <h4>Σχετικά</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Delivery Information</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Terms &amp; Conditions</a></li>
                     </ul>
-                </div>
-                <div class="col-xs-12 col-sm-3 column">
-                    <h4>Stay Posted</h4>
-                    <form>
-                        <div class="form-group">
-                          <input type="text" class="form-control" title="No spam, we promise!" placeholder="Tell us your email">
-                        </div>
-                        <div class="form-group">
-                          <button class="btn btn-primary" data-toggle="modal" data-target="#alertModal" type="button">Subscribe for updates</button>
-                        </div>
-                    </form>
                 </div>
                 <div class="col-xs-12 col-sm-3 text-right">
                     <h4>Ακολουθήστε μας</h4>
@@ -163,30 +120,79 @@
 
 			<script>
 				
-				$.ajax({
+				console.log(localStorage.getItem("language"));
+				
+				
+				if(localStorage.getItem("language") === 'en'){
+					$('head').append('<script src="js/lang.en.js" />');
+					localStorage.removeItem("language");
+					localStorage.setItem("language", "en");
+				}else{
+					$('head').append('<script src="js/lang.js" />');
+					localStorage.removeItem("language");
+					localStorage.setItem("language", "el");
+				}
+				
+				change_lang();
+			
+	
+				console.log(localStorage.getItem("language"));
+				
+				
+				$('#land_el').click(function() {
+					localStorage.setItem("language", "el");
+					console.log(localStorage.getItem("language"));
+					
+					
+					$('head').append('<script src="js/lang.js" />');
+					change_lang();
+					
+					return false;
+				});
+				
+				$('#land_en').click(function() {
+					localStorage.setItem("language", "en");
+					console.log(localStorage.getItem("language"));
+					$('head').append('<script src="js/lang.en.js" />');
+					change_lang();
+					return false;
+				});
+				
+				
+				
+				function change_lang(){
+					$('#msg_subdomain_title').html(lang.msg_subdomain_title);
+					$('#msg_sub_text1').html(lang.msg_sub_text1);
+					$('#msg_sub_text2').html(lang.msg_sub_text2);
+					$('#msg_section_info').html(lang.msg_section_info);
+					$('#msg_section_followus').html(lang.msg_section_followus);
+					
+					
+					$('#recent_five').html('');
+					$('#btn_more').html('');
+					
+					$.ajax({
 							crossDomain: true,
 							type:"GET",
-							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=100&list_issue=1",
+							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1",
 							dataType: "json",                
 							success: function(msg){								
 								
 								$('#recent_five').append();
-								var count_pos =0;
+								var count_slide =0;
 								var position = new Array();
-								/*
-								var positionlat = msg[0].loc.coordinates[1];
-								var positionlon = msg[0].loc.coordinates[0];
-								*/
-								/*console.log(positionlat);
-								console.log(positionlon);
-								*/
+								var flag_active=0;
+								var html_code='';
+								
+								
+								
 								$.each(msg, function(idx, obj) {
 								
-								
+									
 									var positionlat = obj.loc.coordinates[1];
 									var positionlon = obj.loc.coordinates[0];
 									var image_name;
-									if(obj.image_name==='noimage' || obj.image_name==='' || obj.image_name===null || obj.image_name===undefined){
+									if(obj.image_name==='' || obj.image_name===null || obj.image_name===undefined || obj.image_name==='no-image'){
 										image_name = "images/EmptyBox-Phone.png";
 									}
 									else
@@ -196,25 +202,53 @@
 									var issue = '';
 									switch(obj.issue){
 										case 'garbage':
-											issue = 'Πρόβλημα Καθαριότητας';
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Cleaning Problem';
+											}else{
+												issue = 'Πρόβλημα Καθαριότητας';
+											}
 											break;
 										case 'lighting':
-											issue = 'Πρόβλημα Φωτισμού';
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Lighting Problem';
+											}else{
+												issue = 'Πρόβλημα Φωτισμού';
+											}
 											break;
 										case 'plumbing':
-											issue = 'Προβλήματα ύδρευσης';
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Plumbing Problem';
+											}else{
+												issue = 'Πρόβλημα Υδραυλικών';
+											}
 											break;
 										case 'road-contructor':
-											issue = 'Πρόβλημα Δρόμου/Πεζοδρομίου';
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Street/Sidewalk Problem';
+											}else{
+												issue = 'Πρόβλημα Δρόμου/Πεζοδρομίου';
+											}
 											break;
 										case 'angry':
-											issue = 'Διάθεση';
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Disposal';
+											}else{
+												issue = 'Διάθεση';
+											}
 											break;
 										case 'neutral':
-											issue = 'Διάθεση';
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Disposal';
+											}else{
+												issue = 'Διάθεση';
+											}
 											break;
 										case 'happy':
-											issue = 'Διάθεση';
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Disposal';
+											}else{
+												issue = 'Διάθεση';
+											}
 											break;
 										default:											
 											issue = '';
@@ -228,30 +262,56 @@
 									var seconds = (today.getTime() - create_day.getTime())/1000;									
 									var datediff ='';
 									
+									console.log(seconds);
+									
 									if(seconds<60){
-										datediff = "πριν από "+seconds+" δευτερόλεπτα";
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+seconds+" seconds";
+										}else{
+											datediff = "πριν από "+seconds+" δευτερόλεπτα";
+										}
+										
 									}
 									else if(seconds<3600){
-										datediff = "πριν από "+Math.floor(seconds/60)+" λεπτά";
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+Math.floor(seconds/60)+" minutes";
+										}else{
+											datediff = "πριν από "+Math.floor(seconds/60)+" λεπτά";
+										}
+										
 									}else if(seconds<86400){
-										datediff = "πριν από "+Math.floor(seconds/3600)+" ώρες";
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+Math.floor(seconds/3600)+" hours";
+										}else{
+											datediff = "πριν από "+Math.floor(seconds/3600)+" ώρες";
+										}
+										
 									}
 									else{
-										datediff = "πριν από "+Math.floor(seconds/86400)+" μέρες";
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+Math.floor(seconds/86400)+" days";
+										}else{
+											datediff = "πριν από "+Math.floor(seconds/86400)+" μέρες";
+										}
+										
 									}
 									
+									html_code +='<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" style="padding-bottom: 5px;"><div style="background-color:#FFFFFF; border-width: 1px;border-color: #967f7f;border-style: dotted;border-radius: 10px;"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="text-decoration:none;"><center><div class="thumbnail crop" style=" padding:0px; "><img src="'+image_name+'" alt=""></div></center><div class="caption" style="color:#000000;padding-left: 13px;padding-right: 5px; margin-top:-10px;"><p style="font-size:13px;"><b id="msg_subdomain_issue">'+issue+'</b></p> <p style="font-size:12px;height:40px;margin-top:-10px;">'+obj.value_desc+'</p><p style="margin-top:-10px;font-size:14px;"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+datediff+'</p></div></div></div>';
+									count_slide++;
 									
-									$('#recent_five').append('<a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="color: #FFFFFF !important;"><div class="col-lg-4 col-md-6 col-sm-12"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #BFAFAF;  height: 100px;  margin-top: 20px; background-color: #756161;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px" style="max-width: 110px;" /></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px;">'+datediff+'</div><div>'+obj.value_desc+'</div></div></div></div></a>');
-
 								});
 								
-								
+								$('#recent_five').append(html_code);
+								if(localStorage.getItem("language") === 'en'){
+									$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Search </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Report a Problem </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Overview </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">More >></a>');
+								}else{
+									$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Αναζήτηση </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Αναφορά προβλήματος </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Επισκόπηση </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">Περισσότερα >></a>');
+								}
 							}
 							
 						});
-				
-				
-				
+						
+				}
 
 			</script>
 			
