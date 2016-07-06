@@ -348,16 +348,19 @@
 				
 				if(localStorage.getItem("language") === 'en'){
 					$('head').append('<script src="js/lang.en.js" />');
+					localStorage.removeItem("language");
+					localStorage.setItem("language", "en");
 				}else{
 					$('head').append('<script src="js/lang.js" />');
+					localStorage.removeItem("language");
+					localStorage.setItem("language", "el");
 				}
 				
 				change_lang();
 			
 	
 				console.log(localStorage.getItem("language"));
-				var suffix_lang_var = '';
-				
+				/*
 				if(localStorage.getItem("language") === 'en'){
 					localStorage.removeItem("language");
 					localStorage.setItem("language", "en");
@@ -366,7 +369,7 @@
 					localStorage.removeItem("language");
 					localStorage.setItem("language", "el");
 					$('head').append('<script src="js/lang.js" />');
-				}
+				}*/
 				
 				$('#land_el').click(function() {
 					localStorage.setItem("language", "el");
