@@ -385,7 +385,8 @@
 							},
 							success: function(msg){
 								moment.locale('el');
-
+								var local_time_assign = null;
+								var time_assign = null;
 								for (i = 0; i < msg[0].history.length; i++)
 								{
 									for (j = 0; j <msg[0].history[i].changes.length; j++)
@@ -403,7 +404,7 @@
 									$('#assignment').replaceWith(local_time_assign);
 								}
 								
-								var time_compl='';
+								var time_compl=null;
 								
 								for (i = 0; i < msg[0].history.length; i++)
 								{
