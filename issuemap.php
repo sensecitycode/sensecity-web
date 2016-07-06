@@ -1,68 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>sense.city</title>
-    <meta name="description" content="sense.city" />
-	<!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="Codeply">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-	  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/leaflet.css" />
-    <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
-    <script src="js/leaflet.js"></script>
-    <link rel="stylesheet" href="css/styles.css" />
-    <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+	<head>
+		<meta charset="utf-8">
+		<title>sense.city</title>
+		<meta name="description" content="sense.city" />
+		<!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Codeply">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+		<link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+		  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/leaflet.css" />
+		<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+		<script src="js/leaflet.js"></script>
+		<link rel="stylesheet" href="css/styles.css" />
+		<script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
 
-  </head>
-  <body>
-    <nav id="topNav" class="navbar navbar-default navbar-fixed-top" style="background-color: rgb(208, 208, 208);">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand page-scroll" href="./"><i class="ion-ios-analytics-outline"></i> sense.city
-				<sup style="font-size: 55%">beta</sup></a>
-            </div>
-            <div class="navbar-collapse collapse" id="bs-navbar">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a class="page-scroll" href="./#one">Η ΠΟΛΗ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="./#two">ΣΥΜΜΕΤΟΧΗ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="./#three">sense.city app</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="./#four">ΔΕΔΟΜΕΝΑ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="./#last">ΕΠΙΚΟΙΝΩΝΙΑ</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" data-toggle="modal" title="sense.city @ Πάτρα" href="#aboutModal">Σχετικα</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+	</head>
+	<body>
+    <div id="container">
+		<div id="header" style="padding-top: 17px; background-color:#000000;height: 61px;">
+			<div>
+				<div id="logo" style="float:left;">
+					<a href="./" style="font-size:1.5em"> <i class="ion-ios-analytics-outline"></i>
+						sense.city <sup style="font-size: 55%">beta</sup></a>
+					<img src="images/patraslogo.jpg" style="width: 51px; margin-top: -21px; margin-bottom: -17px; margin-left: 4px;"> 
+					<img src="images/upatras_logo.png" style="width: 174px; margin-top: -24px; margin-bottom: -17px; margin-left: 4px;"> 	
+				</div>
+				<div style="font-size:26px; float:left; width:50%;"><center id="msg_subdomain_title">Τι συμβαίνει στην πόλη<center></div>
+				<div style="float:left;">
+					<a href="#" style="float:right;padding-left:0px;padding-right:0px;" id="land_el" ><img src="images/flags/el.png" /> </a>&nbsp;&nbsp;
+					<a href="#" style="float:right;padding-left:0px;padding-right:5px;" id="land_en" ><img src="images/flags/en.png" /> </a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="col-md-12 " style="padding-top:50px;">
 		<br>
 		<div class="col-lg-8">
 			<h2 class="margin-top-0 text-primary text-center">Συμβαίνει στη πόλη</h2>
-			<div id="map" style="color: black; height:85vh;"></div>
+			<div id="map" style="color: black; height:60vh;"></div>
 
 
 
@@ -95,37 +74,33 @@
 		</div>
 		<br>
 	</div>
-    <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-        	<div class="modal-body">
-        		<!-- <img src="//placehold.it/1200x700/222?text=..." id="galleryImage" class="img-responsive" /> -->
-        		<p>
-        		    <br/>
-        		    <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
-        		</p>
-        	</div>
+    <footer id="footer" style="background-color:#D0D0D0;">
+        <div class="container">
+            <div class="row"  style="margin-left:0px;margin-right:0px; ">
+                <div class="col-xs-12 col-sm-9 column">
+                    <h4 id="msg_section_info">Πληροφορίες</h4>
+                    <ul class="list-inline">
+                        <li><a href="">Products</a></li>
+                        <li><a href="">Services</a></li>
+                        <li><a href="">Benefits</a></li>
+                        <li><a href="">Developers</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-3 text-right">
+                    <h4 id="msg_section_followus">Ακολουθήστε μας</h4>
+                    <ul class="list-inline">
+                      <li><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
+                      <li><a rel="nofollow" href="https://www.facebook.com/sensecitybook" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
+                      <li><a rel="nofollow" href="" title="Ιnstagram"><i class="icon-lg ion-social-instagram-outline"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <br/>
+            <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Theme by: Landing Zero by BootstrapZero</a> ©2015 Πανεπιστήμιο Πατρών</span>
         </div>
-        </div>
-    </div>
-    <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-        	<div class="modal-body">
-        		<h2 class="text-center">sense.city @ Πάτρα</h2>
-        		<h5 class="text-center">
-        		    Συμμετέχω ενεργά στη πόλη μου
-        		</h5>
-        		<p class="text-justify">
-        		   Οι πολίτες είστε οι αισθητήρες της πόλης! Χρησιμοποιώντας τις δικές σας συσκευές επικοινωνίας, είτε μέσω της εφαρμογής sense.city είτε με άλλες συσκευές που αναφέρουν στο sense.city δεδομένα της πόλης, ενημερώνετε τους συμπολίτες και το δήμο για προβλήματα και συμβάντα που συμβαίνουν κάθε στιγμή.
-        		</p>
-
-        		<br/>
-        		<button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true"> OK </button>
-        	</div>
-        </div>
-        </div>
-    </div>
+    </footer>
     <!--scripts loaded here from cdn for performance -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -144,151 +119,207 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
 		<script>
-
-			var issue_image;
-			var issue_name;
-			var issue_value_desc;
-			var issue_long;
-			var issue_lat;
-			var issue_name_new;
-
-			$.ajax({
-				crossDomain: true,
-				type:"GET",
-				url: "http://api.sense.city:3000/api/issues/<?php echo $_GET["issue_id"] ?>",
-				dataType: "json",
-				success: function(msg){
-
-					issue_image = msg.image_name;
-					issue_name = msg.issue;
-					issue_value_desc = msg.value_desc;
-					issue_long = msg.loc.coordinates[0];
-					issue_lat = msg.loc.coordinates[1];
-
-					switch(issue_name){
-						case "garbage":
-							issue_name_new = "Πρόβλημα Καθαριότητας";
-							break;
-						case "lighting":
-							issue_name_new = "Πρόβλημα Φωτισμού";
-							break;
-						case "plumbing":
-							issue_name_new = "Προβλήματα ύδρευσης";
-							break;
-						case "road-contructor":
-							issue_name_new = "Πρόβλημα Δρόμου/Πεζοδρομίου";
-							break;
-						default:
-							break;
-					}
-
-					$('#image_div').append('<center><img src="'+issue_image+'" width="450px" /><br /><hr><br /><h3>'+issue_name_new+'</h3>'+issue_value_desc+'</center>');
-
-					var count_pos =0;
-					var position = new Array();
-
-					var positionlat = issue_lat;
-					var positionlon = issue_long;
-
-					var map = L.map('map').setView( new L.LatLng( positionlat, positionlon ), 12);
-
-					L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-						maxZoom: 18, }).addTo(map);
-
-					var get_issue = issue_name;
-					switch(get_issue){
-						case "garbage":
-							var garbageMarkers = L.layerGroup().addTo(map);
-							break;
-						case "lighting":
-							var lightingMarkers = L.layerGroup().addTo(map);
-							break;
-						case "plumping":
-							var plumpingMarkers = L.layerGroup().addTo(map);
-							break;
-						case "road-contructor":
-							var roadConstMarkers = L.layerGroup().addTo(map);
-							break;
-						default:
-							break;
-					}
-
-					var smiliesMarkers = L.layerGroup().addTo(map);
-
-					if (get_issue === 'lighting') {
-						var redMarker = L.AwesomeMarkers.icon({
-							icon: 'lightbulb-o',
-							prefix: 'fa',
-							markerColor: 'orange'
-						});
-
-						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-							marker.bindPopup("light");
-							lightingMarkers.addLayer(marker);
-					}else if (get_issue === 'garbage') {
-						var redMarker = L.AwesomeMarkers.icon({
-							icon: 'trash-o',
-							prefix: 'fa',
-							markerColor: 'green'
-						});
-
-						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-						garbageMarkers.addLayer(marker);
-						marker.bindPopup("garbage");
-					}else if (get_issue === 'road-contructor') {
-						var redMarker = L.AwesomeMarkers.icon({
-							icon: 'road',
-							prefix: 'fa',
-							markerColor: 'cadetblue'
-						});
-
-						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-						roadConstMarkers.addLayer(marker);
-						marker.bindPopup("road");
-					}else if (get_issue === 'plumping') {
-						var redMarker = L.AwesomeMarkers.icon({
-							icon: 'umbrella',
-							prefix: 'fa',
-							markerColor: 'darkpuple'
-						});
-
-						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-						plumpingMarkers.addLayer(marker);
-
-						marker.bindPopup("plumping");
-					}else {
-						var ic = 'smile-o'
-						if (get_issue === 'neutral'){
-							ic = 'meh-o';
-						} else if (get_issue === 'angry'){
-							ic = 'frown-o';
-						}
-
-						var redMarker = L.AwesomeMarkers.icon({
-							icon: ic,
-							prefix: 'fa',
-							markerColor: 'lightgreen',
-							iconColor: 'darkgreen'
-						});
-
-						var marker = L.marker([positionlat, positionlon], {icon: redMarker});
-						marker.bindPopup("Διάθεση");
-						smiliesMarkers.addLayer(marker);
-					}
-
-					var overlayMaps = {
-						"Προβλήματα σκουπιδιών": garbageMarkers,
-						"Προβλήματα φωτισμού": lightingMarkers,
-						"Προβλήματα ύδρευσης": plumpingMarkers,
-						"Προβλήματα οδοστρώματος": roadConstMarkers,
-						"Ανάδραση πολιτών": smiliesMarkers
-					};
-
-					L.control.layers(null, overlayMaps).addTo(map);
-
+			
+				console.log(localStorage.getItem("language"));
+				
+				
+				if(localStorage.getItem("language") === 'en'){
+					$('head').append('<script src="js/lang.en.js" />');
+					localStorage.removeItem("language");
+					localStorage.setItem("language", "en");
+				}else{
+					$('head').append('<script src="js/lang.js" />');
+					localStorage.removeItem("language");
+					localStorage.setItem("language", "el");
 				}
-			});
+				
+				change_lang();
+			
+	
+				console.log(localStorage.getItem("language"));
+				
+				
+				$('#land_el').click(function() {
+					localStorage.setItem("language", "el");
+					console.log(localStorage.getItem("language"));
+					
+					
+					$('head').append('<script src="js/lang.js" />');
+					change_lang();
+					
+					return false;
+				});
+				
+				$('#land_en').click(function() {
+					localStorage.setItem("language", "en");
+					console.log(localStorage.getItem("language"));
+					$('head').append('<script src="js/lang.en.js" />');
+					change_lang();
+					return false;
+				});
+				
+				
+					
+					
+					function change_lang(){
+						$('#msg_subdomain_title').html(lang.msg_subdomain_title);
+						$('#msg_sub_text1').html(lang.msg_sub_text1);
+						$('#msg_sub_text2').html(lang.msg_sub_text2);
+						$('#msg_section_info').html(lang.msg_section_info);
+						$('#msg_section_followus').html(lang.msg_section_followus);
+						
+						$('#recent_five').html('');
+						$('#btn_more').html('');
+						
+						var issue_image;
+						var issue_name;
+						var issue_value_desc;
+						var issue_long;
+						var issue_lat;
+						var issue_name_new;
+
+						$.ajax({
+							crossDomain: true,
+							type:"GET",
+							url: "http://api.sense.city:3000/api/issues/<?php echo $_GET["issue_id"] ?>",
+							dataType: "json",
+							success: function(msg){
+
+								issue_image = msg.image_name;
+								issue_name = msg.issue;
+								issue_value_desc = msg.value_desc;
+								issue_long = msg.loc.coordinates[0];
+								issue_lat = msg.loc.coordinates[1];
+
+								switch(issue_name){
+									case "garbage":
+										issue_name_new = "Πρόβλημα Καθαριότητας";
+										break;
+									case "lighting":
+										issue_name_new = "Πρόβλημα Φωτισμού";
+										break;
+									case "plumbing":
+										issue_name_new = "Προβλήματα ύδρευσης";
+										break;
+									case "road-contructor":
+										issue_name_new = "Πρόβλημα Δρόμου/Πεζοδρομίου";
+										break;
+									default:
+										break;
+								}
+
+								$('#image_div').append('<center><img src="'+issue_image+'" width="450px" /><br /><hr><br /><h3>'+issue_name_new+'</h3>'+issue_value_desc+'</center>');
+
+								var count_pos =0;
+								var position = new Array();
+
+								var positionlat = issue_lat;
+								var positionlon = issue_long;
+
+								var map = L.map('map').setView( new L.LatLng( positionlat, positionlon ), 12);
+
+								L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+									attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+									maxZoom: 18, }).addTo(map);
+
+								var get_issue = issue_name;
+								switch(get_issue){
+									case "garbage":
+										var garbageMarkers = L.layerGroup().addTo(map);
+										break;
+									case "lighting":
+										var lightingMarkers = L.layerGroup().addTo(map);
+										break;
+									case "plumping":
+										var plumpingMarkers = L.layerGroup().addTo(map);
+										break;
+									case "road-contructor":
+										var roadConstMarkers = L.layerGroup().addTo(map);
+										break;
+									default:
+										break;
+								}
+
+								var smiliesMarkers = L.layerGroup().addTo(map);
+
+								if (get_issue === 'lighting') {
+									var redMarker = L.AwesomeMarkers.icon({
+										icon: 'lightbulb-o',
+										prefix: 'fa',
+										markerColor: 'orange'
+									});
+
+									var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+										marker.bindPopup("light");
+										lightingMarkers.addLayer(marker);
+								}else if (get_issue === 'garbage') {
+									var redMarker = L.AwesomeMarkers.icon({
+										icon: 'trash-o',
+										prefix: 'fa',
+										markerColor: 'green'
+									});
+
+									var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+									garbageMarkers.addLayer(marker);
+									marker.bindPopup("garbage");
+								}else if (get_issue === 'road-contructor') {
+									var redMarker = L.AwesomeMarkers.icon({
+										icon: 'road',
+										prefix: 'fa',
+										markerColor: 'cadetblue'
+									});
+
+									var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+									roadConstMarkers.addLayer(marker);
+									marker.bindPopup("road");
+								}else if (get_issue === 'plumping') {
+									var redMarker = L.AwesomeMarkers.icon({
+										icon: 'umbrella',
+										prefix: 'fa',
+										markerColor: 'darkpuple'
+									});
+
+									var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+									plumpingMarkers.addLayer(marker);
+
+									marker.bindPopup("plumping");
+								}else {
+									var ic = 'smile-o'
+									if (get_issue === 'neutral'){
+										ic = 'meh-o';
+									} else if (get_issue === 'angry'){
+										ic = 'frown-o';
+									}
+
+									var redMarker = L.AwesomeMarkers.icon({
+										icon: ic,
+										prefix: 'fa',
+										markerColor: 'lightgreen',
+										iconColor: 'darkgreen'
+									});
+
+									var marker = L.marker([positionlat, positionlon], {icon: redMarker});
+									marker.bindPopup("Διάθεση");
+									smiliesMarkers.addLayer(marker);
+								}
+
+								var overlayMaps = {
+									"Προβλήματα σκουπιδιών": garbageMarkers,
+									"Προβλήματα φωτισμού": lightingMarkers,
+									"Προβλήματα ύδρευσης": plumpingMarkers,
+									"Προβλήματα οδοστρώματος": roadConstMarkers,
+									"Ανάδραση πολιτών": smiliesMarkers
+								};
+
+								L.control.layers(null, overlayMaps).addTo(map);
+
+							}
+						});
+						
+						
+					}
+			
+			
 			</script>
 
 
