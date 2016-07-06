@@ -1,4 +1,4 @@
-var appControllers = angular.module('overviewapp.controllers', []);
+var appControllers = angular.module('overviewapp.controllers', ['pascalprecht.translate','ngCookies']);
 
 appControllers.directive('sidebarDirective', function() {
 	return {
@@ -14,6 +14,56 @@ appControllers.directive('sidebarDirective', function() {
 	};
 });
 
+    appControllers.config(['$translateProvider', function ($translateProvider) {
+      $translateProvider.translations('en', {
+        'TITLE': 'What\'s happening in the city',
+        'ISSUES_SINCE': 'Reported issues since',
+        'SOLUTIONS_SINCE': 'Issues solved since',
+        'ISSUES_LAST_X_DAYS': 'Reported issues last',
+        'EVENTS_LAST_X_DAYS': 'Reported events last',
+        'DAYS': 'days',
+        'GARBAGE_ISSUE': 'Garbage issue',
+        'LIGHTNING_ISSUE': 'Lightning issue',
+        'PLUMBING_ISSUE': 'Plumbing issue',
+        'ROAD_ISSUE': 'Road/Construction issue',
+        'MOOD': 'Mood',
+        'SINCE_TIME': 'since',
+        'HOURS': 'hours',
+        'MINUTES': 'minutes',
+        'SECS': 'seconds',
+        'CONFIRMED': 'Submitted',
+        'IN_PROGRESS': 'Assigned/In progress',
+        'RESOLVED': 'Resolved'
+      });
+     
+      $translateProvider.translations('el', {
+        'TITLE': 'Τι συμβαίνει στην πόλη',
+        'ISSUES_SINCE': 'Προβλήματα από',
+        'SOLUTIONS_SINCE': 'Λύσεις από',
+        'ISSUES_LAST_X_DAYS': 'Προβλήματα τελ.',
+        'EVENTS_LAST_X_DAYS': 'Συμβάντα τελ.',
+        'DAYS': 'ημέρες',
+        'GARBAGE_ISSUE': 'Πρόβλημα Καθαριότητας',
+        'LIGHTNING_ISSUE': 'Πρόβλημα Φωτισμού',
+        'PLUMBING_ISSUE': 'Πρόβλημα Υδρευσης',
+        'ROAD_ISSUE': 'Πρόβλημα Δρόμου/Πεζοδρομίου',
+        'MOOD': 'Διάθεση',
+        'SINCE_TIME': 'πριν από',
+        'HOURS': 'ώρες',
+        'MINUTES': 'λεπτά',
+        'SECS': 'δευτερόλεπτα',
+        'CONFIRMED': 'Ανοιχτό',
+        'IN_PROGRESS': 'Ανάθεση/Σε εκτελέση',
+        'RESOLVED': 'Ολοκληρωμένο'
+      });
+     
+      $translateProvider.preferredLanguage('el');
+	      $translateProvider.useLocalStorage();
+    }]);
+	
+	
+	
+
 appControllers
 		.controller(
 				'mainController',
@@ -26,11 +76,13 @@ appControllers
 						'BugService',
 						'cfpLoadingBar',
 						'$interval',
+						'$translate',
 						function($scope, $q, APIEndPointService,
 								DisplayIssuesService,
 								DisplayLast6IssuesService, BugService,
 								cfpLoadingBar,
-								$interval) {
+								$interval,
+								$translate) {
 
 							$scope.lastdatesToCheck = 30;
 							$scope.lastissues = [];
@@ -292,25 +344,25 @@ appControllers
 
 																switch (lastissue.issue) {
 																case 'garbage':
-																	lastissue.issue = 'Πρόβλημα Καθαριότητας';
+																		lastissue.issue = 'GARBAGE_ISSUE';
 																	break;
 																case 'lighting':
-																	lastissue.issue = 'Πρόβλημα Φωτισμού';
+																		lastissue.issue = 'LIGHTNING_ISSUE';
 																	break;
 																case 'plumbing':
-																	lastissue.issue = 'Πρόβλημα Καθαριότητας';
+																		lastissue.issue = 'PLUMBING_ISSUE';
 																	break;
 																case 'road-contructor':
-																	lastissue.issue = 'Πρόβλημα Δρόμου/Πεζοδρομίου';
+																		lastissue.issue = 'ROAD_ISSUE';
 																	break;
 																case 'angry':
-																	lastissue.issue = 'Διάθεση';
+																		lastissue.issue = 'MOOD';
 																	break;
 																case 'neutral':
-																	lastissue.issue = 'Διάθεση';
+																		lastissue.issue = 'MOOD';
 																	break;
 																case 'happy':
-																	lastissue.issue = 'Διάθεση';
+																		lastissue.issue = 'MOOD';
 																	break;
 																default:
 																	issue = '';
@@ -325,28 +377,27 @@ appControllers
 																		.getTime() - create_day
 																		.getTime()) / 1000;
 																var datediff = '';
+																var datediffunit = '';
 
 																if (seconds < 60) {
-																	datediff = "πριν από "
-																			+ seconds
-																			+ " δευτερόλεπτα";
+																	datediff =  seconds;
+																	datediffunit = "SECS";
 																} else if (seconds < 3600) {
-																	datediff = "πριν από "
-																			+ Math
-																					.floor(seconds / 60)
-																			+ " λεπτά";
+																	datediff =  Math
+																					.floor(seconds / 60);
+																	datediffunit = "MINUTES";
 																} else if (seconds < 86400) {
-																	datediff = "πριν από "
-																			+ Math
-																					.floor(seconds / 3600)
-																			+ " ώρες";
+																	datediff =  Math
+																					.floor(seconds / 3600);
+																	datediffunit = "HOURS";
 																} else {
-																	datediff = "πριν από "
-																			+ Math
-																					.floor(seconds / 86400)
-																			+ " μέρες";
+																	datediff =  Math
+																					.floor(seconds / 86400);
+																	datediffunit = "DAYS";
+																	
 																}
 																lastissue.create_at = datediff;
+																lastissue.create_at_unit = datediffunit;
 																var bugParams =
 																{
 																    "method": "Bug.get",
@@ -356,13 +407,13 @@ appControllers
 																BugService.search(bugParams, function(result) {
 																		switch (result[0].status) {
 																		 case 'CONFIRMED':
-																			 result.status = 'Ανοιχτό';
+																			 result.status = 'CONFIRMED';
 																			 break;
 																		 case 'IN_PROGRESS':
-																			 result.status = 'Σε εκτελέση';
+																			 result.status = 'IN_PROGRESS';
 																			 break;
 																		 case 'RESOLVED':
-																			 result.status = 'Ολοκληρωμένο';
+																			 result.status = 'RESOLVED';
 																			 break;
 																	 }
 																	 lastissue.status = result.status;
@@ -398,6 +449,10 @@ appControllers
 								});
 
 							};
+							
+							$scope.changeLanguage = function (langKey) {
+								$translate.use(langKey);
+							 };
 
 
 							$scope.doCalcLast6Issues();

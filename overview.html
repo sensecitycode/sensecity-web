@@ -21,6 +21,10 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
 <script src="https://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
 <script src="https://code.angularjs.org/1.5.3/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-cookies.js"></script>
+<script src="_js/angular-translate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
 
 <!-- angular strap -->
 <script
@@ -62,7 +66,12 @@
 					<img src="images/upatras_logo.png" style="width: 174px; margin-top: -24px; margin-bottom: -17px; margin-left: 4px;"> 
 						
 				</div>
-				<div id="headertitle">Τι συμβαίνει στην πόλη</div>
+				<div id="headertitle">{{ 'TITLE' | translate }}</div>
+				
+					<div style="float: right; margin-top: -36px; margin-right: 20px;">
+						<a href="#" style="float:right;padding-left:0px;padding-right:0px;" ng-click="changeLanguage('el')" ><img  src="images/flags/el.png" /> </a>&nbsp;&nbsp;
+						<a href="#" style="float:right;padding-left:0px;padding-right:5px;" ng-click="changeLanguage('en')" ><img src="images/flags/en.png" /> </a>
+					</div>
 			</div>
 		</div>
 
@@ -72,23 +81,23 @@
 					<div>
 						<div class="calcItem">
 							<div class="calcValue" >{{calcValue30daysIssues}}</div>
-							<div class="calcValueDescription">Προβλήματα τελ. <br/> {{lastdatesToCheck}} ημέρες</div>
+							<div class="calcValueDescription">{{ 'ISSUES_LAST_X_DAYS' | translate }} <br/> {{lastdatesToCheck}} {{ 'DAYS' | translate }} </div>
 						</div>
 						<div class="calcItem">
 							<div class="calcValue" >{{calcValue30daysEvents}}</div>
-							<div class="calcValueDescription">Συμβάντα τελ. <br/> {{lastdatesToCheck}} ημέρες</div>
+							<div class="calcValueDescription">{{ 'EVENTS_LAST_X_DAYS' | translate }}  <br/> {{lastdatesToCheck}} {{ 'DAYS' | translate }}</div>
 						</div>
 						<div class="calcItem">
 							<div class="calcValue"
 								ng-class="{calcValuenull: calcValue.value === 'N/A'}"
 								>{{calcValueProblemsFrom2016}}</div>
-							<div class="calcValueDescription">Προβλήματα από 1/1/2016</div>
+							<div class="calcValueDescription">{{ 'ISSUES_SINCE' | translate }} 1/1/2016</div>
 						</div>
 						<div class="calcItem">
 							<div class="calcValue"
 								ng-class="{calcValuenull: calcValue.value === 'N/A'} "
 								>{{calcValueSolutionFrom2016}}</div>
-							<div class="calcValueDescription">Λύσεις από <br/> 1/1/2016</div>
+							<div class="calcValueDescription">{{ 'SOLUTIONS_SINCE' | translate }} <br/> 1/1/2016</div>
 						</div>
 					</div>
 				</div>
@@ -116,13 +125,13 @@
 								<div class="caption"
 									style="color: #000000; padding-left: 13px; padding-right: 5px; margin-top: -10px;">
 									<p style="font-size: 13px;">
-										<b>{{lastissue.issue}}</b>
+										<b>{{lastissue.issue | translate}}</b>
 									</p>
 									
 									<p style="font-size: 14px; height: 40px; margin-top: -10px;">{{lastissue.value_desc}}</p>
 									<p style="margin-top: -12px; font-size: 10px;">
-										<i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{lastissue.create_at}}
-									<p style="margin-top: -12px;font-size: 10px;">&nbsp;{{lastissue.status}}&nbsp;</p>
+										<i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{ 'SINCE_TIME' | translate }} {{lastissue.create_at}} {{lastissue.create_at_unit | translate }}
+									<p style="margin-top: -12px;font-size: 10px;">&nbsp;{{lastissue.status | translate}}&nbsp;</p>
 									</p>
 
 								</div></a>
