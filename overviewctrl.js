@@ -376,15 +376,20 @@ appControllers
 							};
 
 							$scope.doCalcFrom2016 = function() {
-								var problemsParam = {startdate:"2016-05-01",sort:"-1",list_issue:"1",image_field:"0"};
-								DisplayIssuesService.query(problemsParam, function(result) {
+								var problemsParam =
+								{
+										"method": "Bug.search",
+										"params": [{"product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων","order":"bug_id DESC","status":["RESOLVED","IN_PROGRESS","CONFIRMED"],"f1":"resolution","o1":"changedafter","v1":"2016-01-01","include_fields":["id"]}],
+										"id": 1
+								};
+								BugService.search(problemsParam, function(result) {
 										 $scope.calcValueProblemsFrom2016 = result.length;
 								});
 
 								var solutionsParam =
 								{
 										"method": "Bug.search",
-										"params": [{"product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων","order":"bug_id DESC","status":"RESOLVED","f1":"resolution","o1":"changedafter","v1":"2016-01-01","include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+										"params": [{"product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων","order":"bug_id DESC","status":"RESOLVED","f1":"resolution","o1":"changedafter","v1":"2016-01-01","include_fields":["id"]}],
 										"id": 1
 								};
 								BugService.search(solutionsParam, function(result) {
