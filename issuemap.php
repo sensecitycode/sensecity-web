@@ -38,7 +38,7 @@
 	</div>
 	
 	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
-		<h1 id="title_h1"></h1> 
+		<center style="color:#000000;"><h1 id="title_h1"></h1> </center>
 	</div>
 	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
 		<br>
@@ -46,35 +46,32 @@
 			<div id="map" style="color: black; height:50vh;"></div>
 
 
-
-      <div id="timeline" style="padding-top:20px; color:#000;" class="text-center">
-        <h2>Εξέλιξη προβλήματος</h2>
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-            <span class="sr-only">50% Complete</span>
-          </div>
-        </div>
-        <div class="row tasks">
-           <div class="col-sm-4">
-             <p>Δήλωση<br /><span id="submit"></span></p>
-           </div>
-           <div class="col-sm-4">
-             <p>Ανάθεση<br /><span id="assignment">---</span></p>
-           </div>
-           <div class="col-sm-4">
-             <p>Ολοκληρώθηκε<br /><span id="completion">---</span></p>
-           </div>
-
-         </div>
-      </div>
-
-
-
 		</div>
 		<div class="col-lg-4" id="image_div" style="color:#000;height: 50%;overflow-x: hidden;">
 
 		</div>
 		<br>
+	</div>
+	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
+		<div id="timeline" style="padding-top:20px; color:#000;" class="text-center">
+			<h2>Εξέλιξη προβλήματος</h2>
+			<div class="progress">
+				<div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+					<span class="sr-only">50% Complete</span>
+				</div>
+			</div>
+			<div class="row tasks">
+				<div class="col-sm-4">
+					<p>Δήλωση<br /><span id="submit"></span></p>
+				</div>
+				<div class="col-sm-4">
+					<p>Ανάθεση<br /><span id="assignment">---</span></p>
+				</div>
+				<div class="col-sm-4">
+					<p>Ολοκληρώθηκε<br /><span id="completion">---</span></p>
+				</div>
+			</div>
+		</div>
 	</div>
     <footer id="footer" style="background-color:#D0D0D0;">
         <div class="container">
