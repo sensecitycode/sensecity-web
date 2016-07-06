@@ -18,22 +18,23 @@
 	</head>
 	<body>
     <div id="container">
-		<div id="header" style="padding-top: 17px; background-color:#000000;height: 61px;">
-			<div>
-				<div id="logo" style="float:left;">
-					<a href="./" style="font-size:1.5em"> <i class="ion-ios-analytics-outline"></i>
+			<div id="header" style="padding-top: 17px; background-color:#000000;height: 61px;">
+				<div>
+					<div id="logo" style="float:left;">
+						<a href="./" style="font-size:1.5em"> <i class="ion-ios-analytics-outline"></i>
 							sense.city <sup style="font-size: 55%">beta</sup></a>
-					<img src="images/patraslogo.jpg" style="width: 51px; margin-top: -21px; margin-bottom: -17px; margin-left: 4px;"> 
-					<img src="images/upatras_logo.png" style="width: 174px; margin-top: -24px; margin-bottom: -17px; margin-left: 4px;"> 
-				</div>
-				<div style="font-size:26px; float:left; width:50%;"><center>Τι συμβαίνει στην πόλη<center></div>
-				<div style="float:left;">
-					<a href="#" style="float:right;padding-left:0px;padding-right:0px;" id="land_el" ><img src="images/flags/el.png" /> </a>&nbsp;&nbsp;
-					<a href="#" style="float:right;padding-left:0px;padding-right:5px;" id="land_en" ><img src="images/flags/en.png" /> </a>
+						<img src="images/patraslogo.jpg" style="width: 51px; margin-top: -21px; margin-bottom: -17px; margin-left: 4px;"> 
+						<img src="images/upatras_logo.png" style="width: 174px; margin-top: -24px; margin-bottom: -17px; margin-left: 4px;"> 
+							
+					</div>
+					<div style="font-size:26px; float:left; width:50%;"><center id="msg_subdomain_title">Τι συμβαίνει στην πόλη<center></div>
+					<div style="float:left;">
+						<a href="#" style="float:right;padding-left:0px;padding-right:0px;" id="land_el" ><img src="images/flags/el.png" /> </a>&nbsp;&nbsp;
+						<a href="#" style="float:right;padding-left:0px;padding-right:5px;" id="land_en" ><img src="images/flags/en.png" /> </a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
     <section class="bg-primary" id="one">
         <div class="container">
             <div class="row">                
@@ -45,9 +46,9 @@
     </section>    
     <footer id="footer" style="background-color:#D0D0D0;">
         <div class="container">
-            <div class="row">
+            <div class="row"  style="margin-left:0px;margin-right:0px; ">
                 <div class="col-xs-12 col-sm-9 column">
-                    <h4>Πληροφορίες</h4>
+                    <h4 id="msg_section_info">Πληροφορίες</h4>
                     <ul class="list-inline">
                         <li><a href="">Products</a></li>
                         <li><a href="">Services</a></li>
@@ -58,7 +59,7 @@
                     </ul>
                 </div>
                 <div class="col-xs-12 col-sm-3 text-right">
-                    <h4>Ακολουθήστε μας</h4>
+                    <h4 id="msg_section_followus">Ακολουθήστε μας</h4>
                     <ul class="list-inline">
                       <li><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
                       <li><a rel="nofollow" href="https://www.facebook.com/sensecitybook" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
@@ -70,37 +71,6 @@
             <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Theme by: Landing Zero by BootstrapZero</a> ©2015 Πανεπιστήμιο Πατρών</span>
         </div>
     </footer>
-    <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-        	<div class="modal-body">
-        		<img src="//placehold.it/1200x700/222?text=..." id="galleryImage" class="img-responsive" />
-        		<p>
-        		    <br/>
-        		    <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
-        		</p>
-        	</div>
-        </div>
-        </div>
-    </div>
-    <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-        	<div class="modal-body">
-        		<h2 class="text-center">sense.city @ Πάτρα</h2>
-        		<h5 class="text-center">
-        		    Συμμετέχω ενεργά στη πόλη μου
-        		</h5>
-        		<p class="text-justify">
-        		   Οι πολίτες είστε οι αισθητήρες της πόλης! Χρησιμοποιώντας τις δικές σας συσκευές επικοινωνίας, είτε μέσω της εφαρμογής sense.city είτε με άλλες συσκευές που αναφέρουν στο sense.city δεδομένα της πόλης, ενημερώνετε τους συμπολίτες και το δήμο για προβλήματα και συμβάντα που συμβαίνουν κάθε στιγμή.
-        		</p>
-        		
-        		<br/>
-        		<button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true"> OK </button>
-        	</div>
-        </div>
-        </div>
-    </div>    
     <!--scripts loaded here from cdn for performance -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> 
