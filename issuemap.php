@@ -208,7 +208,7 @@
 								}
 
 								$('#image_div').append('<center><img src="'+issue_image+'" style="height: 50vh;"/>');
-								$('#title_h1').append('<span style="color:#000000; font-size:28px;"><b>'+issue_name_new+'</b>:</span><span style="color:#000000; font-size:22px;">'+issue_value_desc+'</span>');
+								$('#title_h1').append('<span style="color:#000000; font-size:28px;"><b>'+issue_name_new+'</b>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</span><span style="color:#000000; font-size:22px;">'+issue_value_desc+'</span>');
 
 								var count_pos =0;
 								var position = new Array();
@@ -454,5 +454,18 @@
 			  ga('send', 'pageview');
 
 			</script>
+			
+			<style>
+			
+			.row tasks div:first-child {
+				text-align: left;
+			}
+			
+			.row tasks div:last-child {
+				text-align: right;
+			}
+			
+			
+			</style>
   </body>
 </html>
