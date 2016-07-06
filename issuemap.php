@@ -41,7 +41,7 @@
 		<br>
 		<div class="col-lg-8">
 			<h2 class="margin-top-0 text-primary text-center">Συμβαίνει στη πόλη</h2>
-			<div id="map" style="color: black; height:60vh;"></div>
+			<div id="map" style="color: black; height:50vh;"></div>
 
 
 
@@ -216,7 +216,7 @@
 								var positionlat = issue_lat;
 								var positionlon = issue_long;
 
-								var map = L.map('map').setView( new L.LatLng( positionlat, positionlon ), 12);
+								var map = L.map('map').setView( new L.LatLng( positionlat, positionlon ), 16);
 
 								L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 									attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
