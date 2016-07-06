@@ -208,7 +208,7 @@
 								}
 
 								$('#image_div').append('<center><img src="'+issue_image+'" style="height: 50vh;"/>');
-								$('#title_h1').append('<h1 style="color:#000000;">'+issue_name_new+'</h1>: <h3 style="color:#000000;">'+issue_value_desc+'</h3>');
+								$('#title_h1').append('<span style="color:#000000; font-size:14px;"><b>'+issue_name_new+'</b></span>: <span style="color:#000000; font-size:14px;">'+issue_value_desc+'</span>');
 
 								var count_pos =0;
 								var position = new Array();
