@@ -36,11 +36,13 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
+		<h1>title</h1>
+	</div>
 	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
 		<br>
 		<div class="col-lg-8">
-			<h2 class="margin-top-0 text-primary text-center">Συμβαίνει στη πόλη</h2>
 			<div id="map" style="color: black; height:50vh;"></div>
 
 
@@ -69,7 +71,7 @@
 
 
 		</div>
-		<div class="col-lg-4" id="image_div" style="padding-top:20px; color:#000;">
+		<div class="col-lg-4" id="image_div" style="color:#000; height:50vh;">
 
 		</div>
 		<br>
