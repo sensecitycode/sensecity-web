@@ -428,6 +428,7 @@
 								{
 									alert('111');
 									alert(resol);
+									alert(localStorage.getItem("language"));
 									var local_time_compl = moment(time_compl).format('LLL');
 									switch(resol){
 										case "FIXED":
