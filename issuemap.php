@@ -38,7 +38,7 @@
 	</div>
 	
 	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
-		<h1 id="title_h1"></h1>
+		<h1 id="title_h1"></h1> 
 	</div>
 	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
 		<br>
