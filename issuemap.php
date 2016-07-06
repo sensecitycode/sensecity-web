@@ -62,13 +62,13 @@
 			</div>
 			<div class="row tasks">
 				<div class="col-sm-4">
-					<p>Δήλωση<br /><span id="submit"></span></p>
+					<p><span id="msg_dilosi">Δήλωση</span><br /><span id="submit"></span></p>
 				</div>
 				<div class="col-sm-4">
-					<p>Ανάθεση<br /><span id="assignment">---</span></p>
+					<p><span id="msg_anathesi">Ανάθεση</span><br /><span id="assignment">---</span></p>
 				</div>
 				<div class="col-sm-4">
-					<p>Ολοκληρώθηκε<br /><span id="completion">---</span></p>
+					<p><span id="msg_complete">Ολοκληρώθηκε</span><br /><span id="completion">---</span></p>
 				</div>
 			</div>
 		</div>
@@ -166,6 +166,9 @@
 						$('#msg_sub_text2').html(lang.msg_sub_text2);
 						$('#msg_section_info').html(lang.msg_section_info);
 						$('#msg_section_followus').html(lang.msg_section_followus);
+						$('#msg_dilosi').html(lang.msg_dilosi);
+						$('#msg_anathesi').html(lang.msg_anathesi);
+						$('#msg_complete').html(lang.msg_complete);
 						
 						$('#image_div').html('');
 						$('#title_h1').html('');
@@ -193,16 +196,32 @@
 
 								switch(issue_name){
 									case "garbage":
-										issue_name_new = "Πρόβλημα Καθαριότητας";
+										if(localStorage.getItem("language") === 'en'){
+											issue_name_new = 'Cleaning Problem';
+										}else{
+											issue_name_new = "Πρόβλημα Καθαριότητας";
+										}
 										break;
 									case "lighting":
-										issue_name_new = "Πρόβλημα Φωτισμού";
+										if(localStorage.getItem("language") === 'en'){
+											issue_name_new = 'Lighting Problem';
+										}else{
+											issue_name_new = "Πρόβλημα Φωτισμού";
+										}
 										break;
 									case "plumbing":
-										issue_name_new = "Προβλήματα ύδρευσης";
+										if(localStorage.getItem("language") === 'en'){
+											issue_name_new = 'Plumbing Problem';
+										}else{
+											issue_name_new = "Προβλήματα ύδρευσης";
+										}
 										break;
 									case "road-contructor":
-										issue_name_new = "Πρόβλημα Δρόμου/Πεζοδρομίου";
+										if(localStorage.getItem("language") === 'en'){
+											issue_name_new = 'Street/Sidewalk Problem';
+										}else{
+											issue_name_new = "Πρόβλημα Δρόμου/Πεζοδρομίου";
+										}
 										break;
 									default:
 										break;
