@@ -5,7 +5,7 @@ lang = {
 	menu_contact:"CONTACT",
 	menu_about:"ABOUT",
 	msg_header:"Active participation for my city!", 
-	msg_happen_in_city:"What's happening in the city?", 
+	msg_happen_in_city:"What's happening in the city", 
 	msg_partcipate:"My participation", 
 	msg_start_now:"Start now", 
 	msg_start_now_text:"You can report issues through our available Sense.City mobile apps or from your PC browser", 
@@ -38,5 +38,8 @@ lang = {
 	msg_section_followus:"Follow us", 
 	msg_popup_title:"sense.city", 
 	msg_popup_msg:"Active participation for my city", 
-	msg_popup_text:"You are the city sensors! The sense.city platform (http://sense.city) provides the tools that activate citizen's creativity, imagination and communication, engages urban thinking and improves the relationship between citizens, the city municipality and city's public services.. By using the sense.city platform, citizens become the city sensors! With their own communication devices (mobile phones) or via the sense.city application, citizens can post in real time issues and problems for something that happens in their city, inform their fellow citizens and the municipality for problems and incidents that occur every moment.Citizens actively participate in the processes and solve problems concerning their lives in the city. They help in urban development while improving the relationship between citizens and public services of the city."
+	msg_popup_text:"You are the city sensors! The sense.city platform (http://sense.city) provides the tools that activate citizen's creativity, imagination and communication, engages urban thinking and improves the relationship between citizens, the city municipality and city's public services.. By using the sense.city platform, citizens become the city sensors! With their own communication devices (mobile phones) or via the sense.city application, citizens can post in real time issues and problems for something that happens in their city, inform their fellow citizens and the municipality for problems and incidents that occur every moment.Citizens actively participate in the processes and solve problems concerning their lives in the city. They help in urban development while improving the relationship between citizens and public services of the city.",
+	msg_subdomain_title:"What's happening in the city",
+	msg_sub_text1:"Check the following map for a quick overview of the latest city issues!",
+	msg_sub_text2:"For the city of Patras, the indicated position of waste bins might have differences with the existing ones"
 };
