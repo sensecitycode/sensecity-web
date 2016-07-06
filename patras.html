@@ -807,7 +807,11 @@
 								//$('#recent_five').append('</ul></div>');
 								//html_code += '</ul></div>';
 								$('#recent_five').append(html_code);
-								$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Αναζήτηση </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Αναφορά προβλήματος </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Επισκόπηση </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">Περισσότερα >></a>');
+								if(localStorage.getItem("language") === 'en'){
+									$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Search </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Report a Problem </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Overview </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">Περισσότερα >></a>');
+								}else{
+									$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Αναζήτηση </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Αναφορά προβλήματος </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Επισκόπηση </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">Περισσότερα >></a>');
+								}
 							}
 							
 						});
