@@ -167,8 +167,8 @@
 						$('#msg_section_info').html(lang.msg_section_info);
 						$('#msg_section_followus').html(lang.msg_section_followus);
 						
-						$('#image_div').append('');
-						$('#title_h1').append('');
+						$('#image_div').html('');
+						$('#title_h1').html('');
 
 								
 						var issue_image;
