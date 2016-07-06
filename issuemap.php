@@ -443,28 +443,28 @@
 				switch(resol){
 					case "FIXED":
 						if(localStorage.getItem("language") === 'en'){
-							issue_name_new = 'Fixed';
+							new_resol = 'Fixed';
 						}else{
 							new_resol = "Αποκατάσταση";
 						}
 						break;
 					case "INVALID":
 						if(localStorage.getItem("language") === 'en'){
-							issue_name_new = 'Invalid';
+							new_resol = 'Invalid';
 						}else{
 							new_resol = "Εσφαλμένο αίτημα";
 						}	
 						break;
 					case "WONTFIX":
 						if(localStorage.getItem("language") === 'en'){
-							issue_name_new = 'Will not Fix';
+							new_resol = 'Will not Fix';
 						}else{
 							new_resol = "Μη αποκατάσταση";
 						}
 						break;
 					case "DUPLICATE":
 						if(localStorage.getItem("language") === 'en'){
-							issue_name_new = 'Already reported in other issue';
+							new_resol = 'Already reported in other issue';
 						}else{
 							new_resol = "Εχει ήδη αναφερθεί στο παρελθόν";
 						}
