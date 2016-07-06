@@ -210,7 +210,7 @@
 										break;
 								}
 
-								$('#image_div').append('<center><img src="'+issue_image+'" />');
+								$('#image_div').append('<center><img src="'+issue_image+'" style="height: 50vh;"/>');
 								$('#title_h1').append(issue_name_new+' - '+issue_value_desc);
 
 								var count_pos =0;
