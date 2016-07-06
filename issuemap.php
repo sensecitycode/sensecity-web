@@ -173,7 +173,8 @@
 						$('#image_div').html('');
 						$('#title_h1').html('');
 
-								
+						$('#submit').html('');
+						
 						var issue_image;
 						var issue_name;
 						var issue_value_desc;
@@ -335,153 +336,126 @@
 
 							}
 						});
-						
-						
-						
-						
-						
-						
-						
+												
 						 var bug_status;
 
-        $.ajax({
-          crossDomain: true,
-          type:"POST",
-          url:'http://api.sense.city:3001/bugs/search',
-          dataType: "json",
-          data:{
-                "method": "Bug.get",
-                "params": [{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων",
-                            "include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution"]}],
-                "id": 1
-              },
-          success: function(msg){
-            // console.log("get");
-            // console.log(msg[0]);
-            moment.locale('el');
-            var local_time_sub = moment(msg[0].creation_time).format('LLL');
-            $('#submit').append(local_time_sub);
-            var width;
-            switch(msg[0].status){
-              case "CONFIRMED":
-                width = "16%";
-                break;
-              case "IN_PROGRESS":
-                width = "50%";
-                break;
-              case "RESOLVED":
-                width = "100%";
-                break;
-            }
-            $( ".progress-bar.progress-bar-striped" ).css( "width",width );
-          }
-        });
+						$.ajax({
+							crossDomain: true,
+							type:"POST",
+							url:'http://api.sense.city:3001/bugs/search',
+							dataType: "json",
+							data:{
+								"method": "Bug.get",
+								"params": [{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων",
+											"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution"]}],
+								"id": 1
+							},
+							success: function(msg){
+							// console.log("get");
+							// console.log(msg[0]);
+								moment.locale('el');
+								var local_time_sub = moment(msg[0].creation_time).format('LLL');
+								$('#submit').append(local_time_sub);
+								var width;
+								switch(msg[0].status){
+									case "CONFIRMED":
+										width = "16%";
+										break;
+									case "IN_PROGRESS":
+										width = "50%";
+										break;
+									case "RESOLVED":
+										width = "100%";
+										break;
+								}
+								$( ".progress-bar.progress-bar-striped" ).css( "width",width );
+							}
+						});
 
 
-        $.ajax({
-          crossDomain: true,
-          type:"POST",
-          url:'http://api.sense.city:3001/bugs/search',
-          dataType: "json",
-          data:{
-                "method": "Bug.history",
-                "params": [{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων"}],
-                "id": 1
-              },
-          success: function(msg){
-            // console.log("history");
-            // console.log(msg[0].id);
-            // console.log(msg[0].alias);
-            // console.log(msg[0].history);
-            moment.locale('el');
+						$.ajax({
+							crossDomain: true,
+							type:"POST",
+							url:'http://api.sense.city:3001/bugs/search',
+							dataType: "json",
+							data:{
+								"method": "Bug.history",
+								"params": [{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων"}],
+								"id": 1
+							},
+							success: function(msg){
+								moment.locale('el');
 
-            for (i = 0; i < msg[0].history.length; i++)
-            {
-              for (j = 0; j <msg[0].history[i].changes.length; j++)
-              {
-                // console.log(msg[0].history[i].changes[j]);
-                if (msg[0].history[i].changes[j].added == "IN_PROGRESS")
-                {
-                  var time_assign = msg[0].history[i].when;
-                  // console.log("time_assign");
-                  // console.log(time_assign);
-                }
-              }
-            }
+								for (i = 0; i < msg[0].history.length; i++)
+								{
+									for (j = 0; j <msg[0].history[i].changes.length; j++)
+									{
+										if (msg[0].history[i].changes[j].added == "IN_PROGRESS")
+										{
+											var time_assign = msg[0].history[i].when;
+										}
+									}
+								}
 
-            if (time_assign != null)
-            {
-              var local_time_assign = moment(time_assign).format('LLL');
-              $('#assignment').replaceWith(local_time_assign);
-            }
+								if (time_assign != null)
+								{
+									var local_time_assign = moment(time_assign).format('LLL');
+									$('#assignment').replaceWith(local_time_assign);
+								}
 
-            for (i = 0; i < msg[0].history.length; i++)
-            {
-              for (j = 0; j <msg[0].history[i].changes.length; j++)
-              {
-                // console.log(msg[0].history[i].changes[j]);
-                if (msg[0].history[i].changes[j].added == "RESOLVED")
-                {
-                  var time_compl = msg[0].history[i].when;
-                  // console.log("time_compl");
-                  // console.log(time_compl);
-                }
-                if (msg[0].history[i].changes[j].field_name == "resolution")
-                {
-                  var resol = msg[0].history[i].changes[j].added;
-                  // console.log("resol");
-                  // console.log(resol);
-                }
-              }
-            }
+								for (i = 0; i < msg[0].history.length; i++)
+								{
+									for (j = 0; j <msg[0].history[i].changes.length; j++)
+									{
+										if (msg[0].history[i].changes[j].added == "RESOLVED")
+										{
+											var time_compl = msg[0].history[i].when;
+										}
+										if (msg[0].history[i].changes[j].field_name == "resolution")
+										{
+											var resol = msg[0].history[i].changes[j].added;
+										}
+									}
+								}
 
-            if (time_compl != null)
-            {
-				var local_time_compl = moment(time_compl).format('LLL');
-				switch(resol){
-					case "FIXED":
-						if(localStorage.getItem("language") === 'en'){
-							new_resol = 'Fixed';
-						}else{
-							new_resol = "Αποκατάσταση";
-						}
-						break;
-					case "INVALID":
-						if(localStorage.getItem("language") === 'en'){
-							new_resol = 'Invalid';
-						}else{
-							new_resol = "Εσφαλμένο αίτημα";
-						}	
-						break;
-					case "WONTFIX":
-						if(localStorage.getItem("language") === 'en'){
-							new_resol = 'Will not Fix';
-						}else{
-							new_resol = "Μη αποκατάσταση";
-						}
-						break;
-					case "DUPLICATE":
-						if(localStorage.getItem("language") === 'en'){
-							new_resol = 'Already reported in other issue';
-						}else{
-							new_resol = "Εχει ήδη αναφερθεί στο παρελθόν";
-						}
-						break;
-				}
-				
-				$('#completion').replaceWith("("+new_resol+")<br />"+local_time_compl);
-            }
-
-
-
-          }
-        });
-		
-		
-		
-		
-		
-		
+								if (time_compl != null)
+								{
+									var local_time_compl = moment(time_compl).format('LLL');
+									switch(resol){
+										case "FIXED":
+											if(localStorage.getItem("language") === 'en'){
+												new_resol = 'Fixed';
+											}else{
+												new_resol = "Αποκατάσταση";
+											}
+											break;
+										case "INVALID":
+											if(localStorage.getItem("language") === 'en'){
+												new_resol = 'Invalid';
+											}else{
+												new_resol = "Εσφαλμένο αίτημα";
+											}	
+											break;
+										case "WONTFIX":
+											if(localStorage.getItem("language") === 'en'){
+												new_resol = 'Will not Fix';
+											}else{
+												new_resol = "Μη αποκατάσταση";
+											}
+											break;
+										case "DUPLICATE":
+											if(localStorage.getItem("language") === 'en'){
+												new_resol = 'Already reported in other issue';
+											}else{
+												new_resol = "Εχει ήδη αναφερθεί στο παρελθόν";
+											}
+											break;
+									}
+								
+									$('#completion').replaceWith("("+new_resol+")<br />"+local_time_compl);
+								}
+							}
+						});
 					}
 			
 			
