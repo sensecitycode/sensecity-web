@@ -426,8 +426,7 @@
 
 								if (time_compl != null)
 								{
-									alert('111');
-									alert(resol);
+									
 									alert(localStorage.getItem("language"));
 									var local_time_compl = moment(time_compl).format('LLL');
 									switch(resol){
@@ -460,8 +459,9 @@
 											}
 											break;
 									}
-								
-									$('#completion').replaceWith("("+new_resol+")<br />"+local_time_compl);
+									alert(new_resol);
+									//$('#completion').replaceWith("("+new_resol+")<br />"+local_time_compl);
+									$('#completion').html('');
 									$('#completion').html("("+new_resol+")<br />"+local_time_compl);
 								}
 							}
