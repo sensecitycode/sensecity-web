@@ -426,8 +426,6 @@
 
 								if (time_compl != null)
 								{
-									
-									alert(localStorage.getItem("language"));
 									var local_time_compl = moment(time_compl).format('LLL');
 									switch(resol){
 										case "FIXED":
@@ -459,7 +457,6 @@
 											}
 											break;
 									}
-									alert(new_resol);
 									//$('#completion').replaceWith("("+new_resol+")<br />"+local_time_compl);
 									$('#completion').html('');
 									$('#completion').html("("+new_resol+")<br />"+local_time_compl);
