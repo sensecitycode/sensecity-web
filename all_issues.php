@@ -120,7 +120,65 @@
 
 			<script>
 				
-				$.ajax({
+				
+				
+				
+				console.log(localStorage.getItem("language"));
+				
+				
+				if(localStorage.getItem("language") === 'en'){
+					$('head').append('<script src="js/lang.en.js" />');
+					localStorage.removeItem("language");
+					localStorage.setItem("language", "en");
+				}else{
+					$('head').append('<script src="js/lang.js" />');
+					localStorage.removeItem("language");
+					localStorage.setItem("language", "el");
+				}
+				
+				change_lang();
+			
+	
+				console.log(localStorage.getItem("language"));
+				
+				
+				$('#land_el').click(function() {
+					localStorage.setItem("language", "el");
+					console.log(localStorage.getItem("language"));
+					
+					
+					$('head').append('<script src="js/lang.js" />');
+					change_lang();
+					
+					return false;
+				});
+				
+				$('#land_en').click(function() {
+					localStorage.setItem("language", "en");
+					console.log(localStorage.getItem("language"));
+					$('head').append('<script src="js/lang.en.js" />');
+					change_lang();
+					return false;
+				});
+				
+				
+					
+					
+					function change_lang(){
+						$('#msg_subdomain_title').html(lang.msg_subdomain_title);
+						$('#msg_sub_text1').html(lang.msg_sub_text1);
+						$('#msg_sub_text2').html(lang.msg_sub_text2);
+						$('#msg_section_info').html(lang.msg_section_info);
+						$('#msg_section_followus').html(lang.msg_section_followus);
+						
+						
+						$('#recent_five').html('');
+						$('#btn_more').html('');
+						
+						
+						
+						
+						$.ajax({
 							crossDomain: true,
 							type:"GET",
 							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=100&list_issue=1",
@@ -250,26 +308,9 @@
 							}
 							
 						});
-				
-				
-				
-				
-					
-					
-					function change_lang(){
-					$('#msg_subdomain_title').html(lang.msg_subdomain_title);
-					$('#msg_sub_text1').html(lang.msg_sub_text1);
-					$('#msg_sub_text2').html(lang.msg_sub_text2);
-					$('#msg_section_info').html(lang.msg_section_info);
-					$('#msg_section_followus').html(lang.msg_section_followus);
-					
-					
-					$('#recent_five').html('');
-					$('#btn_more').html('');
-					
-					
 						
-				}
+						
+					}
 				
 				
 				
