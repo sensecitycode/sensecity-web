@@ -37,7 +37,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-12 " style="padding-top:50px;">
+	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
 		<br>
 		<div class="col-lg-8">
 			<h2 class="margin-top-0 text-primary text-center">Συμβαίνει στη πόλη</h2>
