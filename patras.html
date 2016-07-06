@@ -72,7 +72,7 @@
         <div class="container">
             <div class="row"  style="margin-left:0px;margin-right:0px; ">
                 <div class="col-xs-12 col-sm-9 column">
-                    <h4>Πληροφορίες</h4>
+                    <h4 id="msg_section_info">Πληροφορίες</h4>
                     <ul class="list-inline">
                         <li><a href="">Products</a></li>
                         <li><a href="">Services</a></li>
@@ -83,7 +83,7 @@
                     </ul>
                 </div>
                 <div class="col-xs-12 col-sm-3 text-right">
-                    <h4>Ακολουθήστε μας</h4>
+                    <h4 id="msg_section_followus">Ακολουθήστε μας</h4>
                     <ul class="list-inline">
                       <li><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
                       <li><a rel="nofollow" href="https://www.facebook.com/sensecitybook" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
@@ -666,7 +666,8 @@
 					$('#msg_subdomain_title').html(lang.msg_subdomain_title);
 					$('#msg_sub_text1').html(lang.msg_sub_text1);
 					$('#msg_sub_text2').html(lang.msg_sub_text2);
-					
+					$('#msg_section_info').html(lang.msg_section_info);
+					$('#msg_section_followus').html(lang.msg_section_followus);
 					
 					
 					$('#recent_five').html('');
@@ -797,18 +798,14 @@
 										
 									}
 									
-									//$('#recent_five').append('<a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="color: #FFFFFF !important;"><div class="row"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px dotted rgb(2, 71, 197);  height: 100px;  margin-top: 20px; background-color: #FFFFFF;color:#696969;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px" style="max-width: 110px;" /></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px; color: #696969;">'+datediff+'</div><div>'+obj.value_desc+'</div></div></div></div></a>');
-									//$('#recent_five').append('<li class="col-lg-3"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+'"><div class="thumbnail"><img src="'+image_name+'" alt=""></div><div class="caption"><h4>'+issue+'</h4><p>'+datediff+'</p><p>'+obj.value_desc+'</p></div></a></li>');
 									html_code +='<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" style="padding-bottom: 5px;"><div style="background-color:#FFFFFF; border-width: 1px;border-color: #967f7f;border-style: dotted;border-radius: 10px;"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="text-decoration:none;"><center><div class="thumbnail crop" style=" padding:0px; "><img src="'+image_name+'" alt=""></div></center><div class="caption" style="color:#000000;padding-left: 13px;padding-right: 5px; margin-top:-10px;"><p style="font-size:13px;"><b id="msg_subdomain_issue">'+issue+'</b></p> <p style="font-size:12px;height:40px;margin-top:-10px;">'+obj.value_desc+'</p><p style="margin-top:-10px;font-size:14px;"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+datediff+'</p></div></div></div>';
 									count_slide++;
 									
 								});
 								
-								//$('#recent_five').append('</ul></div>');
-								//html_code += '</ul></div>';
 								$('#recent_five').append(html_code);
 								if(localStorage.getItem("language") === 'en'){
-									$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Search </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Report a Problem </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Overview </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">Περισσότερα >></a>');
+									$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Search </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Report a Problem </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Overview </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">More >></a>');
 								}else{
 									$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Αναζήτηση </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Αναφορά προβλήματος </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Επισκόπηση </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">Περισσότερα >></a>');
 								}
