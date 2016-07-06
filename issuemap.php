@@ -402,14 +402,16 @@
 									var local_time_assign = moment(time_assign).format('LLL');
 									$('#assignment').replaceWith(local_time_assign);
 								}
-
+								
+								var time_compl='';
+								
 								for (i = 0; i < msg[0].history.length; i++)
 								{
 									for (j = 0; j <msg[0].history[i].changes.length; j++)
 									{
 										if (msg[0].history[i].changes[j].added == "RESOLVED")
 										{
-											var time_compl = msg[0].history[i].when;
+											time_compl = msg[0].history[i].when;
 										}
 										if (msg[0].history[i].changes[j].field_name == "resolution")
 										{
