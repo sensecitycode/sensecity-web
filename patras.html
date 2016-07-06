@@ -478,6 +478,8 @@
 					event.preventDefault();
 				});
 				
+				
+				/*
 				$.ajax({
 							crossDomain: true,
 							type:"GET",
@@ -617,7 +619,7 @@
 							}
 							
 						});
-				
+				*/
 				
 				
 				console.log(localStorage.getItem("language"));
@@ -667,7 +669,8 @@
 					
 					
 					
-					
+					$('#recent_five').html('');
+					$('#btn_more').html('');
 					
 					$.ajax({
 							crossDomain: true,
