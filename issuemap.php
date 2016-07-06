@@ -462,6 +462,7 @@
 									}
 								
 									$('#completion').replaceWith("("+new_resol+")<br />"+local_time_compl);
+									$('#completion').html("("+new_resol+")<br />"+local_time_compl);
 								}
 							}
 						});
