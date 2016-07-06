@@ -37,10 +37,10 @@
 		</div>
 	</div>
 	
-	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
+	<div class="col-md-12 " style="background-color: #FFFFFF;">
 		<center style="color:#000000;"><h1 id="title_h1"></h1> </center>
 	</div>
-	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
+	<div class="col-md-12 " style="background-color: #FFFFFF;">
 		<br>
 		<div class="col-lg-8">
 			<div id="map" style="color: black; height:50vh;"></div>
@@ -52,7 +52,7 @@
 		</div>
 		<br>
 	</div>
-	<div class="col-md-12 " style="padding-top:50px;background-color: #FFFFFF;">
+	<div class="col-md-12 " style="background-color: #FFFFFF;">
 		<div id="timeline" style="padding-top:20px; color:#000;" class="text-center">
 			<h2>Εξέλιξη προβλήματος</h2>
 			<div class="progress">
