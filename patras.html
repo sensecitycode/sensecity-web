@@ -48,13 +48,13 @@
 			<div style="margin-bottom: -19px;">
 				<!-- <h2 class="margin-top-0 text-primary text-center" style="color:#000000;">Τι συμβαίνει στη πόλη</h2>
 				<br> -->
-				<p class="text-faded text-center" style="color:#000000;background-color: #FFF;">
+				<p class="text-faded text-center" style="color:#000000;background-color: #FFF;" id="msg_sub_text1">
 					Δείτε με μια ματιά εδώ τι έχουν αναφέρει οι υπόλοιποι πολίτες και ποια είναι τα τελευταία συμβάντα στη πόλη!
 				</p>
 			</div>
 			<div class="row col-lg-12 " style="padding-right: 0px; padding-left: 0px; margin-right: 0px; margin-left: 0px;" id="one">
 					<div id="map" style="color: black; height:450px;"></div>
-					<div style="font-size:10px; color:#000000;"> * Η απεικόνιση των κάδων απορριμάτων δεν συνάδει με οποιαδήποτε οριστική χωροθέτηση αυτών.</div>
+					<div style="font-size:10px; color:#000000;" id="msg_sub_text2"> * Η απεικόνιση των κάδων απορριμάτων δεν συνάδει με οποιαδήποτε οριστική χωροθέτηση αυτών.</div>
 					
                 </div>
 				
@@ -499,7 +499,7 @@
 									var positionlat = obj.loc.coordinates[1];
 									var positionlon = obj.loc.coordinates[0];
 									var image_name;
-									if(obj.image_name==='' || obj.image_name===null || obj.image_name===undefined){
+									if(obj.image_name==='' || obj.image_name===null || obj.image_name===undefined || obj.image_name==='no-image'){
 										image_name = "images/EmptyBox-Phone.png";
 									}
 									else
@@ -572,15 +572,35 @@
 									console.log(seconds);
 									
 									if(seconds<60){
-										datediff = "πριν από "+seconds+" δευτερόλεπτα";
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+seconds+" seconds";
+										}else{
+											datediff = "πριν από "+seconds+" δευτερόλεπτα";
+										}
+										
 									}
 									else if(seconds<3600){
-										datediff = "πριν από "+Math.floor(seconds/60)+" λεπτά";
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+Math.floor(seconds/60)+" minutes";
+										}else{
+											datediff = "πριν από "+Math.floor(seconds/60)+" λεπτά";
+										}
+										
 									}else if(seconds<86400){
-										datediff = "πριν από "+Math.floor(seconds/3600)+" ώρες";
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+Math.floor(seconds/3600)+" hours";
+										}else{
+											datediff = "πριν από "+Math.floor(seconds/3600)+" ώρες";
+										}
+										
 									}
 									else{
-										datediff = "πριν από "+Math.floor(seconds/86400)+" μέρες";
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+Math.floor(seconds/86400)+" days";
+										}else{
+											datediff = "πριν από "+Math.floor(seconds/86400)+" μέρες";
+										}
+										
 									}
 									
 									//$('#recent_five').append('<a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="color: #FFFFFF !important;"><div class="row"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px dotted rgb(2, 71, 197);  height: 100px;  margin-top: 20px; background-color: #FFFFFF;color:#696969;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px" style="max-width: 110px;" /></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px; color: #696969;">'+datediff+'</div><div>'+obj.value_desc+'</div></div></div></div></a>');
@@ -641,9 +661,9 @@
 				
 				
 				function change_lang(){
-					$('#menu_participation').html(lang.menu_participation);
-					$('#menu_contact').html(lang.menu_contact);
-					
+					$('#msg_subdomain_title').html(lang.msg_subdomain_title);
+					$('#msg_sub_text1').html(lang.msg_sub_text1);
+					$('#msg_sub_text2').html(lang.msg_sub_text2);
 	
 				}
 				
