@@ -170,6 +170,10 @@
 						$('#recent_five').html('');
 						$('#btn_more').html('');
 						
+						$('#image_div').append('');
+						$('#title_h1').append('');
+
+								
 						var issue_image;
 						var issue_name;
 						var issue_value_desc;
