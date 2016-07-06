@@ -439,22 +439,39 @@
 
             if (time_compl != null)
             {
-              var local_time_compl = moment(time_compl).format('LLL');
-              switch(resol){
-                case "FIXED":
-                  new_resol = "Αποκατάσταση";
-                  break;
-                case "INVALID":
-                  new_resol = "Μη αποδεκτό";
-                  break;
-                case "WONTFIX":
-                  new_resol = "Μη αποκατάσταση";
-                  break;
-                case "DUPLICATE":
-                  new_resol = "Διπλοεγγραφή";
-                  break;
-              }
-              $('#completion').replaceWith("("+new_resol+")<br />"+local_time_compl);
+				var local_time_compl = moment(time_compl).format('LLL');
+				switch(resol){
+					case "FIXED":
+						if(localStorage.getItem("language") === 'en'){
+							issue_name_new = 'Fixed';
+						}else{
+							new_resol = "Αποκατάσταση";
+						}
+						break;
+					case "INVALID":
+						if(localStorage.getItem("language") === 'en'){
+							issue_name_new = 'Invalid';
+						}else{
+							new_resol = "Εσφαλμένο αίτημα";
+						}	
+						break;
+					case "WONTFIX":
+						if(localStorage.getItem("language") === 'en'){
+							issue_name_new = 'Will not Fix';
+						}else{
+							new_resol = "Μη αποκατάσταση";
+						}
+						break;
+					case "DUPLICATE":
+						if(localStorage.getItem("language") === 'en'){
+							issue_name_new = 'Already reported in other issue';
+						}else{
+							new_resol = "Εχει ήδη αναφερθεί στο παρελθόν";
+						}
+						break;
+				}
+				
+				$('#completion').replaceWith("("+new_resol+")<br />"+local_time_compl);
             }
 
 
