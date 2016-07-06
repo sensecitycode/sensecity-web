@@ -167,9 +167,6 @@
 						$('#msg_section_info').html(lang.msg_section_info);
 						$('#msg_section_followus').html(lang.msg_section_followus);
 						
-						$('#recent_five').html('');
-						$('#btn_more').html('');
-						
 						$('#image_div').append('');
 						$('#title_h1').append('');
 
