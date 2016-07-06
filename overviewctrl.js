@@ -284,6 +284,7 @@ appControllers
 																// +
 																// lastissue.issue);
 																if (lastissue.image_name === ''
+																		|| lastissue.image_name === 'no-image'
 																		|| lastissue.image_name === null
 																		|| lastissue.image_name === undefined) {
 																	lastissue.image_name = "images/EmptyBox-Phone.png";

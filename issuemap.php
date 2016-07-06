@@ -37,7 +37,7 @@
 		</div>
 	</div>
 	
-	<div class="col-md-12" id="title_h1" style="background-color: #FFFFFF;">
+	<div class="col-md-12" id="title_h1" style="background-color: #FFFFFF;padding: 20px;">
 		
 	</div>
 	<div class="col-md-12 " style="background-color: #FFFFFF;">
@@ -208,7 +208,7 @@
 								}
 
 								$('#image_div').append('<center><img src="'+issue_image+'" style="height: 50vh;"/>');
-								$('#title_h1').append('<span style="color:#000000; font-size:14px;"><b>'+issue_name_new+'</b></span>: <span style="color:#000000; font-size:14px;">'+issue_value_desc+'</span>');
+								$('#title_h1').append('<span style="color:#000000; font-size:28px;"><b>'+issue_name_new+'</b>:</span><span style="color:#000000; font-size:22px;">'+issue_value_desc+'</span>');
 
 								var count_pos =0;
 								var position = new Array();
