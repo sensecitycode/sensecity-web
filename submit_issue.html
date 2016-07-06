@@ -319,8 +319,8 @@
 				$('#msg_photograph').html(lang.msg_photograph);
 				$('#msg_submit_btn').html(lang.msg_submit_btn);
 	
-				
-				
+				$('#lng').attr("placeholder", );
+				$('#lat').attr("placeholder", );
 				
 				
 				
@@ -358,7 +358,7 @@
 						var select = document.getElementById("issue");
 						$('#issue').empty();
 						if(localStorage.getItem("language") === 'en'){
-							var options = ["Select a Problem", "Καμμένος Λαμπτήρας", "Σπασμένος Βραχίωνας", "Ανεπαρκής Φωτισμός", "Άλλο"];
+							var options = ["Select a Problem", "Glowing Lamps", "Broken Arm", "Insufficient Lighting", "Other"];
 						}else{
 							var options = ["Επιλέξτε προβλήματος", "Καμμένος Λαμπτήρας", "Σπασμένος Βραχίωνας", "Ανεπαρκής Φωτισμός", "Άλλο"];
 						}
@@ -381,7 +381,12 @@
 					case "plumbing":
 						var select = document.getElementById("issue");
 						$('#issue').empty();
-						var options = ["Επιλέξτε προβλήματος", "Βουλωμένο Φρεάτιο", "Σπασμένο Φρεάτιο", "Άλλο"];
+						if(localStorage.getItem("language") === 'en'){
+							var options = ["Select a Problem", "Clogged Well", "Broken Well", "Other"];
+						}else{
+							var options = ["Επιλέξτε προβλήματος", "Βουλωμένο Φρεάτιο", "Σπασμένο Φρεάτιο", "Άλλο"];
+						}
+						
 						for(var i = 0; i < options.length; i++) {
 							var opt = options[i];
 							var el = document.createElement("option");
@@ -401,7 +406,11 @@
 					case "road-contructor":
 						var select = document.getElementById("issue");
 						$('#issue').empty();
-						var options = ["Επιλέξτε προβλήματος", "Σπασμένες Πλάκες", "Αντικείμενο που εμποδίζει", "Εγκαταλ. Αυτοκίνητο", "Άλλο"];
+						if(localStorage.getItem("language") === 'en'){
+							var options = ["Select a Problem", "Broken Plates", "Object interfering", "Abandoned Car", "Other"];
+						}else{
+							var options = ["Επιλέξτε προβλήματος", "Σπασμένες Πλάκες", "Αντικείμενο που εμποδίζει", "Εγκαταλ. Αυτοκίνητο", "Άλλο"];
+						}
 						for(var i = 0; i < options.length; i++) {
 							var opt = options[i];
 							var el = document.createElement("option");
