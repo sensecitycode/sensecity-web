@@ -44,5 +44,17 @@ lang = {
 	msg_sub_text2:"For the city of Patras, the indicated position of waste bins might have differences with the existing ones",
 	msg_dilosi:"Submitted",
 	msg_anathesi:"Assigned",
-	msg_complete:"Completed"
+	msg_complete:"Completed",
+	msg_label_long:"Longtitude",
+	msg_label_lat:"Lattitude",
+	msg_label_type:"Problem Type",
+	msg_type_select:"Select a problem type",
+	msg_type_garbage:"Garbage",
+	msg_type_lighting:"Lighting",
+	msg_type_plumbing:"Plumbing",
+	msg_type_road:"Street/Sidewalk Problem",
+	msg_problem_detail:"Problem",
+	msg_perigrafi_problem:"Description",
+	msg_photograph:"Photo",
+	msg_submit_btn:"Submit"
 };

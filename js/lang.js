@@ -44,5 +44,17 @@
 	msg_sub_text2:"* Η απεικόνιση των κάδων απορριμάτων δεν συνάδει με οποιαδήποτε οριστική χωροθέτηση αυτών.",
 	msg_dilosi:"Δήλωση",
 	msg_anathesi:"Ανάθεση",
-	msg_complete:"Ολοκληρώθηκε"
+	msg_complete:"Ολοκληρώθηκε",
+	msg_label_long:"Γεωγραφικό Μήκος",
+	msg_label_lat:"Γεωγραφικό Πλάτος",
+	msg_label_type:"Τύπος προβλήματος",
+	msg_type_select:"Επιλέξτε τύπο προβλήματος",
+	msg_type_garbage:"Σκουπίδια",
+	msg_type_lighting:"Φωτισμός",
+	msg_type_plumbing:"Ύδρευση",
+	msg_type_road:"Οδόστρωμα",
+	msg_problem_detail:"Προβλήμα",
+	msg_perigrafi_problem:"Περιγραφή",
+	msg_photograph:"Φωτογραφία",
+	msg_submit_btn:"Αποστολή"
 };
