@@ -56,5 +56,8 @@ lang = {
 	msg_problem_detail:"Problem",
 	msg_perigrafi_problem:"Description",
 	msg_photograph:"Photo",
-	msg_submit_btn:"Submit"
+	msg_submit_btn:"Submit",
+	msg_long_text:"Longtitude",
+	msg_lat_text:"Latitude",
+	msg_subtype_select:"Select a Problem"
 };

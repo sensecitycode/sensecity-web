@@ -56,5 +56,8 @@
 	msg_problem_detail:"Προβλήμα",
 	msg_perigrafi_problem:"Περιγραφή",
 	msg_photograph:"Φωτογραφία",
-	msg_submit_btn:"Αποστολή"
+	msg_submit_btn:"Αποστολή",
+	msg_long_text:"Γεωγραφικό Μήκος",
+	msg_lat_text:"Γεωγραφικό Πλάτος",
+	msg_subtype_select:"Επιλέξτε προβλήματος"
 };
