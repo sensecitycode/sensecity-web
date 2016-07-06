@@ -457,11 +457,11 @@
 			
 			<style>
 			
-			.row tasks div:first-child {
+			.row.tasks div:first-child {
 				text-align: left;
 			}
 			
-			.row tasks div:last-child {
+			.row.tasks div:last-child {
 				text-align: right;
 			}
 			
