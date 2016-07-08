@@ -401,7 +401,7 @@ appControllers
 																var bugParams =
 																{
 																    "method": "Bug.get",
-																    "params": [{"ids":lastissue._id,"product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων","include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+																    "params": [{"ids":lastissue._id,"product": "Δημος Πατρέων","include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
 																    "id": 1
 																};
 																BugService.search(bugParams, function(result) {
