@@ -59,5 +59,8 @@ lang = {
 	msg_submit_btn:"Submit",
 	msg_long_text:"Longtitude",
 	msg_lat_text:"Latitude",
-	msg_subtype_select:"Select a Problem"
+	msg_subtype_select:"Select a Problem",
+	city_patra:"Patras",
+	city_other_1:"Your city",
+	city_other_2:"Your city"
 };
