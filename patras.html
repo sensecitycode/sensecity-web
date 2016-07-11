@@ -712,29 +712,31 @@
 										data: bugParams,
 										dataType: "json",                
 										success: function(msg1){
+											console.log(msg1);
+											console.log(msg1[0].resolution);
 											switch (msg1[0].status) {
 												case 'CONFIRMED':
 													if(localStorage.getItem("language") === 'en'){
-														new_status_issue = 'CONFIRMED';
+														new_status_issue = 'Confirmed';
 													}
 													else{
-														new_status_issue = 'CONFIRMED';
+														new_status_issue = 'Ανοιχτό / Μη επιβεβαιωμένο';
 													}
 													break;
 												case 'IN_PROGRESS':
 													if(localStorage.getItem("language") === 'en'){
-														new_status_issue = 'IN_PROGRESS';
+														new_status_issue = 'In Progress';
 													}
 													else{
-														new_status_issue = 'IN_PROGRESS';
+														new_status_issue = 'Ανάθεση / Σε εκτέλεση';
 													}
 													break;
 												case 'RESOLVED':
 													if(localStorage.getItem("language") === 'en'){
-														new_status_issue = 'RESOLVED';
+														new_status_issue = 'Resolved';
 													}
 													else{
-														new_status_issue = 'RESOLVED';
+														new_status_issue = 'Oloklhrvm;eno';
 													}
 													break;
 												default:
