@@ -672,7 +672,9 @@
 					
 					$('#recent_five').html('');
 					$('#btn_more').html('');
+					
 					var html_code='';
+					
 					$.ajax({
 							crossDomain: true,
 							type:"GET",
@@ -941,7 +943,9 @@
 									
 								});
 								
-								
+								console.log('----------------------');
+								console.log(html_code);
+								console.log('----------------------');
 								$('#recent_five').append(html_code);
 								if(localStorage.getItem("language") === 'en'){
 									$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Search </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Report a Problem </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Overview </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">More >></a>');
