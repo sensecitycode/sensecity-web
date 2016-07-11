@@ -401,7 +401,7 @@ appControllers
 																var bugParams =
 																{
 																    "method": "Bug.get",
-																    "params": [{"ids":lastissue._id,"product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων","include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+																    "params": [{"ids":lastissue._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
 																    "id": 1
 																};
 																BugService.search(bugParams, function(result) {
@@ -431,7 +431,7 @@ appControllers
 								var problemsParam =
 								{
 										"method": "Bug.search",
-										"params": [{"product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων","order":"bug_id DESC","status":["CONFIRMED","IN_PROGRESS","RESOLVED"],"f1":"creation_ts","o1":"greaterthan","v1":"2016-01-01","include_fields":["id"]}],
+										"params": [{"product": "Δημος Πατρέων","order":"bug_id DESC","status":["CONFIRMED","IN_PROGRESS","RESOLVED"],"resolution":["---","FIXED"],"f1":"creation_ts","o1":"greaterthan","v1":"2016-01-01","include_fields":["id"]}],
 										"id": 1
 								};
 								BugService.search(problemsParam, function(result) {
@@ -441,7 +441,7 @@ appControllers
 								var solutionsParam =
 								{
 										"method": "Bug.search",
-										"params": [{"product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων","order":"bug_id DESC","status":"RESOLVED","f1":"resolution","o1":"changedafter","v1":"2016-01-01","include_fields":["id"]}],
+										"params": [{"product": "Δημος Πατρέων","order":"bug_id DESC","status":"RESOLVED","resolution": "FIXED","f1":"resolution","o1":"changedafter","v1":"2016-01-01","include_fields":["id"]}],
 										"id": 1
 								};
 								BugService.search(solutionsParam, function(result) {
