@@ -712,7 +712,7 @@
 										data: bugParams,
 										dataType: "json",                
 										success: function(msg1){
-											console.log(msg1);
+											
 											console.log(msg1[0].resolution);
 											switch (msg1[0].status) {
 												case 'CONFIRMED':
@@ -733,10 +733,13 @@
 													break;
 												case 'RESOLVED':
 													if(localStorage.getItem("language") === 'en'){
+														//if(msg1[0].resolution==='FIXED'){
+														
+														//}
 														new_status_issue = 'Resolved';
 													}
 													else{
-														new_status_issue = 'Oloklhrvm;eno';
+														new_status_issue = 'Ολοκληρωμένο';
 													}
 													break;
 												default:
