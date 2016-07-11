@@ -691,6 +691,36 @@
 								$.each(msg, function(idx, obj) {
 								
 									console.log(obj._id);
+									
+									
+									
+									
+									
+									
+									
+									
+									$.ajax({
+										crossDomain: true,
+										type:"POST",
+										url: "http://api.sense.city:3001/bugs/search",
+										data: '{ids: ' + obj._id + '}',
+										dataType: "json",                
+										success: function(msg1){
+											console.log(msg1);
+										}										
+									});
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
 									var positionlat = obj.loc.coordinates[1];
 									var positionlon = obj.loc.coordinates[0];
 									var image_name;
