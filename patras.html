@@ -703,7 +703,7 @@
 																    "id": 1
 																};
 									var status_issue ='';
-									
+									var new_status_issue='';
 									$.ajax({
 										crossDomain: true,
 										type:"POST",
@@ -713,6 +713,39 @@
 										success: function(msg1){
 											status_issue=msg1[0].status;
 											
+									
+									
+											
+											switch (status_issue) {
+												case 'CONFIRMED':
+													if(localStorage.getItem("language") === 'en'){
+														new_status_issue = 'CONFIRMED';
+													}
+													else{
+														new_status_issue = 'CONFIRMED';
+													}
+													break;
+												case 'IN_PROGRESS':
+													if(localStorage.getItem("language") === 'en'){
+														new_status_issue = 'IN_PROGRESS';
+													}
+													else{
+														new_status_issue = 'IN_PROGRESS';
+													}
+													break;
+												case 'RESOLVED':
+													if(localStorage.getItem("language") === 'en'){
+														new_status_issue = 'RESOLVED';
+													}
+													else{
+														new_status_issue = 'RESOLVED';
+													}
+													break;
+											}
+									
+									//console.log(msg1[0].status);
+										}										
+									});
 									
 									
 									
@@ -835,33 +868,7 @@
 									
 									
 									
-											var new_status_issue='';
-											switch (status_issue) {
-												case 'CONFIRMED':
-													if(localStorage.getItem("language") === 'en'){
-														new_status_issue = 'CONFIRMED';
-													}
-													else{
-														new_status_issue = 'CONFIRMED';
-													}
-													break;
-												case 'IN_PROGRESS':
-													if(localStorage.getItem("language") === 'en'){
-														new_status_issue = 'IN_PROGRESS';
-													}
-													else{
-														new_status_issue = 'IN_PROGRESS';
-													}
-													break;
-												case 'RESOLVED':
-													if(localStorage.getItem("language") === 'en'){
-														new_status_issue = 'RESOLVED';
-													}
-													else{
-														new_status_issue = 'RESOLVED';
-													}
-													break;
-											}
+											
 								
 								
 								
@@ -875,10 +882,6 @@
 									
 									
 									
-									
-									//console.log(msg1[0].status);
-										}										
-									});
 									
 									
 									
