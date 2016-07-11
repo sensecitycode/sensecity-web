@@ -696,14 +696,19 @@
 									
 									
 									
-									
+									var bugParams =
+																{
+																    "method": "Bug.get",
+																    "params": [{"ids":obj._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+																    "id": 1
+																};
 									
 									
 									$.ajax({
 										crossDomain: true,
 										type:"POST",
 										url: "http://api.sense.city:3001/bugs/search",
-										data: '{"method": "Bug.get", "params": [{"ids":"'+obj._id+'","include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],	"id": 1	};',
+										data: bugParams,
 										dataType: "json",                
 										success: function(msg1){
 											console.log(msg1);
