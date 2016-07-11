@@ -166,7 +166,77 @@
 								console.log(positionlon);
 								*/
 								$.each(msg, function(idx, obj) {
-								
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									var bugParams =	{
+									    "method": "Bug.get",
+									    "params": [{"ids":obj._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+									    "id": 1
+									};
+									
+									
+									var new_status_issue='';
+									
+									$.ajax({
+										crossDomain: true,
+										type:"POST",
+										url: "http://api.sense.city:3001/bugs/search",
+										data: bugParams,
+										dataType: "json",                
+										success: function(msg1){
+											
+											console.log(msg1[0].resolution);
+											switch (msg1[0].status) {
+												case 'CONFIRMED':
+													if(localStorage.getItem("language") === 'en'){
+														new_status_issue = 'Confirmed';
+													}
+													else{
+														new_status_issue = 'Ανοιχτό / Μη επιβεβαιωμένο';
+													}
+													break;
+												case 'IN_PROGRESS':
+													if(localStorage.getItem("language") === 'en'){
+														new_status_issue = 'In Progress';
+													}
+													else{
+														new_status_issue = 'Ανάθεση / Σε εκτέλεση';
+													}
+													break;
+												case 'RESOLVED':
+													if(localStorage.getItem("language") === 'en'){
+														//if(msg1[0].resolution==='FIXED'){
+														
+														//}
+														new_status_issue = 'Resolved';
+													}
+													else{
+														new_status_issue = 'Ολοκληρωμένο';
+													}
+													break;
+												default:
+													break;
+											}
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
 								
 									var positionlat = obj.loc.coordinates[1];
 									var positionlon = obj.loc.coordinates[0];
@@ -271,11 +341,18 @@
 									
 									
 									//$('#recent_five').append('<a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="color: #FFFFFF !important;"><div class="col-lg-4 col-md-6 col-sm-12"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #BFAFAF;  height: 100px;  margin-top: 20px; background-color: #756161;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px" style="max-width: 110px;" /></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px;">'+datediff+'</div><div>'+obj.value_desc+'</div></div></div></div></a>');
-									$('#recent_five').append('<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" style="padding-bottom: 5px;"><div style="background-color:#FFFFFF; border-width: 1px;border-color: #967f7f;border-style: dotted;border-radius: 10px;"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+' - '+obj.value_desc+'" style="text-decoration:none;"><center><div class="thumbnail crop" style="padding:0px; overflow-y: hidden; height: 200px; "><img src="'+image_name+'" height="200px" alt="'+issue+'"></div></center><div class="caption" style="color:#000000;padding-left: 13px;padding-right: 5px; margin-top:-10px;"><p style="font-size:13px;"><b id="msg_subdomain_issue">'+issue+'</b></p> <p style="font-size:12px;height:40px;margin-top:-10px;">'+obj.value_desc+'</p><p style="margin-top:-10px;font-size:14px;"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+datediff+'</p></div></a></div></div>');
-								});
+									
+									$('#recent_five').append('<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" style="padding-bottom: 5px;"><div style="background-color:#FFFFFF; border-width: 1px;border-color: #967f7f;border-style: dotted;border-radius: 10px;"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+' - '+obj.value_desc+'" style="text-decoration:none;"><center><div class="thumbnail crop" style="padding:0px; overflow-y: hidden; height: 200px; "><img src="'+image_name+'" height="200px" alt="'+issue+'"></div></center><div class="caption" style="color:#000000;padding-left: 13px;padding-right: 5px; margin-top:-10px;"><p style="font-size:13px;"><b id="msg_subdomain_issue">'+issue+'</b></p> <p style="font-size:12px;height:40px;margin-top:-10px;">'+obj.value_desc+'</p><p style="font-size:12px;height:40px;margin-top:-10px;">'+new_status_issue+'</p><p style="margin-top:-10px;font-size:14px;"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+datediff+'</p></div></a></div></div>');
+								}
+							});
+							
+							
+							
+							});
 								
 								
 							}
+								
 							
 						});
 						
