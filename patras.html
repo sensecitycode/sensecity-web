@@ -716,7 +716,7 @@
 									
 									
 											
-											switch (status_issue) {
+											switch (msg1[0].status) {
 												case 'CONFIRMED':
 													if(localStorage.getItem("language") === 'en'){
 														new_status_issue = 'CONFIRMED';
@@ -740,6 +740,8 @@
 													else{
 														new_status_issue = 'RESOLVED';
 													}
+													break;
+												default:
 													break;
 											}
 									
