@@ -69,7 +69,7 @@ appControllers
 				'mainController',
 				[
 						'$scope',
-						'$q',
+						'$q', 'leafletData',
 						'APIEndPointService',
 						'DisplayIssuesService',
 						'DisplayLast6IssuesService',
@@ -78,7 +78,8 @@ appControllers
 						'cfpLoadingBar',
 						'$interval',
 						'$translate',
-						function($scope, $q, APIEndPointService,
+						function($scope, $q, leafletData,
+								APIEndPointService,
 								DisplayIssuesService,
 								DisplayLast6IssuesService, BugService, FixedPointsService,
 								cfpLoadingBar,
@@ -167,10 +168,35 @@ appControllers
 							$scope.patras = {
 								lat : 38.2466395,
 								lng : 21.734574,
-								zoom : 18
+								zoom : 19
 							};
 							
-							
+							$scope.kadoiMarkersEXT = {
+										type : 'markercluster',
+										name : 'Κάδοι',
+										visible : true,
+										layerOptions: {
+											disableClusteringAtZoom : 19,
+											animateAddingMarkers : false,
+											spiderfyDistanceMultiplier: true,
+											singleMarkerMode: false,
+											showCoverageOnHover: true,
+											chunkedLoading: true
+										}
+									};
+									
+							$scope.fotistikoMarkersEXT = {
+										type : 'markercluster',
+										name : 'Φωτισμός',
+										visible : true,
+										layerOptions: {
+											disableClusteringAtZoom : 19,
+											animateAddingMarkers : false,
+											spiderfyDistanceMultiplier: true,
+											singleMarkerMode: false,
+											showCoverageOnHover: true,
+										}
+									};
 
 							$scope.layers = {
 								baselayers : {
@@ -210,45 +236,18 @@ appControllers
 										type : 'group',
 										name : 'Προβλήματα Πολιτών',
 										visible : true
-									},
-									kadoiMarkers : {
-										type : 'markercluster',
-										name : 'Κάδοι',
-										visible : true,
-										layerOptions: {
-											disableClusteringAtZoom : 18,
-											animateAddingMarkers : false,
-											spiderfyDistanceMultiplier: true,
-											singleMarkerMode: false,
-											showCoverageOnHover: true,
-										}
-									},
-									fotistikoMarkers : {
-										type : 'markercluster',
-										name : 'Φωτισμός',
-										visible : true,
-										layerOptions: {
-											disableClusteringAtZoom : 18,
-											animateAddingMarkers : false,
-											spiderfyDistanceMultiplier: true,
-											singleMarkerMode: false,
-											showCoverageOnHover: true,
-										}
 									}
+									//, 
+									//kadoiMarkers : $scope.kadoiMarkersEXT ,									
+									//fotistikoMarkers : $scope.fotistikoMarkersEXT 
 								}
 							};
 							
 							$scope.$on('leafletDirectiveMap.overlayadd', function(event, o){
-									console.log( event);
+									console.log( "overlayadd event " );
 									console.log( o.leafletEvent );
 									console.log( o.leafletEvent.layer );
-									if ( $scope.fixedmarkers.length == 0 )
-									{
-										$scope.displayFixedPoints();									
-										$scope.submitSearchLast30days();
-									}else{
-										console.log( "fixed points already loaded" );
-									}
+									
 							});
 								
 							
@@ -534,15 +533,14 @@ appControllers
 													if(fixedpoint.notes[0].ANAKIKLOSI=='0'){
 														garbageIcon = 'greenGarbageBin';
 													}
-													var marker = {
-																			"layer" : "kadoiMarkers",
-																			"lat" : +positionlat,
-																			"lng" : +positionlon,
-																			"icon" : icons[garbageIcon]
-													};
 													
 													
-														$scope.fixedmarkers.push(marker);
+													var marker = new L.marker([ positionlat, positionlon ] , {
+																icon:  L.AwesomeMarkers.icon( icons[garbageIcon] )
+															});
+													
+													
+													$scope.fixedmarkers.push(marker);
 													
 												}
 												
@@ -550,15 +548,14 @@ appControllers
 												{
 													var fixedLIcon = 'fixedLightning'
 													
-													var marker = {
-																			"layer" : "fotistikoMarkers",
-																			"lat" : +positionlat,
-																			"lng" : +positionlon,
-																			"icon" : icons[fixedLIcon]
-													};
+												
+													
+													var marker = new L.marker([ positionlat, positionlon ] , {
+																icon:  L.AwesomeMarkers.icon( icons[fixedLIcon] )
+															});
 													
 													
-														$scope.fixedmarkers.push(marker);
+													$scope.fixedmarkers.push(marker);
 													
 												}
 												
@@ -566,8 +563,28 @@ appControllers
 											
 											});
 									
-									
-									
+										console.log( $scope.kadoiMarkersEXT );
+										
+										var markers = L.markerClusterGroup( {
+													type : 'markercluster',
+													name : 'Κάδοι',
+													visible : true,
+													layerOptions: {
+														disableClusteringAtZoom : 19,
+														animateAddingMarkers : false,
+														spiderfyDistanceMultiplier: true,
+														singleMarkerMode: false,
+														showCoverageOnHover: true,
+														chunkedLoading: true
+													}
+												} );
+										
+										markers.addLayers( $scope.fixedmarkers );
+										
+										  leafletData.getMap().then(function(map) {
+											map.addLayer(markers);
+											map.fitBounds(markers.getBounds());
+										  });
 											
 								});
 							
@@ -592,7 +609,7 @@ appControllers
 							
 							
 							
-							//$scope.fixedmarkersLazyLoaded 
+							
 							$scope.lastloadedFixedPoint = 0;		
 							
 							$scope.lazyLoadFixedPoints = function() {
@@ -607,15 +624,20 @@ appControllers
 									$scope.markers.push( m );									
 									$scope.lastloadedFixedPoint = $scope.lastloadedFixedPoint + 1;
 									i++;
-									if (i>500)
+									if (i>1000)
 									{
 										break;
 									}
-								}							
-							}
+								}
+
+								if ($scope.lastloadedFixedPoint >= $scope.fixedmarkers.length )	
+								{
+									$interval.cancel( $scope.lazyLoadFixedPointsTask );
+									console.log("cancelling lazy loading task. All loaded");
+								}
+							}							
 							
-							
-							$interval($scope.lazyLoadFixedPoints, 1000, 10);
+							//$scope.lazyLoadFixedPointsTask = $interval($scope.lazyLoadFixedPoints, 1000, 0);
 							
 
 						} ]);
