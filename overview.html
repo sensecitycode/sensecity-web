@@ -38,21 +38,34 @@
 <!-- Map dependancies -->
 <link rel="stylesheet" href="css/leaflet.css" />
 <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+<link rel="stylesheet" href="css/ionicons.min.css" />
+	<link rel="stylesheet" href="_css/MarkerCluster.css" />
+    <link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
+	<link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+	
 <script src="js/leaflet.js"></script>
 <script src="js/ui-leaflet.min.js"></script>
 <script src="js/leaflet.awesome-markers.js"></script>
 <script src="js/angular-simple-logger.js"></script>
+	<script src="js/leaflet.markercluster.js"></script>
+	<script src="js/leaflet.extra-markers.min.js"></script>
+
+
 <!-- Marker icons -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-
+	
+	
 <!-- Angular SearchApp dependancies -->
 <script src="overviewctrl.js"></script>
 <script src="overviewapp.js"></script>
 <script src="overviewsrvs.js"></script>
 
 <script src="js/loading-bar.js"></script>
+
+	
+
 </head>
 <body ng-app="overviewApp" ng-controller="mainController">
 
@@ -102,7 +115,7 @@
 					</div>
 				</div>
 				<div id="mapcontent">
-					<leaflet lf-center="center" layers="layers" markers="markers"
+					<leaflet lf-center="patras" layers="layers" markers="markers"
 						height="100%" style="color:black;"></leaflet>
 				</div>
 			</div>

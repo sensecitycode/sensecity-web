@@ -74,18 +74,21 @@ appControllers
 						'DisplayIssuesService',
 						'DisplayLast6IssuesService',
 						'BugService',
+						'FixedPointsService',
 						'cfpLoadingBar',
 						'$interval',
 						'$translate',
 						function($scope, $q, APIEndPointService,
 								DisplayIssuesService,
-								DisplayLast6IssuesService, BugService,
+								DisplayLast6IssuesService, BugService, FixedPointsService,
 								cfpLoadingBar,
 								$interval,
 								$translate) {
 
 							$scope.lastdatesToCheck = 30;
 							$scope.lastissues = [];
+							$scope.markers = [];
+							$scope.fixedmarkers = [];
 							$scope.state = true;
 							$scope.toggleState = function() {
 								$scope.state = !$scope.state;
@@ -96,25 +99,25 @@ appControllers
 									type : 'awesomeMarker',
 									prefix : 'fa',
 									icon : 'trash-o',
-									markerColor : 'green'
+									markerColor : 'red'
 								},
 								"road-contructor" : {
 									type : 'awesomeMarker',
 									prefix : 'fa',
 									icon : 'road',
-									markerColor : 'cadetblue'
+									markerColor : 'red'
 								},
 								plumbing : {
 									type : 'awesomeMarker',
 									prefix : 'fa',
 									icon : 'umbrella',
-									markerColor : 'darkpuple'
+									markerColor : 'red'
 								},
 								lighting : {
 									type : 'awesomeMarker',
 									prefix : 'fa',
 									icon : 'lightbulb-o',
-									markerColor : 'orange'
+									markerColor : 'red'
 								},
 								angry : {
 									type : 'awesomeMarker',
@@ -136,13 +139,34 @@ appControllers
 									icon : 'smile-o',
 									markerColor : 'lightgreen',
 									iconColor : 'darkgreen'
+								},
+								greenGarbageBin : {
+									type : 'extraMarker',
+									prefix : 'fa',
+									icon : 'fa-trash-o',
+									markerColor : 'green',
+									shape: 'square'
+								},
+								cyanGarbageBin : {
+									type : 'extraMarker',
+									prefix : 'fa',
+									icon : 'fa-trash-o',
+									markerColor : 'cyan',
+									shape: 'square'
+								},
+								fixedLightning : {
+									type : 'extraMarker',
+									prefix : 'fa',
+									icon : 'fa-lightbulb-o',
+									markerColor : 'yellow',
+									shape: 'square'
 								}
 							};
 
-							$scope.center = {
-								lat : 38.248028,
-								lng : 21.7583104,
-								zoom : 12
+							$scope.patras = {
+								lat : 38.2466395,
+								lng : 21.734574,
+								zoom : 19
 							};
 
 							$scope.layers = {
@@ -153,7 +177,8 @@ appControllers
 										url : 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 										layerOptions : {
 											showOnSelector : false,
-											attribution : '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+											attribution : '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+											maxZoom: 19
 										}
 									}
 								},
@@ -182,6 +207,30 @@ appControllers
 										type : 'group',
 										name : 'Προβλήματα Πολιτών',
 										visible : true
+									},
+									kadoiMarkers : {
+										type : 'markercluster',
+										name : 'Κάδοι',
+										visible : false,
+										layerOptions: {
+											disableClusteringAtZoom : 19,
+											animateAddingMarkers : true,
+											spiderfyDistanceMultiplier: true,
+											singleMarkerMode: false,
+											showCoverageOnHover: false,
+										}
+									},
+									fotistikoMarkers : {
+										type : 'markercluster',
+										name : 'Φωτισμός',
+										visible : false,
+										layerOptions: {
+											disableClusteringAtZoom : 19,
+											animateAddingMarkers : true,
+											spiderfyDistanceMultiplier: true,
+											singleMarkerMode: false,
+											showCoverageOnHover: false,
+										}
 									}
 								}
 							};
@@ -306,7 +355,9 @@ appControllers
 																				.push(marker);
 																	},
 																	$scope.markers);
-
+													
+													$scope.markers = $scope.markers.concat( $scope.fixedmarkers );
+													
 													$scope.calcValue30daysIssues = calclast30daysIssues;
 													$scope.calcValue30daysEvents = calclast30daysEvents;
 												});
@@ -450,6 +501,62 @@ appControllers
 
 							};
 							
+							
+							$scope.displayFixedPoints = function() {
+								var i =0;
+								var theFixedPoints = FixedPointsService.query(function() {
+											angular.forEach( theFixedPoints, function(fixedpoint, key) {
+												var positionlat = fixedpoint.loc.coordinates[1];
+												var positionlon = fixedpoint.loc.coordinates[0];
+												i ++;
+												
+												if (fixedpoint.type === 'garbage') 
+												{
+													var garbageIcon = 'cyanGarbageBin'
+													if(fixedpoint.notes[0].ANAKIKLOSI=='0'){
+														garbageIcon = 'greenGarbageBin';
+													}
+													var marker = {
+																			"layer" : "kadoiMarkers",
+																			"lat" : +positionlat,
+																			"lng" : +positionlon,
+																			"icon" : icons[garbageIcon]
+													};
+													
+													
+														$scope.fixedmarkers.push(marker);
+													
+												}
+												
+												if (fixedpoint.type === 'fotistiko') 
+												{
+													var fixedLIcon = 'fixedLightning'
+													
+													var marker = {
+																			"layer" : "fotistikoMarkers",
+																			"lat" : +positionlat,
+																			"lng" : +positionlon,
+																			"icon" : icons[fixedLIcon]
+													};
+													
+													
+														$scope.fixedmarkers.push(marker);
+													
+												}
+												
+												
+												
+												
+												
+											
+											
+											});
+											
+								});
+							
+							
+							}
+							
 							$scope.changeLanguage = function (langKey) {
 								$translate.use(langKey);
 							 };
@@ -458,6 +565,7 @@ appControllers
 							$scope.doCalcLast6Issues();
 							$scope.submitSearchLast30days();
 							$scope.doCalcFrom2016();
+							$scope.displayFixedPoints();
 
 
 							// set intervals to update

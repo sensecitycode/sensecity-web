@@ -43,3 +43,18 @@ appServices.factory('BugService', function ( $resource, APIEndPointService) {
         }
     );
 });
+
+appServices.factory('FixedPointsService', function ( $resource, APIEndPointService) {
+    return $resource(
+        'json/all_fix_data_points.json',
+        null,
+        {
+          search: {
+            method: 'GET',
+            headers:{'Content-Type':'application/json'},
+            isArray: true
+          }
+        }
+    );
+});
+
