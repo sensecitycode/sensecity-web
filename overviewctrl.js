@@ -213,7 +213,7 @@ appControllers
 									kadoiMarkers : {
 										type : 'markercluster',
 										name : 'Κάδοι',
-										visible : false,
+										visible : true,
 										layerOptions: {
 											disableClusteringAtZoom : 19,
 											animateAddingMarkers : true,
@@ -225,7 +225,7 @@ appControllers
 									fotistikoMarkers : {
 										type : 'markercluster',
 										name : 'Φωτισμός',
-										visible : false,
+										visible : true,
 										layerOptions: {
 											disableClusteringAtZoom : 19,
 											animateAddingMarkers : true,
