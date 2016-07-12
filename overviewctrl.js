@@ -215,11 +215,11 @@ appControllers
 										name : 'Κάδοι',
 										visible : true,
 										layerOptions: {
-											disableClusteringAtZoom : 19,
-											animateAddingMarkers : true,
+											disableClusteringAtZoom : 18,
+											animateAddingMarkers : false,
 											spiderfyDistanceMultiplier: true,
 											singleMarkerMode: false,
-											showCoverageOnHover: false,
+											showCoverageOnHover: true,
 										}
 									},
 									fotistikoMarkers : {
@@ -227,11 +227,11 @@ appControllers
 										name : 'Φωτισμός',
 										visible : true,
 										layerOptions: {
-											disableClusteringAtZoom : 19,
-											animateAddingMarkers : true,
+											disableClusteringAtZoom : 18,
+											animateAddingMarkers : false,
 											spiderfyDistanceMultiplier: true,
 											singleMarkerMode: false,
-											showCoverageOnHover: false,
+											showCoverageOnHover: true,
 										}
 									}
 								}
@@ -241,7 +241,13 @@ appControllers
 									console.log( event);
 									console.log( o.leafletEvent );
 									console.log( o.leafletEvent.layer );
-									//$scope.displayFixedPoints();
+									if ( $scope.fixedmarkers.size == 0 )
+									{
+										$scope.displayFixedPoints();									
+										$scope.submitSearchLast30days();
+									}else{
+										console.log( "fixed points already loaded" );
+									}
 							});
 								
 							
@@ -554,10 +560,6 @@ appControllers
 														$scope.fixedmarkers.push(marker);
 													
 												}
-												
-												
-												
-												
 												
 											
 											
