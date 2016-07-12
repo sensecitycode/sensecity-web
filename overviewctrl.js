@@ -215,7 +215,7 @@ appControllers
 										name : 'Κάδοι',
 										visible : true,
 										layerOptions: {
-											disableClusteringAtZoom : 18,
+											disableClusteringAtZoom : 19,
 											animateAddingMarkers : false,
 											spiderfyDistanceMultiplier: true,
 											singleMarkerMode: false,
@@ -227,7 +227,7 @@ appControllers
 										name : 'Φωτισμός',
 										visible : true,
 										layerOptions: {
-											disableClusteringAtZoom : 18,
+											disableClusteringAtZoom : 19,
 											animateAddingMarkers : false,
 											spiderfyDistanceMultiplier: true,
 											singleMarkerMode: false,
