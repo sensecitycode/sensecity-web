@@ -89,6 +89,7 @@ appControllers
 							$scope.lastissues = [];
 							$scope.markers = [];
 							$scope.fixedmarkers = [];
+							$scope.fixedmarkersLazyLoaded = [];
 							$scope.state = true;
 							$scope.toggleState = function() {
 								$scope.state = !$scope.state;
@@ -166,7 +167,7 @@ appControllers
 							$scope.patras = {
 								lat : 38.2466395,
 								lng : 21.734574,
-								zoom : 19
+								zoom : 18
 							};
 							
 							
@@ -215,7 +216,7 @@ appControllers
 										name : 'Κάδοι',
 										visible : true,
 										layerOptions: {
-											disableClusteringAtZoom : 19,
+											disableClusteringAtZoom : 18,
 											animateAddingMarkers : false,
 											spiderfyDistanceMultiplier: true,
 											singleMarkerMode: false,
@@ -227,7 +228,7 @@ appControllers
 										name : 'Φωτισμός',
 										visible : true,
 										layerOptions: {
-											disableClusteringAtZoom : 19,
+											disableClusteringAtZoom : 18,
 											animateAddingMarkers : false,
 											spiderfyDistanceMultiplier: true,
 											singleMarkerMode: false,
@@ -241,7 +242,7 @@ appControllers
 									console.log( event);
 									console.log( o.leafletEvent );
 									console.log( o.leafletEvent.layer );
-									if ( $scope.fixedmarkers.size == 0 )
+									if ( $scope.fixedmarkers.length == 0 )
 									{
 										$scope.displayFixedPoints();									
 										$scope.submitSearchLast30days();
@@ -373,7 +374,7 @@ appControllers
 																	},
 																	$scope.markers);
 													
-													$scope.markers = $scope.markers.concat( $scope.fixedmarkers );
+													$scope.markers = $scope.markers.concat( $scope.fixedmarkersLazyLoaded );
 													
 													$scope.calcValue30daysIssues = calclast30daysIssues;
 													$scope.calcValue30daysEvents = calclast30daysEvents;
@@ -588,5 +589,33 @@ appControllers
 							var updtime = 1 * 60 * 1000; // every 5 minutes
 							$interval($scope.doCalcLast6Issues, updtime);
 							$interval($scope.submitSearchLast30days, updtime);
+							
+							
+							
+							//$scope.fixedmarkersLazyLoaded 
+							$scope.lastloadedFixedPoint = 0;		
+							
+							$scope.lazyLoadFixedPoints = function() {
+							
+								console.log("lazy load fixed points of total = " + $scope.fixedmarkers.length 
+												+", current from " + $scope.lastloadedFixedPoint );
+								i = 0;
+								while ($scope.lastloadedFixedPoint< $scope.fixedmarkers.length )								
+								{
+									var m =$scope.fixedmarkers[$scope.lastloadedFixedPoint];
+									$scope.fixedmarkersLazyLoaded.push( m );
+									$scope.markers.push( m );									
+									$scope.lastloadedFixedPoint = $scope.lastloadedFixedPoint + 1;
+									i++;
+									if (i>500)
+									{
+										break;
+									}
+								}							
+							}
+							
+							
+							$interval($scope.lazyLoadFixedPoints, 1000, 10);
+							
 
 						} ]);
