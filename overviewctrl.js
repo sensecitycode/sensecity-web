@@ -89,8 +89,8 @@ appControllers
 							$scope.lastdatesToCheck = 30;
 							$scope.lastissues = [];
 							$scope.markers = [];
-							$scope.fixedmarkers = [];
-							$scope.fixedmarkersLazyLoaded = [];
+							$scope.fixedmarkersGarbage = [];
+							$scope.fixedmarkersLightning = [];
 							$scope.state = true;
 							$scope.toggleState = function() {
 								$scope.state = !$scope.state;
@@ -168,7 +168,7 @@ appControllers
 							$scope.patras = {
 								lat : 38.2466395,
 								lng : 21.734574,
-								zoom : 19
+								zoom : 15
 							};
 							
 							$scope.kadoiMarkersEXT = {
@@ -373,7 +373,7 @@ appControllers
 																	},
 																	$scope.markers);
 													
-													$scope.markers = $scope.markers.concat( $scope.fixedmarkersLazyLoaded );
+													//$scope.markers = $scope.markers.concat( $scope.fixedmarkersLazyLoaded );
 													
 													$scope.calcValue30daysIssues = calclast30daysIssues;
 													$scope.calcValue30daysEvents = calclast30daysEvents;
@@ -536,11 +536,11 @@ appControllers
 													
 													
 													var marker = new L.marker([ positionlat, positionlon ] , {
-																icon:  L.AwesomeMarkers.icon( icons[garbageIcon] )
+																icon:  L.ExtraMarkers.icon( icons[garbageIcon] )
 															});
 													
 													
-													$scope.fixedmarkers.push(marker);
+													$scope.fixedmarkersGarbage.push(marker);
 													
 												}
 												
@@ -551,11 +551,11 @@ appControllers
 												
 													
 													var marker = new L.marker([ positionlat, positionlon ] , {
-																icon:  L.AwesomeMarkers.icon( icons[fixedLIcon] )
+																icon:  L.ExtraMarkers.icon( icons[fixedLIcon] )
 															});
 													
 													
-													$scope.fixedmarkers.push(marker);
+													$scope.fixedmarkersLightning.push(marker);
 													
 												}
 												
@@ -565,25 +565,45 @@ appControllers
 									
 										console.log( $scope.kadoiMarkersEXT );
 										
-										var markers = L.markerClusterGroup( {
-													type : 'markercluster',
+										var markersGarbage = L.markerClusterGroup( {
 													name : 'Κάδοι',
 													visible : true,
-													layerOptions: {
-														disableClusteringAtZoom : 19,
-														animateAddingMarkers : false,
-														spiderfyDistanceMultiplier: true,
-														singleMarkerMode: false,
-														showCoverageOnHover: true,
-														chunkedLoading: true
-													}
+													
+													disableClusteringAtZoom : 19,
+													animateAddingMarkers : false,
+													spiderfyDistanceMultiplier: true,
+													singleMarkerMode: false,
+													showCoverageOnHover: true,
+													chunkedLoading: true
+													
 												} );
 										
-										markers.addLayers( $scope.fixedmarkers );
+										markersGarbage.addLayers( $scope.fixedmarkersGarbage );
 										
 										  leafletData.getMap().then(function(map) {
-											map.addLayer(markers);
-											map.fitBounds(markers.getBounds());
+											map.addLayer(markersGarbage);
+											//map.fitBounds(markers.getBounds());
+										  });
+										  
+										  
+										  var markersLightning = L.markerClusterGroup( {
+													name : 'Φωτισμός',
+													visible : true,
+													
+													disableClusteringAtZoom : 19,
+													animateAddingMarkers : false,
+													spiderfyDistanceMultiplier: true,
+													singleMarkerMode: false,
+													showCoverageOnHover: true,
+													chunkedLoading: true
+													
+												} );
+										
+										markersLightning.addLayers( $scope.fixedmarkersLightning );
+										
+										  leafletData.getMap().then(function(map) {
+											map.addLayer(markersLightning);
+											//map.fitBounds(markers.getBounds());
 										  });
 											
 								});
@@ -607,37 +627,7 @@ appControllers
 							$interval($scope.doCalcLast6Issues, updtime);
 							$interval($scope.submitSearchLast30days, updtime);
 							
-							
-							
-							
-							$scope.lastloadedFixedPoint = 0;		
-							
-							$scope.lazyLoadFixedPoints = function() {
-							
-								console.log("lazy load fixed points of total = " + $scope.fixedmarkers.length 
-												+", current from " + $scope.lastloadedFixedPoint );
-								i = 0;
-								while ($scope.lastloadedFixedPoint< $scope.fixedmarkers.length )								
-								{
-									var m =$scope.fixedmarkers[$scope.lastloadedFixedPoint];
-									$scope.fixedmarkersLazyLoaded.push( m );
-									$scope.markers.push( m );									
-									$scope.lastloadedFixedPoint = $scope.lastloadedFixedPoint + 1;
-									i++;
-									if (i>1000)
-									{
-										break;
-									}
-								}
-
-								if ($scope.lastloadedFixedPoint >= $scope.fixedmarkers.length )	
-								{
-									$interval.cancel( $scope.lazyLoadFixedPointsTask );
-									console.log("cancelling lazy loading task. All loaded");
-								}
-							}							
-							
-							//$scope.lazyLoadFixedPointsTask = $interval($scope.lazyLoadFixedPoints, 1000, 0);
+														
 							
 
 						} ]);
