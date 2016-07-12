@@ -168,6 +168,8 @@ appControllers
 								lng : 21.734574,
 								zoom : 19
 							};
+							
+							
 
 							$scope.layers = {
 								baselayers : {
@@ -234,6 +236,15 @@ appControllers
 									}
 								}
 							};
+							
+							$scope.$on('leafletDirectiveMap.overlayadd', function(event, o){
+									console.log( event);
+									console.log( o.leafletEvent );
+									console.log( o.leafletEvent.layer );
+									//$scope.displayFixedPoints();
+							});
+								
+							
 
 							var startdate = new Date();
 							startdate.setDate(startdate.getDate() - $scope.lastdatesToCheck);
@@ -551,6 +562,9 @@ appControllers
 											
 											
 											});
+									
+									
+									
 											
 								});
 							
@@ -569,7 +583,7 @@ appControllers
 
 
 							// set intervals to update
-							var updtime = 60 * 1000; // every 60 secs
+							var updtime = 1 * 60 * 1000; // every 5 minutes
 							$interval($scope.doCalcLast6Issues, updtime);
 							$interval($scope.submitSearchLast30days, updtime);
 
