@@ -503,13 +503,16 @@ appControllers
 												if (fixedpoint.type === 'garbage') 
 												{
 													var garbageIcon = 'cyanGarbageBin'
+													var titlenote= "κάδος σκουπιδιών";
 													if(fixedpoint.notes[0].ANAKIKLOSI=='0'){
 														garbageIcon = 'greenGarbageBin';
+														titlenote= "κάδος ανακύκλωσης";
 													}
 													
 													
 													var marker = new L.marker([ positionlat, positionlon ] , {
-																icon:  L.ExtraMarkers.icon( icons[garbageIcon] )
+																icon:  L.ExtraMarkers.icon( icons[garbageIcon] ),
+																title: titlenote
 															});
 													
 													
@@ -520,11 +523,11 @@ appControllers
 												if (fixedpoint.type === 'fotistiko') 
 												{
 													var fixedLIcon = 'fixedLightning'
-													
-												
+													var titlenote= "φωτιστικό στοιχείο";
 													
 													var marker = new L.marker([ positionlat, positionlon ] , {
-																icon:  L.ExtraMarkers.icon( icons[fixedLIcon] )
+																icon:  L.ExtraMarkers.icon( icons[fixedLIcon] ),
+																title: titlenote
 															});
 													
 													
