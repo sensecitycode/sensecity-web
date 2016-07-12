@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>sense.city</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- THIS IS FOR Proper scaling on iPad :-) -->
+<meta name="description" content="sense.city" />
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300'
+	rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="_css/bootstrap.min.css" />
+<link rel="stylesheet" href="_css/animate.min.css" />
+
+<link rel="stylesheet" href="css/loading-bar.css" />
+<link rel="stylesheet" href="css/overview.css" />
+
+<!-- angular dep -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
+<script src="https://code.angularjs.org/1.5.3/angular-route.min.js"></script>
+<script src="https://code.angularjs.org/1.5.3/angular-animate.min.js"></script>
+<script src="https://code.angularjs.org/1.5.3/angular-touch.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-cookies.js"></script>
+<script src="_js/angular-translate.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
+
+<!-- angular strap -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
+
+<!-- Marker icons -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<!-- Map dependancies -->
+<link rel="stylesheet" href="css/leaflet.css" />
+<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+<link rel="stylesheet" href="css/ionicons.min.css" />
+<link rel="stylesheet" href="_css/MarkerCluster.css" />
+<link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
+<link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+
+<script src="js/leaflet.js"></script>
+<script src="js/ui-leaflet.min.js"></script>
+<script src="js/leaflet.awesome-markers.js"></script>
+<script src="js/angular-simple-logger.js"></script>
+<script src="js/leaflet.markercluster.js"></script>
+<script src="js/leaflet.extra-markers.min.js"></script>
+
+
+<!-- Angular scapp dependancies -->
+<script src="scctrl.js"></script>
+<script src="overviewctrl.js"></script>
+<script src="scapp.js"></script>
+<script src="scsrvs.js"></script>
+
+<script src="js/loading-bar.js"></script>
+
+
+
+</head>
+<body ng-app="scApp" ng-controller="sensecityMainCtrl">
+
+	<div id="container">
+		<div id="header">
+			<div class="slide-animate" ng-include="'scnavbar.html'"></div>
+
+		</div>
+
+		<div id="content">
+			<div class="slide-animate" ng-view autoscroll="true"></div>
+
+		</div>
+		<div id="footer" style="background-color:#D0D0D0;">
+			<div class="slide-animate" ng-include="'scfooter.html'"></div>
+
+		</div>
+	</div>
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script',
+				'//www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-73253016-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+</body>
+</html>

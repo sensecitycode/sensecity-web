@@ -75,6 +75,11 @@ a {
 	height: 100%;
 }
 
+#last6issues {
+	height: 300px;
+	background-color: #fff;
+	color: white;
+}
 
 .shadowed{
 	text-shadow: 4px 4px 6px #aaa;

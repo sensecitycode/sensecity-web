@@ -1,0 +1,45 @@
+
+<div id="aside">
+	<div>
+		<div class="calcItem">
+			<div class="calcValue">{{calcValue30daysIssues}}</div>
+			<div class="calcValueDescription">
+				{{ 'ISSUES_LAST_X_DAYS' | translate }} <br /> {{lastdatesToCheck}}
+				{{ 'DAYS' | translate }}
+			</div>
+		</div>
+		<div class="calcItem">
+			<div class="calcValue">{{calcValue30daysEvents}}</div>
+			<div class="calcValueDescription">
+				{{ 'EVENTS_LAST_X_DAYS' | translate }} <br /> {{lastdatesToCheck}}
+				{{ 'DAYS' | translate }}
+			</div>
+		</div>
+		<div class="calcItem">
+			<div class="calcValue"
+				ng-class="{calcValuenull: calcValue.value === 'N/A'}">{{calcValueProblemsFrom2016}}</div>
+			<div class="calcValueDescription">{{ 'ISSUES_SINCE' | translate
+				}} 1/1/2016</div>
+		</div>
+		<div class="calcItem">
+			<div class="calcValue"
+				ng-class="{calcValuenull: calcValue.value === 'N/A'} ">{{calcValueSolutionFrom2016}}</div>
+			<div class="calcValueDescription">
+				{{ 'SOLUTIONS_SINCE' | translate }} <br /> 1/1/2016
+			</div>
+		</div>
+	</div>
+	<div style="font-size: 9px;">* Η απεικόνιση των κάδων απορριμάτων
+		δεν συνάδει με οποιαδήποτε οριστική χωροθέτηση αυτών.</div>
+</div>
+<div id="mapcontent">
+	<leaflet lf-center="patras" layers="layers" markers="markers"
+		height="100%" style="color:black;"></leaflet>
+</div>
+
+
+
+<div id="last6issues">
+	<div class="slide-animate" ng-include="'sclast6issues.html'"></div>
+
+</div>
