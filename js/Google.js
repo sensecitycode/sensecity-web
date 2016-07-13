@@ -28,7 +28,7 @@ L.Google = L.Class.extend({
 		L.Util.setOptions(this, options);
 
 		this._ready = google.maps.Map !== undefined;
-		if (!this._ready) L.GoogleTraffic.asyncWait.push(this);
+		if (!this._ready) L.Google.asyncWait.push(this);
 
 		this._type = type || 'SATELLITE';
 	},
@@ -190,8 +190,8 @@ L.Google = L.Class.extend({
 L.Google.asyncWait = [];
 L.Google.asyncInitialize = function() {
 	var i;
-	for (i = 0; i < L.GoogleTraffic.asyncWait.length; i++) {
-		var o = L.GoogleTraffic.asyncWait[i];
+	for (i = 0; i < L.Google.asyncWait.length; i++) {
+		var o = L.Google.asyncWait[i];
 		o._ready = true;
 		if (o._container) {
 			o._initMapObject();
