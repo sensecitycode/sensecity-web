@@ -201,7 +201,7 @@ appControllers
 										name : 'Google Map',
 										type : 'google',	
 										layerOptions : {
-											//type: 'ROADMAP',
+											type: 'ROADMAP',
 											showOnSelector : true,
 											attribution : 'xxx',
 											maxZoom: 20
@@ -212,7 +212,7 @@ appControllers
 										name : 'Google Hybrid',
 										type : 'google',	
 										layerOptions : {
-											//type: 'HYBRID',
+											type: 'HYBRID',
 											showOnSelector : true,
 											attribution : 'xxx',
 											maxZoom: 20
@@ -223,7 +223,7 @@ appControllers
 										name : 'Google Traffic',
 										type : 'google',	
 										layerOptions : {
-											//type: 'ROADMAP',
+											type: 'ROADMAP',
 											showOnSelector : true,
 											attribution : 'xxx',
 											maxZoom: 20
