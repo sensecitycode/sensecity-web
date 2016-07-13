@@ -187,8 +187,8 @@ L.Google = L.Class.extend({
 	}
 });
 
-L.GoogleTraffic.asyncWait = [];
-L.GoogleTraffic.asyncInitialize = function() {
+L.Google.asyncWait = [];
+L.Google.asyncInitialize = function() {
 	var i;
 	for (i = 0; i < L.GoogleTraffic.asyncWait.length; i++) {
 		var o = L.GoogleTraffic.asyncWait[i];
@@ -198,5 +198,5 @@ L.GoogleTraffic.asyncInitialize = function() {
 			o._update();
 		}
 	}
-	L.GoogleTraffic.asyncWait = [];
+	L.Google.asyncWait = [];
 };
