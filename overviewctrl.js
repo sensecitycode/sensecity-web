@@ -184,22 +184,12 @@ appControllers
 									};
 									
 							  
-							//var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-							//  maxZoom: 20,
-							//  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-							//   '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-							//	'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>'
-							//});
-									
-									
-							// Set up Google Maps layers
-							//var googleRoadmapx = new L.Google('ROADMAP', { maxZoom: 20 });
-							//var googleHybridx = new L.Google('HYBRID', { maxZoom: 20 });
-							var googleTrafficx = new L.GoogleTraffic('ROADMAP', { maxZoom: 20 });
 							
-										
+							
+							//We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
+							
 							var googleRoadmap = {
-										name : 'Google Map',
+										name : 'Google Map + Traffic',
 										layerType: 'ROADMAP',
 										type : 'google',	
 										layerOptions : {
@@ -210,7 +200,7 @@ appControllers
 							};
 							
 							var googleHybrid = {
-										name : 'Google Hybrid',
+										name : 'Google Hybrid + Traffic',
 										layerType: 'HYBRID',
 										type : 'google',	
 										layerOptions : {
@@ -220,19 +210,7 @@ appControllers
 										}										
 							};
 							
-							var googleTraffic = {
-										name : 'Google Traffic',
-										type : 'google',	
-										layerType: 'ROADMAP',
-										layerOptions : {
-											showOnSelector : true,
-											attribution : 'xxx',
-											maxZoom: 20
-										}										
-							};
 							
-							console.log(googleTraffic);
-							console.log(googleTrafficx);
 							
 							$scope.layers = {
 								baselayers : {
