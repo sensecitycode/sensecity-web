@@ -184,34 +184,58 @@ appControllers
 									};
 									
 							  
-							var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-							  maxZoom: 20,
-							  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-								'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-								'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>'
-							});
+							//var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+							//  maxZoom: 20,
+							//  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+							//	'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+							//	'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>'
+							//});
 									
 									
 							// Set up Google Maps layers
-							var googleRoadmap = new L.Google('ROADMAP', { maxZoom: 20 });
-							var googleHybrid = new L.Google('HYBRID', { maxZoom: 20 });
-							var googleTraffic = new L.GoogleTraffic('ROADMAP', { maxZoom: 20 });
+							//var googleRoadmapx = new L.Google('ROADMAP', { maxZoom: 20 });
+							//var googleHybridx = new L.Google('HYBRID', { maxZoom: 20 });
+							//var googleTrafficx = new L.GoogleTraffic('ROADMAP', { maxZoom: 20 });
 
-							var googleRoadmapA = {
+							var googleRoadmap = {
 										name : 'Google Map',
 										type : 'google',	
 										layerOptions : {
+											//type: 'ROADMAP',
 											showOnSelector : true,
 											attribution : 'xxx',
 											maxZoom: 20
 										}										
 							};
 							
+							var googleHybrid = {
+										name : 'Google Hybrid',
+										type : 'google',	
+										layerOptions : {
+											//type: 'HYBRID',
+											showOnSelector : true,
+											attribution : 'xxx',
+											maxZoom: 20
+										}										
+							};
+							
+							var googleTraffic = {
+										name : 'Google Traffic',
+										type : 'google',	
+										layerOptions : {
+											//type: 'ROADMAP',
+											showOnSelector : true,
+											attribution : 'xxx',
+											maxZoom: 20
+										}										
+							};
 							
 							$scope.layers = {
 								baselayers : {
 									openStreetMap: $scope.openStreetMap,
-									gR: googleRoadmapA
+									gR: googleRoadmap,
+									gH: googleHybrid,
+									gT: googleTraffic
 									
 								},
 								overlays : {
