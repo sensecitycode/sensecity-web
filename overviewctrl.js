@@ -187,7 +187,7 @@ appControllers
 							//var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 							//  maxZoom: 20,
 							//  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-							//	'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+							//   '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 							//	'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>'
 							//});
 									
@@ -195,13 +195,14 @@ appControllers
 							// Set up Google Maps layers
 							//var googleRoadmapx = new L.Google('ROADMAP', { maxZoom: 20 });
 							//var googleHybridx = new L.Google('HYBRID', { maxZoom: 20 });
-							//var googleTrafficx = new L.GoogleTraffic('ROADMAP', { maxZoom: 20 });
-
+							var googleTrafficx = new L.GoogleTraffic('ROADMAP', { maxZoom: 20 });
+							
+										
 							var googleRoadmap = {
 										name : 'Google Map',
+										layerType: 'ROADMAP',
 										type : 'google',	
 										layerOptions : {
-											type: 'ROADMAP',
 											showOnSelector : true,
 											attribution : 'xxx',
 											maxZoom: 20
@@ -210,9 +211,9 @@ appControllers
 							
 							var googleHybrid = {
 										name : 'Google Hybrid',
+										layerType: 'HYBRID',
 										type : 'google',	
 										layerOptions : {
-											type: 'HYBRID',
 											showOnSelector : true,
 											attribution : 'xxx',
 											maxZoom: 20
@@ -222,13 +223,16 @@ appControllers
 							var googleTraffic = {
 										name : 'Google Traffic',
 										type : 'google',	
+										layerType: 'ROADMAP',
 										layerOptions : {
-											type: 'ROADMAP',
 											showOnSelector : true,
 											attribution : 'xxx',
 											maxZoom: 20
 										}										
 							};
+							
+							console.log(googleTraffic);
+							console.log(googleTrafficx);
 							
 							$scope.layers = {
 								baselayers : {
