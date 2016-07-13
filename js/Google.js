@@ -4,6 +4,7 @@
 
 /* global googletraffic: true */
 
+
 L.Google = L.Class.extend({
 	includes: L.Mixin.Events,
 
