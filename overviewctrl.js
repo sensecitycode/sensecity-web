@@ -177,12 +177,14 @@ appControllers
 										type : 'xyz',
 										url : 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 										layerOptions : {
-											showOnSelector : false,
+											showOnSelector : true,
 											attribution : '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 											maxZoom: 19
 										}
 									};
-
+									
+							
+							
 							$scope.layers = {
 								baselayers : {
 										openStreetMap: $scope.openStreetMap
@@ -583,9 +585,26 @@ appControllers
 											map.addLayer(markersLightning);											
 											//map.fitBounds(markers.getBounds());
 										});
+										
+										
+										
 										  
-										  
+										var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+										  maxZoom: 20,
+										  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+											'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+											'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>'
+										});
+										  // Set up Google Maps layers
+										var googleRoadmap = new L.Google('ROADMAP', { maxZoom: 20 });
+										var googleHybrid = new L.Google('HYBRID', { maxZoom: 20 });
+										var googleTraffic = new L.GoogleTraffic('ROADMAP', { maxZoom: 20 });
+
 										var baseLayers = {
+											'Open Street Map': osmLayer, 
+											'Google Maps':googleRoadmap, 
+											'Google Maps Satellite':googleHybrid, 
+											'Google Maps Traffic':googleTraffic
 													
 										};
 										var overlays = {
