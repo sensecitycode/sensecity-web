@@ -183,11 +183,36 @@ appControllers
 										}
 									};
 									
+							  
+							var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+							  maxZoom: 20,
+							  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+								'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+								'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>'
+							});
+									
+									
+							// Set up Google Maps layers
+							var googleRoadmap = new L.Google('ROADMAP', { maxZoom: 20 });
+							var googleHybrid = new L.Google('HYBRID', { maxZoom: 20 });
+							var googleTraffic = new L.GoogleTraffic('ROADMAP', { maxZoom: 20 });
+
+							var googleRoadmapA = {
+										name : 'Google Map',
+										type : 'google',	
+										layerOptions : {
+											showOnSelector : true,
+											attribution : 'xxx',
+											maxZoom: 20
+										}										
+							};
 							
 							
 							$scope.layers = {
 								baselayers : {
-										openStreetMap: $scope.openStreetMap
+									openStreetMap: $scope.openStreetMap,
+									gR: googleRoadmapA
+									
 								},
 								overlays : {
 									garbage : {
@@ -587,24 +612,12 @@ appControllers
 										});
 										
 										
-										
-										  
-										var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-										  maxZoom: 20,
-										  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-											'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-											'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>'
-										});
-										  // Set up Google Maps layers
-										var googleRoadmap = new L.Google('ROADMAP', { maxZoom: 20 });
-										var googleHybrid = new L.Google('HYBRID', { maxZoom: 20 });
-										var googleTraffic = new L.GoogleTraffic('ROADMAP', { maxZoom: 20 });
-
+																				
 										var baseLayers = {
-											'Open Street Map': osmLayer, 
-											'Google Maps':googleRoadmap, 
-											'Google Maps Satellite':googleHybrid, 
-											'Google Maps Traffic':googleTraffic
+											//'Open Street Map': osmLayer, 
+											//'Google Maps':googleRoadmap, 
+											//'Google Maps Satellite':googleHybrid, 
+											//'Google Maps Traffic':googleTraffic
 													
 										};
 										var overlays = {
