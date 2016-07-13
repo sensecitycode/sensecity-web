@@ -2,7 +2,7 @@
  * Google layer using Google Maps API
  */
 
-/* global google: true */
+/* global googletraffic: true */
 
 L.GoogleTraffic = L.Class.extend({
 	includes: L.Mixin.Events,

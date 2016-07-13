@@ -2,7 +2,7 @@
  * Google layer using Google Maps API
  */
 
-/* global google: true */
+/* global googletraffic: true */
 
 L.Google = L.Class.extend({
 	includes: L.Mixin.Events,
@@ -27,7 +27,7 @@ L.Google = L.Class.extend({
 		L.Util.setOptions(this, options);
 
 		this._ready = google.maps.Map !== undefined;
-		if (!this._ready) L.Google.asyncWait.push(this);
+		if (!this._ready) L.GoogleTraffic.asyncWait.push(this);
 
 		this._type = type || 'SATELLITE';
 	},
@@ -116,6 +116,8 @@ L.Google = L.Class.extend({
 			styles: this.options.mapOptions.styles,
 			backgroundColor: this.options.mapOptions.backgroundColor
 		});
+		var trafficLayer = new google.maps.TrafficLayer();
+		trafficLayer.setMap(map);
 
 		var _this = this;
 		this._reposition = google.maps.event.addListenerOnce(map, 'center_changed',
@@ -184,16 +186,16 @@ L.Google = L.Class.extend({
 	}
 });
 
-L.Google.asyncWait = [];
-L.Google.asyncInitialize = function() {
+L.GoogleTraffic.asyncWait = [];
+L.GoogleTraffic.asyncInitialize = function() {
 	var i;
-	for (i = 0; i < L.Google.asyncWait.length; i++) {
-		var o = L.Google.asyncWait[i];
+	for (i = 0; i < L.GoogleTraffic.asyncWait.length; i++) {
+		var o = L.GoogleTraffic.asyncWait[i];
 		o._ready = true;
 		if (o._container) {
 			o._initMapObject();
 			o._update();
 		}
 	}
-	L.Google.asyncWait = [];
+	L.GoogleTraffic.asyncWait = [];
 };
