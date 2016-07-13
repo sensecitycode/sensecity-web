@@ -216,8 +216,7 @@ appControllers
 								baselayers : {
 									openStreetMap: $scope.openStreetMap,
 									gR: googleRoadmap,
-									gH: googleHybrid,
-									gT: googleTraffic
+									gH: googleHybrid
 									
 								},
 								overlays : {
