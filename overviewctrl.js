@@ -503,10 +503,10 @@ appControllers
 												if (fixedpoint.type === 'garbage') 
 												{
 													var garbageIcon = 'cyanGarbageBin'
-													var titlenote= "κάδος σκουπιδιών";
+													var titlenote= "κάδος ανακύκλωσης";
 													if(fixedpoint.notes[0].ANAKIKLOSI=='0'){
 														garbageIcon = 'greenGarbageBin';
-														titlenote= "κάδος ανακύκλωσης";
+														titlenote= "κάδος σκουπιδιών";
 													}
 													
 													
