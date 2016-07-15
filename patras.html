@@ -694,7 +694,7 @@
 									
 									
 									
-									
+									console.log(obj.create_at);
 									
 									var bugParams =	{
 									    "method": "Bug.get",
@@ -838,7 +838,7 @@
 											
 											var today = new Date();
 											var create_day = new Date(obj.create_at);
-											
+											console.log(create_day);
 																			
 											var seconds = (today.getTime() - create_day.getTime())/1000;									
 											var datediff ='';
