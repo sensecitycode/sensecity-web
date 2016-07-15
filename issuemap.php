@@ -25,8 +25,8 @@
 				<div id="logo" style="float:left;">
 					<a href="./" style="font-size:1.5em"> <i class="ion-ios-analytics-outline"></i>
 						sense.city <sup style="font-size: 55%">beta</sup></a>
-					<img src="images/patraslogo.jpg" style="width: 51px; margin-top: -21px; margin-bottom: -17px; margin-left: 4px;"> 
-					<img src="images/upatras_logo.png" style="width: 174px; margin-top: -24px; margin-bottom: -17px; margin-left: 4px;"> 	
+					<img src="images/patraslogo.jpg" style="width: 51px; margin-top: -21px; margin-bottom: -17px; margin-left: 4px;">
+					<img src="images/upatras_logo.png" style="width: 174px; margin-top: -24px; margin-bottom: -17px; margin-left: 4px;">
 				</div>
 				<div style="font-size:26px; float:left; width:50%;"><center id="msg_subdomain_title">Τι συμβαίνει στην πόλη<center></div>
 				<div style="float:left;">
@@ -36,9 +36,9 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="col-md-12" id="title_h1" style="background-color: #FFFFFF;padding: 20px;">
-		
+
 	</div>
 	<div class="col-md-12 " style="background-color: #FFFFFF;">
 		<br>
@@ -118,10 +118,10 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
 		<script>
-			
+
 				console.log(localStorage.getItem("language"));
-				
-				
+
+
 				if(localStorage.getItem("language") === 'en'){
 					$('head').append('<script src="js/lang.en.js" />');
 					localStorage.removeItem("language");
@@ -131,24 +131,24 @@
 					localStorage.removeItem("language");
 					localStorage.setItem("language", "el");
 				}
-				
+
 				change_lang();
-			
-	
+
+
 				console.log(localStorage.getItem("language"));
-				
-				
+
+
 				$('#land_el').click(function() {
 					localStorage.setItem("language", "el");
 					console.log(localStorage.getItem("language"));
-					
-					
+
+
 					$('head').append('<script src="js/lang.js" />');
 					change_lang();
-					
+
 					return false;
 				});
-				
+
 				$('#land_en').click(function() {
 					localStorage.setItem("language", "en");
 					console.log(localStorage.getItem("language"));
@@ -156,10 +156,10 @@
 					change_lang();
 					return false;
 				});
-				
-				
-					
-					
+
+
+
+
 					function change_lang(){
 						$('#msg_subdomain_title').html(lang.msg_subdomain_title);
 						$('#msg_sub_text1').html(lang.msg_sub_text1);
@@ -169,12 +169,12 @@
 						$('#msg_dilosi').html(lang.msg_dilosi);
 						$('#msg_anathesi').html(lang.msg_anathesi);
 						$('#msg_complete').html(lang.msg_complete);
-						
+
 						$('#image_div').html('');
 						$('#title_h1').html('');
 
 						$('#submit').html('');
-						
+
 						var issue_image;
 						var issue_name;
 						var issue_value_desc;
@@ -336,7 +336,7 @@
 
 							}
 						});
-												
+
 						 var bug_status;
 
 						$.ajax({
@@ -346,7 +346,7 @@
 							dataType: "json",
 							data:{
 								"method": "Bug.get",
-								"params": [{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων",
+								"params": [{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων",
 											"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution"]}],
 								"id": 1
 							},
@@ -380,16 +380,16 @@
 							dataType: "json",
 							data:{
 								"method": "Bug.history",
-								"params": [{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων","component": "Τμήμα επίλυσης προβλημάτων"}],
+								"params": [{ "ids":"<?php echo $_GET["issue_id"] ?>","product": "Δημος Πατρέων"}],
 								"id": 1
 							},
 							success: function(msg){
 								moment.locale('el');
-								
+
 								var local_time_assign = null;
 								var time_assign = null;
 								var time_compl = null;
-								
+
 								for (i = 0; i < msg[0].history.length; i++)
 								{
 									for (j = 0; j <msg[0].history[i].changes.length; j++)
@@ -406,9 +406,9 @@
 									var local_time_assign = moment(time_assign).format('LLL');
 									$('#assignment').replaceWith(local_time_assign);
 								}
-								
-								
-								
+
+
+
 								for (i = 0; i < msg[0].history.length; i++)
 								{
 									for (j = 0; j <msg[0].history[i].changes.length; j++)
@@ -440,7 +440,7 @@
 												new_resol = 'Invalid';
 											}else{
 												new_resol = "Εσφαλμένο αίτημα";
-											}	
+											}
 											break;
 										case "WONTFIX":
 											if(localStorage.getItem("language") === 'en'){
@@ -464,8 +464,8 @@
 							}
 						});
 					}
-			
-			
+
+
 			</script>
 
 
@@ -480,18 +480,18 @@
 			  ga('send', 'pageview');
 
 			</script>
-			
+
 			<style>
-			
+
 			.row.tasks div:first-child {
 				text-align: left;
 			}
-			
+
 			.row.tasks div:last-child {
 				text-align: right;
 			}
-			
-			
+
+
 			</style>
   </body>
 </html>

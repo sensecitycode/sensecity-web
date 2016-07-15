@@ -49,6 +49,11 @@
 <script src="js/angular-simple-logger.js"></script>
 	<script src="js/leaflet.markercluster.js"></script>
 	<script src="js/leaflet.extra-markers.min.js"></script>
+	
+	
+	 
+<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>
+<script src="js/Google.js"></script>
 
 
 <!-- Marker icons -->
@@ -113,11 +118,15 @@
 							<div class="calcValueDescription">{{ 'SOLUTIONS_SINCE' | translate }} <br/> 1/1/2016</div>
 						</div>
 					</div>
+					<div style="font-size: 9px;">
+						* Η απεικόνιση των κάδων απορριμάτων δεν συνάδει με οποιαδήποτε οριστική χωροθέτηση αυτών.
+					</div>
 				</div>
 				<div id="mapcontent">
 					<leaflet lf-center="patras" layers="layers" markers="markers"
 						height="100%" style="color:black;"></leaflet>
 				</div>
+
 			</div>
 		</div>
 		<div id="footer">

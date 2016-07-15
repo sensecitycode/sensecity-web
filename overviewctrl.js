@@ -168,48 +168,56 @@ appControllers
 							$scope.patras = {
 								lat : 38.2466395,
 								lng : 21.734574,
-								zoom : 15
+								zoom : 12
 							};
 							
-							$scope.kadoiMarkersEXT = {
-										type : 'markercluster',
-										name : 'Κάδοι',
-										visible : true,
-										layerOptions: {
-											disableClusteringAtZoom : 19,
-											animateAddingMarkers : false,
-											spiderfyDistanceMultiplier: true,
-											singleMarkerMode: false,
-											showCoverageOnHover: true,
-											chunkedLoading: true
-										}
-									};
-									
-							$scope.fotistikoMarkersEXT = {
-										type : 'markercluster',
-										name : 'Φωτισμός',
-										visible : true,
-										layerOptions: {
-											disableClusteringAtZoom : 19,
-											animateAddingMarkers : false,
-											spiderfyDistanceMultiplier: true,
-											singleMarkerMode: false,
-											showCoverageOnHover: true,
-										}
-									};
-
-							$scope.layers = {
-								baselayers : {
-									openStreetMap : {
+							
+							$scope.openStreetMap = {
 										name : 'OpenStreetMap',
 										type : 'xyz',
 										url : 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 										layerOptions : {
-											showOnSelector : false,
+											showOnSelector : true,
 											attribution : '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 											maxZoom: 19
 										}
-									}
+									};
+									
+							  
+							
+							
+							//We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
+							
+							var googleRoadmap = {
+										name : 'Google Map + Traffic',
+										layerType: 'ROADMAP',
+										type : 'google',	
+										layerOptions : {
+											showOnSelector : true,
+											attribution : 'xxx',
+											maxZoom: 20
+										}										
+							};
+							
+							var googleHybrid = {
+										name : 'Google Hybrid + Traffic',
+										layerType: 'HYBRID',
+										type : 'google',	
+										layerOptions : {
+											showOnSelector : true,
+											attribution : 'xxx',
+											maxZoom: 20
+										}										
+							};
+							
+							
+							
+							$scope.layers = {
+								baselayers : {
+									openStreetMap: $scope.openStreetMap,
+									gR: googleRoadmap,
+									gH: googleHybrid
+									
 								},
 								overlays : {
 									garbage : {
@@ -237,9 +245,6 @@ appControllers
 										name : 'Προβλήματα Πολιτών',
 										visible : true
 									}
-									//, 
-									//kadoiMarkers : $scope.kadoiMarkersEXT ,									
-									//fotistikoMarkers : $scope.fotistikoMarkersEXT 
 								}
 							};
 							
@@ -530,13 +535,16 @@ appControllers
 												if (fixedpoint.type === 'garbage') 
 												{
 													var garbageIcon = 'cyanGarbageBin'
+													var titlenote= "κάδος ανακύκλωσης";
 													if(fixedpoint.notes[0].ANAKIKLOSI=='0'){
 														garbageIcon = 'greenGarbageBin';
+														titlenote= "κάδος σκουπιδιών";
 													}
 													
 													
 													var marker = new L.marker([ positionlat, positionlon ] , {
-																icon:  L.ExtraMarkers.icon( icons[garbageIcon] )
+																icon:  L.ExtraMarkers.icon( icons[garbageIcon] ),
+																title: titlenote
 															});
 													
 													
@@ -547,11 +555,11 @@ appControllers
 												if (fixedpoint.type === 'fotistiko') 
 												{
 													var fixedLIcon = 'fixedLightning'
-													
-												
+													var titlenote= "φωτιστικό στοιχείο";
 													
 													var marker = new L.marker([ positionlat, positionlon ] , {
-																icon:  L.ExtraMarkers.icon( icons[fixedLIcon] )
+																icon:  L.ExtraMarkers.icon( icons[fixedLIcon] ),
+																title: titlenote
 															});
 													
 													
@@ -563,7 +571,6 @@ appControllers
 											
 											});
 									
-										console.log( $scope.kadoiMarkersEXT );
 										
 										var markersGarbage = L.markerClusterGroup( {
 													name : 'Κάδοι',
@@ -578,15 +585,17 @@ appControllers
 													
 												} );
 										
-										markersGarbage.addLayers( $scope.fixedmarkersGarbage );
 										
-										  leafletData.getMap().then(function(map) {
+												
+										markersGarbage.addLayers( $scope.fixedmarkersGarbage );										
+										leafletData.getMap().then(function(map) {
 											map.addLayer(markersGarbage);
-											//map.fitBounds(markers.getBounds());
-										  });
+																					
+										});
+
 										  
 										  
-										  var markersLightning = L.markerClusterGroup( {
+										 var markersLightning = L.markerClusterGroup( {
 													name : 'Φωτισμός',
 													visible : true,
 													
@@ -597,14 +606,32 @@ appControllers
 													showCoverageOnHover: true,
 													chunkedLoading: true
 													
-												} );
+										} );
 										
+
 										markersLightning.addLayers( $scope.fixedmarkersLightning );
 										
-										  leafletData.getMap().then(function(map) {
-											map.addLayer(markersLightning);
+										leafletData.getMap().then(function(map) {
+											map.addLayer(markersLightning);											
 											//map.fitBounds(markers.getBounds());
-										  });
+										});
+										
+										
+																				
+										var baseLayers = {
+											//'Open Street Map': osmLayer, 
+											//'Google Maps':googleRoadmap, 
+											//'Google Maps Satellite':googleHybrid, 
+											//'Google Maps Traffic':googleTraffic
+													
+										};
+										var overlays = {
+											"<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>":  markersGarbage,
+											"<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
+										};
+										leafletData.getMap().then(function(map) {
+											L.control.layers( baseLayers , overlays).addTo(map);
+										});
 											
 								});
 							
