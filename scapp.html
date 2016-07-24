@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="_css/animate.min.css" />
 
 <link rel="stylesheet" href="css/loading-bar.css" />
-<link rel="stylesheet" href="css/overview.css" />
+<link rel="stylesheet" href="css/scapp.css" />
 
 <!-- angular dep -->
 <script
@@ -72,20 +72,20 @@
 <body ng-app="scApp" ng-controller="sensecityMainCtrl">
 
 	<div id="container">
+		
 		<div id="header">
 			<div class="slide-animate" ng-include="'scnavbar.html'"></div>
 
 		</div>
-
 		<div id="content">
 			<div class="slide-animate" ng-view autoscroll="true"></div>
 
 		</div>
-		<div id="footer" style="background-color:#D0D0D0;">
+	</div>
+		<div id="footer" style="background-color:#D0D0D0;margin-top:400px">
 			<div class="slide-animate" ng-include="'scfooter.html'"></div>
 
 		</div>
-	</div>
 
 
 

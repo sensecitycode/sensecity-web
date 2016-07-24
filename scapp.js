@@ -13,6 +13,9 @@ app.config(function($routeProvider, $locationProvider, $anchorScrollProvider,
 	$routeProvider.when('/overview', {
 		templateUrl : 'overview.html',
 		controller : 'overviewctrl'
+	}).when('/web_report', {
+		templateUrl : 'scwebsubmit.html',
+		controller : 'scwebsubmit'
 	}).when('/', {
 		templateUrl : 'scmapcontent.html',
 		controller : 'mainController'
@@ -21,4 +24,18 @@ app.config(function($routeProvider, $locationProvider, $anchorScrollProvider,
 	});
 
 });
+
+app.controller('NavCtrl', [ '$scope', '$location', '$rootScope', function($scope, $location, $rootScope) {
+	
+	//$scope.user = $rootScope.fstoreuser;
+	
+	$scope.navClass = function(page) {
+		var currentRoute = $location.path().substring(1) || 'home';
+		return page === currentRoute ? 'active' : '';
+	};
+	
+    
+} ]);
+
+
 
