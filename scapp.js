@@ -15,7 +15,7 @@ app.config(function($routeProvider, $locationProvider, $anchorScrollProvider,
 		controller : 'overviewctrl'
 	}).when('/web_report', {
 		templateUrl : 'scwebsubmit.html',
-		controller : 'scwebsubmit'
+		controller : 'scWebSubmit'
 	}).when('/', {
 		templateUrl : 'scmapcontent.html',
 		controller : 'mainController'
@@ -36,6 +36,3 @@ app.controller('NavCtrl', [ '$scope', '$location', '$rootScope', function($scope
 	
     
 } ]);
-
-
-
