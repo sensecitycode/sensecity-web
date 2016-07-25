@@ -177,15 +177,47 @@ appControllers
 										type : 'xyz',
 										url : 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 										layerOptions : {
-											showOnSelector : false,
+											showOnSelector : true,
 											attribution : '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 											maxZoom: 19
 										}
 									};
-
+									
+							  
+							
+							
+							//We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
+							
+							var googleRoadmap = {
+										name : 'Google Map + Traffic',
+										layerType: 'ROADMAP',
+										type : 'google',	
+										layerOptions : {
+											showOnSelector : true,
+											attribution : 'xxx',
+											maxZoom: 20
+										}										
+							};
+							
+							var googleHybrid = {
+										name : 'Google Hybrid + Traffic',
+										layerType: 'HYBRID',
+										type : 'google',	
+										layerOptions : {
+											showOnSelector : true,
+											attribution : 'xxx',
+											maxZoom: 20
+										}										
+							};
+							
+							
+							
 							$scope.layers = {
 								baselayers : {
-										openStreetMap: $scope.openStreetMap
+									openStreetMap: $scope.openStreetMap,
+									gR: googleRoadmap,
+									gH: googleHybrid
+									
 								},
 								overlays : {
 									garbage : {
@@ -503,10 +535,10 @@ appControllers
 												if (fixedpoint.type === 'garbage') 
 												{
 													var garbageIcon = 'cyanGarbageBin'
-													var titlenote= "κάδος σκουπιδιών";
+													var titlenote= "κάδος ανακύκλωσης";
 													if(fixedpoint.notes[0].ANAKIKLOSI=='0'){
 														garbageIcon = 'greenGarbageBin';
-														titlenote= "κάδος ανακύκλωσης";
+														titlenote= "κάδος σκουπιδιών";
 													}
 													
 													
@@ -583,9 +615,14 @@ appControllers
 											map.addLayer(markersLightning);											
 											//map.fitBounds(markers.getBounds());
 										});
-										  
-										  
+										
+										
+																				
 										var baseLayers = {
+											//'Open Street Map': osmLayer, 
+											//'Google Maps':googleRoadmap, 
+											//'Google Maps Satellite':googleHybrid, 
+											//'Google Maps Traffic':googleTraffic
 													
 										};
 										var overlays = {
