@@ -28,7 +28,8 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location)
 
 
 
-appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', function($scope, $log, $location) {
+appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leafletData', 
+                                            function($scope, $log, $location, leafletData) {
 	$log.debug('inside scWebSubmit controller');
 	
 	$scope.patras = {
@@ -36,7 +37,45 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', funct
 			lng : 21.734574,
 			zoom : 12
 		};
+
+	$scope.issueTypeSelect = null;
+	$scope.issueSubTypeSelect = null ;
 		
+
+	$scope.availableIssues= [
+	                   {id: '', name: 'Επιλέξτε τύπο προβλήματος', 
+	                	   types: [ {id: '', name:'Επιλέξτε πρόβλημα'} ] 
+	                   },	                   
+	                   {id: 'garbage', name: 'Σκουπίδια', 
+	                	   types: [ {id: '', name:'Επιλέξτε πρόβλημα'},
+	                	            {id: '1', name:'Χαλασμένος Κάδος'},
+	                	            {id: '2', name:'Γεμάτος Κάδος'},
+	                	            {id: '3', name:'Έλλειψη κάδου'},
+	                	            {id: 'other', name:'Άλλο'}] 
+	                   },
+	                   {id: 'lighting', name: 'Φωτισμός', 
+	                	   types: [ {id: '', name:'Επιλέξτε πρόβλημα'},
+	                	            {id: '1', name:'Καμμένος Λαμπτήρας'},
+	                	            {id: '2', name:'Σπασμένος Βραχίωνας'},
+	                	            {id: '3', name:'Ανεπαρκής Φωτισμός'},
+	                	            {id: 'other', name:'Άλλο'}] 
+	                   },
+	                   {id: 'plumbing', name: 'Ύδρευση', 
+	                	   types: [ {id: '', name:'Επιλέξτε πρόβλημα'},
+	                	            {id: '1', name:'Βουλωμένο Φρεάτιο'},
+	                	            {id: '2', name:'Σπασμένο Φρεάτιο'},
+	                	            {id: 'other', name:'Άλλο'}] 
+	                   },
+	                   {id: 'road-contructor', name: 'Οδόστρωμα', 
+	                	   types: [ {id: '', name:'Επιλέξτε πρόβλημα'},
+	                	            {id: '1', name:'Σπασμένες Πλάκες'},
+	                	            {id: '2', name:'Αντικείμενο που εμποδίζει'},
+	                	            {id: '3', name:'Εγκαταλ. Αυτοκίνητο'},
+	                	            {id: '4', name:'Λακούβα'},
+	                	            {id: 'other', name:'Άλλο'}] 
+	                   }
+	                 ];
+
 		
 	$scope.openStreetMap = {
 			name : 'OpenStreetMap',
@@ -96,12 +135,38 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', funct
 				console.log( o.leafletEvent.layer );
 				
 		});
+		
+		
+
+		var redMarker = L.AwesomeMarkers.icon({
+			icon: 'info-circle',
+			prefix: 'fa',
+			markerColor: 'red'
+		  });
 	
+		
+		$scope.$on('leafletDirectiveMap.click', function(event, args){
+		    console.log(args.leafletEvent.latlng);
+		    
+		    if(typeof(newMarker)==='undefined')
+			{
+				newMarker = new L.marker(args.leafletEvent.latlng, {icon: redMarker},{ draggable: true});
+				
+				leafletData.getMap().then(function(map) {
+					newMarker.addTo(map);
+															
+				});
+			}
+			else 
+			{
+				newMarker.setLatLng(args.leafletEvent.latlng);
+			}
+
+		    $scope.latlabeltxt = args.leafletEvent.latlng.lat; 
+		    $scope.lnglabeltxt = args.leafletEvent.latlng.lng; 
+		});
 	
-	
-	
-	
-	
-	
+
+
 
 }]);

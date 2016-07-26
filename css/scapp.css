@@ -16,7 +16,6 @@ html, body {
 
 a {
 	text-decoration: none;
-	color: white;
 }
 
 #container {
@@ -37,13 +36,13 @@ a {
 
 #header>div {
 	height: 30px;
-	background-color: #10293B;
+	background-color: white;
 	color: white;
 }
 
 #content>div {
 	height: 100%;
-	background: #f0f4f0;
+	background: white;
 	border: solid 0px #5a5;
 }
 
@@ -65,7 +64,7 @@ a {
 #aside {
 	float: left;
 	height: 100%;
-	width: 151px;
+	width: 140px;
 	background-color: #4787B0;
 	color: white;
 }
@@ -97,10 +96,10 @@ a {
 	border-radius: 50%;
 	color: white;
 	background-color: #5D98BF;
-	width: 140px;
-	height: 140px;
-	padding: 5px;
-	margin: 5px;
+	width: 130px;
+	height: 130px;
+	padding: 0px;
+	margin: 4px;
 }
 
 .calcValue {
