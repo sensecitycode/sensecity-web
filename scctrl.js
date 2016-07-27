@@ -241,6 +241,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 			 $scope.issue = new Issue();
 
 			//console.log("in submitNewIssue $scope.uploadedPhotoFile = " + $scope.uploadedPhotoFile  );
+			 
 			
 			var desc = $scope.otherDescriptionTxt;
 			
