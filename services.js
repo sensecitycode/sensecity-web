@@ -16,3 +16,4 @@ appServices.factory('DisplayIssuesService', function ( $resource, APIEndPointSer
         }
     });
 });
+

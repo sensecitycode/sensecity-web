@@ -2,20 +2,6 @@ var appControllers = angular.module('scapp.controllers', ['pascalprecht.translat
 
 
 
-appControllers.config(['$translateProvider', function ($translateProvider) {
-  $translateProvider.translations('en', {
-    'TITLE': 'What\'s happening in the city',
-    'RESOLVED': 'Resolved'
-  });
- 
-  $translateProvider.translations('el', {
-    'TITLE': 'Τι συμβαίνει στην πόλη',
-    'RESOLVED': 'Ολοκληρωμένο'
-  });
- 
-  $translateProvider.preferredLanguage('el');
-      $translateProvider.useLocalStorage();
-}]);
 	
 	
 	
@@ -26,10 +12,22 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location)
 });
 
 
+appControllers.directive('afterRender', ['$timeout', function ($timeout) {
+    var def = {
+        restrict: 'A',
+        terminal: true,
+        transclude: false,
+        link: function (scope, element, attrs) {
+            $timeout(scope.$eval(attrs.afterRender), 0);  //Calling a scoped method
+        }
+    };
+    return def;
+}]);
 
 
-appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leafletData', 
-                                            function($scope, $log, $location, leafletData) {
+
+appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leafletData', 'Issue', '$translate',
+                                            function($scope, $log, $location, leafletData, Issue, $translate) {
 	$log.debug('inside scWebSubmit controller');
 	
 	$scope.patras = {
@@ -38,44 +36,49 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 			zoom : 12
 		};
 
-	$scope.issueTypeSelect = null;
-	$scope.issueSubTypeSelect = null ;
-		
 
 	$scope.availableIssues= [
-	                   {id: '', name: 'Επιλέξτε τύπο προβλήματος', 
-	                	   types: [ {id: '', name:'Επιλέξτε πρόβλημα'} ] 
-	                   },	                   
-	                   {id: 'garbage', name: 'Σκουπίδια', 
-	                	   types: [ {id: '', name:'Επιλέξτε πρόβλημα'},
-	                	            {id: '1', name:'Χαλασμένος Κάδος'},
-	                	            {id: '2', name:'Γεμάτος Κάδος'},
-	                	            {id: '3', name:'Έλλειψη κάδου'},
-	                	            {id: 'other', name:'Άλλο'}] 
+	                                     
+	                   {id: 'garbage', name: 'GARBAGE_ISSUE', 
+	                	   types: [ 
+	                	            {id: '1', name:'BROKENGARBAGE_BIN'},
+	                	            {id: '2', name:'FULL_GARBAGE_BIN'},
+	                	            {id: '3', name:'FAILING_GARBAGE_BIN'},
+	                	            {id: 'other', name:'OTHER'}] 
 	                   },
-	                   {id: 'lighting', name: 'Φωτισμός', 
-	                	   types: [ {id: '', name:'Επιλέξτε πρόβλημα'},
-	                	            {id: '1', name:'Καμμένος Λαμπτήρας'},
-	                	            {id: '2', name:'Σπασμένος Βραχίωνας'},
-	                	            {id: '3', name:'Ανεπαρκής Φωτισμός'},
-	                	            {id: 'other', name:'Άλλο'}] 
+	                   {id: 'lighting', name: 'LIGHTNING_ISSUE', 
+	                	   types: [ 
+	                	            {id: '1', name:'GLOWING_LAMPS'},
+	                	            {id: '2', name:'BROKEN_ARM'},
+	                	            {id: '3', name:'INSUFFICIENT_LIGHTING'},
+	                	            {id: 'other', name:'OTHER'}] 
 	                   },
-	                   {id: 'plumbing', name: 'Ύδρευση', 
-	                	   types: [ {id: '', name:'Επιλέξτε πρόβλημα'},
-	                	            {id: '1', name:'Βουλωμένο Φρεάτιο'},
-	                	            {id: '2', name:'Σπασμένο Φρεάτιο'},
-	                	            {id: 'other', name:'Άλλο'}] 
+	                   {id: 'plumbing', name: 'PLUMBING_ISSUE', 
+	                	   types: [ 
+	                	            {id: '1', name:'CLOGGED_WELL'},
+	                	            {id: '2', name:'BROKEN_WELL'},
+	                	            {id: 'other', name:'OTHER'}] 
 	                   },
-	                   {id: 'road-contructor', name: 'Οδόστρωμα', 
-	                	   types: [ {id: '', name:'Επιλέξτε πρόβλημα'},
-	                	            {id: '1', name:'Σπασμένες Πλάκες'},
-	                	            {id: '2', name:'Αντικείμενο που εμποδίζει'},
-	                	            {id: '3', name:'Εγκαταλ. Αυτοκίνητο'},
-	                	            {id: '4', name:'Λακούβα'},
-	                	            {id: 'other', name:'Άλλο'}] 
+	                   {id: 'road-contructor', name: 'ROAD_ISSUE', 
+	                	   types: [ 
+	                	            {id: '1', name:'BROKEN_PLATES'},
+	                	            {id: '2', name:'OBJECT_INTERFERING'},
+	                	            {id: '3', name:'ABANDONED_CAR'},
+	                	            {id: '4', name:'BAD_ROAD'},
+	                	            {id: 'other', name:'OTHER'}] 
 	                   }
 	                 ];
 
+
+	$scope.issueTypeSelect = $scope.availableIssues[0];
+	$scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0] ;
+	$scope.otherDescriptionTxt = '-';
+	 
+	
+	
+	$scope.updateCompoType = function() {
+		$scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0] ;
+	}
 		
 	$scope.openStreetMap = {
 			name : 'OpenStreetMap',
@@ -166,7 +169,100 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 		    $scope.lnglabeltxt = args.leafletEvent.latlng.lng; 
 		});
 	
+		//need to refresh the map layer after everything is rendered, otherwise it displays empty tiles
+		$scope.invalidateTheMap = function () {
 
+			leafletData.getMap("map").then(
+				    function (map) {
+				    	map.invalidateSize(true);
+				    }
+				);
+		 };
+		 
+		 
+		 $scope.isOtherSelected = function () {
+			 return true ; //$scope.issueSubTypeSelect.id ===  'other';
+		 };
+		 
+		 $scope.issueSubTypeSelectChanged = function () {
+			 
+			 $translate(  $scope.issueSubTypeSelect.name ).then(function ( h ) {
+				 $scope.otherDescriptionTxt = h;
+					console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt );
+				  }, function (translationId) {
+					  //$scope.otherDescriptionTxt = translationId;
+				  });
+			 
+		 }
+		 
+		 $scope.issueSubTypeSelectChanged();
+		 
+		 
+		 
 
+		 $scope.submitNewIssue = function submit() {
+			 
+			 $scope.issue = new Issue();
+
+				console.log("in submitNewIssue $scope.uploadedPhotoFile = " + $scope.uploadedPhotoFile);
+				
+			var desc = $scope.otherDescriptionTxt;
+			
+			var filesSelected = $scope.uploadedPhotoFile;
+			var img_base64='';
+			if (filesSelected.length > 0)
+			{
+				var fileToLoad = filesSelected[0];		 
+				var fileReader = new FileReader();		 
+				fileReader.onload = function(fileLoadedEvent) 
+				{
+					img_base64 = fileLoadedEvent.target.result;					
+				};
+		 
+				fileReader.readAsDataURL(fileToLoad);
+			}
+			
+			
+
+			 $scope.issue.issue =  $scope.issueTypeSelect.id ;
+			 $scope.issue.loc =  '{ "type" : "Point",  "coordinates" : ['+$scope.latlabeltxt+','+ $scope.lnglabeltxt +'] }' ;
+			 $scope.issue.device_id =  'webapp' ;
+			 
+			 $scope.issue.value_desc =  desc ;
+			 $scope.issue.image_name =  img_base64 ;
+			
+			console.log('{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.latlabeltxt+','+ $scope.lnglabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id 
+					+'","device_id" : "webapp", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "'+img_base64+'" }');
+			console.log( $scope.issue );
+
+//			return $http(
+//					{
+//						method : 'POST',
+//						url : APIEndPointService.APIURL,
+//						headers : {
+//							'Content-Type' : 'multipart/form-data'
+//						},
+//						data : {
+//							prodname : $scope.course.name,
+//							shortDescription : $scope.course.teaser,
+//							longDescription : $scope.course.longDescription,
+//							version : $scope.course.version,
+//							prodIcon : $scope.course.uploadedCourseIcon,
+//							prodFile : $scope.course.uploadedCourseFile,
+//							categories : catidsCommaSeparated,
+//						// file : $scope.file
+//						},
+//						transformRequest : formDataObject
+//					}).success(function() {
+//				$location.path("/");
+//			});
+		}
 
 }]);
+
+
+
+
+
+
+

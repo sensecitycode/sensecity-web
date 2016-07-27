@@ -1,76 +1,55 @@
 
 	<div  ng-controller="scWebSubmit" >
-	
+		<form class="form-horizontal" name="form" role="form" ng-submit="submitNewIssue()" id="addIssueForm">	
 		<div class="col-md-8"> 
 			<div style="height: 800px">
-			<leaflet lf-center="patras" layers="layers" 
-				height="100%" style="color:black;"></leaflet>
+			<leaflet defaults="defaults" lf-center="patras" layers="layers" 
+				 height="100%"  style="color:black"  ></leaflet>
 			</div>
+			<div  after-render="invalidateTheMap"></div>
 		</div>
 		
 		<div class="col-md-4"> 
 			<div class="form-group">
-				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_label_long">Γεωγραφικό Μήκος</label>
-				<input ng-model="latlabeltxt" type="text" class="form-control" id="lng" placeholder="Γεωγραφικό Μήκος" readonly style="background-color: black;">
+				<label for="lng" style="color: #000000; font-weight: 300;" id="msg_label_long">{{'LONGTITUDE' | translate}}</label>
+				<input ng-model="latlabeltxt" type="text" class="form-control" id="lng" placeholder="{{'LONGTITUDE' | translate}}" readonly >
 			</div>
 			<div class="form-group">
-				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_label_lat">Γεωγραφικό Πλάτος</label>
-				<input ng-model="lnglabeltxt" type="text" class="form-control" id="lat" placeholder="Γεωγραφικό Πλάτος" readonly style="background-color: black;">
+				<label for="lat" style="color: #000000; font-weight: 300;" id="msg_label_lat">{{'LATTITUDE' | translate}}</label>
+				<input ng-model="lnglabeltxt" type="text" class="form-control" id="lat" placeholder="{{'LATTITUDE' | translate}}" readonly >
 			</div>
 			<div class="form-group">
-				<label for="type-issue" style="color: #000000; font-weight: 300;" id="msg_label_type">Τύπος προβλήματος</label>
-				<select ng-model="issueTypeSelect"  name="type-issue" class="form-control">
-					  <option ng-repeat="option in availableIssues" ng-value="option.id">{{option.name}}</option>
-						  
-				</select>
+				<label for="type-issue" style="color: #000000; font-weight: 300;" id="msg_label_type">{{ 'PROBLEMTYPE' | translate}}</label>
+				<select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" class="form-control" ng-change="updateCompoType()"></select>
+				
 			</div>
 			<div class="form-group">
-				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_problem_detail">Προβλήμα</label>
-				<select ng-model="issueSubTypeSelect" id="issue" name="issue" class="form-control">
-					<option ng-repeat="o in issueTypeSelect.types" ng-value="{{o.id}}">{{o.name}}</option>
-				</select>
+				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_problem_detail">{{ 'PROBLEM' | translate}}</label>
+				
+				<select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" ng-model="issueSubTypeSelect" class="form-control" ng-change="issueSubTypeSelectChanged()"></select>
+			
 			</div>
-			<div class="form-group" id="other-txt" style="display:none;">
-				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_perigrafi_problem" >Περιγραφή</label>
-				<input type="text" class="form-control" id="other_description" placeholder="Γράψτε το πρόβλημα" style="background-color: black;color: #ffffff;">
+			<div class="form-group"  ng-show='isOtherSelected()'>
+				<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'DESCRIPTION' | translate}}</label>
+				<input ng-model="otherDescriptionTxt" type="text" class="form-control" value="" placeholder="{{ 'OTHERPROBWRITE' | translate }}"   >
 			</div>
 			
 			<div class="form-group">
-				<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">Φωτογραφία</label>
-				<input type="file" id="input_file" style="color: #000000;">
+				<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">{{ 'PHOTO' | translate}}</label>
+				<input type="file" id="input_file"   class="form-control" name="uploadedPhotoFile"  file-model="uploadedPhotoFile" placeholder="" />
+				
 			</div>			
-			<a href="#" id="btnsubmit" class="btn btn-primary" style="background-color: #76a0ff !important;" >Αποστολή</a>
+			
+			
+			<input id="btnsubmit" class="btn btn-default" type="submit" value="{{ 'SUBMIT' | translate}}" />
+
 			<div id="try_another_issue"></div>
 		</div>
 		
 		
-		<pre>model = {{issueTypeSelect | json}}</pre><br/>
+   </form>
     </div>
     
-    
-    <!--scripts loaded here from cdn for performance -->
-	<script src="_js/jquery.min.js"></script>
-     <script src="_js/bootstrap.min.js"></script> 
-    <script src="_js/jquery.easing.min.js"></script>
-    <script src="_js/wow.js"></script>
-	<script src="js/leaflet.awesome-markers.js"></script>
-    <script src="js/scripts.js"></script>
-	
-	<link rel="stylesheet" type="text/css" href="_css/MarkerCluster.css" />
-    <link rel="stylesheet" type="text/css" href="_css/MarkerCluster.Default.css" />
-	<link rel="stylesheet" type="text/css" href="css/leaflet.extra-markers.min.css" />
-	
-	<script type='text/javascript' src='js/leaflet.markercluster.js'></script>
-	<script type='text/javascript' src='js/leaflet.extra-markers.min.js'></script>
-	
-	 <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-    <!-- <script>window.jQuery || document.write('<script src="_js/vendor/jquery.min.js"><\/script>')</script> -->
-    <!-- <script src="_js/bootstrap.min.js"></script> -->
-    <!-- <script src="_js/docs.min.js"></script> -->
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
 	<script>
 		
@@ -144,164 +123,6 @@
 				
 			
 
-			
-			
-			
-			
-			
-			
-			
-			
-			function change_lang(){
-				
-				
-				var optionValue = $("select[name='type-issue']").val();		
-				if(optionValue!=null)
-				{
-					switch(optionValue){
-						case "garbage":
-							var select = document.getElementById("issue");
-							$('#issue').empty();
-							if(localStorage.getItem("language") === 'en'){
-								var options = ["Select a Problem", "Garbage Bin", "Full Garbage Bin", "Failing Garbage Bin", "Other"];
-							}else{
-								var options = ["Επιλέξτε προβλήματος", "Χαλασμένος Κάδος", "Γεμάτος Κάδος", "Έλλειψη κάδου", "Άλλο"];
-							}
-							for(var i = 0; i < options.length; i++) {
-								var opt = options[i];
-								var el = document.createElement("option");
-								el.textContent = opt;
-								if(i+1 == options.length)
-								{
-									el.value = "other";
-								}else if(i==0){
-									el.value = "";
-								}
-								else{
-									el.value = opt;
-								}	
-								select.appendChild(el);
-							}
-							break;
-						case "lighting":
-							var select = document.getElementById("issue");
-							$('#issue').empty();
-							if(localStorage.getItem("language") === 'en'){
-								var options = ["Select a Problem", "Glowing Lamps", "Broken Arm", "Insufficient Lighting", "Other"];
-							}else{
-								var options = ["Επιλέξτε προβλήματος", "Καμμένος Λαμπτήρας", "Σπασμένος Βραχίωνας", "Ανεπαρκής Φωτισμός", "Άλλο"];
-							}
-							for(var i = 0; i < options.length; i++) {
-								var opt = options[i];
-								var el = document.createElement("option");
-								el.textContent = opt;
-								if(i+1 == options.length)
-								{
-									el.value = "other";
-								}else if(i==0){
-									el.value = "";
-								}
-								else{
-									el.value = opt;
-								}
-								select.appendChild(el);
-							}
-							break;
-						case "plumbing":
-							var select = document.getElementById("issue");
-							$('#issue').empty();
-							if(localStorage.getItem("language") === 'en'){
-								var options = ["Select a Problem", "Clogged Well", "Broken Well", "Other"];
-							}else{
-								var options = ["Επιλέξτε προβλήματος", "Βουλωμένο Φρεάτιο", "Σπασμένο Φρεάτιο", "Άλλο"];
-							}
-							
-							for(var i = 0; i < options.length; i++) {
-								var opt = options[i];
-								var el = document.createElement("option");
-								el.textContent = opt;
-								if(i+1 == options.length)
-								{
-									el.value = "other";
-								}else if(i==0){
-									el.value = "";
-								}
-								else{
-									el.value = opt;
-								}
-								select.appendChild(el);
-							}
-							break;
-						case "road-contructor":
-							var select = document.getElementById("issue");
-							$('#issue').empty();
-							if(localStorage.getItem("language") === 'en'){
-								var options = ["Select a Problem", "Broken Plates", "Object interfering", "Abandoned Car", "Other"];
-							}else{
-								var options = ["Επιλέξτε προβλήματος", "Σπασμένες Πλάκες", "Αντικείμενο που εμποδίζει", "Εγκαταλ. Αυτοκίνητο", "Άλλο"];
-							}
-							for(var i = 0; i < options.length; i++) {
-								var opt = options[i];
-								var el = document.createElement("option");
-								el.textContent = opt;
-								if(i+1 == options.length)
-								{
-									el.value = "other";
-								}else if(i==0){
-									el.value = "";
-								}
-								else{
-									el.value = opt;
-								}
-								select.appendChild(el);
-							}
-							break;
-					}
-				}
-
-				
-				
-			
-			
-			
-			
-			
-			
-			
-			$('#msg_subdomain_title').html(lang.msg_subdomain_title);
-				$('#msg_sub_text1').html(lang.msg_sub_text1);
-				$('#msg_sub_text2').html(lang.msg_sub_text2);
-				$('#msg_section_info').html(lang.msg_section_info);
-				$('#msg_section_followus').html(lang.msg_section_followus);
-				$('#msg_dilosi').html(lang.msg_dilosi);
-				$('#msg_anathesi').html(lang.msg_anathesi);
-				$('#msg_complete').html(lang.msg_complete);
-				
-				$('#msg_label_long').html(lang.msg_label_long);
-				$('#msg_label_lat').html(lang.msg_label_lat);
-				$('#msg_label_type').html(lang.msg_label_type);
-				$('#msg_type_select').html(lang.msg_type_select);
-				$('#msg_type_garbage').html(lang.msg_type_garbage);
-				$('#msg_type_lighting').html(lang.msg_type_lighting);
-				$('#msg_type_plumbing').html(lang.msg_type_plumbing);
-				$('#msg_type_road').html(lang.msg_type_road);
-				$('#msg_problem_detail').html(lang.msg_problem_detail);
-				$('#msg_perigrafi_problem').html(lang.msg_perigrafi_problem);
-				$('#msg_photograph').html(lang.msg_photograph);
-				$('#btnsubmit').html(lang.msg_submit_btn);
-				$('#msg_subtype_select').html(lang.msg_subtype_select);
-				
-				$('#lng').attr("placeholder", lang.msg_long_text);
-				$('#lat').attr("placeholder", lang.msg_lat_text);
-				
-			
-			
-				$('#image_div').html('');
-				$('#title_h1').html('');
-
-				$('#submit').html('');
-					
-			}
 		
 			</script>
 			

@@ -14,59 +14,12 @@ appControllers.directive('sidebarDirective', function() {
 	};
 });
 
-    appControllers.config(['$translateProvider', function ($translateProvider) {
-      $translateProvider.translations('en', {
-        'TITLE': 'What\'s happening in the city',
-        'ISSUES_SINCE': 'Reported issues since',
-        'SOLUTIONS_SINCE': 'Issues solved since',
-        'ISSUES_LAST_X_DAYS': 'Reported issues last',
-        'EVENTS_LAST_X_DAYS': 'Reported events last',
-        'DAYS': 'days',
-        'GARBAGE_ISSUE': 'Cleaning issue',
-        'LIGHTNING_ISSUE': 'Lighting issue',
-        'PLUMBING_ISSUE': 'Plumbing issue',
-        'ROAD_ISSUE': 'Road/Construction issue',
-        'MOOD': 'Mood',
-        'SINCE_TIME': 'since',
-        'HOURS': 'hours',
-        'MINUTES': 'minutes',
-        'SECS': 'seconds',
-        'CONFIRMED': 'Submitted',
-        'IN_PROGRESS': 'Assigned/In progress',
-        'RESOLVED': 'Resolved'
-      });
-     
-      $translateProvider.translations('el', {
-        'TITLE': 'Τι συμβαίνει στην πόλη',
-        'ISSUES_SINCE': 'Προβλήματα από',
-        'SOLUTIONS_SINCE': 'Λύσεις από',
-        'ISSUES_LAST_X_DAYS': 'Προβλήματα τελ.',
-        'EVENTS_LAST_X_DAYS': 'Συμβάντα τελ.',
-        'DAYS': 'ημέρες',
-        'GARBAGE_ISSUE': 'Πρόβλημα Καθαριότητας',
-        'LIGHTNING_ISSUE': 'Πρόβλημα Φωτισμού',
-        'PLUMBING_ISSUE': 'Πρόβλημα Υδρευσης',
-        'ROAD_ISSUE': 'Πρόβλημα Δρόμου/Πεζοδρομίου',
-        'MOOD': 'Διάθεση',
-        'SINCE_TIME': 'πριν από',
-        'HOURS': 'ώρες',
-        'MINUTES': 'λεπτά',
-        'SECS': 'δευτερόλεπτα',
-        'CONFIRMED': 'Ανοιχτό',
-        'IN_PROGRESS': 'Ανάθεση/Σε εκτελέση',
-        'RESOLVED': 'Ολοκληρωμένο'
-      });
-     
-      $translateProvider.preferredLanguage('el');
-	      $translateProvider.useLocalStorage();
-    }]);
-	
 	
 	
 
 appControllers
 		.controller(
-				'mainController',
+				'mainOverviewController',
 				[
 						'$scope',
 						'$q', 'leafletData',
@@ -631,6 +584,7 @@ appControllers
 										};
 										leafletData.getMap().then(function(map) {
 											L.control.layers( baseLayers , overlays).addTo(map);
+									    	map.invalidateSize(true);
 										});
 											
 								});
@@ -638,9 +592,6 @@ appControllers
 							
 							}
 							
-							$scope.changeLanguage = function (langKey) {
-								$translate.use(langKey);
-							 };
 
 
 							$scope.doCalcLast6Issues();
@@ -654,7 +605,8 @@ appControllers
 							$interval($scope.doCalcLast6Issues, updtime);
 							$interval($scope.submitSearchLast30days, updtime);
 							
-														
+
+							
 							
 
-						} ]);
+} ]);
