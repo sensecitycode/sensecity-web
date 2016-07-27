@@ -3,7 +3,7 @@
 		<form class="form-horizontal" name="form" role="form" ng-submit="submitNewIssue()" id="addIssueForm">	
 		<div class="col-md-8"> 
 			<div style="height: 800px">
-			<leaflet defaults="defaults" lf-center="patras" layers="layers" 
+			<leaflet  lf-center="patras" layers="layers" 
 				 height="100%"  style="color:black"  ></leaflet>
 			</div>
 			<div  after-render="invalidateTheMap"></div>
@@ -36,7 +36,7 @@
 			
 			<div class="form-group">
 				<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">{{ 'PHOTO' | translate}}</label>
-				<input type="file" id="input_file"   class="form-control" name="uploadedPhotoFile"  file-model="uploadedPhotoFile" placeholder="" />
+				<input type="file" id="input_file"   class="form-control" file-model="uploadedPhotoFile" placeholder=""   />
 				
 			</div>			
 			

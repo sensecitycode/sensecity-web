@@ -26,6 +26,43 @@ appControllers.directive('afterRender', ['$timeout', function ($timeout) {
 
 
 
+appControllers.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                	
+                	
+                	var filesSelected = element[0].files[0];
+                    //modelSetter(scope, element[0].files[0]);
+                    if (filesSelected.size > 0)
+    				{
+    					console.log('size>0' );
+    					var base64image_name='';
+    					var fileToLoad = filesSelected;		 
+    					r = new FileReader();
+
+    				      r.onloadend = function(e) { //callback after files finish loading
+    				    	base64image_name = e.target.result;
+    				       
+    				        console.log(base64image_name.replace(/^data:image\/(png|jpg);base64,/, "")); //replace regex if you want to rip off the base 64 "header"
+    				        //here you can send data over your server as desired
+    				        modelSetter(scope, base64image_name );
+    				        
+    				      }
+    				      r.readAsDataURL(fileToLoad); //once defined all callbacks, begin reading the file
+    				}
+                    
+                });
+            });
+        }
+    };
+}]);
+
 appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leafletData', 'Issue', '$translate',
                                             function($scope, $log, $location, leafletData, Issue, $translate) {
 	$log.debug('inside scWebSubmit controller');
@@ -181,9 +218,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 		 
 		 
 		 $scope.isOtherSelected = function () {
-			 return true ; //$scope.issueSubTypeSelect.id ===  'other';
+			 return $scope.issueSubTypeSelect.id ===  'other';
 		 };
 		 
+		 //translate immediately when change
 		 $scope.issueSubTypeSelectChanged = function () {
 			 
 			 $translate(  $scope.issueSubTypeSelect.name ).then(function ( h ) {
@@ -194,46 +232,31 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 				  });
 			 
 		 }
-		 
+		 //this executes the first time just once in the init of page
 		 $scope.issueSubTypeSelectChanged();
 		 
 		 
-		 
-
 		 $scope.submitNewIssue = function submit() {
 			 
 			 $scope.issue = new Issue();
 
-				console.log("in submitNewIssue $scope.uploadedPhotoFile = " + $scope.uploadedPhotoFile);
-				
+			//console.log("in submitNewIssue $scope.uploadedPhotoFile = " + $scope.uploadedPhotoFile  );
+			
 			var desc = $scope.otherDescriptionTxt;
 			
-			var filesSelected = $scope.uploadedPhotoFile;
-			var img_base64='';
-			if (filesSelected.length > 0)
-			{
-				var fileToLoad = filesSelected[0];		 
-				var fileReader = new FileReader();		 
-				fileReader.onload = function(fileLoadedEvent) 
-				{
-					img_base64 = fileLoadedEvent.target.result;					
-				};
-		 
-				fileReader.readAsDataURL(fileToLoad);
-			}
-			
-			
-
-			 $scope.issue.issue =  $scope.issueTypeSelect.id ;
+			$scope.issue.issue =  $scope.issueTypeSelect.id ;
 			 $scope.issue.loc =  '{ "type" : "Point",  "coordinates" : ['+$scope.latlabeltxt+','+ $scope.lnglabeltxt +'] }' ;
 			 $scope.issue.device_id =  'webapp' ;
 			 
 			 $scope.issue.value_desc =  desc ;
-			 $scope.issue.image_name =  img_base64 ;
+			 $scope.issue.image_name =  $scope.uploadedPhotoFile ;
 			
 			console.log('{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.latlabeltxt+','+ $scope.lnglabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id 
-					+'","device_id" : "webapp", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "'+img_base64+'" }');
+					+'","device_id" : "webapp", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "'+ $scope.issue.image_name  +'" }');
 			console.log( $scope.issue );
+	        
+
+			
 
 //			return $http(
 //					{
