@@ -185,21 +185,26 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 		  });
 	
 		
+		$scope.newMarker = null;
+		
 		$scope.$on('leafletDirectiveMap.click', function(event, args){
 		    console.log(args.leafletEvent.latlng);
 		    
-		    if(typeof(newMarker)==='undefined')
+		    if( $scope.newMarker === null)
 			{
-				newMarker = new L.marker(args.leafletEvent.latlng, {icon: redMarker},{ draggable: true});
+				console.log(" 1 newMarker.addTo(map) "  );
+				$scope.newMarker = new L.marker(args.leafletEvent.latlng, {icon: redMarker},{ draggable: true});
 				
 				leafletData.getMap().then(function(map) {
-					newMarker.addTo(map);
+					$scope.newMarker.addTo(map);
+					console.log(" 2newMarker.addTo(map) "  );
 															
 				});
 			}
 			else 
 			{
-				newMarker.setLatLng(args.leafletEvent.latlng);
+				$scope.newMarker.setLatLng(args.leafletEvent.latlng);
+				console.log(" else newMarker.addTo(map) "  );
 			}
 
 		    $scope.latlabeltxt = args.leafletEvent.latlng.lat; 
@@ -209,9 +214,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 		//need to refresh the map layer after everything is rendered, otherwise it displays empty tiles
 		$scope.invalidateTheMap = function () {
 
-			leafletData.getMap("map").then(
+			leafletData.getMap().then(
 				    function (map) {
-				    	map.invalidateSize(true);
+				    	map.invalidateSize( true );
 				    }
 				);
 		 };
