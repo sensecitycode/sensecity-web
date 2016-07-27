@@ -17,18 +17,17 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav" >
-						<li><a href="#/web_report">Αναφορά Προβλήματος</a></li>
-						<li><a href="#/search">Αναζήτηση</a></li>
-						<li><a href="#/overview">Επισκόπηση</a></li>
+						<li ng-class="navClass('web_report')" ><a href="#/web_report">Αναφορά Προβλήματος</a></li>
+						<li ng-class="navClass('search')"><a href="#/search">Αναζήτηση</a></li>
+						<li ng-class="navClass('overview')"><a href="#/overview">Επισκόπηση</a></li>
 						
 			
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li ><a 
+					<li ><a href=""
 					style="float: right; padding-left: 0px; padding-right: 0px;"
 					ng-click="changeLanguage('el')"><img src="images/flags/el.png" /></li>
-					<li></a>&nbsp;&nbsp; <a 
-		style="float: right; padding-left: 0px; padding-right: 5px;"
+					<li></a>&nbsp;&nbsp; <a href=""style="float: right; padding-left: 0px; padding-right: 5px;"
 		ng-click="changeLanguage('en')"><img src="images/flags/en.png" />
 	</a></li>
 						</ul>

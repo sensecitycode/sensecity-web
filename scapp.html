@@ -15,6 +15,7 @@
 
 <link rel="stylesheet" href="css/loading-bar.css" />
 <link rel="stylesheet" href="css/scapp.css" />
+ <link rel="stylesheet" href="css/sidebar.css">
 
 <!-- angular dep -->
 <script
@@ -62,6 +63,8 @@
 
 <!-- Angular scapp dependancies -->
 <script src="scctrl.js"></script>
+<script src="scwebsubmitctrl.js"></script>
+<script src="scsearchctrl.js"></script>
 <script src="overviewctrl.js"></script>
 <script src="scapp.js"></script>
 <script src="scsrvs.js"></script>
@@ -83,11 +86,13 @@
 			<div class="slide-animate" ng-view autoscroll="true"></div>
 
 		</div>
-	</div>
-		<div id="footer" style="background-color:#D0D0D0;margin-top:10px">
+		<div ng-show="(location.path() != '/overview')" id="footer" style="background-color:#D0D0D0;margin-top:10px">
 			<div class="slide-animate" ng-include="'scfooter.html'"></div>
 
 		</div>
+		
+		
+	</div>
 
 
 

@@ -41,7 +41,7 @@
 			</div>			
 			
 			
-			<input id="btnsubmit" class="btn btn-default" type="submit" value="{{ 'SUBMIT' | translate}}" />
+			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null"/>
 
 			<div id="try_another_issue"></div>
 		</div>
@@ -50,80 +50,4 @@
    </form>
     </div>
     
-
-	<script>
-		
-		var img_base64 = 'no-image';
-		
-	
-		
-		
-		$('#input_file').on("change", function(){ 
-
-			var filesSelected = document.getElementById("input_file").files;//$("#input_file").val();
-						if (filesSelected.length > 0)
-						{
-							var fileToLoad = filesSelected[0];
-					 
-							var fileReader = new FileReader();
-					 
-							fileReader.onload = function(fileLoadedEvent) 
-							{
-								img_base64 = fileLoadedEvent.target.result;
-								//console.log(img_base64);
-								//textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
-								
-							};
-					 
-							fileReader.readAsDataURL(fileToLoad);
-							//console.log(fileToLoad);
-						}
-
-
-			});
-	
-	
-		
-				
-			
-
-				$("#btnsubmit").click(function() {
-					$("#btnsubmit").html('<i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>');
-					$('#btnsubmit').addClass('disabled');
-					var other_='';
-					
-					if($("#other_description").val() !=''){
-						other_ = $("#other_description").val();
-					}else{
-						other_ = $("#issue").val();
-					}
-					
-					console.log(img_base64);
-					
-					console.log('{"loc" : { "type" : "Point",  "coordinates" : ['+$("#lng").val()+','+$("#lat").val()+'] }, "issue" : "'+$("#type-issue").val()+'","device_id" : "webapp", "value_desc" : "' + other_ + '","image_name" : "'+img_base64+'" }');
-					
-					$.ajax({
-						crossDomain: true,
-						type:"POST",
-						url: "http://api.sense.city:3000/api/issue",
-						data: '{"loc" : { "type" : "Point",  "coordinates" : ['+$("#lng").val()+','+$("#lat").val()+'] }, "issue" : "'+$("#type-issue").val()+'","device_id" : "webapp", "value_desc" : "' + other_ + '","image_name" : "'+img_base64+'" }',
-						contentType: "application/json; charset=utf-8",
-						dataType: "json",                
-						success: function(msg){
-							//$('#btnsubmit').removeClass('disabled');
-							$("#btnsubmit").html('Αποστολή');
-							$("#try_another_issue").html('<a href="submit_issue.html" class="btn btn-primary" style="background-color: #76a0ff !important;">Νέα καταχώριση</a>');
-						}
-					});					
-					
-					/*var image = document.getElementById('input_file').src;
-                    image.src = "data:image/jpeg;base64," + image;
-					console.log(image.src);*/
-				});
-				
-			
-
-		
-			</script>
-			
 		

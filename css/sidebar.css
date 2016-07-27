@@ -28,7 +28,7 @@ body {
     list-style : none;
     padding : 0;
     margin : 0;
-    background-color : #D6D6D6;
+    background-color : RGBA(194, 203, 252, 0.74);;
 }
 .navigation-items a {
     display : block;

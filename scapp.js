@@ -1,6 +1,7 @@
-var app = angular.module('scApp', [ 'mgcrea.ngStrap', 'scapp.controllers', 'overviewapp.controllers',
-		'scapp.services', 'ngResource',  'ngRoute', 'ui-leaflet', 'angular-loading-bar',
-		'ngAnimate', 'pascalprecht.translate', 'ngCookies' ]);
+var app = angular.module('scApp', [ 'mgcrea.ngStrap', 'scapp.controllers', 'scwebsubmit.controllers', 'overviewapp.controllers',
+                                    'searchapp.controllers', 'scapp.services', 
+                                    'ngResource',  'ngRoute', 'ui-leaflet', 'angular-loading-bar',
+                                    'ngAnimate', 'pascalprecht.translate', 'ngCookies' ]);
 
 app.config(function($routeProvider, $locationProvider, $anchorScrollProvider,
 		cfpLoadingBarProvider) {
@@ -11,11 +12,17 @@ app.config(function($routeProvider, $locationProvider, $anchorScrollProvider,
 	cfpLoadingBarProvider.includeBar = true;
 
 	$routeProvider.when('/overview', {
-		templateUrl : 'overview.html',
-		controller : 'overviewctrl'
+		templateUrl : 'scoverview.html',
+		controller : 'mainOverviewController'
 	}).when('/web_report', {
 		templateUrl : 'scwebsubmit.html',
 		controller : 'scWebSubmit'
+	}).when('/search', {
+		templateUrl : 'scsearchissues.html',
+		controller : 'searchIssueController'
+	}).when('/all_issues', {
+		templateUrl : 'all_issues.html',
+		controller : 'searchIssueController'
 	}).when('/', {
 		templateUrl : 'scmapcontent.html',
 		controller : 'mainOverviewController'
