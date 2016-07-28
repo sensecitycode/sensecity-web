@@ -1,291 +1,33 @@
 
-    <section class="bg-primary" id="one">
-        <div class="container">
-            <div class="row">                
-				<div class="col-lg-12" id="recent_five" style="padding-top:50px;">
-					<br />					
-				</div>
-            </div>
-        </div>
-    </section>    
-   
+<div class="row" style="padding: 20px; width: 100%;">
+	<div ng-repeat="lastissue in allissues"
+		class="issueitem col-lg-2 col-md-2 col-sm-2 col-xs-2"
+		style="padding-bottom: 5px;">
+		<div
+			style="background-color: #FFFFFF; border-width: 1px; border-color: #967f7f; border-style: dotted; border-radius: 10px;">
+			<a href="http://sense.city/issuemap.php?issue_id={{lastissue._id}}"
+				style="text-decoration: none;"><center>
+					<div class="thumbnail crop" style="padding: 0px;">
+						<img src={{lastissue.image_name}} alt="">
+					</div>
+				</center>
+				<div class="caption"
+					style="color: #000000; padding-left: 13px; padding-right: 5px; margin-top: -10px;">
+					<p style="font-size: 13px;">
+						<b>{{lastissue.issue | translate}}</b>
+					</p>
 
-			<script>
-				
-				
-				
-				
-				console.log(localStorage.getItem("language"));
-				
-				
-				if(localStorage.getItem("language") === 'en'){
-					$('head').append('<script src="js/lang.en.js" />');
-					localStorage.removeItem("language");
-					localStorage.setItem("language", "en");
-				}else{
-					$('head').append('<script src="js/lang.js" />');
-					localStorage.removeItem("language");
-					localStorage.setItem("language", "el");
-				}
-				
-				change_lang();
-			
-	
-				console.log(localStorage.getItem("language"));
-				
-				
-				$('#land_el').click(function() {
-					localStorage.setItem("language", "el");
-					console.log(localStorage.getItem("language"));
-					
-					
-					$('head').append('<script src="js/lang.js" />');
-					change_lang();
-					
-					return false;
-				});
-				
-				$('#land_en').click(function() {
-					localStorage.setItem("language", "en");
-					console.log(localStorage.getItem("language"));
-					$('head').append('<script src="js/lang.en.js" />');
-					change_lang();
-					return false;
-				});
-				
-				
-					
-					
-					function change_lang(){
-						$('#msg_subdomain_title').html(lang.msg_subdomain_title);
-						$('#msg_sub_text1').html(lang.msg_sub_text1);
-						$('#msg_sub_text2').html(lang.msg_sub_text2);
-						$('#msg_section_info').html(lang.msg_section_info);
-						$('#msg_section_followus').html(lang.msg_section_followus);
-						
-						
-						$('#recent_five').html('');
-						$('#btn_more').html('');
-						
-						
-						
-						
-						$.ajax({
-							crossDomain: true,
-							type:"GET",
-							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=100&list_issue=1",
-							dataType: "json",                
-							success: function(msg){								
-								
-								$('#recent_five').append();
-								var count_pos =0;
-								var position = new Array();
-								/*
-								var positionlat = msg[0].loc.coordinates[1];
-								var positionlon = msg[0].loc.coordinates[0];
-								*/
-								/*console.log(positionlat);
-								console.log(positionlon);
-								*/
-								$.each(msg, function(idx, obj) {
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									var bugParams =	{
-									    "method": "Bug.get",
-									    "params": [{"ids":obj._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
-									    "id": 1
-									};
-									
-									
-									var new_status_issue='';
-									
-									$.ajax({
-										crossDomain: true,
-										type:"POST",
-										url: "http://api.sense.city:3001/bugs/search",
-										data: bugParams,
-										dataType: "json",                
-										success: function(msg1){
-											
-											console.log(msg1[0].resolution);
-											switch (msg1[0].status) {
-												case 'CONFIRMED':
-													if(localStorage.getItem("language") === 'en'){
-														new_status_issue = 'Confirmed';
-													}
-													else{
-														new_status_issue = 'Ανοιχτό / Μη επιβεβαιωμένο';
-													}
-													break;
-												case 'IN_PROGRESS':
-													if(localStorage.getItem("language") === 'en'){
-														new_status_issue = 'In Progress';
-													}
-													else{
-														new_status_issue = 'Ανάθεση / Σε εκτέλεση';
-													}
-													break;
-												case 'RESOLVED':
-													if(localStorage.getItem("language") === 'en'){
-														//if(msg1[0].resolution==='FIXED'){
-														
-														//}
-														new_status_issue = 'Resolved';
-													}
-													else{
-														new_status_issue = 'Ολοκληρωμένο';
-													}
-													break;
-												default:
-													break;
-											}
-											
-											
-											
-											
-											
-											
-											
-											
-											
-											
-											
-								
-									var positionlat = obj.loc.coordinates[1];
-									var positionlon = obj.loc.coordinates[0];
-									var image_name;
-									if(obj.image_name==='no-image' || obj.image_name==='noimage' || obj.image_name==='' || obj.image_name===null || obj.image_name===undefined){
-										image_name = "images/EmptyBox-Phone.png";
-									}
-									else
-									{
-										image_name = obj.image_name;
-									}
-									var issue = '';
-									switch(obj.issue){
-										case 'garbage':
-											if(localStorage.getItem("language") === 'en'){
-												issue = 'Cleaning Problem';
-											}else{
-												issue = 'Πρόβλημα Καθαριότητας';
-											}
-											break;
-										case 'lighting':
-											if(localStorage.getItem("language") === 'en'){
-												issue = 'Lighting Problem';
-											}else{
-												issue = 'Πρόβλημα Φωτισμού';
-											}
-											break;
-										case 'plumbing':
-											if(localStorage.getItem("language") === 'en'){
-												issue = 'Plumbing Problem';
-											}else{
-												issue = 'Πρόβλημα Υδραυλικών';
-											}
-											break;
-										case 'road-contructor':
-											if(localStorage.getItem("language") === 'en'){
-												issue = 'Street/Sidewalk Problem';
-											}else{
-												issue = 'Πρόβλημα Δρόμου/Πεζοδρομίου';
-											}
-											break;
-										case 'angry':
-											if(localStorage.getItem("language") === 'en'){
-												issue = 'Disposal';
-											}else{
-												issue = 'Διάθεση';
-											}
-											break;
-										case 'neutral':
-											if(localStorage.getItem("language") === 'en'){
-												issue = 'Disposal';
-											}else{
-												issue = 'Διάθεση';
-											}
-											break;
-										case 'happy':
-											if(localStorage.getItem("language") === 'en'){
-												issue = 'Disposal';
-											}else{
-												issue = 'Διάθεση';
-											}
-											break;
-										default:											
-											issue = '';
-											break;
-									}									
-									
-									var today = new Date();
-									var create_day = new Date(obj.create_at);
-									
-																	
-									var seconds = (today.getTime() - create_day.getTime())/1000;									
-									var datediff ='';
-									
-									if(seconds<60){
-										if(localStorage.getItem("language") === 'en'){
-											datediff = "before "+seconds+" seconds";
-										}else{
-											datediff = "πριν από "+seconds+" δευτερόλεπτα";
-										}
-									}
-									else if(seconds<3600){
-										if(localStorage.getItem("language") === 'en'){
-											datediff = "before "+Math.floor(seconds/60)+" minutes";
-										}else{
-											datediff = "πριν από "+Math.floor(seconds/60)+" λεπτά";
-										}
-									}else if(seconds<86400){
-										if(localStorage.getItem("language") === 'en'){
-											datediff = "before "+Math.floor(seconds/3600)+" hours";
-										}else{
-											datediff = "πριν από "+Math.floor(seconds/3600)+" ώρες";
-										}
-									}
-									else{
-										if(localStorage.getItem("language") === 'en'){
-											datediff = "before "+Math.floor(seconds/86400)+" days";
-										}else{
-											datediff = "πριν από "+Math.floor(seconds/86400)+" μέρες";
-										}
-									}
-									
-									
-									//$('#recent_five').append('<a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="color: #FFFFFF !important;"><div class="col-lg-4 col-md-6 col-sm-12"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px solid #BFAFAF;  height: 100px;  margin-top: 20px; background-color: #756161;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px" style="max-width: 110px;" /></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px;">'+datediff+'</div><div>'+obj.value_desc+'</div></div></div></div></a>');
-									
-									$('#recent_five').append('<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6" style="padding-bottom: 5px;"><div style="background-color:#FFFFFF; border-width: 1px;border-color: #967f7f;border-style: dotted;border-radius: 10px;"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+' - '+obj.value_desc+'" style="text-decoration:none;"><center><div class="thumbnail crop" style="padding:0px; overflow-y: hidden; height: 200px; "><img src="'+image_name+'" height="200px" alt="'+issue+'"></div></center><div class="caption" style="color:#000000;padding-left: 13px;padding-right: 5px; margin-top:-10px;"><p style="font-size:13px;"><b id="msg_subdomain_issue">'+issue+'</b></p> <p style="font-size:12px;height:40px;margin-top:-10px;">'+obj.value_desc+'</p><p style="font-size:12px;height:40px;margin-top:-10px;">'+new_status_issue+'</p><p style="margin-top:-10px;font-size:14px;"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+datediff+'</p></div></a></div></div>');
-								}
-							});
-							
-							
-							
-							});
-								
-								
-							}
-								
-							
-						});
-						
-						
-					}
-				
-				
-				
+					<p style="font-size: 14px; height: 40px; margin-top: -10px;">{{lastissue.value_desc}}</p>
+					<p style="margin-top: -12px; font-size: 10px;">
+						<i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{ 'SINCE_TIME' |
+						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
+						translate }}
+					<p style="margin-top: -12px; font-size: 10px;">&nbsp;{{lastissue.status
+						| translate}}&nbsp;</p>
+					</p>
 
-			</script>
-			
+				</div></a>
+		</div>
+	</div>
 
-  </body>
-</html>
+</div>

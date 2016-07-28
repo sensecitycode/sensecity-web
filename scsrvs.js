@@ -46,6 +46,18 @@ appServices.factory('DisplayLast6IssuesService', function ( $resource, APIEndPoi
     });
 });
 
+
+appServices.factory('DisplayLast100IssuesService', function ( $resource, APIEndPointService) {
+    // console.log("DisplayIssues");
+    return $resource( APIEndPointService.APIURL + '?startdate=2016-03-15&sort=-1&limit=100&list_issue=1&image_field=1',
+        {}, {
+        update: {
+          method: 'GET'
+          // isArray: true
+        }
+    });
+});
+
 appServices.factory('BugService', function ( $resource, APIEndPointService) {
     return $resource(
         APIEndPointService.bugzilla,

@@ -22,7 +22,7 @@ app.config(function($routeProvider, $locationProvider, $anchorScrollProvider,
 		controller : 'searchIssueController'
 	}).when('/all_issues', {
 		templateUrl : 'all_issues.html',
-		controller : 'searchIssueController'
+		controller : 'allissuesCtrl'
 	}).when('/', {
 		templateUrl : 'scmapcontent.html',
 		controller : 'mainOverviewController'

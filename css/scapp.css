@@ -124,3 +124,43 @@ a {
 					border-bottom-left-radius: 0px;
 					border-bottom-right-radius: 0px;
 			}
+
+			
+.issueitem {
+    opacity: 1;
+}
+
+.issueitem.ng-enter {
+    -webkit-transition: 1s;
+    transition: 1s;
+    opacity: 0;
+  margin-left: 100%;
+}
+
+.issueitem.ng-enter-active {
+  margin-left: 0;
+    opacity: 1;
+}
+
+
+.issueitem..ng-leave {
+  -webkit-transition: 1s;
+  transition: 1s;
+  
+  margin-left: 0;
+}
+
+.issueitem..ng-leave-active {
+  margin-left: 100%;
+}
+
+.issueitem..ng-move {
+  -webkit-transition: 1s;
+  transition: 1s;
+  
+  background: gold;
+}
+
+.issueitem..ng-move-active {
+  background: #fff;
+}
