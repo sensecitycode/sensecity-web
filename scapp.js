@@ -1,7 +1,7 @@
 var app = angular.module('scApp', [ 'mgcrea.ngStrap', 'scapp.controllers', 'scwebsubmit.controllers', 'overviewapp.controllers',
                                     'searchapp.controllers', 'scapp.services', 
                                     'ngResource',  'ngRoute', 'ui-leaflet', 'angular-loading-bar',
-                                    'ngAnimate', 'pascalprecht.translate', 'ngCookies' ]);
+                                    'ngAnimate', 'pascalprecht.translate', 'ngCookies', 'countTo' ]);
 
 app.config(function($routeProvider, $locationProvider, $anchorScrollProvider,
 		cfpLoadingBarProvider) {
@@ -12,7 +12,7 @@ app.config(function($routeProvider, $locationProvider, $anchorScrollProvider,
 	cfpLoadingBarProvider.includeBar = true;
 
 	$routeProvider.when('/overview', {
-		templateUrl : 'scoverview.html',
+		templateUrl : 'scmapcontent.html',
 		controller : 'mainOverviewController'
 	}).when('/web_report', {
 		templateUrl : 'scwebsubmit.html',

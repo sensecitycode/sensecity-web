@@ -49,10 +49,10 @@ appControllers
 								$scope.state = !$scope.state;
 							};
 
-							$scope.calcValue30daysIssues = '?';
-							$scope.calcValue30daysEvents = '?';
-							$scope.calcValueProblemsFrom2016 = '?';
-							$scope.calcValueSolutionFrom2016 = '?';
+							$scope.calcValue30daysIssues = '0';
+							$scope.calcValue30daysEvents = '0';
+							$scope.calcValueProblemsFrom2016 = '0';
+							$scope.calcValueSolutionFrom2016 = '0';
 
 							var icons = {
 								garbage : {
