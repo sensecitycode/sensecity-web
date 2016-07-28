@@ -194,7 +194,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 			 $scope.issue.image_name =  $scope.uploadedPhotoFile ;
 			
 			var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.latlabeltxt+','+ $scope.lnglabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id 
-			+'","device_id" : "webapp", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "'+ $scope.issue.image_name  +'" }' ;
+			+'","device_id" : "webapp", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "no-image" }' ;
 			console.log( txtpost );			
 			
 
