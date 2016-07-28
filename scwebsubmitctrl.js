@@ -187,14 +187,14 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 			 var desc = $scope.otherDescriptionTxt;
 			
 			 $scope.issue.issue =  $scope.issueTypeSelect.id ;
-			 $scope.issue.loc =  '{ "type" : "Point",  "coordinates" : ['+$scope.latlabeltxt+','+ $scope.lnglabeltxt +'] }' ;
+			 //$scope.issue.loc =  '{ "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }' ;
 			 $scope.issue.device_id =  'webapp' ;
 			 
 			 $scope.issue.value_desc =  desc ;
 			 $scope.issue.image_name =  $scope.uploadedPhotoFile ;
 			
-			var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.latlabeltxt+','+ $scope.lnglabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id 
-			+'","device_id" : "webapp", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "no-image" }' ;
+			var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id 
+			+'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "no-image" }' ;
 			console.log( txtpost );			
 			
 
