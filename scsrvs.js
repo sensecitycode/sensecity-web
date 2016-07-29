@@ -2,9 +2,9 @@ var appServices = angular.module('scapp.services', []);
 
 appServices.factory('APIEndPointService', function() {
 	  return {
-		  APIURL: "http://api.sense.city:4000/api/issue",
-		  ALLISSUESAPIURL: "http://api.sense.city:4000/api/issues",
-			bugzilla: "http://api.sense.city:4001/bugs/search"
+		  APIURL: "http://api.sense.city:3000/api/issue",
+		  ALLISSUESAPIURL: "http://api.sense.city:3000/api/issues",
+			bugzilla: "http://api.sense.city:3001/bugs/search"
 	  };
 });
 
