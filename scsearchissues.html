@@ -9,28 +9,28 @@
                     </a>
                 </div> -->
 
-                <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">Προβλήματα Πολιτών</div>
+                <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'ISSUES' | translate }}</div>
                   <div ng-model="searchIssue" class="text-center" bs-checkbox-group>
-                      <label class="btn btn-default"><i class="fa fa-trash-o"></i> <input type="checkbox" class="btn btn-default" value="garbage" > Σκουπίδια</label><br />
-                      <label class="btn btn-default"><i class="fa fa-lightbulb-o"></i> <input type="checkbox" class="btn btn-default" value="lighting"> Φωτισμός</label><br />
-                      <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="checkbox" class="btn btn-default" value="plumbing"> Ύδρευση</label><br />
-                      <label class="btn btn-default"><i class="fa fa-road"></i> <input type="checkbox" class="btn btn-default" value="roadcontructor"> Οδόστρωμα</label><br />
+                      <label class="btn btn-default"><i class="fa fa-trash-o"></i> <input type="checkbox" class="btn btn-default" value="garbage" > {{ 'GARBAGE_ISSUE' | translate }}</label><br />
+                      <label class="btn btn-default"><i class="fa fa-lightbulb-o"></i> <input type="checkbox" class="btn btn-default" value="lighting"> {{ 'LIGHTNING_ISSUE' | translate }}</label><br />
+                      <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="checkbox" class="btn btn-default" value="plumbing">  {{ 'PLUMBING_ISSUE' | translate }}</label><br />
+                      <label class="btn btn-default"><i class="fa fa-road"></i> <input type="checkbox" class="btn btn-default" value="roadcontructor">  {{ 'ROAD_ISSUE' | translate }}</label><br />
                   </div>
                 </div>
 
                   <hr>
 
-                  <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">Ανάδραση Πολιτών</div>
+                  <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'MOOD' | translate }}</div>
                     <div ng-model="searchIssue" bs-checkbox-group >
-                        <label class="btn btn-default"><i class="fa fa-smile-o"></i> <input type="checkbox" class="btn btn-default" value="happy"> Θετική</label><br />
-                        <label class="btn btn-default"><i class="fa fa-meh-o"></i> <input type="checkbox" class="btn btn-default" value="neutral"> Ουδέτερη</label><br />
-                        <label class="btn btn-default"><i class="fa fa-frown-o"></i> <input type="checkbox" class="btn btn-default" value="angry"> Αρνητική</label><br />
+                        <label class="btn btn-default"><i class="fa fa-smile-o"></i> <input type="checkbox" class="btn btn-default" value="happy"> {{ 'MOODPOSITIVE' | translate }}</label><br />
+                        <label class="btn btn-default"><i class="fa fa-meh-o"></i> <input type="checkbox" class="btn btn-default" value="neutral"> {{ 'MOODNEUTRAL' | translate }}</label><br />
+                        <label class="btn btn-default"><i class="fa fa-frown-o"></i> <input type="checkbox" class="btn btn-default" value="angry"> {{ 'MOODNEGATIVE' | translate }}</label><br />
                     </div>
                   </div>
 
                   <hr>
 
-                  <div class="navigation-items text-center"><div style="padding-bottom:10px; padding-top:10px;"> Ημερομηνία Συμβάντος </div>
+                  <div class="navigation-items text-center"><div style="padding-bottom:10px; padding-top:10px;"> {{ 'ISSUE_DATE' | translate }} </div>
                       <div class="form-group col-md-12 text-center">
                         <i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i>
                         <input type="text" class="form-control text-center" ng-model="startISOdate" data-max-date="today" placeholder="Από" data-date-format="dd-MM-yyyy" autoclose="true" bs-datepicker>
@@ -40,7 +40,7 @@
                   </div>
 
 
-                  <div class="text-center"><button type="button" class="btn btn-success" ng-click="submit()">Αναζήτηση</button><button type="button" class="btn btn-danger" ng-click="reset()">Καθαρισμός</button></div><br />
+                  <div class="text-center"><button type="button" class="btn btn-success" ng-click="submit()">{{ 'MENUSEARCH' | translate }}</button><button type="button" class="btn btn-danger" ng-click="reset()">{{ 'MENUCLEAN' | translate }}</button></div><br />
 
 
             </div>

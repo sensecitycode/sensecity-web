@@ -49,7 +49,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 	$scope.issueTypeSelect = $scope.availableIssues[0];
 	$scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0] ;
 	$scope.otherDescriptionTxt = '-';
-	 
+	$scope.uploadedPhotoFile = 'no-image';
 	
 	
 	$scope.updateCompoType = function() {
@@ -191,10 +191,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leaf
 			 $scope.issue.device_id =  'webapp' ;
 			 
 			 $scope.issue.value_desc =  desc ;
-			 $scope.issue.image_name =  $scope.uploadedPhotoFile ;
+			 $scope.issue.image_name =  $scope.uploadedPhotoFile ; //no-image
 			
 			var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id 
-			+'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "no-image" }' ;
+			+'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '" }' ;
 			console.log( txtpost );			
 			
 

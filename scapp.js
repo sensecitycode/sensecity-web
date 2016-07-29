@@ -52,19 +52,28 @@ app.controller('NavCtrl', [ '$scope', '$location', '$rootScope','$translate', fu
 
 app.config(['$translateProvider', function ($translateProvider) {
     $translateProvider.translations('en', {
-        'LONGTITUDE': 'Longtitude',
+        'MENUREPORT':'Report issue',
+        'MENUSEARCH':'Search',
+        'MENUOVERVIEW':'Overview',
+        'MENUCLEAN':'Clean',
+    	'LONGTITUDE': 'Longtitude',
         'LATTITUDE': 'Lattitude',
         'GARBAGE_ISSUE': 'Cleaning issue',
         'LIGHTNING_ISSUE': 'Lighting issue',
         'PLUMBING_ISSUE': 'Plumbing issue',
         'ROAD_ISSUE': 'Road/Construction issue',
         'TITLE': 'What\'s happening in the city',
+        'ISSUES' : 'Issues',
         'ISSUES_SINCE': 'Reported issues since',
+        'ISSUE_DATE': 'Issue date',
         'SOLUTIONS_SINCE': 'Issues solved since',
         'ISSUES_LAST_X_DAYS': 'Reported issues last',
         'EVENTS_LAST_X_DAYS': 'Reported events last',
         'DAYS': 'days',
-        'MOOD': 'Mood',
+        'MOOD': 'Citizen feedback',
+        'MOODPOSITIVE': 'Positive',
+        'MOODNEUTRAL': 'Neutral',
+        'MOODNEGATIVE': 'Negative',
         'SINCE_TIME': 'since',
         'HOURS': 'hours',
         'MINUTES': 'minutes',
@@ -91,14 +100,20 @@ app.config(['$translateProvider', function ($translateProvider) {
         'DESCRIPTION' : 'Description',
         'PHOTO':'Photo',
         'SUBMIT':'Submit',
-        'OTHERPROBWRITE':'Describe issue'
-        
+        'OTHERPROBWRITE':'Describe issue',
+        'PATRASDISCLAIMER':'* For the city of Patras, the indicated position of waste bins might have differences with the existing ones.',
+        'MORE':'More',
+        'FOLLOWUS':'Follow us'
 
 
 	
     });
    
     $translateProvider.translations('el', {
+        'MENUREPORT':'Αναφορά Προβλήματος',
+        'MENUSEARCH':'Αναζήτηση',
+        'MENUOVERVIEW':'Επισκόπηση',
+        'MENUCLEAN':'Καθαρισμός',
         'LONGTITUDE': 'Γεωγραφικό Μήκος',
         'LATTITUDE': 'Γεωγραφικό Πλάτος',
         'GARBAGE_ISSUE': 'Πρόβλημα Καθαριότητας',
@@ -106,12 +121,18 @@ app.config(['$translateProvider', function ($translateProvider) {
         'PLUMBING_ISSUE': 'Πρόβλημα Υδρευσης',
         'ROAD_ISSUE': 'Πρόβλημα Δρόμου/Πεζοδρομίου',
         'TITLE': 'Τι συμβαίνει στην πόλη',
+        'ISSUES' : 'Προβλήματα',
         'ISSUES_SINCE': 'Προβλήματα από',
+        'ISSUE_DATE': 'Ημερομηνία Συμβάντος',
+        'ISSUE_DATE': 'Ημερομηνία Συμβάντος',
         'SOLUTIONS_SINCE': 'Λύσεις από',
         'ISSUES_LAST_X_DAYS': 'Προβλήματα τελ.',
         'EVENTS_LAST_X_DAYS': 'Συμβάντα τελ.',
         'DAYS': 'ημέρες',
-        'MOOD': 'Διάθεση',
+        'MOOD': 'Διάθεση πολιτών',
+        'MOODPOSITIVE': 'Θετική',
+        'MOODNEUTRAL': 'Ουδέτερη',
+        'MOODNEGATIVE': 'Αρνητική',
         'SINCE_TIME': 'πριν από',
         'HOURS': 'ώρες',
         'MINUTES': 'λεπτά',
@@ -138,7 +159,10 @@ app.config(['$translateProvider', function ($translateProvider) {
         'DESCRIPTION' : 'Περιγραφή',
         'PHOTO':'Φωτογραφία',
         'SUBMIT':'Αποστολή',
-        'OTHERPROBWRITE':'Γράψτε το πρόβλημα'
+        'OTHERPROBWRITE':'Γράψτε το πρόβλημα',
+        'PATRASDISCLAIMER':'* Η απεικόνιση των κάδων απορριμάτων δεν συνάδει με οποιαδήποτε οριστική χωροθέτηση αυτών.',
+        'MORE':'Περισσότερα',
+        'FOLLOWUS':'Ακολουθήστε μας'
         	
       
     });
