@@ -8,6 +8,18 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location)
 	$log.debug('inside sensecityMainCtrl controller');
 	$scope.scvesrion = '20160712_trunk';
 	$scope.location = $location;
+	
+	var url_path=$location.absUrl().split("://");
+	var sub_domain = url_path.split(".");
+	console.log('current url : '+sub_domain[0]);
+	
+	$rootScope.Variables = {
+		city_name: sub_domain[0],
+		lat_center: 21,
+		long_center: 0,
+		img_logo:'',
+		bugzilla_products:''
+	}
 });
 
 
