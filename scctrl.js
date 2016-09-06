@@ -10,11 +10,11 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	$scope.location = $location;
 	
 	var url_path = $location.absUrl().split("//");
-	//var sub_domain = url_path.split(".");
-	console.log('current url : '+url_path[0]);
+	var sub_domain = url_path[1].split(".");
+	console.log('current url : '+sub_domain[0]);
 	
 	$rootScope.Variables = {
-		city_name: url_path[0],
+		city_name: sub_domain[0],
 		lat_center: 21,
 		long_center: 0,
 		img_logo:'',
