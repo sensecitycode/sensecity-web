@@ -4,7 +4,7 @@ var appControllers = angular.module('scapp.controllers', ['pascalprecht.translat
 
 	
 	
-appControllers.controller('sensecityMainCtrl', function($scope, $log, $location) {
+appControllers.controller('sensecityMainCtrl', function($scope, $log, $location, $rootScope) {
 	$log.debug('inside sensecityMainCtrl controller');
 	$scope.scvesrion = '20160712_trunk';
 	$scope.location = $location;
