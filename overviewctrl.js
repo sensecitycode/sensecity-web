@@ -14,7 +14,7 @@ appControllers.directive('sidebarDirective', function() {
 	};
 });
 
-	
+	 
 	
 
 appControllers
