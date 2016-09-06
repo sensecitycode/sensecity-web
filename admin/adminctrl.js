@@ -148,7 +148,7 @@ appControllers.controller('adminController',['$scope','$window','$http','EndPoin
       var pageload = function(callback) {
       var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
       // console.log(issue_type);
-      var params = {"product": "Δημος Πατρέων","order":"bug_id DESC","status": ["CONFIRMED", "IN_PROGRESS"],"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","url","resolution"]};
+      var params = {"product": "patras","order":"bug_id DESC","status": ["CONFIRMED", "IN_PROGRESS"],"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","url","resolution"]};
       if (issue_type!="all")
         {
           params.summary = issue_type;
@@ -324,7 +324,7 @@ appControllers.controller('adminController',['$scope','$window','$http','EndPoin
       // console.log(bug_fieldname);
       // console.log(panel);
 
-      var obj = { "ids":panel.id,"status":panel.status.en,"product": "Δημος Πατρέων","component": panel.component};
+      var obj = { "ids":panel.id,"status":panel.status.en,"product": "patras","component": panel.component};
       if (panel.comment !== undefined && bug_fieldname!== undefined)
       {
         obj[bug_fieldname] = panel.comment;
@@ -363,7 +363,7 @@ appControllers.controller('adminController',['$scope','$window','$http','EndPoin
 
       var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
       // console.log(issue_type);
-      var params = {"product": "Δημος Πατρέων","order":"bug_id DESC","include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","url","resolution"]};
+      var params = {"product": "patras","order":"bug_id DESC","include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","url","resolution"]};
       if (issue_type!="all")
       {
         params.summary = issue_type;
