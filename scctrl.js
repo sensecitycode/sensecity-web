@@ -9,9 +9,9 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	$scope.scvesrion = '20160712_trunk';
 	$scope.location = $location;
 	
-	var url_path=$location.absUrl().split("://");
-	var sub_domain = url_path.split(".");
-	console.log('current url : '+sub_domain[0]);
+	var url_path = $location.absUrl().split("//");
+	//var sub_domain = url_path.split(".");
+	console.log('current url : '+url_path[0]);
 	
 	$rootScope.Variables = {
 		city_name: sub_domain[0],
