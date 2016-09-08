@@ -15,10 +15,10 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	
 	$rootScope.Variables = {
 		city_name: sub_domain[0],
-		lat_center: 21,
-		long_center: 0,
-		img_logo:'',
-		bugzilla_products:''
+		lat_center: 37.7999968,
+		long_center: 20.749997,
+		img_logo: '',
+		bugzilla_products: 'testweb'
 	}
 });
 
