@@ -2,13 +2,13 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 
 
-appControllers.controller('scWebSubmit',  [ '$scope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http', 'APIEndPointService',
-                                            function($scope, $log, $location, leafletData, Issue, $translate, $http, APIEndPointService) {
+appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http', 'APIEndPointService',
+                                            function($scope, $rootScope, $log, $location, leafletData, Issue, $translate, $http, APIEndPointService) {
 	$log.debug('inside scWebSubmit controller');
 	
 	$scope.patras = {
-			lat : 38.2466395,
-			lng : 21.734574,
+			lat : $rootScope.Variables.lat_center,
+			lng : $rootScope.Variables.long_center,
 			zoom : 12
 		};
 

@@ -22,6 +22,7 @@ appControllers
 				'mainOverviewController',
 				[
 						'$scope',
+						'$rootScope','$http',
 						'$q', 'leafletData',
 						'APIEndPointService',
 						'DisplayIssuesService',
@@ -31,7 +32,7 @@ appControllers
 						'cfpLoadingBar',
 						'$interval',
 						'$translate',
-						function($scope, $q, leafletData,
+						function($scope, $rootScope, $http, $q, leafletData,
 								APIEndPointService,
 								DisplayIssuesService,
 								DisplayLast6IssuesService, BugService, FixedPointsService,
@@ -49,6 +50,9 @@ appControllers
 								$scope.state = !$scope.state;
 							};
 
+							$http.get('config.json').success(function(response) {console.log(response["patras"][0]);});
+							
+							
 							$scope.calcValue30daysIssues = '0';
 							$scope.calcValue30daysEvents = '0';
 							$scope.calcValueProblemsFrom2016 = '0';
@@ -124,8 +128,8 @@ appControllers
 							};
 
 							$scope.patras = {
-								lat : 38.2466395,
-								lng : 21.734574,
+								lat : $rootScope.Variables.lat_center,
+								lng : $rootScope.Variables.long_center,
 								zoom : 12
 							};
 							

@@ -16,7 +16,7 @@ appControllers.directive('sidebarDirective', function() {
     };
 });
 
-appControllers.controller('searchIssueController', ['$scope','$q','APIEndPointService','DisplayIssuesService', 'leafletData', function($scope,$q,APIEndPointService,DisplayIssuesService,leafletData) {
+appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q', 'APIEndPointService', 'DisplayIssuesService', 'leafletData', function($scope, $rootScope, $q, APIEndPointService, DisplayIssuesService, leafletData) {
 
   $scope.state = true;
   $scope.toggleState = function() {
@@ -72,8 +72,8 @@ appControllers.controller('searchIssueController', ['$scope','$q','APIEndPointSe
   };
 
   $scope.center= {
-      lat: 38.248028,
-      lng: 21.7583104,
+      lat: $rootScope.Variables.lat_center,
+      lng: $rootScope.Variables.long_center,
       zoom: 12
   };
 
@@ -191,8 +191,8 @@ appControllers.controller('searchIssueController', ['$scope','$q','APIEndPointSe
     $scope.searchIssue = "";
     $scope.markers = [];
     $scope.center= {
-        lat: 38.248028,
-        lng: 21.7583104,
+        lat: $rootScope.Variables.lat_center,
+        lng: $rootScope.Variables.long_center,
         zoom: 12
     };
   };
