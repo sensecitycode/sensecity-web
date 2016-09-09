@@ -4,7 +4,7 @@ var appControllers = angular.module('scapp.controllers', ['pascalprecht.translat
 
 	
 	
-appControllers.controller('sensecityMainCtrl', function($scope, $log, $http, $location, $rootScope) {
+appControllers.controller('sensecityMainCtrl', function($scope, $log, $location, $rootScope) {
 	$log.debug('inside sensecityMainCtrl controller');
 	$scope.scvesrion = '20160712_trunk';
 	$scope.location = $location;
@@ -13,31 +13,13 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $http, $lo
 	var sub_domain = url_path[1].split(".");
 	console.log('current url : '+sub_domain[0]);
 	
-	
-	$http.get('config.json').success(function(response) {
-
-	
-		console.log(response[sub_domain[0].toString()][0]);
-
-		$rootScope.Variables = {
-			city_name: sub_domain[0],
-			lat_center: response[sub_domain[0]][0],
-			long_center: response[sub_domain[0]][1],
-			img_logo: response[sub_domain[0]][2],
-			bugzilla_products: response[sub_domain[0]][3]
-		}
-
-		
-	});
-	
-	
-	/*$rootScope.Variables = {
+	$rootScope.Variables = {
 		city_name: sub_domain[0],
 		lat_center: 38.189279,
 		long_center: 21.762028,
 		img_logo: 'images/city_logos/patraslogo.jpg',
 		bugzilla_products: 'testweb'
-	}*/
+	}
 });
 
 
