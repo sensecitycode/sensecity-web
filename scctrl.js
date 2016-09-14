@@ -16,7 +16,7 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	var sub_domain = url_path[1].split(".");
 	console.log('current url : '+sub_domain[0]);
 	
-	var mainInfo = $http.get('config/patras.json').success(function(response) {
+	var mainInfo = $http.get('config/'+sub_domain[0]+'.json').success(function(response) {
 		
 		$rootScope.Variables = {
 			city_name: sub_domain[0],
