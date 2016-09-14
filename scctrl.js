@@ -4,22 +4,32 @@ var appControllers = angular.module('scapp.controllers', ['pascalprecht.translat
 
 	
 	
-appControllers.controller('sensecityMainCtrl', function($scope, $log, $location, $rootScope) {
+appControllers.controller('sensecityMainCtrl', function($scope, $log, $location, $rootScope,$http) {
 	$log.debug('inside sensecityMainCtrl controller');
 	$scope.scvesrion = '20160712_trunk';
 	$scope.location = $location;
+	
+	
+	
 	
 	var url_path = $location.absUrl().split("//");
 	var sub_domain = url_path[1].split(".");
 	console.log('current url : '+sub_domain[0]);
 	
-	$rootScope.Variables = {
-		city_name: sub_domain[0],
-		lat_center: 38.189279,
-		long_center: 21.762028,
-		img_logo: 'images/city_logos/patraslogo.jpg',
-		bugzilla_products: 'testweb'
-	}
+	var mainInfo = $http.get('config/patras.json').success(function(response) {
+		
+		$rootScope.Variables = {
+			city_name: sub_domain[0],
+			lat_center: response.lat_center,
+			long_center: response.long_center,
+			img_logo: "images/city_logos/"+response.city_name+".jpg",
+			bugzilla_products: response.bugzilla_products
+		}
+		
+        return $rootScope;
+    });
+	//console.log("response.city_name = " + Variables.city_name);
+	
 });
 
 
