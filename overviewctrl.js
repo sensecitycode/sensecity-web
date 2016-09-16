@@ -484,14 +484,14 @@ appControllers
 								});
 
 							};
-							console.log("city_name11" + $rootScope.Variables.city_name);
+							console.log("city_name11 : " + $rootScope.Variables.city_name);
 							
-							$scope.displayFixedPoints = function($rootScope) {
+							$scope.displayFixedPoints = function() {
 								
-								console.log("city_name" + $rootScope.Variables.city_name);
+								console.log("city_name : " + $rootScope.Variables.city_name);
 								
 								var i =0;
-								var theFixedPoints = FixedPointsService.query(function() {
+								var theFixedPoints = FixedPointsService.query(function($rootScope) {
 											angular.forEach( theFixedPoints, function(fixedpoint, key) {
 												var positionlat = fixedpoint.loc.coordinates[1];
 												var positionlon = fixedpoint.loc.coordinates[0];
