@@ -45,7 +45,7 @@ appServices.factory('BugService', function ( $resource, APIEndPointService) {
 });
 
 appServices.factory('FixedPointsService', function ( $resource, APIEndPointService,$rootScope) {
-	console.log("city_name" + $rootScope.city_name);
+	console.log("city_name" + $rootScope.Variables.city_name);
 	
     return $resource(
         'json/all_fix_data_points.json',
