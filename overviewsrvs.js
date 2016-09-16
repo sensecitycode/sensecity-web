@@ -48,7 +48,7 @@ appServices.factory('FixedPointsService', function ( $resource, APIEndPointServi
 	console.log("city_name" + $rootScope.Variables.city_name);
 	
     return $resource(
-        'json/all_fix_data_points.json',
+        'json/'+$rootScope.Variables.city_name+'.json',
         null,
         {
           search: {
