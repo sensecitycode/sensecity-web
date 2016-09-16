@@ -491,7 +491,7 @@ appControllers
 								console.log("city_name : " + $rootScope.Variables.city_name);
 								
 								var i =0;
-								var theFixedPoints = FixedPointsService.query(function($rootScope) {
+								var theFixedPoints = FixedPointsService.query(function() {
 											angular.forEach( theFixedPoints, function(fixedpoint, key) {
 												var positionlat = fixedpoint.loc.coordinates[1];
 												var positionlon = fixedpoint.loc.coordinates[0];
