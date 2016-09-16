@@ -486,7 +486,10 @@ appControllers
 							};
 							
 							
-							$scope.displayFixedPoints = function() {
+							$scope.displayFixedPoints = function($rootScope) {
+								
+								console.log("city_name" + $rootScope.Variables.city_name);
+								
 								var i =0;
 								var theFixedPoints = FixedPointsService.query(function() {
 											angular.forEach( theFixedPoints, function(fixedpoint, key) {
