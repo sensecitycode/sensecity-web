@@ -484,7 +484,7 @@ appControllers
 								});
 
 							};
-							
+							console.log("city_name11" + $rootScope.Variables.city_name);
 							
 							$scope.displayFixedPoints = function($rootScope) {
 								
