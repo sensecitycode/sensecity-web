@@ -75,7 +75,7 @@ appServices.factory('BugService', function ( $resource, APIEndPointService) {
 
 appServices.factory('FixedPointsService', function ( $resource, APIEndPointService) {
     return $resource(
-        'json/all_fix_data_points.json',
+        'json/xxx.json',
         null,
         {
           search: {
