@@ -50,7 +50,7 @@ appControllers
 								$scope.state = !$scope.state;
 							};
 
-							$http.get('config.json').success(function(response) {console.log(response["patras"][0]);});
+							//$http.get('config.json').success(function(response) {console.log(response["patras"][0]);});
 							
 							
 							$scope.calcValue30daysIssues = '0';
