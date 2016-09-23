@@ -61,7 +61,7 @@ appServices.factory('DisplayLast100IssuesService', function ( $resource/*, APIEn
 
 appServices.factory('BugService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     return $resource(
-        APIEndPointService.bugzilla,
+        $rootScope.Variables.bugzilla,
         null,
         {
           search: {
