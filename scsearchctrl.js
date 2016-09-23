@@ -193,7 +193,7 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
     $scope.center= {
         lat: $rootScope.Variables.lat_center,
         lng: $rootScope.Variables.long_center,
-        zoom: 12
+        zoom: $rootScope.Variables.map_zoom
     };
   };
 

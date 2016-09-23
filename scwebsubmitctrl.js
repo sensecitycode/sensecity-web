@@ -9,7 +9,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	$scope.patras = {
 			lat : $rootScope.Variables.lat_center,
 			lng : $rootScope.Variables.long_center,
-			zoom : 12
+			zoom : $rootScope.Variables.map_zoom
 		};
 
 

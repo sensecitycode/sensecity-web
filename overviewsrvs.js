@@ -7,9 +7,10 @@ appServices.factory('APIEndPointService', function() {
 	  };
 });
 
-appServices.factory('DisplayIssuesService', function ( $resource, APIEndPointService) {
+appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
-    return $resource(APIEndPointService.APIURL,
+    //return $resource(APIEndPointService.APIURL,
+	return $resource($rootScope.Variables.APIURL+$rootScope.Variables.city_name,
         {}, {
         update: {
           method: 'GET'
@@ -19,9 +20,9 @@ appServices.factory('DisplayIssuesService', function ( $resource, APIEndPointSer
 });
 
 
-appServices.factory('DisplayLast6IssuesService', function ( $resource, APIEndPointService) {
+appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
-    return $resource('http://api.sense.city:4000/api/issue?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1',
+    return $resource($rootScope.Variables.APIURL + $rootScope.Variables.city_name + '?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1',
         {}, {
         update: {
           method: 'GET'
@@ -30,9 +31,10 @@ appServices.factory('DisplayLast6IssuesService', function ( $resource, APIEndPoi
     });
 });
 
-appServices.factory('BugService', function ( $resource, APIEndPointService) {
+appServices.factory('BugService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     return $resource(
-        APIEndPointService.bugzilla,
+        //APIEndPointService.bugzilla,
+		$rootScope.Variables.bugzilla
         null,
         {
           search: {
@@ -44,9 +46,9 @@ appServices.factory('BugService', function ( $resource, APIEndPointService) {
     );
 });
 
-appServices.factory('FixedPointsService', function ( $resource, APIEndPointService) {
+appServices.factory('FixedPointsService', function ( $resource, APIEndPointService, $rootScope) {
     return $resource(
-        'json/patras.json',
+        'json/'+$rootScope.Variables.city_name+'.json',
         null,
         {
           search: {

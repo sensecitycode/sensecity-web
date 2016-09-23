@@ -16,7 +16,7 @@ appControllers.directive('sidebarDirective', function() {
     };
 });
 
-appControllers.controller('mainController', ['$scope','$q','APIEndPointService','DisplayIssuesService', function($scope,$q,APIEndPointService,DisplayIssuesService) {
+appControllers.controller('mainController', ['$scope','$q','APIEndPointService','DisplayIssuesService', '$rootScope', function($scope,$q,APIEndPointService,DisplayIssuesService, $rootScope) {
 
   $scope.state = true;
   $scope.toggleState = function() {
@@ -70,11 +70,17 @@ appControllers.controller('mainController', ['$scope','$q','APIEndPointService',
       iconColor: 'darkgreen'
     }
   };
-
+/*
   $scope.center= {
       lat: 38.248028,
       lng: 21.7583104,
       zoom: 12
+  };*/
+  
+   $scope.center= {
+      lat: $rootScope.Variables.lat_center,
+      lng: $rootScope.Variables.long_center,
+      zoom: $rootScope.Variables.map_zoom
   };
 
   $scope.layers= {
@@ -180,10 +186,17 @@ appControllers.controller('mainController', ['$scope','$q','APIEndPointService',
     $scope.endISOdate = new Date();
     $scope.searchIssue = "";
     $scope.markers = [];
-    $scope.center= {
+    /*
+	$scope.center= {
         lat: 38.248028,
         lng: 21.7583104,
         zoom: 12
+    };
+	*/
+	$scope.center= {
+        lat: $rootScope.Variables.lat_center,
+        lng: $rootScope.Variables.long_center,
+        zoom: $rootScope.Variables.map_zoom
     };
   };
 

@@ -13,8 +13,8 @@ appServices.factory('APIEndPointService', function() {
 
 
 //Issue Resource
-appServices.factory('Issue', function($resource, APIEndPointService) {
-	return $resource(APIEndPointService.ALLISSUESAPIURL+"/:id", 
+appServices.factory('Issue', function($resource/*, APIEndPointService*/ , $rootScope) {
+	return $resource(/*APIEndPointService.ALLISSUESAPIURL*/$rootScope.Variables.ALLISSUESAPIURL+"/:id", 
 		{id : "@id"	}, {
 		"update" : {
 			method : "PUT"
@@ -24,9 +24,9 @@ appServices.factory('Issue', function($resource, APIEndPointService) {
 });
 
 
-appServices.factory('DisplayIssuesService', function ( $resource, APIEndPointService) {
+appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointService*/ , $rootScope) {
     // console.log("DisplayIssues");
-    return $resource(APIEndPointService.APIURL,
+    return $resource(/*APIEndPointService.APIURL,*/$rootScope.Variables.APIURL+$rootScope.Variables.city_name
         {}, {
         update: {
           method: 'GET'
@@ -36,7 +36,7 @@ appServices.factory('DisplayIssuesService', function ( $resource, APIEndPointSer
 });
 
 
-appServices.factory('DisplayLast6IssuesService', function ( $resource, APIEndPointService, $rootScope) {
+appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
     return $resource( APIEndPointService.APIURL + '/'+$rootScope.Variables.city_name+'?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1',
         {}, {
@@ -48,7 +48,7 @@ appServices.factory('DisplayLast6IssuesService', function ( $resource, APIEndPoi
 });
 
 
-appServices.factory('DisplayLast100IssuesService', function ( $resource, APIEndPointService, $rootScope) {
+appServices.factory('DisplayLast100IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
     return $resource( APIEndPointService.APIURL + '/'+$rootScope.Variables.city_name+'?startdate=2016-03-15&sort=-1&limit=100&list_issue=1&image_field=1',
         {}, {
@@ -59,7 +59,7 @@ appServices.factory('DisplayLast100IssuesService', function ( $resource, APIEndP
     });
 });
 
-appServices.factory('BugService', function ( $resource, APIEndPointService) {
+appServices.factory('BugService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     return $resource(
         APIEndPointService.bugzilla,
         null,
@@ -73,7 +73,7 @@ appServices.factory('BugService', function ( $resource, APIEndPointService) {
     );
 });
 
-appServices.factory('FixedPointsService', function ( $resource, APIEndPointService, $rootScope) {
+appServices.factory('FixedPointsService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     return $resource(
         'json/'+$rootScope.Variables.city_name+'.json',
         null,
