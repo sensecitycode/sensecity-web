@@ -26,7 +26,7 @@ appServices.factory('Issue', function($resource/*, APIEndPointService*/ , $rootS
 
 appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointService*/ , $rootScope) {
     // console.log("DisplayIssues");
-    return $resource(/*APIEndPointService.APIURL,*/$rootScope.Variables.APIURL+$rootScope.Variables.city_name
+    return $resource(/*APIEndPointService.APIURL,*/$rootScope.Variables.APIURL+$rootScope.Variables.city_name,
         {}, {
         update: {
           method: 'GET'
