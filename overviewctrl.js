@@ -457,12 +457,7 @@ appControllers
 															});
 										});
 										// query() returns all the last 6
-										// issues
-										
-									leafletData.getMap().then(function(map) {
-											L.control.layers( baseLayers , overlays).addTo(map);
-									    	map.invalidateSize(true);
-										});
+										// issues									
 									
 									$scope.lastissues = theLastIssues;
 							};
@@ -560,7 +555,7 @@ appControllers
 										markersGarbage.addLayers( $scope.fixedmarkersGarbage );										
 										leafletData.getMap().then(function(map) {
 											map.addLayer(markersGarbage);
-																					
+											
 										});
 
 										  
