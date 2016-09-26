@@ -126,8 +126,8 @@ appControllers
 									shape: 'square'
 								}
 							};
-
-							$scope.patras = {
+							
+							$scope.map_center = {
 								lat : $rootScope.Variables.lat_center,
 								lng : $rootScope.Variables.long_center,
 								zoom : $rootScope.Variables.map_zoom

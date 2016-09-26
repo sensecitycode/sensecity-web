@@ -5,8 +5,9 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http', 'APIEndPointService',
                                             function($scope, $rootScope, $log, $location, leafletData, Issue, $translate, $http, APIEndPointService) {
 	$log.debug('inside scWebSubmit controller');
+
 	
-	$scope.patras = {
+	$scope.map_center = {
 			lat : $rootScope.Variables.lat_center,
 			lng : $rootScope.Variables.long_center,
 			zoom : $rootScope.Variables.map_zoom
