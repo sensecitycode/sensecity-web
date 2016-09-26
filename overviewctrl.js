@@ -466,7 +466,7 @@ appControllers
 								var problemsParam =
 								{
 										"method": "Bug.search",
-										"params": [{"product": APIEndPointService.citykey,"order":"bug_id DESC","status":["CONFIRMED","IN_PROGRESS","RESOLVED"],"resolution":["---","FIXED"],"f1":"creation_ts","o1":"greaterthan","v1":"2016-01-01","include_fields":["id"]}],
+										"params": [{"product": $rootScope.Variables.bugzilla_products,"order":"bug_id DESC","status":["CONFIRMED","IN_PROGRESS","RESOLVED"],"resolution":["---","FIXED"],"f1":"creation_ts","o1":"greaterthan","v1":"2016-01-01","include_fields":["id"]}],
 										"id": 1
 								};
 								BugService.search(problemsParam, function(result) {
@@ -476,7 +476,7 @@ appControllers
 								var solutionsParam =
 								{
 										"method": "Bug.search",
-										"params": [{"product": APIEndPointService.citykey,"order":"bug_id DESC","status":"RESOLVED","resolution": "FIXED","f1":"resolution","o1":"changedafter","v1":"2016-01-01","include_fields":["id"]}],
+										"params": [{"product": $rootScope.Variables.bugzilla_products,"order":"bug_id DESC","status":"RESOLVED","resolution": "FIXED","f1":"resolution","o1":"changedafter","v1":"2016-01-01","include_fields":["id"]}],
 										"id": 1
 								};
 								BugService.search(solutionsParam, function(result) {
