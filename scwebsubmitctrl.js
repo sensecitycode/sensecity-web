@@ -202,7 +202,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			return $http(
 					{
 						method : 'POST',
-						url : APIEndPointService.APIURL,
+						url : $rootScope.Variables.APIURL,
 						headers : {
 							'Content-Type' : 'application/json; charset=utf-8'
 						},
