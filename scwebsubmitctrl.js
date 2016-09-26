@@ -6,7 +6,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
                                             function($scope, $rootScope, $log, $location, leafletData, Issue, $translate, $http, APIEndPointService) {
 	$log.debug('inside scWebSubmit controller');
 	
-	$scope.patras = {
+	$scope.city_center = {
 			lat : $rootScope.Variables.lat_center,
 			lng : $rootScope.Variables.long_center,
 			zoom : $rootScope.Variables.map_zoom

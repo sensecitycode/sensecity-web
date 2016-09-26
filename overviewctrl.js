@@ -127,7 +127,7 @@ appControllers
 								}
 							};
 
-							$scope.patras = {
+							$scope.city_center = {
 								lat : $rootScope.Variables.lat_center,
 								lng : $rootScope.Variables.long_center,
 								zoom : $rootScope.Variables.map_zoom
