@@ -13,7 +13,7 @@ appServices.factory('APIEndPointService', function() {
 
 //Issue Resource
 appServices.factory('Issue', function($resource/*, APIEndPointService*/ , $rootScope) {
-	return $resource(/*APIEndPointService.ALLISSUESAPIURL*/$rootScope.Variables.ALLISSUESAPIURL+"/:id", 
+	return $resource(/*APIEndPointService.ALLISSUESAPIURL*/$rootScope.Variables.ALLISSUESAPIURL+"/:id",
 		{id : "@id"	}, {
 		"update" : {
 			method : "PUT"
@@ -34,6 +34,13 @@ appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointS
     });
 });
 
+//single full issue (with image) via ID
+appServices.factory('Issue2MapService', function ( $resource/*, APIEndPointService*/ , $rootScope) {
+    // console.log("DisplayIssues");
+    return $resource(/*APIEndPointService.APIURL,*/'http://api.sense.city:3000/api/fullissue/:issueID',
+        {issueID:'@id'}
+			);
+});
 
 appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
@@ -85,4 +92,3 @@ appServices.factory('FixedPointsService', function ( $resource/*, APIEndPointSer
         }
     );
 });
-

@@ -16,7 +16,7 @@ appControllers.directive('sidebarDirective', function() {
     };
 });
 
-appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q', 'APIEndPointService', 'DisplayIssuesService', 'leafletData', function($scope, $rootScope, $q, APIEndPointService, DisplayIssuesService, leafletData) {
+appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q', 'APIEndPointService', 'DisplayIssuesService', 'Issue2MapService', 'leafletData', function($scope, $rootScope, $q, APIEndPointService, DisplayIssuesService, Issue2MapService, leafletData) {
 
   $scope.state = true;
   $scope.toggleState = function() {
@@ -132,7 +132,33 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
 			    }
 			);
 	 };
-	 
+
+   $scope.$on("leafletDirectiveMarker.click", function(event, args){
+    var marker3 = args.leafletObject;
+    var popup = marker3.getPopup();
+    // marker3.bindPopup("Loading...");
+    Issue2MapService.get({issueID:marker3.options.issue_id}, function(resp) {
+      switch(resp.issue){
+        case "garbage":
+          issue_name = "Πρόβλημα Καθαριότητας";
+          break;
+        case "lighting":
+          issue_name = "Πρόβλημα Φωτισμού";
+          break;
+        case "plumbing":
+          issue_name = "Πρόβλημα Ύδρευσης";
+          break;
+        case "road-contructor":
+          issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου";
+          break;
+        default:
+          break;
+      }
+      popup.setContent("<center><b>"+issue_name+"</b><br>"+resp.value_desc+"<br><img src="+resp.image_name+" style=height:200px><br><a href=http://sense.city/issuemap.php?issue_id="+resp._id+">Εξέλιξη προβλήματος!</a></center>");
+      popup.update();
+    });
+  });
+
   $scope.submit = function() {
       $scope.startdate = $scope.startISOdate.getFullYear()+'-' + ($scope.startISOdate.getMonth()+1) + '-'+$scope.startISOdate.getDate();
       $scope.enddate = $scope.endISOdate.getFullYear()+'-' + ($scope.endISOdate.getMonth()+1) + '-'+$scope.endISOdate.getDate();
@@ -142,7 +168,7 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
               problem = "road-contructor";
           }
           if (state === true){
-              paramsObj.push({startdate:$scope.startdate,enddate:$scope.enddate,issue:problem});
+              paramsObj.push({startdate:$scope.startdate,enddate:$scope.enddate,issue:problem,image_field:0});
           }
       });
 
@@ -177,7 +203,10 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
               }else{
                 message = 'Μη διαθέσιμη περιγραφή';
               }
-              var marker = {"layer":""+layer+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"message":""+message+"<br><a href="+issuelink+">Δες με!</a>"};
+              var marker = {"layer":""+layer+"","lat":+positionlat,"lng":+positionlon,"icon":icons[issue],"issue_id":issueid,/*"message":""+message+"<br><a href="+issuelink+">Δες με!</a>"*/};
+              if (layer!='reaction'){
+                marker.message = "Loading...";
+              }
               this.push(marker);
           }, $scope.markers);
       });

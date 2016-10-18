@@ -14,8 +14,8 @@ appControllers.directive('sidebarDirective', function() {
 	};
 });
 
-	 
-	
+
+
 
 appControllers
 		.controller(
@@ -26,6 +26,7 @@ appControllers
 						'$q', 'leafletData',
 						'APIEndPointService',
 						'DisplayIssuesService',
+						'Issue2MapService',
 						'DisplayLast6IssuesService',
 						'BugService',
 						'FixedPointsService',
@@ -35,6 +36,7 @@ appControllers
 						function($scope, $rootScope, $http, $q, leafletData,
 								APIEndPointService,
 								DisplayIssuesService,
+								Issue2MapService,
 								DisplayLast6IssuesService, BugService, FixedPointsService,
 								cfpLoadingBar,
 								$interval,
@@ -51,8 +53,8 @@ appControllers
 							};
 
 							//$http.get('config.json').success(function(response) {console.log(response["patras"][0]);});
-							
-							
+
+
 							$scope.calcValue30daysIssues = '0';
 							$scope.calcValue30daysEvents = '0';
 							$scope.calcValueProblemsFrom2016 = '0';
@@ -126,14 +128,14 @@ appControllers
 									shape: 'square'
 								}
 							};
-							
+
 							$scope.map_center = {
 								lat : $rootScope.Variables.lat_center,
 								lng : $rootScope.Variables.long_center,
 								zoom : $rootScope.Variables.map_zoom
 							};
-							
-							
+
+
 							$scope.openStreetMap = {
 										name : 'OpenStreetMap',
 										type : 'xyz',
@@ -144,42 +146,42 @@ appControllers
 											maxZoom: 19
 										}
 									};
-									
-							  
-							
-							
+
+
+
+
 							//We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
-							
+
 							var googleRoadmap = {
 										name : 'Google Map + Traffic',
 										layerType: 'ROADMAP',
-										type : 'google',	
+										type : 'google',
 										layerOptions : {
 											showOnSelector : true,
 											attribution : 'xxx',
 											maxZoom: 20
-										}										
+										}
 							};
-							
+
 							var googleHybrid = {
 										name : 'Google Hybrid + Traffic',
 										layerType: 'HYBRID',
-										type : 'google',	
+										type : 'google',
 										layerOptions : {
 											showOnSelector : true,
 											attribution : 'xxx',
 											maxZoom: 20
-										}										
+										}
 							};
-							
-							
-							
+
+
+
 							$scope.layers = {
 								baselayers : {
 									openStreetMap: $scope.openStreetMap,
 									gR: googleRoadmap,
 									gH: googleHybrid
-									
+
 								},
 								overlays : {
 									garbage : {
@@ -209,15 +211,40 @@ appControllers
 									}
 								}
 							};
-							
+
 							$scope.$on('leafletDirectiveMap.overlayadd', function(event, o){
 									console.log( "overlayadd event " );
 									console.log( o.leafletEvent );
 									console.log( o.leafletEvent.layer );
-									
+
 							});
-								
-							
+
+							$scope.$on("leafletDirectiveMarker.click", function(event, args){
+					     var marker3 = args.leafletObject;
+					     var popup = marker3.getPopup();
+					     // marker3.bindPopup("Loading...");
+					     Issue2MapService.get({issueID:marker3.options.issue_id}, function(resp) {
+					       switch(resp.issue){
+					         case "garbage":
+					           issue_name = "Πρόβλημα Καθαριότητας";
+					           break;
+					         case "lighting":
+					           issue_name = "Πρόβλημα Φωτισμού";
+					           break;
+					         case "plumbing":
+					           issue_name = "Πρόβλημα Ύδρευσης";
+					           break;
+					         case "road-contructor":
+					           issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου";
+					           break;
+					         default:
+					           break;
+					       }
+					       popup.setContent("<center><b>"+issue_name+"</b><br>"+resp.value_desc+"<br><img src="+resp.image_name+" style=height:200px><br><a href=http://sense.city/issuemap.php?issue_id="+resp._id+">Εξέλιξη προβλήματος!</a></center>");
+					       popup.update();
+					     });
+					   });
+
 
 							var startdate = new Date();
 							startdate.setDate(startdate.getDate() - $scope.lastdatesToCheck);
@@ -243,22 +270,26 @@ appControllers
 								paramsObj.push({
 									startdate : $scope.startdate,
 									enddate : $scope.enddate,
-									issue : "garbage"
+									issue : "garbage",
+									image_field:0
 								});
 								paramsObj.push({
 									startdate : $scope.startdate,
 									enddate : $scope.enddate,
-									issue : "lighting"
+									issue : "lighting",
+									image_field:0
 								});
 								paramsObj.push({
 									startdate : $scope.startdate,
 									enddate : $scope.enddate,
-									issue : "plumbing"
+									issue : "plumbing",
+									image_field:0
 								});
 								paramsObj.push({
 									startdate : $scope.startdate,
 									enddate : $scope.enddate,
-									issue : "road-contructor"
+									issue : "road-contructor",
+									image_field:0
 								});
 								paramsObj.push({
 									startdate : $scope.startdate,
@@ -268,7 +299,7 @@ appControllers
 								paramsObj.push({
 									startdate : $scope.startdate,
 									enddate : $scope.enddate,
-									issue : "nutral"
+									issue : "neutral"
 								});
 								paramsObj.push({
 									startdate : $scope.startdate,
@@ -329,19 +360,23 @@ appControllers
 																			"lat" : +positionlat,
 																			"lng" : +positionlon,
 																			"icon" : icons[issue],
-																			"message" : ""
-																					+ message
-																					+ "<br><a href="
-																					+ issuelink
-																					+ ">Δες με!</a>"
+																			// "message" : ""
+																			// 		+ message
+																			// 		+ "<br><a href="
+																			// 		+ issuelink
+																			// 		+ ">Δες με!</a>"
+																			"issue_id":issueid
 																		};
+																		if (layer!='reaction'){
+											                marker.message = "Loading...";
+											              }
 																		this
 																				.push(marker);
 																	},
 																	$scope.markers);
-													
+
 													//$scope.markers = $scope.markers.concat( $scope.fixedmarkersLazyLoaded );
-													
+
 													$scope.calcValue30daysIssues = calclast30daysIssues;
 													$scope.calcValue30daysEvents = calclast30daysEvents;
 												});
@@ -429,7 +464,7 @@ appControllers
 																	datediff =  Math
 																					.floor(seconds / 86400);
 																	datediffunit = "DAYS";
-																	
+
 																}
 																lastissue.create_at = datediff;
 																lastissue.create_at_unit = datediffunit;
@@ -485,19 +520,19 @@ appControllers
 
 							};
 							console.log("city_name11 : " + $rootScope.Variables.city_name);
-							
+
 							$scope.displayFixedPoints = function() {
-								
+
 								console.log("city_name : " + $rootScope.Variables.city_name);
-								
+
 								var i =0;
 								var theFixedPoints = FixedPointsService.query(function() {
 											angular.forEach( theFixedPoints, function(fixedpoint, key) {
 												var positionlat = fixedpoint.loc.coordinates[1];
 												var positionlon = fixedpoint.loc.coordinates[0];
 												i ++;
-												
-												if (fixedpoint.type === 'garbage') 
+
+												if (fixedpoint.type === 'garbage')
 												{
 													var garbageIcon = 'cyanGarbageBin'
 													var titlenote= "κάδος ανακύκλωσης";
@@ -505,90 +540,90 @@ appControllers
 														garbageIcon = 'greenGarbageBin';
 														titlenote= "κάδος σκουπιδιών";
 													}
-													
-													
+
+
 													var marker = new L.marker([ positionlat, positionlon ] , {
 																icon:  L.ExtraMarkers.icon( icons[garbageIcon] ),
 																title: titlenote
 															});
-													
-													
+
+
 													$scope.fixedmarkersGarbage.push(marker);
-													
+
 												}
-												
-												if (fixedpoint.type === 'fotistiko') 
+
+												if (fixedpoint.type === 'fotistiko')
 												{
 													var fixedLIcon = 'fixedLightning'
 													var titlenote= "φωτιστικό στοιχείο";
-													
+
 													var marker = new L.marker([ positionlat, positionlon ] , {
 																icon:  L.ExtraMarkers.icon( icons[fixedLIcon] ),
 																title: titlenote
 															});
-													
-													
+
+
 													$scope.fixedmarkersLightning.push(marker);
-													
+
 												}
-												
-											
-											
+
+
+
 											});
-									
-										
+
+
 										var markersGarbage = L.markerClusterGroup( {
 													name : 'Κάδοι',
 													visible : true,
-													
+
 													disableClusteringAtZoom : 19,
 													animateAddingMarkers : false,
 													spiderfyDistanceMultiplier: true,
 													singleMarkerMode: false,
 													showCoverageOnHover: true,
 													chunkedLoading: true
-													
+
 												} );
-										
-										
-												
-										markersGarbage.addLayers( $scope.fixedmarkersGarbage );										
+
+
+
+										markersGarbage.addLayers( $scope.fixedmarkersGarbage );
 										leafletData.getMap().then(function(map) {
 											map.addLayer(markersGarbage);
-																					
+
 										});
 
-										  
-										  
+
+
 										 var markersLightning = L.markerClusterGroup( {
 													name : 'Φωτισμός',
 													visible : true,
-													
+
 													disableClusteringAtZoom : 19,
 													animateAddingMarkers : false,
 													spiderfyDistanceMultiplier: true,
 													singleMarkerMode: false,
 													showCoverageOnHover: true,
 													chunkedLoading: true
-													
+
 										} );
-										
+
 
 										markersLightning.addLayers( $scope.fixedmarkersLightning );
-										
+
 										leafletData.getMap().then(function(map) {
-											map.addLayer(markersLightning);											
+											map.addLayer(markersLightning);
 											//map.fitBounds(markers.getBounds());
 										});
-										
-										
-																				
+
+
+
 										var baseLayers = {
-											//'Open Street Map': osmLayer, 
-											//'Google Maps':googleRoadmap, 
-											//'Google Maps Satellite':googleHybrid, 
+											//'Open Street Map': osmLayer,
+											//'Google Maps':googleRoadmap,
+											//'Google Maps Satellite':googleHybrid,
 											//'Google Maps Traffic':googleTraffic
-													
+
 										};
 										var overlays = {
 											"<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>":  markersGarbage,
@@ -598,12 +633,12 @@ appControllers
 											L.control.layers( baseLayers , overlays).addTo(map);
 									    	map.invalidateSize(true);
 										});
-											
+
 								});
-							
-							
+
+
 							}
-							
+
 
 
 							$scope.doCalcLast6Issues();
@@ -616,9 +651,9 @@ appControllers
 							var updtime = 1 * 60 * 1000; // every 5 minutes
 							$interval($scope.doCalcLast6Issues, updtime);
 							$interval($scope.submitSearchLast30days, updtime);
-							
 
-							
-							
+
+
+
 
 } ]);
