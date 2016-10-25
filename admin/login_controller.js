@@ -34,7 +34,7 @@ app.controller('login_controller', ['$scope', '$window', '$http','$cookieStore',
         $scope.authenticate_us = function (event) {
             var parameter = JSON.stringify({username: $scope.username_l, password: $scope.password_l});
             console.log(parameter);
-            $http.post('http://localhost:4000/dashboard', parameter).success(
+            $http.post('http://api.sense.city:4000/dashboard', parameter).success(
                     function (response, status, headers, config) {
                         response = response.split(';');
                         if (response != "failure") {

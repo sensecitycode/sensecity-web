@@ -11,7 +11,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         $scope.valid = false;
 
         $scope.logout = function ($event) {
-            $http.get('http://localhost:4000/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
+            $http.get('http://api.sense.city:4000/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
                 $cookieStore.remove("uuid");
                 $cookieStore.remove("city");
                 $cookieStore.remove("role");
@@ -480,7 +480,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             };
 
             $scope.refresh = function () {
-                $http.get('http://localhost:4000/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
+                $http.get('http://api.sense.city:4000/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
                         function (response) {
                             if (response == "failure") {
                                 $scope.valid = false;
