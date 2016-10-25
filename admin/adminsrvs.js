@@ -2,8 +2,8 @@ var appServices = angular.module('adminapp.adminsrvs', []);
 
 appServices.factory('EndPointService', function() {
 	  return {
-		  bugzillaURL: "http://api.sense.city:3001/bugs/search",
-			APIURL: "http://api.sense.city:3000"
+		  bugzillaURL: "http://api.sense.city:4001/bugs/search",
+			APIURL: "http://api.sense.city:4000"
 	  };
 });
 
@@ -15,7 +15,8 @@ appServices.factory('BugService', function ( $resource, EndPointService) {
           search: {
             method: 'POST',
             headers:{'Content-Type':'application/json'},
-            isArray: true
+            isArray: true,
+            withCredentials: false
           }
         }
     );

@@ -11,6 +11,7 @@
 
         <!-- angular dep -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js"></script>
+        
         <script src="https://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js"></script>
@@ -31,20 +32,29 @@
         <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
 
         <!-- Map dependancies -->
-        <script src="../js/leaflet.js"></script>
-        <script src="../js/angular-simple-logger.js"></script>
-        <script src="../js/ui-leaflet.min.js"></script>
-        <script src="../js/leaflet.awesome-markers.js"></script>
-        <script src="../js/leaflet.extra-markers.min.js"></script>
-        <link rel="stylesheet" href="../css/leaflet.css" />
-        <link rel="stylesheet" href="../css/leaflet.awesome-markers.css">
-        <link rel="stylesheet" href="../css/leaflet.extra-markers.min.css">
+        <script src="./js/leaflet.js"></script>
+        <script src="./js/angular-simple-logger.js"></script>
+        <script src="./js/ui-leaflet.min.js"></script>
+        <script src="./js/leaflet.awesome-markers.js"></script>
+        <script src="./js/leaflet.extra-markers.min.js"></script>
+        <link rel="stylesheet" href="./css/leaflet.css" />
+        <link rel="stylesheet" href="./css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="./css/leaflet.extra-markers.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-cookies.js"></script>
     </head>
     <body ng-app="adminapp" ng-controller="adminController" ng-init="">
+        <div ng-show="valid">
+                <div style="position:absolute;left:68%;top:1.6%;width:23%;text-align:right">
+                      <span ng-bind="usrname + ' / '"></span>
+                      <span style="position:relative;left:0.05%" ng-bind="usrrole"></span>                    
+                </div>
+                <button ng-click="logout($event)" style="position:absolute;left:92.5%;top:1%;outline:none" type="button" class="btn btn-default btn-sm">
+                      <span class="glyphicon glyphicon-log-out"></span> Log out
+                </button>
 		<div bs-active-pane="tabs.activeTab" bs-tabs ng-click="refresh()">
 			<div ng-repeat="tab in tabs" data-title="{{ tab.title }}" name="{{ tab.title }}" ng-bind="tab.content"  bs-pane></div>
-		</div>
+		</div>               
 		<hr />
 
 		<center>
@@ -93,18 +103,23 @@
 								<div>
 									<span class="title">Κατάσταση: </span>
 									<button type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in statuses" data-animation="am-flip-x" data-placement="bottom" bs-select></button>
+                                                                    
 									<button type="button" ng-show="selectedStatus.en=='RESOLVED'" class="btn btn-default" ng-model="selectedResolution" data-html="1" data-toggle="true" bs-options="resolution.gr for resolution in resolutions" data-animation="am-flip-x" data-placement="bottom"  bs-select></button>
+                                                                        <div style="position:relative;top:5px" ng-show="selectedStatus.en=='RESOLVED' && selectedResolution.en =='DUPLICATE'">
+                                                                            <span class="title">Διπλότυπο πρόβλημα: </span>
+                                                                            <input type="text" ng-model="duplicof" ng-blur="dupli_change($event,duplicof)">
+                                                                        </div>
 									  <div ng-show="selectedStatus.en=='IN_PROGRESS'">
-										<span class="title" >Ανάθεση σε: </span>
-										<button type="button" class="btn btn-default" ng-model="selectedComponent" data-html="1" data-toggle="true" bs-options="component for component in components" data-animation="am-flip-x" data-placement="bottom"  bs-select></button>
+										<span ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" class="title" >Ανάθεση σε: </span>
+										<button ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" type="button" class="btn btn-default" ng-model="selectedComponent" data-html="1" data-toggle="true" bs-options="component for component in components" data-animation="am-flip-x" data-placement="bottom"  bs-select></button>                                                                               
 									  </div>
 								</div>
-								<div>
+								<div style="position:relative;top:5px">
 									<span class="title" >Σχόλια: </span>
 									<input ng-disabled="selectedStatus.en=='CONFIRMED'" type="text" class="form-control" ng-model="comment" placeholder="περιγραφή ...">
 								</div>
-								<div class="btn btn-success" ng-show="panel.admin" ng-click="submit(panel,selectedStatus,selectedResolution,comment,selectedComponent)" ><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</div>
-								<div class="btn btn-danger" ng-show="panel.admin" ng-click="resetPanel(panel)" ><span class="glyphicon glyphicon-remove"></span> Ακύρωση</div>
+								<div style="position:relative;top:5px" class="btn btn-success" ng-show="panel.admin" ng-click="submit(panel,selectedStatus,selectedResolution,comment,selectedComponent)" ><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</div>
+								<div style="position:relative;top:5px" class="btn btn-danger" ng-show="panel.admin" ng-click="resetPanel(panel)" ><span class="glyphicon glyphicon-remove"></span> Ακύρωση</div>
 							</form>
 							<br />
 							<hr />
@@ -128,5 +143,9 @@
         </leaflet>
 			</div>
 		</div>
+        </div>
+        <div ng-show="!valid">
+            Forbidden
+        </div>
     </body>
 </html>
