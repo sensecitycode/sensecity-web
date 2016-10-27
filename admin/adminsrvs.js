@@ -1,20 +1,25 @@
 var appServices = angular.module('adminapp.adminsrvs', []);
 
+//appServices.run([
+//  '$cookieStore',
+//  function($cookieStore) {
+//  }]);
+
 appServices.factory('EndPointService', function() {
 	  return {
-		  bugzillaURL: "http://api.sense.city:4001/bugs/search",
+		  bugzillaURL: "http://api.sense.city:4000/admin/bugs/search",
 			APIURL: "http://api.sense.city:4000"
 	  };
 });
 
-appServices.factory('BugService', function ( $resource, EndPointService) {
+appServices.factory('BugService', function ( $resource,$cookieStore, EndPointService) {
     return $resource(
         EndPointService.bugzillaURL,
         null,
         {
           search: {
             method: 'POST',
-            headers:{'Content-Type':'application/json'},
+            headers:{'Content-Type':'application/json','x-uuid': $cookieStore.get('uuid'),'x-role': $cookieStore.get('role')},
             isArray: true,
             withCredentials: false
           }

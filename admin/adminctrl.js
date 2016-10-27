@@ -18,7 +18,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $cookieStore.remove("department");
                 $cookieStore.remove("email");
                 $cookieStore.remove("username");
-                $window.location.href = "/admin/login.html";
+                $window.location.href = "/admin_login/";
             });
         }
 
@@ -111,6 +111,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             moment.locale('el');
 
             $scope.closedissues = false;
+            $scope.assignissues = false;
 
             if ($cookieStore.get("city") == "Patra") {
 
@@ -253,18 +254,36 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                 if ($scope.closedissues === false)
                 {
-                    if ($scope.role == "cityAdmin" || $scope.role == "sensecityAdmin") {
-                        params.status = ["CONFIRMED", "IN_PROGRESS"];
+                    if ($scope.assignissues === true) {
+                        if ($scope.role == "cityAdmin" || $scope.role == "sensecityAdmin") {
+                            params.status = ["CONFIRMED", "IN_PROGRESS"];
+                        } else {
+                            if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                                params.status = ["IN_PROGRESS"];
+                            }
+                        }
                     } else {
-                        if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
-                            params.status = ["IN_PROGRESS"];
+                        if ($scope.role == "cityAdmin" || $scope.role == "sensecityAdmin") {
+                            params.status = ["CONFIRMED"];
+                        } else {
+                            if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                                params.status = ["IN_PROGRESS"];
+                            }
                         }
                     }
                 } else {
-                    if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
-                        params.status = ["RESOLVED", "IN_PROGRESS"];
+                    if ($scope.assignissues === true) {
+                        if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                            params.status = ["RESOLVED", "IN_PROGRESS"];
+                        } else {
+                            params.status = ["CONFIRMED", "IN_PROGRESS", "RESOLVED"];
+                        }
                     } else {
-                        params.status = ["CONFIRMED", "IN_PROGRESS", "RESOLVED"];
+                        if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                            params.status = ["RESOLVED", "IN_PROGRESS"];
+                        } else {
+                            params.status = ["CONFIRMED", "RESOLVED"];
+                        }
                     }
                 }
                 // console.log(params);
@@ -414,7 +433,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 console.log($scope.comment);
             };
 
-            $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent) {
+            $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, e) {
                 if ($cookieStore.get("uuid") != undefined) {
                     panel.status = seldstatus;
                     if (panel.status.en == "RESOLVED")
@@ -443,6 +462,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     {
                         if (panel.resolution.en == "DUPLICATE") {
                             obj = {"ids": panel.id, "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "resolution": panel.resolution.en, "dupe_of": $scope.duplicof};
+                        } else {
+                            obj = {"ids": panel.id, "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component};
                         }
                     } else {
                         obj = {"ids": panel.id, "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component};
@@ -470,12 +491,31 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         var panelTitle = ToGrService.statusTitle(seldstatus.en, seldResolution.en);
                         panel.style = panelTitle.status_style;
                         panel.icon = panelTitle.status_icon;
+                        if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                            if (panel.status.en !== "IN_PROGRESS") {
+                                setTimeout(function () {
+                                    $(e.target).parent().parent().parent().parent().remove();
+                                }, 3000);
+                            }
+                        } else {
+                            if (panel.status.en !== "CONFIRMED") {
+                                setTimeout(function () {
+                                    $(e.target).parent().parent().parent().parent().remove();
+                                }, 3000);
+                            }
+                        }
                         console.log("Result:");
                         console.log(result);
                         // $scope.refresh();
                     });
                 } else {
                     $scope.valid = false;
+                    $cookieStore.remove("uuid");
+                    $cookieStore.remove("city");
+                    $cookieStore.remove("role");
+                    $cookieStore.remove("department");
+                    $cookieStore.remove("email");
+                    $cookieStore.remove("username");
                 }
             };
 
@@ -506,18 +546,36 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     // console.log(params);
                     if ($scope.closedissues === false)
                     {
-                        if ($scope.role == "cityAdmin" || $scope.role == "sensecityAdmin") {
-                            params.status = ["CONFIRMED", "IN_PROGRESS"];
+                        if ($scope.assignissues === true) {
+                            if ($scope.role == "cityAdmin" || $scope.role == "sensecityAdmin") {
+                                params.status = ["CONFIRMED", "IN_PROGRESS"];
+                            } else {
+                                if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                                    params.status = ["IN_PROGRESS"];
+                                }
+                            }
                         } else {
-                            if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
-                                params.status = ["IN_PROGRESS"];
+                            if ($scope.role == "cityAdmin" || $scope.role == "sensecityAdmin") {
+                                params.status = ["CONFIRMED"];
+                            } else {
+                                if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                                    params.status = ["IN_PROGRESS"];
+                                }
                             }
                         }
                     } else {
-                        if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
-                            params.status = ["RESOLVED", "IN_PROGRESS"];
+                        if ($scope.assignissues === true) {
+                            if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                                params.status = ["RESOLVED", "IN_PROGRESS"];
+                            } else {
+                                params.status = ["CONFIRMED", "IN_PROGRESS", "RESOLVED"];
+                            }
                         } else {
-                            params.status = ["CONFIRMED", "IN_PROGRESS", "RESOLVED"];
+                            if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                                params.status = ["RESOLVED", "IN_PROGRESS"];
+                            } else {
+                                params.status = ["CONFIRMED", "RESOLVED"];
+                            }
                         }
                     }
                     // console.log(params);
@@ -576,6 +634,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 ;
             }
         } else {
-            $scope.valid = false;
+            $cookieStore.remove("uuid");
+            $cookieStore.remove("city");
+            $cookieStore.remove("role");
+            $cookieStore.remove("department");
+            $cookieStore.remove("email");
+            $cookieStore.remove("username");
         }
     }]);

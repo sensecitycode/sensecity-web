@@ -7,9 +7,9 @@
 <!-- THIS IS FOR Proper scaling on iPad :-) -->
 <meta name="description" content="sense.city" />
 
-<link rel="stylesheet" href="../css/scapp.css" />
-<link rel="stylesheet" href="../css/sidebar.css">
-<link rel="stylesheet" href="../css/ionicons.min.css" />
+<link rel="stylesheet" href="css/scapp.css" />
+<link rel="stylesheet" href="css/sidebar.css">
+<link rel="stylesheet" href="css/ionicons.min.css" />
 <!-- angular dep -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
@@ -21,6 +21,15 @@
 
 <link rel="stylesheet" type="text/css"
           href="https://fonts.googleapis.com/css?family=Tangerine">
+<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script>
+    $(document).keypress(function(event){
+	var keycode = (event.keyCode ? event.keyCode : event.which);
+	if(keycode == '13'){
+		$(".login_btn").click();
+	}
+});
+ </script>   
 
 </head>
 <body style="background-color:white" ng-app="login_fo" ng-controller="login_controller">
