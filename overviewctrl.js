@@ -223,6 +223,7 @@ appControllers
 					     var marker3 = args.leafletObject;
 					     var popup = marker3.getPopup();
 					     // marker3.bindPopup("Loading...");
+							 var issue_name;
 					     Issue2MapService.get({issueID:marker3.options.issue_id}, function(resp) {
 					       switch(resp.issue){
 					         case "garbage":
