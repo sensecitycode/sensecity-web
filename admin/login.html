@@ -51,7 +51,7 @@
         <form  method="post">
             <div><span ng-style="admin_user" class="fontawesome-user"></span><input ng-model="username_l" ng-focus="user_focus($event)" ng-blur="user_blur($event,username_l)" type="text" ng-value="username_l" onblur="if(this.value == '') this.value = 'Username'" onfocus="if(this.value == 'Username') this.value = ''" required=""></div> <!-- JS because of IE support; better: placeholder="Username" -->
             <div><span ng-style="lock" class="fontawesome-lock"></span><input ng-model="password_l" ng-focus="lock_focus($event)" ng-blur="lock_blur($event,password_l)" type="password" ng-value="password_l" onblur="if(this.value == '') this.value = 'Password'" onfocus="if(this.value == 'Password') this.value = ''" required=""></div> <!-- JS because of IE support; better: placeholder="Password" -->
-            <div style="position:relative;display:table;width:71%"><div ng-click="authenticate_us($event)" class="login_btn">Login</div></div>
+            <div style="position:relative;display:table;width:71%"><div ng-click="authenticate_us($event)" class="login_btn"><center>Login</center></div></div>
         </form>
       </div>
 </center>
