@@ -137,6 +137,7 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
     var marker3 = args.leafletObject;
     var popup = marker3.getPopup();
     // marker3.bindPopup("Loading...");
+    var issue_name;
     Issue2MapService.get({issueID:marker3.options.issue_id}, function(resp) {
       switch(resp.issue){
         case "garbage":
@@ -154,7 +155,7 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
         default:
           break;
       }
-      popup.setContent("<center><b>"+issue_name+"</b><br>"+resp.value_desc+"<br><img src="+resp.image_name+" style=height:200px><br><a href=http://sense.city/issuemap.php?issue_id="+resp._id+">Εξέλιξη προβλήματος!</a></center>");
+      popup.setContent("<center><b>"+issue_name+"</b><br>"+resp.value_desc+"<br><img src="+resp.image_name+" style=height:200px><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ resp._id+"\">Εξέλιξη προβλήματος!</a></center>");
       popup.update();
     });
   });
@@ -187,7 +188,7 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
            $scope.markers = [];
            angular.forEach(searchissues, function(value,key) {
               var issueid = value._id;
-              var issuelink = "http://sense.city/issuemap.php?issue_id="+issueid;
+              var issuelink = "http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ issueid;
               var positionlat = value.loc.coordinates[1];
               var positionlon = value.loc.coordinates[0];
               var issue = value.issue;
