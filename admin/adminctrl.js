@@ -18,7 +18,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $cookieStore.remove("department");
                 $cookieStore.remove("email");
                 $cookieStore.remove("username");
-                $window.location.href = "/admin_login/";
+                $window.location.href = "/admin/login.html";
             });
         }
 
