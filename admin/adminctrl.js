@@ -301,7 +301,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
                         var description = CommentService.field(value.status);
                         var id = value.id;
-                        var issuelink = "http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ value.alias;
+                        var issuelink = "http://"+$cookieStore.get("city")+".sense.city/scissuemap.html#?issue_id="+ value.alias;
                         var creation_time = value.creation_time;
                         var local_time = moment(creation_time).format('LLLL');
                         var time_fromNow = moment(creation_time).fromNow();
