@@ -6,53 +6,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+        
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <!-- END META SECTION -->
-
+        
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
-        <!-- EOF CSS INCLUDE -->               
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js"></script>
-        <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
-        <script src="https://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-motion/0.4.4/angular-motion.css" />
-
-        <!-- angular strap -->
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
-
-        <!-- Angular administrationapp dependancies -->
-        <script src="adminctrl.js"></script>
-        <script src="adminapp.js"></script>
-        <script src="adminsrvs.js"></script>
-
-        <!-- Moment Js Greek Locale Support -->
-        <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
-
-        <!-- Map dependancies -->
-        <script src="./js/leaflet.js"></script>
-        <script src="./js/angular-simple-logger.js"></script>
-        <script src="./js/ui-leaflet.min.js"></script>
-        <script src="./js/leaflet.awesome-markers.js"></script>
-        <script src="./js/leaflet.extra-markers.min.js"></script>
-        <link rel="stylesheet" href="./css/leaflet.css" />
-        <link rel="stylesheet" href="./css/leaflet.awesome-markers.css">
-        <link rel="stylesheet" href="./css/leaflet.extra-markers.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-cookies.js"></script>
-        <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
-        <script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
+        <!-- EOF CSS INCLUDE -->                                    
     </head>
-    <body ng-app="adminapp" ng-controller="adminController" ng-init="">
+    <body>
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
-
+            
             <!-- START PAGE SIDEBAR -->
             <div class="page-sidebar">
                 <!-- START X-NAVIGATION -->
@@ -102,7 +67,7 @@
                             <li><a href="pages-search.html"><span class="fa fa-search"></span> Search</a></li>
                             <li class="xn-openable">
                                 <a href="#"><span class="fa fa-file"></span> Blog</a>
-
+                                
                                 <ul>                                    
                                     <li><a href="pages-blog-list.html"><span class="fa fa-copy"></span> List of Posts</a></li>
                                     <li><a href="pages-blog-post.html"><span class="fa fa-file-o"></span>Single Post</a></li>
@@ -126,27 +91,14 @@
                             </li>                            
                         </ul>
                     </li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
-                    <li><div style="height:50px;visibility:hidden"></div></li>
                 </ul>
                 <!-- END X-NAVIGATION -->
             </div>
             <!-- END PAGE SIDEBAR -->
-
+            
             <!-- PAGE CONTENT -->
             <div class="page-content">
-
+                
                 <!-- START X-NAVIGATION VERTICAL -->
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
                     <!-- TOGGLE NAVIGATION -->
@@ -170,119 +122,74 @@
                     <li><a href="#">Home</a></li>                    
                     <li class="active">Dashboard</li>
                 </ul>
-
-
                 <!-- END BREADCRUMB -->                       
-
+                
                 <!-- PAGE CONTENT WRAPPER -->
-                <div class="col-md-12">
+                <!-- END PAGE CONTENT WRAPPER -->                                
+            </div>            
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTAINER -->
 
-                    <div style="width:42%" class="timeline">
-                        <div style="padding:0" class="content-frame-top">
-                        <center style="margin-bottom: 4%;margin-top: -1.6%">
-                            <h2 style="font-family:Open Sans, sans-serif;margin-bottom: 0px;font-size: 22px;">Επισκόπηση Προβλημάτων</h2>
-                        </center>
-                        </div>
-                        <div style="background-color:rgba(249, 249, 249, 0.53);float:right;width:100%;border-bottom:1px solid #DDD;padding-left:1%;padding-right:1.5%;padding-bottom:4%;padding-top:4%">
-                        <div style="width:106%;" class="timeline-item">
-                            <div class="timeline-item-content">
-                                <div class="timeline-body">
-
-                                </div>                                     
-
-                            </div>
-                        </div>  
-                        </div>    
+        <!-- MESSAGE BOX-->
+        <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
+                    <div class="mb-content">
+                        <p>Are you sure you want to log out?</p>                    
+                        <p>Press No if youwant to continue work. Press Yes to logout current user.</p>
                     </div>
-
-                    <div style="float:right;width:58%" class="col-md-6">                        
-                        <!-- START GOOGLE EUROPE MAP -->
-                        <div class="panel panel-default">
-                            <div class="panel-heading ui-draggable-handle">
-                                <h3 class="panel-title">Google Europe Map</h3>
-                                <ul class="panel-controls" style="margin-top: 2px;">
-                                    <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                                    <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>                                     
-                                </ul>
-                            </div>
-                            <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">
-                                <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel == -1">
-                                    <leaflet id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="550px" width="100%"  style="color:black;">
-                                    </leaflet>
-                                </div>
-                                <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel != -1">
-                                    <leaflet id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="550px" width="100%"  style="color:black;">
-                                    </leaflet>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END GOOGLE EUROPE MAP -->
-                    </div>
-                    <!-- END PAGE CONTENT WRAPPER -->                                
-                </div>            
-                <!-- END PAGE CONTENT -->
-            </div>
-            <!-- END PAGE CONTAINER -->
-
-            <!-- MESSAGE BOX-->
-            <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
-                <div class="mb-container">
-                    <div class="mb-middle">
-                        <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
-                        <div class="mb-content">
-                            <p>Are you sure you want to log out?</p>                    
-                            <p>Press No if youwant to continue work. Press Yes to logout current user.</p>
-                        </div>
-                        <div class="mb-footer">
-                            <div class="pull-right">
-                                <a href="pages-login.html" class="btn btn-success btn-lg">Yes</a>
-                                <button class="btn btn-default btn-lg mb-control-close">No</button>
-                            </div>
+                    <div class="mb-footer">
+                        <div class="pull-right">
+                            <a href="pages-login.html" class="btn btn-success btn-lg">Yes</a>
+                            <button class="btn btn-default btn-lg mb-control-close">No</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- END MESSAGE BOX-->
+        </div>
+        <!-- END MESSAGE BOX-->
 
-            <!-- START PRELOADS -->
-            <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
-            <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
-            <!-- END PRELOADS -->                  
+        <!-- START PRELOADS -->
+        <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
+        <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
+        <!-- END PRELOADS -->                  
+        
+    <!-- START SCRIPTS -->
+        <!-- START PLUGINS -->
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
+        <!-- END PLUGINS -->
 
-            <!-- START SCRIPTS -->
-            <!-- START PLUGINS -->
-            <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-            <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-            <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
-            <!-- END PLUGINS -->
+        <!-- START THIS PAGE PLUGINS-->        
+        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>        
+        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+        <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+        
+        <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
+        <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>       
+        <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
+        <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
+        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
+        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>                
+        <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>                 
+        
+        <script type="text/javascript" src="js/plugins/moment.min.js"></script>
+        <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
+        <!-- END THIS PAGE PLUGINS-->        
 
-            <!-- START THIS PAGE PLUGINS-->        
-            <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>        
-            <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
-            <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
-
-            <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
-            <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>       
-            <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
-            <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
-            <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
-            <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
-            <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>                
-            <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>                 
-
-            <script type="text/javascript" src="js/plugins/moment.min.js"></script>
-            <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
-            <!-- END THIS PAGE PLUGINS-->        
-
-            <!-- START TEMPLATE -->
-            <!--        <script type="text/javascript" src="js/settings.js"></script>-->
-
-            <script type="text/javascript" src="js/plugins.js"></script>        
-            <script type="text/javascript" src="js/actions.js"></script>
-
-            <script type="text/javascript" src="js/demo_dashboard.js"></script>
-            <!-- END TEMPLATE -->
-            <!-- END SCRIPTS -->         
+        <!-- START TEMPLATE -->
+<!--        <script type="text/javascript" src="js/settings.js"></script>-->
+        
+        <script type="text/javascript" src="js/plugins.js"></script>        
+        <script type="text/javascript" src="js/actions.js"></script>
+        
+        <script type="text/javascript" src="js/demo_dashboard.js"></script>
+        <!-- END TEMPLATE -->
+    <!-- END SCRIPTS -->         
     </body>
 </html>
 
