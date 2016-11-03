@@ -159,10 +159,10 @@ $(document).ready(function(){
     
     /* PANELS */
     
-    $(".panel-fullscreen").on("click",function(){
-        panel_fullscreen($(this).parents(".panel"));
-        return false;
-    });
+//    $(".panel-fullscreen").on("click",function(){
+//        panel_fullscreen($(this).parents(".panel"));
+//        return false;
+//    });
     
     $(".panel-collapse").on("click",function(){
         panel_collapse($(this).parents(".panel"));
