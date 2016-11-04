@@ -101,7 +101,7 @@ appServices.factory('ToGrService', function() {
 					switch(status){
 						case "CONFIRMED":
 							_status = "Ανοιχτό";
-							_style = {color:'red'};
+							_style = {color: '#e42c2c'};
 							_icon = "glyphicon glyphicon-exclamation-sign";
 							break;
 						case "IN_PROGRESS":

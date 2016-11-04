@@ -1636,6 +1636,11 @@ a.list-group-item:focus {
 .panel-group .panel-heading + .panel-collapse > .panel-body {
   border-top: 0px;
 }
+
+.line_spacing{
+    margin-bottom: 1%;
+}
+
 .panel-title > a {
   text-decoration: none;
 }
@@ -1940,8 +1945,9 @@ ul.panel-controls > li > .dropdown-menu:before {
 }
 /* END USER */
 /* BUTTONS */
-.btn {
-  font-size: 12px;
+.bton {
+  font-size: 13px;
+  color:white;
   padding: 4px 15px;
   line-height: 20px;
   font-weight: 400;
@@ -1992,8 +1998,8 @@ ul.panel-controls > li > .dropdown-menu:before {
   background-color: #a43f3e;
   border-color: #a43f3e;
 }
-.btn-danger[disabled],
-.btn-danger.disabled {
+.bton_prim_red[disabled],
+.bton_prim_red.disabled {
   background: #c66968;
   border-color: #c36261;
 }
@@ -2009,11 +2015,7 @@ ul.panel-controls > li > .dropdown-menu:before {
   background-color: #fe970a;
   border-color: #fe970a;
 }
-.btn-warning[disabled],
-.btn-warning.disabled {
-  background: #feb756;
-  border-color: #feb34c;
-}
+
 .btn-success {
   background-color: #95b75d;
   border-color: #95b75d;
@@ -2026,15 +2028,91 @@ ul.panel-controls > li > .dropdown-menu:before {
   background-color: #89ad4d;
   border-color: #89ad4d;
 }
-.btn-success[disabled],
-.btn-success.disabled {
+.bton_prim_green[disabled],
+.bton_prim_green.disabled {
   background: #acc780;
   border-color: #a7c479;
 }
-.btn-primary {
-  background-color: #1b1e24;
-  border-color: #1b1e24;
+
+.bton_prim_green {
+  background-color: #95d753;
+  border-color: #81c639;
+  width: 32%;
+  border-style: solid;
+  font-size: 13px;
+  color:white;
+  padding: 4px 15px;
+  line-height: 20px;
+  font-weight: 400;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
 }
+
+.bton_prim_green:hover {
+  background-color: #90c856;
+  border-color: #78b837;
+  cursor: pointer;
+}
+
+.bton_prim_red {
+  background-color: #e96866;
+  border-color: #c85d5c;
+  width: 32%;
+  border-style: solid;
+  font-size: 13px;
+  color:white;
+  padding: 4px 15px;
+  line-height: 20px;
+  font-weight: 400;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
+.bton_prim_red:hover {
+  background: #d96a69;
+  border-color: #b65251;
+  cursor: pointer;
+}
+
+.bton_prim_orange {
+  background-color: #1b1e24;
+  background-color:#f0ad4e;
+  width: 32%;
+  border-color:#eea236;
+  border-style: solid;
+  font-size: 13px;
+  color:white;
+  padding: 4px 15px;
+  line-height: 20px;
+  font-weight: 400;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
+.bton_prim_orange:hover {
+  background-color: #ec971f;
+  border-color: #d58512;
+  cursor: pointer;
+}
+
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
@@ -4003,6 +4081,16 @@ background: #1caf9a !important;
   margin-bottom: 20px;
   z-index: 2;
 }
+
+.timeline-item-active {
+  width: 50%;
+  float: left;
+  position: relative;
+  clear: both;
+  margin-bottom: 20px;
+  z-index: 2;
+}
+
 .timeline .timeline-item.timeline-main {
   height: 40px;
   width: 50%;
@@ -4025,10 +4113,31 @@ background: #1caf9a !important;
   width: 100px;
   box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.2);
 }
+
+ .issue_text{
+    font-family: Open Sans, sans-serif;
+  }
+  
+  .issue_text:hover{
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
 .timeline .timeline-item .timeline-date a {
   color: #1b1e24;
 }
 .timeline .timeline-item .timeline-item-content {
+  float: left;
+  background: #eeeeef;
+  border: 3px solid #FFF;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  width: 95%;
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.2);
+}
+
+.timeline .timeline-item-active .timeline-item-content {
   float: left;
   background: #eeeeef;
   border: 3px solid #FFF;
@@ -4074,7 +4183,18 @@ background: #1caf9a !important;
   width: 100%;
   float: left;
   padding: 10px;
+  left:5%;
+  position: relative;
 }
+
+.timeline .timeline-item-active .timeline-item-content .timeline-body {
+  width: 100%;
+  float: left;
+  padding: 10px;
+  left:5%;
+  position: relative;
+}
+
 .timeline .timeline-item .timeline-item-content .timeline-body.comments {
   padding: 0px;
 }

@@ -18,7 +18,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $cookieStore.remove("department");
                 $cookieStore.remove("email");
                 $cookieStore.remove("username");
-                $window.location.href = "/admin_login/";
+                $window.location.href = "/joli/index.html";
             });
         }
 
@@ -41,6 +41,27 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         authorizedu();
         username();
         userole();
+
+        $(".panel-fullscreen").on("click", function () {
+            panel_fullscreen($(this).parents(".panel"));
+            if ($scope.activePanel == -1) {
+                var map = leafletData.getMap("issuesmap").then(
+                        function (map) {
+
+                            map.invalidateSize(true);
+                        }
+
+                );
+            } else {
+                var map = leafletData.getMap("panelmap").then(
+                        function (map) {
+                            map.invalidateSize(true);
+                        }
+
+                );
+            }
+            return false;
+        });
         //-----------------------------------------------------------------------
 //        $scope.valid = true;
 //        $cookieStore.put('city','testweb');
@@ -53,6 +74,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             $scope.dupli_change = function ($event, dupl) {
                 $scope.duplicof = dupl;
             }
+
             if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
                 if ($cookieStore.get("role") == "departmentAdmin") {
                     $scope.role = "departmentAdmin";
@@ -233,7 +255,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 // console.log(args);
                 // console.log(args.model.panelid);
                 // console.log($scope.panels[args.model.panelid]);
-                $scope.activePanel = [args.model.panelid];
+                $scope.activePanel = args.model.panelid;
+                $scope.currentactive = args.model.panelid;
                 $scope.linkmap($scope.panels[args.model.panelid]);
             });
 
@@ -243,12 +266,26 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 // console.log(args);
                 // console.log(args.model.panelid);
                 // console.log($scope.panels[args.model.panelid]);
-                $scope.activePanel = [-1];
+                $scope.activePanel = -1;
+                $scope.currentactive = -1;
                 // $scope.linkmap($scope.panels[args.model.panelid]);
             });
 
             var pageload = function (callback) {
-           
+
+                $scope.activePanel = -1;
+                $scope.currentactive = -1;
+
+                $scope.itemClicked = function ($index) {
+                    if ($scope.currentactive != $index) {
+                        $scope.activePanel = $index;
+                        $scope.currentactive = $index;
+                    } else {
+                        $scope.activePanel = -1;
+                        $scope.currentactive = -1;
+                    }
+                };
+
                 var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
                 // console.log(issue_type);
                 var params = {"product": $cookieStore.get("city"), "order": "bug_id DESC", "include_fields": ["component", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution"]};
@@ -299,9 +336,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             "id": 1
                         };
                 // console.log(obj);
-                
+
                 BugService.search(obj, function (result) {
-                    
+
                     angular.forEach(result, function (value, key) {
                         var issue_name = ToGrService.issueName(value.summary);
                         var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
@@ -334,11 +371,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                         "comment": value[description],
                                         "initialdesc": value.url,
                                         "mongoId": value.alias
-                                    };       
+                                    };
                             this.push(panel);
                             Issue2MapService.get({issueID: panel.mongoId[0]}, function (issue) {
-                                // $scope.panel_image = issue.image_name;
-                                // $scope.center = {lat:issue.loc.coordinates[1],lng:issue.loc.coordinates[0],zoom:17};                                
+                                 $scope.panel_image = issue.image_name;
+                                 $scope.center = {lat:issue.loc.coordinates[1],lng:issue.loc.coordinates[0],zoom:17};                                
                                 $scope.ALLmarkers.push({"lat": issue.loc.coordinates[1], "lng": issue.loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                             });
                         }
@@ -524,6 +561,22 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $cookieStore.remove("username");
                 }
             };
+            
+            $scope.toggle_closedissues = function(){
+                if($scope.closedissues == false){
+                    $scope.closedissues = true;
+                }else{
+                    $scope.closedissues = false;
+                } 
+            };
+            
+            $scope.toggle_inprogressissues = function(){
+                if($scope.assignissues == false){
+                    $scope.assignissues = true;
+                }else{
+                    $scope.assignissues = false;
+                } 
+            };
 
             $scope.refresh = function () {
                 $http.get('http://localhost:8023/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
@@ -628,8 +681,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                         };
                                 this.push(panel);
                                 Issue2MapService.get({issueID: panel.mongoId[0]}, function (issue) {
-                                    // $scope.panel_image = issue.image_name;
-                                    // $scope.center = {lat:issue.loc.coordinates[1],lng:issue.loc.coordinates[0],zoom:17};
+                                     $scope.panel_image = issue.image_name;
+                                     $scope.center = {lat:issue.loc.coordinates[1],lng:issue.loc.coordinates[0],zoom:17};
                                     $scope.ALLmarkers.push({"lat": issue.loc.coordinates[1], "lng": issue.loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                 });
                             }
@@ -640,106 +693,106 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 ;
             }
         } else {
-            $scope.ALLcenter = {
-                lat: 37.7881600,
-                lng: 20.8090979,
-                zoom: 11
-            };
-
-
-            $scope.ALLmarkers = [];
-
-            $scope.center = {
-                lat: 37.7881600,
-                lng: 20.8090979,
-                zoom: 11
-            };
-
-            $scope.defaults = {
-                scrollWheelZoom: false
-            };
-
-            $scope.layers = {
-                baselayers: {
-                    openStreetMap: {
-                        name: 'OpenStreetMap',
-                        type: 'xyz',
-                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                        layerOptions: {
-                            showOnSelector: false,
-                            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-                        }
-                    }
-                }
-
-            };
-
-            var redMarker = {
-                type: 'awesomeMarker',
-                icon: 'info-circle',
-                prefix: 'fa',
-                markerColor: 'red'
-            };
-            var icons = {
-                garbage: {
-                    type: 'awesomeMarker',
-                    prefix: 'fa',
-                    icon: 'trash-o',
-                    markerColor: 'red',
-                    shape: 'square'
-
-                },
-                "road-contructor": {
-                    type: 'awesomeMarker',
-                    prefix: 'fa',
-                    icon: 'road',
-                    markerColor: 'red'
-                },
-                plumbing: {
-                    type: 'awesomeMarker',
-                    prefix: 'fa',
-                    icon: 'umbrella',
-                    markerColor: 'red'
-                },
-                lighting: {
-                    type: 'awesomeMarker',
-                    prefix: 'fa',
-                    icon: 'lightbulb-o',
-                    markerColor: 'red'
-                },
-                staticGarbage: {
-                    type: 'extraMarker',
-                    icon: 'fa-trash-o',
-                    prefix: 'fa',
-                    markerColor: 'green',
-                    shape: 'square'
-                },
-                staticGarbageRecycle: {
-                    type: 'extraMarker',
-                    prefix: 'fa',
-                    icon: 'fa-trash-o',
-                    markerColor: 'cyan',
-                    shape: 'square'
-                },
-                staticLighting: {
-                    type: 'extraMarker',
-                    prefix: 'fa',
-                    icon: 'fa-lightbulb-o',
-                    markerColor: 'yellow',
-                    shape: 'square'
-                }
-
-            };
-
-            $scope.$on("leafletDirectiveMarker.issuesmap.click", function (event, args) {
-                // Args will contain the marker name and other relevant information
-                // console.log("Leaflet Click");
-                // console.log(args);
-                // console.log(args.model.panelid);
-                // console.log($scope.panels[args.model.panelid]);
-                $scope.activePanel = [args.model.panelid];
-                $scope.linkmap($scope.panels[args.model.panelid]);
-            });
+//            $scope.ALLcenter = {
+//                lat: 37.7881600,
+//                lng: 20.8090979,
+//                zoom: 11
+//            };
+//
+//
+//            $scope.ALLmarkers = [];
+//
+//            $scope.center = {
+//                lat: 37.7881600,
+//                lng: 20.8090979,
+//                zoom: 11
+//            };
+//
+//            $scope.defaults = {
+//                scrollWheelZoom: false
+//            };
+//
+//            $scope.layers = {
+//                baselayers: {
+//                    openStreetMap: {
+//                        name: 'OpenStreetMap',
+//                        type: 'xyz',
+//                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+//                        layerOptions: {
+//                            showOnSelector: false,
+//                            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+//                        }
+//                    }
+//                }
+//
+//            };
+//
+//            var redMarker = {
+//                type: 'awesomeMarker',
+//                icon: 'info-circle',
+//                prefix: 'fa',
+//                markerColor: 'red'
+//            };
+//            var icons = {
+//                garbage: {
+//                    type: 'awesomeMarker',
+//                    prefix: 'fa',
+//                    icon: 'trash-o',
+//                    markerColor: 'red',
+//                    shape: 'square'
+//
+//                },
+//                "road-contructor": {
+//                    type: 'awesomeMarker',
+//                    prefix: 'fa',
+//                    icon: 'road',
+//                    markerColor: 'red'
+//                },
+//                plumbing: {
+//                    type: 'awesomeMarker',
+//                    prefix: 'fa',
+//                    icon: 'umbrella',
+//                    markerColor: 'red'
+//                },
+//                lighting: {
+//                    type: 'awesomeMarker',
+//                    prefix: 'fa',
+//                    icon: 'lightbulb-o',
+//                    markerColor: 'red'
+//                },
+//                staticGarbage: {
+//                    type: 'extraMarker',
+//                    icon: 'fa-trash-o',
+//                    prefix: 'fa',
+//                    markerColor: 'green',
+//                    shape: 'square'
+//                },
+//                staticGarbageRecycle: {
+//                    type: 'extraMarker',
+//                    prefix: 'fa',
+//                    icon: 'fa-trash-o',
+//                    markerColor: 'cyan',
+//                    shape: 'square'
+//                },
+//                staticLighting: {
+//                    type: 'extraMarker',
+//                    prefix: 'fa',
+//                    icon: 'fa-lightbulb-o',
+//                    markerColor: 'yellow',
+//                    shape: 'square'
+//                }
+//
+//            };
+//
+//            $scope.$on("leafletDirectiveMarker.issuesmap.click", function (event, args) {
+            // Args will contain the marker name and other relevant information
+            // console.log("Leaflet Click");
+            // console.log(args);
+            // console.log(args.model.panelid);
+            // console.log($scope.panels[args.model.panelid]);
+//                $scope.activePanel = [args.model.panelid];
+//                $scope.linkmap($scope.panels[args.model.panelid]);
+//            });
 
 //            angular.extend($scope, {events: {
 //                    map: {
@@ -753,35 +806,128 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 //
 //            });
 
-    $(".panel-fullscreen").on("click",function(){
-        panel_fullscreen($(this).parents(".panel"));
-        var map = leafletData.getMap("panelmap").then(
-                                function (map) {
-                                    map.invalidateSize(true);
-                                }
+//            $(".panel-fullscreen").on("click", function () {
+//                panel_fullscreen($(this).parents(".panel"));
+//                var map = leafletData.getMap("panelmap").then(
+//                        function (map) {
+//                            map.invalidateSize(true);
+//                        }
+//
+//                );
+//                return false;
+//            });
+//
+//            $scope.$on("leafletDirectiveMarker.panelmap.click", function (event, args) {
+            // Args will contain the marker name and other relevant information
+            // console.log("Leaflet Click");
+            // console.log(args);
+            // console.log(args.model.panelid);
+            // console.log($scope.panels[args.model.panelid]);
+            //               $scope.activePanel = [-1];
+            // $scope.linkmap($scope.panels[args.model.panelid]);
+            //           });
 
-                        );
-        return false;
-    });
+            //         $scope.$on("leafletDirectiveMarker.panelmap.click", function (event, args) {
+            // Args will contain the marker name and other relevant information
+            // console.log("Leaflet Click");
+            // console.log(args);
+            // console.log(args.model.panelid);
+            // console.log($scope.panels[args.model.panelid]);
+            // $scope.linkmap($scope.panels[args.model.panelid]);
+            //       });
 
-            $scope.$on("leafletDirectiveMarker.panelmap.click", function (event, args) {
-                // Args will contain the marker name and other relevant information
-                // console.log("Leaflet Click");
-                // console.log(args);
-                // console.log(args.model.panelid);
-                // console.log($scope.panels[args.model.panelid]);
-                $scope.activePanel = [-1];
-                // $scope.linkmap($scope.panels[args.model.panelid]);
-            });
+//            $scope.issues = ["Item 1", "Item 2"];
+//
+//            $scope.active = 0;
+//            $scope.currentactive = 0;
+//
+//            $scope.itemClicked = function ($index) {
+//                if ($scope.currentactive != $index) {
+//                    $scope.active = $index;
+//                    $scope.currentactive = $index;
+//                } else {
+//                    $scope.active = -1;
+//                    $scope.currentactive = -1;
+//                }
+//            };
+//            
+//             var panel =
+//                                    {
+//                                        "title": "dsa",
+//                                        "style": "dsa",
+//                                        "icon": "dsa",
+//                                        "time": "dsa",
+//                                        "issuelink": "dsa",
+//                                        "issuenameGR": "sda",
+//                                        "issuenameEN": "ds",
+//                                        "id": "sda",
+//                                        "status": "dsa",
+//                                        "new_status": "dsa",
+//                                        "resolution": "dsa",
+//                                        "new_resolution": "dsad",
+//                                        "component": "asasd",
+//                                        "admin": false,
+//                                        "ArrayID": "dsads",
+//                                        "comment": "dssad",
+//                                        "initialdesc": "dsasd",
+//                                        "mongoId": "dssad"
+//                                    };
+//            
+//            $scope.panels = [];
+//            
+//            $scope.panels.push(panel);
+//            
+//            $scope.admin = function (panel) {
+            // $scope.initResetPanel(panel);
+//                $scope.selectedStatus = null;
+//                $scope.selectedResolution = null;
+//                $scope.comment = null;
+            // console.log($scope.selectedStatus + $scope.selectedResolution + $scope.comment);
+            // console.log(panel);
+            //        panel.admin = true;
+            // $scope.multipleActivePanels = [panel.ArrayID];
 
-            $scope.$on("leafletDirectiveMarker.panelmap.click", function (event, args) {
-                // Args will contain the marker name and other relevant information
-                // console.log("Leaflet Click");
-                // console.log(args);
-                // console.log(args.model.panelid);
-                // console.log($scope.panels[args.model.panelid]);
-                // $scope.linkmap($scope.panels[args.model.panelid]);
-            });
+//                $scope.statuses = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Σε εκτέλεση", "en": "IN_PROGRESS"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
+//                $scope.resolutions = [{"gr": "Αποκατάσταση", "en": "FIXED"}, {"gr": "Εσφαλμένη Αναφορά", "en": "INVALID"}, {"gr": "Μη αποκατάσταση / Απόρριψη από Δήμο", "en": "WONTFIX"}, {"gr": "Έχει ήδη αναφερθεί σε άλλο αίτημα", "en": "DUPLICATE"}];
+            // $scope.components = [{"gr":"Ανοιχτό","en":"CONFIRMED"},{"gr":"Σε εκτέλεση","en":"IN_PROGRESS"},{"gr":"Ολοκληρωμένο","en":"RESOLVED"}];
+            //          $scope.components = ["Τμήμα επίλυσης προβλημάτων", "ΤΜΗΜΑ ΚΑΘΑΡΙΟΤΗΤΑΣ", "ΤΜΗΜΑ ΟΔΟΠΟΙΙΑΣ", "ΤΜΗΜΑ ΦΩΤΙΣΜΟΥ"];
+
+
+//                console.log("----------------------------------------------------");
+//                console.log(panel.status);
+//                $scope.selectedComponent = panel.component;
+//                $scope.selectedStatus = panel.status;
+//
+//                if (panel.resolution.gr !== undefined)
+//                {
+//                    $scope.selectedResolution = {"gr": panel.resolution.gr, "en": panel.resolution.en};
+//                } else {
+//                    $scope.selectedResolution = {"gr": "Αποκατάσταση", "en": "FIXED"};
+//                }
+//            };
+//
+//
+//
+//            $scope.initResetPanel = function (panel) {
+//                $scope.selectedStatus = null;
+//                $scope.selectedResolution = null;
+//            };
+//
+//            $scope.resetPanel = function (panel) {
+//                console.log("BEFORE:");
+//                console.log($scope.selectedStatus);
+//                console.log($scope.selectedResolution);
+//                console.log($scope.comment);
+//                panel.admin = false;
+//                $scope.selectedStatus = null;
+//                $scope.selectedResolution = null;
+//                $scope.comment = null;
+//
+//                console.log("AFTER:");
+//                console.log($scope.selectedStatus);
+//                console.log($scope.selectedResolution);
+//                console.log($scope.comment);
+//            };
 
             $cookieStore.remove("uuid");
             $cookieStore.remove("city");

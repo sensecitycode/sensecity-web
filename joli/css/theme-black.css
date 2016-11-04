@@ -4095,6 +4095,7 @@ td.dataTables_empty {
   float: left;
   padding: 10px;
 }
+
 .timeline .timeline-item .timeline-item-content .timeline-body.comments {
   padding: 0px;
 }
@@ -7179,6 +7180,7 @@ li.ext_zip {
   }
   /* END TOCIFY */
   /* TIMELINE */
+  
   .timeline.timeline-right:before {
     left: 60px;
   }
