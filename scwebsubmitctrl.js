@@ -210,8 +210,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						
 					}).success(function() {
 						
-						hide_1st_step=false;
-						hide_2nd_step=true;
+						
 						
 						//$location.path("/test1");
 					});
