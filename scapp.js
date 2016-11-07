@@ -103,8 +103,13 @@ app.config(['$translateProvider', function ($translateProvider) {
         'OTHERPROBWRITE':'Describe issue',
         'PATRASDISCLAIMER':'* For the city of Patras, the indicated position of waste bins might have differences with the existing ones.',
         'MORE':'More',
-        'FOLLOWUS':'Follow us'
-
+        'FOLLOWUS':'Follow us',
+		'EPONYMOUS_NAME':'Name',
+		'EPONYMOUS_TYPE_NAME':'Type your Name',
+		'EPONYMOUS_EMAIL':'email',
+		'EPONYMOUS_TYPE_EMAIL':'Type your email',
+		'EPONYMOUS_MOBILE':'Mobile number',
+		'EPONYMOUS_TYPE_MOBILE':'Type your Mobile number'
 
 	
     });
@@ -162,7 +167,13 @@ app.config(['$translateProvider', function ($translateProvider) {
         'OTHERPROBWRITE':'Γράψτε το πρόβλημα',
         'PATRASDISCLAIMER':'* Η απεικόνιση των κάδων απορριμάτων δεν συνάδει με οποιαδήποτε οριστική χωροθέτηση αυτών.',
         'MORE':'Περισσότερα',
-        'FOLLOWUS':'Ακολουθήστε μας'
+        'FOLLOWUS':'Ακολουθήστε μας',
+		'EPONYMOUS_NAME':'Ονοματεπώνυμο',
+		'EPONYMOUS_TYPE_NAME':'Γράψτε το ονοματεπώνυμο σας',
+		'EPONYMOUS_EMAIL':'email',
+		'EPONYMOUS_TYPE_EMAIL':'Γράψτε το email',
+		'EPONYMOUS_MOBILE':'Κινητό',
+		'EPONYMOUS_TYPE_MOBILE':'Γράψτε το κινητό σας'
         	
       
     });
