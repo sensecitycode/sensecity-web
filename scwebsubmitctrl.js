@@ -209,9 +209,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						data : txtpost 
 						
 					}).success(function() {
-						console.log("submit ok!");
-						$location.path("eponymous");
-			});
+					
+						//$location.path("/test1");
+					});
 		}
 
 }]);
