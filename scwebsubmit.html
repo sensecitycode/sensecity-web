@@ -10,36 +10,37 @@
 		</div>
 		
 		<div class="col-md-4" > 
-			<div class="form-group">
-				<label for="lng" style="color: #000000; font-weight: 300;" id="msg_label_long">{{'LONGTITUDE' | translate}}</label>
-				<input ng-model="latlabeltxt" type="text" class="form-control" id="lng" placeholder="{{'LONGTITUDE' | translate}}" readonly >
-			</div>
-			<div class="form-group">
-				<label for="lat" style="color: #000000; font-weight: 300;" id="msg_label_lat">{{'LATTITUDE' | translate}}</label>
-				<input ng-model="lnglabeltxt" type="text" class="form-control" id="lat" placeholder="{{'LATTITUDE' | translate}}" readonly >
-			</div>
-			<div class="form-group">
-				<label for="type-issue" style="color: #000000; font-weight: 300;" id="msg_label_type">{{ 'PROBLEMTYPE' | translate}}</label>
-				<select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" class="form-control" ng-change="updateCompoType()"></select>
+			<div class="eponymous" ng-show='issubmit_isseu_form()'>
+				<div class="form-group">
+					<label for="lng" style="color: #000000; font-weight: 300;" id="msg_label_long">{{'LONGTITUDE' | translate}}</label>
+					<input ng-model="latlabeltxt" type="text" class="form-control" id="lng" placeholder="{{'LONGTITUDE' | translate}}" readonly >
+				</div>
+				<div class="form-group">
+					<label for="lat" style="color: #000000; font-weight: 300;" id="msg_label_lat">{{'LATTITUDE' | translate}}</label>
+					<input ng-model="lnglabeltxt" type="text" class="form-control" id="lat" placeholder="{{'LATTITUDE' | translate}}" readonly >
+				</div>
+				<div class="form-group">
+					<label for="type-issue" style="color: #000000; font-weight: 300;" id="msg_label_type">{{ 'PROBLEMTYPE' | translate}}</label>
+					<select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" class="form-control" ng-change="updateCompoType()"></select>
+					
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_problem_detail">{{ 'PROBLEM' | translate}}</label>
+					
+					<select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" ng-model="issueSubTypeSelect" class="form-control" ng-change="issueSubTypeSelectChanged()"></select>
 				
-			</div>
-			<div class="form-group">
-				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_problem_detail">{{ 'PROBLEM' | translate}}</label>
+				</div>
+				<div class="form-group"  ng-show='isOtherSelected()'>
+					<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'DESCRIPTION' | translate}}</label>
+					<input ng-model="otherDescriptionTxt" type="text" class="form-control" value="" placeholder="{{ 'OTHERPROBWRITE' | translate }}"   >
+				</div>
 				
-				<select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" ng-model="issueSubTypeSelect" class="form-control" ng-change="issueSubTypeSelectChanged()"></select>
-			
+				<div class="form-group">
+					<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">{{ 'PHOTO' | translate}}</label>
+					<input type="file" id="input_file"   class="form-control" file-model="uploadedPhotoFile" placeholder=""   />
+					
+				</div>
 			</div>
-			<div class="form-group"  ng-show='isOtherSelected()'>
-				<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'DESCRIPTION' | translate}}</label>
-				<input ng-model="otherDescriptionTxt" type="text" class="form-control" value="" placeholder="{{ 'OTHERPROBWRITE' | translate }}"   >
-			</div>
-			
-			<div class="form-group">
-				<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">{{ 'PHOTO' | translate}}</label>
-				<input type="file" id="input_file"   class="form-control" file-model="uploadedPhotoFile" placeholder=""   />
-				
-			</div>
-			
 			<div class="eponymous" ng-show='iseponymous()'>
 				<div class="form-group">
 					<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'DESCRIPTION' | translate}}</label>
