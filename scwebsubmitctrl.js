@@ -7,8 +7,8 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	$log.debug('inside scWebSubmit controller');
 
 	
-	hide_1st_step=true;
-	hide_2nd_step=false;
+	$scope.hide_1st_step=true;
+	$scope.hide_2nd_step=false;
 	
 	$scope.map_center = {
 			lat : $rootScope.Variables.lat_center,
