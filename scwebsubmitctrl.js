@@ -210,7 +210,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						
 					}).success(function() {
 					
-						//$location.path("/test1");
+						$location.path("/test1");
 					});
 		}
 
