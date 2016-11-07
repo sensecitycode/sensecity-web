@@ -212,7 +212,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						data : txtpost 
 						
 					}).success(function() {
-						$scope.issubmit_isseu_form = !true;
+						$scope.issubmit_isseu_form = false;
 						 
 						$scope.iseponymous = function(){
 							 return true;
