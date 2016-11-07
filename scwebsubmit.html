@@ -44,19 +44,23 @@
 			<div class="eponymous" ng-show='iseponymous()'>
 				<div class="form-group">
 					<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_NAME' | translate}}</label>
-					<input ng-model="NameTxt" type="text" class="form-control" value="" placeholder="{{ 'OTHERPROBWRITE' | translate }}"   >
+					<input ng-model="NameTxt" type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_NAME' | translate }}"   >
 				</div>
 				<div class="form-group">
 					<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_EMAIL' | translate}}</label>
-					<input ng-model="EmailTxt" type="text" class="form-control" value="" placeholder="{{ 'OTHERPROBWRITE' | translate }}"   >
+					<input ng-model="EmailTxt" type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_EMAIL' | translate }}"   >
 				</div>
 				<div class="form-group">
 					<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_MOBILE' | translate}}</label>
-					<input ng-model="MobileTxt" type="text" class="form-control" value="" placeholder="{{ 'OTHERPROBWRITE' | translate }}"   >
+					<input ng-model="MobileTxt" type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_MOBILE' | translate }}"   >
 				</div>
 			</div>
 			
-			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null"/>
+			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_button' />
+			
+			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='register_button' />
+			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' />
+			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' />
 
 			<div id="try_another_issue"></div>
 		</div>

@@ -220,6 +220,8 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 							 return true;
 						 }
 						
+						$scope.submit_button = false;
+						
 						//$location.path("/test1");
 					});
 		}
