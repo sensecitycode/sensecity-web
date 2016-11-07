@@ -209,7 +209,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						data : txtpost 
 						
 					}).success(function() {
-				$location.path("/eponymous");
+				$location.path("/eponymous/");
 			});
 		}
 
