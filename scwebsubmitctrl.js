@@ -163,6 +163,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		 };
 		 
 		 
+		 
 		 $scope.isOtherSelected = function () {
 			 return $scope.issueSubTypeSelect.id ===  'other';
 		 };
@@ -210,7 +211,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						
 					}).success(function() {
 						
-						
+						$scope.iseponymous = function(){
+							 return true;
+						 }
 						
 						//$location.path("/test1");
 					});
