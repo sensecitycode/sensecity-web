@@ -162,6 +162,13 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				);
 		 };
 		 
+		 
+		$scope.submit_button = true;
+		$scope.register_button = false;
+		$scope.verify_button = false;
+		$scope.submit_eponymous_button = false;
+			
+			
 		$scope.issubmit_isseu_form = function(){
 			return true;
 		}
