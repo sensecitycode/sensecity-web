@@ -74,7 +74,7 @@
 				<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">Φωτογραφία</label>
 				<input type="file" id="input_file" style="color: #000000;">
 			</div>			
-			<a href="#" id="btnsubmit" class="btn btn-primary" style="background-color: #76a0ff !important;" >Αποστολή</a>
+			<a href="#" id="btnsubmit" class="btn btn-primary" style="background-color: #76a0ff !important;" >Αποστολή1</a>
 			<div id="try_another_issue"></div>
 		</div>
     </div>
@@ -238,6 +238,9 @@
 						dataType: "json",                
 						success: function(msg){
 							//$('#btnsubmit').removeClass('disabled');
+							
+							//second screen for eponymous issue
+							
 							$("#btnsubmit").html('Αποστολή');
 							$("#try_another_issue").html('<a href="submit_issue.html" class="btn btn-primary" style="background-color: #76a0ff !important;">Νέα καταχώριση</a>');
 						}

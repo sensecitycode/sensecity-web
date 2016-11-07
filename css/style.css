@@ -561,3 +561,7 @@ img::-moz-selection {
     border-width: 1px;
 	background-color: #e1e6e6;
 }
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: #36333d !important;
+}
