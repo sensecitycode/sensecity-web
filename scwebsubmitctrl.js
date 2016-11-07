@@ -229,6 +229,12 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						
 						$scope.submit_button = false;
 						
+						
+						$scope.submit_button = false;
+						$scope.register_button = true;
+						$scope.verify_button = false;
+						$scope.submit_eponymous_button = false;
+						
 						//$location.path("/test1");
 					});
 		}
