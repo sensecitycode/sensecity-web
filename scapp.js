@@ -23,6 +23,9 @@ app.config(function($routeProvider, $locationProvider, $anchorScrollProvider,
 	}).when('/all_issues', {
 		templateUrl : 'all_issues.html',
 		controller : 'allissuesCtrl'
+	}).when('/test1', {
+		templateUrl : 'all_issues.html',
+		controller : 'allissuesCtrl'
 	}).when('/', {
 		templateUrl : 'scmapcontent.html',
 		controller : 'mainOverviewController'
