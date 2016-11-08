@@ -206,9 +206,14 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			
 			var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id 
 			+'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '" }' ;
-			console.log( txtpost );			
 			
-
+			
+			console.log( txtpost );			
+			console.log("--------------------------------------");
+			console.log($rootScope.Variables.APIURL);
+			console.log("--------------------------------------");
+			
+			
 			return $http(
 					{
 						method : 'POST',
@@ -219,6 +224,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						data : txtpost 
 						
 					}).success(function() {
+						
+						console.log("Submit ok!");
+						
 						$scope.issubmit_isseu_form = function(){
 							 return false;
 						 }
