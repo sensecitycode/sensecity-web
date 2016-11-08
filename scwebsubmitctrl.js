@@ -223,7 +223,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						},
 						data : txtpost 
 						
-					}).success(function(err, resp) {
+					}).success(function(resp) {
 						
 						console.log(resp);
 						
