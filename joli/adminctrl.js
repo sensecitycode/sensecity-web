@@ -1,4 +1,5 @@
-var appControllers = angular.module('adminapp.adminctrl', ['ngCookies']);
+var appControllers = angular.module('adminapp.adminctrl', ['ngCookies'])
+        .constant("config",{"host":"localhost","port":"8023"});
 
 //appControllers.config([
 //  '$httpProvider',
@@ -6,12 +7,11 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies']);
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', 'EndPointService', 'BugService', 'ToGrService', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', function ($scope, $window, $http, $cookieStore, EndPointService, BugService, ToGrService, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData) {
+appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', 'EndPointService', 'BugService', 'ToGrService', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData','config' ,function ($scope, $window, $http, $cookieStore, EndPointService, BugService, ToGrService, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData,config) {
         $scope.duplicof = "";
-        $scope.valid = false;
 
         $scope.logout = function ($event) {
-            $http.get('http://localhost:8023/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
+            $http.get('http://'+config.host+':'+config.port+'/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
                 $cookieStore.remove("uuid");
                 $cookieStore.remove("city");
                 $cookieStore.remove("role");
@@ -20,7 +20,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $cookieStore.remove("username");
                 $window.location.href = "/joli/index.html";
             });
-        }
+        };
 
         function authorizedu() {
             if ($cookieStore.get("uuid") !== undefined) {
@@ -42,12 +42,34 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         username();
         userole();
 
+        $scope.city = $cookieStore.get("city");
+
+        $scope.changeTab = function (index) {
+            $scope.tabs.activeTab = index;
+            var issue = Tab2BugzillaService.issue_type(index);
+            if (issue == 'all') {
+                $scope.tabs.activeTitle = "Γενικά";
+                $scope.tabs.activeIcon = "fa ion-ios-analytics-outline";
+            } else if (issue == 'garbage') {
+                $scope.tabs.activeTitle = "Καθαριότητα";
+                $scope.tabs.activeIcon = "fa fa-trash-o";
+            } else if (issue == 'lighting') {
+                $scope.tabs.activeTitle = "Φωτισμός";
+                $scope.tabs.activeIcon = "fa fa-lightbulb-o";
+            } else if (issue == 'plumbing') {
+                $scope.tabs.activeTitle = "Ύδρευση";
+                $scope.tabs.activeIcon = "fa fa-umbrella";
+            } else if (issue == 'road-contructor') {
+                $scope.tabs.activeTitle = "Οδόστρωμα";
+                $scope.tabs.activeIcon = "fa fa-road";
+            }
+        };
+
         $(".panel-fullscreen").on("click", function () {
             panel_fullscreen($(this).parents(".panel"));
             if ($scope.activePanel == -1) {
                 var map = leafletData.getMap("issuesmap").then(
                         function (map) {
-
                             map.invalidateSize(true);
                         }
 
@@ -73,7 +95,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         if ($scope.valid) {
             $scope.dupli_change = function ($event, dupl) {
                 $scope.duplicof = dupl;
-            }
+            };
 
             if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
                 if ($cookieStore.get("role") == "departmentAdmin") {
@@ -86,52 +108,61 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.tabs = [{
                             "title": "Καθαριότητα",
                             "content": "Παρουσίαση προβλημάτων καθαριότητας",
+                            "icon": "fa fa-trash-o"
                         }];
-                    $scope.tabs.activeTab = "Καθαριότητα";
+                    $scope.tabs.activeTab = 1;
                 } else if (department == "road-contructor") {
                     $scope.tabs = [{
                             "title": "Οδόστρωμα",
                             "content": "Παρουσίαση προβλημάτων οδοστρώματος",
+                            "icon": "fa fa-road"
                         }];
-                    $scope.tabs.activeTab = "Οδόστρωμα";
+                    $scope.tabs.activeTab = 3;
                 } else if (department == "lighting") {
                     $scope.tabs = [{
                             "title": "Φωτισμός",
                             "content": "Παρουσίαση προβλημάτων φωτισμού",
+                            "icon": "fa fa-lightbulb-o"
                         }];
-                    $scope.tabs.activeTab = "Φωτισμός";
+                    $scope.tabs.activeTab = 2;
                 } else if (department == "plumbing") {
                     $scope.tabs = [{
                             "title": "Ύδρευση",
-                            "content": "Παρουσίαση προβλημάτων ύδρευσης/αποχέτευσης"
+                            "content": "Παρουσίαση προβλημάτων ύδρευσης/αποχέτευσης",
+                            "icon": "fa fa-umbrella"
                         }];
-                    $scope.tabs.activeTab = "Ύδρευση";
+                    $scope.tabs.activeTab = 4;
                 }
             } else {
                 $scope.role = "cityAdmin";
                 $scope.tabs = [
                     {
                         "title": "Γενικά",
-                        "content": "Παρουσίαση όλων των δηλωμένων προβλημάτων"
+                        "content": "Παρουσίαση όλων των δηλωμένων προβλημάτων",
+                        "icon": "fa ion-ios-analytics-outline"
                     },
                     {
                         "title": "Καθαριότητα",
                         "content": "Παρουσίαση προβλημάτων καθαριότητας",
+                        "icon": "fa fa-trash-o"
                     },
                     {
                         "title": "Φωτισμός",
                         "content": "Παρουσίαση προβλημάτων φωτισμού",
+                        "icon": "fa fa-lightbulb-o"
                     },
                     {
                         "title": "Ύδρευση",
                         "content": "Παρουσίαση προβλημάτων ύδρευσης/αποχέτευσης",
+                        "icon": "fa fa-umbrella"
                     },
                     {
                         "title": "Οδόστρωμα",
                         "content": "Παρουσίαση προβλημάτων οδοστρώματος",
+                        "icon": "fa fa-road"
                     }
                 ];
-                $scope.tabs.activeTab = "Γενικά";
+                $scope.tabs.activeTab = 0;
             }
 
             $scope.panels = [];
@@ -276,6 +307,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.activePanel = -1;
                 $scope.currentactive = -1;
 
+                $scope.changeTab($scope.tabs.activeTab);
+
                 $scope.itemClicked = function ($index) {
                     if ($scope.currentactive != $index) {
                         $scope.activePanel = $index;
@@ -374,8 +407,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                     };
                             this.push(panel);
                             Issue2MapService.get({issueID: panel.mongoId[0]}, function (issue) {
-                                 $scope.panel_image = issue.image_name;
-                                 $scope.center = {lat:issue.loc.coordinates[1],lng:issue.loc.coordinates[0],zoom:17};                                
+                                $scope.panel_image = issue.image_name;
+                                $scope.center = {lat: issue.loc.coordinates[1], lng: issue.loc.coordinates[0], zoom: 17};
                                 $scope.ALLmarkers.push({"lat": issue.loc.coordinates[1], "lng": issue.loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                             });
                         }
@@ -428,7 +461,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 // $scope.initResetPanel(panel);
                 $scope.selectedStatus = null;
                 $scope.selectedResolution = null;
-                $scope.comment = null;
+                
                 // console.log($scope.selectedStatus + $scope.selectedResolution + $scope.comment);
                 // console.log(panel);
                 panel.admin = true;
@@ -444,6 +477,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 console.log(panel.status);
                 $scope.selectedComponent = panel.component;
                 $scope.selectedStatus = panel.status;
+                $scope.comment = panel.comment;
+                $scope.duplicof = panel.duplicof;
+                //$scope.duplicof = panel;
+                $scope.selectedResolution = panel.resolution;
+
 
                 if (panel.resolution.gr !== undefined)
                 {
@@ -494,8 +532,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     console.log(panel.resolution);
                     console.log(panel.comment);
                     console.log(panel.component);
-
-
+                    
                     var bug_fieldname = CommentService.field(panel.status.en);
                     // console.log(bug_fieldname);
                     // console.log(panel);
@@ -534,18 +571,30 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         var panelTitle = ToGrService.statusTitle(seldstatus.en, seldResolution.en);
                         panel.style = panelTitle.status_style;
                         panel.icon = panelTitle.status_icon;
-                        if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
-                            if (panel.status.en !== "IN_PROGRESS") {
-                                setTimeout(function () {
-                                    $(e.target).parent().parent().parent().parent().remove();
-                                }, 3000);
-                            }
-                        } else {
-                            if (panel.status.en !== "CONFIRMED") {
-                                setTimeout(function () {
-                                    $(e.target).parent().parent().parent().parent().remove();
-                                }, 3000);
-                            }
+                            if ($scope.selectedStatus.gr == 'Ανοιχτό') {
+                                if ($scope.selectedStatus.gr != panel.status.gr) {
+                                    setTimeout(function () {
+                                        $(e.target).closest(".timeline-item-active").remove();
+                                        $scope.activePanel = -1;
+                                        $scope.currentactive = -1;
+                                    }, 3000);
+                                }
+                            } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
+                                if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.comment != panel.comment) {
+                                    setTimeout(function () {
+                                        $(e.target).closest(".timeline-item-active").remove();
+                                        $scope.activePanel = -1;
+                                        $scope.currentactive = -1;
+                                    }, 3000);
+                                }
+                            }else if($scope.selectedStatus.gr == 'Ολοκληρωμένο'){
+                                if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.comment != panel.comment || $scope.selectedResolution != panel.resolution || $scope.duplicof != panel.duplicof) {
+                                    setTimeout(function () {
+                                        $(e.target).closest(".timeline-item-active").remove();
+                                        $scope.activePanel = -1;
+                                        $scope.currentactive = -1;
+                                    }, 3000);
+                                }
                         }
                         console.log("Result:");
                         console.log(result);
@@ -561,25 +610,25 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $cookieStore.remove("username");
                 }
             };
-            
-            $scope.toggle_closedissues = function(){
-                if($scope.closedissues == false){
+
+            $scope.toggle_closedissues = function () {
+                if ($scope.closedissues == false) {
                     $scope.closedissues = true;
-                }else{
+                } else {
                     $scope.closedissues = false;
-                } 
+                }
             };
-            
-            $scope.toggle_inprogressissues = function(){
-                if($scope.assignissues == false){
+
+            $scope.toggle_inprogressissues = function () {
+                if ($scope.assignissues == false) {
                     $scope.assignissues = true;
-                }else{
+                } else {
                     $scope.assignissues = false;
-                } 
+                }
             };
 
             $scope.refresh = function () {
-                $http.get('http://localhost:8023/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
+                $http.get('http://'+config.host+':'+config.port+'/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
                         function (response) {
                             if (response == "failure") {
                                 $scope.valid = false;
@@ -590,14 +639,14 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 $cookieStore.remove("email");
                                 $cookieStore.remove("username");
                             }
-                        });
+                        });      
                 if ($cookieStore.get("uuid") != "undefined") {
                     $scope.panels = [];
                     $scope.ALLmarkers = [];
 
                     var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
                     // console.log(issue_type);
-                    var params = {"product": $cookieStore.get("city"), "order": "bug_id DESC", "include_fields": ["component", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution"]};
+                    var params = {"product": $cookieStore.get("city"), "order": "bug_id DESC", "include_fields": ["component", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution","dupe_of"]};
                     if (issue_type != "all")
                     {
                         params.summary = issue_type;
@@ -648,6 +697,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     BugService.search(obj, function (result) {
 
                         angular.forEach(result, function (value, key) {
+  
                             var issue_name = ToGrService.issueName(value.summary);
                             var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
                             var description = CommentService.field(value.status);
@@ -677,12 +727,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             "ArrayID": key,
                                             "comment": value[description],
                                             "initialdesc": value.url,
-                                            "mongoId": value.alias
+                                            "mongoId": value.alias,
+                                            "duplicof": value.dupe_of
                                         };
                                 this.push(panel);
                                 Issue2MapService.get({issueID: panel.mongoId[0]}, function (issue) {
-                                     $scope.panel_image = issue.image_name;
-                                     $scope.center = {lat:issue.loc.coordinates[1],lng:issue.loc.coordinates[0],zoom:17};
+                                    $scope.panel_image = issue.image_name;
+                                    $scope.center = {lat: issue.loc.coordinates[1], lng: issue.loc.coordinates[0], zoom: 17};
                                     $scope.ALLmarkers.push({"lat": issue.loc.coordinates[1], "lng": issue.loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                 });
                             }
@@ -691,7 +742,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     });
                 }
                 ;
-            }
+            };
         } else {
 //            $scope.ALLcenter = {
 //                lat: 37.7881600,

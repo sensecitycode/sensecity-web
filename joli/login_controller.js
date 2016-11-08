@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var app = angular.module('login_fo', ['ngCookies']);
+var app = angular.module('login_fo', ['ngCookies'])
+            .constant("config",{"host":"localhost","port":"8023"});
 
 //app.config([
 //  '$httpProvider',
@@ -11,7 +12,7 @@ var app = angular.module('login_fo', ['ngCookies']);
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-app.controller('login_controller', ['$scope', '$window', '$http','$cookieStore','$location', function ($scope, $window, $http,$cookieStore,$location) {
+app.controller('login_controller', ['$scope', '$window', '$http','$cookieStore','$location','config', function ($scope, $window, $http,$cookieStore,$location,config) {
         $scope.admin_user = "";
         $scope.lock = "";
         $scope.username_l = "Username";
@@ -34,7 +35,7 @@ app.controller('login_controller', ['$scope', '$window', '$http','$cookieStore',
         $scope.authenticate_us = function (event) {
             var domain = $location.host().split(".");
             var parameter = JSON.stringify({username: $scope.username_l, password: $scope.password_l, city: 'testweb'});
-            $http.post('http://localhost:8023/dashboard', parameter).success(
+            $http.post('http://'+config.host+':'+config.port+'/dashboard', parameter).success(
                     function (response, status, headers, config) {
                         response = response.split(';');
                         if (response != "failure") {
@@ -52,5 +53,5 @@ app.controller('login_controller', ['$scope', '$window', '$http','$cookieStore',
                     function (response) {
                         $window.alert("failure");
                     });
-        }
+        };
     }]);

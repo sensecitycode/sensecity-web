@@ -513,7 +513,7 @@ function x_navigation(){
             if(li.children("ul").length > 0 || li.children(".panel").length > 0 || $(this).hasClass("xn-profile") > 0){
                 if(li.hasClass("active")){
                     li.removeClass("active");
-                    li.find("li.active").removeClass("active");
+                    //li.find("li.active").removeClass("active");
                 }else
                     li.addClass("active");
                     
