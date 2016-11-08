@@ -109,7 +109,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'EPONYMOUS_EMAIL':'email',
 		'EPONYMOUS_TYPE_EMAIL':'Type your email',
 		'EPONYMOUS_MOBILE':'Mobile number',
-		'EPONYMOUS_TYPE_MOBILE':'Type your Mobile number'
+		'EPONYMOUS_TYPE_MOBILE':'Type your Mobile number',
+		'EPONYMOUS_REPORT':'Eponymous Report'
 
 	
     });
@@ -173,7 +174,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'EPONYMOUS_EMAIL':'email',
 		'EPONYMOUS_TYPE_EMAIL':'Γράψτε το email',
 		'EPONYMOUS_MOBILE':'Κινητό',
-		'EPONYMOUS_TYPE_MOBILE':'Γράψτε το κινητό σας'
+		'EPONYMOUS_TYPE_MOBILE':'Γράψτε το κινητό σας',
+		'EPONYMOUS_REPORT':'Επώνυμη καταγγελία'
         	
       
     });
