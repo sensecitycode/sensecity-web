@@ -167,19 +167,19 @@ appServices.factory('Tab2BugzillaService', function(){
 		issue_type: function(tab) {
 			var type;
 			switch (tab) {
-				case "Γενικά":
+				case 0:
 					type="all";
 					break;
-				case "Καθαριότητα":
+				case 1:
 					type="garbage";
 					break;
-				case "Φωτισμός":
+				case 2:
 					type="lighting";
 					break;
-				case "Ύδρευση":
+				case 3:
 					type="plumbing";
 					break;
-				case "Οδόστρωμα":
+				case 4:
 					type="road-contructor";
 					break;
 			}
