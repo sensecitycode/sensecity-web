@@ -98,62 +98,67 @@ appControllers.controller('scissuemapctrl',['$scope','$location','EndPointServic
     var issue_id = $location.search().issue_id;
 
     Issue2MapService.get({issueID:issue_id}, function(issue) {
-      $scope.issue_image = issue.image_name;
-      $scope.center = {lat:issue.loc.coordinates[1],lng:issue.loc.coordinates[0],zoom:16};
-      $scope.markers = [{"lat":issue.loc.coordinates[1],"lng":issue.loc.coordinates[0],"icon":icons[issue.issue]}];
+		
+		console.log(issue);
+		
+		$scope.issue_image = issue.image_name;
+		$scope.center = {lat:issue.loc.coordinates[1],lng:issue.loc.coordinates[0],zoom:16};
+		$scope.markers = [{"lat":issue.loc.coordinates[1],"lng":issue.loc.coordinates[0],"icon":icons[issue.issue]}];
 
-      if (issue.issue == "garbage" || "lighting"){
-        var type;
-        if (issue.issue=="lighting")
-        {
-          type = "fotistiko";
-        } else {
-          type = issue.issue;
-        }
+		if (issue.issue == "garbage" || "lighting"){
+			var type;
+			if (issue.issue=="lighting")
+			{
+				type = "fotistiko";
+			} else {
+				type = issue.issue;
+			}
 
-        FixPoints2MapService.query({long:issue.loc.coordinates[0],lat:issue.loc.coordinates[1],type:type}, function(fix_points) {
-          angular.forEach(fix_points, function(value,key) {
-            var icon = FixPointsMarkerService.icon(value);
-            $scope.markers.push({"lat":value.loc.coordinates[1],"lng":value.loc.coordinates[0],"icon":icons[icon]});
-          });
-        });
-      }
+			FixPoints2MapService.query({long:issue.loc.coordinates[0],lat:issue.loc.coordinates[1],type:type}, function(fix_points) {
+				angular.forEach(fix_points, function(value,key) {
+					var icon = FixPointsMarkerService.icon(value);
+					$scope.markers.push({"lat":value.loc.coordinates[1],"lng":value.loc.coordinates[0],"icon":icons[icon]});
+				});
+			});
+		}
 
-      var issue_name_new;
-      switch(issue.issue){
-        case "garbage":
-          if(localStorage.getItem("language") === 'en'){
-            issue_name_new = 'Cleaning Problem';
-          }else{
-            issue_name_new = "Πρόβλημα Καθαριότητας";
-          }
-          break;
-        case "lighting":
-          if(localStorage.getItem("language") === 'en'){
-            issue_name_new = 'Lighting Problem';
-          }else{
-            issue_name_new = "Πρόβλημα Φωτισμού";
-          }
-          break;
-        case "plumbing":
-          if(localStorage.getItem("language") === 'en'){
-            issue_name_new = 'Plumbing Problem';
-          }else{
-            issue_name_new = "Προβλήματα ύδρευσης";
-          }
-          break;
-        case "road-contructor":
-          if(localStorage.getItem("language") === 'en'){
-            issue_name_new = 'Street/Sidewalk Problem';
-          }else{
-            issue_name_new = "Πρόβλημα Δρόμου/Πεζοδρομίου";
-          }
-          break;
-        default:
-          break;
-      }
-      $scope.issue_name_new = issue_name_new;
-      $scope.issue_value_desc = issue.value_desc;
+		var issue_name_new;
+		
+		switch(issue.issue){
+			case "garbage":
+				if(localStorage.getItem("language") === 'en'){
+					issue_name_new = 'Cleaning Problem';
+				}else{
+					issue_name_new = "Πρόβλημα Καθαριότητας";
+				}
+				break;
+			case "lighting":
+				if(localStorage.getItem("language") === 'en'){
+					issue_name_new = 'Lighting Problem';
+				}else{
+					issue_name_new = "Πρόβλημα Φωτισμού";
+				}
+				break;
+			case "plumbing":
+				if(localStorage.getItem("language") === 'en'){
+					issue_name_new = 'Plumbing Problem';
+				}else{
+					issue_name_new = "Προβλήματα ύδρευσης";
+				}
+				break;
+			case "road-contructor":
+				if(localStorage.getItem("language") === 'en'){
+					issue_name_new = 'Street/Sidewalk Problem';
+				}else{
+					issue_name_new = "Πρόβλημα Δρόμου/Πεζοδρομίου";
+				}
+				break;
+			default:
+				break;
+		}
+      
+		$scope.issue_name_new = issue_name_new;
+		$scope.issue_value_desc = issue.value_desc;
     });
 
 
