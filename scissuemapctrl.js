@@ -152,6 +152,18 @@ appControllers.controller('scissuemapctrl',['$scope','$location','EndPointServic
 				}else{
 					issue_name_new = "Πρόβλημα Δρόμου/Πεζοδρομίου";
 				}
+			case "protection-policy":
+				if(localStorage.getItem("language") === 'en'){
+					issue_name_new = 'Protection Policy';
+				}else{
+					issue_name_new = "Πολιτική Προστασία";
+				}
+			case "green":
+				if(localStorage.getItem("language") === 'en'){
+					issue_name_new = 'Green';
+				}else{
+					issue_name_new = "Πράσινο";
+				}
 				break;
 			default:
 				break;

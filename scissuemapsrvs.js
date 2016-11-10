@@ -82,6 +82,12 @@ appServices.factory('ToGrService', function() {
 						case "road-contructor":
 							issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου";
 							break;
+						case "protection-policy":
+							issue_name = "Πολιτική Προστασία";
+							break;
+						case "green":
+							issue_name = "Πράσινο";
+							break;
 						default:
 							break;
 					}

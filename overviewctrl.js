@@ -85,6 +85,18 @@ appControllers
 									icon : 'lightbulb-o',
 									markerColor : 'red'
 								},
+								protection-policy : {
+									type : 'awesomeMarker',
+									prefix : 'fa',
+									icon : 'lightbulb-o',
+									markerColor : 'red'
+								},
+								green : {
+									type : 'awesomeMarker',
+									prefix : 'fa',
+									icon : 'lightbulb-o',
+									markerColor : 'red'
+								},
 								angry : {
 									type : 'awesomeMarker',
 									prefix : 'fa',
@@ -204,6 +216,16 @@ appControllers
 										name : 'Προβλήματα Οδοστρώματος',
 										visible : true
 									},
+									"protection-policy" : {
+										type : 'group',
+										name : 'Πολιτική Προστασία',
+										visible : true
+									},
+									"green" : {
+										type : 'group',
+										name : 'Πράσινο',
+										visible : true
+									},
 									reaction : {
 										type : 'group',
 										name : 'Προβλήματα Πολιτών',
@@ -237,6 +259,12 @@ appControllers
 					           break;
 					         case "road-contructor":
 					           issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου";
+					           break;
+							 case "protection-policy":
+					           issue_name = "Πολιτική Προστασία";
+					           break;
+							 case "green":
+					           issue_name = "Πράσινο";
 					           break;
 					         default:
 					           break;
@@ -290,6 +318,18 @@ appControllers
 									startdate : $scope.startdate,
 									enddate : $scope.enddate,
 									issue : "road-contructor",
+									image_field:0
+								});
+								paramsObj.push({
+									startdate : $scope.startdate,
+									enddate : $scope.enddate,
+									issue : "protection-policy",
+									image_field:0
+								});
+								paramsObj.push({
+									startdate : $scope.startdate,
+									enddate : $scope.enddate,
+									issue : "green",
 									image_field:0
 								});
 								paramsObj.push({

@@ -112,7 +112,10 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'EPONYMOUS_TYPE_MOBILE':'Type your Mobile number',
 		'EPONYMOUS_REPORT':'Eponymous Report',
 		'PROTECTION_POLICY_ISSUE':'Protection Policy',
-		'GREEN_ISSUE':'Green'
+		'GREEN_ISSUE':'Green',
+		'CUTTING_GRASS':'Cutting Grass',
+		'TREE_PRUNING':'Tree pruning',
+		'RODENT':'Rodent'
 	
     });
    
@@ -178,7 +181,10 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'EPONYMOUS_TYPE_MOBILE':'Γράψτε το κινητό σας',
 		'EPONYMOUS_REPORT':'Επώνυμη καταγγελία',
 		'PROTECTION_POLICY_ISSUE':'Πολιτική προστασία',
-		'GREEN_ISSUE':'Πράσινο'
+		'GREEN_ISSUE':'Πράσινο',
+		'CUTTING_GRASS':'Κοπή Χόρτων',
+		'TREE_PRUNING':'Κλάδευμα Δέντρων',
+		'RODENT':'Μυοκτονίες'
         	
       
     });

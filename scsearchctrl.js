@@ -48,6 +48,18 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
       icon: 'lightbulb-o',
       markerColor: 'orange'
     },
+    protection-policy: {
+      type: 'awesomeMarker',
+      prefix: 'fa',
+      icon: 'lightbulb-o',
+      markerColor: 'orange'
+    },
+    green: {
+      type: 'awesomeMarker',
+      prefix: 'fa',
+      icon: 'lightbulb-o',
+      markerColor: 'orange'
+    },
     angry: {
       type: 'awesomeMarker',
       prefix: 'fa',
@@ -110,6 +122,16 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
               name:'Προβλήματα Οδοστρώματος',
               visible:true
           },
+          "protection-policy": {
+              type:'group',
+              name:'Πολιτική Προστασία',
+              visible:true
+          },
+          "green": {
+              type:'group',
+              name:'Πράσινο',
+              visible:true
+          },
           reaction: {
               type:'group',
               name:'Προβλήματα Πολιτών',
@@ -151,6 +173,12 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
           break;
         case "road-contructor":
           issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου";
+          break;
+        case "protection-policy":
+          issue_name = "Πολιτική Προστασία";
+          break;
+        case "green":
+          issue_name = "Πράσινο";
           break;
         default:
           break;

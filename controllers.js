@@ -48,6 +48,18 @@ appControllers.controller('mainController', ['$scope','$q','APIEndPointService',
       icon: 'lightbulb-o',
       markerColor: 'orange'
     },
+    "protection-policy": {
+      type: 'awesomeMarker',
+      prefix: 'fa',
+      icon: 'lightbulb-o',
+      markerColor: 'orange'
+    },
+    green: {
+      type: 'awesomeMarker',
+      prefix: 'fa',
+      icon: 'lightbulb-o',
+      markerColor: 'orange'
+    },
     angry: {
       type: 'awesomeMarker',
       prefix: 'fa',
@@ -114,6 +126,16 @@ appControllers.controller('mainController', ['$scope','$q','APIEndPointService',
           "road-contructor": {
               type:'group',
               name:'Προβλήματα Οδοστρώματος',
+              visible:true
+          },
+          "protection-policy": {
+              type:'group',
+              name:'Πολιτική Προστασία',
+              visible:true
+          },
+          green: {
+              type:'group',
+              name:'Πράσινο',
               visible:true
           },
           reaction: {

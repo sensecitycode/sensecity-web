@@ -78,6 +78,12 @@ appControllers.controller('allissuesCtrl', function($scope, $log, DisplayLast100
 										case 'road-contructor':
 												lastissue.issue = 'ROAD_ISSUE';
 											break;
+										case 'protection-policy':
+												lastissue.issue = 'PROTECTION_POLICY_ISSUE';
+											break;
+										case 'green':
+												lastissue.issue = 'GREEN_ISSUE';
+											break;
 										case 'angry':
 												lastissue.issue = 'MOOD';
 											break;

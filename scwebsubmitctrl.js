@@ -43,6 +43,16 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	                	            {id: '3', name:'ABANDONED_CAR'},
 	                	            {id: '4', name:'BAD_ROAD'},
 	                	            {id: 'other', name:'OTHER'}] 
+	                   },
+	                   {id: 'protection-policy', name: 'PROTECTION_POLICY_ISSUE', 
+	                	   types: [ {id: 'other', name:'OTHER'}] 
+	                   },
+	                   {id: 'green', name: 'GREEN_ISSUE', 
+	                	   types: [ 
+	                	            {id: '1', name:'CUTTING_GRASS'},
+	                	            {id: '2', name:'TREE_PRUNING'},
+	                	            {id: '3', name:'RODENT'},	                	            
+	                	            {id: 'other', name:'OTHER'}] 
 	                   }
 	                 ];
 
