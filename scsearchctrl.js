@@ -48,7 +48,7 @@ appControllers.controller('searchIssueController', ['$scope', '$rootScope', '$q'
       icon: 'lightbulb-o',
       markerColor: 'orange'
     },
-    protection-policy: {
+    "protection-policy": {
       type: 'awesomeMarker',
       prefix: 'fa',
       icon: 'lightbulb-o',
