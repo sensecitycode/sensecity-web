@@ -85,7 +85,7 @@ appControllers
 									icon : 'lightbulb-o',
 									markerColor : 'red'
 								},
-								protection-policy : {
+								"protection-policy" : {
 									type : 'awesomeMarker',
 									prefix : 'fa',
 									icon : 'lightbulb-o',
