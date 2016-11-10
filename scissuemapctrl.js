@@ -124,7 +124,7 @@ appControllers.controller('scissuemapctrl',['$scope','$location','EndPointServic
 
 		var issue_name_new;
 		
-		console.log(issue.issue);
+		
 		
 		switch(issue.issue){
 			case "garbage":
