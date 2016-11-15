@@ -2938,18 +2938,21 @@ blockquote.pull-right {
   width: 100%;
   margin: 10px 0px;
 }
-.pagination > li > a,
-.pagination > li > span {
+.pagination.pagination-sm  > li > a,
+.pagination.pagination-sm > li > span {
   margin-left: 3px;
+  margin-top:15px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
   color: #22262e;
   border-color: #E5E5E5;
+  background-color: rgba(229, 229, 229, 0.5);
 }
-.pagination > li > a:hover,
+.pagination.pagination-sm  > li > a:hover,
 .pagination > li > span:hover {
   color: #222;
+  background-color: rgb(229, 229, 229);
 }
 .pagination > li.active > a,
 .pagination > li.active > a:hover {
@@ -4183,7 +4186,7 @@ background: #1caf9a !important;
   width: 100%;
   float: left;
   padding: 10px;
-  left:5%;
+  left:4.7%;
   position: relative;
 }
 
@@ -4191,7 +4194,7 @@ background: #1caf9a !important;
   width: 100%;
   float: left;
   padding: 10px;
-  left:5%;
+  left:4.7%;
   position: relative;
 }
 

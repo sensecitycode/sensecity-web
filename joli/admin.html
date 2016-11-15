@@ -26,7 +26,9 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
-
+        
+        <link href="./dist/angular-tooltips.min.css" rel="stylesheet" type="text/css" />
+        
         <!-- Angular administrationapp dependancies -->
         <script src="adminctrl.js"></script>
         <script src="adminapp.js"></script>
@@ -50,7 +52,8 @@
         <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
         <script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
     </head>
-    <body ng-app="adminapp" ng-controller="adminController" ng-init="">
+    <body ng-app="adminapp" ng-cloak ng-controller="adminController" ng-init="">
+        <script src="./dist/angular-tooltips.min.js"></script>
         <div ng-show="valid">
             <!-- START PAGE CONTAINER -->
             <div class="page-container">
@@ -60,7 +63,7 @@
                     <!-- START X-NAVIGATION -->
                     <ul class="x-navigation">
                         <li class="xn-logo">
-                            <a href="admin.html"><div style="left:-3%;position:relative;top:-2px"><i style="left:-5%;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a href="admin.html"><div style="left:-8px;position:relative;top:-2px"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
                             <a href="#" class="x-navigation-control"></a>
                         </li>
                         <li class="xn-profile">
@@ -74,9 +77,9 @@
                                 </div>
                             </div>                                                                        
                         </li>
-                        <li class="xn-title">Navigation</li>                
+                        <li class="xn-title">Περιήγηση</li>                
                         <li class="xn-openable active">
-                            <a href="#"><span class="fa fa-desktop"></span> <span class="xn-text">Τμήματα</span></a>
+                            <a href="#"><span class="fa fa-desktop"></span> <span class="xn-text">Προβλήματα</span></a>
                             <ul>
                                 <li ng-click="changeTab($index);refresh()" ng-repeat="tab in tabs" ng-class="($index == tabs.activeTab) ? 'active':''" data-title="{{ tab.title}}" name="{{ tab.title}}"><a href="#"><i ng-class="tab.icon"></i>{{tab.title}}</a></li>                                                      
                             </ul>
@@ -112,10 +115,11 @@
                     <!-- START BREADCRUMB -->
                     <ul class="breadcrumb">
                         <li><a href="#">Αρχική</a></li>                    
-                        <li class="active">Τμήματα</li>
+                        <li class="active">Προβλήματα</li>
                         <ul class="panel-controls" style="margin-top: 2px;">
+                            <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_allclosedissues(); refresh()"><a href="#" class="panel-completed"><span ng-style="(allclosedissues == false)? {'font-size':'13px'} : {'color':'#0c45c4','font-size':'13px'}" class="fa fa-building-o"></span></a></li> 
                             <li ng-click="toggle_closedissues(); refresh()"><a href="#" class="panel-completed"><span ng-style="(closedissues == false)? {} : {'color':'green'}" class="glyphicon glyphicon-ok-sign"></span></a></li> 
-                                        <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_inprogressissues(); refresh()"><a href="#" class="panel-inprogress"><span ng-style="(assignissues == false) ? {} : {'color':'orange'}" class="glyphicon glyphicon-question-sign"></span></a></li> 
+                            <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_inprogressissues(); refresh()"><a href="#" class="panel-inprogress"><span ng-style="(assignissues == false) ? {} : {'color':'orange'}" class="glyphicon glyphicon-question-sign"></span></a></li> 
                         </ul>
                     </ul>
 
@@ -125,9 +129,9 @@
                     <!-- PAGE CONTENT WRAPPER -->
                     <div class="col-md-12">
 
-                        <div style="width:42%" class="timeline">
+                        <div style="width:48%" class="timeline">
                             <div style="padding:0" class="content-frame-top">
-                                <center style="margin-bottom: 4%;margin-top: -1.6%">
+                                <center style="margin-bottom: 3%;margin-top: -1.6%">
                                     <h2 style="font-family:Open Sans, sans-serif;margin-bottom: 0px;font-size: 22px;">Επισκόπηση Προβλημάτων</h2>
                                 </center>
                             </div>
@@ -135,12 +139,12 @@
 
                                 <div style="width:106%;margin-bottom:10px" ng-repeat="panel in panels" ng-class="($index == activePanel) ? 'timeline-item-active' :  'timeline-item'">
                                     <div class="timeline-item-content">
-                                        <div style="" class="timeline-body">
+                                        <div style="padding-right:26px" class="timeline-body">
                                             <span ng-class="panel.icon" ng-style="panel.style"></span>
                                             <span class="issue_text" ng-click="itemClicked($index); linkmap(panel)">{{ panel.title}}</span>
                                         </div>                                     
                                     </div>
-                                    <div ng-style="($index == activePanel)? {'height': '500px', 'opacity': '1', 'transition': 'height 0.3s'} : {'height': '0px', 'opacity': '0', 'transition': 'height 0.3s'}" ng-show="$index == activePanel">
+                                    <div ng-style="($index == activePanel)? {'height': '950px', 'opacity': '1', 'transition': 'height 0.3s'} : {'height': '0px', 'opacity': '0', 'transition': 'height 0.3s'}" ng-show="$index == activePanel">
                                         <div style="margin-top:10%" class="panel-body">
                                             <form name="editableForm" ng-hide="panel.admin">
                                                 <div style="margin-bottom:3%;margin-left:1%">
@@ -152,16 +156,16 @@
                                                     <span class="title">Καταγραφη: </span>
                                                     <span >{{ panel.time}}</span>
                                                 </div>
-                                                <div style="margin-bottom:3%;margin-left:1%">
+                                                <div ng-show="role != 'sensecityAdmin' && role != 'cityAdmin' || tabs.activeTitle != 'Όλα τα προβλήματα'" style="margin-bottom:3%;margin-left:1%">
                                                     <span class="title">Τμήμα Ανάθεσης: </span>
                                                     <span >{{ panel.component}}</span>
                                                 </div>
                                                 <div style="visibility: hidden">
                                                     <span>{{panel.duplicof}}</span>
                                                 </div>
-                                                <div style="margin-bottom:2%;margin-left:1%;">
+                                                <div ng-show="panel.comment != '';" style="margin-bottom:2%;margin-left:1%;">
                                                     <div class="title">Σχόλια: </div>
-                                                    <div style="border:solid 1px #cdd5d5;font-family:Open,sans-serif;padding: 8px 15px;border-radius:6px;margin-bottom:5%;margin-top:2%;width:95%">{{ panel.comment}}</div>
+                                                    <div style="border:solid 1px #cdd5d5;font-family:Open,sans-serif;padding: 8px 15px;border-radius:6px;margin-bottom:5%;margin-top:2%;width:95%;word-wrap: break-word">{{ panel.comment}}</div>
                                                 </div>
                                                 <div class="bton_prim_orange" ng-hide="panel.admin" ng-click="admin(panel)" ><center><span class="glyphicon glyphicon-edit"></span> Διαχείριση</center></div>
                                             </form>
@@ -187,19 +191,30 @@
                                                 <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_red" ng-show="panel.admin" ng-click="resetPanel(panel)" ><center><span class="glyphicon glyphicon-remove"></span> Ακύρωση</center></div>
                                             </form>
                                             <br />
-                                            <hr />
+                                            <hr style="position:relative;right:2%"/>
+                                            <div ng-hide="panel.admin">
                                             <h4 style="word-wrap:break-word;padding-right:35px">{{initial_desc}}</h4>
                                             <br />
                                             <center>
                                                 <img ng-src="{{panel_image}}" height="400px" alt="{{initial_desc}}" />
                                             </center>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
+<!--                                <ul class="pagination pagination-sm pull-right">
+                                        <li><a href="#">«</a></li>
+                                        <li class="active"><a  href="#">1</a></li>
+                                        <li><a href="#"><span>2</span></a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a  href="#">4</a></li>
+                                        <li><a  href="#">5</a></li>
+                                        <li><a  href="#">»</a></li>
+                                    </ul>-->
                             </div>    
                         </div>
 
-                        <div style="float:right;width:58%" class="col-md-6">                        
+                        <div style="float:right;width:52%" class="col-md-6">                        
                             <!-- START GOOGLE EUROPE MAP -->
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
@@ -211,11 +226,11 @@
                                 </div>
                                 <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">
                                     <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel == - 1">
-                                        <leaflet id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="550px" width="100%"  style="color:black;">
+                                        <leaflet id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="525px" width="100%"  style="color:black;">
                                         </leaflet>
                                     </div>
                                     <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel != - 1">
-                                        <leaflet id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="550px" width="100%"  style="color:black;">
+                                        <leaflet id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="525px" width="100%"  style="color:black;">
                                         </leaflet>
                                     </div>
                                 </div>
@@ -239,7 +254,7 @@
                             </div>
                             <div class="mb-footer">
                                 <div class="pull-right">
-                                    <button  ng-click="logout($event)" style="border-radius:0px" class="btn btn-success btn-lg">Yes</button>
+                                    <button ng-click="logout($event)" style="border-radius:0px" class="btn btn-success btn-lg">Yes</button>
                                     <button style="border-radius:0px" class="btn btn-default btn-lg mb-control-close">No</button>
                                 </div>
                             </div>
@@ -294,9 +309,3 @@
         </div>
     </body>
 </html>
-
-
-
-
-
-

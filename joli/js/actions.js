@@ -501,7 +501,7 @@ function x_navigation(){
         var li = $(this).parent('li');        
         var ul = li.parent("ul");
         
-        ul.find(" > li").not(li).removeClass("active");    
+        //ul.find(" > li").not(li).removeClass("active");    
         
     });
     
