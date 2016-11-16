@@ -19,8 +19,11 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	                   {id: 'garbage', name: 'GARBAGE_ISSUE', 
 	                	   types: [ 
 	                	            {id: '1', name:'BROKENGARBAGE_BIN'},
-	                	            {id: '2', name:'FULL_GARBAGE_BIN'},
-	                	            {id: '3', name:'FAILING_GARBAGE_BIN'},
+	                	            {id: '2', name:'BULKY_ITEMS'},
+	                	            {id: '3', name:'CUT_BRANCHES'},
+									{id: '4', name:'DEBRIS'},
+									{id: '5', name:'SQUARE_CLEANING'},
+									{id: '6', name:'MOTORIZED_SCANNING'},
 	                	            {id: 'other', name:'OTHER'}] 
 	                   },
 	                   {id: 'lighting', name: 'LIGHTNING_ISSUE', 
@@ -38,10 +41,12 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	                   },
 	                   {id: 'road-contructor', name: 'ROAD_ISSUE', 
 	                	   types: [ 
-	                	            {id: '1', name:'BROKEN_PLATES'},
-	                	            {id: '2', name:'OBJECT_INTERFERING'},
+	                	            {id: '1', name:'POTHOLES'},
+	                	            {id: '2', name:'BROKEN_PLATES'},
 	                	            {id: '3', name:'ABANDONED_CAR'},
-	                	            {id: '4', name:'BAD_ROAD'},
+	                	            {id: '4', name:'OCCUPATION_PAVEMENT'},
+									{id: '5', name:'BROKEN_BENCH'},
+									{id: '6', name:'BOTCHERY'},
 	                	            {id: 'other', name:'OTHER'}] 
 	                   },
 	                   {id: 'protection-policy', name: 'PROTECTION_POLICY_ISSUE', 

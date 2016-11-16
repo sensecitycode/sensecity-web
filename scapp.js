@@ -115,8 +115,16 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'GREEN_ISSUE':'Green',
 		'CUTTING_GRASS':'Cutting Grass',
 		'TREE_PRUNING':'Tree pruning',
-		'RODENT':'Rodent'
-	
+		'RODENT':'Rodent',
+		'BULKY_ITEMS':'Bulky Items',
+        'CUT_BRANCHES':'Cut Branches',
+		'DEBRIS':'Debris',
+		'SQUARE_CLEANING':'Square Cleaning',
+		'MOTORIZED_SCANNING':'Motorized Scanning',
+		'POTHOLES':'Potholes',
+		'OCCUPATION_PAVEMENT':'Occupation Pavement',
+		'BOTCHERY':'Botchery',
+		'BROKEN_BENCH':"Broken Bench"
     });
    
     $translateProvider.translations('el', {
@@ -129,7 +137,7 @@ app.config(['$translateProvider', function ($translateProvider) {
         'GARBAGE_ISSUE': 'Πρόβλημα Καθαριότητας',
         'LIGHTNING_ISSUE': 'Πρόβλημα Φωτισμού',
         'PLUMBING_ISSUE': 'Πρόβλημα Υδρευσης',
-        'ROAD_ISSUE': 'Πρόβλημα Δρόμου/Πεζοδρομίου',
+        'ROAD_ISSUE': 'Πρόβλημα Δρόμου/Πεζοδρομίου/Πλατεία',
         'TITLE': 'Τι συμβαίνει στην πόλη',
         'ISSUES' : 'Προβλήματα',
         'ISSUES_SINCE': 'Προβλήματα από',
@@ -154,7 +162,7 @@ app.config(['$translateProvider', function ($translateProvider) {
         'PROBLEM':'Πρόβλημα',
         'SELPROBLEM': 'Select a Problem',
         'OTHER':'Άλλο',
-        'BROKEN_PLATES': 'Σπασμένες Πλάκες"',
+        'BROKEN_PLATES': 'Σπασμένες Πλάκες',
         'OBJECT_INTERFERING':'Αντικείμενο που εμποδίζει',
         'ABANDONED_CAR':'Εγκαταλ. Αυτοκίνητο',
         'BAD_ROAD':'Λακούβα',
@@ -184,8 +192,16 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'GREEN_ISSUE':'Πράσινο',
 		'CUTTING_GRASS':'Κοπή Χόρτων',
 		'TREE_PRUNING':'Κλάδευμα Δέντρων',
-		'RODENT':'Μυοκτονίες'
-        	
+		'RODENT':'Μυοκτονίες',
+		'BULKY_ITEMS':'Ογκώδη Αντικείμενα',
+        'CUT_BRANCHES':'Κομμένα Κλαδιά',
+		'DEBRIS':'Μπάζα',
+		'SQUARE_CLEANING':'Καθαρισμός Πλατείας',
+		'MOTORIZED_SCANNING':'Μηχανοκίνητη Σάρωση',
+		'POTHOLES':'Λακούβα',
+		'OCCUPATION_PAVEMENT':'Κατάληψη Πεζοδρομίου',
+		'BOTCHERY':'Κακοτεχνία',
+		'BROKEN_BENCH':"Σπασμένο Παγκάκι"
       
     });
    
