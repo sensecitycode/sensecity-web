@@ -42,7 +42,7 @@
 				</div>
 			</div>
 			<div class="eponymous" ng-show='iseponymous()'>
-				<p ng-model="myText"></p>
+				<p><span ng-bind="myText"></span></p>
 				<div class="form-group" style="color:#000000;">					
 					<input ng-model="chkSelected" ng-change="stateChanged()" type="checkbox" class="" value="{{ 'EPONYMOUS_REPORT' | translate}}" style=" width: 25px; height: 25px;"> {{ 'EPONYMOUS_REPORT' | translate}}
 				</div>
