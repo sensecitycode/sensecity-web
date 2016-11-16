@@ -70,11 +70,16 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	
 	$scope.stateChanged = function(){
 	
-		$scope.chkSelected = false;
-		$scope.NameTxt = "Kostas";
-		$scope.EmailTxt = "kostas.bakoulias@gmail.com";
-		$scope.MobileTxt = "6974037897";
-	
+		if($scope.chkSelected){ 
+			$scope.NameTxt = "Kostas";
+			$scope.EmailTxt = "kostas.bakoulias@gmail.com";
+			$scope.MobileTxt = "6974037897";
+		}else{
+			$scope.NameTxt = "";
+			$scope.EmailTxt = "";
+			$scope.MobileTxt = "";
+			
+		}
 		
 	}
 	
