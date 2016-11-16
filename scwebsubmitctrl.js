@@ -67,14 +67,17 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	$scope.otherDescriptionTxt = '-';
 	$scope.uploadedPhotoFile = 'no-image';
 	
-	if($scope.stateChanged){
-		alert($scope.chkSelected);
-		alert("change!");
+	
+	$scope.stateChanged = function(){
+	
+		$scope.chkSelected = false;
+		$scope.NameTxt = "Kostas";
+		$scope.EmailTxt = "kostas.bakoulias@gmail.com";
+		$scope.MobileTxt = "6974037897";
+	
+		
 	}
-	$scope.chkSelected = false;
-	$scope.NameTxt = "Kostas";
-	$scope.EmailTxt = "kostas.bakoulias@gmail.com";
-	$scope.MobileTxt = "6974037897";
+	
 	
 	
 	$scope.updateCompoType = function() {
