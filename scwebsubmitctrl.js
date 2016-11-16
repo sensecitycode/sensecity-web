@@ -67,6 +67,13 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	$scope.otherDescriptionTxt = '-';
 	$scope.uploadedPhotoFile = 'no-image';
 	
+	$scope.stateChanged = function (qId) {
+	   if($scope.answers[qId]){ //If it is checked
+		   alert('test');
+	   }else{
+		   alert("Not checked!");
+	   }
+	}
 	
 	$scope.updateCompoType = function() {
 		$scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0] ;
