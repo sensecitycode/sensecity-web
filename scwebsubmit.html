@@ -41,6 +41,8 @@
 					
 				</div>
 			</div>
+			
+			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_button' />
 			</form>
 			<form class="form-horizontal" name="form" role="form" ng-submit="submit_Eponymous()" id="addeponymous">	
 			<div class="eponymous" ng-show='iseponymous()'>
@@ -62,7 +64,7 @@
 				</div>
 			</div>
 			
-			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_button' />
+			
 			
 			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='register_button' />
 			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' />
