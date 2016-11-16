@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 var app = angular.module('login_fo', ['ngCookies'])
-            .constant("config",{"host":"localhost","port":"8023"});
+        .constant("config", {"host": "localhost", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "8023", "bugzilla_path": "/bugzilla"});
 
 //app.config([
 //  '$httpProvider',
@@ -12,7 +12,7 @@ var app = angular.module('login_fo', ['ngCookies'])
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-app.controller('login_controller', ['$scope', '$window', '$http','$cookieStore','$location','config', function ($scope, $window, $http,$cookieStore,$location,config) {
+app.controller('login_controller', ['$scope', '$window', '$http', '$cookieStore', '$location', 'config', function ($scope, $window, $http, $cookieStore, $location, config) {
         $scope.admin_user = "";
         $scope.lock = "";
         $scope.username_l = "Username";
@@ -20,38 +20,41 @@ app.controller('login_controller', ['$scope', '$window', '$http','$cookieStore',
         $scope.user_focus = function (event) {
 
             $scope.admin_user = {"border": "2px #979ea7 solid", "border-right": "none"};
-        }
+        };
         $scope.lock_focus = function (event) {
             $scope.lock = {"border": "2px #979ea7 solid", "border-right": "none"};
-        }
+        };
         $scope.user_blur = function (event, username) {
             $scope.admin_user = "";
             $scope.username_l = username;
-        }
+        };
         $scope.lock_blur = function (event, password) {
             $scope.lock = "";
             $scope.password_l = password;
-        }
+        };
         $scope.authenticate_us = function (event) {
             var domain = $location.host().split(".");
-            var parameter = JSON.stringify({username: $scope.username_l, password: $scope.password_l, city: 'testweb'});
-            $http.post('http://'+config.host+':'+config.port+'/dashboard', parameter).success(
-                    function (response, status, headers, config) {
-                        response = response.split(';');
-                        if (response != "failure") {
-                            $cookieStore.put('city',response[0]);
-                            $cookieStore.put('role',response[1]);
-                            $cookieStore.put('department',response[2]);
-                            $cookieStore.put('email',response[3]);
-                            $cookieStore.put('uuid',response[4]);
-                            $cookieStore.put('username',response[5]);
-                            $window.location.href = "/joli/admin.html";
-                        } else {
-                            $window.alert("Wrong credentials!");
-                        }
-                    }).error(
-                    function (response) {
-                        $window.alert("failure");
-                    });
+            var parameter = {username: $scope.username_l, password: $scope.password_l, city: 'testcity1'};                       
+            $http.post('http://' + config.host + ':' + config.port + '/dashboard', parameter).success(
+                                function (response, status, headers, cnfg) {
+                                    response = response.split(';');
+                                    if (response != "failure") {
+                                        $cookieStore.put('city', response[0]);
+                                        $cookieStore.put('role', response[1]);
+                                        $cookieStore.put('department', response[2]);
+                                        $cookieStore.put('email', response[3]);
+                                        $cookieStore.put('uuid', response[4]);
+                                        $cookieStore.put('username', response[5]);
+                                        $cookieStore.put('bug_token');
+
+                                        $window.location.href = "/joli/admin.html";
+
+                                    } else {
+                                        $window.alert("Wrong credentials!");
+                                    }
+                                }).error(
+                                function (response) {
+                                    $window.alert("failure");
+                                });
         };
     }]);
