@@ -71,6 +71,13 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	$scope.stateChanged = function(){
 	
 		if($scope.chkSelected){ 
+		
+			
+			console.log("");
+			
+			
+			
+			
 			$scope.NameTxt = "Kostas";
 			$scope.EmailTxt = "kostas.bakoulias@gmail.com";
 			$scope.MobileTxt = "6974037897";
@@ -258,6 +265,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					}).success(function(resp) {
 						
 						console.log(resp);
+						
+						
+						$scope.myText = resp.policy_description;
 						
 						console.log("Submit ok!");
 						
