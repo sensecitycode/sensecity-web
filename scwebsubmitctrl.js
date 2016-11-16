@@ -67,7 +67,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	$scope.otherDescriptionTxt = '-';
 	$scope.uploadedPhotoFile = 'no-image';
 	
-	$scope.chkSelected = true;
+	$scope.chkSelected = false;
 	$scope.NameTxt = "Kostas";
 	$scope.EmailTxt = "kostas.bakoulias@gmail.com";
 	$scope.MobileTxt = "6974037897";
