@@ -68,6 +68,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	$scope.uploadedPhotoFile = 'no-image';
 	
 	$scope.chkSelected = true;
+	$scope.NameTxt = "Kostas";
+	$scope.EmailTxt = "kostas.bakoulias@gmail.com";
+	$scope.MobileTxt = "6974037897";
+	
 	
 	$scope.updateCompoType = function() {
 		$scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0] ;
