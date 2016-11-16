@@ -230,6 +230,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		 //this executes the first time just once in the init of page
 		 $scope.issueSubTypeSelectChanged();
 		 
+		 $scope.submit_Eponymous = function submit(){
+			 
+			 console.log("new submit");
+		 }
 		 
 		 $scope.submitNewIssue = function submit() {
 			 $scope.issue = new Issue();
