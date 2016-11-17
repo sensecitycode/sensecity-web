@@ -400,40 +400,40 @@ body.page-container-boxed .page-container {
 .x-navigation > li.xn-openable:before {
   top: 15px;
 }
-.x-navigation > li > ul > li > a {
+.x-navigation > li > ul  li  a {
   padding-left: 25px;
 }
-.x-navigation > li > ul > li > a:hover {
+.x-navigation > li > ul  li  a:hover {
   padding-left: 30px;
 }
-.x-navigation > li > ul > li.active > a {
+.x-navigation > li > ul  li.active  a {
   padding-left: 30px;
 }
-.x-navigation > li > ul > li > ul > li > a {
+.x-navigation > li > ul > li > ul li a {
   padding-left: 40px;
 }
-.x-navigation > li > ul > li > ul > li > a:hover {
+.x-navigation > li > ul > li > ul li a:hover {
   padding-left: 45px;
 }
-.x-navigation > li > ul > li > ul > li.active > a {
+.x-navigation > li > ul > li > ul li.active a {
   padding-left: 45px;
 }
-.x-navigation > li > ul > li > ul > li > ul > li > a {
+.x-navigation > li > ul > li > ul > li > ul li a {
   padding-left: 50px;
 }
-.x-navigation > li > ul > li > ul > li > ul > li > a:hover {
+.x-navigation > li > ul > li > ul > li > ul li a:hover {
   padding-left: 55px;
 }
-.x-navigation > li > ul > li > ul > li > ul > li.active > a {
+.x-navigation > li > ul > li > ul > li > ul li.active a {
   padding-left: 55px;
 }
-.x-navigation > li > ul > li > ul > li > ul > li > ul > li > a {
+.x-navigation > li > ul > li > ul > li > ul > li > ul li a {
   padding-left: 60px;
 }
-.x-navigation > li > ul > li > ul > li > ul > li > ul > li > a:hover {
+.x-navigation > li > ul > li > ul > li > ul > li > ul li a:hover {
   padding-left: 65px;
 }
-.x-navigation > li > ul > li > ul > li > ul > li > ul > li.active > a {
+.x-navigation > li > ul > li > ul > li > ul > li > ul li.active a {
   padding-left: 65px;
 }
 .x-navigation > li:last-child > a {
@@ -2938,7 +2938,7 @@ blockquote.pull-right {
   width: 100%;
   margin: 10px 0px;
 }
-.pagination.pagination-sm  > li > a,
+.pagination.pagination-sm li a,
 .pagination.pagination-sm > li > span {
   margin-left: 3px;
   margin-top:15px;
@@ -2949,13 +2949,13 @@ blockquote.pull-right {
   border-color: #E5E5E5;
   background-color: rgba(229, 229, 229, 0.5);
 }
-.pagination.pagination-sm  > li > a:hover,
+.pagination.pagination-sm  li  a:hover,
 .pagination > li > span:hover {
   color: #222;
   background-color: rgb(229, 229, 229);
 }
-.pagination > li.active > a,
-.pagination > li.active > a:hover {
+.pagination  li.active  a,
+.pagination  li.active  a:hover {
   background: #1b1e24;
   color: #FFF;
   border-color: #1b1e24;

@@ -26,9 +26,9 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
-        
+
         <link href="./dist/angular-tooltips.min.css" rel="stylesheet" type="text/css" />
-        
+
         <!-- Angular administrationapp dependancies -->
         <script src="adminctrl.js"></script>
         <script src="adminapp.js"></script>
@@ -81,7 +81,7 @@
                         <li class="xn-openable active">
                             <a href="#"><span class="fa fa-desktop"></span> <span class="xn-text">Προβλήματα</span></a>
                             <ul>
-                                <li ng-click="changeTab($index);refresh()" ng-repeat="tab in tabs" ng-class="($index == tabs.activeTab) ? 'active':''" data-title="{{ tab.title}}" name="{{ tab.title}}"><a href="#"><i ng-class="tab.icon"></i>{{tab.title}}</a></li>                                                      
+                                <li ng-click="changeTab($index); refresh()" ng-repeat="tab in tabs" ng-class="($index == tabs.activeTab) ? 'active':''" data-title="{{ tab.title}}" name="{{ tab.title}}"><a href="#"><i ng-class="tab.icon"></i>{{tab.title}}</a></li>                                                      
                             </ul>
                         </li>
 
@@ -185,32 +185,24 @@
                                                 </div>
                                                 <div style="position:relative;margin-top:3%">
                                                     <div class="title" >Σχόλια: </div>
-                                                    <textarea style="width: 95%;height:150px;margin-top:3%;resize:none" ng-disabled="selectedStatus.en == 'CONFIRMED'" type="text" class="form-control" ng-model="comment" placeholder="περιγραφή ...">{{panel.comment}}</textarea>
+                                                    <textarea style="width: 95%;height:150px;margin-top:3%;resize:none" ng-disabled="selectedStatus.en == 'CONFIRMED'" type="text" class="form-control" ng-model="scomment" placeholder="περιγραφή ..."></textarea>
                                                 </div>
-                                                <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(panel, selectedStatus, selectedResolution, comment, selectedComponent, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
+                                                <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(panel, selectedStatus, selectedResolution, scomment, selectedComponent, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
                                                 <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_red" ng-show="panel.admin" ng-click="resetPanel(panel)" ><center><span class="glyphicon glyphicon-remove"></span> Ακύρωση</center></div>
                                             </form>
                                             <br />
                                             <hr style="position:relative;right:2%"/>
                                             <div ng-hide="panel.admin">
-                                            <h4 style="word-wrap:break-word;padding-right:35px">{{initial_desc}}</h4>
-                                            <br />
-                                            <center>
-                                                <img ng-src="{{panel_image}}" height="400px" alt="{{initial_desc}}" />
-                                            </center>
+                                                <h4 style="word-wrap:break-word;padding-right:35px">{{initial_desc}}</h4>
+                                                <br />
+                                                <center>
+                                                    <img ng-src="{{panel_image}}" height="400px" alt="{{initial_desc}}" />
+                                                </center>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-<!--                                <ul class="pagination pagination-sm pull-right">
-                                        <li><a href="#">«</a></li>
-                                        <li class="active"><a  href="#">1</a></li>
-                                        <li><a href="#"><span>2</span></a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a  href="#">4</a></li>
-                                        <li><a  href="#">5</a></li>
-                                        <li><a  href="#">»</a></li>
-                                    </ul>-->
+                            <div class="test"></div>
                             </div>    
                         </div>
 
@@ -221,7 +213,7 @@
                                     <h3 class="panel-title" ng-model="city">{{city}}</h3>
                                     <ul class="panel-controls" style="margin-top: 2px;">
                                         <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                                        <li ng-click="refresh()"><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>                                       
+                                        <li ><a ng-click="refresh()"href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>                                       
                                     </ul>
                                 </div>
                                 <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">

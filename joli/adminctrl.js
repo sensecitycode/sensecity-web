@@ -7,7 +7,12 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', 'EndPointService', 'BugService', 'ToGrService', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $window, $http, $cookieStore, EndPointService, BugService, ToGrService, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
+appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', 'EndPointService', 'BugService', 'ToGrService', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $window, $http, $cookieStore, $templateCache, $compile, EndPointService, BugService, ToGrService, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
+        var summary;
+        var params;
+        var tabchanged = 2;
+        var init = 1;
+
         $scope.duplicof = "";
 
         $scope.logout = function ($event) {
@@ -52,9 +57,52 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         username();
         userole();
 
+        $scope.totalpages = function () {
+            if (($scope.assignissues == false || $scope.closedissues == true)) {
+                if (summary == "all") {
+                    parameter = {params: {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bugs.bug_id desc","status": params.status}};
+                } else {
+                    parameter = {params: {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bugs.bug_id desc","status": params.status, "summary": summary}};
+                }
+            } else {
+                if (summary == "all") {
+                    parameter = {params: {"product": $cookieStore.get("city"), "component": ["Τμήμα επίλυσης προβλημάτων", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου", "Τμήμα ηλεκτροφωτισμού", "Τμήμα καθαριότητας", "Τμήμα πεζοδρομίου/δρόμου/πλατείας"], "order": "bugs.bug_id desc","status": params.status}};
+                } else {
+                    parameter = {params: {"product": $cookieStore.get("city"), "component": ["Τμήμα επίλυσης προβλημάτων", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου", "Τμήμα ηλεκτροφωτισμού", "Τμήμα καθαριότητας", "Τμήμα πεζοδρομίου/δρόμου/πλατείας"], "order": "bugs.bug_id desc","status": params.status, "summary": summary}};
+                }
+            }
+
+            $http.get('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug', parameter).success(
+                    function (response, status, headers, conf) {
+                        $scope.total_pages = Math.ceil(response.bugs.length / 20);
+                        if (init == 0) {
+                            if (tabchanged == 1) {
+                                tabchanged = 0;
+                                $scope.refreshPages(1);
+                                $scope.bugsearch();
+                            }
+                        } else {
+                            init = 0;
+                            $scope.refreshPages(1);
+                            $scope.bugsearchinit();
+                        }
+                    }).error(
+                    function (data, status) {
+                        
+                    });
+        };
+
+        $scope.page_set = [];
+
         $scope.city = $cookieStore.get("city");
 
         $scope.changeTab = function (index) {
+            if (tabchanged == 2) {
+                tabchanged = 0;
+            } else {
+                tabchanged = 1;
+            }
+
             if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "sensecityAdmin") {
                 $scope.tabs.activeTab = index;
                 var issue = Tab2BugzillaService.issue_type(index);
@@ -72,10 +120,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.tabs.activeIcon = "fa fa-road";
                 } else if (issue == "protection-policy") {
                     $scope.tabs.activeTitle = "Πολιτικής Προστασίας";
-                    $scope.tabs.activeTab = "fa fa-shield";
+                    $scope.tabs.activeIcon = "fa fa-shield";
                 } else if (issue == "green") {
                     $scope.tabs.activeTitle = "Πρασίνου";
-                    $scope.tabs.activeTab = "fa fa-tree";
+                    $scope.tabs.activeIcon = "fa fa-tree";
                 }
                 $scope.activePanel = -1;
                 $scope.currentactive = -1;
@@ -366,13 +414,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
             var pageload = function (callback) {
 
+                $scope.activePage = 1;
+                $scope.startPage = 1;
                 $scope.activePanel = -1;
                 $scope.currentactive = -1;
-                $scope.activePage = 0;
-
-                $scope.updatePage = function (activePage) {
-                    $scope.activePage = activePage - 1;
-                };
+                $scope.pageIndex = 1;
 
                 $scope.changeTab($scope.tabs.activeTab);
 
@@ -388,7 +434,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                 var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
                 $scope.component = "Τμήμα επίλυσης προβλημάτων";
-                var summary;
+                summary = "all";
                 // console.log(issue_type);
                 if (issue_type != "all" && ($scope.role == "sensecityAdmin" || $scope.role == "cityAdmin"))
                 {
@@ -396,97 +442,169 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 } else if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
                     if ($scope.tabs[0].title == 'Καθαριότητας') {
                         $scope.component = "Τμήμα καθαριότητας";
-                        summary = 'garbage';
                     } else if ($scope.tabs[0].title == 'Ηλεκτροφωτισμού') {
                         $scope.component = "Τμήμα ηλεκτροφωτισμού";
-                        summary = 'lighting';
                     } else if ($scope.tabs[0].title == 'Πεζοδρομίου/Δρόμου/Πλατείας') {
                         $scope.component = "Τμήμα πεζοδρομίου/δρόμου/πλατείας";
-                        summary = 'road-contructor';
                     } else if ($scope.tabs[0].title == 'Πολιτικής Προστασίας') {
                         $scope.component = "Τμήμα πολιτικής προστασίας";
-                        summary = 'protection-policy';
                     } else if ($scope.tabs[0].title == 'Πρασίνου') {
                         $scope.component = "Τμήμα πρασίνου";
-                        summary = 'green';
                     }
                 }
-                var params = {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bug_id DESC", "limit": "20", "include_fields": ["cf_comment", "cf_description", "component", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution"]};
+                params = {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bug_id DESC", "limit": "20", "include_fields": ["cf_comment", "cf_description", "component", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution"]};
 
                 if ($scope.role == "cityAdmin" || $scope.role == "sensecityAdmin") {
                     params.status = ["CONFIRMED", "IN_PROGRESS"];
                 } else if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
                     params.status = ["IN_PROGRESS"];
                 }
-                // console.log(params);
-                var obj =
-                        {
-                            "method": "Bug.search",
-                            "params": [params],
-                            "id": 1
-                        };
-                // console.log(obj);
 
-                BugService.search(obj, function (result) {
-
-                    var total_counter = result.length;
-                    var counter = 0;
-
-                    angular.forEach(result, function (value, key) {
-                        var issue_name = ToGrService.issueName(value.summary);
-                        var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
-                        var description = CommentService.field(value.status);
-                        var id = value.id;
-                        var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
-                        var creation_time = value.creation_time;
-                        var local_time = moment(creation_time).format('LLLL');
-                        var time_fromNow = moment(creation_time).fromNow();
-                        var parameter;
-
-                        if (!(value.component == "default")) {
-                            $http.get('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/' + id + '/comment', {"token": $cookieStore.get('bug_token')}).success(
-                                    function (response, status, headers, config) {
-                                        counter++;
-                                        var panel =
-                                                {
-                                                    "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
-                                                    "style": panelTitle.status_style,
-                                                    "icon": panelTitle.status_icon,
-                                                    "time": local_time,
-                                                    "issuelink": issuelink,
-                                                    "issuenameGR": issue_name,
-                                                    "issuenameEN": value.summary,
-                                                    "id": Object.keys(response.bugs)[0],
-                                                    "status": panelTitle.status,
-                                                    "new_status": "",
-                                                    "resolution": panelTitle.resolution,
-                                                    "new_resolution": "",
-                                                    "component": value.component,
-                                                    "admin": false,
-                                                    "ArrayID": key,
-                                                    "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
-                                                    "initialdesc": value.cf_description,
-                                                    "mongoId": value.alias
-                                                };
-                                        if (panel.comment == undefined) {
-                                            panel.comment = '';
-                                        }
-                                        $scope.panels.push(panel);
-                                        if (counter == total_counter) {
-                                            counter = 0;
-                                            $scope.panels.sort(function (a, b) {
-                                                return b.id - a.id;
-                                            });
-                                        }
-                                        Issue2MapService.get({issueID: panel.mongoId[0]}, function (issue) {
-                                            $scope.panel_image = issue.image_name;
-                                            $scope.center = {lat: issue.loc.coordinates[1], lng: issue.loc.coordinates[0], zoom: 17};
-                                            $scope.ALLmarkers.push({"lat": issue.loc.coordinates[1], "lng": issue.loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
-                                        });
-                                    });
+                $scope.refreshPages = function (startPage, arrow_type) {
+                    if (startPage < 0) {
+                        $scope.startPage = 1;
+                    } else if (startPage + 4 > $scope.total_pages) {
+                        if ($scope.total_pages < 5) {
+                            $scope.startPage = 1;
+                        } else {
+                            $scope.startPage = $scope.total_pages - 4;
                         }
-                    }, $scope.panels);
-                });
+                    } else if ((startPage - 1) % 5 != 0 && arrow_type != 4) {
+                        $scope.startPage = startPage + 5 - ($scope.total_pages % 5);
+                    } else {
+                        $scope.startPage = startPage;
+                    }
+
+                    if (arrow_type == 4) {
+                        if ($scope.total_pages < 5) {
+                            $scope.activePage = $scope.total_pages;
+                            $scope.pageIndex = $scope.total_pages;
+                        } else {
+                            $scope.activePage = $scope.total_pages;
+                            $scope.pageIndex = 5;
+                        }
+                    } else {
+                        $scope.activePage = $scope.startPage;
+                        if (($scope.startPage - 1 % 5) == 0) {
+                            $scope.pageIndex = $scope.startPage % 5;
+                        } else {
+                            $scope.pageIndex = 5 - ($scope.total_pages - $scope.startPage) % 5;
+                        }
+                    }
+
+                    var local_pages;
+                    if ($scope.total_pages < 5) {
+                        local_pages = $scope.total_pages;
+                    } else if ($scope.total_pages < $scope.startPage + 4) {
+                        local_pages = $scope.total_pages;
+                    } else {
+                        local_pages = $scope.startPage + 4;
+                    }
+
+                    $scope.page_set = [];
+                    for (var i = $scope.startPage; i <= local_pages; i++) {
+                        $scope.page_set.push(i);
+                    }
+
+                    //$templateCache.put('pages', pages);
+                };
+
+                $scope.totalpages();
+
+                $scope.bugsearchinit = function () {
+
+                    $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#">«</a></span></li>'
+                            + '<li ng-click="totalpages();refreshPages(startPage - 5,2);refresh()"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#"><</a></span></li>';
+
+                    $scope.refreshPages(1);
+
+                    $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#">{{page}}</a></span></li>';
+
+                    $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#">></a></span></li>'
+                            + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#">»</a></span></li></ul>';
+
+                    $(".test").html($compile($scope.pages)($scope));
+                    $scope.updatePage = function (activePage) {
+                        $scope.activePage = activePage;
+                        if (($scope.startPage - 1 % 5) == 0) {
+                            $scope.pageIndex = activePage % 5;
+                        } else { //When totalpages are not divided by 5
+                            $scope.pageIndex = 5 - ($scope.total_pages - activePage);
+                        }
+                        if ($scope.pageIndex == 0) {
+                            $scope.pageIndex = 5;
+                        }
+                    };
+                    // console.log(params);
+                    var obj =
+                            {
+                                "method": "Bug.search",
+                                "params": [params],
+                                "id": 1
+                            };
+                    // console.log(obj);
+
+                    BugService.search(obj, function (result) {
+
+                        var total_counter = result.length;
+                        var counter = 0;
+
+                        angular.forEach(result, function (value, key) {
+                            var issue_name = ToGrService.issueName(value.summary);
+                            var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
+                            var description = CommentService.field(value.status);
+                            var id = value.id;
+                            var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
+                            var creation_time = value.creation_time;
+                            var local_time = moment(creation_time).format('LLLL');
+                            var time_fromNow = moment(creation_time).fromNow();
+                            var parameter;
+
+                            if (!(value.component == "default")) {
+                                $http.get('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/' + id + '/comment', {"token": $cookieStore.get('bug_token')}).success(
+                                        function (response, status, headers, config) {
+                                            counter++;
+                                            var panel =
+                                                    {
+                                                        "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
+                                                        "style": panelTitle.status_style,
+                                                        "icon": panelTitle.status_icon,
+                                                        "time": local_time,
+                                                        "issuelink": issuelink,
+                                                        "issuenameGR": issue_name,
+                                                        "issuenameEN": value.summary,
+                                                        "id": Object.keys(response.bugs)[0],
+                                                        "status": panelTitle.status,
+                                                        "new_status": "",
+                                                        "resolution": panelTitle.resolution,
+                                                        "new_resolution": "",
+                                                        "component": value.component,
+                                                        "admin": false,
+                                                        "ArrayID": key,
+                                                        "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
+                                                        "initialdesc": value.cf_description,
+                                                        "mongoId": value.alias
+                                                    };
+                                            if (panel.comment == undefined) {
+                                                panel.comment = '';
+                                            }
+                                            $scope.panels.push(panel);
+                                            if (counter == total_counter) {
+                                                counter = 0;
+                                                $scope.panels.sort(function (a, b) {
+                                                    return b.id - a.id;
+                                                });
+                                            }
+                                            Issue2MapService.get({issueID: panel.mongoId[0]}, function (issue) {
+                                                $scope.panel_image = issue.image_name;
+                                                $scope.center = {lat: issue.loc.coordinates[1], lng: issue.loc.coordinates[0], zoom: 17};
+                                                $scope.ALLmarkers.push({"lat": issue.loc.coordinates[1], "lng": issue.loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
+                                            });
+                                        });
+                            }
+                        }, $scope.panels);
+                    });
+                };
             };
 
             pageload(function (callback) {
@@ -602,93 +720,95 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     panel.component = seldcomponent;
                     panel.admin = false;
 
-
-                    var bug_fieldname = CommentService.field(panel.status.en);
                     // console.log(bug_fieldname);
                     // console.log(panel);
-
-                    var obj;
-                    if (panel.status.en == "RESOLVED")
-                    {
-                        if (panel.resolution.en == "DUPLICATE") {
-                            obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "resolution": panel.resolution.en, "dupe_of": $scope.duplicof};
+                    function update() {
+                        var obj;
+                        if (panel.status.en == "RESOLVED")
+                        {
+                            if (panel.resolution.en == "DUPLICATE") {
+                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "resolution": panel.resolution.en, "dupe_of": $scope.duplicof};
+                            } else {
+                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component};
+                            }
                         } else {
                             obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component};
                         }
-                    } else {
-                        obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component};
-                    }
-                    if (panel.status.en == "RESOLVED")
-                    {
-                        obj.resolution = panel.resolution.en;
-                    }
-                    // console.log(obj);
-
-                    var body =
-                            {
-                                "method": "Bug.update",
-                                "params": [obj],
-                                "id": 1
-                            };
-                    // console.log(body);
-                    BugService.search(body, function (result) {
-                        if (panel.comment !== undefined && bug_fieldname !== undefined)
+                        if (panel.status.en == "RESOLVED")
                         {
-                            $http.post('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/' + panel.id + '/comment', {"comment": panel.comment}, {params: {"token": $cookieStore.get('bug_token')}}).success(
-                                    function (response, status, headers, conf) {
-                                        $http.put('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/comment/' + response.id + '/tags', {"add": [panel.status.en]}, {params: {"token": $cookieStore.get('bug_token')}}).success(
-                                                function (response, status, headers, config) {
-                                                });
-                                    });
+                            obj.resolution = panel.resolution.en;
                         }
-                        var panelTitle = ToGrService.statusTitle(seldstatus.en, seldResolution.en);
-                        panel.style = panelTitle.status_style;
-                        panel.icon = panelTitle.status_icon;
-                        if ($scope.selectedStatus.gr == 'Ανοιχτό') {
-                            if ($scope.selectedStatus.gr != panel.status.gr) {
-                                if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component && $scope.assignissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
-                                    setTimeout(function () {
-                                        $(e.target).closest(".timeline-item-active").remove();
-                                        $scope.activePanel = -1;
-                                        $scope.currentactive = -1;
-                                    }, 3000);
-                                }
+                        // console.log(obj);
+
+                        var body =
+                                {
+                                    "method": "Bug.update",
+                                    "params": [obj],
+                                    "id": 1
+                                };
+                        // console.log(body);
+                        BugService.search(body, function (result) {
+                            if (panel.comment !== undefined)
+                            {
+                                $http.post('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/' + panel.id + '/comment', {"comment": panel.comment}, {params: {"token": $cookieStore.get('bug_token')}}).success(
+                                        function (response, status, headers, conf) {
+                                            $http.put('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/comment/' + response.id + '/tags', {"add": [panel.status.en]}, {params: {"token": $cookieStore.get('bug_token')}}).success(
+                                                    function (response, status, headers, config) {
+                                                    });
+                                        });
+                            }
+                            var panelTitle = ToGrService.statusTitle(seldstatus.en, seldResolution.en);
+                            panel.style = panelTitle.status_style;
+                            panel.icon = panelTitle.status_icon;
+                        });
+                    }
+                    if ($scope.selectedStatus.gr == 'Ανοιχτό') {
+                        if ($scope.selectedStatus.gr != panel.status.gr) {
+                            update();
+                            if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component && $scope.assignissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                                setTimeout(function () {
+                                    $(e.target).closest(".timeline-item-active").remove();
+                                    $scope.activePanel = -1;
+                                    $scope.currentactive = -1;
+                                }, 3000);
+                            }
+                            $scope.selectedStatus.gr = panel.status.gr;
+//                                $scope.activePanel = -1;
+//                                $scope.currentactive = -1;
+                        }
+                    } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.comment != panel.comment) {
+                            $scope.comment = panel.comment;
+                            update();
+                            if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                                setTimeout(function () {
+                                    $(e.target).closest(".timeline-item-active").remove();
+                                    $scope.activePanel = -1;
+                                    $scope.currentactive = -1;
+                                }, 3000);
+                            } else {
                                 $scope.selectedStatus.gr = panel.status.gr;
 //                                $scope.activePanel = -1;
 //                                $scope.currentactive = -1;
                             }
-                        } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
-                            if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.comment != panel.comment) {
-                                if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
-                                    setTimeout(function () {
-                                        $(e.target).closest(".timeline-item-active").remove();
-                                        $scope.activePanel = -1;
-                                        $scope.currentactive = -1;
-                                    }, 3000);
-                                } else {
-                                    $scope.selectedStatus.gr = panel.status.gr;
-//                                $scope.activePanel = -1;
-//                                $scope.currentactive = -1;
-                                }
-                            }
-                        } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
-                            if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.comment != panel.comment || $scope.selectedResolution != panel.resolution || $scope.duplicof != panel.duplicof) {
-                                if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component)) {
-                                    setTimeout(function () {
-                                        $(e.target).closest(".timeline-item-active").remove();
-                                        $scope.activePanel = -1;
-                                        $scope.currentactive = -1;
-                                    }, 3000);
-                                }
-                                $scope.selectedStatus.gr = panel.status.gr;
-//                                $scope.activePanel = -1;
-//                                $scope.currentactive = -1;
-                            }
                         }
-                        console.log("Result:");
-                        console.log(result);
-                        // $scope.refresh();
-                    });
+                    } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.comment != panel.comment || $scope.selectedResolution != panel.resolution || $scope.duplicof != panel.duplicof) {
+                            $scope.comment = panel.comment;
+                            update();
+                            if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component)) {
+                                setTimeout(function () {
+                                    $(e.target).closest(".timeline-item-active").remove();
+                                    $scope.activePanel = -1;
+                                    $scope.currentactive = -1;
+                                }, 3000);
+                            }
+                            $scope.selectedStatus.gr = panel.status.gr;
+//                                $scope.activePanel = -1;
+//                                $scope.currentactive = -1;
+                        }
+                    }
+
                 } else {
                     $scope.valid = false;
                     $cookieStore.remove("uuid");
@@ -750,42 +870,37 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 $cookieStore.remove("username");
                             }
                         });
+                $scope.activePanel = -1;
+                $scope.currentactive = -1;
                 if ($cookieStore.get("uuid") != "undefined") {
                     $scope.panels = [];
                     $scope.ALLmarkers = [];
-
                     var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
                     // console.log(issue_type);
-                    var offset = $scope.activePage * 20;
+                    var offset = ($scope.activePage - 1) * 20;
                     $scope.component = "Τμήμα επίλυσης προβλημάτων";
-                    var summary;
-                    if (issue_type != "all" && ($scope.role == "sensecityAdmin" || $scope.role == "cityAdmin"))
-                    {
-                        params.summary = issue_type;
-                    } else if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                    summary = issue_type;
+                    if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
                         if ($scope.tabs[0].title == 'Καθαριότητας') {
                             $scope.component = "Τμήμα καθαριότητας";
-                            summary = 'garbage';
                         } else if ($scope.tabs[0].title == 'Ηλεκτροφωτισμού') {
                             $scope.component = "Τμήμα ηλεκτροφωτισμού";
-                            summary = 'lighting';
                         } else if ($scope.tabs[0].title == 'Πεζοδρομίου/Δρόμου/Πλατείας') {
                             $scope.component = "Τμήμα πεζοδρομίου/δρόμου/πλατείας";
-                            summary = 'road-contructor';
                         } else if ($scope.tabs[0].title == 'Πολιτικής Προστασίας') {
                             $scope.component = "Τμήμα πολιτικής προστασίας";
-                            summary = 'protection-policy';
                         } else if ($scope.tabs[0].title == 'Πρασίνου') {
                             $scope.component = "Τμήμα πρασίνου";
-                            summary = 'green';
                         }
                     }
                     if (($scope.assignissues == false || $scope.closedissues == true) && $scope.allclosedissues == false) {
-                        var params = {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bug_id DESC", "limit": "20", "offset": offset, "include_fields": ["component", "cf_comment", "cf_description", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "dupe_of"]};
+                        params = {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bug_id DESC", "limit": "20", "offset": offset, "include_fields": ["component", "cf_comment", "cf_description", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "dupe_of"]};
                     } else {
-                        var params = {"product": $cookieStore.get("city"), "component": ["Τμήμα επίλυσης προβλημάτων", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου", "Τμήμα ηλεκτροφωτισμού", "Τμήμα καθαριότητας", "Τμήμα πεζοδρομίου/δρόμου/πλατείας"], "order": "bug_id DESC", "limit": "20", "offset": offset, "include_fields": ["component", "cf_comment", "cf_description", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "dupe_of"]};
+                        params = {"product": $cookieStore.get("city"), "component": ["Τμήμα επίλυσης προβλημάτων", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου", "Τμήμα ηλεκτροφωτισμού", "Τμήμα καθαριότητας", "Τμήμα πεζοδρομίου/δρόμου/πλατείας"], "order": "bug_id DESC", "limit": "20", "offset": offset, "include_fields": ["component", "cf_comment", "cf_description", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "dupe_of"]};
                     }
-                    params.summary = summary;
+                    if (summary != "all") {
+                        params.summary = summary;
+                    }
                     // console.log(params);
                     if (($scope.closedissues == false && $scope.allclosedissues == false) || $scope.assignissues == true)
                     {
@@ -801,77 +916,101 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             params.status = ["CONFIRMED", "IN_PROGRESS", "RESOLVED"];
                         }
                     }
-                    // console.log(params);
-                    var obj =
-                            {
-                                "method": "Bug.search",
-                                "params": [params],
-                                "id": 1
-                            };
 
-                    BugService.search(obj, function (result) {
+                    $scope.bugsearch = function () {
+                        $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#">«</a></span></li>'
+                                + '<li ng-click="totalpages();refreshPages(startPage - 5,2);refresh()"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#"><</a></span></li>';
 
-                        var total_counter = result.length;
-                        var counter = 0;
+                        $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#">{{page}}</a></span></li>';
 
-                        angular.forEach(result, function (value, key) {
+                        $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#">></a></span></li>'
+                                + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#">»</a></span></li></ul>';
 
-                            var issue_name = ToGrService.issueName(value.summary);
-                            var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
-                            var description = CommentService.field(value.status);
-                            var id = value.id;
-                            var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
-                            var creation_time = value.creation_time;
-                            var local_time = moment(creation_time).format('LLLL');
-                            var time_fromNow = moment(creation_time).fromNow();
-                            if (!(value.component == "default")) {
-                                $http.get('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/' + id + '/comment', {"token": $cookieStore.get('bug_token')}).success(
-                                        function (response, status, headers, config) {
-                                            counter++;
-                                            var panel =
-                                                    {
-                                                        "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
-                                                        "style": panelTitle.status_style,
-                                                        "icon": panelTitle.status_icon,
-                                                        "time": local_time,
-                                                        "issuelink": issuelink,
-                                                        "issuenameGR": issue_name,
-                                                        "issuenameEN": value.summary,
-                                                        "id": Object.keys(response.bugs)[0],
-                                                        "status": panelTitle.status,
-                                                        "new_status": "",
-                                                        "resolution": panelTitle.resolution,
-                                                        "new_resolution": "",
-                                                        "component": value.component,
-                                                        "admin": false,
-                                                        "ArrayID": key,
-                                                        "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
-                                                        "initialdesc": value.cf_description,
-                                                        "mongoId": value.alias
-                                                    };
-                                            if (panel.comment == undefined) {
-                                                panel.comment = '';
-                                            }
-                                            $scope.panels.push(panel);
-                                            if (counter == total_counter) {
-                                                counter = 0;
-                                                $scope.panels.sort(function (a, b) {
-                                                    return b.id - a.id;
+
+                        //$templateCache.put('pages', pages);
+                        $(".test").html($compile($scope.pages)($scope));
+                        //$compile('ng-include');
+
+                        // $scope.$apply(); ng-include='{{}}'
+
+                        var obj =
+                                {
+                                    "method": "Bug.search",
+                                    "params": [params],
+                                    "id": 1
+                                };
+
+                        BugService.search(obj, function (result) {
+
+                            var total_counter = result.length;
+                            var counter = 0;
+
+                            angular.forEach(result, function (value, key) {
+
+                                var issue_name = ToGrService.issueName(value.summary);
+                                var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
+                                var description = CommentService.field(value.status);
+                                var id = value.id;
+                                var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
+                                var creation_time = value.creation_time;
+                                var local_time = moment(creation_time).format('LLLL');
+                                var time_fromNow = moment(creation_time).fromNow();
+                                if (!(value.component == "default")) {
+                                    $http.get('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/' + id + '/comment', {"token": $cookieStore.get('bug_token')}).success(
+                                            function (response, status, headers, config) {
+                                                counter++;
+                                                var panel =
+                                                        {
+                                                            "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
+                                                            "style": panelTitle.status_style,
+                                                            "icon": panelTitle.status_icon,
+                                                            "time": local_time,
+                                                            "issuelink": issuelink,
+                                                            "issuenameGR": issue_name,
+                                                            "issuenameEN": value.summary,
+                                                            "id": Object.keys(response.bugs)[0],
+                                                            "status": panelTitle.status,
+                                                            "new_status": "",
+                                                            "resolution": panelTitle.resolution,
+                                                            "new_resolution": "",
+                                                            "component": value.component,
+                                                            "admin": false,
+                                                            "ArrayID": key,
+                                                            "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
+                                                            "initialdesc": value.cf_description,
+                                                            "mongoId": value.alias
+                                                        };
+                                                if (panel.comment == undefined) {
+                                                    panel.comment = '';
+                                                }
+                                                $scope.panels.push(panel);
+                                                if (counter == total_counter) {
+                                                    counter = 0;
+                                                    $scope.panels.sort(function (a, b) {
+                                                        return b.id - a.id;
+                                                    });
+                                                }
+                                                Issue2MapService.get({issueID: panel.mongoId[0]}, function (issue) {
+                                                    $scope.panel_image = issue.image_name;
+                                                    $scope.center = {lat: issue.loc.coordinates[1], lng: issue.loc.coordinates[0], zoom: 17};
+                                                    $scope.ALLmarkers.push({"lat": issue.loc.coordinates[1], "lng": issue.loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                                 });
-                                            }
-                                            Issue2MapService.get({issueID: panel.mongoId[0]}, function (issue) {
-                                                $scope.panel_image = issue.image_name;
-                                                $scope.center = {lat: issue.loc.coordinates[1], lng: issue.loc.coordinates[0], zoom: 17};
-                                                $scope.ALLmarkers.push({"lat": issue.loc.coordinates[1], "lng": issue.loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                             });
-                                        });
-                            }
-                        }, $scope.panels);
+                                }
+                            }, $scope.panels);
+                        });
+                    };
 
-                    });
+                    // console.log(params);
+                    if (tabchanged == 0) {
+                        $scope.bugsearch();
+                    } else {
+                        $scope.totalpages();
+                    }
                 }
                 ;
             };
+
         } else {
 //            $scope.ALLcenter = {
 //                lat: 37.7881600,
