@@ -753,7 +753,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                                 $http.post('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/' + panel.id + '/comment', {"comment": panel.comment}, {params: {"token": $cookieStore.get('bug_token')}}).success(
                                         function (response, status, headers, conf) {
-                                            $http.put('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/comment/' + response.id + '/tags', {"add": [panel.status.en]}, {params: {"token": $cookieStore.get('bug_token')}}).success(
+                                            $http.put('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug/comment/' + response.id + '/tags', {"add": [panel.status.en,panel.component]}, {params: {"token": $cookieStore.get('bug_token')}}).success(
                                                     function (response, status, headers, config) {
                                                     });
                                         });           
