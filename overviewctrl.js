@@ -451,7 +451,9 @@ appControllers
 																		|| lastissue.image_name === undefined) {
 																	lastissue.image_name = "images/EmptyBox-Phone.png";
 																}
-
+																
+																console.log("test test test ====================>>>>>>>>>>>>>");
+																
 																switch (lastissue.issue) {
 																case 'garbage':
 																		lastissue.issue = 'GARBAGE_ISSUE';
