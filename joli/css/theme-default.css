@@ -4325,11 +4325,11 @@ background: #1caf9a !important;
   line-height: 15px;
   border-bottom: 1px solid #dbedff;
 }
-.comments .comment-item img {
+.comments .comment-item span {
   width: 30px;
   height: 30px;
-  margin: 0px 10px 20px 0px;
-  border: 3px solid #FFF;
+  font-size: 15px;
+  margin: 0px 5px 5px 0px;
   -moz-border-radius: 20%;
   -webkit-border-radius: 20%;
   border-radius: 20%;

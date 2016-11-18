@@ -144,7 +144,7 @@
                                             <span class="issue_text" ng-click="itemClicked($index); linkmap(panel)">{{ panel.title}}</span>
                                         </div>                                     
                                     </div>
-                                    <div ng-style="($index == activePanel)? {'height': '950px', 'opacity': '1', 'transition': 'height 0.3s'} : {'height': '0px', 'opacity': '0', 'transition': 'height 0.3s'}" ng-show="$index == activePanel">
+                                    <div ng-style="($index == activePanel)? {'height': '100%', 'opacity': '1', 'transition': 'height 0.3s linear'} : {'height': '0px', 'opacity': '0', 'transition': 'height 0.3s linear'}" ng-show="$index == activePanel">
                                         <div style="margin-top:10%" class="panel-body">
                                             <form name="editableForm" ng-hide="panel.admin">
                                                 <div style="margin-bottom:3%;margin-left:1%">
@@ -152,18 +152,30 @@
                                                     <span>{{panel.status.gr}}</span>
                                                     <span ng-show="panel.status.en == 'RESOLVED'"> ({{panel.resolution.gr}})</span>
                                                 </div>
-                                                <div style="margin-bottom:3%;margin-left:1%">
-                                                    <span class="title">Καταγραφη: </span>
-                                                    <span >{{ panel.time}}</span>
-                                                </div>
                                                 <div ng-show="role != 'sensecityAdmin' && role != 'cityAdmin' || tabs.activeTitle != 'Όλα τα προβλήματα'" style="margin-bottom:3%;margin-left:1%">
                                                     <span class="title">Τμήμα Ανάθεσης: </span>
                                                     <span >{{ panel.component}}</span>
+                                                </div>                            
+                                                <div style="margin-bottom:3%;margin-left:1%">
+                                                    <span class="title">Καταγραφη: </span>
+                                                    <span >{{ panel.time}}</span>
+                                                </div>   
+                                                <div style="margin-bottom:3%;margin-left:1%">
+                                                    <span class="title">Ονοματεπώνυμο: </span>
+                                                    <span> {{panel.creator}}</span>
                                                 </div>
+                                                <div style="margin-bottom:3%;margin-left:1%">
+                                                    <span class="title">Τηλέφωνο: </span>
+                                                    <span> {{panel.tel}}</span>
+                                                </div>
+                                                <div style="margin-bottom:3%;margin-left:1%">
+                                                    <span class="title">e-mail: </span>
+                                                    <span> {{panel.email}}</span>
+                                                </div>                                             
                                                 <div style="visibility: hidden">
                                                     <span>{{panel.duplicof}}</span>
                                                 </div>
-                                                <div ng-show="panel.comment != '';" style="margin-bottom:2%;margin-left:1%;">
+                                                <div ng-show="panel.comment != '' && panel.comment != 'undefined';" style="margin-bottom:2%;margin-left:1%;">
                                                     <div class="title">Σχόλια: </div>
                                                     <div style="border:solid 1px #cdd5d5;font-family:Open,sans-serif;padding: 8px 15px;border-radius:6px;margin-bottom:5%;margin-top:2%;width:95%;word-wrap: break-word">{{ panel.comment}}</div>
                                                 </div>
@@ -196,13 +208,28 @@
                                                 <h4 style="word-wrap:break-word;padding-right:35px">{{initial_desc}}</h4>
                                                 <br />
                                                 <center>
-                                                    <img ng-src="{{panel_image}}" height="400px" alt="{{initial_desc}}" />
+                                                    <img ng-src="{{panel_image}}" width="60%" height="400px" alt="{{initial_desc}}" />
                                                 </center>
                                             </div>
+                                        <div class="timeline-heading" style="padding-bottom: 10px;">                         
+                                        </div>                                        
+                                        <div style="left: -4.1%;position:relative;width:102.6%;;margin-top:20px" class="timeline-body comments">
+                                            <center style="background-color:#191616;color:#d8dedf" class="comment-item">
+                                            <h4>Ιστορικό</h4>                                                                                                 
+                                            </center>
+                                            <div ng-repeat="progress in panel.history" class="comment-item">
+                                                <span ng-style="progress.style" ng-class="progress.class"></span>
+                                                    <div class="comment-head">Κατάσταση: {{progress.state}}</div>
+                                                    <br>
+                                                    <div class="comment-head">Αναφορά: {{progress.timestamp}}</div>
+                                                    <br><br>
+                                                <p style="font-size: 16px">{{progress.text}}</p>
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
-                            <div class="test"></div>
+                            <div class="paging"></div>
                             </div>    
                         </div>
 
