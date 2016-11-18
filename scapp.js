@@ -124,7 +124,10 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'POTHOLES':'Potholes',
 		'OCCUPATION_PAVEMENT':'Occupation Pavement',
 		'BOTCHERY':'Botchery',
-		'BROKEN_BENCH':"Broken Bench"
+		'BROKEN_BENCH':"Broken Bench",
+		'MESSAGE_USER':'I want to be informed by email or sms.',
+		'EMAIL_USER':'email',
+		'SMS_USER':'sms'
     });
    
     $translateProvider.translations('el', {
@@ -201,7 +204,10 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'POTHOLES':'Λακούβα',
 		'OCCUPATION_PAVEMENT':'Κατάληψη Πεζοδρομίου',
 		'BOTCHERY':'Κακοτεχνία',
-		'BROKEN_BENCH':"Σπασμένο Παγκάκι"
+		'BROKEN_BENCH':"Σπασμένο Παγκάκι",
+		'MESSAGE_USER':'Θέλω να ενημερωθώ με email ή sms.',
+		'EMAIL_USER':'email',
+		'SMS_USER':'sms'
       
     });
    

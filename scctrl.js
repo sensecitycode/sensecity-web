@@ -27,6 +27,7 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 			APIURL: "http://api.sense.city:4000/api/issue/",
 			bugzilla: "http://api.sense.city:4001/bugs/search",
 			ALLISSUESAPIURL: "http://api.sense.city:4000/api/issues",
+			active_user_URL : "http://api.sense.city:4000/api/active_users",
 			map_zoom:12
 		}
 		

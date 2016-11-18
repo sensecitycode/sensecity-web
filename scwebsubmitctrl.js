@@ -231,8 +231,51 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		 $scope.issueSubTypeSelectChanged();
 		 
 		 $scope.submit_Eponymous = function submit(){
+				
+			var txtpost = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'", "permission" :  { "send_issues": "true" , "communicate_with": {"email" : "'+$("#btn_settings_ans_email").is(":checked").toString()+'", "sms" : "'+$("#btn_settings_ans_sms").is(":checked").toString()+'"}}}';    
+			
+			console.log(txtpost);
+			
+			
+			return $http({
+				method : 'POST',
+				url : $rootScope.Variables.active_user_URL,
+				headers : {
+					'Content-Type' : 'application/json; charset=utf-8'
+				},
+				data : txtpost 
+			}).success(function(resp) {
+						
+						console.log(resp);
+						$scope.myText = resp.policy_description;
+						
+						$scope.issubmit_isseu_form = function(){
+							 return false;
+						 }
+						 
+						$scope.iseponymous = function(){
+							 return true;
+						 }
+						
+						$scope.submit_button = false;
+						
+						
+						$scope.submit_button = false;
+						$scope.register_button = true;
+						$scope.verify_button = false;
+						$scope.submit_eponymous_button = false;
+						
+						//$location.path("/test1");
+					}); 
 			 
-			 console.log("new submit");
+			 
+			 
+			 
+			 
+			 
+			 
+			 
+			
 		 }
 		 
 		 $scope.submitNewIssue = function submit() {
@@ -247,9 +290,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			 $scope.issue.value_desc =  desc ;
 			 $scope.issue.image_name =  $scope.uploadedPhotoFile ; //no-image
 			
-			var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id 
-			+'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '" }' ;
 			
+		var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id 
+			+'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '" }' ;	
 			
 			console.log( txtpost );			
 			console.log("--------------------------------------");

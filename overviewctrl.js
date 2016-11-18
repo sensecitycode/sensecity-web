@@ -514,7 +514,7 @@ appControllers
 																}
 																lastissue.create_at = datediff;
 																lastissue.create_at_unit = datediffunit;
-																var bugParams =
+																/*var bugParams =
 																{
 																    "method": "Bug.get",
 																    "params": [{"ids":lastissue._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
@@ -534,6 +534,7 @@ appControllers
 																	 }
 																	 lastissue.status = result.status;
 																});
+																*/
 
 															});
 										});
