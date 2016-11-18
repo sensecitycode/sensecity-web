@@ -128,6 +128,8 @@ appControllers.controller('allissuesCtrl', function($scope, $log, DisplayLast100
 										}
 										lastissue.create_at = datediff;
 										lastissue.create_at_unit = datediffunit;
+										
+										/*
 										var bugParams =
 										{
 										    "method": "Bug.get",
@@ -149,6 +151,9 @@ appControllers.controller('allissuesCtrl', function($scope, $log, DisplayLast100
 											 lastissue.status = result.status;
 										});
 
+										*/
+										
+										
 									});
 				});
 				// query() returns all the last 6
