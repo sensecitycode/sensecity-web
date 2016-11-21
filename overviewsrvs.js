@@ -20,10 +20,8 @@ appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointS
 });
 
 //single full issue (with image) via ID
-appServices.factory('Issue2MapService', function ( $resource, APIEndPointService) {
-    return $resource('http://api.sense.city:4000/api/fullissue/:issueID',
-        {issueID: '@id'}, {}
-	);
+appServices.factory('Issue2MapService', function ( $resource, APIEndPointService) {	
+    return $resource('http://api.sense.city:4000/api/fullissue/:issueID', {issueID: '@id'},{'query':{ method:'GET', isArray:true}});
 });
 
 appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
@@ -40,8 +38,7 @@ appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndP
 appServices.factory('BugService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     return $resource(
         //APIEndPointService.bugzilla,
-		$rootScope.Variables.bugzilla
-        null,
+		$rootScope.Variables.bugzilla,
         {
           search: {
             method: 'POST',
