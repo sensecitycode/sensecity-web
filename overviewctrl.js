@@ -247,7 +247,7 @@ appControllers
 					     // marker3.bindPopup("Loading...");
 							 var issue_name;
 					     Issue2MapService.get({issueID:marker3.options.issue_id}, function(resp) {
-					       switch(resp.issue){
+					       switch(resp[0].issue){
 					         case "garbage":
 					           issue_name = "Πρόβλημα Καθαριότητας";
 					           break;
@@ -269,7 +269,7 @@ appControllers
 					         default:
 					           break;
 					       }
-					       popup.setContent("<center><b>"+issue_name+"</b><br>"+resp.value_desc+"<br><img src="+resp.image_name+" style=height:200px><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ issueid+"\">Εξέλιξη προβλήματος!</a></center>");
+					       popup.setContent("<center><b>"+issue_name+"</b><br>"+resp[0].value_desc+"<br><img src="+resp[0].image_name+" style=height:200px><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ issueid+"\">Εξέλιξη προβλήματος!</a></center>");
 					       popup.update();
 					     });
 					   });
