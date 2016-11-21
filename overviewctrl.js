@@ -246,7 +246,7 @@ appControllers
 					     var popup = marker3.getPopup();
 					     // marker3.bindPopup("Loading...");
 							 var issue_name;
-						console.log("issueID:marker3.options.issue_id============================================================"+issueID:marker3.options.issue_id)
+						console.log("issueID:marker3.options.issue_id============================================================"+issueID:marker3.options.issue_id);
 					     Issue2MapService.query({issueID:marker3.options.issue_id}, function(resp) {
 							console.log("resp =============-------------------->>>>>>>>>>"+JSON.stringify(resp));
 							console.log("resp[0] =============-------------------->>>>>>>>>>"+resp[0].issue);
