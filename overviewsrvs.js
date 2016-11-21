@@ -23,8 +23,8 @@ appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointS
 appServices.factory('Issue2MapService', function ( $resource/*, APIEndPointService*/ , $rootScope) {
     // console.log("DisplayIssues");
     return $resource('http://api.sense.city:4000/api/fullissue/:issueID',
-        {issueID:'@id'}
-			);
+        {issueID:'@id'},{query: {method: 'get', isArray: true, cancellable: true}}
+	);
 });
 
 appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
