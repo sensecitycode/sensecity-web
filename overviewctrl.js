@@ -1,4 +1,4 @@
-var appControllers = angular.module('overviewapp.controllers', ['pascalprecht.translate','ngCookies']);
+var appControllers = angular.module('overviewapp.controllers', ['pascalprecht.translate','ngCookies','ngResource']);
 
 appControllers.directive('sidebarDirective', function() {
 	return {
