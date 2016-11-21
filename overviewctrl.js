@@ -1,4 +1,4 @@
-var appControllers = angular.module('overviewapp.controllers', ['pascalprecht.translate','ngCookies','ngResource']);
+var appControllers = angular.module('overviewapp.controllers', ['pascalprecht.translate','ngCookies']);
 
 appControllers.directive('sidebarDirective', function() {
 	return {
@@ -242,42 +242,40 @@ appControllers
 							});
 
 							$scope.$on("leafletDirectiveMarker.click", function(event, args){
-								var marker3 = args.leafletObject;
-								var popup = marker3.getPopup();
-								// marker3.bindPopup("Loading...");
-								var issue_name;
+					     var marker3 = args.leafletObject;
+					     var popup = marker3.getPopup();
+					     // marker3.bindPopup("Loading...");
+							 var issue_name;
+					     Issue2MapService.get({issueID:marker3.options.issue_id}, function(resp) {
+							console.log("resp =============-------------------->>>>>>>>>>"+resp);
+							console.log("resp[0] =============-------------------->>>>>>>>>>"+resp.issue);
 							
-								Issue2MapService.query({issueID:marker3.options.issue_id}, function(resp) {
-									console.log("resp =============-------------------->>>>>>>>>>"+resp);
-								
-									switch(resp[0].issue){
-										case "garbage":
-											issue_name = "Πρόβλημα Καθαριότητας";
-										break;
-										case "lighting":
-											issue_name = "Πρόβλημα Φωτισμού";
-											break;
-										case "plumbing":
-											issue_name = "Πρόβλημα Ύδρευσης";
-											break;
-										case "road-contructor":
-											issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου/Πλατείας";
-											break;
-										case "protection-policy":
-											issue_name = "Πολιτική Προστασία";
-											break;
-										case "green":
-											issue_name = "Πράσινο";
-											break;
-										default:
-											break;
-									}
-									
-									
-									popup.setContent("<center><b>"+issue_name+"</b><br>"+resp[0].value_desc+"<br><img src="+resp[0].image_name+" style=height:200px><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ issueid+"\">Εξέλιξη προβλήματος!</a></center>");
-									popup.update();
-								});
-						});
+					       switch(resp[0].issue){
+					         case "garbage":
+					           issue_name = "Πρόβλημα Καθαριότητας";
+					           break;
+					         case "lighting":
+					           issue_name = "Πρόβλημα Φωτισμού";
+					           break;
+					         case "plumbing":
+					           issue_name = "Πρόβλημα Ύδρευσης";
+					           break;
+					         case "road-contructor":
+					           issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου/Πλατείας";
+					           break;
+							 case "protection-policy":
+					           issue_name = "Πολιτική Προστασία";
+					           break;
+							 case "green":
+					           issue_name = "Πράσινο";
+					           break;
+					         default:
+					           break;
+					       }
+					       popup.setContent("<center><b>"+issue_name+"</b><br>"+resp[0].value_desc+"<br><img src="+resp[0].image_name+" style=height:200px><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ issueid+"\">Εξέλιξη προβλήματος!</a></center>");
+					       popup.update();
+					     });
+					   });
 
 
 							var startdate = new Date();
@@ -456,6 +454,8 @@ appControllers
 																		|| lastissue.image_name === undefined) {
 																	lastissue.image_name = "images/EmptyBox-Phone.png";
 																}
+																
+																console.log("test test test ====================>>>>>>>>>>>>>");
 																
 																switch (lastissue.issue) {
 																case 'garbage':
