@@ -258,7 +258,7 @@ appControllers
 					           issue_name = "Πρόβλημα Ύδρευσης";
 					           break;
 					         case "road-contructor":
-					           issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου";
+					           issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου/Πλατείας";
 					           break;
 							 case "protection-policy":
 					           issue_name = "Πολιτική Προστασία";

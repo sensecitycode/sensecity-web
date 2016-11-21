@@ -22,7 +22,7 @@ appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointS
 //single full issue (with image) via ID
 appServices.factory('Issue2MapService', function ( $resource/*, APIEndPointService*/ , $rootScope) {
     // console.log("DisplayIssues");
-    return $resource(/*APIEndPointService.APIURL,*/'http://api.sense.city:3000/api/fullissue/:issueID',
+    return $resource('http://api.sense.city:4000/api/fullissue/:issueID',
         {issueID:'@id'}
 			);
 });
