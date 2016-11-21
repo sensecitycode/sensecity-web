@@ -246,6 +246,7 @@ appControllers
 								var popup = marker3.getPopup();
 							 
 								var issue_name;
+								console.log(marker3.options.issue_id);
 								Issue2MapService.query({issueID:marker3.options.issue_id}, function(resp) {
 									console.log("resp =============-------------------->>>>>>>>>>"+JSON.stringify(resp));
 									console.log("resp[0] =============-------------------->>>>>>>>>>"+resp[0]);

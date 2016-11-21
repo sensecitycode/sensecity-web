@@ -21,7 +21,7 @@ appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointS
 
 //single full issue (with image) via ID
 appServices.factory('Issue2MapService', function ( $resource, APIEndPointService) {	
-    return $resource('http://api.sense.city:4000/api/fullissue/:issueID', {issueID: '@id'},{'query':{ method:'GET', isArray:true}});
+    return $resource('http://xxx.sense.city:4000/api/fullissue/:issueID', {issueID: '@id'},{'query':{ method:'GET', isArray:true}});
 });
 
 appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
