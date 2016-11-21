@@ -20,10 +20,11 @@ appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointS
 });
 
 //single full issue (with image) via ID
+/*
 appServices.factory('Issue2MapService', function ( $resource, APIEndPointService) {	
     return $resource('http://xxx.sense.city:4000/api/fullissue/:issueID', {issueID: '@id'},{'query':{ method:'GET', isArray:true}});
 });
-
+*/
 appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
     return $resource($rootScope.Variables.APIURL + $rootScope.Variables.city_name + '?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1',

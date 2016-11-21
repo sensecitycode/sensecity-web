@@ -149,41 +149,38 @@ appControllers
 
 
 							$scope.openStreetMap = {
-										name : 'OpenStreetMap',
-										type : 'xyz',
-										url : 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-										layerOptions : {
-											showOnSelector : true,
-											attribution : '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-											maxZoom: 19
-										}
-									};
-
-
-
+								name : 'OpenStreetMap',
+								type : 'xyz',
+								url : 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+								layerOptions : {
+									showOnSelector : true,
+									attribution : '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+									maxZoom: 19
+								}
+							};
 
 							//We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
 
 							var googleRoadmap = {
-										name : 'Google Map + Traffic',
-										layerType: 'ROADMAP',
-										type : 'google',
-										layerOptions : {
-											showOnSelector : true,
-											attribution : 'xxx',
-											maxZoom: 20
-										}
+								name : 'Google Map + Traffic',
+								layerType: 'ROADMAP',
+								type : 'google',
+								layerOptions : {
+									showOnSelector : true,
+									attribution : 'xxx',
+									maxZoom: 20
+								}
 							};
 
 							var googleHybrid = {
-										name : 'Google Hybrid + Traffic',
-										layerType: 'HYBRID',
-										type : 'google',
-										layerOptions : {
-											showOnSelector : true,
-											attribution : 'xxx',
-											maxZoom: 20
-										}
+								name : 'Google Hybrid + Traffic',
+								layerType: 'HYBRID',
+								type : 'google',
+								layerOptions : {
+									showOnSelector : true,
+									attribution : 'xxx',
+									maxZoom: 20
+								}
 							};
 
 
@@ -193,7 +190,6 @@ appControllers
 									openStreetMap: $scope.openStreetMap,
 									gR: googleRoadmap,
 									gH: googleHybrid
-
 								},
 								overlays : {
 									garbage : {
@@ -235,10 +231,9 @@ appControllers
 							};
 
 							$scope.$on('leafletDirectiveMap.overlayadd', function(event, o){
-									console.log( "overlayadd event " );
-									console.log( o.leafletEvent );
-									console.log( o.leafletEvent.layer );
-
+								console.log( "overlayadd event " );
+								console.log( o.leafletEvent );
+								console.log( o.leafletEvent.layer );
 							});
 
 							$scope.$on("leafletDirectiveMarker.click", function(event, args){
@@ -246,6 +241,8 @@ appControllers
 								var popup = marker3.getPopup();
 							 
 								var issue_name;
+								var issue_image;
+								
 								console.log(marker3.options.issue_id);
 								Issue2MapService.query({issueID:marker3.options.issue_id}, function(resp) {
 								
@@ -270,6 +267,13 @@ appControllers
 											break;
 										default:
 											break;
+									}
+									
+									if(resp[0].image_name==""){
+										issue_image="/images/EmptyBox-Phone.png";
+									}
+									else{
+										issue_image=resp[0].image_name;
 									}
 									
 									popup.setContent("<center><b>"+issue_name+"</b><br>"+resp[0].value_desc+"<br><img src="+resp[0].image_name+" style=height:200px><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ resp[0]._id+"\">Εξέλιξη προβλήματος!</a></center>");
