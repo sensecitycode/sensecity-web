@@ -248,7 +248,7 @@ appControllers
 								var issue_name;
 							
 								Issue2MapService.query({issueID : marker3.options.issue_id}, function(resp) {
-									console.log("resp =============-------------------->>>>>>>>>>"+resp.issue);
+									console.log("resp =============-------------------->>>>>>>>>>"+resp);
 								
 									switch(resp[0].issue){
 										case "garbage":
