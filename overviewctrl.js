@@ -248,8 +248,6 @@ appControllers
 								var issue_name;
 								console.log(marker3.options.issue_id);
 								Issue2MapService.query({issueID:marker3.options.issue_id}, function(resp) {
-									console.log("resp =============-------------------->>>>>>>>>>"+JSON.stringify(resp));
-									console.log("resp[0] =============-------------------->>>>>>>>>>"+resp[0].issue);
 								
 									switch(resp[0].issue){
 										case "garbage":
@@ -274,7 +272,7 @@ appControllers
 											break;
 									}
 									
-									popup.setContent("<center><b>"+issue_name+"</b><br>"+resp[0].value_desc+"<br><img src="+resp[0].image_name+" style=height:200px><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ issueid+"\">Εξέλιξη προβλήματος!</a></center>");
+									popup.setContent("<center><b>"+issue_name+"</b><br>"+resp[0].value_desc+"<br><img src="+resp[0].image_name+" style=height:200px><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ resp[0]._id+"\">Εξέλιξη προβλήματος!</a></center>");
 									popup.update();
 									
 								});
