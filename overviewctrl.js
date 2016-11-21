@@ -247,6 +247,10 @@ appControllers
 					     // marker3.bindPopup("Loading...");
 							 var issue_name;
 					     Issue2MapService.get({issueID:marker3.options.issue_id}, function(resp) {
+							console.log("resp =============-------------------->>>>>>>>>>"+resp);
+							console.log("resp[0] =============-------------------->>>>>>>>>>"+resp[0]);
+							console.log("resp[1] =============-------------------->>>>>>>>>>"+resp[1]);
+							
 					       switch(resp[0].issue){
 					         case "garbage":
 					           issue_name = "Πρόβλημα Καθαριότητας";
