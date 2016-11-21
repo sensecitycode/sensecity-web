@@ -276,7 +276,7 @@ appControllers
 										issue_image=resp[0].image_name;
 									}
 									
-									popup.setContent("<center><b>"+issue_name+"</b><br>"+resp[0].value_desc+"<br><img src="+resp[0].image_name+" style=height:200px><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ resp[0]._id+"\">Εξέλιξη προβλήματος!</a></center>");
+									popup.setContent("<center><b>"+issue_name+"</b><br>"+resp[0].value_desc+"<br><img src=\""+issue_image+"\" style=\"height:200px\"><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ resp[0]._id+"\">Εξέλιξη προβλήματος!</a></center>");
 									popup.update();
 									
 								});
