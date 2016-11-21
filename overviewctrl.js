@@ -249,7 +249,7 @@ appControllers
 								console.log(marker3.options.issue_id);
 								Issue2MapService.query({issueID:marker3.options.issue_id}, function(resp) {
 									console.log("resp =============-------------------->>>>>>>>>>"+JSON.stringify(resp));
-									console.log("resp[0] =============-------------------->>>>>>>>>>"+resp[0]);
+									console.log("resp[0] =============-------------------->>>>>>>>>>"+resp[0].issue);
 								
 									switch(resp[0].issue){
 										case "garbage":
