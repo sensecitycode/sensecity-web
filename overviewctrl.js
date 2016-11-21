@@ -247,8 +247,8 @@ appControllers
 					     // marker3.bindPopup("Loading...");
 							 var issue_name;
 					     Issue2MapService.get({issueID:marker3.options.issue_id}, function(resp) {
-							console.log("resp =============-------------------->>>>>>>>>>"+JSONStringify(resp));
-							console.log("resp[0] =============-------------------->>>>>>>>>>"+resp.issue);
+							
+							console.log("resp[0] =============-------------------->>>>>>>>>>"+resp[0]);
 							
 					       switch(resp[0].issue){
 					         case "garbage":
