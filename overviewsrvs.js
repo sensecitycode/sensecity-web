@@ -22,6 +22,7 @@ appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointS
 //single full issue (with image) via ID
 appServices.factory('Issue2MapService', function ( $resource/*, APIEndPointService*/ , $rootScope) {
     // console.log("DisplayIssues");
+	console.log("sdfsgf======>>>>>>>>>>>>>>---------------------");
     return $resource('http://api.sense.city:4000/api/fullissue/:issueID',
         {issueID:'@id'},{query: {method: 'get', isArray: true, cancellable: true}}
 	);
