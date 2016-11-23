@@ -98,36 +98,33 @@ section#timeline article:nth-child(2n+2) div.inner {
   float: right;
 }
 section#timeline article:nth-child(2n+2) div.inner h2:after {
-  left: -5px;
+  left: -5px;   
   background-color: inherit;
 }
-section#timeline article:nth-child(1) div.inner h2 {
+
+section#timeline article:nth-child(n) div.inner div div {
+  position: relative;
+  left: 40%;
+  top: -2px;
+  color:white;
+  font-size: 15px;
+}
+
+section#timeline article:nth-child(n+1) div.inner div div {
+  position: relative;
+  left: 40%;
+  top: -2px;
+  color:white;
+  font-size: 15px;
+}
+
+section#timeline article:nth-child(n) div.inner h2 {
   background-color: inherit;
 }
-section#timeline article:nth-child(1) div.inner h2:after {
+section#timeline article:nth-child(n) div.inner h2:after {
   background-color: inherit;
 }
-section#timeline article:nth-child(2) div.inner h2 {
-  background-color: inherit;
-}
-section#timeline article:nth-child(2) div.inner h2:after {
-  background-color: inherit;
-}
-section#timeline article:nth-child(3) div.inner h2 {
-  background-color: inherit;
-}
-section#timeline article:nth-child(3) div.inner h2:after {
-  background-color: inherit;
-}
-section#timeline article:nth-child(4) div.inner h2 {
-  background-color: inherit;
-}
-section#timeline article:nth-child(4) div.inner h2:after {
-  background-color: inherit;
-}
-section#timeline article:nth-child(5) div.inner h2 {
-  background-color: inherit;
-}
-section#timeline article:nth-child(5) div.inner h2:after {
+
+section#timeline article:nth-child(n+1) div.inner h2:after {
   background-color: inherit;
 }
