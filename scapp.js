@@ -127,7 +127,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'BROKEN_BENCH':"Broken Bench",
 		'MESSAGE_USER':'I want to be informed by email or sms.',
 		'EMAIL_USER':'email',
-		'SMS_USER':'sms'
+		'SMS_USER':'sms',
+		'VERIFY_CODE':'Verify Code'
     });
    
     $translateProvider.translations('el', {
@@ -207,7 +208,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'BROKEN_BENCH':"Σπασμένο Παγκάκι",
 		'MESSAGE_USER':'Θέλω να ενημερωθώ με email ή sms.',
 		'EMAIL_USER':'email',
-		'SMS_USER':'sms'
+		'SMS_USER':'sms',
+		'VERIFY_CODE':'Κωδικός πιστοποίησης'
       
     });
    
