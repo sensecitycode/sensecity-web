@@ -284,7 +284,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		 
 		 
 		 
-		 
+		var my_id;
 		 
 		 
 		 
@@ -322,7 +322,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					data : txtpost 
 				}).success(function(resp) {
 					console.log(resp);
-					
+					my_id=resp._id;
 					$scope.myText = resp.policy_description;
 						
 					console.log("Submit ok!");
@@ -467,7 +467,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				
 				return $http({
 					method : 'POST',
-					url : $rootScope.Variables.APIURL,
+					url : $rootScope.Variables.APIURL+my_id,
 					headers : {
 						'Content-Type' : 'application/json; charset=utf-8'
 					},
