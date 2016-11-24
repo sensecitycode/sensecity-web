@@ -478,6 +478,13 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.register_button = false;
 					$scope.verify_button = false;
 					$scope.submit_eponymous_button = false;
+					$scope.latlabeltxt = "";
+					$scope.lnglabeltxt = "";
+					$scope.NameTxt = "";
+					$scope.EmailTxt = "";
+					$scope.MobileTxt = "";
+					$scope.chkSelected_1 = false;
+					$scope.chkSelected_2 = false;
 					
 					$scope.issubmit_isseu_form = function(){
 						return true;
