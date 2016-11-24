@@ -63,10 +63,10 @@
 					</div>
 					<p style="color:#000000;">{{ 'MESSAGE_USER' | translate }}</p>
 					<div class="form-group" style="color:#000000;">					
-						<input ng-model="chkSelected_1" ng-change="stateChanged_email()" type="checkbox" class="" value="{{ 'EMAIL_USER' | translate}}" style=" width: 25px; height: 25px;"> {{ 'EMAIL_USER' | translate}}
+						<input ng-model="chkSelected_1" ng-readonly="!chkSelected" ng-change="stateChanged_email()" type="checkbox" class="" value="{{ 'EMAIL_USER' | translate}}" style=" width: 25px; height: 25px;"> {{ 'EMAIL_USER' | translate}}
 					</div>
 					<div class="form-group" style="color:#000000;">					
-						<input ng-model="chkSelected_2" ng-change="stateChanged_sms()" type="checkbox" class="" value="{{ 'SMS_USER' | translate}}" style=" width: 25px; height: 25px;"> {{ 'SMS_USER' | translate}}
+						<input ng-model="chkSelected_2" ng-readonly="!chkSelected" ng-change="stateChanged_sms()" type="checkbox" class="" value="{{ 'SMS_USER' | translate}}" style=" width: 25px; height: 25px;"> {{ 'SMS_USER' | translate}}
 					</div>
 				</div>
 				
