@@ -334,7 +334,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.iseponymous = function(){
 						 return true;
 					}
-						
+					$scope.isnotverify = function(){
+						return false;
+					}
+				
 					$scope.submit_button = false;
 					
 					$scope.submit_button = false;
@@ -378,26 +381,67 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					},
 					data : txtpost1 
 				}).success(function(resp) {
-						
-					console.log(resp);
+					
+					
+					console.log(resp.user_exist);
 					$scope.myText = resp.policy_description;
+					if(resp.user_exist=="1"){
+						//user exists
 						
-					$scope.issubmit_isseu_form = function(){
-						return false;
+						$scope.issubmit_isseu_form = function(){
+							return false;
+						}
+							 
+						$scope.iseponymous = function(){
+							return false;
+						}
+						$scope.isnotverify = function(){
+							return false;
+						}
+						$scope.submit_button = false;
+							
+						$scope.submit_button = false;
+						$scope.register_button = false;
+						$scope.verify_button = false;
+						$scope.submit_eponymous_button = true;
 					}
-						 
-					$scope.iseponymous = function(){
-						return true;
+					else{
+						//Verify button
 					}
+					
+					
 						
-					$scope.submit_button = false;
-						
-					$scope.submit_button = false;
-					$scope.register_button = true;
-					$scope.verify_button = false;
-					$scope.submit_eponymous_button = false;
+					
 						
 				}); 
+			}else if(step==3){
+				$scope.issubmit_isseu_form = function(){
+					return false;
+				}
+							 
+				$scope.iseponymous = function(){
+					return false;
+				}
+				$scope.isnotverify = function(){
+					return true;
+				}
+				$scope.submit_button = false;
+				$scope.register_button = false;
+				$scope.verify_button = true;
+				$scope.submit_eponymous_button = false;
+						
+			}else if(step==4){
+				
+				$scope.issubmit_isseu_form = function(){
+					return false;
+				}
+							 
+				$scope.iseponymous = function(){
+					return false;
+				}
+				$scope.isnotverify = function(){
+					return false;
+				}
 			}
 		   
 		   

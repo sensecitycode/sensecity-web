@@ -129,7 +129,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'EMAIL_USER':'email',
 		'SMS_USER':'sms',
 		'VERIFY_CODE':'Verify Code',
-		'REGISTER':'Register'
+		'REGISTER':'Register',
+		'NEW_ISSUE':'New issue'
     });
    
     $translateProvider.translations('el', {
@@ -211,7 +212,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'EMAIL_USER':'email',
 		'SMS_USER':'sms',
 		'VERIFY_CODE':'Κωδικός πιστοποίησης',
-		'REGISTER':'Εγγραφή'
+		'REGISTER':'Εγγραφή',
+		'NEW_ISSUE':'Νέο πρόβλημα'
       
     });
    

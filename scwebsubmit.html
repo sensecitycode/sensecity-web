@@ -87,10 +87,10 @@
 					<label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
 					<input ng-model="codeTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'VERIFY_CODE' | translate }}"   >
 				</div>
-				<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' />
+				<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' ng-click="setStep(3)" />
 			</div>
 			<div class="issue_submit" ng-show='issue_submit()'>			
-				<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' />
+				<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'NEW_ISSUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' ng-click="setStep(4)" />
 			</div>
     </div>
 
