@@ -462,7 +462,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			}else if(step==4){
 				
 				var jsonData = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'"}';
-				
+				console.log(jsonData);
 				return $http({
 					method : 'POST',
 					url : $rootScope.Variables.APIURL,
