@@ -383,7 +383,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				}).success(function(resp) {
 					
 					
-					console.log(resp.user_exist);
+					console.log(resp);
 					$scope.myText = resp.policy_description;
 					if(resp.user_exist=="1"){
 						//user exists
