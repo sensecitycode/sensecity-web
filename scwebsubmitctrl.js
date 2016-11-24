@@ -388,10 +388,14 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						//user exists
 						
 						
+						$scope.submit_button = false;
+						$scope.register_button = false;
+						$scope.verify_button = false;
+						$scope.submit_eponymous_button = true;
+						
 						$scope.issubmit_isseu_form = function(){
 							return false;
 						}
-							 
 						$scope.iseponymous = function(){
 							return false;
 						}
@@ -402,12 +406,6 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 							return true;
 						}
 						
-						$scope.submit_button = false;
-							
-						$scope.submit_button = false;
-						$scope.register_button = false;
-						$scope.verify_button = false;
-						$scope.submit_eponymous_button = true;
 					}
 					else{
 						//Verify button
