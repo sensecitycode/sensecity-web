@@ -967,7 +967,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             $scope.refresh = function () {
                 $scope.isloading = true;
                 // + config.port +
-                $http.get('http://' + config.host + ':8023/api/1.0/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
+                $http.get('http://' + config.host + ':'+config.port+'/api/1.0/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
                         function (response) {
                             if (response == "failure") {
                                 $scope.valid = false;
