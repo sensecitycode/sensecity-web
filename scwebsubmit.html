@@ -89,8 +89,10 @@
 				</div>
 				<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' ng-click="setStep(3)" />
 			</div>
-			<div class="issue_submit" ng-show='issue_submit()'>			
-				<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'NEW_ISSUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' ng-click="setStep(4)" />
+			<div class="is_finalsubmit" ng-show='is_finalsubmit()'>
+				<div class="issue_submit" ng-show='issue_submit()'>			
+					<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'NEW_ISSUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' ng-click="setStep(4)" />
+				</div>
 			</div>
     </div>
 

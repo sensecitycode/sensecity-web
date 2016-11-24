@@ -388,6 +388,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					if(resp.user_exist=="1"){
 						//user exists
 						
+						
 						$scope.issubmit_isseu_form = function(){
 							return false;
 						}
@@ -398,6 +399,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						$scope.isnotverify = function(){
 							return false;
 						}
+						$scope.is_finalsubmit = function(){
+							return true;
+						}
+						
 						$scope.submit_button = false;
 							
 						$scope.submit_button = false;
@@ -407,6 +412,26 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					}
 					else{
 						//Verify button
+						
+						
+						$scope.issubmit_isseu_form = function(){
+							return false;
+						}
+									 
+						$scope.iseponymous = function(){
+							return false;
+						}
+						$scope.isnotverify = function(){
+							return true;
+						}
+						$scope.is_finalsubmit = function(){
+							return false;
+						}
+						
+						$scope.submit_button = false;
+						$scope.register_button = false;
+						$scope.verify_button = true;
+						$scope.submit_eponymous_button = false;
 					}
 					
 					
@@ -423,6 +448,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					return false;
 				}
 				$scope.isnotverify = function(){
+					return false;
+				}
+				$scope.is_finalsubmit = function(){
 					return true;
 				}
 				$scope.submit_button = false;
@@ -433,13 +461,16 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			}else if(step==4){
 				
 				$scope.issubmit_isseu_form = function(){
-					return false;
+					return true;
 				}
 							 
 				$scope.iseponymous = function(){
 					return false;
 				}
 				$scope.isnotverify = function(){
+					return false;
+				}
+				$scope.is_finalsubmit = function(){
 					return false;
 				}
 			}
