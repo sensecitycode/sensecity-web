@@ -1,0 +1,166 @@
+html, body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+	color: black;
+	/*TODO: Use media queries to load smallest image that will fill screen.*/
+	/*background: url(http://www.wallpaperup.com/uploads/wallpapers/2014/05/20/355030/big_thumb_493d117744b6f0d01da7b16f25da1e82.jpg) no-repeat center top fixed;
+  */
+	background-color: white;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+a {
+	text-decoration: none;
+}
+
+#container {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+
+#container>div {
+	display: table-row;
+	width: 100%;
+}
+
+#container>div>div {
+	display: table-cell;
+	width: 100%;
+}
+
+#header>div {
+	height: 30px;
+	background-color: white;
+	color: white;
+}
+
+#content>div {
+	height: 100%;
+	background: white;
+	border: solid 0px #5a5;
+}
+
+#footer>div {
+	height: 300px;
+}
+
+#logo {
+	float: left;
+	padding: 10px;
+	font-family: 'Questrial', 'Helvetica Neue', Arial, sans-serif;
+}
+
+#headertitle {
+	padding: 10px;
+	font-size: 160%;
+}
+
+#aside {
+	float: left;
+	height: 100%;
+	width: 140px;
+	background-color: #4787B0;
+	color: white;
+}
+
+#mapcontent {
+	height: 100%;
+}
+
+#mapcontentfixed {
+	height: 768px;
+}
+
+#last6issues {
+	height: 300px;
+	background-color: #fff;
+	color: white;
+}
+
+.shadowed{
+	text-shadow: 4px 4px 6px #aaa;
+}
+
+.shadowed-dark{
+	text-shadow: 4px 4px 6px #513838;
+}
+
+.calcItem {
+	border: 1px solid #CBD5EC;
+	border-radius: 50%;
+	color: white;
+	background-color: #5D98BF;
+	width: 130px;
+	height: 130px;
+	padding: 0px;
+	margin: 4px;
+}
+
+.calcValue {
+	font-size: 57px;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: -13px;
+	text-shadow: 4px 4px 6px #513838;
+}
+
+.calcValueDescription {
+	font-size: 13px;
+	text-align: center;
+	text-shadow: 4px 4px 6px #513838;
+}
+
+.crop {
+				height: 200px;
+					overflow: hidden;
+					
+					border-radius: 10px;
+					border-bottom-left-radius: 0px;
+					border-bottom-right-radius: 0px;
+			}
+
+			
+.issueitem {
+    opacity: 1;
+}
+
+.issueitem.ng-enter {
+    -webkit-transition: 1s;
+    transition: 1s;
+    opacity: 0;
+  margin-left: 100%;
+}
+
+.issueitem.ng-enter-active {
+  margin-left: 0;
+    opacity: 1;
+}
+
+
+.issueitem..ng-leave {
+  -webkit-transition: 1s;
+  transition: 1s;
+  
+  margin-left: 0;
+}
+
+.issueitem..ng-leave-active {
+  margin-left: 100%;
+}
+
+.issueitem..ng-move {
+  -webkit-transition: 1s;
+  transition: 1s;
+  
+  background: gold;
+}
+
+.issueitem..ng-move-active {
+  background: #fff;
+}

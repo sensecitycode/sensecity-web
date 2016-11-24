@@ -306,7 +306,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', 'EndPointSer
                 content: "new comment",
                 tags: ["Σε εκτελεση", "Τμήμα επίλυσης προβλημάτων"]
             }, {time: "2010-08-22T18:20:12Z",
-                content: "new comment",
+                content: "default",
                 tags: ["Σε εκτελεση", "Τμήμα επίλυσης προβλημάτων"]
             }, {time: "2010-08-22T18:20:12Z",
                 content: "new comment",
@@ -323,6 +323,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', 'EndPointSer
             var time;
             var color;
             var type;
+            var show = true;
 
             var time_parse = response[i].time.split("-");
             day = time_parse[2].substring(0, 2);
@@ -381,7 +382,16 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', 'EndPointSer
             year = time_parse[0];
 
             time = response[i].time.substring(11, 19);
-
+            if(response[i].content == 'default'){
+                show = false;
+            }
+            if(response[i].tags[1] == "all"){
+                response[i].tags[1] = "Τμήμα επίλυσης προβλημάτων";
+            }else if(response[i].tags[1] == "protection"){
+                response[i].tags[1] = "Τμήμα πολιτικής προστασίας";
+            }else if(response[i].tags[1] == "road-contructor"){
+                response[i].tags[1] = "Τμήμα πεζοδρομίου/δρόμου/πλατείας";
+            }
             var com = {
                 "content": response[i].content,
                 "type": type,
@@ -390,7 +400,8 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', 'EndPointSer
                 "year": year,
                 "time": time,
                 "color": color,
-                "component": response[i].tags[1]
+                "component": response[i].tags[1],
+                "show": show
             };
 
             $scope.comments.push(com);

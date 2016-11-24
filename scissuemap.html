@@ -33,7 +33,7 @@
         <link rel="stylesheet" href="css/leaflet.extra-markers.min.css">
         <link rel="stylesheet" href="css/timeline.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
+        
         <!-- Angular scissuemapapp dependancies -->
         <script src="scissuemapctrl.js"></script>
         <script src="scissuemapapp.js"></script>
@@ -89,12 +89,15 @@
                                 <span class="month">{{comment.month}}</span>
                                 <span class="year">{{comment.year}}</span>
                             </span>
-                            <h2 ng-style="comment.color">{{comment.type}}</h2>
+                            <div ng-style="comment.color">
+                                <h2 style="top:10px">{{comment.type}}</h2>
+                                <div><span class="fa fa-clock-o"></span> {{comment.time}}</div>
+                            </div>
                             <p style="text-align:left">
                             Ανάθεση σε:  {{comment.component}}
                             <br>
                             <br>
-                            {{comment.content}}
+                            <span ng-show="comment.show"> {{comment.content}}</span>
                             </p>
                         </div>
                     </article>

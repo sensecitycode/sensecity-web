@@ -45,7 +45,6 @@ app.controller('login_controller', ['$scope', '$window', '$http', '$cookieStore'
                                         $cookieStore.put('email', response[3]);
                                         $cookieStore.put('uuid', response[4]);
                                         $cookieStore.put('username', response[5]);
-                                        $cookieStore.put('bug_token');
 
                                         $window.location.href = "/joli/admin.html";
 
