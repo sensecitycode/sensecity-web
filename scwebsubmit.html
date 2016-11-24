@@ -72,9 +72,9 @@
 				
 				
 				
-				<input id="btnregister" class="btn btn-info" type="submit" value="{{ 'REGISTER' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='register_button' />
+				<input id="btnregister" class="btn btn-info" type="submit" value="{{ 'REGISTER' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='register_button'  ng-click="setStep(2)" />
 				
-				<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' />
+				
 
 				<div id="try_another_issue"></div>
 			</div>
@@ -82,8 +82,6 @@
 				test
 			</div>
 			
-	   </form>
-		<form class="form-horizontal" name="form" role="form" ng-submit="submit_verify()" id="addeponymous">
 			<p style="color:#000000;"><span ng-bind="myText"></span></p>
 			<div class="form-group" style="color:#000000;">					
 				<label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
@@ -91,7 +89,6 @@
 			</div>
 			<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' />
 			
-			
-		</form>
+			<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' />
     </div>
 

@@ -290,6 +290,97 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		 
 		$scope.setStep = function(step){
            console.log("=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    " + step);
+			if(step==1){
+			   
+				$scope.issue = new Issue();
+			 
+				var desc = $scope.otherDescriptionTxt;
+			
+				$scope.issue.issue =  $scope.issueTypeSelect.id ;
+				//$scope.issue.loc =  '{ "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }' ;
+				$scope.issue.device_id =  'webapp' ;
+			 
+				$scope.issue.value_desc =  desc ;
+				$scope.issue.image_name =  $scope.uploadedPhotoFile ; //no-image
+			
+				var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id +'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '" }' ;	
+			
+				console.log( txtpost );			
+				console.log("--------------------------------------");
+				console.log($rootScope.Variables.APIURL);
+				console.log("--------------------------------------");
+			
+				return $http(
+				{
+					method : 'POST',
+					url : $rootScope.Variables.APIURL,
+					headers : {
+						'Content-Type' : 'application/json; charset=utf-8'
+					},
+					data : txtpost 
+				}).success(function(resp) {
+					console.log(resp);
+					
+					$scope.myText = resp.policy_description;
+						
+					console.log("Submit ok!");
+						
+					$scope.issubmit_isseu_form = function(){
+						 return false;
+					 }
+						 
+					$scope.iseponymous = function(){
+						 return true;
+					}
+						
+					$scope.submit_button = false;
+					
+					$scope.submit_button = false;
+					$scope.register_button = true;
+					$scope.verify_button = false;
+					$scope.submit_eponymous_button = false;
+
+				});
+			}else if(step==2){
+				
+				var txtpost = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'", "permission" :  { "send_issues": "true" , "communicate_with": {"email" : "'+$("#btn_settings_ans_email").is(":checked").toString()+'", "sms" : "'+$("#btn_settings_ans_sms").is(":checked").toString()+'"}}}';    
+			
+				console.log(txtpost);
+			
+				return $http({
+					method : 'POST',
+					url : $rootScope.Variables.active_user_URL,
+					headers : {
+						'Content-Type' : 'application/json; charset=utf-8'
+					},
+					data : txtpost 
+				}).success(function(resp) {
+						
+					console.log(resp);
+					$scope.myText = resp.policy_description;
+						
+					$scope.issubmit_isseu_form = function(){
+						return false;
+					}
+						 
+					$scope.iseponymous = function(){
+						return true;
+					}
+						
+					$scope.submit_button = false;
+						
+					$scope.submit_button = false;
+					$scope.register_button = true;
+					$scope.verify_button = false;
+					$scope.submit_eponymous_button = false;
+						
+				}); 
+			}
+		   
+		   
+		   
+		   
+		   
         }
 		 
 		 
