@@ -349,8 +349,8 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				console.log($scope.NameTxt);
 				console.log($scope.EmailTxt);
 				console.log($scope.MobileTxt);
-				console.log($scope.chkSelected_1);
-				console.log($scope.chkSelected_2);
+				console.log(element(by.id('chkSelected_1')).value());
+				console.log(element(by.id('chkSelected_2')).value());
 				
 			
 			
