@@ -349,9 +349,12 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				console.log($scope.NameTxt);
 				console.log($scope.EmailTxt);
 				console.log($scope.MobileTxt);
-				console.log(element(by.id('chkSelected_1')).selected());
-				console.log(element(by.id('chkSelected_2')).selected());
-				
+				if ($scope.chkSelected_1) {
+                    $window.alert("CheckBox is checked.");
+                } else {
+                    $window.alert("CheckBox is not checked.");
+                }
+								
 			
 			
 				var txtpost1 = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'", "permission" :  { "send_issues": "true" , "communicate_with": {"email" : "'+$("#btn_settings_ans_email").is(":checked").toString()+'", "sms" : "'+$("#btn_settings_ans_sms").is(":checked").toString()+'"}}}';    
