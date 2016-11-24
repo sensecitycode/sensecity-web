@@ -466,7 +466,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.is_finalsubmit = function(){
 						return true;
 					}
-				}
+				});
 						
 			}else if(step==4){
 				
