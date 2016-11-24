@@ -232,7 +232,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		 //this executes the first time just once in the init of page
 		 $scope.issueSubTypeSelectChanged();
 		 
-		 $scope.submit_Eponymous = function submit(){
+		 /*$scope.submit_Eponymous = function submit(){
 				
 			var txtpost = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'", "permission" :  { "send_issues": "true" , "communicate_with": {"email" : "'+$("#btn_settings_ans_email").is(":checked").toString()+'", "sms" : "'+$("#btn_settings_ans_sms").is(":checked").toString()+'"}}}';    
 			
@@ -278,7 +278,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			 
 			 
 			
-		 }
+		 }*/
 		 
 		 
 		 
@@ -405,7 +405,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		 
 		 
 		 
-		 
+		 /*
 		 
 		 
 		 $scope.submitNewIssue = function submit() {
@@ -466,7 +466,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						
 						//$location.path("/test1");
 					});
-		}
+		}*/
 
 }]);
 

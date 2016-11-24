@@ -78,17 +78,17 @@
 
 				<div id="try_another_issue"></div>
 			</div>
-			<div class="col-md-4" > 
-				test
-			</div>
 			
-			<p style="color:#000000;"><span ng-bind="myText"></span></p>
-			<div class="form-group" style="color:#000000;">					
-				<label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
-				<input ng-model="codeTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'VERIFY_CODE' | translate }}"   >
+			<div class="isnotverify" ng-show='isnotverify()'>
+				<p style="color:#000000;"><span ng-bind="myText"></span></p>
+				<div class="form-group" style="color:#000000;">					
+					<label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
+					<input ng-model="codeTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'VERIFY_CODE' | translate }}"   >
+				</div>
+				<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' />
 			</div>
-			<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' />
-			
-			<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' />
+			<div class="issue_submit" ng-show='issue_submit()'>			
+				<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' />
+			</div>
     </div>
 
