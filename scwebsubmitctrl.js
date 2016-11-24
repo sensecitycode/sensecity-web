@@ -349,6 +349,8 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				console.log($scope.NameTxt);
 				console.log($scope.EmailTxt);
 				console.log($scope.MobileTxt);
+				console.log($("#btn_settings_ans_email").is(":checked").toString());
+				console.log($("#btn_settings_ans_sms").is(":checked").toString());
 				
 			
 			
