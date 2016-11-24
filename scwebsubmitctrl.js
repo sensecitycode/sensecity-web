@@ -285,7 +285,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		 
 		 
 		var my_id;
-		 
+		var user_id;
 		 
 		 
 		$scope.setStep = function(step){
@@ -409,7 +409,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					}
 					else{
 						//Verify button
-						
+						user_id=resp._id;
 						$scope.submit_button = false;
 						$scope.register_button = false;
 						$scope.verify_button = true;
@@ -438,26 +438,35 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				}); 
 			}else if(step==3){
 				
+				var jsonact_Data = '{ "id1" : "'+user_id+'", "id2": "web-site", "id3": "'+$scope.codeTxt+'"}';
 				
-				
-				$scope.submit_button = false;
-				$scope.register_button = false;
-				$scope.verify_button = false;
-				$scope.submit_eponymous_button = true;
-				
-				$scope.issubmit_isseu_form = function(){
-					return false;
+				return $http({
+					method : 'POST',
+					url : $rootScope.Variables.activate_user_URL,
+					headers : {
+						'Content-Type' : 'application/json; charset=utf-8'
+					},
+					data : jsonact_Data 
+				}).success(function(resp) {
+					
+					$scope.submit_button = false;
+					$scope.register_button = false;
+					$scope.verify_button = false;
+					$scope.submit_eponymous_button = true;
+					
+					$scope.issubmit_isseu_form = function(){
+						return false;
+					}
+					$scope.iseponymous = function(){
+						return false;
+					}
+					$scope.isnotverify = function(){
+						return false;
+					}
+					$scope.is_finalsubmit = function(){
+						return true;
+					}
 				}
-				$scope.iseponymous = function(){
-					return false;
-				}
-				$scope.isnotverify = function(){
-					return false;
-				}
-				$scope.is_finalsubmit = function(){
-					return true;
-				}
-				
 						
 			}else if(step==4){
 				
