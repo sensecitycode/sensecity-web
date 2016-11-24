@@ -494,6 +494,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.MobileTxt = "";
 					$scope.chkSelected_1 = false;
 					$scope.chkSelected_2 = false;
+					$scope.chkSelected = false;
 					
 					$scope.issubmit_isseu_form = function(){
 						return true;
