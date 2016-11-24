@@ -350,9 +350,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				console.log($scope.EmailTxt);
 				console.log($scope.MobileTxt);
 				if ($scope.chkSelected_1) {
-                    $window.alert("CheckBox is checked.");
+                    console.log("CheckBox is checked.");
                 } else {
-                    $window.alert("CheckBox is not checked.");
+                    console.log("CheckBox is not checked.");
                 }
 								
 			
