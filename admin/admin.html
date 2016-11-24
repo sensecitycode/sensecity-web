@@ -135,16 +135,16 @@
                                     <h2 style="font-family:Open Sans, sans-serif;margin-bottom: 0px;font-size: 22px;">Επισκόπηση Προβλημάτων</h2>
                                 </center>
                             </div>
-                            <div style="background-color:rgba(249, 249, 249, 0.53);float:right;width:100%;padding-left:1%;padding-right:1.5%;padding-bottom:4%;padding-top:4%">
+                            <div ng-hide="isloading" style="background-color:rgba(249, 249, 249, 0.53);float:right;width:100%;padding-left:1%;padding-right:1.5%;padding-bottom:4%;padding-top:4%">
 
                                 <div style="width:106%;margin-bottom:10px" ng-repeat="panel in panels" ng-class="($index == activePanel) ? 'timeline-item-active' :  'timeline-item'">
                                     <div class="timeline-item-content">
                                         <div style="padding-right:26px" class="timeline-body">
                                             <span ng-class="panel.icon" ng-style="panel.style"></span>
-                                            <span class="issue_text" ng-click="itemClicked($index); linkmap(panel)">{{ panel.title}}</span>
+                                            <span class="issue_text" ng-click="itemClicked($index,$event); linkmap(panel)">{{ panel.title}}</span>
                                         </div>                                     
                                     </div>
-                                    <div ng-style="($index == activePanel)? {'height': '100%', 'opacity': '1', 'transition': 'height 0.3s linear'} : {'height': '0px', 'opacity': '0', 'transition': 'height 0.3s linear'}" ng-show="$index == activePanel">
+                                    <div id="{{($index == activePanel) ? 'activePanel':''}}" ng-style="($index == activePanel)? {'height': '100%', 'opacity': '1', 'transition': 'height 0.3s linear'} : {'height': '0px', 'opacity': '0', 'transition': 'height 0.3s linear'}" ng-show="$index == activePanel">
                                         <div style="margin-top:10%" class="panel-body">
                                             <form name="editableForm" ng-hide="panel.admin">
                                                 <div style="margin-bottom:3%;margin-left:1%">
@@ -159,7 +159,15 @@
                                                 <div style="margin-bottom:3%;margin-left:1%">
                                                     <span class="title">Καταγραφη: </span>
                                                     <span >{{ panel.time}}</span>
-                                                </div>   
+                                                </div>
+                                                <div style="margin-bottom:3%;margin-left:1%">
+                                                    <span class="title">Προτεραιότητα: </span>
+                                                    <span >{{ panel.priority.gr}}</span>
+                                                </div> 
+                                                <div style="margin-bottom:3%;margin-left:1%">
+                                                    <span class="title">Σπουδαιότητα: </span>
+                                                    <span >{{ panel.severity.gr}}</span>
+                                                </div> 
                                                 <div style="margin-bottom:3%;margin-left:1%">
                                                     <span class="title">Ονοματεπώνυμο: </span>
                                                     <span> {{panel.creator}}</span>
@@ -191,15 +199,23 @@
                                                         <input type="text" ng-model="duplicof" ng-blur="dupli_change($event, duplicof)">
                                                     </div>
                                                     <div ng-show="selectedStatus.en == 'IN_PROGRESS'">
-                                                        <span ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" class="title" >Ανάθεση σε: </span>
-                                                        <button ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedComponent" data-html="1" data-toggle="true" bs-options="component for component in components" data-placement="bottom"  bs-select></button>                                                                               
+                                                        <span class="title">Ανάθεση σε: </span>
+                                                        <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedComponent" data-html="1" data-toggle="true" bs-options="component for component in components" data-placement="bottom"  bs-select></button>                                                                               
+                                                    </div>
+                                                    <div ng-show="selectedStatus.en == 'IN_PROGRESS'">
+                                                        <span class="title" >Προτεραιότητα: </span>
+                                                        <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedPriority.gr" data-html="1" data-toggle="true" bs-options="priority for priority in priorities" data-placement="bottom"  bs-select></button>                                                                               
+                                                    </div>
+                                                    <div ng-show="selectedStatus.en == 'IN_PROGRESS'">
+                                                        <span class="title" >Σπουδαιότητα: </span>
+                                                        <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedSeverity.gr" data-html="1" data-toggle="true" bs-options="severity for severity in severities" data-placement="bottom"  bs-select></button>                                                                               
                                                     </div>
                                                 </div>
                                                 <div style="position:relative;margin-top:3%">
                                                     <div class="title" >Σχόλια: </div>
                                                     <textarea style="width: 95%;height:150px;margin-top:3%;resize:none" ng-disabled="selectedStatus.en == 'CONFIRMED'" type="text" class="form-control" ng-model="scomment" placeholder="περιγραφή ..."></textarea>
                                                 </div>
-                                                <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(panel, selectedStatus, selectedResolution, scomment, selectedComponent, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
+                                                <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(panel, selectedStatus, selectedResolution, scomment, selectedComponent,selectedPriority,selectedSeverity, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
                                                 <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_red" ng-show="panel.admin" ng-click="resetPanel(panel)" ><center><span class="glyphicon glyphicon-remove"></span> Ακύρωση</center></div>
                                             </form>
                                             <br />
@@ -239,7 +255,7 @@
                                 <div class="panel-heading ui-draggable-handle">
                                     <h3 class="panel-title" ng-model="city">{{city}}</h3>
                                     <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                                        <li><a ng-click="removeFixed()" href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
                                         <li ><a ng-click="refresh()"href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>                                       
                                     </ul>
                                 </div>

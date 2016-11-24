@@ -14,8 +14,15 @@
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
         <script src="js/leaflet.js"></script>
         <link rel="stylesheet" href="css/styles.css" />
+        <style>
+      #map, #pano {
+        float: left;
+        height: 100%;
+        width: 45%;
+      }
+    </style>
         <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
-
+        
 
 
         <!-- angular dep -->
@@ -33,7 +40,7 @@
         <link rel="stylesheet" href="css/leaflet.extra-markers.min.css">
         <link rel="stylesheet" href="css/timeline.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        
+
         <!-- Angular scissuemapapp dependancies -->
         <script src="scissuemapctrl.js"></script>
         <script src="scissuemapapp.js"></script>
@@ -94,15 +101,17 @@
                                 <div><span class="fa fa-clock-o"></span> {{comment.time}}</div>
                             </div>
                             <p style="text-align:left">
-                            Ανάθεση σε:  {{comment.component}}
-                            <br>
-                            <br>
-                            <span ng-show="comment.show"> {{comment.content}}</span>
+                                Ανάθεση σε:  {{comment.component}}
+                                <br>
+                                <br>
+                                <span ng-show="comment.show"> {{comment.content}}</span>
                             </p>
                         </div>
                     </article>
                 </section>
             </div>
+            <div id="map"></div>
+            <div id="pano"></div>
         </div>
         <footer id="footer" style="background-color:#219577;">
             <div class="container">
@@ -138,7 +147,29 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
         <script src="js/leaflet.awesome-markers.js"></script>
         <script src="js/scripts.js"></script>
+        <script>
 
+                                        function initialize() {
+
+                                            var fenway = {lat: 25.345573, lng: 20.098326};
+                                            var map = new google.maps.Map(document.getElementById('map'), {
+                                                center: fenway,
+                                                zoom: 14
+                                            });
+                                            var panorama = new google.maps.StreetViewPanorama(
+                                                    document.getElementById('pano'), {
+                                                position: fenway,
+                                                pov: {
+                                                    heading: 34,
+                                                    pitch: 10
+                                                }
+                                            });
+                                            map.setStreetView(panorama);
+                                        }
+        </script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9HFuXc5qrtl12R5XD92h2mVh4ytB-JIg&callback=initialize">
+        </script>
 
     </body>
 </html>

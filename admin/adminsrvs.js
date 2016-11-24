@@ -19,7 +19,7 @@ appServices.factory('BugService', function ($resource, $cookieStore, EndPointSer
             {
                 search: {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json','x-uuid': $cookieStore.get('uuid'),'x-role': $cookieStore.get('role')},
+                    headers: {'Content-Type': 'application/json'},
                     isArray: true,
                     withCredentials: false
                 }
@@ -29,19 +29,19 @@ appServices.factory('BugService', function ($resource, $cookieStore, EndPointSer
 
 appServices.factory('Issue2MapService', function ($resource, EndPointService) {
     // console.log("DisplayIssues");
-    return $resource(EndPointService.APIURL + '/api/fullissue/:issueID',
-            {issueID: '@id'}
+    return $resource(EndPointService.APIURL + '/api/1.0/fullissue/:issueID',
+            {issueID: '@id'},{'query': {method: 'GET', isArray: true}}
     );
 });
 
 appServices.factory('FixPoints2MapService', function ($resource, EndPointService) {
     // console.log("DisplayFixPoints");
-    return $resource(EndPointService.APIURL + '/fix_point/:long/:lat/50/:type',
+    return $resource(EndPointService.APIURL + '/fixed-point/:long/:lat/50/:type',
             {
                 long: '@long',
                 lat: '@lat',
                 type: "@type"
-            }
+            },{'query': {method: 'GET', isArray: true}}
     );
 });
 
@@ -194,6 +194,107 @@ appServices.factory('Tab2BugzillaService', function () {
                     break;
                 case 6:
                     type = "plumbing";
+                    break;
+            }
+            return type;
+        }
+    };
+});
+
+appServices.factory('PriorityTag', function () {
+    return{
+        priority_type: function (tab) {
+            var type;
+            switch (tab) {
+                case "---":
+                    type = "Κανονική";
+                    break;
+                case "High":
+                    type = "Υψηλή";
+                    break;
+                case "Normal":
+                    type = "Κανονική";
+                    break;
+                case "Low":
+                    type = "Χαμηλή";
+                    break;
+            }
+            return type;
+        }
+    };
+});
+
+appServices.factory('PriorityTagEn', function () {
+    return{
+        priority_type: function (tab) {
+            var type;
+            switch (tab) {
+                case "Κανονική":
+                    type = "Normal";
+                    break;
+                case "Υψηλή":
+                    type = "High";
+                    break;
+                case "Χαμηλή":
+                    type = "Low";
+                    break;
+            }
+            return type;
+        }
+    };
+});
+
+appServices.factory('SeverityTag', function () {
+    return{
+        severity_type: function (tab) {
+            var type;
+            switch (tab) {
+                case "critical":
+                    type = "Κρίσιμο";
+                    break;
+                case "major":
+                    type = "Μείζον";
+                    break;
+                case "normal":
+                    type = "Κανονικό";
+                    break;
+                case "minor":
+                    type = "Ελλάσον";
+                    break;
+                case "trivial":
+                    type = "Μηδαμινό";
+                    break;
+                case "enhancement":
+                    type = "Βελτίωση";
+                    break;
+            }
+            return type;
+        }
+    };
+});
+
+appServices.factory('SeverityTagEn', function () {
+    return{
+        severity_type: function (tab) {
+            var type;
+            switch (tab) {
+                case "Κρίσιμο":
+                    type = "critical";
+                    break;
+                case "Μείζον":
+                    type = "major";
+                    break;
+                case "Κανονικό":
+                    type = "normal";
+                    break;
+                case "Ελλάσον":
+                    type = "minor";
+                    break;
+                case "Μηδαμινό":
+                    type = "trivial";
+                    break;
+                case "Βελτίωση":
+                    type = "enhancement";
                     break;
             }
             return type;

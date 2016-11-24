@@ -200,3 +200,104 @@ appServices.factory('Tab2BugzillaService', function () {
         }
     };
 });
+
+appServices.factory('PriorityTag', function () {
+    return{
+        priority_type: function (tab) {
+            var type;
+            switch (tab) {
+                case "---":
+                    type = "Κανονική";
+                    break;
+                case "High":
+                    type = "Υψηλή";
+                    break;
+                case "Normal":
+                    type = "Κανονική";
+                    break;
+                case "Low":
+                    type = "Χαμηλή";
+                    break;
+            }
+            return type;
+        }
+    };
+});
+
+appServices.factory('PriorityTagEn', function () {
+    return{
+        priority_type: function (tab) {
+            var type;
+            switch (tab) {
+                case "Κανονική":
+                    type = "Normal";
+                    break;
+                case "Υψηλή":
+                    type = "High";
+                    break;
+                case "Χαμηλή":
+                    type = "Low";
+                    break;
+            }
+            return type;
+        }
+    };
+});
+
+appServices.factory('SeverityTag', function () {
+    return{
+        severity_type: function (tab) {
+            var type;
+            switch (tab) {
+                case "critical":
+                    type = "Κρίσιμο";
+                    break;
+                case "major":
+                    type = "Μείζον";
+                    break;
+                case "normal":
+                    type = "Κανονικό";
+                    break;
+                case "minor":
+                    type = "Ελλάσον";
+                    break;
+                case "trivial":
+                    type = "Μηδαμινό";
+                    break;
+                case "enhancement":
+                    type = "Βελτίωση";
+                    break;
+            }
+            return type;
+        }
+    };
+});
+
+appServices.factory('SeverityTagEn', function () {
+    return{
+        severity_type: function (tab) {
+            var type;
+            switch (tab) {
+                case "Κρίσιμο":
+                    type = "critical";
+                    break;
+                case "Μείζον":
+                    type = "major";
+                    break;
+                case "Κανονικό":
+                    type = "normal";
+                    break;
+                case "Ελλάσον":
+                    type = "minor";
+                    break;
+                case "Μηδαμινό":
+                    type = "trivial";
+                    break;
+                case "Βελτίωση":
+                    type = "enhancement";
+                    break;
+            }
+            return type;
+        }
+    };
+});

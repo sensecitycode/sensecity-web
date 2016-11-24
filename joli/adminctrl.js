@@ -7,7 +7,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', 'EndPointService', 'BugService', 'ToGrService', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $window, $http, $cookieStore, $templateCache, $compile, EndPointService, BugService, ToGrService, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
+appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $window, $http, $cookieStore, $templateCache, $compile, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
         var summary;
         var params;
         var tabchanged = 2;
@@ -18,7 +18,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         $scope.duplicof = "";
 
         $scope.logout = function ($event) {
-            $http.get('http://' + config.host + ':' + config.port + '/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
+            $http.get('http://' + config.host + ':' + config.port + '/api/1.0/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
                 $cookieStore.remove("uuid");
                 $cookieStore.remove("city");
                 $cookieStore.remove("role");
@@ -95,7 +95,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 }
             }
 
-            $http.post('http://' + config.host + ':'+config.port+'/admin/bugs/search',parameter, {headers:{'Content-Type': 'application/json','x-uuid': $cookieStore.get('uuid'),'x-role': $cookieStore.get('role')}}).success(
+            $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', parameter, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                     function (response, status, headers, conf) {
                         $scope.total_pages = Math.ceil(response.length / 20);
                         if (init == 0) {
@@ -453,9 +453,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 //                                $("html,body").scrollTop($(event.target).offset().top - $("#activePanel").height());
 //                            }, 500);
 //                        } else {
-                            setTimeout(function () {
-                                $("html,body").scrollTop($(event.target).offset().top);
-                            }, 400);
+                        setTimeout(function () {
+                            $("html,body").scrollTop($(event.target).offset().top);
+                        }, 400);
 
 //                        }
                         $scope.activePanel = $index;
@@ -486,7 +486,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         $scope.component = "Τμήμα πρασίνου";
                     }
                 }
-                params = {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bug_id DESC", "limit": "20", "include_fields": ["cf_comment", "cf_description", "component", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "cf_mobile", "cf_email", "cf_creator"]};
+                params = {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bug_id DESC", "limit": "20", "include_fields": ["cf_comment", "cf_description", "component", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "cf_mobile", "cf_email", "cf_creator", "severity", "priority"]};
 
                 if ($scope.role == "cityAdmin" || $scope.role == "sensecityAdmin") {
                     params.status = ["CONFIRMED", "IN_PROGRESS"];
@@ -568,14 +568,16 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.pageIndex = 5;
                         }
                     };
-                    
-                    $http.post('http://' + config.host + ':'+config.port+'/admin/bugs/search',params, {headers:{'Content-Type': 'application/json','x-uuid': $cookieStore.get('uuid'),'x-role': $cookieStore.get('role')}}).success(function (result) {
+
+                    $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
                         var total_counter = result.length;
                         var counter = 0;
                         angular.forEach(result, function (value, key) {
                             var issue_name = ToGrService.issueName(value.summary);
                             var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
+                            var priority = PriorityTag.priority_type(value.priority);
+                            var severity = SeverityTag.severity_type(value.severity);
                             var description = CommentService.field(value.status);
                             var id = value.id;
                             var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
@@ -585,7 +587,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             var parameter;
 
                             if (!(value.component == "default")) {
-                                $http.post('http://' + config.host + ':'+config.port+ '/admin/bugs/comment',{id:id}, {headers:{'Content-Type': 'application/json','x-uuid': $cookieStore.get('uuid'),'x-role': $cookieStore.get('role')}}).success(
+                                $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment', {id: id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                         function (response, status, headers, config) {
                                             counter++;
                                             var history = [];
@@ -619,6 +621,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         "component": value.component,
                                                         "admin": false,
                                                         "ArrayID": key,
+                                                        "priority": {en: value.priority, gr: priority},
+                                                        "severity": {en: value.severity, gr: severity},
                                                         "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
                                                         "initialdesc": value.cf_description,
                                                         "mongoId": value.alias,
@@ -695,14 +699,20 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.statuses = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Σε εκτέλεση", "en": "IN_PROGRESS"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
                 $scope.resolutions = [{"gr": "Αποκατάσταση", "en": "FIXED"}, {"gr": "Εσφαλμένη Αναφορά", "en": "INVALID"}, {"gr": "Μη αποκατάσταση / Απόρριψη από Δήμο", "en": "WONTFIX"}, {"gr": "Έχει ήδη αναφερθεί σε άλλο αίτημα", "en": "DUPLICATE"}];
                 $scope.components = ["Τμήμα επίλυσης προβλημάτων", "Τμήμα καθαριότητας", "Τμήμα ηλεκτροφωτισμού", "Τμήμα πεζοδρομίου/δρόμου/πλατείας", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου"];//,"Τμήμα ύδρευσης"];
-
+                $scope.priorities = ["Υψηλή", "Κανονική", "Χαμηλή"];
+                $scope.severities = ["Κρίσιμο", "Μείζον", "Κανονικό", "Ελάσσον", "Μηδαμινό", "Βελτίωση"];
 
                 console.log("----------------------------------------------------");
                 console.log(panel.status);
                 $scope.selectedComponent = panel.component;
+
+                $scope.selectedPriority = {en: panel.priority.en, gr: panel.priority.gr};
+                $scope.selectedSeverity = {en: panel.severity.en, gr: panel.severity.gr};
+
                 $scope.selectedStatus = panel.status;
                 $scope.comment = panel.comment;
                 $scope.duplicof = panel.duplicof;
+
                 //$scope.duplicof = panel;
                 $scope.selectedResolution = panel.resolution;
 
@@ -738,7 +748,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 console.log($scope.comment);
             };
 
-            $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, e) {
+            $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, seldpriority, seldseverity, e) {
                 if ($cookieStore.get("uuid") != undefined) {
                     panel.status = seldstatus;
                     if (panel.status.en == "RESOLVED")
@@ -750,6 +760,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     }
                     panel.comment = seldcomment;
                     panel.component = seldcomponent;
+
                     panel.admin = false;
 
                     function update() {
@@ -762,22 +773,26 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component};
                             }
                         } else {
-                            obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component};
+                            if (panel.status.gr == "Σε εκτέλεση") {
+                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "priority": panel.priority.en, "severity": panel.severity.en};
+                            } else {
+                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component};
+                            }
                         }
                         if (panel.status.en == "RESOLVED")
                         {
                             obj.resolution = panel.resolution.en;
                         }
-                        
-                        $http.post('http://' + config.host + ':'+config.port+'/admin/bugs/update',obj, {headers:{'Content-Type': 'application/json','x-uuid': $cookieStore.get('uuid'),'x-role': $cookieStore.get('role')}}).success( function (result) {
-                            if (panel.comment == undefined)
+                        $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                            if (panel.comment == undefined || panel.comment == "" || $scope.selectedStatus.gr == 'Ανοιχτό')
                             {
+                                $scope.comment = "undefined";
                                 panel.comment = "undefined";
                             }
-                            $http.post('http://' + config.host + ':'+config.port+'/admin/bugs/comment/add',{"comment": panel.comment,"id":obj.ids[0]}, {headers:{'Content-Type': 'application/json','x-uuid': $cookieStore.get('uuid'),'x-role': $cookieStore.get('role')}}).success(
+                            $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                     function (response, status, headers, conf) {
                                         var comp = panel.component;
-                                        switch(panel.component){
+                                        switch (panel.component) {
                                             case "Τμήμα επίλυσης προβλημάτων":
                                                 comp = "all";
                                                 break;
@@ -788,7 +803,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 comp = "road-contructor";
                                                 break;
                                         }
-                                        $http.post('http://' + config.host + ':'+config.port+'/admin/bugs/comment/tags',{"add": [panel.status.en,comp] ,"id":response.id}, {headers:{'Content-Type': 'application/json','x-uuid': $cookieStore.get('uuid'),'x-role': $cookieStore.get('role')}}).success(
+                                        $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                 function (response, status, headers, config) {
                                                 });
                                     });
@@ -799,6 +814,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     }
                     if ($scope.selectedStatus.gr == 'Ανοιχτό') {
                         if ($scope.selectedStatus.gr != panel.status.gr) {
+                            panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
+                            panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
+                            if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
+                                $scope.comment = panel.comment;
+                            } else {
+                                $scope.comment = "undefined";
+                            }
                             update();
                             if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component && $scope.assignissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
@@ -807,11 +829,18 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                     $scope.currentactive = -1;
                                 }, 3000);
                             }
-                            $scope.selectedStatus.gr = panel.status.gr;
+                            $scope.selectedStatus = panel.status;
                         }
                     } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.comment != panel.comment) {
-                            $scope.comment = panel.comment;
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
+                            if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
+                                $scope.comment = panel.comment;
+                            } else {
+                                $scope.comment = "undefined";
+                            }
+
+                            panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
+                            panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             update();
                             if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
@@ -819,13 +848,40 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                     $scope.activePanel = -1;
                                     $scope.currentactive = -1;
                                 }, 3000);
-                            } else {
-                                $scope.selectedStatus.gr = panel.status.gr;
+                            }
+                            $scope.selectedStatus = panel.status;
+                        } else {
+                            if (panel.comment != $scope.comment) {
+                                if (panel.comment != undefined || $scope.comment != "undefined") {
+                                    if (panel.comment != undefined && panel.comment.charAt(0)) {
+                                        $scope.comment = panel.comment;
+                                    } else {
+                                        $scope.comment = "undefined";
+                                    }
+
+                                    update();
+                                    if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                                        setTimeout(function () {
+                                            $(e.target).closest(".timeline-item-active").remove();
+                                            $scope.activePanel = -1;
+                                            $scope.currentactive = -1;
+                                        }, 3000);
+                                    } else {
+                                        $scope.selectedStatus = panel.status;
+                                    }
+                                } else {
+                                    panel.comment = "undefined";
+                                }
                             }
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.comment != panel.comment || $scope.selectedResolution != panel.resolution || $scope.duplicof != panel.duplicof) {
-                            $scope.comment = panel.comment;
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedResolution != panel.resolution || $scope.duplicof != panel.duplicof) {
+                            if (panel.comment != undefined && panel.comment.charAt(0)) {
+                                $scope.comment = panel.comment;
+                            } else {
+                                $scope.comment = "undefined";
+                            }
+
                             update();
                             if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component)) {
                                 setTimeout(function () {
@@ -834,7 +890,29 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                     $scope.currentactive = -1;
                                 }, 3000);
                             }
-                            $scope.selectedStatus.gr = panel.status.gr;
+                            $scope.selectedStatus = panel.status;
+                        } else {
+                            if (panel.comment != $scope.comment) {
+                                if (panel.comment != undefined || $scope.comment != "undefined") {
+                                    if (panel.comment != undefined && panel.comment.charAt(0)) {
+                                        $scope.comment = panel.comment;
+                                    } else {
+                                        $scope.comment = "undefined";
+                                    }
+                                    update();
+                                    if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component)) {
+                                        setTimeout(function () {
+                                            $(e.target).closest(".timeline-item-active").remove();
+                                            $scope.activePanel = -1;
+                                            $scope.currentactive = -1;
+                                        }, 3000);
+                                    } else {
+                                        $scope.selectedStatus = panel.status;
+                                    }
+                                } else {
+                                    panel.comment = "undefined";
+                                }
+                            }
                         }
                     }
 
@@ -889,7 +967,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             $scope.refresh = function () {
                 $scope.isloading = true;
                 // + config.port +
-                $http.get('http://' + config.host + ':8023/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
+                $http.get('http://' + config.host + ':8023/api/1.0/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
                         function (response) {
                             if (response == "failure") {
                                 $scope.valid = false;
@@ -926,7 +1004,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     }
 
                     if (($scope.assignissues == false || $scope.closedissues == true) && $scope.allclosedissues == false) {
-                        params = {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bug_id DESC", "limit": "20", "offset": offset, "include_fields": ["component", "cf_comment", "cf_description", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "dupe_of", "cf_mobile", "cf_email", "cf_creator"]};
+                        params = {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bug_id DESC", "limit": "20", "offset": offset, "include_fields": ["component", "cf_comment", "cf_description", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "dupe_of", "cf_mobile", "cf_email", "cf_creator", "severity", "priority"]};
                     } else {
                         params = {"product": $cookieStore.get("city"), "component": ["Τμήμα επίλυσης προβλημάτων", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου", "Τμήμα ηλεκτροφωτισμού", "Τμήμα καθαριότητας", "Τμήμα πεζοδρομίου/δρόμου/πλατείας"], "order": "bug_id DESC", "limit": "20", "offset": offset, "include_fields": ["component", "cf_comment", "cf_description", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "dupe_of", "cf_mobile", "cf_email", "cf_creator"]};
                     }
@@ -961,7 +1039,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                         $(".paging").html($compile($scope.pages)($scope));
 
-                        $http.post('http://' + config.host + ':'+config.port+'/admin/bugs/search',params, {headers:{'Content-Type': 'application/json','x-uuid': $cookieStore.get('uuid'),'x-role': $cookieStore.get('role')}}).success(function (result) {
+                        $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
                             var total_counter = result.length;
                             var counter = 0;
@@ -970,14 +1048,16 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
                                 var description = CommentService.field(value.status);
                                 var id = value.id;
+                                var priority = PriorityTag.priority_type(value.priority);
+                                var severity = SeverityTag.severity_type(value.severity);
                                 var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
                                 var creation_time = value.creation_time;
                                 var local_time = moment(creation_time).format('LLLL');
                                 var time_fromNow = moment(creation_time).fromNow();
-                               
+
                                 if (!(value.component == "default")) {
-                                    
-                                    $http.post('http://' + config.host + ':'+config.port+ '/admin/bugs/comment',{id:id},{headers:{'Content-Type': 'application/json','x-uuid': $cookieStore.get('uuid'),'x-role': $cookieStore.get('role')}}).success(
+
+                                    $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment', {id: id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                             function (response, status, headers, config) {
                                                 counter++;
                                                 var history = [];
@@ -1010,6 +1090,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                             "component": value.component,
                                                             "admin": false,
                                                             "ArrayID": key,
+                                                            "priority": {en: value.priority, gr: priority},
+                                                            "severity": {en: value.severity, gr: severity},
                                                             "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
                                                             "initialdesc": value.cf_description,
                                                             "mongoId": value.alias,
@@ -1019,7 +1101,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     panel.comment = '';
                                                 }
                                                 $scope.panels.push(panel);
-                                                if (counter == total_counter) {                                                   
+                                                if (counter == total_counter) {
                                                     counter = 0;
                                                     $scope.panels.sort(function (a, b) {
                                                         return b.id - a.id;

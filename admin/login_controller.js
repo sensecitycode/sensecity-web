@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 var app = angular.module('login_fo', ['ngCookies'])
-        .constant("config", {"host": "http://api.sense.city", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "4000", "bugzilla_path": "/bugzilla"});
+        .constant("config", {"host": "localhost", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "4000", "bugzilla_path": "/bugzilla"});
 
 //app.config([
 //  '$httpProvider',
@@ -34,8 +34,8 @@ app.controller('login_controller', ['$scope', '$window', '$http', '$cookieStore'
         };
         $scope.authenticate_us = function (event) {
             var domain = $location.host().split(".");
-            var parameter = {username: $scope.username_l, password: $scope.password_l, city: domain};                       
-            $http.post('http://' + config.host + ':' + config.port + '/dashboard', parameter).success(
+            var parameter = {username: $scope.username_l, password: $scope.password_l, city: 'testcity1'};                       
+            $http.post('http://' + config.host + ':' + config.port + '/api/1.0/dashboard', parameter).success(
                                 function (response, status, headers, cnfg) {
                                     response = response.split(';');
                                     if (response != "failure") {
