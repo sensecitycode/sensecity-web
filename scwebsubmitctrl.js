@@ -410,11 +410,14 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					else{
 						//Verify button
 						
+						$scope.submit_button = false;
+						$scope.register_button = false;
+						$scope.verify_button = true;
+						$scope.submit_eponymous_button = false;
 						
 						$scope.issubmit_isseu_form = function(){
 							return false;
 						}
-									 
 						$scope.iseponymous = function(){
 							return false;
 						}
@@ -425,10 +428,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 							return false;
 						}
 						
-						$scope.submit_button = false;
-						$scope.register_button = false;
-						$scope.verify_button = true;
-						$scope.submit_eponymous_button = false;
+						
 					}
 					
 					
@@ -437,28 +437,16 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						
 				}); 
 			}else if(step==3){
-				$scope.issubmit_isseu_form = function(){
-					return false;
-				}
-							 
-				$scope.iseponymous = function(){
-					return false;
-				}
-				$scope.isnotverify = function(){
-					return false;
-				}
-				$scope.is_finalsubmit = function(){
-					return true;
-				}
+				
+				
+				
 				$scope.submit_button = false;
 				$scope.register_button = false;
 				$scope.verify_button = false;
 				$scope.submit_eponymous_button = true;
-						
-			}else if(step==4){
 				
 				$scope.issubmit_isseu_form = function(){
-					return true;
+					return false;
 				}
 				$scope.iseponymous = function(){
 					return false;
@@ -467,8 +455,44 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					return false;
 				}
 				$scope.is_finalsubmit = function(){
-					return false;
+					return true;
 				}
+				
+						
+			}else if(step==4){
+				
+				var jsonData = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'"}';
+				
+				return $http({
+					method : 'POST',
+					url : $rootScope.Variables.APIURL,
+					headers : {
+						'Content-Type' : 'application/json; charset=utf-8'
+					},
+					data : jsonData 
+				}).success(function(resp) {
+					
+					$scope.submit_button = true;
+					$scope.register_button = false;
+					$scope.verify_button = false;
+					$scope.submit_eponymous_button = false;
+					
+					$scope.issubmit_isseu_form = function(){
+						return true;
+					}
+					$scope.iseponymous = function(){
+						return false;
+					}
+					$scope.isnotverify = function(){
+						return false;
+					}
+					$scope.is_finalsubmit = function(){
+						return false;
+					}
+				
+				});
+				
+				
 				
 				
 			}
