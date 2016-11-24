@@ -383,7 +383,6 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				}).success(function(resp) {
 					
 					
-					console.log(resp);
 					$scope.myText = resp.policy_description;
 					if(resp.user_exist=="1"){
 						//user exists
@@ -408,7 +407,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						$scope.submit_button = false;
 						$scope.register_button = false;
 						$scope.verify_button = false;
-						$scope.submit_eponymous_button = true;
+						$scope.btneponymous = true;
 					}
 					else{
 						//Verify button
@@ -431,7 +430,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						$scope.submit_button = false;
 						$scope.register_button = false;
 						$scope.verify_button = true;
-						$scope.submit_eponymous_button = false;
+						$scope.btneponymous = false;
 					}
 					
 					
@@ -455,15 +454,14 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				}
 				$scope.submit_button = false;
 				$scope.register_button = false;
-				$scope.verify_button = true;
-				$scope.submit_eponymous_button = false;
+				$scope.verify_button = false;
+				$scope.btneponymous = true;
 						
 			}else if(step==4){
 				
 				$scope.issubmit_isseu_form = function(){
 					return true;
 				}
-							 
 				$scope.iseponymous = function(){
 					return false;
 				}
@@ -473,6 +471,8 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				$scope.is_finalsubmit = function(){
 					return false;
 				}
+				
+				
 			}
 		   
 		   
