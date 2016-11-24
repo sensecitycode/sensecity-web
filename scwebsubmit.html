@@ -77,21 +77,22 @@
 				<input id="btnregister" class="btn btn-info" type="submit" value="{{ 'REGISTER' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='register_button'  ng-click="setStep(2)" />
 				
 				
-
+				<div class="isnotverify" ng-show='isnotverify()'>
+					<p style="color:#000000;"><span ng-bind="myText"></span></p>
+					<div class="form-group" style="color:#000000;">					
+						<label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
+						<input ng-model="codeTxt" type="text" class="form-control" value="" placeholder="{{ 'VERIFY_CODE' | translate }}"   >
+					</div>
+					<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' ng-click="setStep(3)" />
+				</div>
+				<div class="is_finalsubmit" ng-show='is_finalsubmit()'>
+					<label for="verify" style="color: #000000; font-weight: 300;" >Απόθηκευση επώνυμης αναφοράς προβλήματος!</label><br />
+					<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'NEW_ISSUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' ng-click="setStep(4)" />
+				</div>
+				
 				<div id="try_another_issue"></div>
 			</div>
 			
-			<div class="isnotverify" ng-show='isnotverify()'>
-				<p style="color:#000000;"><span ng-bind="myText"></span></p>
-				<div class="form-group" style="color:#000000;">					
-					<label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
-					<input ng-model="codeTxt" type="text" class="form-control" value="" placeholder="{{ 'VERIFY_CODE' | translate }}"   >
-				</div>
-				<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' ng-click="setStep(3)" />
-			</div>
-			<div class="is_finalsubmit" ng-show='is_finalsubmit()'>
-				<label for="verify" style="color: #000000; font-weight: 300;" >Απόθηκευση επώνυμης αναφοράς προβλήματος!</label><br />
-				<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'NEW_ISSUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' ng-click="setStep(4)" />
-			</div>
+			
     </div>
 
