@@ -1,6 +1,6 @@
 
 	<div  ng-controller="scWebSubmit" >
-		<form class="form-horizontal" name="form" role="form" ng-submit="submitNewIssue()" id="addIssueForm">	
+		
 		<div class="col-md-8"> 
 			<div style="height: 800px">
 			<leaflet  lf-center="map_center" layers="layers" 
@@ -42,9 +42,8 @@
 				</div>
 			</div>
 			
-			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_button' />
-			</form>
-			<form class="form-horizontal" name="form" role="form" ng-submit="submit_Eponymous()" id="addeponymous">	
+			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_button' ng-click="setStep(1)" />
+			
 				<div class="eponymous" ng-show='iseponymous()'>
 					<p style="color:#000000;"><span ng-bind="myText"></span></p>
 					<div class="form-group" style="color:#000000;">					
@@ -73,9 +72,9 @@
 				
 				
 				
-				<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='register_button' />
+				<input id="btnregister" class="btn btn-info" type="submit" value="{{ 'REGISTER' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='register_button' />
 				
-				<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' />
+				<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' />
 
 				<div id="try_another_issue"></div>
 			</div>
@@ -90,7 +89,7 @@
 				<label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
 				<input ng-model="codeTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'VERIFY_CODE' | translate }}"   >
 			</div>
-			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' />
+			<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' />
 			
 			
 		</form>

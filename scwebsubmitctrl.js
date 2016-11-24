@@ -280,6 +280,43 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			
 		 }
 		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		$scope.setStep = function(step){
+           console.log("=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    " + step);
+        }
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
 		 $scope.submitNewIssue = function submit() {
 			 $scope.issue = new Issue();
 			 

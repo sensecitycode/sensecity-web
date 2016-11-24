@@ -128,7 +128,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'MESSAGE_USER':'I want to be informed by email or sms.',
 		'EMAIL_USER':'email',
 		'SMS_USER':'sms',
-		'VERIFY_CODE':'Verify Code'
+		'VERIFY_CODE':'Verify Code',
+		'REGISTER':'Register'
     });
    
     $translateProvider.translations('el', {
@@ -209,7 +210,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'MESSAGE_USER':'Θέλω να ενημερωθώ με email ή sms.',
 		'EMAIL_USER':'email',
 		'SMS_USER':'sms',
-		'VERIFY_CODE':'Κωδικός πιστοποίησης'
+		'VERIFY_CODE':'Κωδικός πιστοποίησης',
+		'REGISTER':'Εγγραφή'
       
     });
    
