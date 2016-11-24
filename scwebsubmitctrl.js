@@ -407,7 +407,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						$scope.submit_button = false;
 						$scope.register_button = false;
 						$scope.verify_button = false;
-						$scope.btneponymous = true;
+						$scope.submit_eponymous_button = true;
 					}
 					else{
 						//Verify button
@@ -430,7 +430,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						$scope.submit_button = false;
 						$scope.register_button = false;
 						$scope.verify_button = true;
-						$scope.btneponymous = false;
+						$scope.submit_eponymous_button = false;
 					}
 					
 					
@@ -455,7 +455,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				$scope.submit_button = false;
 				$scope.register_button = false;
 				$scope.verify_button = false;
-				$scope.btneponymous = true;
+				$scope.submit_eponymous_button = true;
 						
 			}else if(step==4){
 				
