@@ -353,15 +353,15 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				var chk_2;
 				
 				if ($scope.chkSelected_1) {
-                    chk_1="1";
+                    chk_1="true";
                 } else {
-                    chk_1="0";
+                    chk_1="false";
                 }
 				
 				if ($scope.chkSelected_2) {
-                    chk_2="1";
+                    chk_2="true";
                 } else {
-                    chk_2="0";
+                    chk_2="false";
                 }
 				
 			
