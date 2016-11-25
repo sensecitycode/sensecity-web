@@ -1,5 +1,5 @@
 var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.tooltips'])
-        .constant("config", {"host": "localhost", "bugzilla_host": "nam.ece.upatras.gr", "port": "4000", "bugzilla_path": "/bugzilla"});
+        .constant("config", {"host": "api.sense.city", "bugzilla_host": "nam.ece.upatras.gr", "port": "4000", "bugzilla_path": "/bugzilla"});
 
 //appControllers.config([
 //  '$httpProvider',
