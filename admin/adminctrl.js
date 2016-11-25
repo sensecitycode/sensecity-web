@@ -574,7 +574,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.pageIndex = 5;
                         }
                     };
-					console.log("1");
+					console.log("====>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  "+$cookieStore.get('uuid')+"---"+cookieStore.get('role'));
                     $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 						console.log("2");
 						console.log(result);
