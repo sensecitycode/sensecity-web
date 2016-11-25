@@ -159,7 +159,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 //            }
             } else {
                 $scope.tabs.activeTab = index;
-				console.log($scope.tabs[index].title);
+				console.log(JSON.stringify($scope.tabs));
+				console.log(index);
+
                 $scope.tabs.activeTitle = $scope.tabs[index].title;
                 $scope.tabs.activeIcon = $scope.tabs[index].icon;
             }
@@ -232,7 +234,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             "icon": "fa fa-shield"
                         }];
                     $scope.tabs.activeTab = 3;
-                } else if (department == "tree") {
+                } else if (department == "green") {
                     $scope.tabs = [{
                             "title": "Πρασίνου",
                             "content": "Παρουσίαση προβλημάτων πρασίνου",
