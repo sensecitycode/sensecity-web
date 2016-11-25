@@ -83,11 +83,11 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	}
 	
 	
-	$scope.step1() = function(){
+	$scope.step1 = function(){
 		return true;
 	}
 	
-	$scope.step2() = function(){
+	$scope.step2 = function(){
 		return false;
 	}
 	
