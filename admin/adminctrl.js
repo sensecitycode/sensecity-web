@@ -159,6 +159,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 //            }
             } else {
                 $scope.tabs.activeTab = index;
+				console.log($scope.tabs[index].title);
                 $scope.tabs.activeTitle = $scope.tabs[index].title;
                 $scope.tabs.activeIcon = $scope.tabs[index].icon;
             }
