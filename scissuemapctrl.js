@@ -102,20 +102,20 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$r
 
             console.log(issue);
 
-            $scope.issue_image = issue.image_name;
-            $scope.center = {lat: issue.loc.coordinates[1], lng: issue.loc.coordinates[0], zoom: 16};
-            $scope.markers = [{"lat": issue.loc.coordinates[1], "lng": issue.loc.coordinates[0], "icon": icons[issue.issue]}];
+            $scope.issue_image = issue[0].image_name;
+            $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 16};
+            $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[issue[0].issue]}];
 
-            if (issue.issue == "garbage" || "lighting") {
+            if (issue[0].issue == "garbage" || "lighting") {
                 var type;
-                if (issue.issue == "lighting")
+                if (issue[0].issue == "lighting")
                 {
                     type = "fotistiko";
                 } else {
-                    type = issue.issue;
+                    type = issue[0].issue;
                 }
 
-                FixPoints2MapService.query({long: issue.loc.coordinates[0], lat: issue.loc.coordinates[1], type: type}, function (fix_points) {
+                FixPoints2MapService.query({long: issue[0].loc.coordinates[0], lat: issue[0].loc.coordinates[1], type: type}, function (fix_points) {
                     angular.forEach(fix_points, function (value, key) {
                         var icon = FixPointsMarkerService.icon(value);
                         $scope.markers.push({"lat": value.loc.coordinates[1], "lng": value.loc.coordinates[0], "icon": icons[icon]});
@@ -127,7 +127,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$r
 
 
 
-            switch (issue.issue) {
+            switch (issue[0].issue) {
                 case "garbage":
                     if (localStorage.getItem("language") === 'en') {
                         issue_name_new = 'Cleaning Problem';
@@ -173,7 +173,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$r
             }
 
             $scope.issue_name_new = issue_name_new;
-            $scope.issue_value_desc = issue.value_desc;
+            $scope.issue_value_desc = issue[0].value_desc;
         });
 
 
