@@ -129,7 +129,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 tabchanged = 1;
             }
 
-            if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "sensecityAdmin") {
+            if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("role") == "sensecityAdmin") {
                 $scope.tabs.activeTab = index;
                 var issue = Tab2BugzillaService.issue_type(index);
                 if (issue == 'all') {
@@ -452,8 +452,12 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.currentactive = -1;
                 $scope.pageIndex = 1;
                 $scope.isloading = true;
-
+				
+			  if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("role") == "sensecityAdmin"){
                 $scope.changeTab($scope.tabs.activeTab);
+			}else{
+				$scope.changeTab(0);
+			}
 
                 $scope.itemClicked = function ($index, event) {
                     if ($scope.currentactive != $index) {
