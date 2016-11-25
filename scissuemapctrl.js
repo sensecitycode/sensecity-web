@@ -1,7 +1,8 @@
-var appControllers = angular.module('scissuemapapp.scissuemapctrl', []);
+var appControllers = angular.module('scissuemapapp.scissuemapctrl', [])
+.constant("config", {"host": "api.sense.city", "port": "4000"});
 
-appControllers.controller('scissuemapctrl', ['$scope', '$location', 'EndPointService', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService',
-    function ($scope, $location, EndPointService, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService) {
+appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$http', 'EndPointService', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService','config',
+    function ($scope, $location,$window,$http, EndPointService, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService,config) {
 
         var icons = {
             garbage: {
@@ -294,29 +295,28 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', 'EndPointSer
             }
         });
 
-        //var parameter = {params: {"product": $cookieStore.get("city"), "component": ["Τμήμα επίλυσης προβλημάτων", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου", "Τμήμα ηλεκτροφωτισμού", "Τμήμα καθαριότητας", "Τμήμα πεζοδρομίου/δρόμου/πλατείας"], "order": "bugs.bug_id desc", "status": params.status}};
-
-//    $http.get('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/bug', parameter).success(
-//                    function (response, status, headers, conf) {
-        var response = [{
-                time: "2000-07-25T13:50:04Z",
-                content: "test bug to fix problem in removing from cc list.",
-                tags: ["Ανοιχτό", "Τμήμα επίλυσης προβλημάτων"]
-            }, {time: "2010-08-22T18:20:12Z",
-                content: "new comment",
-                tags: ["Σε εκτελεση", "Τμήμα επίλυσης προβλημάτων"]
-            }, {time: "2010-08-22T18:20:12Z",
-                content: "default",
-                tags: ["Σε εκτελεση", "Τμήμα επίλυσης προβλημάτων"]
-            }, {time: "2010-08-22T18:20:12Z",
-                content: "new comment",
-                tags: ["Ολοκληρωμένο", "Τμήμα επίλυσης προβλημάτων"]
-            }];
+    $http.get('http://' + config.host + ':' + config.port + '/api/1.0/fullissue/'+ issue_id).success(
+                    function (response, status, headers, conf) {                     
+//        var res = [{
+//                time: "2000-07-25T13:50:04Z",
+//                content: "test bug to fix problem in removing from cc list.",
+//                tags: ["Ανοιχτό", "Τμήμα επίλυσης προβλημάτων"]
+//            }, {time: "2010-08-22T18:20:12Z",
+//                content: "new comment",
+//                tags: ["Σε εκτελεση", "Τμήμα επίλυσης προβλημάτων"]
+//            }, {time: "2010-08-22T18:20:12Z",
+//                content: "default",
+//                tags: ["Σε εκτελεση", "Τμήμα επίλυσης προβλημάτων"]
+//            }, {time: "2010-08-22T18:20:12Z",
+//                content: "new comment",
+//                tags: ["Ολοκληρωμένο", "Τμήμα επίλυσης προβλημάτων"]
+//            }];
 
         $scope.comments = [];
-
-        for (var i = 0; i < response.length; i++) {
-
+        var resp_id = response[0].bug_id;
+        
+        for (var i = 0; i < response[1].bugs[resp_id].comments.length; i++) {
+            
             var day;
             var month;
             var year;
@@ -324,15 +324,16 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', 'EndPointSer
             var color;
             var type;
             var show = true;
-
-            var time_parse = response[i].time.split("-");
+            $window.alert(JSON.stringify(response[1].bugs[resp_id].comments[i]));
+            $window.alert(response[1].bugs[resp_id].comments.length);
+            var time_parse = response[1].bugs[resp_id].comments[i].time.split("-");
             day = time_parse[2].substring(0, 2);
             month = time_parse[1];
 
             if (i == 0) {
                 color = {"background-color": "#e74c3c"};
                 type = "Ανοιχτο";
-            } else if (response[i].tags[0] == "IN_PROGRESS") {
+            } else if (response[1].bugs[resp_id].comments[i].tags[0] == "IN_PROGRESS") {
                 color = {"background-color": "#e67e22"};
                 type = "Σε εκτελεση";
             } else {
@@ -381,33 +382,33 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', 'EndPointSer
 
             year = time_parse[0];
 
-            time = response[i].time.substring(11, 19);
-            if(response[i].content == 'default'){
+            time = response[1].bugs[resp_id].comments[i].time.substring(11, 19);
+            if(response[1].bugs[resp_id].comments[i].content == 'default'){
                 show = false;
             }
-            if(response[i].tags[1] == "all"){
-                response[i].tags[1] = "Τμήμα επίλυσης προβλημάτων";
-            }else if(response[i].tags[1] == "protection"){
-                response[i].tags[1] = "Τμήμα πολιτικής προστασίας";
-            }else if(response[i].tags[1] == "road-contructor"){
-                response[i].tags[1] = "Τμήμα πεζοδρομίου/δρόμου/πλατείας";
+            if(response[1].bugs[resp_id].comments[i].tags[1] == "all"){
+                response[1].bugs[resp_id].comments[i].tags[1] = "Τμήμα επίλυσης προβλημάτων";
+            }else if(response[1].bugs[resp_id].comments[i].tags[1] == "protection"){
+                response[1].bugs[resp_id].comments[i].tags[1] = "Τμήμα πολιτικής προστασίας";
+            }else if(response[1].bugs[resp_id].comments[i].tags[1] == "road-contructor"){
+                response[1].bugs[resp_id].comments[i].tags[1] = "Τμήμα πεζοδρομίου/δρόμου/πλατείας";
             }
             var com = {
-                "content": response[i].content,
+                "content": response[1].bugs[resp_id].comments[i].content,
                 "type": type,
                 "day": day,
                 "month": month,
                 "year": year,
                 "time": time,
                 "color": color,
-                "component": response[i].tags[1],
+                "component": response[1].bugs[resp_id].comments[i].tags[1],
                 "show": show
             };
 
             $scope.comments.push(com);
         }
-//                    }).error(
-//                    function (data, status) {
-//
-//                    });
+                    }).error(
+                    function (data, status) {
+
+                    });
     }]);
