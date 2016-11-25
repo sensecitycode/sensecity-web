@@ -294,7 +294,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$h
                 // $('#completion').html("("+new_resol+")<br />"+local_time_compl);
             }
         });
-
+	$window(alert(config.host + ':' + config.port));
     $http.get('http://' + config.host + ':' + config.port + '/api/1.0/fullissue/'+ issue_id).success(
                     function (response, status, headers, conf) {                     
 //        var res = [{
