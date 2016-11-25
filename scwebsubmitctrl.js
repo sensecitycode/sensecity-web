@@ -292,7 +292,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		$scope.setStep = function(step){
            console.log("=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    " + step);
 			if(step==1){
-			   				
+			   	
+				$scope.step2 = function(){
+					return false;
+				}
 				
 				console.log("step 1");
 				
@@ -349,6 +352,13 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				});
 			}else if(step==2){
 				
+	
+				$scope.step3 = function(){
+					return false;
+				}
+	
+	
+	
 				console.log("step 2");
 				console.log($scope.NameTxt);
 				console.log($scope.EmailTxt);
@@ -439,6 +449,18 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				}); 
 			}else if(step==3){
 				
+				$scope.step2 = function(){
+					return false;
+				}
+				
+				$scope.step3 = function(){
+					return false;
+				}
+				
+				$scope.step4 = function(){
+					return false;
+				}
+	
 				var jsonact_Data = '{ "id1" : "'+user_id+'", "id2": "web-site", "id3": "'+$scope.codeTxt+'"}';
 				
 				return $http({
@@ -470,6 +492,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				});
 						
 			}else if(step==4){
+				
 				
 				var jsonData = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'"}';
 				
