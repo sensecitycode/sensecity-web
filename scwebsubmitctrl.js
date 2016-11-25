@@ -61,7 +61,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	                   }
 	                 ];
 
-
+	
 	$scope.issueTypeSelect = $scope.availableIssues[0];
 	$scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0] ;
 	$scope.otherDescriptionTxt = '-';
@@ -83,6 +83,13 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	}
 	
 	
+	$scope.step1() = function(){
+		return true;
+	}
+	
+	$scope.step2() = function(){
+		return false;
+	}
 	
 	$scope.updateCompoType = function() {
 		$scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0] ;
