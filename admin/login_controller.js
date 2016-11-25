@@ -80,7 +80,7 @@ app.controller('login_controller', ['$scope', '$rootScope', '$window', '$http', 
                                         $cookieStore.put('uuid', response[4]);
                                         $cookieStore.put('username', response[5]);
 
-                                        $window.location.href = "/admin/admin.html";
+                                        //$window.location.href = "/admin/admin.html";
 
                                     } else {
                                         $window.alert("Wrong credentials!");
