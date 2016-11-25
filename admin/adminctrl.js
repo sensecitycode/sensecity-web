@@ -553,12 +553,12 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.totalpages();
 				console.log("5");
                 $scope.bugsearchinit = function () {
-
+					
                     $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#">«</a></span></li>'
                             + '<li ng-click="totalpages();refreshPages(startPage - 5,2);refresh()"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#"><</a></span></li>';
 
                     $scope.refreshPages(1);
-
+					console.log("6");
                     $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#">{{page}}</a></span></li>';
 
                     $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#">></a></span></li>'
@@ -576,7 +576,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.pageIndex = 5;
                         }
                     };
-
+					console.log("7");
                     $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 						
 						console.log(result);
@@ -584,6 +584,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         var total_counter = result.length;
                         var counter = 0;
                         angular.forEach(result, function (value, key) {
+							console.log("8");
                             var issue_name = ToGrService.issueName(value.summary);
                             var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
                             var priority = PriorityTag.priority_type(value.priority);
@@ -599,6 +600,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             if (!(value.component == "default")) {
                                 $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment', {id: id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                         function (response, status, headers, config) {
+											console.log("9");
                                             counter++;
                                             var history = [];
                                             for (var i = 0; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
@@ -665,7 +667,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
             pageload(function (callback) {
             });
-
+			console.log("10");
             $scope.linkmap = function (panel) {
 
                 $scope.markers = [];
@@ -676,6 +678,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.panel_image = issue[0].image_name;
                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                     $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN]}];
+					
+					console.log("11");
 //--------FIXED POINTS
 //                    if (issue[0].issue == "garbage" || "lighting") {
 //                        var type;
@@ -705,7 +709,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.selectedResolution = null;
 
                 panel.admin = true;
-
+				console.log("12");
                 $scope.statuses = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Σε εκτέλεση", "en": "IN_PROGRESS"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
                 $scope.resolutions = [{"gr": "Αποκατάσταση", "en": "FIXED"}, {"gr": "Εσφαλμένη Αναφορά", "en": "INVALID"}, {"gr": "Μη αποκατάσταση / Απόρριψη από Δήμο", "en": "WONTFIX"}, {"gr": "Έχει ήδη αναφερθεί σε άλλο αίτημα", "en": "DUPLICATE"}];
                 $scope.components = ["Τμήμα επίλυσης προβλημάτων", "Τμήμα καθαριότητας", "Τμήμα ηλεκτροφωτισμού", "Τμήμα πεζοδρομίου/δρόμου/πλατείας", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου"];//,"Τμήμα ύδρευσης"];
@@ -726,7 +730,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 //$scope.duplicof = panel;
                 $scope.selectedResolution = panel.resolution;
 
-
+				console.log("13");
+				
                 if (panel.resolution.gr !== undefined)
                 {
                     $scope.selectedResolution = {"gr": panel.resolution.gr, "en": panel.resolution.en};
@@ -740,6 +745,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             $scope.initResetPanel = function (panel) {
                 $scope.selectedStatus = null;
                 $scope.selectedResolution = null;
+				console.log("14");
             };
 
             $scope.resetPanel = function (panel) {
