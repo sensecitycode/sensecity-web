@@ -438,7 +438,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             var pageload = function (callback) {
 				
 				
-				console.log("sdsdfgfdg");
+				
 				
                 $scope.activePage = 1;
                 $scope.startPage = 1;
@@ -468,8 +468,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         $scope.currentactive = -1;
                     }
                 };
-
+				
+				console.log("1");
+				
                 var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
+				console.log("2");
                 $scope.component = "Τμήμα επίλυσης προβλημάτων";
                 summary = "all";
                 // console.log(issue_type);
@@ -496,6 +499,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 } else if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
                     params.status = ["IN_PROGRESS"];
                 }
+				
+				console.log("3");
 
                 $scope.refreshPages = function (startPage, arrow_type) {
                     if (startPage < 0) {
@@ -544,9 +549,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     }
 
                 };
-
+				console.log("4");
                 $scope.totalpages();
-
+				console.log("5");
                 $scope.bugsearchinit = function () {
 
                     $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#">«</a></span></li>'
