@@ -62,7 +62,7 @@ app.controller('login_controller', ['$scope', '$rootScope', '$window', '$http', 
         };
         $scope.authenticate_us = function (event) {
             var domain = $location.host().split(".");
-            var parameter = {username: $scope.username_l, password: $scope.password_l, city: 'testcity1'};    
+            var parameter = {username: $scope.username_l, password: $scope.password_l, city: $rootScope.Variables.city_name};    
 			
 			console.log($rootScope.Variables.APIADMIN);
 			

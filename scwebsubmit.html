@@ -10,6 +10,29 @@
 		</div>
 		
 		<div class="col-md-4" > 
+		
+			<div class="stepwizard">
+				<div class="stepwizard-row">
+					<div class="stepwizard-step">
+						<button type="button" class="btn btn-default btn-circle">1</button>
+						<p>Αναφορά Προβλήματος</p>
+					</div>
+					<div class="stepwizard-step">
+						<button type="button" class="btn btn-primary btn-circle">2</button>
+						<p>Επώνυμη αναφορά</p>
+					</div>
+					<div class="stepwizard-step">
+						<button type="button" class="btn btn-default btn-circle" disabled="disabled">3</button>
+						<p>Πιστοποίηση email</p>
+					</div> 
+					<div class="stepwizard-step">
+						<button type="button" class="btn btn-default btn-circle" disabled="disabled">4</button>
+						<p>Καταχώριση αναφοράς</p>
+					</div> 
+				</div>
+			</div>
+			
+
 			<div class="eponymous" ng-show='issubmit_isseu_form()'>
 				<div class="form-group">
 					<label for="lng" style="color: #000000; font-weight: 300;" id="msg_label_long">{{'LONGTITUDE' | translate}}</label>
