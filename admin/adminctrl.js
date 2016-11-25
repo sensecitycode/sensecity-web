@@ -13,6 +13,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         var tabchanged = 2;
         var init = 1;
         var isfixed = 0;
+		
+
+		
         $scope.isloading = true;
 
         $scope.duplicof = "";
@@ -574,7 +577,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.pageIndex = 5;
                         }
                     };
-					console.log("====>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  "+$cookieStore.get('uuid')+"---"+cookieStore.get('role'));
+					console.log("====>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  "+$cookieStore.get('uuid')+"---"+$cookieStore.get('role'));
                     $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 						console.log("2");
 						console.log(result);
