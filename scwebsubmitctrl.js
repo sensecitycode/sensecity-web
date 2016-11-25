@@ -84,11 +84,19 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	
 	
 	$scope.step1 = function(){
-		return true;
+		return false;
 	}
 	
 	$scope.step2 = function(){
-		return false;
+		return true;
+	}
+	
+	$scope.step3 = function(){
+		return true;
+	}
+	
+	$scope.step4 = function(){
+		return true;
 	}
 	
 	$scope.updateCompoType = function() {
