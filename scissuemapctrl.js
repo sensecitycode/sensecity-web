@@ -325,8 +325,8 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$r
             var color;
             var type;
             var show = true;
-            $window.alert(JSON.stringify(response[1].bugs[resp_id].comments[i]));
-            $window.alert(response[1].bugs[resp_id].comments.length);
+            
+			
             var time_parse = response[1].bugs[resp_id].comments[i].time.split("-");
             day = time_parse[2].substring(0, 2);
             month = time_parse[1];
