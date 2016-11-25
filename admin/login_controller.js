@@ -68,6 +68,9 @@ app.controller('login_controller', ['$scope', '$rootScope', '$window', '$http', 
 			
             $http.post($rootScope.Variables.APIADMIN + '/dashboard', parameter).success(
                                 function (response, status, headers, cnfg) {
+									
+									console.log("================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+response);
+									
                                     response = response.split(';');
                                     if (response != "failure") {
                                         $cookieStore.put('city', response[0]);
