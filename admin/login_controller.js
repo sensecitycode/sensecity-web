@@ -13,7 +13,7 @@ var app = angular.module('login_fo', ['ngCookies'])
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-app.controller('login_controller','$rootScope', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', '$location', 'config', function ($scope, $window, $http, $cookieStore, $location, config) {
+app.controller('login_controller', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', '$location', 'config', function ($scope, $rootScope, $window, $http, $cookieStore, $location, config) {
         $scope.admin_user = "";
         $scope.lock = "";
         $scope.username_l = "Username";
