@@ -525,5 +525,5 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$h
                     }).error(
                     function (data, status) {
 
-                    });
-    }]);*/
+                    });*/
+    }]);
