@@ -469,10 +469,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     }
                 };
 				
-				console.log("1");
 				
                 var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
-				console.log("2");
+				
                 $scope.component = "Τμήμα επίλυσης προβλημάτων";
                 summary = "all";
                 // console.log(issue_type);
@@ -500,7 +499,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     params.status = ["IN_PROGRESS"];
                 }
 				
-				console.log("3");
 
                 $scope.refreshPages = function (startPage, arrow_type) {
                     if (startPage < 0) {
@@ -549,16 +547,16 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     }
 
                 };
-				console.log("4");
+				
                 $scope.totalpages();
-				console.log("5");
+				
                 $scope.bugsearchinit = function () {
 					
                     $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#">«</a></span></li>'
                             + '<li ng-click="totalpages();refreshPages(startPage - 5,2);refresh()"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#"><</a></span></li>';
 
                     $scope.refreshPages(1);
-					console.log("6");
+					
                     $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#">{{page}}</a></span></li>';
 
                     $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#">></a></span></li>'
@@ -576,9 +574,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.pageIndex = 5;
                         }
                     };
-					console.log("7");
+					console.log("1");
                     $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-						
+						console.log("2");
 						console.log(result);
 						
                         var total_counter = result.length;
