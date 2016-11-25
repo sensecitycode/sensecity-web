@@ -281,8 +281,11 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		$scope.setStep = function(step){
            console.log("=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    " + step);
 			if(step==1){
-			   
-				$scope.step1.disable="disable";
+			   				
+				$scope.disable1=false;
+				$scope.disable1=true;
+				$scope.disable1=true;
+				$scope.disable1=false;
 				console.log("step 1");
 				
 				
