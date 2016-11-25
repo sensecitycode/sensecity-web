@@ -436,7 +436,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             });
 
             var pageload = function (callback) {
-
+				
+				
+				console.log("sdsdfgfdg");
+				
                 $scope.activePage = 1;
                 $scope.startPage = 1;
                 $scope.activePanel = -1;
@@ -570,7 +573,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     };
 
                     $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-
+						
+						console.log(result);
+						
                         var total_counter = result.length;
                         var counter = 0;
                         angular.forEach(result, function (value, key) {
