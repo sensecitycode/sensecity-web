@@ -276,14 +276,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			 
 			
 		 }*/
-		 
-		 
-		 
-		$scope.disable1=false;
-		$scope.disable2=true;
-		$scope.disable3=true;
-		$scope.disable4=true;
-		 
+			 
 		var my_id;
 		var user_id;
 		 
@@ -292,10 +285,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
            console.log("=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    " + step);
 			if(step==1){
 			   				
-				$scope.disable1=false;
-				$scope.disable2=true;
-				$scope.disable3=true;
-				$scope.disable4=false;
+				
 				console.log("step 1");
 				
 				
