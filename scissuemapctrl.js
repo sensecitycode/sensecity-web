@@ -295,7 +295,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$h
             }
         });
 		console.log('http://' + config.host + ':' + config.port + '/api/1.0/fullissue/'+ issue_id);
-    $http.get('http://' + config.host + ':' + config.port + '/api/1.0/fullissue/'+ issue_id).success(
+    $http.get('http://' + config.host + ':' + config.port + '/api/1.0/fullissue/'+ issue_id, {isArray:true} ).success(
                     function (response, status, headers, conf) {                     
 //        var res = [{
 //                time: "2000-07-25T13:50:04Z",
