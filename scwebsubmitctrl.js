@@ -71,16 +71,6 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	$scope.stateChanged = function(){
 	
 		if($scope.chkSelected){ 
-		
-			
-			console.log("");
-			
-			
-			
-			
-			$scope.NameTxt = "Kostas";
-			$scope.EmailTxt = "kostas.bakoulias@gmail.com";
-			$scope.MobileTxt = "6974037897";
 			
 			
 		}else{
@@ -292,7 +282,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
            console.log("=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    " + step);
 			if(step==1){
 			   
+				$scope.step1.disable="disable";
 				console.log("step 1");
+				
 				
 				$scope.issue = new Issue();
 			 
@@ -337,8 +329,6 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.isnotverify = function(){
 						return false;
 					}
-				
-					$scope.submit_button = false;
 					
 					$scope.submit_button = false;
 					$scope.register_button = true;
