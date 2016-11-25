@@ -37,9 +37,9 @@ app.controller('login_controller', ['$scope', '$window', '$http', '$cookieStore'
             var domain = $location.host().split(".");
             var parameter = {username: $scope.username_l, password: $scope.password_l, city: 'testcity1'};    
 			
-			console.log($rootScope.Variable.APIURL);
+			console.log($rootScope.Variables.APIADMIN);
 			
-            $http.post('http://' + $rootScope.Variable.APIURL + '/dashboard', parameter).success(
+            $http.post('http://' + $rootScope.Variables.APIADMIN + '/dashboard', parameter).success(
                                 function (response, status, headers, cnfg) {
                                     response = response.split(';');
                                     if (response != "failure") {
