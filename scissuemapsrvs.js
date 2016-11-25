@@ -61,7 +61,7 @@ appServices.factory('FixPoints2MapService', function ( $resource, EndPointServic
 
 appServices.factory('Issue2MapService', function ( $resource, EndPointService) {
     // console.log("DisplayIssues");
-    return $resource(EndPointService.APIURL+'/api/fullissue/:issueID',
+    return $resource(EndPointService.APIURL+'/api/1.0/fullissue/:issueID',
         {issueID:'@id'}
 			);
 });
