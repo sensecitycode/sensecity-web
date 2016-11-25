@@ -67,9 +67,7 @@ app.controller('login_controller', ['$scope', '$rootScope', '$window', '$http', 
 			console.log($rootScope.Variables.APIADMIN);
 			
             $http.post($rootScope.Variables.APIADMIN + '/dashboard', parameter).success(
-                                function (response, status, headers, cnfg) {
-									
-									console.log("================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+response);
+                                function (response, status, headers, cnfg) {									
 									
                                     response = response.split(';');
                                     if (response != "failure") {
@@ -80,7 +78,7 @@ app.controller('login_controller', ['$scope', '$rootScope', '$window', '$http', 
                                         $cookieStore.put('uuid', response[4]);
                                         $cookieStore.put('username', response[5]);
 
-                                        //$window.location.href = "/admin/admin.html";
+                                        $window.location.href = "/admin/admin.html";
 
                                     } else {
                                         $window.alert("Wrong credentials!");
