@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var app = angular.module('login_fo','$rootScope', ['ngCookies'])
+var app = angular.module('login_fo', ['ngCookies'])
         .constant("config", {"host": "api.sense.city:", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "4000", "bugzilla_path": "/bugzilla"});
 
 
@@ -13,7 +13,7 @@ var app = angular.module('login_fo','$rootScope', ['ngCookies'])
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-app.controller('login_controller', ['$scope', '$window', '$http', '$cookieStore', '$location', 'config', function ($scope, $window, $http, $cookieStore, $location, config) {
+app.controller('login_controller','$rootScope', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', '$location', 'config', function ($scope, $window, $http, $cookieStore, $location, config) {
         $scope.admin_user = "";
         $scope.lock = "";
         $scope.username_l = "Username";
