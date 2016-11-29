@@ -121,7 +121,10 @@
 					<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'DESCRIPTION' | translate}}</label>
 					<input ng-model="otherDescriptionTxt" type="text" class="form-control" value="" placeholder="{{ 'OTHERPROBWRITE' | translate }}"   >
 				</div>
-				
+				<div class="form-group"  ng-show='isOtherSelected()'>
+					<label for="commentstxt" style="color: #000000; font-weight: 300;" >{{ 'DESCRIPTION' | translate}}</label>
+					<input ng-model="commentstxt" type="text" class="form-control" value="" placeholder="{{ 'OTHERPROBWRITE' | translate }}"   >
+				</div>
 				<div class="form-group">
 					<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">{{ 'PHOTO' | translate}}</label>
 					<input type="file" id="input_file"   class="form-control" file-model="uploadedPhotoFile" placeholder=""   />
