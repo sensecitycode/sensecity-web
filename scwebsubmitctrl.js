@@ -293,8 +293,20 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
            console.log("=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    " + step);
 			if(step==1){
 			   	
+				$scope.step1 = function(){
+					return false;
+				}
+				
 				$scope.step2 = function(){
 					return false;
+				}
+				
+				$scope.step3 = function(){
+					return true;
+				}
+				
+				$scope.step4 = function(){
+					return true;
 				}
 				
 				console.log("step 1");
@@ -373,8 +385,20 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			}else if(step==2){
 				
 	
+				$scope.step1 = function(){
+					return false;
+				}
+				
+				$scope.step2 = function(){
+					return false;
+				}
+				
 				$scope.step3 = function(){
 					return false;
+				}
+				
+				$scope.step4 = function(){
+					return true;
 				}
 	
 	
@@ -469,6 +493,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				}); 
 			}else if(step==3){
 				
+				$scope.step1 = function(){
+					return false;
+				}
+				
 				$scope.step2 = function(){
 					return false;
 				}
@@ -551,6 +579,22 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					}
 					$scope.is_finalsubmit = function(){
 						return false;
+					}
+					
+					$scope.step1 = function(){
+						return false;
+					}
+					
+					$scope.step2 = function(){
+						return true;
+					}
+					
+					$scope.step3 = function(){
+						return true;
+					}
+					
+					$scope.step4 = function(){
+						return true;
 					}
 				
 				});
