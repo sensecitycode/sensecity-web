@@ -841,7 +841,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.selectedStatus = panel.status;
                         }
                     } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
-                        $window.alert($scope.selectedStatus.gr);
                         
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
                             if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
@@ -885,8 +884,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
-                        $window.alert($scope.selectedStatus.gr);
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedResolution != panel.resolution || $scope.duplicof != panel.duplicof) {
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedResolution != panel.resolution || ( $scope.duplicof != panel.duplicof)) {
                             if (panel.comment != undefined && panel.comment.charAt(0)) {
                                 $scope.comment = panel.comment;
                             } else {
@@ -904,6 +902,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                             $scope.selectedStatus = panel.status;
                         } else {
+                            $window.alert($scope.duplicof +"" + panel.status.gr + " "+ $scope.closedissues  +" " + panel.component != $scope.component+" "+panel.component + " "+ $scope.component);
                             if (panel.comment != $scope.comment) {
                                 if (panel.comment != undefined || $scope.comment != "undefined") {
                                     if (panel.comment != undefined && panel.comment.charAt(0)) {
@@ -912,7 +911,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                         $scope.comment = "undefined";
                                     }
                                     update();
-                                    if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component)) {
+                                    if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                         setTimeout(function () {
                                             $(e.target).closest(".timeline-item-active").remove();
                                             $scope.activePanel = -1;
