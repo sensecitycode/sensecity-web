@@ -375,6 +375,22 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						$scope.is_finalsubmit = function(){
 							return true;
 						}
+						$scope.step1 = function(){
+							return false;
+						}
+						
+						$scope.step2 = function(){
+							return false;
+						}
+						
+						$scope.step3 = function(){
+							return false;
+						}
+						
+						$scope.step4 = function(){
+							return false;
+						}
+						
 						$scope.submit_button = false;
 						$scope.register_button = false;
 						$scope.verify_button = false;
