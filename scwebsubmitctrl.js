@@ -311,7 +311,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				$scope.issue.value_desc =  desc ;
 				$scope.issue.image_name =  $scope.uploadedPhotoFile ; //no-image
 			
-				var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id +'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '","comments" : " test " }' ;	
+				var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id +'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '","comments" : "'+$scope.commentstxt+'" }' ;	
 			
 				console.log( txtpost );			
 				console.log("--------------------------------------");
@@ -327,27 +327,47 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					},
 					data : txtpost 
 				}).success(function(resp) {
-					console.log(resp);
+					console.log(resp.anonymous);
 					my_id=resp._id;
 					$scope.myText = resp.policy_description;
 						
 					console.log("Submit ok!");
-						
-					$scope.issubmit_isseu_form = function(){
-						 return false;
-					 }
-						 
-					$scope.iseponymous = function(){
-						 return true;
-					}
-					$scope.isnotverify = function(){
-						return false;
-					}
 					
-					$scope.submit_button = false;
-					$scope.register_button = true;
-					$scope.verify_button = false;
-					$scope.submit_eponymous_button = false;
+					if(resp.anonymous=="false") {
+						$scope.issubmit_isseu_form = function(){
+							 return false;
+						 }
+							 
+						$scope.iseponymous = function(){
+							 return true;
+						}
+						$scope.isnotverify = function(){
+							return false;
+						}
+						
+						$scope.submit_button = false;
+						$scope.register_button = true;
+						$scope.verify_button = false;
+						$scope.submit_eponymous_button = false;
+					}else{
+						$scope.issubmit_isseu_form = function(){
+							 return false;
+						 }
+							 
+						$scope.iseponymous = function(){
+							 return false;
+						}
+						$scope.isnotverify = function(){
+							return false;
+						}
+						$scope.is_finalsubmit = function(){
+							return true;
+						}
+						$scope.submit_button = false;
+						$scope.register_button = false;
+						$scope.verify_button = false;
+						$scope.submit_eponymous_button = true;
+					}
 
 				});
 			}else if(step==2){
