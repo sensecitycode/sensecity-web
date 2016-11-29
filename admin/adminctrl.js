@@ -868,8 +868,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.selectedStatus = panel.status;
                         } else {
                             if (panel.comment != $scope.comment) {
-                                if (panel.comment != undefined || $scope.comment != "undefined") {
-                                    if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
+                                if (panel.comment != undefined || $scope.comment != "undefined" || $scope.comment != "") {
+                                    if (panel.comment != undefined && panel.comment != "" && panel.comment.charAt(0)) {
                                         $scope.comment = panel.comment;
                                     } else {
                                         $scope.comment = "undefined";
@@ -910,11 +910,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.selectedStatus = panel.status;
                         } else {
                             if (panel.comment != $scope.comment) {
-                                if (panel.comment != undefined || $scope.comment != "undefined") {
-                                    $window.alert("mphke");
-                                    $window.alert(panel.comment);
-                                    $window.alert($scope.comment);
-                                    if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
+                                if (panel.comment != undefined || $scope.comment != "undefined" || $scope.comment != "") {
+//                                    $window.alert("mphke");
+//                                    $window.alert(panel.comment);
+                                    $window.alert(panel.comment.charAt(0));
+                                    if (panel.comment != undefined && panel.comment != "") {
                                         $scope.comment = panel.comment;
                                     } else {
                                         $scope.comment = "undefined";
