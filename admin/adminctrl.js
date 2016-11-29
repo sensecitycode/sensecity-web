@@ -726,6 +726,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.selectedSeverity = {en: panel.severity.en, gr: panel.severity.gr};
 
                 $scope.selectedStatus = panel.status;
+                $window.alert($scope.selectedStatus.en);
                 if($scope.selectedStatus.en != "RESOLVED"){
                     $(".status").html($compile($scope.statuses)($scope));
                     $window.alert("NRESOLVED");
