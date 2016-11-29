@@ -841,7 +841,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.selectedStatus = panel.status;
                         }
                     } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
-                        $(window).alert("mphke1");
+                        $window.alert($scope.selectedStatus.gr);
+                        
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
                             if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
                                 $scope.comment = panel.comment;
@@ -884,7 +885,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
-                        $(window).alert("mphke");
+                        $window.alert($scope.selectedStatus.gr);
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedResolution != panel.resolution || $scope.duplicof != panel.duplicof) {
                             if (panel.comment != undefined && panel.comment.charAt(0)) {
                                 $scope.comment = panel.comment;
@@ -894,7 +895,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                             update();                    
                             if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
-                                $(window).alert(panel.status.gr + " "+ $scope.closedissues  +" " + panel.component != $scope.component+" "+panel.component + " "+ $scope.component);
+                                $window.alert(panel.status.gr + " "+ $scope.closedissues  +" " + panel.component != $scope.component+" "+panel.component + " "+ $scope.component);
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
