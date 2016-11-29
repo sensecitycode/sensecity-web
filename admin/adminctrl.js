@@ -728,8 +728,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.selectedStatus = panel.status;
                 if($scope.selectedStatus.en != "RESOLVED"){
                     $(".status").html($compile($scope.statuses)($scope));
+                    $window.alert("NRESOLVED");
                 }else{
+                    $window.alert("RESOLVED");
                     $(".status").html($compile($scope.statuses_resolved)($scope));
+                    $window.alert("RESOLVED");
                 }
                 $scope.comment = panel.comment;
                 $scope.duplicof = panel.duplicof;
@@ -1047,11 +1050,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
 
                         $(".paging").html($compile($scope.pages)($scope));
+                        $window.alert("in");
 
                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
                             var total_counter = result.length;
                             var counter = 0;
+                            $window.alert("mphke");
                             angular.forEach(result, function (value, key) {
                                 var issue_name = ToGrService.issueName(value.summary);
                                 var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
