@@ -764,6 +764,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, seldpriority, seldseverity, e) {
                 if ($cookieStore.get("uuid") != undefined) {
                     panel.status = seldstatus;
+                    panel.priority = seldpriority;
+                    panel.severity = seldseverity;
                     if (panel.status.en == "RESOLVED")
                     {
                         panel.resolution = seldResolution;
@@ -884,7 +886,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedResolution != panel.resolution ||  $scope.duplicof != panel.duplicof) {
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedResolution != panel.resolution ||  $scope.duplicof != panel.duplicof ||  $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
                             if (panel.comment != undefined && panel.comment.charAt(0)) {
                                 $scope.comment = panel.comment;
                             } else {
@@ -893,7 +895,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                             update();                    
                             if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
-                                $window.alert("mphke1");
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
@@ -902,9 +903,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                             $scope.selectedStatus = panel.status;
                         } else {
-                            $window.alert($scope.selectedStatus.gr != panel.status.gr);
-                            $window.alert($scope.selectedComponent != panel.component);
-                            $window.alert($scope.selectedResolution != panel.resolution);
                             if (panel.comment != $scope.comment) {
                                 if (panel.comment != undefined || $scope.comment != "undefined") {
                                     if (panel.comment != undefined && panel.comment.charAt(0)) {
