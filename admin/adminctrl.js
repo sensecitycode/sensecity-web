@@ -159,8 +159,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 //            }
             } else {
                 $scope.tabs.activeTab = index;
-				console.log(JSON.stringify($scope.tabs));
-				console.log(index);
 
                 $scope.tabs.activeTitle = $scope.tabs[index].title;
                 $scope.tabs.activeIcon = $scope.tabs[index].icon;
@@ -614,7 +612,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             for (var i = 0; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                                 if (i == 0) {
                                                     history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
-                                                } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0] == "IN_PROGRESS") {
+                                                } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0] == "in_progress") {
                                                     history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
                                                 } else {
                                                     history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
@@ -719,6 +717,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 panel.admin = true;
 				console.log("12");
                 $scope.statuses = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Σε εκτέλεση", "en": "IN_PROGRESS"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
+                 $scope.statuses_resolved = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
                 $scope.resolutions = [{"gr": "Αποκατάσταση", "en": "FIXED"}, {"gr": "Εσφαλμένη Αναφορά", "en": "INVALID"}, {"gr": "Μη αποκατάσταση / Απόρριψη από Δήμο", "en": "WONTFIX"}, {"gr": "Έχει ήδη αναφερθεί σε άλλο αίτημα", "en": "DUPLICATE"}];
                 $scope.components = ["Τμήμα επίλυσης προβλημάτων", "Τμήμα καθαριότητας", "Τμήμα ηλεκτροφωτισμού", "Τμήμα πεζοδρομίου/δρόμου/πλατείας", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου"];//,"Τμήμα ύδρευσης"];
                 $scope.priorities = ["Υψηλή", "Κανονική", "Χαμηλή"];
@@ -792,15 +791,15 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         if (panel.status.en == "RESOLVED")
                         {
                             if (panel.resolution.en == "DUPLICATE") {
-                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "resolution": panel.resolution.en, "dupe_of": $scope.duplicof};
+                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "resolution": panel.resolution.en, "dupe_of": $scope.duplicof, "reset_assigned_to":true};
                             } else {
-                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component};
+                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "reset_assigned_to":true};
                             }
                         } else {
                             if (panel.status.gr == "Σε εκτέλεση") {
-                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "priority": panel.priority.en, "severity": panel.severity.en};
+                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "priority": panel.priority.en, "severity": panel.severity.en, "reset_assigned_to":true};
                             } else {
-                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component};
+                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "reset_assigned_to":true};
                             }
                         }
                         if (panel.status.en == "RESOLVED")
@@ -890,9 +889,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             $scope.activePanel = -1;
                                             $scope.currentactive = -1;
                                         }, 3000);
-                                    } else {
-                                        $scope.selectedStatus = panel.status;
                                     }
+                                    $scope.selectedStatus = panel.status;
                                 } else {
                                     panel.comment = "undefined";
                                 }
@@ -907,7 +905,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
 
                             update();
-                            if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component)) {
+                            if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
@@ -930,9 +928,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             $scope.activePanel = -1;
                                             $scope.currentactive = -1;
                                         }, 3000);
-                                    } else {
-                                        $scope.selectedStatus = panel.status;
                                     }
+                                    $scope.selectedStatus = panel.status;
                                 } else {
                                     panel.comment = "undefined";
                                 }
@@ -1088,7 +1085,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 for (var i = 0; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                                     if (i == 0) {
                                                         history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
-                                                    } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0] == "IN_PROGRESS") {
+                                                    } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0] == "in_progress") {
                                                         history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
                                                     } else {
                                                         history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
