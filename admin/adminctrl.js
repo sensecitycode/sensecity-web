@@ -913,8 +913,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 if (panel.comment != undefined || $scope.comment != "undefined" || $scope.comment != "") {
 //                                    $window.alert("mphke");
 //                                    $window.alert(panel.comment);
-//                                    $window.alert($scope.comment);
-                                    if (panel.comment != undefined && panel.comment != "" && panel.comment.charAt(0)) {
+                                    $window.alert(panel.comment.charAt(0));
+                                    if (panel.comment != undefined && panel.comment != "") {
                                         $scope.comment = panel.comment;
                                     } else {
                                         $scope.comment = "undefined";
