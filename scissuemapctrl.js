@@ -316,7 +316,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$r
         $scope.comments = [];
         var resp_id = response[0].bug_id;
         
-        for (var i = 0; i < response[1].bugs[resp_id].comments.length; i++) {
+        for (var i = 1; i < response[1].bugs[resp_id].comments.length; i++) {
             
             var day;
             var month;
@@ -331,10 +331,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$r
             day = time_parse[2].substring(0, 2);
             month = time_parse[1];
 
-            if (i == 0) {
+            if (i == 1) {
                 color = {"background-color": "#e74c3c"};
                 type = "Ανοιχτο";
-            } else if (response[1].bugs[resp_id].comments[i].tags[0] == "IN_PROGRESS") {
+            } else if (response[1].bugs[resp_id].comments[i].tags[1] == "IN_PROGRESS") {
                 color = {"background-color": "#e67e22"};
                 type = "Σε εκτελεση";
             } else {
@@ -384,7 +384,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$r
             year = time_parse[0];
 
             time = response[1].bugs[resp_id].comments[i].time.substring(11, 19);
-            if(response[1].bugs[resp_id].comments[i].content == 'default'){
+            if(response[1].bugs[resp_id].comments[i].content == 'default' || response[1].bugs[resp_id].comments[i].content == "undefined"){
                 show = false;
             }
             if(response[1].bugs[resp_id].comments[i].tags[1] == "all"){
@@ -394,6 +394,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location','$window','$r
             }else if(response[1].bugs[resp_id].comments[i].tags[1] == "road-contructor"){
                 response[1].bugs[resp_id].comments[i].tags[1] = "Τμήμα πεζοδρομίου/δρόμου/πλατείας";
             }
+                        
             var com = {
                 "content": response[1].bugs[resp_id].comments[i].content,
                 "type": type,
