@@ -764,8 +764,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, seldpriority, seldseverity, e) {
                 if ($cookieStore.get("uuid") != undefined) {
                     panel.status = seldstatus;
-                    panel.priority = seldpriority;
-                    panel.severity = seldseverity;
                     
                     panel.priority.en = PriorityTagEn.priority_type(panel.priority.gr);
                     panel.severity.en = SeverityTagEn.severity_type(panel.severity.gr);
@@ -845,6 +843,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 }, 3000);
                             }
                             $scope.selectedStatus = panel.status;
+                            panel.priority = seldpriority;
+                            panel.severity = seldseverity;
                         }
                     } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
                         
@@ -896,7 +896,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             } else {
                                 $scope.comment = "undefined";
                             }
-
+                            
+                            panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
+                            panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             update();                    
                             if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
@@ -909,6 +911,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         } else {
                             if (panel.comment != $scope.comment) {
                                 if (panel.comment != undefined || $scope.comment != "undefined") {
+                                    $window.alert("mphke");
+                                    $window.alert(panel.comment);
+                                    $window.alert($scope.comment);
                                     if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
                                         $scope.comment = panel.comment;
                                     } else {
