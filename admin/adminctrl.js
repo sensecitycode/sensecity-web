@@ -642,7 +642,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         "ArrayID": key,
                                                         "priority": {en: value.priority, gr: priority},
                                                         "severity": {en: value.severity, gr: severity},
-                                                        "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
+                                                        "comment": com,
                                                         "initialdesc": value.cf_description,
                                                         "mongoId": value.alias,
                                                         "history": history
