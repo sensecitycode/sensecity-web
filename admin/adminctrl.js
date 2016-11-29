@@ -890,6 +890,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
+                        $window.alert($scope.selectedPriority.gr != panel.priority.gr);
+                        $window.alert($scope.selectedSeverity.gr != panel.severity.gr);
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedResolution != panel.resolution ||  $scope.duplicof != panel.duplicof ||  $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
                             if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
                                 $scope.comment = panel.comment;
