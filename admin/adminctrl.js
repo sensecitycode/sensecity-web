@@ -766,8 +766,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     panel.status = seldstatus;
                     panel.priority = seldpriority;
                     panel.severity = seldseverity;
-                    $window.alert(JSON.stringify(panel.priority));
-                        $window.alert(JSON.stringify(panel.severity));
+                    
+                    panel.priority.en = PriorityTagEn.priority_type(panel.priority.gr);
+                    panel.severity.en = SeverityTagEn.severity_type(panel.severity.gr);
+                    
                     if (panel.status.en == "RESOLVED")
                     {
                         panel.resolution = seldResolution;
@@ -796,9 +798,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         {
                             obj.resolution = panel.resolution.en;
                         }
-                        $window.alert(JSON.stringify(obj));
-                        $window.alert(JSON.stringify(panel.priority));
-                        $window.alert(JSON.stringify(panel.severity));
                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             if (panel.comment == undefined || panel.comment == "" || $scope.selectedStatus.gr == 'Ανοιχτό')
                             {
@@ -915,6 +914,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                     } else {
                                         $scope.comment = "undefined";
                                     }
+                                    $window.alert(panel.comment);
                                     $window.alert($scope.comment);
                                     update();
                                     if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
