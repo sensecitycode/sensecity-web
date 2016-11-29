@@ -193,7 +193,8 @@
                                                 <div>
                                                     <span class="title">Κατάσταση: </span>
                                                                                                         
-                                                    <div class="status"></div>                                                   
+                                                    <button ng-show="selectedStatus.en != 'RESOLVED'" style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in statuses" data-placement="bottom" bs-select></button>
+                                                    <button ng-show="selectedStatus.en == 'RESOLVED'" style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in sresolved" data-placement="bottom" bs-select></button>
                                                     <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" ng-show="selectedStatus.en == 'RESOLVED'" class="btn btn-default" ng-model="selectedResolution" data-html="1" data-toggle="true" bs-options="resolution.gr for resolution in resolutions" data-placement="bottom"  bs-select></button>
                                                     <div style="position:relative;top:5px" ng-show="selectedStatus.en == 'RESOLVED' && selectedResolution.en == 'DUPLICATE'">
                                                         <span class="title">Διπλότυπο πρόβλημα: </span>

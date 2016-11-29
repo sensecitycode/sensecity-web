@@ -13,9 +13,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         var tabchanged = 2;
         var init = 1;
         var isfixed = 0;
-	$scope.statuses = '<button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in statuses" data-placement="bottom" bs-select></button>';
-        $scope.statuses_resolved = '<button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in sresolved" data-placement="bottom" bs-select></button>';
-
 		
         $scope.isloading = true;
 
@@ -615,6 +612,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                 }
                                             }
+                                            
+                                            var com;
+                                            if( com != "undefined"){
+                                                    com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                }else{
+                                                    com = "";
+                                                }
 
                                             var panel =
                                                     {
@@ -726,15 +730,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.selectedSeverity = {en: panel.severity.en, gr: panel.severity.gr};
 
                 $scope.selectedStatus = panel.status;
-                $window.alert($scope.selectedStatus.en);
-                if($scope.selectedStatus.en != "RESOLVED"){
-                    $(".status").html($compile($scope.statuses)($scope));
-                    $window.alert("NRESOLVED");
-                }else{
-                    $window.alert("RESOLVED");
-                    $(".status").html($compile($scope.statuses_resolved)($scope));
-                    $window.alert("RESOLVED");
-                }
+
                 $scope.comment = panel.comment;
                 $scope.duplicof = panel.duplicof;
 
@@ -1051,13 +1047,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
 
                         $(".paging").html($compile($scope.pages)($scope));
-                        $window.alert("in");
 
                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
                             var total_counter = result.length;
                             var counter = 0;
-                            $window.alert("mphke");
                             angular.forEach(result, function (value, key) {
                                 var issue_name = ToGrService.issueName(value.summary);
                                 var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
@@ -1065,9 +1059,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 var id = value.id;
                                 var priority = PriorityTag.priority_type(value.priority);
                                 var severity = SeverityTag.severity_type(value.severity);
-                                $window.alert(JSON.stringify(params));
-                                $window.alert(priority);
-                                $window.alert(severity);
                                 var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
                                 var creation_time = value.creation_time;
                                 var local_time = moment(creation_time).format('LLLL');
@@ -1088,6 +1079,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                     }
                                                 }
+                                                var com;
+                                                if( com != "undefined"){
+                                                    com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                }else{
+                                                    com = "";
+                                                }
+                                                
                                                 var panel =
                                                         {
                                                             "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
@@ -1110,7 +1108,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                             "ArrayID": key,
                                                             "priority": {en: value.priority, gr: priority},
                                                             "severity": {en: value.severity, gr: severity},
-                                                            "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
+                                                            "comment": com,
                                                             "initialdesc": value.cf_description,
                                                             "mongoId": value.alias,
                                                             "history": history
