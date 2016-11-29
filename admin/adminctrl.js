@@ -482,7 +482,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 				
                 $scope.component = "Τμήμα επίλυσης προβλημάτων";
                 summary = "all";
-                // console.log(issue_type);
                 if (issue_type != "all" && ($scope.role == "sensecityAdmin" || $scope.role == "cityAdmin"))
                 {
                     params.summary = issue_type;
@@ -582,15 +581,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.pageIndex = 5;
                         }
                     };
-					console.log("====>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  "+$cookieStore.get('uuid')+"---"+$cookieStore.get('role'));
+
                     $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-						console.log("2");
-						console.log(result);
+
 						
                         var total_counter = result.length;
                         var counter = 0;
                         angular.forEach(result, function (value, key) {
-							console.log("8");
                             var issue_name = ToGrService.issueName(value.summary);
                             var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
                             var priority = PriorityTag.priority_type(value.priority);
@@ -606,7 +603,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             if (!(value.component == "default")) {
                                 $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment', {id: id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                         function (response, status, headers, config) {
-											console.log("9");
                                             counter++;
                                             var history = [];
                                             for (var i = 0; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
@@ -673,7 +669,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
             pageload(function (callback) {
             });
-			console.log("10");
+            
             $scope.linkmap = function (panel) {
 
                 $scope.markers = [];
@@ -685,7 +681,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                     $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN]}];
 					
-					console.log("11");
+
 //--------FIXED POINTS
 //                    if (issue[0].issue == "garbage" || "lighting") {
 //                        var type;
@@ -715,7 +711,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.selectedResolution = null;
 
                 panel.admin = true;
-				console.log("12");
+				
                 $scope.statuses = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Σε εκτέλεση", "en": "IN_PROGRESS"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
                 $scope.sresolved = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
                 $scope.resolutions = [{"gr": "Αποκατάσταση", "en": "FIXED"}, {"gr": "Εσφαλμένη Αναφορά", "en": "INVALID"}, {"gr": "Μη αποκατάσταση / Απόρριψη από Δήμο", "en": "WONTFIX"}, {"gr": "Έχει ήδη αναφερθεί σε άλλο αίτημα", "en": "DUPLICATE"}];
@@ -723,8 +719,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.priorities = ["Υψηλή", "Κανονική", "Χαμηλή"];
                 $scope.severities = ["Κρίσιμο", "Μείζον", "Κανονικό", "Ελάσσον", "Μηδαμινό", "Βελτίωση"];
 
-                console.log("----------------------------------------------------");
-                console.log(panel.status);
                 $scope.selectedComponent = panel.component;
 
                 $scope.selectedPriority = {en: panel.priority.en, gr: panel.priority.gr};
@@ -737,7 +731,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 //$scope.duplicof = panel;
                 $scope.selectedResolution = panel.resolution;
 
-				console.log("13");
 				
                 if (panel.resolution.gr !== undefined)
                 {
@@ -752,23 +745,16 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             $scope.initResetPanel = function (panel) {
                 $scope.selectedStatus = null;
                 $scope.selectedResolution = null;
-				console.log("14");
             };
 
             $scope.resetPanel = function (panel) {
-                console.log("BEFORE:");
-                console.log($scope.selectedStatus);
-                console.log($scope.selectedResolution);
-                console.log($scope.comment);
+
                 panel.admin = false;
                 $scope.selectedStatus = null;
                 $scope.selectedResolution = null;
                 $scope.comment = null;
 
-                console.log("AFTER:");
-                console.log($scope.selectedStatus);
-                console.log($scope.selectedResolution);
-                console.log($scope.comment);
+
             };
 
             $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, seldpriority, seldseverity, e) {
@@ -1023,7 +1009,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     if (($scope.assignissues == false || $scope.closedissues == true) && $scope.allclosedissues == false) {
                         params = {"product": $cookieStore.get("city"), "component": $scope.component, "order": "bug_id DESC", "limit": "20", "offset": offset, "include_fields": ["component", "cf_comment", "cf_description", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "dupe_of", "cf_mobile", "cf_email", "cf_creator", "severity", "priority"]};
                     } else {
-                        params = {"product": $cookieStore.get("city"), "component": ["Τμήμα επίλυσης προβλημάτων", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου", "Τμήμα ηλεκτροφωτισμού", "Τμήμα καθαριότητας", "Τμήμα πεζοδρομίου/δρόμου/πλατείας"], "order": "bug_id DESC", "limit": "20", "offset": offset, "include_fields": ["component", "cf_comment", "cf_description", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "dupe_of", "cf_mobile", "cf_email", "cf_creator"]};
+                        params = {"product": $cookieStore.get("city"), "component": ["Τμήμα επίλυσης προβλημάτων", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου", "Τμήμα ηλεκτροφωτισμού", "Τμήμα καθαριότητας", "Τμήμα πεζοδρομίου/δρόμου/πλατείας"], "order": "bug_id DESC", "limit": "20", "offset": offset, "include_fields": ["component", "cf_comment", "cf_description", "cf_sensecityissue", "status", "id", "alias", "summary", "creation_time", "whiteboard", "url", "resolution", "dupe_of", "cf_mobile", "cf_email", "cf_creator","severity", "priority"]};
                     }
                     if (summary != "all") {
                         params.summary = summary;
