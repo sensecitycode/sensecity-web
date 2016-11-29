@@ -14,8 +14,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         var init = 1;
         var isfixed = 0;
 		
-
-		
         $scope.isloading = true;
 
         $scope.duplicof = "";
@@ -614,6 +612,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                 }
                                             }
+                                            
+                                            var com;
+                                            if( com != "undefined"){
+                                                    com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                }else{
+                                                    com = "";
+                                                }
 
                                             var panel =
                                                     {
@@ -706,7 +711,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             };
 
             $scope.admin = function (panel) {
-
+                
                 $scope.selectedStatus = null;
                 $scope.selectedResolution = null;
 
@@ -725,6 +730,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.selectedSeverity = {en: panel.severity.en, gr: panel.severity.gr};
 
                 $scope.selectedStatus = panel.status;
+
                 $scope.comment = panel.comment;
                 $scope.duplicof = panel.duplicof;
 
@@ -1073,6 +1079,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                     }
                                                 }
+                                                var com;
+                                                if( com != "undefined"){
+                                                    com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                }else{
+                                                    com = "";
+                                                }
+                                                
                                                 var panel =
                                                         {
                                                             "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
@@ -1095,7 +1108,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                             "ArrayID": key,
                                                             "priority": {en: value.priority, gr: priority},
                                                             "severity": {en: value.severity, gr: severity},
-                                                            "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
+                                                            "comment": com,
                                                             "initialdesc": value.cf_description,
                                                             "mongoId": value.alias,
                                                             "history": history
