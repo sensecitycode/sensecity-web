@@ -717,7 +717,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 panel.admin = true;
 				console.log("12");
                 $scope.statuses = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Σε εκτέλεση", "en": "IN_PROGRESS"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
-                 $scope.statuses_resolved = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
+                $scope.sresolved = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
                 $scope.resolutions = [{"gr": "Αποκατάσταση", "en": "FIXED"}, {"gr": "Εσφαλμένη Αναφορά", "en": "INVALID"}, {"gr": "Μη αποκατάσταση / Απόρριψη από Δήμο", "en": "WONTFIX"}, {"gr": "Έχει ήδη αναφερθεί σε άλλο αίτημα", "en": "DUPLICATE"}];
                 $scope.components = ["Τμήμα επίλυσης προβλημάτων", "Τμήμα καθαριότητας", "Τμήμα ηλεκτροφωτισμού", "Τμήμα πεζοδρομίου/δρόμου/πλατείας", "Τμήμα πολιτικής προστασίας", "Τμήμα πρασίνου"];//,"Τμήμα ύδρευσης"];
                 $scope.priorities = ["Υψηλή", "Κανονική", "Χαμηλή"];
