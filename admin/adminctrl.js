@@ -766,6 +766,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     panel.status = seldstatus;
                     panel.priority = seldpriority;
                     panel.severity = seldseverity;
+                    $window.alert(JSON.stringify(panel.priority));
+                        $window.alert(JSON.stringify(panel.severity));
                     if (panel.status.en == "RESOLVED")
                     {
                         panel.resolution = seldResolution;
@@ -795,8 +797,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             obj.resolution = panel.resolution.en;
                         }
                         $window.alert(JSON.stringify(obj));
-                        $window.alert(panel.priority);
-                        $window.alert(panel.severity);
+                        $window.alert(JSON.stringify(panel.priority));
+                        $window.alert(JSON.stringify(panel.severity));
                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             if (panel.comment == undefined || panel.comment == "" || $scope.selectedStatus.gr == 'Ανοιχτό')
                             {
