@@ -13,7 +13,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         var tabchanged = 2;
         var init = 1;
         var isfixed = 0;
-		
+	$scope.statuses = '<button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in statuses" data-placement="bottom" bs-select></button>';
+        $scope.statuses_resolved = '<button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in sresolved" data-placement="bottom" bs-select></button>';
 
 		
         $scope.isloading = true;
@@ -706,7 +707,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             };
 
             $scope.admin = function (panel) {
-
+                
                 $scope.selectedStatus = null;
                 $scope.selectedResolution = null;
 
@@ -725,6 +726,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.selectedSeverity = {en: panel.severity.en, gr: panel.severity.gr};
 
                 $scope.selectedStatus = panel.status;
+                if($scope.selectedStatus.en != "RESOLVED"){
+                    $(".status").html($compile($scope.statuses)($scope));
+                }else{
+                    $(".status").html($compile($scope.statuses_resolved)($scope));
+                }
                 $scope.comment = panel.comment;
                 $scope.duplicof = panel.duplicof;
 
@@ -1053,6 +1059,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 var id = value.id;
                                 var priority = PriorityTag.priority_type(value.priority);
                                 var severity = SeverityTag.severity_type(value.severity);
+                                $window.alert(JSON.stringify(params));
+                                $window.alert(priority);
+                                $window.alert(severity);
                                 var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
                                 var creation_time = value.creation_time;
                                 var local_time = moment(creation_time).format('LLLL');
