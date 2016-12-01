@@ -867,16 +867,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                             $scope.selectedStatus = panel.status;
                         } else {
+                            if( panel.comment == undefined){
+                                panel.comment = "undefined";
+                            }
                             if (panel.comment != $scope.comment) {
-                                if (panel.comment != undefined || $scope.comment != "undefined" || $scope.comment != "") {
-                                    if (panel.comment != undefined && panel.comment != "" && panel.comment.charAt(0)) {
-                                        $scope.comment = panel.comment;
-                                    } else {
-                                        $scope.comment = "undefined";
-                                    }
-
+                                    $scope.comment = panel.comment;
                                     update();
-                                    if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                                    if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                         setTimeout(function () {
                                             $(e.target).closest(".timeline-item-active").remove();
                                             $scope.activePanel = -1;
@@ -884,9 +881,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                         }, 3000);
                                     }
                                     $scope.selectedStatus = panel.status;
-                                } else {
-                                    panel.comment = "undefined";
-                                }
+                            }else{
+                              $scope.comment = panel.comment;  
                             }
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
@@ -909,17 +905,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                             $scope.selectedStatus = panel.status;
                         } else {
+                            if( panel.comment == undefined){
+                                panel.comment = "undefined";
+                            }
                             if (panel.comment != $scope.comment) {
-                                if (panel.comment != undefined || $scope.comment != "undefined" || $scope.comment != "") {
-//                                    $window.alert("mphke");
-//                                    $window.alert(panel.comment)
-                                    if (panel.comment != undefined && panel.comment != "" && panel.comment.charAt(0)) {
-                                        $scope.comment = panel.comment;
-                                    } else {
-                                        $scope.comment = "undefined";
-                                    }
-                                    $window.alert(panel.comment);
-                                    $window.alert($scope.comment);
+                                    $scope.comment = panel.comment;
                                     update();
                                     if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                         setTimeout(function () {
@@ -929,10 +919,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                         }, 3000);
                                     }
                                     $scope.selectedStatus = panel.status;
-                                } else {
-                                    panel.comment = "undefined";
-                                    $scope.comment = "undefined";
-                                }
+                            }else{
+                              $scope.comment = panel.comment;  
                             }
                         }
                     }
