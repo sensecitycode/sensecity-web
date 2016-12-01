@@ -858,6 +858,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             update();
                             if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                                $window.alert(panel.status.gr);
+                                $window.alert($scope.assignissues);
+                                $window.alert(panel.component);
+                                $window.alert($scope.component);
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
