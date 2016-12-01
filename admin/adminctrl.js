@@ -624,7 +624,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             if (response.bugs[Object.keys(response.bugs)[0]].comments.pop() == undefined) {
                                                 tcom = "undefined";
                                             }else{
-                                                $window.alert(response.bugs[Object.keys(response.bugs)[0]].comments.pop());
+                                                $window.alert(JSON.stringify(response.bugs[Object.keys(response.bugs)[0]].comments));
                                                 tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
                                             }
 
