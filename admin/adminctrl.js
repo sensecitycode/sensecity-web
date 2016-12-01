@@ -609,7 +609,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 if (com == "undefined") {
                                                     com = "";
                                                 }
-                                                $window.alert(counter + ", "+ response.bugs[Object.keys(response.bugs)[0]].comments.pop().text);
+                                                $window.alert(counter + ", "+ Object.keys(response.bugs)[0]);
                                                 if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "CONFIRMED") {
                                                     history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
                                                 } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "IN_PROGRESS") {
