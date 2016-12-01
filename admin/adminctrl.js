@@ -604,7 +604,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             counter++;
                                             var history = [];
                                             var com;
-                                            for (var i = 0; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
+                                            for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                                 com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
                                                 if (com == "undefined") {
                                                     com = "";
@@ -624,7 +624,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             if (response.bugs[Object.keys(response.bugs)[0]].comments != []) {
                                                 tcom = "undefined";
                                             }else{
-                                                tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                tcom = response.bugs[Object.keys(response.bugs)[0]].comments.shift().text;
                                             }
 
                                             var panel =
@@ -1044,7 +1044,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 counter++;
                                                 var history = [];
                                                 var com;
-                                                for (var i = 0; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
+                                                for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                                     com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
                                                     if (com == "undefined") {
                                                         com = "";
@@ -1064,7 +1064,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 if (response.bugs[Object.keys(response.bugs)[0]].comments != []) {
                                                     tcom = "undefined";
                                                 }else{
-                                                    tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                    tcom = response.bugs[Object.keys(response.bugs)[0]].comments.shift().text;
                                                 }
 
                                                 var panel =
