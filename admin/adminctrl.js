@@ -603,19 +603,19 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                         function (response, status, headers, config) {
                                             counter++;
                                             var history = [];
-                                            for (var i = 0; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
-                                                if (i == 0) {
+                                            var com;
+                                            for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
+                                                com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                    if (com == "undefined") {
+                                                        com = "";
+                                                    }
+                                                if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "CONFIRMED") {
                                                     history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
                                                 } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "IN_PROGRESS") {
                                                     history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
                                                 } else {
                                                     history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                 }
-                                            }
-
-                                            var com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
-                                            if (com == "undefined") {
-                                                com = "";
                                             }
 
                                             var panel =
@@ -640,7 +640,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         "ArrayID": key,
                                                         "priority": {en: value.priority, gr: priority},
                                                         "severity": {en: value.severity, gr: severity},
-                                                        "comment": com,
+                                                        "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
                                                         "initialdesc": value.cf_description,
                                                         "mongoId": value.alias,
                                                         "history": history
@@ -764,10 +764,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, seldpriority, seldseverity, e) {
                 if ($cookieStore.get("uuid") != undefined) {
                     panel.status = seldstatus;
-                    
+
                     panel.priority.en = PriorityTagEn.priority_type(panel.priority.gr);
                     panel.severity.en = SeverityTagEn.severity_type(panel.severity.gr);
-                    
+
                     if (panel.status.en == "RESOLVED")
                     {
                         panel.resolution = seldResolution;
@@ -785,9 +785,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         if (panel.status.en == "RESOLVED")
                         {
                             if (panel.resolution.en == "DUPLICATE") {
-                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "resolution": panel.resolution.en, "dupe_of": $scope.duplicof,"priority": panel.priority.en, "severity": panel.severity.en, "reset_assigned_to": true};
+                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "resolution": panel.resolution.en, "dupe_of": $scope.duplicof, "priority": panel.priority.en, "severity": panel.severity.en, "reset_assigned_to": true};
                             } else {
-                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component,"priority": panel.priority.en, "severity": panel.severity.en, "reset_assigned_to": true};
+                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "priority": panel.priority.en, "severity": panel.severity.en, "reset_assigned_to": true};
                             }
                         } else {
                             obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "priority": panel.priority.en, "severity": panel.severity.en, "reset_assigned_to": true};
@@ -824,10 +824,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         if ($scope.selectedStatus.gr != panel.status.gr) {
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
-                            if( panel.comment == undefined || panel.comment == ""){
+                            if (panel.comment == undefined || panel.comment == "") {
                                 panel.comment = "undefined";
                             }
-                            if( $scope.comment == ""){
+                            if ($scope.comment == "") {
                                 $scope.comment = "undefined";
                             }
                             $scope.comment = panel.comment;
@@ -844,12 +844,12 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             panel.severity = seldseverity;
                         }
                     } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
-                        if( panel.comment == undefined || panel.comment == ""){
-                                panel.comment = "undefined";
-                            }
-                            if( $scope.comment == ""){
-                                $scope.comment = "undefined";
-                            }                           
+                        if (panel.comment == undefined || panel.comment == "") {
+                            panel.comment = "undefined";
+                        }
+                        if ($scope.comment == "") {
+                            $scope.comment = "undefined";
+                        }
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
                             $scope.comment = panel.comment;
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
@@ -865,19 +865,19 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.selectedStatus = panel.status;
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
-                        if( panel.comment == undefined || panel.comment == ""){
-                                panel.comment = "undefined";
-                            }
-                            if( $scope.comment == ""){
-                                $scope.comment = "undefined";
-                            }                            
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedResolution != panel.resolution ||  $scope.duplicof != panel.duplicof ||  $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {                           
+                        if (panel.comment == undefined || panel.comment == "") {
+                            panel.comment = "undefined";
+                        }
+                        if ($scope.comment == "") {
+                            $scope.comment = "undefined";
+                        }
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedResolution != panel.resolution || $scope.duplicof != panel.duplicof || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
                             $scope.comment = panel.comment;
                             $window.alert($scope.comment);
                             $window.alert(panel.comment);
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
-                            update();                    
+                            update();
                             if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
@@ -1034,18 +1034,19 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             function (response, status, headers, config) {
                                                 counter++;
                                                 var history = [];
-                                                for (var i = 0; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
-                                                    if (i == 0) {
-                                                        history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
-                                                    } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "IN_PROGRESS") {
-                                                        history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
-                                                    } else {
-                                                        history.push({"text": response.bugs[Object.keys(response.bugs)[0]].comments[i].text, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                                                var com;
+                                                for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
+                                                    com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                    if (com == "undefined") {
+                                                        com = "";
                                                     }
-                                                }
-                                                var com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
-                                                if (com == "undefined") {
-                                                    com = "";
+                                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "CONFIRMED") {
+                                                        history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
+                                                    } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "IN_PROGRESS") {
+                                                        history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+                                                    } else {
+                                                        history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                                                    }
                                                 }
 
                                                 var panel =
@@ -1070,7 +1071,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                             "ArrayID": key,
                                                             "priority": {en: value.priority, gr: priority},
                                                             "severity": {en: value.severity, gr: severity},
-                                                            "comment": com,
+                                                            "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
                                                             "initialdesc": value.cf_description,
                                                             "mongoId": value.alias,
                                                             "history": history
