@@ -620,9 +620,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 }
                                             }
 
-                                            var tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
-                                            if (tcom == undefined) {
+                                            var tcom;
+                                            if (response.bugs[Object.keys(response.bugs)[0]].comments == undefined) {
                                                 tcom = "undefined";
+                                            }else{
+                                                tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
                                             }
 
                                             var panel =
@@ -1058,9 +1060,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     }
                                                 }
 
-                                                var tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                var tcom;
                                                 if (tcom == undefined) {
                                                     tcom = "undefined";
+                                                }else{
+                                                    tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
                                                 }
 
                                                 var panel =
