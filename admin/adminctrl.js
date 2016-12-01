@@ -797,11 +797,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             obj.resolution = panel.resolution.en;
                         }
                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-                            if (panel.comment == undefined || panel.comment == "" || $scope.selectedStatus.gr == 'Ανοιχτό')
-                            {
-                                $scope.comment = "undefined";
-                                panel.comment = "undefined";
-                            }
                             $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                     function (response, status, headers, conf) {
                                         var comp = panel.component;
@@ -849,11 +844,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
                         
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
-                            if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
-                                $scope.comment = panel.comment;
-                            } else {
+                            if( panel.comment == undefined || panel.comment == ""){
+                                panel.comment = "undefined";
+                            }
+                            if( $scope.comment == ""){
                                 $scope.comment = "undefined";
                             }
+                            $scope.comment = panel.comment;
 
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
@@ -891,11 +888,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedResolution != panel.resolution ||  $scope.duplicof != panel.duplicof ||  $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
-                            if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
-                                $scope.comment = panel.comment;
-                            } else {
+                            if( panel.comment == undefined || panel.comment == ""){
+                                panel.comment = "undefined";
+                            }
+                            if( $scope.comment == ""){
                                 $scope.comment = "undefined";
                             }
+                            $scope.comment = panel.comment;
                             
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
