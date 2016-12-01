@@ -824,11 +824,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         if ($scope.selectedStatus.gr != panel.status.gr) {
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
-                            if (panel.comment != undefined && isNaN(panel.comment.charAt(0))) {
-                                $scope.comment = panel.comment;
-                            } else {
+                            if( panel.comment == undefined || panel.comment == ""){
+                                panel.comment = "undefined";
+                            }
+                            if( $scope.comment == ""){
                                 $scope.comment = "undefined";
                             }
+                            $scope.comment = panel.comment;
                             update();
                             if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component && $scope.assignissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
