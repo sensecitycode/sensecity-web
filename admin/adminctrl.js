@@ -868,6 +868,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 }, 3000);
                             }
                             $scope.selectedStatus = panel.status;
+                            $scope.selectedResolution = panel.resolution;
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
                         if (panel.comment == undefined || panel.comment == "") {
@@ -878,7 +879,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         }
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedResolution != panel.resolution || $scope.duplicof != panel.duplicof || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
                             $scope.comment = panel.comment;
-                            $window.alert("mphke!");
+                            $window.alert($scope.selectedResolution);
+                            $window.alert(panel.resolution);
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
@@ -891,6 +893,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 }, 3000);
                             }
                             $scope.selectedStatus = panel.status;
+                            $scope.selectedResolution = panel.resolution;
                         }
                     }
 
