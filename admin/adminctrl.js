@@ -605,7 +605,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             var history = [];
                                             var com;
                                             for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
-                                                com = response.bugs[Object.keys(response.bugs)[0]].comments.shift().text;
+                                                com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
                                                 if (com == "undefined") {
                                                     com = "";
                                                 }
@@ -1038,7 +1038,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 var history = [];
                                                 var com;
                                                 for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
-                                                    com = response.bugs[Object.keys(response.bugs)[0]].comments.shift().text;
+                                                    com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
                                                     if (com == "undefined") {
                                                         com = "";
                                                     }
