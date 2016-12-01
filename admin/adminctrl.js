@@ -605,7 +605,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             var history = [];
                                             var com;
                                             for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
-                                                com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                com = response.bugs[Object.keys(response.bugs)[0]].comments.shift().text;
                                                 if (com == "undefined") {
                                                     com = "";
                                                 }
@@ -618,13 +618,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                     }
                                                 }
-                                            }
-
-                                            var tcom;
-                                            if (response.bugs[Object.keys(response.bugs)[0]].comments != []) {
-                                                tcom = "undefined";
-                                            }else{
-                                                tcom = response.bugs[Object.keys(response.bugs)[0]].comments.shift().text;
                                             }
 
                                             var panel =
@@ -649,7 +642,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         "ArrayID": key,
                                                         "priority": {en: value.priority, gr: priority},
                                                         "severity": {en: value.severity, gr: severity},
-                                                        "comment": tcom,
+                                                        "comment": com,
                                                         "initialdesc": value.cf_description,
                                                         "mongoId": value.alias,
                                                         "history": history
@@ -1045,7 +1038,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 var history = [];
                                                 var com;
                                                 for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
-                                                    com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                    com = response.bugs[Object.keys(response.bugs)[0]].comments.shift().text;
                                                     if (com == "undefined") {
                                                         com = "";
                                                     }
@@ -1058,13 +1051,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                             history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                         }
                                                     }
-                                                }
-
-                                                var tcom;
-                                                if (response.bugs[Object.keys(response.bugs)[0]].comments != []) {
-                                                    tcom = "undefined";
-                                                }else{
-                                                    tcom = response.bugs[Object.keys(response.bugs)[0]].comments.shift().text;
                                                 }
 
                                                 var panel =
@@ -1089,7 +1075,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                             "ArrayID": key,
                                                             "priority": {en: value.priority, gr: priority},
                                                             "severity": {en: value.severity, gr: severity},
-                                                            "comment": tcom,
+                                                            "comment": com,
                                                             "initialdesc": value.cf_description,
                                                             "mongoId": value.alias,
                                                             "history": history
