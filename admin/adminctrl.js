@@ -620,6 +620,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 }
                                             }
 
+                                            var tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                            if (tcom == undefined) {
+                                                tcom = "undefined";
+                                            }
+
                                             var panel =
                                                     {
                                                         "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
@@ -642,7 +647,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         "ArrayID": key,
                                                         "priority": {en: value.priority, gr: priority},
                                                         "severity": {en: value.severity, gr: severity},
-                                                        "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
+                                                        "comment": tcom,
                                                         "initialdesc": value.cf_description,
                                                         "mongoId": value.alias,
                                                         "history": history
@@ -1053,6 +1058,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     }
                                                 }
 
+                                                var tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
+                                                if (tcom == undefined) {
+                                                    tcom = "undefined";
+                                                }
+
                                                 var panel =
                                                         {
                                                             "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
@@ -1075,7 +1085,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                             "ArrayID": key,
                                                             "priority": {en: value.priority, gr: priority},
                                                             "severity": {en: value.severity, gr: severity},
-                                                            "comment": response.bugs[Object.keys(response.bugs)[0]].comments.pop().text,
+                                                            "comment": tcom,
                                                             "initialdesc": value.cf_description,
                                                             "mongoId": value.alias,
                                                             "history": history
