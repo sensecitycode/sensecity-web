@@ -604,6 +604,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             counter++;
                                             var history = [];
                                             var com;
+                                            $window.alert(counter +","+Object.keys(response.bugs)[0]);
                                             for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                                 com = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
                                                     if (com == "undefined") {
@@ -617,7 +618,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                 }
                                             }
-
+                                            
                                             var panel =
                                                     {
                                                         "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
