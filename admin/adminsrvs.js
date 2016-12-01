@@ -301,3 +301,26 @@ appServices.factory('SeverityTagEn', function () {
         }
     };
 });
+
+appServices.factory('ResolutionTagEn', function () {
+    return{
+        resolution_type: function (tab) {
+            var type;
+            switch (tab) {
+                case "Αποκατάσταση":
+                    type = "FIXED";
+                    break;
+                case "Εσφαλμένη Αναφορά":
+                    type = "INVALID";
+                    break;
+                case "Μη αποκατάσταση / Απόρριψη από Δήμο":
+                    type = "WONTFIX";
+                    break;
+                case "Έχει ήδη αναφερθεί σε άλλο αίτημα":
+                    type = "DUPLICATE";
+                    break;
+            }
+            return type;
+        }
+    };
+});

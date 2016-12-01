@@ -7,7 +7,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $window, $http, $cookieStore, $templateCache, $compile, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
+appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn','ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $window, $http, $cookieStore, $templateCache, $compile, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn,ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
         var summary;
         var params;
         var tabchanged = 2;
@@ -728,6 +728,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                 $scope.selectedPriority = {en: panel.priority.en, gr: panel.priority.gr};
                 $scope.selectedSeverity = {en: panel.severity.en, gr: panel.severity.gr};
+                $scope.selectedResolution = {en: panel.resolution.en,gr: panel.resolution.gr};
 
                 $scope.selectedStatus = panel.status;
 
@@ -735,15 +736,14 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.duplicof = panel.duplicof;
 
                 //$scope.duplicof = panel;
-                $scope.selectedResolution = panel.resolution;
 
 
-                if (panel.resolution.gr !== undefined)
-                {
-                    $scope.selectedResolution = {"gr": panel.resolution.gr, "en": panel.resolution.en};
-                } else {
-                    $scope.selectedResolution = {"gr": "Αποκατάσταση", "en": "FIXED"};
-                }
+//                if (panel.resolution.gr !== undefined)
+//                {
+//                    $scope.selectedResolution = {"gr": panel.resolution.gr, "en": panel.resolution.en};
+//                } else {
+//                    $scope.selectedResolution = {"gr": "Αποκατάσταση", "en": "FIXED"};
+//                }
             };
 
 
@@ -769,6 +769,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                     panel.priority.en = PriorityTagEn.priority_type(panel.priority.gr);
                     panel.severity.en = SeverityTagEn.severity_type(panel.severity.gr);
+                    panel.resolution.en = ResolutionTagEn.resolution_type(panel.resolution.gr);
 
                     if (panel.status.en == "RESOLVED")
                     {
@@ -826,6 +827,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         if ($scope.selectedStatus.gr != panel.status.gr) {
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
+                            panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
                             if (panel.comment == undefined || panel.comment == "") {
                                 panel.comment = "undefined";
                             }
@@ -856,6 +858,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.comment = panel.comment;
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
+                            panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
                             update();
                             if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
@@ -874,16 +877,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.comment = "undefined";
                         }
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedResolution != panel.resolution || $scope.duplicof != panel.duplicof || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
-                            $window.alert($scope.selectedStatus.gr != panel.status.gr);
-                            $window.alert($scope.selectedComponent != panel.component);
-                            $window.alert( panel.comment != $scope.comment);
-                            $window.alert($scope.selectedResolution != panel.resolution);
-                            $window.alert($scope.duplicof != panel.duplicof);
-                            $window.alert($scope.selectedPriority.gr != panel.priority.gr);
-                            $window.alert($scope.selectedSeverity.gr != panel.severity.gr);
                             $scope.comment = panel.comment;
+                            $window.alert("mphke!");
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
+                            panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
                             update();
                             if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
