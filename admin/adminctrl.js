@@ -621,7 +621,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             }
 
                                             var tcom;
-                                            if (response.bugs[Object.keys(response.bugs)[0]].comments == undefined) {
+                                            if (response.bugs[Object.keys(response.bugs)[0]].comments.pop() == undefined) {
                                                 tcom = "undefined";
                                             }else{
                                                 tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
@@ -1061,7 +1061,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 }
 
                                                 var tcom;
-                                                if (tcom == undefined) {
+                                                if (response.bugs[Object.keys(response.bugs)[0]].comments.pop() == undefined) {
                                                     tcom = "undefined";
                                                 }else{
                                                     tcom = response.bugs[Object.keys(response.bugs)[0]].comments.pop().text;
