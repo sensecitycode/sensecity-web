@@ -195,11 +195,7 @@
                                                                                                         
                                                     <button ng-show="selectedStatus.en != 'RESOLVED'" style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in statuses" data-placement="bottom" bs-select></button>
                                                     <button ng-show="selectedStatus.en == 'RESOLVED'" style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in sresolved" data-placement="bottom" bs-select></button>
-                                                    <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" ng-show="selectedStatus.en == 'RESOLVED'" class="btn btn-default" ng-model="selectedResolution" data-html="1" data-toggle="true" bs-options="resolution.gr for resolution in resolutions" data-placement="bottom"  bs-select></button>
-                                                    <div style="position:relative;top:5px" ng-show="selectedStatus.en == 'RESOLVED' && selectedResolution.en == 'DUPLICATE'">
-                                                        <span class="title">Διπλότυπο πρόβλημα: </span>
-                                                        <input type="text" ng-model="duplicof" ng-blur="dupli_change($event, duplicof)">
-                                                    </div>
+                                                    <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" ng-show="selectedStatus.en == 'RESOLVED'" class="btn btn-default" ng-model="selectedResolution" data-html="1" data-toggle="true" bs-options="resolution.gr for resolution in resolutions" data-placement="bottom"  bs-select></button>                                                   
                                                     <div ng-show="selectedStatus.en == 'IN_PROGRESS'">
                                                         <span class="title">Ανάθεση σε: </span>
                                                         <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedComponent" data-html="1" data-toggle="true" bs-options="component for component in components" data-placement="bottom"  bs-select></button>                                                                               
@@ -211,6 +207,10 @@
                                                     <div>
                                                         <span class="title" >Σπουδαιότητα: </span>
                                                         <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedSeverity.gr" data-html="1" data-toggle="true" bs-options="severity for severity in severities" data-placement="bottom"  bs-select></button>                                                                               
+                                                    </div>
+                                                    <div style="position:relative;top:5px" ng-show="selectedStatus.en == 'RESOLVED' && selectedResolution.en == 'DUPLICATE'">
+                                                        <span class="title">Διπλότυπο πρόβλημα: </span>
+                                                        <input type="text" ng-model="duplicof" ng-blur="dupli_change($event, duplicof)">
                                                     </div>
                                                 </div>
                                                 <div style="position:relative;margin-top:3%">

@@ -7,7 +7,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn','ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $window, $http, $cookieStore, $templateCache, $compile, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn,ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
+appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $window, $http, $cookieStore, $templateCache, $compile, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
         var summary;
         var params;
         var tabchanged = 2;
@@ -728,7 +728,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                 $scope.selectedPriority = {en: panel.priority.en, gr: panel.priority.gr};
                 $scope.selectedSeverity = {en: panel.severity.en, gr: panel.severity.gr};
-                $scope.selectedResolution = {en: panel.resolution.en,gr: panel.resolution.gr};
+                $scope.selectedResolution = {en: panel.resolution.en, gr: panel.resolution.gr};
 
                 $scope.selectedStatus = panel.status;
 
@@ -814,8 +814,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 comp = "road-contructor";
                                                 break;
                                         }
+                                        $window.alert(comp);
                                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                 function (response, status, headers, config) {
+                                                    $window.alert(comp);
                                                 });
                                     });
                             var panelTitle = ToGrService.statusTitle(seldstatus.en, seldResolution.en);
@@ -859,6 +861,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
+                            if (panel.status == "Ανοιχτό") {
+                                panel.comment = "undefined";
+                                $scope.comment = panel.comment;
+                            }
                             update();
                             if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
@@ -874,15 +880,18 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         if (panel.comment == undefined || panel.comment == "") {
                             panel.comment = "undefined";
                         }
-                        if ($scope.comment == "") {
-                            $scope.comment = "undefined";
+                        if (panel.status == "Ανοιχτό") {
+                            panel.comment = "undefined";
+                            $scope.comment = panel.comment;
                         }
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedResolution.en != panel.resolution.en || $scope.selectedResolution.gr != panel.resolution.gr || $scope.duplicof != panel.duplicof || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
                             $scope.comment = panel.comment;
-                            $window.alert("mphke");
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
+                            if (panel.status == "Ανοιχτό") {
+                                panel.status = "undefined";
+                            }
                             update();
                             if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
