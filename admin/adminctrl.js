@@ -844,15 +844,14 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             panel.severity = seldseverity;
                         }
                     } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
-                        
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
-                            if( panel.comment == undefined || panel.comment == ""){
+                        if( panel.comment == undefined || panel.comment == ""){
                                 panel.comment = "undefined";
                             }
                             if( $scope.comment == ""){
                                 $scope.comment = "undefined";
                             }
                             $scope.comment = panel.comment;
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
                             
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
@@ -865,38 +864,16 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 }, 3000);
                             }
                             $scope.selectedStatus = panel.status;
-                        } else {
-                            if( panel.comment == undefined || panel.comment == ""){
-                                panel.comment = "undefined";
-                            }
-                            if( $scope.comment == ""){
-                                $scope.comment = "undefined";
-                            }
-                            if (panel.comment != $scope.comment) {
-                                    $scope.comment = panel.comment;
-                                    update();
-                                    if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
-                                        setTimeout(function () {
-                                            $(e.target).closest(".timeline-item-active").remove();
-                                            $scope.activePanel = -1;
-                                            $scope.currentactive = -1;
-                                        }, 3000);
-                                    }
-                                    $scope.selectedStatus = panel.status;
-                            }else{
-                              $scope.comment = panel.comment; 
-                              $scope.selectedStatus = panel.status;
-                            }
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || $scope.selectedResolution != panel.resolution ||  $scope.duplicof != panel.duplicof ||  $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
-                            if( panel.comment == undefined || panel.comment == ""){
+                        if( panel.comment == undefined || panel.comment == ""){
                                 panel.comment = "undefined";
                             }
                             if( $scope.comment == ""){
                                 $scope.comment = "undefined";
                             }
                             $scope.comment = panel.comment;
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedResolution != panel.resolution ||  $scope.duplicof != panel.duplicof ||  $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {                           
                             $window.alert($scope.comment);
                             $window.alert(panel.comment);
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
@@ -910,28 +887,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 }, 3000);
                             }
                             $scope.selectedStatus = panel.status;
-                        } else {
-                            if( panel.comment == undefined || panel.comment == ""){
-                                panel.comment = "undefined";
-                            }
-                            if( $scope.comment == ""){
-                                $scope.comment = "undefined";
-                            }
-                            if (panel.comment != $scope.comment) {
-                                    $scope.comment = panel.comment;
-                                    update();
-                                    if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
-                                        setTimeout(function () {
-                                            $(e.target).closest(".timeline-item-active").remove();
-                                            $scope.activePanel = -1;
-                                            $scope.currentactive = -1;
-                                        }, 3000);
-                                    }
-                                    $scope.selectedStatus = panel.status;
-                            }else{
-                              $scope.comment = panel.comment;
-                              $scope.selectedStatus = panel.status;
-                            }
                         }
                     }
 
