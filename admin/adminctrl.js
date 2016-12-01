@@ -915,10 +915,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             if( $scope.comment == ""){
                                 $scope.comment = "undefined";
                             }
-                            $window.alert(panel.comment);
-                            $window.alert($scope.comment);
                             if (panel.comment != $scope.comment) {
-                                    $window.alert("mphke!");
                                     $scope.comment = panel.comment;
                                     update();
                                     if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component) || (panel.status.gr == 'Ολοκληρωμένο' && panel.component != $scope.component && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
