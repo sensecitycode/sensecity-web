@@ -853,7 +853,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 $scope.comment = "undefined";
                             }
                             $scope.comment = panel.comment;
-
+                            
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             update();
@@ -897,7 +897,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 $scope.comment = "undefined";
                             }
                             $scope.comment = panel.comment;
-                            
+                            $window.alert($scope.comment);
+                            $window.alert(panel.comment);
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             update();                    
