@@ -849,10 +849,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                             if( $scope.comment == ""){
                                 $scope.comment = "undefined";
-                            }
-                            $scope.comment = panel.comment;
+                            }                           
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
-                            
+                            $scope.comment = panel.comment;
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             update();
@@ -871,9 +870,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                             if( $scope.comment == ""){
                                 $scope.comment = "undefined";
-                            }
-                            $scope.comment = panel.comment;
+                            }                            
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedResolution != panel.resolution ||  $scope.duplicof != panel.duplicof ||  $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {                           
+                            $scope.comment = panel.comment;
                             $window.alert($scope.comment);
                             $window.alert(panel.comment);
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
