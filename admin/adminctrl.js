@@ -867,8 +867,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                             $scope.selectedStatus = panel.status;
                         } else {
-                            if( panel.comment == undefined){
+                            if( panel.comment == undefined || panel.comment == ""){
                                 panel.comment = "undefined";
+                            }
+                            if( $scope.comment == ""){
+                                $scope.comment = "undefined";
                             }
                             if (panel.comment != $scope.comment) {
                                     $scope.comment = panel.comment;
@@ -906,8 +909,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                             $scope.selectedStatus = panel.status;
                         } else {
-                            if( panel.comment == undefined){
+                            if( panel.comment == undefined || panel.comment == ""){
                                 panel.comment = "undefined";
+                            }
+                            if( $scope.comment == ""){
+                                $scope.comment = "undefined";
                             }
                             $window.alert(panel.comment);
                             $window.alert($scope.comment);
