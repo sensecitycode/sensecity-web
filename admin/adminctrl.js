@@ -609,10 +609,23 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 if (com == "undefined") {
                                                     com = "";
                                                 }
-                                                if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != undefined) {
-                                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "CONFIRMED") {
+                                                var tag_pos;
+                                                if( i == 1){
+                                                        switch(response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]){
+                                                            case "CONFIRMED":
+                                                            case "IN_PROGRESS":
+                                                            case "RESOLVED":
+                                                                tag_pos = 0;
+                                                                break;
+                                                            default:
+                                                                tag_pos = 1;
+                                                                break;
+                                                        }
+                                                    }
+                                                if (response.bugs[Object.keys(response.bugs)[0]].comments[tag_pos] != undefined) {
+                                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
                                                         history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
-                                                    } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "IN_PROGRESS") {
+                                                    } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
                                                         history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
                                                     } else {
                                                         history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
@@ -802,8 +815,17 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                     function (response, status, headers, conf) {
-                                        var comp = panel.component;
+                                        var comp;
                                         switch (panel.component) {
+                                            case "Τμήμα καθαριότητας":
+                                                comp = "garbage";
+                                                break;
+                                            case "Τμήμα ηλεκτροφωτισμού":
+                                                comp = "lighting";
+                                                break;
+                                            case "Πρασίνου":
+                                                comp= "green";
+                                                break;
                                             case "Τμήμα επίλυσης προβλημάτων":
                                                 comp = "all";
                                                 break;
@@ -814,7 +836,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 comp = "road-contructor";
                                                 break;
                                         }
-                                        $window.alert(comp);
                                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                 function (response, status, headers, config) {
                                                     $window.alert(comp);
@@ -837,7 +858,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 $scope.comment = "undefined";
                             }
                             $scope.comment = panel.comment;
-                            update();
+                            update();//koita to component
                             if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component && $scope.assignissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
@@ -1050,18 +1071,31 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 counter++;
                                                 var history = [];
                                                 var com;
+                                                var tag_pos;
                                                 for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                                     com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
                                                     if (com == "undefined") {
                                                         com = "";
                                                     }
+                                                    if( i == 1){
+                                                        switch(response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]){
+                                                            case "CONFIRMED":
+                                                            case "IN_PROGRESS":
+                                                            case "RESOLVED":
+                                                                tag_pos = 0;
+                                                                break;
+                                                            default:
+                                                                tag_pos = 1;
+                                                                break;
+                                                        }
+                                                    }
                                                     if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != undefined) {
-                                                        if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "CONFIRMED") {
+                                                        if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
                                                             history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
-                                                        } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[1] == "IN_PROGRESS") {
-                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+                                                        } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
+                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[tag_pos]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
                                                         } else {
-                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[tag_pos]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                         }
                                                     }
                                                 }
