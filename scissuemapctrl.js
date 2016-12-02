@@ -404,7 +404,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
 
                 year = time_parse[0];
 
-                time = response[1].bugs[resp_id].comments[i].time.substring(11, 19);
+                time = Number(response[1].bugs[resp_id].comments[i].time.substring(11, 19)) + 2;
                 if (response[1].bugs[resp_id].comments[i].content == 'default' || response[1].bugs[resp_id].comments[i].content == 'undefined') {
                     show = false;
                 }
