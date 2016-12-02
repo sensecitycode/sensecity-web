@@ -1170,7 +1170,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         $scope.nloaded = false;
                                                     }
                                                 }
-                                                });
+                                                }, function(response) {$window.alert("mphke")});
                                             });
                                 }
                             }, $scope.panels);
