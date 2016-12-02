@@ -614,7 +614,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     com = "";
                                                 }
                                                 var tag_pos;
-                                                if (i == 1) {
+
                                                     switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
                                                         case "CONFIRMED":
                                                         case "IN_PROGRESS":
@@ -625,7 +625,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                             tag_pos = 1;
                                                             break;
                                                     }
-                                                }
+                                                    
                                                 if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
                                                     if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
                                                         history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
@@ -1101,7 +1101,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     if (com == "undefined") {
                                                         com = "";
                                                     }
-                                                    if (i == 1) {
+
                                                         switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
                                                             case "CONFIRMED":
                                                             case "IN_PROGRESS":
@@ -1112,7 +1112,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                                 tag_pos = 1;
                                                                 break;
                                                         }
-                                                    }
+                                                        
                                                     if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
                                                         if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
                                                             history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});

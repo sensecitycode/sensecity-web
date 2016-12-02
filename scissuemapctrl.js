@@ -335,7 +335,6 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
 
 
                 var tag_pos;
-                if (i == 1) {
                     switch (response[1].bugs[resp_id].comments[i].tags[0]) {
                         case "CONFIRMED":
                         case "IN_PROGRESS":
@@ -348,7 +347,6 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                             dep_pos = 0;
                             break;
                     }
-                }
 
                 if (response[1].bugs[resp_id].comments[i].tags[tag_pos] == "CONFIRMED") {
                     color = {"background-color": "#e74c3c"};
@@ -434,7 +432,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                 }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "green") {
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πρασίνου";
                 }
-
+                
+                $window.alert(response[1].bugs[resp_id].comments[i].content);
+                $window.alert(show);
+                
                 var com = {
                     "content": response[1].bugs[resp_id].comments[i].content,
                     "type": type,
