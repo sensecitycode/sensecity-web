@@ -47,12 +47,16 @@
         <link rel="stylesheet" href="./css/leaflet.awesome-markers.css">
         <link rel="stylesheet" href="./css/leaflet.extra-markers.min.css">
         <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="css/loading_overlay.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-cookies.js"></script>
         <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
         <script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
     </head>
     <body ng-app="adminapp" ng-cloak ng-controller="adminController" ng-init="">
+<!--        <div ng-show="nloaded" class="loading">
+            Loading&#8230;
+        </div>    -->
         <script src="./dist/angular-tooltips.min.js"></script>
         <div ng-show="valid">
             <!-- START PAGE CONTAINER -->
@@ -141,7 +145,7 @@
                                     <div class="timeline-item-content">
                                         <div style="padding-right:26px" class="timeline-body">
                                             <span ng-class="panel.icon" ng-style="panel.style"></span>
-                                            <span class="issue_text" ng-click="itemClicked($index,$event); linkmap(panel)">{{ panel.title}}</span>
+                                            <span class="issue_text" ng-click="itemClicked($index, $event); linkmap(panel)">{{ panel.title}}</span>
                                         </div>                                     
                                     </div>
                                     <div id="{{($index == activePanel) ? 'activePanel':''}}" ng-style="($index == activePanel)? {'height': '100%', 'opacity': '1', 'transition': 'height 0.3s linear'} : {'height': '0px', 'opacity': '0', 'transition': 'height 0.3s linear'}" ng-show="$index == activePanel">
@@ -192,7 +196,7 @@
                                             <form name="editingForm"  ng-show="panel.admin">
                                                 <div>
                                                     <span class="title">Κατάσταση: </span>
-                                                                                                        
+
                                                     <button ng-show="selectedStatus.en != 'RESOLVED'" style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in statuses" data-placement="bottom" bs-select></button>
                                                     <button ng-show="selectedStatus.en == 'RESOLVED'" style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in sresolved" data-placement="bottom" bs-select></button>
                                                     <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" ng-show="selectedStatus.en == 'RESOLVED'" class="btn btn-default" ng-model="selectedResolution" data-html="1" data-toggle="true" bs-options="resolution.gr for resolution in resolutions" data-placement="bottom"  bs-select></button>                                                   
@@ -217,7 +221,7 @@
                                                     <div class="title" >Σχόλια: </div>
                                                     <textarea style="width: 95%;height:150px;margin-top:3%;resize:none" ng-disabled="selectedStatus.en == 'CONFIRMED'" type="text" class="form-control" ng-model="scomment" placeholder="περιγραφή ..."></textarea>
                                                 </div>
-                                                <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(panel, selectedStatus, selectedResolution, scomment, selectedComponent,selectedPriority,selectedSeverity, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
+                                                <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(panel, selectedStatus, selectedResolution, scomment, selectedComponent, selectedPriority, selectedSeverity, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
                                                 <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_red" ng-show="panel.admin" ng-click="resetPanel(panel)" ><center><span class="glyphicon glyphicon-remove"></span> Ακύρωση</center></div>
                                             </form>
                                             <br />
@@ -226,28 +230,28 @@
                                                 <h4 style="word-wrap:break-word;padding-right:35px">{{initial_desc}}</h4>
                                                 <br />
                                                 <center>
-                                                    <img ng-src="{{panel_image}}" width="60%" height="400px" alt="{{initial_desc}}" />
+                                                    <img ng-show="panel_image != 'no-image'" ng-src="{{panel_image}}" width="60%" height="400px" alt="{{initial_desc}}" />
                                                 </center>
                                             </div>
-                                        <div class="timeline-heading" style="padding-bottom: 10px;">                         
-                                        </div>                                        
-                                        <div style="left: -4.1%;position:relative;width:102.6%;;margin-top:20px" class="timeline-body comments">
-                                            <center style="background-color:#191616;color:#d8dedf" class="comment-item">
-                                            <h4>Ιστορικό</h4>                                                                                                 
-                                            </center>
-                                            <div ng-repeat="progress in panel.history" class="comment-item">
-                                                <span ng-style="progress.style" ng-class="progress.class"></span>
+                                            <div class="timeline-heading" style="padding-bottom: 10px;">                         
+                                            </div>                                        
+                                            <div style="left: -4.1%;position:relative;width:102.6%;;margin-top:20px" class="timeline-body comments">
+                                                <center style="background-color:#191616;color:#d8dedf" class="comment-item">
+                                                    <h4>Ιστορικό</h4>                                                                                                 
+                                                </center>
+                                                <div ng-repeat="progress in panel.history" class="comment-item">
+                                                    <span ng-style="progress.style" ng-class="progress.class"></span>
                                                     <div class="comment-head">Κατάσταση: {{progress.state}}</div>
                                                     <br>
                                                     <div class="comment-head">Αναφορά: {{progress.timestamp}}</div>
                                                     <br><br>
-                                                <p style="font-size: 16px">{{progress.text}}</p>
+                                                    <p style="font-size: 16px">{{progress.text}}</p>
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </div>
                                 </div>
-                            <div class="paging"></div>
+                                <div class="paging"></div>
                             </div>    
                         </div>
 

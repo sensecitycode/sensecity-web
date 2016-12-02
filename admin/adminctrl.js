@@ -13,10 +13,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         var tabchanged = 2;
         var init = 1;
         var isfixed = 0;
+        var mapnloaded = true;
 
         $scope.isloading = true;
 
         $scope.duplicof = "";
+
+        $scope.nloaded = true;
 
         $scope.logout = function ($event) {
             $http.get('http://' + config.host + ':' + config.port + '/api/1.0/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
@@ -585,6 +588,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                         var total_counter = result.length;
                         var counter = 0;
+                        var map_counter = 0;
                         angular.forEach(result, function (value, key) {
                             var issue_name = ToGrService.issueName(value.summary);
                             var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
@@ -610,18 +614,18 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     com = "";
                                                 }
                                                 var tag_pos;
-                                                if( i == 1){
-                                                        switch(response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]){
-                                                            case "CONFIRMED":
-                                                            case "IN_PROGRESS":
-                                                            case "RESOLVED":
-                                                                tag_pos = 0;
-                                                                break;
-                                                            default:
-                                                                tag_pos = 1;
-                                                                break;
-                                                        }
+                                                if (i == 1) {
+                                                    switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
+                                                        case "CONFIRMED":
+                                                        case "IN_PROGRESS":
+                                                        case "RESOLVED":
+                                                            tag_pos = 0;
+                                                            break;
+                                                        default:
+                                                            tag_pos = 1;
+                                                            break;
                                                     }
+                                                }
                                                 if (response.bugs[Object.keys(response.bugs)[0]].comments[tag_pos] != undefined) {
                                                     if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
                                                         history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
@@ -671,12 +675,22 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     return b.id - a.id;
                                                 });
                                                 $scope.isloading = false;
+                                                if ($scope.isloading == false && mapnloaded == false) {
+                                                    $scope.nloaded = false;
+                                                }
                                             }
 
                                             Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
+                                                map_counter++;
                                                 $scope.panel_image = issue[0].image_name;
                                                 $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                                 $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
+                                                if (map_counter == total_counter) {
+                                                    mapnloaded = false;
+                                                    if ($scope.isloading == false && mapnloaded == false) {
+                                                        $scope.nloaded = false;
+                                                    }
+                                                }
                                             });
                                         });
                             }
@@ -824,7 +838,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 comp = "lighting";
                                                 break;
                                             case "Πρασίνου":
-                                                comp= "green";
+                                                comp = "green";
                                                 break;
                                             case "Τμήμα επίλυσης προβλημάτων":
                                                 comp = "all";
@@ -838,7 +852,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                         }
                                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                 function (response, status, headers, config) {
-                                                    $window.alert(comp);
                                                 });
                                     });
                             var panelTitle = ToGrService.statusTitle(seldstatus.en, seldResolution.en);
@@ -976,6 +989,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
             $scope.refresh = function () {
                 $scope.isloading = true;
+                $scope.nloaded = true;
                 $http.get('http://' + config.host + ':' + config.port + '/api/1.0/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
                         function (response) {
                             if (response == "failure") {
@@ -1052,6 +1066,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                             var total_counter = result.length;
                             var counter = 0;
+                            var map_counter = 0;
                             angular.forEach(result, function (value, key) {
                                 var issue_name = ToGrService.issueName(value.summary);
                                 var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
@@ -1077,8 +1092,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     if (com == "undefined") {
                                                         com = "";
                                                     }
-                                                    if( i == 1){
-                                                        switch(response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]){
+                                                    if (i == 1) {
+                                                        switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
                                                             case "CONFIRMED":
                                                             case "IN_PROGRESS":
                                                             case "RESOLVED":
@@ -1137,11 +1152,22 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         return b.id - a.id;
                                                     });
                                                     $scope.isloading = false;
+                                                    $scope.isloading = false;
+                                                    if ($scope.isloading == false && mapnloaded == false) {
+                                                        $scope.nloaded = false;
+                                                    }
                                                 }
                                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
+                                                    map_counter++;
                                                     $scope.panel_image = issue[0].image_name;
                                                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                                     $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
+                                                    if (map_counter == total_counter) {
+                                                    mapnloaded = false;
+                                                    if ($scope.isloading == false && mapnloaded == false) {
+                                                        $scope.nloaded = false;
+                                                    }
+                                                }
                                                 });
                                             });
                                 }
