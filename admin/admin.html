@@ -54,9 +54,9 @@
         <script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
     </head>
     <body ng-app="adminapp" ng-cloak ng-controller="adminController" ng-init="">
-<!--        <div ng-show="nloaded" class="loading">
+        <div ng-show="nloaded" class="loading">
             Loading&#8230;
-        </div>    -->
+        </div>    
         <script src="./dist/angular-tooltips.min.js"></script>
         <div ng-show="valid">
             <!-- START PAGE CONTAINER -->
@@ -139,7 +139,7 @@
                                     <h2 style="font-family:Open Sans, sans-serif;margin-bottom: 0px;font-size: 22px;">Επισκόπηση Προβλημάτων</h2>
                                 </center>
                             </div>
-                            <div ng-hide="isloading" style="background-color:rgba(249, 249, 249, 0.53);float:right;width:100%;padding-left:1%;padding-right:1.5%;padding-bottom:4%;padding-top:4%">
+                            <div ng-hide="isloading" style="min-width:300px;background-color:rgba(249, 249, 249, 0.53);float:right;width:100%;padding-left:1%;padding-right:1.5%;padding-bottom:4%;padding-top:4%">
 
                                 <div style="width:106%;margin-bottom:10px" ng-repeat="panel in panels" ng-class="($index == activePanel) ? 'timeline-item-active' :  'timeline-item'">
                                     <div class="timeline-item-content">
@@ -229,8 +229,8 @@
                                             <div ng-hide="panel.admin">
                                                 <h4 style="word-wrap:break-word;padding-right:35px">{{initial_desc}}</h4>
                                                 <br />
-                                                <center>
-                                                    <img ng-show="panel_image != 'no-image'" ng-src="{{panel_image}}" width="60%" height="400px" alt="{{initial_desc}}" />
+                                                <center ng-show="panel_image != 'no-image'">
+                                                    <img ng-src="{{panel_image}}" width="60%" height="400px" alt="{{initial_desc}}" />
                                                 </center>
                                             </div>
                                             <div class="timeline-heading" style="padding-bottom: 10px;">                         

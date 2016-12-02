@@ -765,12 +765,12 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 //$scope.duplicof = panel;
 
 
-//                if (panel.resolution.gr !== undefined)
-//                {
-//                    $scope.selectedResolution = {"gr": panel.resolution.gr, "en": panel.resolution.en};
-//                } else {
-//                    $scope.selectedResolution = {"gr": "Αποκατάσταση", "en": "FIXED"};
-//                }
+                if (panel.resolution.gr !== undefined)
+                {
+                    $scope.selectedResolution = {"en": panel.resolution.en, "gr": panel.resolution.gr};
+                } else {
+                    $scope.selectedResolution = {"en": "FIXED", "gr": "Αποκατάσταση",};
+                }
             };
 
 

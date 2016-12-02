@@ -2041,6 +2041,8 @@ ul.panel-controls > li > .dropdown-menu:before {
   border-style: solid;
   font-size: 13px;
   color:white;
+  min-width: 113.27px;
+  max-height: 34px;
   padding: 4px 15px;
   line-height: 20px;
   font-weight: 400;
@@ -2070,6 +2072,8 @@ ul.panel-controls > li > .dropdown-menu:before {
   padding: 4px 15px;
   line-height: 20px;
   font-weight: 400;
+  min-width: 113.27px;
+  max-height: 34px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
@@ -2097,6 +2101,8 @@ ul.panel-controls > li > .dropdown-menu:before {
   padding: 4px 15px;
   line-height: 20px;
   font-weight: 400;
+  min-width: 113.27px;
+  max-height: 34px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
