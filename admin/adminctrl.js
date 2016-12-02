@@ -990,6 +990,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             $scope.refresh = function () {
                 $scope.isloading = true;
                 $scope.nloaded = true;
+                mapnloaded = true;
                 $http.get('http://' + config.host + ':' + config.port + '/api/1.0/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
                         function (response) {
                             if (response == "failure") {
@@ -1151,7 +1152,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     $scope.panels.sort(function (a, b) {
                                                         return b.id - a.id;
                                                     });
-                                                    $scope.isloading = false;
                                                     $scope.isloading = false;
                                                     if ($scope.isloading == false && mapnloaded == false) {
                                                         $scope.nloaded = false;
