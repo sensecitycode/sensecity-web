@@ -1171,8 +1171,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         if( $scope.panels[i].mongoId[0] == issue[0]._id){
                                                            if( issue[0].image_name != "" && issue[0].image_name != "no-image"){ 
                                                             $scope.panels[i].image = issue[0].image_name;
+                                                            $window.alert($scope.panels[i].image);
                                                            }else{
-                                                             $scope.panels[i].image = "http://testcity1.sense.city/images/EmptyBox-Phone.png";  
+                                                             $scope.panels[i].image = "http://testcity1.sense.city/images/EmptyBox-Phone.png";
+                                                             $window.alert($scope.panels[i].image);
                                                            }
                                                         }
                                                     }
