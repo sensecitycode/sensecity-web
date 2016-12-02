@@ -691,6 +691,14 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         $scope.nloaded = false;
                                                     }
                                                 }
+                                            }, function(response) {
+                                                map_counter++;
+                                                if (map_counter == total_counter) {
+                                                    mapnloaded = false;
+                                                    if ($scope.isloading == false && mapnloaded == false) {
+                                                        $scope.nloaded = false;
+                                                    }
+                                                }
                                             });
                                         });
                             }
@@ -1170,7 +1178,15 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         $scope.nloaded = false;
                                                     }
                                                 }
-                                                }, function(response) {$window.alert("mphke")});
+                                                }, function(response) {
+                                                map_counter++;
+                                                if (map_counter == total_counter) {
+                                                    mapnloaded = false;
+                                                    if ($scope.isloading == false && mapnloaded == false) {
+                                                        $scope.nloaded = false;
+                                                    }
+                                                }
+                                            });
                                             });
                                 }
                             }, $scope.panels);
