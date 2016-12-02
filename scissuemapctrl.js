@@ -402,7 +402,22 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
 
                 year = time_parse[0];
 
-                time = parseInt(response[1].bugs[resp_id].comments[i].time.substring(11, 19)) + 2;
+                time = response[1].bugs[resp_id].comments[i].time.substring(11, 19);
+                var temp_time = time.substring(0,2);
+                var ntime = parseInt(temp_time);
+                ntime += 2;
+                if(ntime < 10){
+                    time = "0"+ ntime + time.substring(2);
+                }else if( ntime > 23){
+                   if( ntime == 24){
+                       ntime = 0;
+                    }else{
+                       ntime = 1; 
+                    }
+                   time = "0"+ ntime + time.substring(2);
+                } else{
+                    time = ntime + time.substring(2);
+                }
                 if (response[1].bugs[resp_id].comments[i].content == 'default' || response[1].bugs[resp_id].comments[i].content == 'undefined') {
                     show = false;
                 }
@@ -428,7 +443,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     "year": year,
                     "time": time,
                     "color": color,
-                    "component": response[1].bugs[resp_id].comments[i].tags[1],
+                    "component": response[1].bugs[resp_id].comments[i].tags[dep_pos],
                     "show": show
                 };
 
