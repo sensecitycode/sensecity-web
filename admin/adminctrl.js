@@ -842,6 +842,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         {
                             obj.resolution = panel.resolution.en;
                         }
+                        if( panel.status.en == "CONFIRMED"){
+                            $scope.comment = "undefined";
+                            panel.comment = "undefined";
+                        }
                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                     function (response, status, headers, conf) {
