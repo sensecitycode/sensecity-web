@@ -1109,11 +1109,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
                                                             history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
                                                         } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
-                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[tag_pos]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
                                                         } else {
-                                                            $window.alert(JSON.stringify(response.bugs));
-                                                            $window.alert(Object.keys(response.bugs)[tag_pos]);
-                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[tag_pos]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                         }
                                                     }
                                                 }
