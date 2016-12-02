@@ -682,7 +682,17 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                                             Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                 map_counter++;
-                                                $scope.panel_image = issue[0].image_name;
+                                                for( i = 0 ; i < $scope.panels.length; i++){
+                                                        if( $scope.panels[i].mongoId[0] == issue[0]._id){
+                                                           if( issue[0].image_name != "" && issue[0].image_name != "no-image"){ 
+                                                            $scope.panels[i].image = issue[0].image_name;
+                                                            $window.alert($scope.panels[i].image);
+                                                           }else{
+                                                             $scope.panels[i].image = "../images/EmptyBox-Phone.png";
+                                                             $window.alert($scope.panels[i].image);
+                                                           }
+                                                        }
+                                                    }
                                                 $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                                 $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                                 if (map_counter == total_counter) {
@@ -1173,7 +1183,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                             $scope.panels[i].image = issue[0].image_name;
                                                             $window.alert($scope.panels[i].image);
                                                            }else{
-                                                             $scope.panels[i].image = "http://testcity1.sense.city/images/EmptyBox-Phone.png";
+                                                             $scope.panels[i].image = "../images/EmptyBox-Phone.png";
                                                              $window.alert($scope.panels[i].image);
                                                            }
                                                         }
