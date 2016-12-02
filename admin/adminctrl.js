@@ -691,7 +691,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         $scope.nloaded = false;
                                                     }
                                                 }
-                                            }, function(response) {
+                                            }, function (response) {
                                                 map_counter++;
                                                 if (map_counter == total_counter) {
                                                     mapnloaded = false;
@@ -777,7 +777,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 {
                     $scope.selectedResolution = {"en": panel.resolution.en, "gr": panel.resolution.gr};
                 } else {
-                    $scope.selectedResolution = {"en": "FIXED", "gr": "Αποκατάσταση",};
+                    $scope.selectedResolution = {"en": "FIXED", "gr": "Αποκατάσταση" };
                 }
             };
 
@@ -1166,27 +1166,29 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     }
                                                 }
                                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
-                                                    $window.alert(map_counter);
                                                     map_counter++;
+                                                    $window.alert(JSON.stringify(issue));
+//                                                    for( i = 0 ; i < $scope.panels.length; i++){
+//                                                        if( $scope.panels.mongoId[0] == issue[0].id)
+//                                                    }
                                                     $scope.panel_image = issue[0].image_name;
                                                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                                     $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
-                                                    $window.alert("map_counter:"+ map_counter);
                                                     if (map_counter == total_counter) {
-                                                    mapnloaded = false;
-                                                    if ($scope.isloading == false && mapnloaded == false) {
-                                                        $scope.nloaded = false;
+                                                        mapnloaded = false;
+                                                        if ($scope.isloading == false && mapnloaded == false) {
+                                                            $scope.nloaded = false;
+                                                        }
                                                     }
-                                                }
-                                                }, function(response) {
-                                                map_counter++;
-                                                if (map_counter == total_counter) {
-                                                    mapnloaded = false;
-                                                    if ($scope.isloading == false && mapnloaded == false) {
-                                                        $scope.nloaded = false;
+                                                }, function (response) {
+                                                    map_counter++;
+                                                    if (map_counter == total_counter) {
+                                                        mapnloaded = false;
+                                                        if ($scope.isloading == false && mapnloaded == false) {
+                                                            $scope.nloaded = false;
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
                                             });
                                 }
                             }, $scope.panels);
