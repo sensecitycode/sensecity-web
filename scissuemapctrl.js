@@ -433,8 +433,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πρασίνου";
                 }
                 
-                $window.alert(response[1].bugs[resp_id].comments[i].content);
-                $window.alert(show);
+                $window.alert(JSON.stringify(response[1].bugs[resp_id].comments[i]));
                 
                 var com = {
                     "content": response[1].bugs[resp_id].comments[i].content,

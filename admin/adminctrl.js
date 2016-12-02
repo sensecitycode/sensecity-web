@@ -1168,7 +1168,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                     map_counter++;
                                                     for( i = 0 ; i < $scope.panels.length; i++){
-                                                        if( $scope.panels.mongoId[0] == issue[0]._id){
+                                                        if( $scope.panels[i].mongoId[0] == issue[0]._id){
                                                             $scope.panels[i].image = issue[0].image_name;
                                                         }
                                                     }
