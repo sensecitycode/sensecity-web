@@ -316,6 +316,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
             $scope.comments = [];
             var resp_id = response[0].bug_id;
             var tag_pos;
+            var dep_pos;
             
             $window.alert(response[1].bugs[resp_id].comments.length);
             
@@ -342,9 +343,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                         case "IN_PROGRESS":
                         case "RESOLVED":
                             tag_pos = 0;
+                            dep_pos = 1;
                             break;
                         default:
                             tag_pos = 1;
+                            dep_pos = 0;
                             break;
                     }
                 }
@@ -405,12 +408,18 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                 if (response[1].bugs[resp_id].comments[i].content == 'default' || response[1].bugs[resp_id].comments[i].content == 'undefined') {
                     show = false;
                 }
-                if (response[1].bugs[resp_id].comments[i].tags[1] == "all") {
+                if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "all") {
                     response[1].bugs[resp_id].comments[i].tags[1] = "Τμήμα επίλυσης προβλημάτων";
-                } else if (response[1].bugs[resp_id].comments[i].tags[1] == "protection") {
+                } else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "protection") {
                     response[1].bugs[resp_id].comments[i].tags[1] = "Τμήμα πολιτικής προστασίας";
-                } else if (response[1].bugs[resp_id].comments[i].tags[1] == "road-contructor") {
+                } else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "road-contructor") {
                     response[1].bugs[resp_id].comments[i].tags[1] = "Τμήμα πεζοδρομίου/δρόμου/πλατείας";
+                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "garbage") {
+                    response[1].bugs[resp_id].comments[i].tags[1] = "Τμήμα καθαριότητας";
+                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "lighting") {
+                    response[1].bugs[resp_id].comments[i].tags[1] = "Τμήμα ηλεκτροφωτισμού";
+                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "green") {
+                    response[1].bugs[resp_id].comments[i].tags[1] = "Τμήμα πρασίνου";
                 }
 
                 var com = {

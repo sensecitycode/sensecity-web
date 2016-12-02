@@ -837,7 +837,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             case "Τμήμα ηλεκτροφωτισμού":
                                                 comp = "lighting";
                                                 break;
-                                            case "Πρασίνου":
+                                            case "Τμήμα πρασίνου":
                                                 comp = "green";
                                                 break;
                                             case "Τμήμα επίλυσης προβλημάτων":
