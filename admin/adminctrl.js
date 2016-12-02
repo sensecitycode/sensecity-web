@@ -1169,7 +1169,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     map_counter++;
                                                     for( i = 0 ; i < $scope.panels.length; i++){
                                                         if( $scope.panels[i].mongoId[0] == issue[0]._id){
+                                                           if( issue[0].image_name != "" && issue[0].image_name != "no-image"){ 
                                                             $scope.panels[i].image = issue[0].image_name;
+                                                           }else{
+                                                             $scope.panels[i].image = "/images/EmptyBox-Phone.png";  
+                                                           }
                                                         }
                                                     }
                                                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};

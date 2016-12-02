@@ -416,7 +416,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                 } else{
                     time = ntime + time.substring(2);
                 }
-                if (response[1].bugs[resp_id].comments[i].content == 'default' || response[1].bugs[resp_id].comments[i].content == 'undefined') {
+                if (response[1].bugs[resp_id].comments[i].text == 'undefined') {
                     show = false;
                 }
                 if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "all") {
@@ -431,12 +431,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα ηλεκτροφωτισμού";
                 }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "green") {
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πρασίνου";
-                }
-                
-                $window.alert(JSON.stringify(response[1].bugs[resp_id].comments[i]));
+                }               
                 
                 var com = {
-                    "content": response[1].bugs[resp_id].comments[i].content,
+                    "content": response[1].bugs[resp_id].comments[i].text,
                     "type": type,
                     "day": day,
                     "month": month,
