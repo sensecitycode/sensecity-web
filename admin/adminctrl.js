@@ -877,6 +877,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         });
                     }
                     if ($scope.selectedStatus.gr == 'Ανοιχτό') {
+                        $window.alert("ok1");
                         if ($scope.selectedStatus.gr != panel.status.gr) {
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
@@ -903,6 +904,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             panel.severity = seldseverity;
                         }
                     } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
+                        $window.alert("ok2");
                         if (panel.comment == undefined || panel.comment == "") {
                             panel.comment = "undefined";
                         }
@@ -932,6 +934,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.selectedResolution = panel.resolution;
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
+                        $window.alert("ok3");
                         if (panel.comment == undefined || panel.comment == "") {
                             panel.comment = "undefined";
                         }
@@ -944,8 +947,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
-                            $window.alert($scope.selectedSeverity);
-                            $window.alert(panel.severity);
+                            $window.alert(JSON.stringify($scope.selectedSeverity));
+                            $window.alert(JSON.stringify(panel.severity));
                             if (panel.status == "Ανοιχτό") {
                                 panel.status = "undefined";
                                 $scope.comment = panel.comment;
