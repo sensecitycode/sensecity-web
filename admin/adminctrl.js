@@ -43,6 +43,14 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 //
 //                });
 
+        $(window).on('resize', function () {
+            if ($(".panel.panel-default").width() <= 600) { //isws prepei na checkaroume ean einai ston xarth
+                isfixed = 0;
+            }else{
+                isfixed = 1;
+            }
+        });
+
         function authorizedu() {
             if ($cookieStore.get("uuid") !== undefined) {
                 $scope.valid = true;
@@ -1085,7 +1093,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#">{{page}}</a></span></li>';
 
                         $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#">></a></span></li>'
-                                + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#">»</a></span></li></ul>';                    
+                                + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#">»</a></span></li></ul>';
 
                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
@@ -1096,7 +1104,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 mapnloaded = false;
                                 $scope.isloading = false;
                                 $scope.nloaded = false;
-                            }else{
+                            } else {
                                 $(".paging").html($compile($scope.pages)($scope));
                             }
                             angular.forEach(result, function (value, key) {
