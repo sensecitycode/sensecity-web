@@ -770,7 +770,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.selectedSeverity = {en: panel.severity.en, gr: panel.severity.gr};
                 $scope.selectedResolution = {en: panel.resolution.en, gr: panel.resolution.gr};
 
-                $scope.selectedStatus = panel.status;
+                $scope.selectedStatus = panel.status;               
 
                 $scope.comment = panel.comment;
                 $scope.duplicof = panel.duplicof;
@@ -843,6 +843,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.comment = "undefined";
                             panel.comment = "undefined";
                         }
+                        $window.alert(JSON.stringify($scope.selectedSeverity));
+                        $window.alert(JSON.stringify(panel.severity));
                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                     function (response, status, headers, conf) {
@@ -888,10 +890,10 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 $scope.comment = "undefined";
                             }
                             $scope.comment = panel.comment;
-                            update();//koita to component
+                            update();
                             $window.alert(panel.component);
-                            $window.alert($scope.component);
-                            if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component && $scope.assignissues == false && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                            $window.alert($scope.selectedComponent);
+                            if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.selectedComponent && $scope.assignissues == false && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
@@ -899,6 +901,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 }, 3000);
                             }                          
                             $scope.selectedStatus = panel.status;
+                            $scope.component = panel.component;
                             panel.priority = seldpriority;
                             panel.severity = seldseverity;
                         }
@@ -923,7 +926,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             update();
                             $window.alert(panel.component);
                             $window.alert($scope.component);
-                            if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                            if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.selectedComponent && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
@@ -953,7 +956,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 $scope.comment = panel.comment;
                             }
                             update();
-                            if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.component && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                            if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.selectedComponent && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
