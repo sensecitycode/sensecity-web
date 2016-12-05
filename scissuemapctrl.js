@@ -433,12 +433,6 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πρασίνου";
                 }
                 
-                if(response[1].bugs[resp_id].comments[i].text.substr(2,3) == "***"){
-                    show = false;
-                }
-                
-                $window.alert(response[1].bugs[resp_id].comments[i].text.substr(2,3));
-                $window.alert(show);
                 var com = {
                     "content": response[1].bugs[resp_id].comments[i].text,
                     "type": type,
@@ -450,8 +444,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     "component": response[1].bugs[resp_id].comments[i].tags[dep_pos],
                     "show": show
                 };
-
-                $scope.comments.push(com);
+                
+                if(response[1].bugs[resp_id].comments[i].text.substr(2,3) != "***"){
+                    $scope.comments.push(com);
+                }               
             }
         });
         /*	
