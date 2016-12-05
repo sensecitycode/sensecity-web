@@ -428,7 +428,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.currentactive = args.model.panelid;
                 $scope.linkmap($scope.panels[args.model.panelid]);
                 setTimeout(function () {
-                            $("html,body").scrollTop($(".timeline-item-active").offset().top);
+                            $("html,body").scrollTop($(".timeline-item-active span").offset().top);
                         }, 400);
             });
 
