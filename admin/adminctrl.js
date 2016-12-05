@@ -424,12 +424,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 // console.log(args);
                 // console.log(args.model.panelid);
                 // console.log($scope.panels[args.model.panelid]);
-                $window.alert("ok1");
                 $scope.activePanel = args.model.panelid;
                 $scope.currentactive = args.model.panelid;
                 $scope.linkmap($scope.panels[args.model.panelid]);
                 setTimeout(function () {
-                            $("html,body").scrollTop($(".timeline-item-active > span").offset().top);
+                            $("html,body").scrollTop($(".timeline-item-active").offset().top);
                         }, 400);
             });
 
@@ -439,7 +438,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 // console.log(args);
                 // console.log(args.model.panelid);
                 // console.log($scope.panels[args.model.panelid]);
-                $window.alert("ok2");
                 $scope.activePanel = -1;
                 $scope.currentactive = -1;
                 // $scope.linkmap($scope.panels[args.model.panelid]);
