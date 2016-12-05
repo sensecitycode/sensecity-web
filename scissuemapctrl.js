@@ -431,7 +431,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα ηλεκτροφωτισμού";
                 }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "green") {
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πρασίνου";
-                }               
+                }
+                
+                if(response[1].bugs[resp_id].comments[i].text == "*** This bug has been marked as a duplicate of bug 2 ***"){
+                    show = false;
+                }
                 
                 var com = {
                     "content": response[1].bugs[resp_id].comments[i].text,
