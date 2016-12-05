@@ -437,7 +437,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     show = false;
                 }
                 
-                $window.alert(response[1].bugs[resp_id].comments[i].text.substr(2,5));
+                $window.alert(response[1].bugs[resp_id].comments[i].text.substr(2,4));
                 $window.alert(show);
                 var com = {
                     "content": response[1].bugs[resp_id].comments[i].text,
