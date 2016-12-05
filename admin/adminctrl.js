@@ -428,8 +428,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.currentactive = args.model.panelid;
                 $scope.linkmap($scope.panels[args.model.panelid]);
                 setTimeout(function () {
-                            $("html,body").scrollTop($(".timeline-item-active span").offset().top);
-                        }, 400);
+                    $("html,body").scrollTop($(".timeline-item-active span").offset().top);
+                }, 400);
             });
 
             $scope.$on("leafletDirectiveMarker.panelmap.click", function (event, args) {
@@ -589,6 +589,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         var total_counter = result.length;
                         var counter = 0;
                         var map_counter = 0;
+                        if (total_counter == 0) {
+                            mapnloaded = false;
+                            $scope.isloading = false;
+                            $scope.nloaded = false;
+                        }
                         angular.forEach(result, function (value, key) {
                             var issue_name = ToGrService.issueName(value.summary);
                             var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
@@ -615,17 +620,17 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 }
                                                 var tag_pos;
 
-                                                    switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
-                                                        case "CONFIRMED":
-                                                        case "IN_PROGRESS":
-                                                        case "RESOLVED":
-                                                            tag_pos = 0;
-                                                            break;
-                                                        default:
-                                                            tag_pos = 1;
-                                                            break;
-                                                    }
-                                                    
+                                                switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
+                                                    case "CONFIRMED":
+                                                    case "IN_PROGRESS":
+                                                    case "RESOLVED":
+                                                        tag_pos = 0;
+                                                        break;
+                                                    default:
+                                                        tag_pos = 1;
+                                                        break;
+                                                }
+
                                                 if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
                                                     if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
                                                         history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
@@ -682,15 +687,15 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                                             Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                 map_counter++;
-                                                for( i = 0 ; i < $scope.panels.length; i++){
-                                                        if( $scope.panels[i].mongoId[0] == issue[0]._id){
-                                                           if( issue[0].image_name != "" && issue[0].image_name != "no-image"){ 
+                                                for (i = 0; i < $scope.panels.length; i++) {
+                                                    if ($scope.panels[i].mongoId[0] == issue[0]._id) {
+                                                        if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                                                             $scope.panels[i].image = issue[0].image_name;
-                                                           }else{
-                                                             $scope.panels[i].image = "../images/EmptyBox-Phone.png";
-                                                           }
+                                                        } else {
+                                                            $scope.panels[i].image = "../images/EmptyBox-Phone.png";
                                                         }
                                                     }
+                                                }
                                                 $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                                 $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                                 if (map_counter == total_counter) {
@@ -773,7 +778,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 $scope.selectedSeverity = {en: panel.severity.en, gr: panel.severity.gr};
                 $scope.selectedResolution = {en: panel.resolution.en, gr: panel.resolution.gr};
 
-                $scope.selectedStatus = panel.status;               
+                $scope.selectedStatus = panel.status;
 
                 $scope.comment = panel.comment;
                 $scope.duplicof = panel.duplicof;
@@ -785,7 +790,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 {
                     $scope.selectedResolution = {"en": panel.resolution.en, "gr": panel.resolution.gr};
                 } else {
-                    $scope.selectedResolution = {"en": "FIXED", "gr": "Αποκατάσταση" };
+                    $scope.selectedResolution = {"en": "FIXED", "gr": "Αποκατάσταση"};
                 }
             };
 
@@ -841,7 +846,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         {
                             obj.resolution = panel.resolution.en;
                         }
-                        if( panel.status.en == "CONFIRMED"){
+                        if (panel.status.en == "CONFIRMED") {
                             $scope.comment = "undefined";
                             panel.comment = "undefined";
                         }
@@ -897,7 +902,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                     $scope.activePanel = -1;
                                     $scope.currentactive = -1;
                                 }, 3000);
-                            }                          
+                            }
                             $scope.selectedStatus = panel.status;
                             $scope.component = panel.component;
                             panel.priority = seldpriority;
@@ -910,7 +915,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         if ($scope.comment == "") {
                             $scope.comment = "undefined";
                         }
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {                           
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
                             $scope.comment = panel.comment;
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
@@ -1089,6 +1094,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             var total_counter = result.length;
                             var counter = 0;
                             var map_counter = 0;
+                            if (total_counter == 0) {
+                                mapnloaded = false;
+                                $scope.isloading = false;
+                                $scope.nloaded = false;
+                            }
                             angular.forEach(result, function (value, key) {
                                 var issue_name = ToGrService.issueName(value.summary);
                                 var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
@@ -1115,17 +1125,17 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         com = "";
                                                     }
 
-                                                        switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
-                                                            case "CONFIRMED":
-                                                            case "IN_PROGRESS":
-                                                            case "RESOLVED":
-                                                                tag_pos = 0;
-                                                                break;
-                                                            default:
-                                                                tag_pos = 1;
-                                                                break;
-                                                        }
-                                                        
+                                                    switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
+                                                        case "CONFIRMED":
+                                                        case "IN_PROGRESS":
+                                                        case "RESOLVED":
+                                                            tag_pos = 0;
+                                                            break;
+                                                        default:
+                                                            tag_pos = 1;
+                                                            break;
+                                                    }
+
                                                     if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
                                                         if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
                                                             history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
@@ -1180,13 +1190,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 }
                                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                     map_counter++;
-                                                    for( i = 0 ; i < $scope.panels.length; i++){
-                                                        if( $scope.panels[i].mongoId[0] == issue[0]._id){
-                                                           if( issue[0].image_name != "" && issue[0].image_name != "no-image"){ 
-                                                            $scope.panels[i].image = issue[0].image_name;
-                                                           }else{
-                                                             $scope.panels[i].image = "../images/EmptyBox-Phone.png";
-                                                           }
+                                                    for (i = 0; i < $scope.panels.length; i++) {
+                                                        if ($scope.panels[i].mongoId[0] == issue[0]._id) {
+                                                            if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
+                                                                $scope.panels[i].image = issue[0].image_name;
+                                                            } else {
+                                                                $scope.panels[i].image = "../images/EmptyBox-Phone.png";
+                                                            }
                                                         }
                                                     }
                                                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};

@@ -433,12 +433,9 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πρασίνου";
                 }
                 
-                if(response[1].bugs[resp_id].comments[i].text.replace(/(\r\n|\n|\r)/gm,"").substr(0,3) == "***"){
+                if(response[1].bugs[resp_id].comments[i].text.replace(/(\r\n|\n|\r)/gm,"").substr(2,5) == "***"){
                     show = false;
                 }
-                
-                $window.alert(response[1].bugs[resp_id].comments[i].textreplace(/(\r\n|\n|\r)/gm,"").substr(0,3));
-                $window.alert(show);
                 
                 var com = {
                     "content": response[1].bugs[resp_id].comments[i].text,
