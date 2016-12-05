@@ -43,14 +43,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 //
 //                });
 
-        $(window).on('resize', function () {
-            if ($(".panel.panel-default").width() <= 600) { //isws prepei na checkaroume ean einai ston xarth
-                isfixed = 0;
-            }else{
-                isfixed = 1;
-            }
-        });
-
         function authorizedu() {
             if ($cookieStore.get("uuid") !== undefined) {
                 $scope.valid = true;
@@ -74,7 +66,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         $(document).on('scroll', function () {
             var bottom = $('.xn-profile').position().top;
             var outerHeight = $('.xn-profile').height();
-            if ($(window).scrollTop() > bottom + outerHeight) {
+            if ($(window).scrollTop() > bottom + outerHeight && $(".panel.panel-default").width() > 600) {
                 if (isfixed == 0) {
                     $(".panel.panel-default").css({position: 'fixed', left: '58%', top: '3%', width: '40%'});
                 }
