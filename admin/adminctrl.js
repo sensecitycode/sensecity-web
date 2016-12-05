@@ -907,12 +907,13 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         if ($scope.comment == "") {
                             $scope.comment = "undefined";
                         }
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
-                            $window.alert($scope.selectedSeverity);
+                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {                           
                             $scope.comment = panel.comment;
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
+                            $window.alert($scope.selectedSeverity);
+                            $window.alert(panel.severity);
                             if (panel.status == "Ανοιχτό") {
                                 panel.comment = "undefined";
                                 $scope.comment = panel.comment;
@@ -937,11 +938,12 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             $scope.comment = panel.comment;
                         }
                         if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedResolution.en != panel.resolution.en || $scope.selectedResolution.gr != panel.resolution.gr || $scope.duplicof != panel.duplicof || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
-                            $window.alert($scope.selectedSeverity);
                             $scope.comment = panel.comment;
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
+                            $window.alert($scope.selectedSeverity);
+                            $window.alert(panel.severity);
                             if (panel.status == "Ανοιχτό") {
                                 panel.status = "undefined";
                                 $scope.comment = panel.comment;
