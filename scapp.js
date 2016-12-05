@@ -131,7 +131,11 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'VERIFY_CODE':'Verify Code',
 		'REGISTER':'Register',
 		'NEW_ISSUE':'New issue',
-		'MESSAGE_ISSUE':'Message'
+		'MESSAGE_ISSUE':'Message',
+		'COMMON_AREA':'Infringement common areas',
+		'ENVIROMENT_ISSUE':'Enviroment issues',
+		'STRAY_ANIMALS':'Stray animals',
+		'RECYCLE_ISSUE':'Recycling'
     });
    
     $translateProvider.translations('el', {
@@ -215,7 +219,11 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'VERIFY_CODE':'Κωδικός πιστοποίησης',
 		'REGISTER':'Εγγραφή',
 		'NEW_ISSUE':'Νέο πρόβλημα',
-		'MESSAGE_ISSUE':'Σχόλια'
+		'MESSAGE_ISSUE':'Σχόλια',
+		'COMMON_AREA':'Kαταπάτηση κοινόχροιστων χώρων',
+		'ENVIROMENT_ISSUE':'Περιβαλλοντικά Θέματα',
+		'STRAY_ANIMALS':'Αδέσποτα ζώα',
+		'RECYCLE_ISSUE':'Ανακύκλωση'
       
     });
    

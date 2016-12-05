@@ -42,15 +42,21 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	                   {id: 'road-contructor', name: 'ROAD_ISSUE', 
 	                	   types: [ 
 	                	            {id: '1', name:'POTHOLES'},
-	                	            {id: '2', name:'BROKEN_PLATES'},
-	                	            {id: '3', name:'ABANDONED_CAR'},
-	                	            {id: '4', name:'OCCUPATION_PAVEMENT'},
-									{id: '5', name:'BROKEN_BENCH'},
-									{id: '6', name:'BOTCHERY'},
+									{id: '2', name:'COMMON_AREA'},
+	                	            {id: '3', name:'BROKEN_PLATES'},
+	                	            {id: '4', name:'ABANDONED_CAR'},
+	                	            {id: '5', name:'OCCUPATION_PAVEMENT'},
+									{id: '6', name:'BROKEN_BENCH'},
+									{id: '7', name:'BOTCHERY'},
 	                	            {id: 'other', name:'OTHER'}] 
 	                   },
 	                   {id: 'protection-policy', name: 'PROTECTION_POLICY_ISSUE', 
 	                	   types: [ {id: 'other', name:'OTHER'}] 
+	                   },
+	                   {id: 'enviroment', name: 'ENVIROMENT_ISSUE', 
+	                	   types: [ {id: '1', name:'STRAY_ANIMALS'},
+									{id: '2', name:'RECYCLE_ISSUE'},
+									{id: 'other', name:'OTHER'}] 
 	                   },
 	                   {id: 'green', name: 'GREEN_ISSUE', 
 	                	   types: [ 
