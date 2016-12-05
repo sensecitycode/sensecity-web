@@ -437,7 +437,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     show = false;
                 }
                 
-                $window.alert(response[1].bugs[resp_id].comments[i].text.substr(0,3));
+                $window.alert(response[1].bugs[resp_id].comments[i].textreplace(/(\r\n|\n|\r)/gm,"").substr(0,3));
                 $window.alert(show);
                 
                 var com = {
