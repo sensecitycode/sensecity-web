@@ -570,18 +570,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#">></a></span></li>'
                             + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#">»</a></span></li></ul>';
 
-                    $(".paging").html($compile($scope.pages)($scope));
-                    $scope.updatePage = function (activePage) {
-                        $scope.activePage = activePage;
-                        if (($scope.startPage - 1 % 5) == 0) {
-                            $scope.pageIndex = activePage % 5;
-                        } else { //When totalpages are not divided by 5
-                            $scope.pageIndex = 5 - ($scope.total_pages - activePage);
-                        }
-                        if ($scope.pageIndex == 0) {
-                            $scope.pageIndex = 5;
-                        }
-                    };
 
                     $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
@@ -593,6 +581,19 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             mapnloaded = false;
                             $scope.isloading = false;
                             $scope.nloaded = false;
+                        } else {
+                            $(".paging").html($compile($scope.pages)($scope));
+                            $scope.updatePage = function (activePage) {
+                                $scope.activePage = activePage;
+                                if (($scope.startPage - 1 % 5) == 0) {
+                                    $scope.pageIndex = activePage % 5;
+                                } else { //When totalpages are not divided by 5
+                                    $scope.pageIndex = 5 - ($scope.total_pages - activePage);
+                                }
+                                if ($scope.pageIndex == 0) {
+                                    $scope.pageIndex = 5;
+                                }
+                            };
                         }
                         angular.forEach(result, function (value, key) {
                             var issue_name = ToGrService.issueName(value.summary);
@@ -1084,10 +1085,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#">{{page}}</a></span></li>';
 
                         $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#">></a></span></li>'
-                                + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#">»</a></span></li></ul>';
-
-
-                        $(".paging").html($compile($scope.pages)($scope));
+                                + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#">»</a></span></li></ul>';                    
 
                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
@@ -1098,6 +1096,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                 mapnloaded = false;
                                 $scope.isloading = false;
                                 $scope.nloaded = false;
+                            }else{
+                                $(".paging").html($compile($scope.pages)($scope));
                             }
                             angular.forEach(result, function (value, key) {
                                 var issue_name = ToGrService.issueName(value.summary);
