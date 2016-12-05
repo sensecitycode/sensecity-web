@@ -889,13 +889,15 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             }
                             $scope.comment = panel.comment;
                             update();//koita to component
+                            $window.alert(panel.component);
+                            $window.alert($scope.component);
                             if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.component && $scope.assignissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
                                     $scope.currentactive = -1;
                                 }, 3000);
-                            }
+                            }                          
                             $scope.selectedStatus = panel.status;
                             panel.priority = seldpriority;
                             panel.severity = seldseverity;
@@ -912,8 +914,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
-                            $window.alert($scope.selectedSeverity);
-                            $window.alert(panel.severity);
+                            $window.alert(JSON.stringify($scope.selectedSeverity));
+                            $window.alert(JSON.stringify(panel.severity));
                             if (panel.status == "Ανοιχτό") {
                                 panel.comment = "undefined";
                                 $scope.comment = panel.comment;
