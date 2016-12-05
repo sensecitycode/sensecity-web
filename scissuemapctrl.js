@@ -433,7 +433,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πρασίνου";
                 }
                 
-                if(response[1].bugs[resp_id].comments[i].text.substr(0,3) == "***"){
+                if(response[1].bugs[resp_id].comments[i].text.replace(/(\r\n|\n|\r)/gm,"").substr(0,3) == "***"){
                     show = false;
                 }
                 
