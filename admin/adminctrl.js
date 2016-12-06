@@ -1286,6 +1286,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         $scope.nloaded = false;
                                                     }
                                                 }
+                                                $window.alert("counter: "+counter);
                                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                     map_counter++;
                                                     for (i = 0; i < $scope.panels.length; i++) {
@@ -1299,8 +1300,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     }
                                                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                                     $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
-                                                    $window.alert("map_counter: " +map_counter);
-                                                    $window.alert("counter: "+counter);
+                                                    $window.alert("map_counter1: " +map_counter);
                                                     if (map_counter == total_counter) {
                                                         mapnloaded = false;                              
                                                         if ($scope.isloading == false && mapnloaded == false) {
@@ -1309,8 +1309,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     }
                                                 }, function (response) {
                                                     map_counter++;
-                                                    $window.alert("map_counter: " +map_counter);
-                                                    $window.alert("counter: "+counter);
+                                                    $window.alert("map_counter2: " +map_counter);                                  
                                                     if (map_counter == total_counter) {
                                                         mapnloaded = false;
                                                         if ($scope.isloading == false && mapnloaded == false) {
