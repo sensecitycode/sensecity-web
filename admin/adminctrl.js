@@ -211,6 +211,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
             if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
                 $scope.tabs = [];
+                $window.alert($cookieStore.get("department"));
                 if ($cookieStore.get("role") == "departmentAdmin") {
                     $scope.role = "departmentAdmin";
                 } else {
