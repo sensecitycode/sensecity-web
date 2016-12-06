@@ -1188,11 +1188,11 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             var total_counter = result.length;
                             var counter = 0;
                             var map_counter = 0;
-                            $window.alert(total_counter);
                             if (total_counter == 0) {
                                 mapnloaded = false;
                                 $scope.isloading = false;
                                 $scope.nloaded = false;
+                                $(".paging").html("");
                             } else {
                                 $(".paging").html($compile($scope.pages)($scope));
                             }
