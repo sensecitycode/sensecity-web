@@ -247,6 +247,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         }];
                     $scope.tabs.activeTab = 3;
                 } else if (department == "Τμήμα Πρασίνου") {
+                    $window.alert("mphke");
                     $scope.utabs = [{
                             "title": "Τμήμα πρασίνου",
                             "content": "Παρουσίαση προβλημάτων πρασίνου",
