@@ -210,6 +210,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             };
 
             if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
+                $scope.tabs = [];
                 if ($cookieStore.get("role") == "departmentAdmin") {
                     $scope.role = "departmentAdmin";
                 } else {
