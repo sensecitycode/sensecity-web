@@ -170,7 +170,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 //                $scope.tabs.activeIcon = "fa fa-umbrella";
 //            }
             } else {
-                $scope.utabs.activeTab = index;
+                $scope.tabs.activeTab = index;
 
                 $scope.tabs.activeTitle = $scope.utabs[index].title;
                 $scope.tabs.activeIcon = $scope.utabs[index].icon;
