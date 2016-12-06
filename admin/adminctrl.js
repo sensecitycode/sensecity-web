@@ -758,8 +758,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
                                             Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                 map_counter++;
+                                                if(issue[0] != undefined){
                                                 for (i = 0; i < $scope.panels.length; i++) {
-                                                    if (issue[0] != undefined && $scope.panels[i].mongoId[0] == issue[0]._id) {
+                                                    if ($scope.panels[i].mongoId[0] == issue[0]._id) {
                                                         if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                                                             $scope.panels[i].image = issue[0].image_name;
                                                         } else {
@@ -769,6 +770,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 }
                                                 $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                                 $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
+                                            }
                                                 if (map_counter == total_counter) {
                                                     mapnloaded = false;
                                                     if ($scope.isloading == false && mapnloaded == false) {
@@ -1197,7 +1199,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             } else {
                                 $(".paging").html($compile($scope.pages)($scope));
                             }
-                            $window.alert("total counter: "+ total_counter);
                             angular.forEach(result, function (value, key) {
                                 var issue_name = ToGrService.issueName(value.summary);
                                 var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
@@ -1289,8 +1290,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 }
                                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                     map_counter++;
+                                                    if(issue[0] != undefined ){
                                                     for (i = 0; i < $scope.panels.length; i++) {
-                                                        if (issue[0] != undefined && $scope.panels[i].mongoId[0] == issue[0]._id) {
+                                                        if ($scope.panels[i].mongoId[0] == issue[0]._id) {
                                                             if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                                                                 $scope.panels[i].image = issue[0].image_name;
                                                             } else {
@@ -1300,7 +1302,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     }
                                                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                                     $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
-                                                    $window.alert("map_counter1: " +map_counter);
+                                                }
                                                     if (map_counter == total_counter) {
                                                         mapnloaded = false;                              
                                                         if ($scope.isloading == false && mapnloaded == false) {
@@ -1308,8 +1310,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         }
                                                     }
                                                 }, function (response) {
-                                                    map_counter++;
-                                                    $window.alert("map_counter2: " +map_counter);                                  
+                                                    map_counter++;                                 
                                                     if (map_counter == total_counter) {
                                                         mapnloaded = false;
                                                         if ($scope.isloading == false && mapnloaded == false) {
