@@ -217,6 +217,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.role = "departmentUser";
                 }
                 var department = $cookieStore.get("department");
+                $window.alert(department);
                 if (department == "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών") {
                     $scope.utabs = [{
                             "title": "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών",
@@ -246,6 +247,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         }];
                     $scope.tabs.activeTab = 3;
                 } else if (department == "Τμήμα Πρασίνου") {
+                     $window.alert("mphke");
                     $scope.utabs = [{
                             "title": "Τμήμα πρασίνου",
                             "content": "Παρουσίαση προβλημάτων πρασίνου",
