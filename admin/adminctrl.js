@@ -1218,7 +1218,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 var history = [];
                                                 var com;
                                                 var tag_pos;
-                                                $window.alert(Object.keys(response.bugs)[0]);
                                                 for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                                     com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
                                                     if (com == "undefined") {
@@ -1288,7 +1287,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         $scope.nloaded = false;
                                                     }
                                                 }
-                                                $window.alert("counter: "+counter);
+                                                $window.alert("mongoid: "+panel.mongoId[0]);
                                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                     map_counter++;
                                                     for (i = 0; i < $scope.panels.length; i++) {
