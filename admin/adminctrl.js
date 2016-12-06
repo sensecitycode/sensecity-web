@@ -759,7 +759,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                 map_counter++;
                                                 for (i = 0; i < $scope.panels.length; i++) {
-                                                    if ($scope.panels[i].mongoId[0] == issue[0]._id && issue[0] != undefined) {
+                                                    if (issue[0] != undefined && $scope.panels[i].mongoId[0] == issue[0]._id) {
                                                         if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                                                             $scope.panels[i].image = issue[0].image_name;
                                                         } else {
@@ -1290,7 +1290,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                     map_counter++;
                                                     for (i = 0; i < $scope.panels.length; i++) {
-                                                        if ($scope.panels[i].mongoId[0] == issue[0]._id && issue[0] != undefined) {
+                                                        if (issue[0] != undefined && $scope.panels[i].mongoId[0] == issue[0]._id) {
                                                             if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                                                                 $scope.panels[i].image = issue[0].image_name;
                                                             } else {
