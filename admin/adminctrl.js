@@ -160,7 +160,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.tabs.activeTitle = "Πρασίνου";
                     $scope.tabs.activeIcon = "fa fa-tree";
                 } else if (issue == "enviroment") {
-                    $scope.tabs.activeTitle = "Περιβάλλον";
+                    $scope.tabs.activeTitle = "Περιβάλλοντος";
                     $scope.tabs.activeIcon = "fa fa-leaf";
                 }
                 $scope.activePanel = -1;
