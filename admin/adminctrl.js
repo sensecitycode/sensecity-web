@@ -172,8 +172,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
             } else {
                 $scope.tabs.activeTab = index;
 
-                $scope.tabs.activeTitle = $scope.utabs[index].title;
-                $scope.tabs.activeIcon = $scope.utabs[index].icon;
+                $scope.tabs.activeTitle = $scope.tabs[index].title;
+                $scope.tabs.activeIcon = $scope.tabs[index].icon;
             }
         };
 
@@ -217,73 +217,71 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.role = "departmentUser";
                 }
                 var department = $cookieStore.get("department");
-                $window.alert(department);
                 if (department == "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών") {
-                    $scope.utabs = [{
+                    $scope.tabs = [{
                             "title": "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών",
                             "content": "Παρουσίαση προβλημάτων αποκομιδής απορριμμάτων & ανακυκλώσιμων υλικών",
                             "icon": "fa fa-trash-o"
                         }];
                     $scope.tabs.activeTab = 0;
                 } else if (department == "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων Κτιρίων & Ηλεκτροφωτισμού") {
-                    $scope.utabs = [{
+                    $scope.tabs = [{
                             "title": "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων Κτιρίων & Ηλεκτροφωτισμο",
                             "content": "Παρουσίαση προβλημάτων κοινόχρηστων χώρων κτιρίων & ηλεκτροφωτισμού",
                             "icon": "fa fa-lightbulb-o"
                         }];
                     $scope.tabs.activeTab = 1;
                 } else if (department == "Τμήμα Οδοποιίας") {
-                    $scope.utabs = [{
+                    $scope.tabs = [{
                             "title": "Τμήμα Οδοποιίας",
                             "content": "Παρουσίαση προβλημάτων Οδοποιίας",
                             "icon": "fa fa-road"
                         }];
                     $scope.tabs.activeTab = 2;
                 } else if (department == "Αυτοτελές τμήμα Πολιτικής Προστασίας") {
-                    $scope.utabs = [{
+                    $scope.tabs = [{
                             "title": "Αυτοτελές τμήμα Πολιτικής Προστασίας",
                             "content": "Παρουσίαση προβλημάτων πολιτικής προστασίας",
                             "icon": "fa fa-shield"
                         }];
                     $scope.tabs.activeTab = 3;
                 } else if (department == "Τμήμα Πρασίνου") {
-                     $window.alert("mphke");
-                    $scope.utabs = [{
+                    $scope.tabs = [{
                             "title": "Τμήμα πρασίνου",
                             "content": "Παρουσίαση προβλημάτων πρασίνου",
                             "icon": "fa fa-tree"
                         }];
                     $scope.tabs.activeTab = 4;
                 } else if (department == "Τμήμα Συγκοινωνιακού & Κυκλοφοριακού Σχεδιασμού") {
-                    $scope.utabs = [{
+                    $scope.tabs = [{
                             "title": "Τμήμα Συγκοινωνιακού & Κυκλοφοριακού Σχεδιασμού",
                             "content": "Παρουσίαση προβλημάτων συγκοινωνιακού & κυκλοφοριακού σχεδιασμού",
                             "icon": "fa fa-car"
                         }];
                     $scope.tabs.activeTab = 5;
                 } else if (department == "Τμήμα Αυτεπιστασίας Έργων Υποδομής") {
-                    $scope.utabs = [{
+                    $scope.tabs = [{
                             "title": "Τμήμα Αυτεπιστασίας Έργων Υποδομής",
                             "content": "Παρουσίαση προβλημάτων αυτεπιστασίας έργων υποδομής",
                             "icon": "fa fa-university"
                         }];
                     $scope.tabs.activeTab = 6;
                 } else if (department == "Τμήμα Ελέγχου Κοινοχρήστων Χώρων") {
-                    $scope.utabs = [{
+                    $scope.tabs = [{
                             "title": "Τμήμα Ελέγχου Κοινοχρήστων Χώρων",
                             "content": "Παρουσίαση προβλημάτων κοινοχρήστων χώρων",
                             "icon": "fa fa-id-card"
                         }];
                     $scope.tabs.activeTab = 7;
                 } else if (department == "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων") {
-                    $scope.utabs = [{
+                    $scope.tabs = [{
                             "title": "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων",
                             "content": "Παρουσίαση προβλημάτων καθαρισμού κοινοχρήστων χώρων & ειδικών συνεργείων",
                             "icon": "fa fa-wrench"
                         }];
                     $scope.tabs.activeTab = 8;
                 } else if (department == "Τμήμα Μελετών Έργων & Πρασίνο") {
-                    $scope.utabs = [{
+                    $scope.tabs = [{
                             "title": "Τμήμα Μελετών Έργων & Πρασίνο",
                             "content": "Παρουσίαση προβλημάτων μελετών έργων & πρασίνο",
                             "icon": "fa fa-leaf"
@@ -547,27 +545,27 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                 {
                     params.summary = issue_type;
                 } else if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
-                    if ($scope.utabs[0].title == 'Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών') {
+                    if ($scope.tabs[0].title == 'Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών') {
                         $scope.component = "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών";
-                    } else if ($scope.utabs[0].title == 'Τμήμα Οδοποιίας') {
+                    } else if ($scope.tabs[0].title == 'Τμήμα Οδοποιίας') {
                         $scope.component = "Τμήμα Οδοποιίας";
-                    } else if ($scope.utabs[0].title == 'Πεζοδρομίου/Δρόμου/Πλατείας') {
+                    } else if ($scope.tabs[0].title == 'Πεζοδρομίου/Δρόμου/Πλατείας') {
                         $scope.component = "Τμήμα πεζοδρομίου/δρόμου/πλατείας";
-                    } else if ($scope.utabs[0].title == 'Αυτοτελές τμήμα Πολιτικής Προστασίας') {
+                    } else if ($scope.tabs[0].title == 'Αυτοτελές τμήμα Πολιτικής Προστασίας') {
                         $scope.component = "Αυτοτελές τμήμα Πολιτικής Προστασίας";
-                    } else if ($scope.utabs[0].title == 'Τμήμα πρασίνου') {
+                    } else if ($scope.tabs[0].title == 'Τμήμα πρασίνου') {
                         $scope.component = "Τμήμα πρασίνου";
-                    } else if ($scope.utabs[0].title == 'Τμήμα Συγκοινωνιακού & Κυκλοφοριακού Σχεδιασμού') {
+                    } else if ($scope.tabs[0].title == 'Τμήμα Συγκοινωνιακού & Κυκλοφοριακού Σχεδιασμού') {
                         $scope.component = "Τμήμα Συγκοινωνιακού & Κυκλοφοριακού Σχεδιασμού";
-                    } else if ($scope.utabs[0].title == 'Τμήμα Αυτεπιστασίας Έργων Υποδομής') {
+                    } else if ($scope.tabs[0].title == 'Τμήμα Αυτεπιστασίας Έργων Υποδομής') {
                         $scope.component = "Τμήμα Αυτεπιστασίας Έργων Υποδομής";
-                    } else if ($scope.utabs[0].title == 'Τμήμα Ελέγχου Κοινοχρήστων Χώρων') {
+                    } else if ($scope.tabs[0].title == 'Τμήμα Ελέγχου Κοινοχρήστων Χώρων') {
                         $scope.component = "Τμήμα Ελέγχου Κοινοχρήστων Χώρων";
-                    } else if ($scope.utabs[0].title == 'Τμήμα πρασίνου') {
+                    } else if ($scope.tabs[0].title == 'Τμήμα πρασίνου') {
                         $scope.component = "Τμήμα πρασίνου";
-                    } else if ($scope.utabs[0].title == 'Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων') {
+                    } else if ($scope.tabs[0].title == 'Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων') {
                         $scope.component = "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων";
-                    } else if ($scope.utabs[0].title == 'Τμήμα Μελετών Έργων & Πρασίνο') {
+                    } else if ($scope.tabs[0].title == 'Τμήμα Μελετών Έργων & Πρασίνο') {
                         $scope.component = "Τμήμα Μελετών Έργων & Πρασίνο";
                     }
                 }
@@ -1128,27 +1126,27 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.component = "Τμήμα επίλυσης προβλημάτων";
                     summary = issue_type;
                     if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
-                        if ($scope.utabs[0].title == 'Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών') {
+                        if ($scope.tabs[0].title == 'Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών') {
                             $scope.component = "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών";
-                        } else if ($scope.utabs[0].title == 'Τμήμα Οδοποιίας') {
+                        } else if ($scope.tabs[0].title == 'Τμήμα Οδοποιίας') {
                             $scope.component = "Τμήμα Οδοποιίας";
-                        } else if ($scope.utabs[0].title == 'Πεζοδρομίου/Δρόμου/Πλατείας') {
+                        } else if ($scope.tabs[0].title == 'Πεζοδρομίου/Δρόμου/Πλατείας') {
                             $scope.component = "Τμήμα πεζοδρομίου/δρόμου/πλατείας";
-                        } else if ($scope.utabs[0].title == 'Αυτοτελές τμήμα Πολιτικής Προστασίας') {
+                        } else if ($scope.tabs[0].title == 'Αυτοτελές τμήμα Πολιτικής Προστασίας') {
                             $scope.component = "Αυτοτελές τμήμα Πολιτικής Προστασίας";
-                        } else if ($scope.utabs[0].title == 'Τμήμα πρασίνου') {
+                        } else if ($scope.tabs[0].title == 'Τμήμα πρασίνου') {
                             $scope.component = "Τμήμα πρασίνου";
-                        } else if ($scope.utabs[0].title == 'Τμήμα Συγκοινωνιακού & Κυκλοφοριακού Σχεδιασμού') {
+                        } else if ($scope.tabs[0].title == 'Τμήμα Συγκοινωνιακού & Κυκλοφοριακού Σχεδιασμού') {
                             $scope.component = "Τμήμα Συγκοινωνιακού & Κυκλοφοριακού Σχεδιασμού";
-                        } else if ($scope.utabs[0].title == 'Τμήμα Αυτεπιστασίας Έργων Υποδομής') {
+                        } else if ($scope.tabs[0].title == 'Τμήμα Αυτεπιστασίας Έργων Υποδομής') {
                             $scope.component = "Τμήμα Αυτεπιστασίας Έργων Υποδομής";
-                        } else if ($scope.utabs[0].title == 'Τμήμα Ελέγχου Κοινοχρήστων Χώρων') {
+                        } else if ($scope.tabs[0].title == 'Τμήμα Ελέγχου Κοινοχρήστων Χώρων') {
                             $scope.component = "Τμήμα Ελέγχου Κοινοχρήστων Χώρων";
-                        } else if ($scope.utabs[0].title == 'Τμήμα πρασίνου') {
+                        } else if ($scope.tabs[0].title == 'Τμήμα πρασίνου') {
                             $scope.component = "Τμήμα πρασίνου";
-                        } else if ($scope.utabs[0].title == 'Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων') {
+                        } else if ($scope.tabs[0].title == 'Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων') {
                             $scope.component = "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων";
-                        } else if ($scope.utabs[0].title == 'Τμήμα Μελετών Έργων & Πρασίνο') {
+                        } else if ($scope.tabs[0].title == 'Τμήμα Μελετών Έργων & Πρασίνο') {
                             $scope.component = "Τμήμα Μελετών Έργων & Πρασίνο";
                         }
                     }
