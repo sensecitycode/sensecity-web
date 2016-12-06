@@ -92,6 +92,9 @@ appServices.factory('ToGrService', function () {
                 case "protection-policy":
                     issue_name = "Πρόβλημα Πολιτικής Προστασίας";
                     break;
+                case "enviroment":
+                    issue_name = "Πρόβλημα Περιβάλλοντος";
+                    break;    
                 default:
                     break;
             }
@@ -193,6 +196,9 @@ appServices.factory('Tab2BugzillaService', function () {
                     type = "green";
                     break;
                 case 6:
+                    type = "enviroment";
+                    break;
+                case 7:
                     type = "plumbing";
                     break;
             }

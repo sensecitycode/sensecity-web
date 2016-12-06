@@ -422,15 +422,25 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                 if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "all") {
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα επίλυσης προβλημάτων";
                 } else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "protection") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πολιτικής προστασίας";
+                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Αυτοτελές τμήμα Πολιτικής Προστασίας";
                 } else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "road-contructor") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πεζοδρομίου/δρόμου/πλατείας";
+                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Οδοποιίας";
                 }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "garbage") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα καθαριότητας";
+                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών";
                 }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "lighting") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα ηλεκτροφωτισμού";
+                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων Κτιρίων & Ηλεκτροφωτισμο";
                 }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "green") {
                     response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πρασίνου";
+                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "transport") {
+                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Συγκοινωνιακού & Κυκλοφοριακού Σχεδιασμού";
+                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "infrastructure") {
+                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Αυτεπιστασίας Έργων Υποδομής";
+                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "shared") {
+                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Ελέγχου Κοινοχρήστων Χώρων";
+                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "studies") {
+                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Μελετών Έργων & Πρασίνο";
+                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "clean") {
+                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων";
                 }
                 
                 var com = {
