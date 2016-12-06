@@ -1197,6 +1197,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             } else {
                                 $(".paging").html($compile($scope.pages)($scope));
                             }
+                            $window.alert("total counter: "+ total_counter);
                             angular.forEach(result, function (value, key) {
                                 var issue_name = ToGrService.issueName(value.summary);
                                 var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
@@ -1217,6 +1218,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 var history = [];
                                                 var com;
                                                 var tag_pos;
+                                                $window.alert(Object.keys(response.bugs)[0]);
                                                 for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                                     com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
                                                     if (com == "undefined") {
