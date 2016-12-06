@@ -1300,9 +1300,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                                     $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                                     $window.alert("map_counter: " +map_counter);
+                                                    $window.alert("counter: "+counter);
                                                     if (map_counter == total_counter) {
-                                                        mapnloaded = false;
-                                                        $window.alert("counter: "+counter);
+                                                        mapnloaded = false;                              
                                                         if ($scope.isloading == false && mapnloaded == false) {
                                                             $scope.nloaded = false;
                                                         }
@@ -1310,9 +1310,9 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 }, function (response) {
                                                     map_counter++;
                                                     $window.alert("map_counter: " +map_counter);
+                                                    $window.alert("counter: "+counter);
                                                     if (map_counter == total_counter) {
                                                         mapnloaded = false;
-                                                        $window.alert("counter: "+counter);
                                                         if ($scope.isloading == false && mapnloaded == false) {
                                                             $scope.nloaded = false;
                                                         }
