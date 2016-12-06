@@ -218,7 +218,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.role = "departmentUser";
                 }
                 var department = $cookieStore.get("department");
-                $window.alert("mphke");
+                $window.alert(department);
                 if (department == "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών") {
                     $scope.tabs = [{
                             "title": "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών",
