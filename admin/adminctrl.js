@@ -170,7 +170,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 //                $scope.tabs.activeIcon = "fa fa-umbrella";
 //            }
             } else {
-                $window.alert("mphke1");
                 $scope.tabs.activeTab = index;
 
                 $scope.tabs.activeTitle = $scope.tabs[index].title;
@@ -218,7 +217,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                     $scope.role = "departmentUser";
                 }
                 var department = $cookieStore.get("department");
-                $window.alert(department);
                 if (department == "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών") {
                     $scope.tabs = [{
                             "title": "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών",
@@ -290,7 +288,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         }];
                     $scope.tabs.activeTab = 9;
                 }
-                $window.alert(JSON.stringify($scope.tabs[0]));
 //                else if (department == "plumbing") {
 //                    $scope.tabs = [{
 //                            "title": "Ύδρευσης/Αποχέτευσης",
@@ -1302,20 +1299,20 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     }
                                                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                                     $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
-                                                    $window.alert(map_counter);
+                                                    $window.alert("map_counter: " +map_counter);
                                                     if (map_counter == total_counter) {
                                                         mapnloaded = false;
-                                                        $window.alert(counter);
+                                                        $window.alert("counter: "+counter);
                                                         if ($scope.isloading == false && mapnloaded == false) {
                                                             $scope.nloaded = false;
                                                         }
                                                     }
                                                 }, function (response) {
                                                     map_counter++;
-                                                    $window.alert(map_counter);
+                                                    $window.alert("map_counter: " +map_counter);
                                                     if (map_counter == total_counter) {
                                                         mapnloaded = false;
-                                                        $window.alert(counter);
+                                                        $window.alert("counter: "+counter);
                                                         if ($scope.isloading == false && mapnloaded == false) {
                                                             $scope.nloaded = false;
                                                         }
