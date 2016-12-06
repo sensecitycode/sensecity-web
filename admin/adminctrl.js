@@ -211,7 +211,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
 
             if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
                 $scope.tabs = [];
-                $window.alert($cookieStore.get("department"));
                 if ($cookieStore.get("role") == "departmentAdmin") {
                     $scope.role = "departmentAdmin";
                 } else {
@@ -247,7 +246,6 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                         }];
                     $scope.tabs.activeTab = 3;
                 } else if (department == "Τμήμα Πρασίνου") {
-                    $window.alert("mphke");
                     $scope.utabs = [{
                             "title": "Τμήμα πρασίνου",
                             "content": "Παρουσίαση προβλημάτων πρασίνου",
