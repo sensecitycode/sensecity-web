@@ -224,7 +224,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             "icon": "fa fa-trash-o"
                         }];
                     $scope.tabs.activeTab = 0;
-                } else if (department == "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων Κτιρίων & Ηλεκτροφωτισμο") {
+                } else if (department == "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων Κτιρίων & Ηλεκτροφωτισμού") {
                     $scope.utabs = [{
                             "title": "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων Κτιρίων & Ηλεκτροφωτισμο",
                             "content": "Παρουσίαση προβλημάτων κοινόχρηστων χώρων κτιρίων & ηλεκτροφωτισμού",
@@ -245,7 +245,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                             "icon": "fa fa-shield"
                         }];
                     $scope.tabs.activeTab = 3;
-                } else if (department == "Τμήμα πρασίνου") {
+                } else if (department == "Τμήμα Πρασίνου") {
                     $scope.utabs = [{
                             "title": "Τμήμα πρασίνου",
                             "content": "Παρουσίαση προβλημάτων πρασίνου",
