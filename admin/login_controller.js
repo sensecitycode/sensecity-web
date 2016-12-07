@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 var app = angular.module('login_fo', ['ngCookies'])
-        .constant("config", {"host": "api.sense.city:", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "4000", "bugzilla_path": "/bugzilla"});
+        .constant("config", {"host": "api.sense.city:", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "3000", "bugzilla_path": "/bugzilla"});
 
 
 //app.config([
@@ -28,14 +28,14 @@ app.controller('login_controller', ['$scope', '$rootScope', '$window', '$http', 
 				long_center: response.long_center,
 				img_logo: "images/city_logos/"+response.city_name+".jpg",
 				bugzilla_products: response.bugzilla_products,
-				APIURL: "http://api.sense.city:4000/api/1.0/issue/",
+				APIURL: "http://api.sense.city:3000/api/1.0/issue/",
 				bugzilla: "http://api.sense.city:4001/bugs/search",
-				ALLISSUESAPIURL: "http://api.sense.city:4000/api/1.0/issues",
-				active_user_URL : "http://api.sense.city:4000/api/1.0/active_users",
-				activate_user_URL : "http://api.sense.city:4000/api/1.0/activate_users",
-				APIADMIN: "http://api.sense.city:4000/api/1.0",
+				ALLISSUESAPIURL: "http://api.sense.city:3000/api/1.0/issues",
+				active_user_URL : "http://api.sense.city:3000/api/1.0/active_users",
+				activate_user_URL : "http://api.sense.city:3000/api/1.0/activate_users",
+				APIADMIN: "http://api.sense.city:3000/api/1.0",
 				map_zoom:12
-			}
+			};
 			
 			return $rootScope;
 		});
