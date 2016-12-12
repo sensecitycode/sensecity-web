@@ -83,6 +83,8 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.showSuccessAlertEmail = false;
 			
 		}else{
+			$scope.showSuccessAlertName = false;
+					$scope.showSuccessAlertEmail = false;
 			$scope.NameTxt = "";
 			$scope.EmailTxt = "";
 			$scope.MobileTxt = "";
