@@ -2,8 +2,8 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 
 
-appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http', 'ngMessages'/*, 'APIEndPointService'*/,
-                                            function($scope, $rootScope, $log, $location, leafletData, Issue, $translate, $http, $ngMessages /*, APIEndPointService*/) {
+appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http'/*, 'APIEndPointService'*/,
+                                            function($scope, $rootScope, $log, $location, leafletData, Issue, $translate, $http /*, APIEndPointService*/) {
 	$log.debug('inside scWebSubmit controller');
 
 	
@@ -444,7 +444,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					}
 		
 					if($scope.NameTxt=="" || $scope.EmailTxt ==""){
-						
+						$scope.NameTxt_error = "test";
   
 						return false;
 					}

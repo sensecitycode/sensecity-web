@@ -142,15 +142,15 @@
 					<div class="form-group">
 						<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_NAME' | translate}}</label>
 						<input ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_NAME' | translate }}"   >
-						<div ng-messages="NameTxt.$error" style="color:maroon" role="alert">
-							<div ng-message="required">You did not enter a field</div>
+						<div ng-model="NameTxt_error" style="color:maroon" role="alert">
+							
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_EMAIL' | translate}}</label>
 						<input ng-model="EmailTxt" name="EmailTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_EMAIL' | translate }}"   >
-						<div ng-messages="EmailTxt.$error" style="color:maroon" role="alert">
-							<div ng-message="required">You did not enter a field</div>
+						<div ng-model="EmailTxt_error" style="color:maroon" role="alert">
+							
 						</div>
 					</div>
 					<div class="form-group">
