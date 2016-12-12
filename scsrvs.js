@@ -13,7 +13,8 @@ appServices.factory('APIEndPointService', function() {
 
 //Issue Resource
 appServices.factory('Issue', function($resource , $rootScope) {
-	return $resource($rootScope.Variables.APIADMIN+"issue/:id",
+	console.log($rootScope.Variables.APIADMIN);
+	return $resource($rootScope.Variables.APIADMIN + "issue/:id",
 		{id : "@id"	}, {
 		"update" : {
 			method : "PUT"
