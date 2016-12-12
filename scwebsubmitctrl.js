@@ -406,7 +406,12 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				});
 			}else if(step==2){
 				
-				if(!$scope.chkSelected){
+				if(!$scope.chkSelected){ //if you sent an issue as anonymous
+					
+					$scope.submit_button = false;
+					$scope.register_button = false;
+					$scope.verify_button = false;
+					$scope.submit_eponymous_button = true;
 					
 					$scope.issubmit_isseu_form = function(){
 						return false;
