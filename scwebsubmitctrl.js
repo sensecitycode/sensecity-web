@@ -406,7 +406,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				});
 			}else if(step==2){
 				
-	
+				if(!$scope.iseponymous){
+					console.log("is not checked");
+				}
 				$scope.step1 = function(){
 					return false;
 				}
