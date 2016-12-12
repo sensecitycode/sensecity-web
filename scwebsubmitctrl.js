@@ -409,127 +409,128 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				if(!$scope.chkSelected){
 					
 					$scope.issubmit_isseu_form = function(){
-							return false;
-						}
-						$scope.iseponymous = function(){
-							return false;
-						}
-						$scope.isnotverify = function(){
-							return false;
-						}
-						$scope.is_finalsubmit = function(){
-							return true;
-						}
-				}
-				
-				$scope.step1 = function(){
-					return false;
-				}
-				
-				$scope.step2 = function(){
-					return false;
-				}
-				
-				$scope.step3 = function(){
-					return false;
-				}
-				
-				$scope.step4 = function(){
-					return true;
-				}
-	
-				if($scope.NameTxt=="" || $scope.EmailTxt ==""){
-					return false;
-				}
-	
-				console.log("step 2");
-				console.log($scope.NameTxt);
-				console.log($scope.EmailTxt);
-				console.log($scope.MobileTxt);
-				var chk_1;
-				var chk_2;
-				
-				if ($scope.chkSelected_1) {
-                    chk_1="true";
-                } else {
-                    chk_1="false";
-                }
-				
-				if ($scope.chkSelected_2) {
-                    chk_2="true";
-                } else {
-                    chk_2="false";
-                }
-				
-			
-			
-				var txtpost1 = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'", "permission" :  { "send_issues": "true" , "communicate_with": {"email" : "'+chk_1+'", "sms" : "'+chk_2+'"}}}';    
-				
-				console.log(txtpost1);
-			
-				return $http({
-					method : 'POST',
-					url : $rootScope.Variables.active_user_URL,
-					headers : {
-						'Content-Type' : 'application/json; charset=utf-8'
-					},
-					data : txtpost1 
-				}).success(function(resp) {
-					
-					
-					$scope.myText = resp.policy_description;
-					if(resp.user_exist=="1"){
-						//user exists
-						
-						
-						$scope.submit_button = false;
-						$scope.register_button = false;
-						$scope.verify_button = false;
-						$scope.submit_eponymous_button = true;
-						
-						$scope.issubmit_isseu_form = function(){
-							return false;
-						}
-						$scope.iseponymous = function(){
-							return false;
-						}
-						$scope.isnotverify = function(){
-							return false;
-						}
-						$scope.is_finalsubmit = function(){
-							return true;
-						}
-						
+						return false;
 					}
-					else{
-						//Verify button
-						user_id=resp._id;
-						$scope.submit_button = false;
-						$scope.register_button = false;
-						$scope.verify_button = true;
-						$scope.submit_eponymous_button = false;
-						
-						$scope.issubmit_isseu_form = function(){
-							return false;
-						}
-						$scope.iseponymous = function(){
-							return false;
-						}
-						$scope.isnotverify = function(){
-							return true;
-						}
-						$scope.is_finalsubmit = function(){
-							return false;
-						}
-						
-						
+					$scope.iseponymous = function(){
+						return false;
+					}
+					$scope.isnotverify = function(){
+						return false;
+					}
+					$scope.is_finalsubmit = function(){
+						return true;
+					}					
+				}else{
+				
+					$scope.step1 = function(){
+						return false;
 					}
 					
+					$scope.step2 = function(){
+						return false;
+					}
 					
-						
+					$scope.step3 = function(){
+						return false;
+					}
 					
+					$scope.step4 = function(){
+						return true;
+					}
+		
+					if($scope.NameTxt=="" || $scope.EmailTxt ==""){
+						return false;
+					}
+		
+					console.log("step 2");
+					console.log($scope.NameTxt);
+					console.log($scope.EmailTxt);
+					console.log($scope.MobileTxt);
+					var chk_1;
+					var chk_2;
+					
+					if ($scope.chkSelected_1) {
+						chk_1="true";
+					} else {
+						chk_1="false";
+					}
+					
+					if ($scope.chkSelected_2) {
+						chk_2="true";
+					} else {
+						chk_2="false";
+					}
+					
+				
+				
+					var txtpost1 = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'", "permission" :  { "send_issues": "true" , "communicate_with": {"email" : "'+chk_1+'", "sms" : "'+chk_2+'"}}}';    
+					
+					console.log(txtpost1);
+				
+					return $http({
+						method : 'POST',
+						url : $rootScope.Variables.active_user_URL,
+						headers : {
+							'Content-Type' : 'application/json; charset=utf-8'
+						},
+						data : txtpost1 
+					}).success(function(resp) {
 						
-				}); 
+						
+						$scope.myText = resp.policy_description;
+						if(resp.user_exist=="1"){
+							//user exists
+							
+							
+							$scope.submit_button = false;
+							$scope.register_button = false;
+							$scope.verify_button = false;
+							$scope.submit_eponymous_button = true;
+							
+							$scope.issubmit_isseu_form = function(){
+								return false;
+							}
+							$scope.iseponymous = function(){
+								return false;
+							}
+							$scope.isnotverify = function(){
+								return false;
+							}
+							$scope.is_finalsubmit = function(){
+								return true;
+							}
+							
+						}
+						else{
+							//Verify button
+							user_id=resp._id;
+							$scope.submit_button = false;
+							$scope.register_button = false;
+							$scope.verify_button = true;
+							$scope.submit_eponymous_button = false;
+							
+							$scope.issubmit_isseu_form = function(){
+								return false;
+							}
+							$scope.iseponymous = function(){
+								return false;
+							}
+							$scope.isnotverify = function(){
+								return true;
+							}
+							$scope.is_finalsubmit = function(){
+								return false;
+							}
+							
+							
+						}
+						
+						
+							
+						
+							
+					}); 
+				}
 			}else if(step==3){
 				
 				$scope.step1 = function(){
