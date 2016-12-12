@@ -2,8 +2,8 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 
 
-appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http', 'APIEndPointService',
-                                            function($scope, $rootScope, $log, $location, leafletData, Issue, $translate, $http, APIEndPointService) {
+appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http'/*, 'APIEndPointService'*/,
+                                            function($scope, $rootScope, $log, $location, leafletData, Issue, $translate, $http/*, APIEndPointService*/) {
 	$log.debug('inside scWebSubmit controller');
 
 	
