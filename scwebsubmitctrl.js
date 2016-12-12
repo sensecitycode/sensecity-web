@@ -445,7 +445,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					}
 		
 					if($scope.NameTxt=="" || $scope.EmailTxt ==""){		
-						
+						console.log("gfhgfhgfh --- sdgfsdf");
 						$scope.successTextAlert = "Some content";
 						$scope.showSuccessAlert = true;
 
@@ -454,7 +454,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 							$scope[value] = !$scope[value];
 						};
 						
-						
+
 						return false;
 					}
 		
