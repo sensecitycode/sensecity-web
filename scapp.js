@@ -135,7 +135,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'COMMON_AREA':'Infringement common areas',
 		'ENVIROMENT_ISSUE':'Enviroment issues',
 		'STRAY_ANIMALS':'Stray animals',
-		'RECYCLE_ISSUE':'Recycling'
+		'RECYCLE_ISSUE':'Recycling',
+		'SAVE_NEW_ISSUE':'Save'
     });
    
     $translateProvider.translations('el', {
@@ -223,7 +224,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'COMMON_AREA':'Kαταπάτηση κοινόχροιστων χώρων',
 		'ENVIROMENT_ISSUE':'Περιβαλλοντικά Θέματα',
 		'STRAY_ANIMALS':'Αδέσποτα ζώα',
-		'RECYCLE_ISSUE':'Ανακύκλωση'
+		'RECYCLE_ISSUE':'Ανακύκλωση',
+		'SAVE_NEW_ISSUE':'Αποθήκευση'
       
     });
    
