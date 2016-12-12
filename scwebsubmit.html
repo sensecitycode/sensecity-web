@@ -128,7 +128,6 @@
 				<div class="form-group">
 					<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">{{ 'PHOTO' | translate}}</label>
 					<input type="file" id="input_file"   class="form-control" file-model="uploadedPhotoFile" placeholder=""   />
-					
 				</div>
 			</div>
 			
@@ -142,16 +141,13 @@
 					<div class="form-group">
 						<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_NAME' | translate}}</label>
 						<input ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_NAME' | translate }}"   >
-						<div ng-model="NameTxt_error" style="color:maroon" role="alert">
-							
+						<div class="alert alert-success" ng-show="showSuccessAlert">
+							<button type="button" class="close" data-ng-click="switchBool('showSuccessAlert')">×</button> <strong>Done!</strong> {{successTextAlert}}
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_EMAIL' | translate}}</label>
 						<input ng-model="EmailTxt" name="EmailTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_EMAIL' | translate }}"   >
-						<div ng-model="EmailTxt_error" style="color:maroon" role="alert">
-							
-						</div>
 					</div>
 					<div class="form-group">
 						<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_MOBILE' | translate}}</label>
