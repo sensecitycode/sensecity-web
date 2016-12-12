@@ -407,8 +407,19 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			}else if(step==2){
 				
 				if(!$scope.chkSelected){
-					console.log("is not checked");
-					return false;
+					
+					$scope.issubmit_isseu_form = function(){
+							return false;
+						}
+						$scope.iseponymous = function(){
+							return false;
+						}
+						$scope.isnotverify = function(){
+							return false;
+						}
+						$scope.is_finalsubmit = function(){
+							return true;
+						}
 				}
 				
 				$scope.step1 = function(){
@@ -427,7 +438,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					return true;
 				}
 	
-	
+				if($scope.NameTxt=="" || $scope.EmailTxt ==""){
+					return false;
+				}
 	
 				console.log("step 2");
 				console.log($scope.NameTxt);
