@@ -79,7 +79,8 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	$scope.stateChanged = function(){
 	
 		if($scope.chkSelected){ 
-			
+			$scope.showSuccessAlertName = false;
+					$scope.showSuccessAlertEmail = false;
 			
 		}else{
 			$scope.NameTxt = "";
@@ -414,6 +415,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.register_button = false;
 					$scope.verify_button = false;
 					$scope.submit_eponymous_button = true;
+					
+					$scope.showSuccessAlertName = false;
+					$scope.showSuccessAlertEmail = false;
 					
 					$scope.issubmit_isseu_form = function(){
 						return false;
