@@ -443,8 +443,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.step4 = function(){
 						return true;
 					}
-		console.log($scope.NameTxt + $scope.EmailTxt);
-					if($scope.NameTxt=="" || $scope.EmailTxt =="" || $scope.NameTxt=="undefined" || $scope.EmailTxt=="undefined"){		
+					
+					console.log("==============>"+$scope.NameTxt + $scope.EmailTxt);
+					
+					if($scope.NameTxt=="" || $scope.EmailTxt =="" || $scope.NameTxt==undefined || $scope.EmailTxt==undefined || $scope.NameTxt==null || $scope.EmailTxt==null){		
 						
 						$scope.successTextAlert = "Some content";
 						$scope.showSuccessAlert = true;
