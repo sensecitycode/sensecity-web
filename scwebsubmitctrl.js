@@ -296,7 +296,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		 
 		 
 		$scope.setStep = function(step){
-           console.log("=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    " + step);
+           
 			if(step==1){
 			   	
 				$scope.step1 = function(){
@@ -315,26 +315,18 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					return true;
 				}
 				
-				console.log("step 1");
-				
-				
 				$scope.issue = new Issue();
 			 
 				var desc = $scope.otherDescriptionTxt;
 			
 				$scope.issue.issue =  $scope.issueTypeSelect.id ;
-				//$scope.issue.loc =  '{ "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }' ;
+				
 				$scope.issue.device_id =  'webapp' ;
 			 
 				$scope.issue.value_desc =  desc ;
 				$scope.issue.image_name =  $scope.uploadedPhotoFile ; //no-image
 			
 				var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id +'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '","comments" : "'+$scope.commentstxt+'" }' ;	
-			
-				console.log( txtpost );			
-				console.log("--------------------------------------");
-				console.log($rootScope.Variables.APIURL);
-				console.log("--------------------------------------");
 			
 				return $http(
 				{
@@ -348,8 +340,6 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					console.log(resp.anonymous);
 					my_id=resp._id;
 					$scope.myText = resp.policy_description;
-						
-					console.log("Submit ok!");
 					
 					if(resp.anonymous=="false") {
 						$scope.issubmit_isseu_form = function(){
@@ -406,7 +396,12 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				});
 			}else if(step==2){
 				
-	
+				if(!$scope.iseponymous){
+					console.log("is not checked");
+				}else{
+					console.log("is checked");
+				}
+				
 				$scope.step1 = function(){
 					return false;
 				}
@@ -422,13 +417,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				$scope.step4 = function(){
 					return true;
 				}
-	
-	
-	
-				console.log("step 2");
-				console.log($scope.NameTxt);
-				console.log($scope.EmailTxt);
-				console.log($scope.MobileTxt);
+				
 				var chk_1;
 				var chk_2;
 				
@@ -447,9 +436,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			
 			
 				var txtpost1 = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'", "permission" :  { "send_issues": "true" , "communicate_with": {"email" : "'+chk_1+'", "sms" : "'+chk_2+'"}}}';    
-				
-				console.log(txtpost1);
-			
+							
 				return $http({
 					method : 'POST',
 					url : $rootScope.Variables.active_user_URL,
@@ -515,6 +502,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				}); 
 			}else if(step==3){
 				
+						
 				$scope.step1 = function(){
 					return false;
 				}
