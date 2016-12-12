@@ -141,13 +141,16 @@
 					<div class="form-group">
 						<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_NAME' | translate}}</label>
 						<input ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_NAME' | translate }}"   >
-						<div class="alert alert-success" ng-show="showSuccessAlert">
-							<button type="button" class="close" data-ng-click="switchBool('showSuccessAlert')">×</button> <strong>Done!</strong> {{successTextAlert}}
+						<div class="alert alert-error" ng-show="showSuccessAlertName">
+							<button type="button" class="close" data-ng-click="switchBoolName('showSuccessAlert')">×</button> <strong>{{'WARNING_MSG' | translate}}</strong> {{'WARNING_MSG_REQUIRED_FIELD' | translate}}
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_EMAIL' | translate}}</label>
 						<input ng-model="EmailTxt" name="EmailTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_EMAIL' | translate }}"   >
+						<div class="alert alert-error" ng-show="showSuccessAlertEmail">
+							<button type="button" class="close" data-ng-click="switchBoolEmail('showSuccessAlert')">×</button> <strong>{{'WARNING_MSG' | translate}}</strong> {{'WARNING_MSG_REQUIRED_FIELD' | translate}}
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_MOBILE' | translate}}</label>

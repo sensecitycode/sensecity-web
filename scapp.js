@@ -136,7 +136,9 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'ENVIROMENT_ISSUE':'Enviroment issues',
 		'STRAY_ANIMALS':'Stray animals',
 		'RECYCLE_ISSUE':'Recycling',
-		'SAVE_NEW_ISSUE':'Save'
+		'SAVE_NEW_ISSUE':'Save',
+		'WARNING_MSG':'Warning! ',
+		'WARNING_MSG_REQUIRED_FIELD':'The field is required!'
     });
    
     $translateProvider.translations('el', {
@@ -225,7 +227,9 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'ENVIROMENT_ISSUE':'Περιβαλλοντικά Θέματα',
 		'STRAY_ANIMALS':'Αδέσποτα ζώα',
 		'RECYCLE_ISSUE':'Ανακύκλωση',
-		'SAVE_NEW_ISSUE':'Αποθήκευση'
+		'SAVE_NEW_ISSUE':'Αποθήκευση',
+		'WARNING_MSG':'Ειδοποίηση! ',
+		'WARNING_MSG_REQUIRED_FIELD':'Το πεδίο είναι υποχρεωτικό!'
       
     });
    

@@ -6,7 +6,8 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
                                             function($scope, $rootScope, $log, $location, leafletData, Issue, $translate, $http /*, APIEndPointService*/) {
 	$log.debug('inside scWebSubmit controller');
 
-	$scope.showSuccessAlert = false;
+	$scope.showSuccessAlertName = false;
+	$scope.showSuccessAlertEmail = false;
 	
 	$scope.map_center = {
 			lat : $rootScope.Variables.lat_center,
@@ -448,15 +449,19 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					
 					if($scope.NameTxt=="" || $scope.EmailTxt =="" || $scope.NameTxt==undefined || $scope.EmailTxt==undefined || $scope.NameTxt==null || $scope.EmailTxt==null){		
 						
-						$scope.successTextAlert = "Some content";
-						$scope.showSuccessAlert = true;
-
+						//$scope.showSuccessAlertName = {{''|}};
+						$scope.showSuccessAlertName = true;
+						
 						// switch flag
-						$scope.switchBool = function (value) {
+						$scope.switchBoolName = function (value) {
 							$scope[value] = !$scope[value];
 						};
 						
-
+						$scope.showSuccessAlertEmail = true;
+						$scope.switchBoolEmail = function (value) {
+							$scope[value] = !$scope[value];
+						};
+						
 						return false;
 					}
 		
