@@ -3,6 +3,14 @@
 	"lat_center": _latitude_,
 	"long_center": _longtitude_,
 	"img_logo": "images/city_logos/_cityname_.jpg",
-	"bugzilla_products": "_cityname_"
+	"bugzilla_products": "_cityname_",
+	"APIURL": "",
+	"bugzilla": "",
+	"ALLISSUESAPIURL": "",
+	"active_user_URL" : "",
+	"activate_user_URL" : "",
+	"APIADMIN": "",
+	"map_zoom":12
+	
 }
 

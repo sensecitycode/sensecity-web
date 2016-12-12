@@ -24,13 +24,13 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 			long_center: response.long_center,
 			img_logo: "images/city_logos/"+response.city_name+".jpg",
 			bugzilla_products: response.bugzilla_products,
-			APIURL: "http://api.sense.city:3000/api/1.0/issue/",
-			bugzilla: "http://api.sense.city:3001/bugs/search",
-			ALLISSUESAPIURL: "http://api.sense.city:3000/api/1.0/issues",
-			active_user_URL : "http://api.sense.city:3000/api/1.0/active_users",
-			activate_user_URL : "http://api.sense.city:3000/api/1.0/activate_users",
-			APIADMIN: "http://api.sense.city:3000/api/1.0/",
-			map_zoom:12
+			APIURL: response.APIURL,
+			bugzilla: response.bugzilla,
+			ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+			active_user_URL : response.active_user_URL,
+			activate_user_URL : response.activate_user_URL,
+			APIADMIN: response.APIADMIN,
+			map_zoom:response.map_zoom
 		}
 		
         return $rootScope;
