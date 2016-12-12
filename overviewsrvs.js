@@ -1,11 +1,11 @@
 var appServices = angular.module('overviewapp.services', []);
-
+/*
 appServices.factory('APIEndPointService', function() {
 	  return {
 		  APIURL: "http://api.sense.city:4000/api/issue",
 			bugzilla: "http://api.sense.city:4001/bugs/search"
 	  };
-});
+});*/
 
 appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
@@ -50,7 +50,7 @@ appServices.factory('BugService', function ( $resource/*, APIEndPointService*/, 
     );
 });
 
-appServices.factory('FixedPointsService', function ( $resource, APIEndPointService, $rootScope) {
+appServices.factory('FixedPointsService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     return $resource(
         'json/'+$rootScope.Variables.city_name+'.json',
         null,

@@ -12,8 +12,8 @@ appServices.factory('APIEndPointService', function() {
 
 
 //Issue Resource
-appServices.factory('Issue', function($resource/*, APIEndPointService*/ , $rootScope) {
-	return $resource(/*APIEndPointService.ALLISSUESAPIURL*/$rootScope.Variables.APIADMIN+"issue/:id",
+appServices.factory('Issue', function($resource , $rootScope) {
+	return $resource($rootScope.Variables.APIADMIN+"issue/:id",
 		{id : "@id"	}, {
 		"update" : {
 			method : "PUT"
@@ -23,9 +23,9 @@ appServices.factory('Issue', function($resource/*, APIEndPointService*/ , $rootS
 });
 
 
-appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointService*/ , $rootScope) {
+appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
     // console.log("DisplayIssues");
-    return $resource(/*APIEndPointService.APIURL,*/$rootScope.Variables.APIURL+$rootScope.Variables.city_name,
+    return $resource($rootScope.Variables.APIURL+$rootScope.Variables.city_name,
         {}, {
         update: {
           method: 'GET'
@@ -35,7 +35,7 @@ appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointS
 });
 
 //single full issue (with image) via ID
-appServices.factory('Issue2MapService', function ( $resource/*, APIEndPointService*/ , $rootScope) {
+appServices.factory('Issue2MapService', function ( $resource , $rootScope) {
     // console.log("DisplayIssues");
     return $resource($rootScope.APIADMIN+'fullissue/:issueID',
         {issueID:'@id'}
