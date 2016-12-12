@@ -17,7 +17,7 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	console.log('current url : '+sub_domain[0]);
 	
 	var mainInfo = $http.get('config/'+sub_domain[0]+'.json').success(function(response) {
-		
+		console.log("test");
 		console.log(JSON.stringify(response));
 		
 		$rootScope.Variables = {
