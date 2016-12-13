@@ -135,7 +135,8 @@ appControllers
 							shape: 'square'
 						}
 					};
-
+					
+					console.log(JSON.stringify($rootScope.Variables));
 					$scope.map_center = {
 						lat : $rootScope.Variables.lat_center,
 						lng : $rootScope.Variables.long_center,
