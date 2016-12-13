@@ -640,7 +640,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.chkSelected_1 = false;
 					$scope.chkSelected_2 = false;
 					$scope.chkSelected = false;
-					map.removeLayer(redMarker);
+					
 					$scope.issubmit_isseu_form = function(){
 						return true;
 					}
