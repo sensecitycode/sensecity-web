@@ -17,7 +17,7 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	
 var mainInfo = $http.get('/config/'+sub_domain[0]+'.json').success(function(response) {
 		
-		console.log(JSON.stringify(response));
+		console.log("asdsadsa==============>>>>>>>>>>>>>>>>"+JSON.stringify(response));
 		
 		$rootScope.Variables = {
 			city_name: sub_domain[0],
