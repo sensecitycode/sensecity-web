@@ -351,7 +351,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					},
 					data : txtpost 
 				}).success(function(resp) {
-					console.log("test ======>>>>>>>>"+resp.anonymous);
+					console.log("test ======>>>>>>>>"+JSON.stringify(resp));
 					my_id=resp._id;
 					$scope.myText = resp.policy_description;
 					
