@@ -300,8 +300,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		var user_id;
 		 
 		 
-		$scope.setStep = function(step){
-           console.log("=================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    " + step);
+		$scope.setStep = function(step){           
 			if(step==1){
 			   	
 				$scope.step1 = function(){
@@ -320,26 +319,18 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					return true;
 				}
 				
-				console.log("step 1");
-				
-				
 				$scope.issue = new Issue();
 			 
 				var desc = $scope.otherDescriptionTxt;
 			
 				$scope.issue.issue =  $scope.issueTypeSelect.id ;
-				//$scope.issue.loc =  '{ "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }' ;
+				
 				$scope.issue.device_id =  'webapp' ;
 			 
 				$scope.issue.value_desc =  desc ;
 				$scope.issue.image_name =  $scope.uploadedPhotoFile ; //no-image
 			
-				var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id +'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '","comments" : "'+$scope.commentstxt+'" }' ;	
-			
-				console.log( txtpost );			
-				console.log("--------------------------------------");
-				console.log($rootScope.Variables.APIURL);
-				console.log("--------------------------------------");
+				var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id +'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '","comments" : "'+$scope.commentstxt+'" }' ;				
 			
 				return $http(
 				{
@@ -353,8 +344,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					console.log(resp.anonymous);
 					my_id=resp._id;
 					$scope.myText = resp.policy_description;
-						
-					console.log("Submit ok!");
+					
 					
 					if(resp.anonymous=="false") {
 						$scope.issubmit_isseu_form = function(){
@@ -451,14 +441,12 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						return true;
 					}
 					
-					console.log("==============>"+$scope.NameTxt + $scope.EmailTxt);
-					
 					if($scope.NameTxt=="" || $scope.EmailTxt =="" || $scope.NameTxt==undefined || $scope.EmailTxt==undefined || $scope.NameTxt==null || $scope.EmailTxt==null){		
 						
-						//$scope.showSuccessAlertName = {{''|}};
+						
 						$scope.showSuccessAlertName = true;
 						
-						// switch flag
+						
 						$scope.switchBoolName = function (value) {
 							$scope[value] = !$scope[value];
 						};
@@ -471,10 +459,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						return false;
 					}
 		
-					console.log("step 2");
-					console.log($scope.NameTxt);
-					console.log($scope.EmailTxt);
-					console.log($scope.MobileTxt);
+					
 					var chk_1;
 					var chk_2;
 					
@@ -494,8 +479,6 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				
 					var txtpost1 = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'", "permission" :  { "send_issues": "true" , "communicate_with": {"email" : "'+chk_1+'", "sms" : "'+chk_2+'"}}}';    
 					
-					console.log(txtpost1);
-				
 					return $http({
 						method : 'POST',
 						url : $rootScope.Variables.active_user_URL,
@@ -505,12 +488,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						data : txtpost1 
 					}).success(function(resp) {
 						
-						
 						$scope.myText = resp.policy_description;
 						if(resp.user_exist=="1"){
-							//user exists
-							
-							
+														
 							$scope.submit_button = false;
 							$scope.register_button = false;
 							$scope.verify_button = false;
@@ -613,8 +593,6 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				
 				var jsonData = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'"}';
 				
-				console.log("====>"+jsonData);
-				
 				return $http({
 					method : 'POST',
 					url : $rootScope.Variables.APIURL+my_id,
@@ -630,6 +608,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.submit_eponymous_button = false;
 					$scope.latlabeltxt = "";
 					$scope.lnglabeltxt = "";
+					$scope.otherDescriptionTxt = "";
+					$scope.commentstxt = "";
+					$scope.issueTypeSelect.id="";
+					$scope.issueSubTypeSelect.id=""
 					$scope.NameTxt = "";
 					$scope.EmailTxt = "";
 					$scope.MobileTxt = "";
