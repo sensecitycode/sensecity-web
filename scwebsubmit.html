@@ -131,7 +131,7 @@
 				</div>
 			</div>
 			
-			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_button' ng-click="setStep(1)" />
+			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_button' ng-click="setStep(1)" />
 			
 				<div class="eponymous" ng-show='iseponymous()'>
 					<p style="color:#000000;"><span ng-bind="myText"></span></p>
@@ -178,10 +178,10 @@
 						<label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
 						<input ng-model="codeTxt" type="text" class="form-control" value="" placeholder="{{ 'VERIFY_CODE' | translate }}"   >
 					</div>
-					<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' ng-click="setStep(3)" />
+					<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT_AND_CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' ng-click="setStep(3)" />
 				</div>
 				<div class="is_finalsubmit" ng-show='is_finalsubmit()'>
-					<label for="verify" style="color: #000000; font-weight: 300;" >Απόθηκευση επώνυμης αναφοράς προβλήματος!</label><br />
+					<label for="verify" style="color: #000000; font-weight: 300;" >Απόθηκευση αναφοράς προβλήματος!</label><br />
 					<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'SAVE_NEW_ISSUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' ng-click="setStep(4)" />
 				</div>
 				

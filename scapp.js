@@ -146,7 +146,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'RECYCLE_ISSUE':'Recycling',
 		'SAVE_NEW_ISSUE':'Save',
 		'WARNING_MSG':'Warning! ',
-		'WARNING_MSG_REQUIRED_FIELD':'The field is required!'
+		'WARNING_MSG_REQUIRED_FIELD':'The field is required!',
+		'SUBMIT_AND_CONTINUE':'Submit & Continue'
     });
    
     $translateProvider.translations('el', {
@@ -240,7 +241,8 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'RECYCLE_ISSUE':'Ανακύκλωση',
 		'SAVE_NEW_ISSUE':'Αποθήκευση',
 		'WARNING_MSG':'Ειδοποίηση! ',
-		'WARNING_MSG_REQUIRED_FIELD':'Το πεδίο είναι υποχρεωτικό!'
+		'WARNING_MSG_REQUIRED_FIELD':'Το πεδίο είναι υποχρεωτικό!',
+		'SUBMIT_AND_CONTINUE':'Απόθηκευση & Συνέχεια'
       
     });
    
