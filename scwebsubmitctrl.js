@@ -610,9 +610,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.lnglabeltxt = "";
 					$scope.otherDescriptionTxt = "";
 					$scope.commentstxt = "";
-					$scope.issueTypeSelect.id="";
-					$scope.issueSubTypeSelect.id="";
-					$scope.newMarker = null;
+					$scope.issueTypeSelect="";
+					$scope.issueSubTypeSelect="";
+					$scope.newMarker.setLatLng();
 					$scope.NameTxt = "";
 					$scope.EmailTxt = "";
 					$scope.MobileTxt = "";
