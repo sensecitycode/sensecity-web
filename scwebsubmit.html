@@ -138,7 +138,7 @@
 					<div class="form-group" style="color:#000000;">					
 						<input ng-model="chkSelected" ng-change="stateChanged()" type="checkbox" class="" value="{{ 'EPONYMOUS_REPORT' | translate}}" style=" width: 25px; height: 25px;"> {{ 'EPONYMOUS_REPORT' | translate}}
 					</div>
-					<div class="write_user_data" ng-show='!chkSelected'>
+					<div class="write_user_data" ng-show='chkSelected'>
 						<div class="form-group">
 							<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_NAME' | translate}}</label>
 							<input ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_NAME' | translate }}"   >
