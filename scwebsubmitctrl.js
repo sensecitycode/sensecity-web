@@ -653,7 +653,12 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.is_finalsubmit = function(){
 						return false;
 					}
-										
+					
+					$scope.issueTypeSelect = $scope.availableIssues[0];
+					$scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0] ;
+					$scope.otherDescriptionTxt = '-';
+					$scope.uploadedPhotoFile = 'no-image';
+					
 					$scope.latlabeltxt = "";
 					$scope.lnglabeltxt = "";
 					$scope.otherDescriptionTxt = "";
