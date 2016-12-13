@@ -59,10 +59,9 @@ appServices.factory('FixPoints2MapService', function ( $resource, $rootScope) {
 });
 
 
-appServices.factory('Issue2MapService', function ( $resource, $rootScope,$window) {
+appServices.factory('Issue2MapService', function ( $resource, $rootScope) {
     // console.log("DisplayIssues");
-    $window.alert(JSON.stringify($rootScope));
-    return $resource($rootScope.Variables.APIURL+'/api/1.0/fullissue/:issueID',
+    return $resource('testcity1.sense.city/api/1.0/fullissue/:issueID',
         {issueID:'@id'},{'query': {method: 'GET', isArray: true}}
 			);
 });
