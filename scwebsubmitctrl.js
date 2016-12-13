@@ -350,10 +350,16 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						$scope.issubmit_isseu_form = function(){
 							 return false;
 						 }
-							 
+						
+						
 						$scope.iseponymous = function(){
 							 return true;
 						}
+						
+						$scope.write_user_data = function(){
+							 return true;
+						}
+						
 						$scope.isnotverify = function(){
 							return false;
 						}
@@ -368,6 +374,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						 }
 							 
 						$scope.iseponymous = function(){
+							 return false;
+						}
+						$scope.write_user_data = function(){
 							 return false;
 						}
 						$scope.isnotverify = function(){
