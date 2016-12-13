@@ -61,7 +61,7 @@ appServices.factory('FixPoints2MapService', function ( $resource, $rootScope) {
 
 appServices.factory('Issue2MapService', function ( $resource, $rootScope) {
     // console.log("DisplayIssues");
-    return $resource('testcity1.sense.city/api/1.0/fullissue/:issueID',
+    return $resource($rootScope.Variables.APIURL+'lsdao/api/1.0/fullissue/:issueID',
         {issueID:'@id'},{'query': {method: 'GET', isArray: true}}
 			);
 });
