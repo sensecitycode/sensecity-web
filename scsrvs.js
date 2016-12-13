@@ -36,12 +36,12 @@ appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
 });
 
 //single full issue (with image) via ID
-appServices.factory('Issue2MapService', function ( $resource , $rootScope) {
+/*appServices.factory('Issue2MapService', function ( $resource , $rootScope) {
     // console.log("DisplayIssues");
     return $resource($rootScope.Variables.APIADMIN+'fullissue/:issueID',
         {issueID:'@id'}
 			);
-});
+});*/
 
 appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
