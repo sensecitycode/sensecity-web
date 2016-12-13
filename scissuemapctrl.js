@@ -96,8 +96,8 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
         $scope.completion = "---";
 
         //parse ?issue_id from URL
-        var issue_id = $location.$$url.replace('/scissuemap=','');
-
+        var issue_id = $location.$$url.replace('#/scissuemap=','');
+        $window.alert(issue_id);
         Issue2MapService.query({issueID: issue_id}, function (issue) {
 
             console.log(issue);
