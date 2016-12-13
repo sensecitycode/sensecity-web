@@ -7,9 +7,9 @@ appServices.factory('EndPointService', function() {
 	  };
 });
 
-appServices.factory('BugService', function ( $resource, EndPointService) {
+appServices.factory('BugService', function ( $resource, $rootScope) {
     return $resource(
-        EndPointService.bugzillaURL,
+        $rootScope.Variables.bugzilla,
         null,
         {
           search: {
@@ -47,9 +47,9 @@ appServices.factory('FixPointsMarkerService', function() {
     };
 });
 
-appServices.factory('FixPoints2MapService', function ( $resource, EndPointService) {
+appServices.factory('FixPoints2MapService', function ( $resource, $rootScope) {
     // console.log("DisplayFixPoints");
-    return $resource(EndPointService.APIURL+'/fix_point/:long/:lat/50/:type',
+    return $resource($rootScope.Variables.APIURL+'/fix_point/:long/:lat/50/:type',
         {
 					long:'@long',
 					lat:'@lat',
@@ -59,9 +59,9 @@ appServices.factory('FixPoints2MapService', function ( $resource, EndPointServic
 });
 
 
-appServices.factory('Issue2MapService', function ( $resource, EndPointService) {
+appServices.factory('Issue2MapService', function ( $resource, $rootScope) {
     // console.log("DisplayIssues");
-    return $resource(EndPointService.APIURL+'/api/1.0/fullissue/:issueID',
+    return $resource($rootScope.Variables.APIURL+'/api/1.0/fullissue/:issueID',
         {issueID:'@id'},{'query': {method: 'GET', isArray: true}}
 			);
 });
