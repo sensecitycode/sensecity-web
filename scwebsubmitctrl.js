@@ -295,7 +295,11 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 			 
 			
 		 }*/
-			 
+			
+		$scope.write_user_data = function(){
+			 return false;
+		}
+		
 		var my_id;
 		var user_id;
 		 
@@ -426,6 +430,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.iseponymous = function(){
 						return false;
 					}
+					$scope.write_user_data = function(){
+							 return false;
+						}
 					$scope.isnotverify = function(){
 						return false;
 					}
@@ -449,7 +456,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.step4 = function(){
 						return true;
 					}
-					
+					$scope.write_user_data = function(){
+							 return true;
+						}
+						
 					if($scope.NameTxt=="" || $scope.EmailTxt =="" || $scope.NameTxt==undefined || $scope.EmailTxt==undefined || $scope.NameTxt==null || $scope.EmailTxt==null){		
 						
 						
