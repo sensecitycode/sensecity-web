@@ -133,12 +133,12 @@
 			
 			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_button' ng-click="setStep(1)" />
 			
-				<div class="eponymous" ng-show='iseponymous()'>
+				<div class="eponymous" ng-show='!chkSelected'>
 					<p style="color:#000000;"><span ng-bind="myText"></span></p>
 					<div class="form-group" style="color:#000000;">					
 						<input ng-model="chkSelected" ng-change="stateChanged()" type="checkbox" class="" value="{{ 'EPONYMOUS_REPORT' | translate}}" style=" width: 25px; height: 25px;"> {{ 'EPONYMOUS_REPORT' | translate}}
 					</div>
-					<div class="eponymous" ng-show='write_user_data()'>
+					<div class="write_user_data" ng-show='write_user_data()'>
 						<div class="form-group">
 							<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_NAME' | translate}}</label>
 							<input ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_NAME' | translate }}"   >
