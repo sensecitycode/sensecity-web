@@ -4,12 +4,22 @@
 	"long_center": _longtitude_,
 	"img_logo": "images/city_logos/_cityname_.jpg",
 	"bugzilla_products": "_cityname_",
-	"APIURL": "",
-	"bugzilla": "",
+        "APIURL": "",
+        "bugzilla": "",
 	"ALLISSUESAPIURL": "",
 	"active_user_URL" : "",
-	"activate_user_URL" : "",
 	"APIADMIN": "",
-	"map_zoom":12
-	
+        "components": [],
+        "activeTitles": [],
+        "activeIcons": [],
+        "depUserTitles": [],
+        "depUserContent": [],
+        "depUserIcons": [],
+        "cityAdminTabs": [
+                    {
+                    },
+                    {
+                    }],
+        "": "",        
+        "host": ""
 }
