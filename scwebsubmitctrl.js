@@ -225,9 +225,13 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		$scope.verify_button = false;
 		$scope.submit_eponymous_button = false;
 			
-			
+		
 		$scope.issubmit_isseu_form = function(){
 			return true;
+		}
+		
+		$scope.write_user_data = function(){
+			return false;
 		}
 		 
 		 $scope.isOtherSelected = function () {
