@@ -16,7 +16,7 @@ appControllers.directive('sidebarDirective', function () {
     };
 });
 
-appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', 'APIEndPointService', 'DisplayIssuesService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, APIEndPointService, DisplayIssuesService, Issue2MapService, leafletData) {
+appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', 'DisplayIssuesService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, DisplayIssuesService, Issue2MapService, leafletData) {
 
         $scope.state = true;
         $scope.toggleState = function () {
