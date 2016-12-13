@@ -658,7 +658,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.lnglabeltxt = "";
 					$scope.otherDescriptionTxt = "";
 					$scope.commentstxt = "";
-					$scope.issueTypeSelect.id="Καθαριότητας";			
+					$scope.issueTypeSelect.id="garbage";
 					$scope.NameTxt = "";
 					$scope.EmailTxt = "";
 					$scope.MobileTxt = "";
