@@ -216,8 +216,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             });
             
-            $window.alert(states);
-            
             angular.forEach($scope.searchIssue, function (state, problem) {
                 if (problem == "roadcontructor") {
                     problem = "road-contructor";
