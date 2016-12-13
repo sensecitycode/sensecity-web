@@ -227,8 +227,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             });
             
-            $window.alert(JSON.stringify(paramsObj));
-
             var promisesArray = [];
             for (index = 0; index < paramsObj.length; index++) {
                 promisesArray.push(doQuery(paramsObj[index]));
@@ -244,7 +242,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 $scope.markers = [];
                 angular.forEach(searchissues, function (value, key) {
                     var issueid = value._id;
-                    var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html#?issue_id=" + issueid;
+                    var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + issueid;
                     var positionlat = value.loc.coordinates[1];
                     var positionlon = value.loc.coordinates[0];
                     var issue = value.issue;
