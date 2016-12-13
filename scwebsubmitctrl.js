@@ -651,6 +651,10 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.is_finalsubmit = function(){
 						return false;
 					}
+					
+					$scope.newMarker = null;
+					$scope.latlabeltxt = null;
+					
 					$scope.submit_button = true;
 					$scope.register_button = false;
 					$scope.verify_button = false;
