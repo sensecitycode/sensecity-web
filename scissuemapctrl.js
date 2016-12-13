@@ -105,7 +105,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
             $scope.issue_image = issue[0].image_name;
             $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 16};
             $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[issue[0].issue]}];
-
+            $window.alert(JSON.stringify($scope.center);
             if (issue[0].issue == "garbage" || "lighting") {
                 var type;
                 if (issue[0].issue == "lighting")
@@ -132,21 +132,21 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     if (localStorage.getItem("language") === 'en') {
                         issue_name_new = 'Cleaning Problem';
                     } else {
-                        issue_name_new = "Πρόβλημα Καθαριότητας";
+                        issue_name_new = "Καθαριότητας";
                     }
                     break;
                 case "lighting":
                     if (localStorage.getItem("language") === 'en') {
                         issue_name_new = 'Lighting Problem';
                     } else {
-                        issue_name_new = "Πρόβλημα Φωτισμού";
+                        issue_name_new = "Φωτισμού";
                     }
                     break;
                 case "plumbing":
                     if (localStorage.getItem("language") === 'en') {
                         issue_name_new = 'Plumbing Problem';
                     } else {
-                        issue_name_new = "Προβλήματα ύδρευσης";
+                        issue_name_new = "Ύδρευσης";
                     }
                     break;
                 case "road-contructor":
@@ -168,6 +168,13 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                         issue_name_new = "Πράσινο";
                     }
                     break;
+                case "enviroment":
+                    if (localStorage.getItem("language") === 'en') {
+                        issue_name_new = 'Environment';
+                    } else {
+                        issue_name_new = "Περιβάλλον";
+                    }
+                    break;    
                 default:
                     break;
             }
