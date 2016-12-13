@@ -639,7 +639,18 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					},
 					data : jsonData 
 				}).success(function(resp) {
-					
+					$scope.issubmit_isseu_form = function(){
+						return true;
+					}
+					$scope.iseponymous = function(){
+						return false;
+					}
+					$scope.isnotverify = function(){
+						return false;
+					}
+					$scope.is_finalsubmit = function(){
+						return false;
+					}
 					$scope.submit_button = true;
 					$scope.register_button = false;
 					$scope.verify_button = false;
@@ -655,19 +666,6 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.chkSelected_1 = false;
 					$scope.chkSelected_2 = false;
 					$scope.chkSelected = false;
-					
-					$scope.issubmit_isseu_form = function(){
-						return true;
-					}
-					$scope.iseponymous = function(){
-						return false;
-					}
-					$scope.isnotverify = function(){
-						return false;
-					}
-					$scope.is_finalsubmit = function(){
-						return false;
-					}
 					
 					$scope.step1 = function(){
 						return false;
