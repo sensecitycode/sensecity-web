@@ -442,6 +442,21 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					}
 					$scope.is_finalsubmit = function(){
 						return true;
+					}		
+					$scope.step1 = function(){
+						return false;
+					}
+					
+					$scope.step2 = function(){
+						return false;
+					}
+					
+					$scope.step3 = function(){
+						return false;
+					}
+					
+					$scope.step4 = function(){
+						return false;
 					}					
 				}else{
 				
@@ -633,7 +648,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.lnglabeltxt = "";
 					$scope.otherDescriptionTxt = "";
 					$scope.commentstxt = "";
-					$scope.issueTypeSelect="Καθαριότητας";			
+					$scope.issueTypeSelect.id="Καθαριότητας";			
 					$scope.NameTxt = "";
 					$scope.EmailTxt = "";
 					$scope.MobileTxt = "";
