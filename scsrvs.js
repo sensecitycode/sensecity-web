@@ -38,7 +38,7 @@ appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
 //single full issue (with image) via ID
 appServices.factory('Issue2MapService', function ( $resource , $rootScope) {
     // console.log("DisplayIssues");
-    return $resource($rootScope.APIADMIN+'fullissue/:issueID',
+    return $resource($rootScope.Variables.APIADMIN+'fullissue/:issueID',
         {issueID:'@id'}
 			);
 });
