@@ -611,8 +611,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.otherDescriptionTxt = "";
 					$scope.commentstxt = "";
 					$scope.issueTypeSelect="";
-					$scope.issueSubTypeSelect="";
-					$scope.newMarker.setLatLng();
+					$scope.issueSubTypeSelect="";					
 					$scope.NameTxt = "";
 					$scope.EmailTxt = "";
 					$scope.MobileTxt = "";
