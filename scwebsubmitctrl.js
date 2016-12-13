@@ -341,7 +341,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				$scope.issue.image_name =  $scope.uploadedPhotoFile ; //no-image
 			
 				var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id +'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '","comments" : "'+$scope.commentstxt+'" }' ;				
-			
+				console.log("txtpost ======>>>>>>>>"+txtpost);
 				return $http(
 				{
 					method : 'POST',
@@ -351,7 +351,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					},
 					data : txtpost 
 				}).success(function(resp) {
-					console.log(resp.anonymous);
+					console.log("test ======>>>>>>>>"+resp.anonymous);
 					my_id=resp._id;
 					$scope.myText = resp.policy_description;
 					
