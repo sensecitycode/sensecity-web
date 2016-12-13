@@ -209,6 +209,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 if (state == true) {
                     if( i == 0){
                     states += sstate;
+                    i++;
                         }else{
                         states += "|"+sstate;    
                     }
