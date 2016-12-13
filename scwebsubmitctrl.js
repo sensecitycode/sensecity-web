@@ -651,14 +651,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.is_finalsubmit = function(){
 						return false;
 					}
-					
-					$scope.newMarker = null;
-					$scope.latlabeltxt = null;
-					
-					$scope.submit_button = true;
-					$scope.register_button = false;
-					$scope.verify_button = false;
-					$scope.submit_eponymous_button = false;
+										
 					$scope.latlabeltxt = "";
 					$scope.lnglabeltxt = "";
 					$scope.otherDescriptionTxt = "";
@@ -670,6 +663,11 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.chkSelected_1 = false;
 					$scope.chkSelected_2 = false;
 					$scope.chkSelected = false;
+					
+					$scope.submit_button = true;
+					$scope.register_button = false;
+					$scope.verify_button = false;
+					$scope.submit_eponymous_button = false;
 					
 					$scope.step1 = function(){
 						return false;
