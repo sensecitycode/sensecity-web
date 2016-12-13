@@ -3,7 +3,6 @@ var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource
 
 appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config',
     function ($scope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config) {
-
         var icons = {
             garbage: {
                 type: 'awesomeMarker',
@@ -97,9 +96,8 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
 
         //parse ?issue_id from URL
         var issue_id = $location.$$url.replace('/scissuemap=','');
-
+        
         Issue2MapService.query({issueID: issue_id}, function (issue) {
-
             console.log(issue);
 
             $scope.issue_image = issue[0].image_name;
