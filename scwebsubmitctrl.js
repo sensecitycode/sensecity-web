@@ -311,6 +311,8 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		$scope.setStep = function(step){           
 			if(step==1){
 			   	
+				console.log("Step 1");
+				
 				$scope.step1 = function(){
 					return false;
 				}
@@ -417,7 +419,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 
 				});
 			}else if(step==2){
-				
+				console.log("Step 2");
 				if(!$scope.chkSelected){ //if you sent an issue as anonymous
 					
 					$scope.submit_button = false;
@@ -579,7 +581,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					}); 
 				}
 			}else if(step==3){
-				
+				console.log("Step 3");
 				$scope.step1 = function(){
 					return false;
 				}
@@ -628,7 +630,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						
 			}else if(step==4){
 				
-				
+				console.log("Step 4");
 				var jsonData = '{ "uuid" : "web-site", "name": "'+$scope.NameTxt+'", "email": "'+$scope.EmailTxt+'", "mobile_num": "'+$scope.MobileTxt+'"}';
 				
 				return $http({
