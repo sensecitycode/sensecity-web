@@ -226,7 +226,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     }
                 }
             });
-            
+            $window.alert(JSON.stringify(paramsObj.push));
             var promisesArray = [];
             for (index = 0; index < paramsObj.length; index++) {
                 promisesArray.push(doQuery(paramsObj[index]));
