@@ -1,5 +1,5 @@
-var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource'])
-        .constant("config", {"host": "api.sense.city", "port": "3000"});
+var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource','scissuemapapp.scissuemapsrvs'])
+        .constant("config", {"host": "api.sense.city", "port": "4000"});
 
 appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '$resource', '$http', 'EndPointService', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config',
     function ($scope, $location, $window, $resource, $http, EndPointService, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config) {
@@ -96,7 +96,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
         $scope.completion = "---";
 
         //parse ?issue_id from URL
-        var issue_id = $location.search().issue_id;
+        var issue_id = $location.$$url.replace('/scissuemap=','');
 
         Issue2MapService.query({issueID: issue_id}, function (issue) {
 

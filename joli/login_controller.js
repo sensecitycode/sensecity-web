@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 var app = angular.module('login_fo', ['ngCookies'])
-        .constant("config", {"host": "localhost", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "8023", "bugzilla_path": "/bugzilla"});
+        .constant("config", {"host": "localhost", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "4000", "bugzilla_path": "/bugzilla"});
 
 //app.config([
 //  '$httpProvider',
@@ -15,8 +15,8 @@ var app = angular.module('login_fo', ['ngCookies'])
 app.controller('login_controller', ['$scope', '$window', '$http', '$cookieStore', '$location', 'config', function ($scope, $window, $http, $cookieStore, $location, config) {
         $scope.admin_user = "";
         $scope.lock = "";
-        $scope.username_l = "Username";
-        $scope.password_l = "Password";
+        $scope.username_l = "";
+        $scope.password_l = "";
         $scope.user_focus = function (event) {
 
             $scope.admin_user = {"border": "2px #979ea7 solid", "border-right": "none"};
@@ -32,10 +32,11 @@ app.controller('login_controller', ['$scope', '$window', '$http', '$cookieStore'
             $scope.lock = "";
             $scope.password_l = password;
         };
+        
         $scope.authenticate_us = function (event) {
             var domain = $location.host().split(".");
             var parameter = {username: $scope.username_l, password: $scope.password_l, city: 'testcity1'};                       
-            $http.post('http://' + config.host + ':' + config.port + '/api/1.0/dashboard', parameter).success(
+            $http.post('http://api.sense.city:4000/api/1.0/dashboard', parameter).success(
                                 function (response, status, headers, cnfg) {
                                     response = response.split(';');
                                     if (response != "failure") {

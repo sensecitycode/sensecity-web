@@ -1,5 +1,5 @@
 var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.tooltips'])
-        .constant("config", {"host": "api.sense.city", "bugzilla_host": "nam.ece.upatras.gr", "port": "3000", "bugzilla_path": "/bugzilla"});
+        .constant("config", {"host": "api.sense.city", "bugzilla_host": "nam.ece.upatras.gr", "port": "4000", "bugzilla_path": "/bugzilla"});
 
 //appControllers.config([
 //  '$httpProvider',
@@ -7,7 +7,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-appControllers.controller('adminController', ['$scope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $window, $http, $cookieStore, $templateCache, $compile, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
+appControllers.controller('adminController', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', '$location' , 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $rootScope, $window, $http, $cookieStore, $templateCache, $compile, $location, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
         var summary;
         var params;
         var tabchanged = 2;
@@ -20,6 +20,28 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
         $scope.duplicof = "";
 
         $scope.nloaded = true;
+        
+        var url_path = $location.absUrl().split("//");
+        var sub_domain = url_path[1].split(".");
+        
+        var mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function(response) {
+			
+			$rootScope.Variables = {
+				city_name: sub_domain[0],
+				lat_center: response.lat_center,
+				long_center: response.long_center,
+				img_logo: "images/city_logos/"+response.city_name+".jpg",
+				bugzilla_products: response.bugzilla_products,
+				APIURL: response.APIURL,
+				bugzilla: response.bugzilla,
+				ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+				activate_user_URL : response.active_user_URL,
+				APIADMIN: response.APIADMIN,
+				map_zoom:12
+			};
+			
+			return $rootScope;
+		});
 
         $scope.logout = function ($event) {
             $http.get('http://' + config.host + ':' + config.port + '/api/1.0/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
@@ -751,6 +773,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     return b.id - a.id;
                                                 });
                                                 $scope.isloading = false;
+                                                $(window).resize();
                                                 if ($scope.isloading == false && mapnloaded == false) {
                                                     $scope.nloaded = false;
                                                 }
@@ -773,6 +796,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                             }
                                                 if (map_counter == total_counter) {
                                                     mapnloaded = false;
+                                                    $(window).resize();
                                                     if ($scope.isloading == false && mapnloaded == false) {
                                                         $scope.nloaded = false;
                                                     }
@@ -781,6 +805,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                 map_counter++;
                                                 if (map_counter == total_counter) {
                                                     mapnloaded = false;
+                                                    $(window).resize();
                                                     if ($scope.isloading == false && mapnloaded == false) {
                                                         $scope.nloaded = false;
                                                     }
@@ -1284,6 +1309,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                         return b.id - a.id;
                                                     });
                                                     $scope.isloading = false;
+                                                    $(window).resize();
                                                     if ($scope.isloading == false && mapnloaded == false) {
                                                         $scope.nloaded = false;
                                                     }
@@ -1304,7 +1330,8 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                                 }
                                                     if (map_counter == total_counter) {
-                                                        mapnloaded = false;                              
+                                                        mapnloaded = false;
+                                                        $(window).resize();
                                                         if ($scope.isloading == false && mapnloaded == false) {
                                                             $scope.nloaded = false;
                                                         }
@@ -1313,6 +1340,7 @@ appControllers.controller('adminController', ['$scope', '$window', '$http', '$co
                                                     map_counter++;                                 
                                                     if (map_counter == total_counter) {
                                                         mapnloaded = false;
+                                                        $(window).resize();
                                                         if ($scope.isloading == false && mapnloaded == false) {
                                                             $scope.nloaded = false;
                                                         }

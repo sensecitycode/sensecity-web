@@ -207,6 +207,7 @@ appControllers.controller('mainController', ['$scope','$q'/*,'APIEndPointService
     $scope.startISOdate = startdate;
     $scope.endISOdate = new Date();
     $scope.searchIssue = "";
+    $scope.searchState ="";
     $scope.markers = [];
     /*
 	$scope.center= {

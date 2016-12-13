@@ -22,6 +22,7 @@ appControllers
 		'mainOverviewController',
 		[
 			'$scope',
+                        '$window',
 			'$rootScope','$http',
 			'$q', 'leafletData'/*,
 			'APIEndPointService'*/,
@@ -33,8 +34,8 @@ appControllers
 			'cfpLoadingBar',
 			'$interval',
 			'$translate',
-			function($scope, $rootScope, $http, $q, leafletData/*,
-				APIEndPointService*/,
+			function($scope, $window,$rootScope, $http, $q, leafletData,
+				APIEndPointService,
 				DisplayIssuesService,
 				Issue2MapService,
 				DisplayLast6IssuesService, BugService, FixedPointsService,
@@ -142,7 +143,7 @@ appControllers
 						lng : $rootScope.Variables.long_center,
 						zoom : $rootScope.Variables.map_zoom
 					};
-
+                                        
 					$scope.openStreetMap = {
 						name : 'OpenStreetMap',
 						type : 'xyz',
@@ -152,7 +153,7 @@ appControllers
 							attribution : '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 							maxZoom: 19
 						}
-					};
+					};                                      
 
 							//We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
 
@@ -427,12 +428,11 @@ appControllers
 													if (layer!='reaction'){
 														marker.message = "Loading...";
 													}
-													
-													this
-														.push(marker);
+                                                                                                        $scope.markers.push(marker);
+                                                                                                        
 											},
-											
 										$scope.markers);
+                                                                                
 
 										//$scope.markers = $scope.markers.concat( $scope.fixedmarkersLazyLoaded );
 										$scope.calcValue30daysIssues = calclast30daysIssues;
@@ -450,7 +450,7 @@ appControllers
 							
 						return d.promise;
 					}
-
+                                        
 					$scope.doCalcLast6Issues = function() {
 						var theLastIssues = DisplayLast6IssuesService
 							.query(function() {
@@ -677,7 +677,6 @@ appControllers
 
 						});
 					}
-
 
 
 					$scope.doCalcLast6Issues();

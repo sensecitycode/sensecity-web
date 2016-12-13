@@ -105,10 +105,11 @@ body {
 .page-container .page-content {
   min-height: 100%;
   margin-left: 220px;
-  background: #f5f5f5 url('../img/bg.png') left top repeat;
+  background: #f5f5f5;
   position: relative;
   zoom: 1;
 }
+
 .page-container .page-content:before,
 .page-container .page-content:after {
   content: "";
@@ -1664,6 +1665,26 @@ ul.panel-controls > li {
   float: left;
 }
 ul.panel-controls > li > a {
+  display: block;
+  float: left;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 28px;
+  color: #22262e;
+  border: 1px solid #BBB;
+  -moz-border-radius: 20%;
+  -webkit-border-radius: 20%;
+  border-radius: 20%;
+  margin-left: 3px;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
+ul.panel-controls > li span > a {
   display: block;
   float: left;
   width: 30px;

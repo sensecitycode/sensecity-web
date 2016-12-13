@@ -8,7 +8,7 @@ var appServices = angular.module('adminapp.adminsrvs', []);
 appServices.factory('EndPointService', function () {
     return {
         bugzillaURL: "http://api.sense.city:4001/bugs/search",
-        APIURL: "http://api.sense.city:3000"
+        APIURL: "http://api.sense.city:4000"
     };
 });
 

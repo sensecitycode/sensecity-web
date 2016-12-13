@@ -4,7 +4,7 @@ var appControllers = angular.module('scapp.controllers', ['pascalprecht.translat
 
 	
 	
-appControllers.controller('sensecityMainCtrl', function($scope, $log, $location, $rootScope,$http) {
+appControllers.controller('sensecityMainCtrl', function($scope, $log, $location, $rootScope,$http,$window) {
 	$log.debug('inside sensecityMainCtrl controller');
 	$scope.scvesrion = '20160712_trunk';
 	$scope.location = $location;
@@ -14,11 +14,8 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	
 	var url_path = $location.absUrl().split("//");
 	var sub_domain = url_path[1].split(".");
-	console.log('current url : '+sub_domain[0]);
 	
-	var mainInfo = $http.get('config/'+sub_domain[0]+'.json').success(function(response) {
-		console.log("test");
-		console.log(JSON.stringify(response));
+var mainInfo = $http.get('/config/'+sub_domain[0]+'.json').success(function(response) {
 		
 		$rootScope.Variables = {
 			city_name: sub_domain[0],
@@ -32,11 +29,9 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 			active_user_URL : response.active_user_URL,
 			activate_user_URL : response.activate_user_URL,
 			APIADMIN: response.APIADMIN,
-			map_zoom:response.map_zoom
-			
-			
-		}
-		
+			map_zoom:response.map_zoom			
+                 };
+                 
         return $rootScope;
     });
 	//console.log("response.city_name = " + Variables.city_name);
@@ -91,6 +86,9 @@ appControllers.controller('allissuesCtrl', function($scope, $log, DisplayLast100
 										case 'green':
 												lastissue.issue = 'GREEN_ISSUE';
 											break;
+                                                                                case 'enviroment':
+                                                                                                lastissue.issue = 'ENVIRONMENT_ISSUE';
+                                                                                        break;
 										case 'angry':
 												lastissue.issue = 'MOOD';
 											break;
@@ -156,6 +154,7 @@ appControllers.controller('allissuesCtrl', function($scope, $log, DisplayLast100
 											 }
 											 lastissue.status = result.status;
 										});
+
 										*/
 										
 										
