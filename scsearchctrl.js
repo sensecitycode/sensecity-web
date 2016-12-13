@@ -203,12 +203,19 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             $scope.startdate = $scope.startISOdate.getFullYear() + '-' + ($scope.startISOdate.getMonth() + 1) + '-' + $scope.startISOdate.getDate();
             $scope.enddate = $scope.endISOdate.getFullYear() + '-' + ($scope.endISOdate.getMonth() + 1) + '-' + $scope.endISOdate.getDate();
             var paramsObj = [];
-            var states = [];
+            var states = "";
+            var i = 0;
             angular.forEach($scope.searchState, function (state, sstate) {
                 if (state == true) {
-                    states.push(sstate);
+                    if( i == 0){
+                    states += sstate;
+                        }else{
+                        states += "|"+sstate;    
+                    }
                 }
             });
+            
+            $window.alert(states);
             
             angular.forEach($scope.searchIssue, function (state, problem) {
                 if (problem == "roadcontructor") {
@@ -219,7 +226,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
 
                 if (state === true) {
-                    if (states == []) {
+                    if (states == "") {
                         paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0});
                     } else {
                         paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, status: states});
