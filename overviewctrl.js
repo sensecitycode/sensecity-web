@@ -587,8 +587,7 @@ appControllers
 
 						var i =0;
 						var theFixedPoints = FixedPointsService.query(function() {
-							angular.forEach( theFixedPoints, function(fixedpoint, key) {
-								console.log(fixedpoint);
+							angular.forEach( theFixedPoints, function(fixedpoint, key) {								
 								var positionlat = fixedpoint.loc.coordinates[1];
 								var positionlon = fixedpoint.loc.coordinates[0];
 								i ++;
