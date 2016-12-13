@@ -61,7 +61,7 @@ appServices.factory('FixPoints2MapService', function ( $resource, $rootScope) {
 
 appServices.factory('Issue2MapService', function ( $resource, $rootScope) {
     // console.log("DisplayIssues");
-    return $resource($rootScope.Variables.APIΑΔΜΙΝ+'/fullissue/:issueID',
+    return $resource($rootScope.Variables.APIADMIN+'/fullissue/:issueID',
         {issueID:'@id'},{'query': {method: 'GET', isArray: true}}
 			);
 });
