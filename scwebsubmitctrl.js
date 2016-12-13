@@ -610,8 +610,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.lnglabeltxt = "";
 					$scope.otherDescriptionTxt = "";
 					$scope.commentstxt = "";
-					$scope.issueTypeSelect="";
-					$scope.issueSubTypeSelect="";					
+					$scope.issueTypeSelect="Καθαριότητας";			
 					$scope.NameTxt = "";
 					$scope.EmailTxt = "";
 					$scope.MobileTxt = "";
