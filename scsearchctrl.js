@@ -242,6 +242,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     }
                 }
             });
+            
+            if( paramsObj == []){
+                paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate,image_field: 0});
+            }
 
             var promisesArray = [];
             for (index = 0; index < paramsObj.length; index++) {
