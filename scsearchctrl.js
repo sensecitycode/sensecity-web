@@ -244,7 +244,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             });
             
             if( paramsObj.length == 0){
+                if(states == ""){
                 paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate,image_field: 0});
+            }else{
+                paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate,image_field: 0,status: states});
+            }
             }
 
             var promisesArray = [];
