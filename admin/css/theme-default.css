@@ -2005,6 +2005,7 @@ ul.panel-controls > li > .dropdown-menu:before {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
+  font-size: 12px;  
   background-color: #F5F5F5;
   border-color: #DDD;
 }
@@ -5705,7 +5706,8 @@ div.datepicker thead tr:first-child th:hover {
   font-weight: normal;
 }
 .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
-  content: '';
+  font-size: 12px;
+    content: '';
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
   border-bottom-width: 7px;
@@ -5718,7 +5720,8 @@ div.datepicker thead tr:first-child th:hover {
   display: none;
 }
 .bootstrap-select.show-menu-arrow .dropdown-toggle:after {
-  content: '';
+  font-size:12px;
+    content: '';
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-bottom: 6px solid white;
@@ -5728,6 +5731,7 @@ div.datepicker thead tr:first-child th:hover {
   display: none;
 }
 .bootstrap-select.show-menu-arrow.dropup .dropdown-toggle:before {
+  font-size: 12px;
   bottom: auto;
   top: -3px;
   border-bottom: 0;
@@ -5737,6 +5741,7 @@ div.datepicker thead tr:first-child th:hover {
   border-top-color: rgba(204, 204, 204, 0.2);
 }
 .bootstrap-select.show-menu-arrow.dropup .dropdown-toggle:after {
+  font-size: 12px;
   bottom: auto;
   top: -3px;
   border-top: 6px solid #FFFFFF;
