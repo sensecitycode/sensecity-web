@@ -243,20 +243,22 @@ appControllers
 									issue_name = "Πρόβλημα Καθαριότητας";
 									break;
 								case "lighting":
-									issue_name = "Πρόβλημα Φωτισμού";
+									issue_name = "Πρόβλημα Ηλεκτροφωτισμού";
 									break;
 								case "plumbing":
 									issue_name = "Πρόβλημα Ύδρευσης";
 									break;
 								case "road-contructor":
-									issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου/Πλατείας";
+									issue_name = "Πρόβλημα Πεζοδρομίου/Δρόμου/Πλατείας";
 									break;
 								case "protection-policy":
-									issue_name = "Πολιτική Προστασία";
+									issue_name = "Πρόβλημα Πολιτική Προστασία";
 									break;
 								case "green":
-									issue_name = "Πράσινο";
+									issue_name = "Πρόβλημα Πρασίνου";
 									break;
+                                                                case "enviroment":
+                                                                        issue_name = "Πρόβλημα Περιβάλλοντος";
 								default:
 									break;
 							}
