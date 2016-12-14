@@ -251,7 +251,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             for (index = 0; index < paramsObj.length; index++) {
                 promisesArray.push(doQuery(paramsObj[index]));
             }
-
+            $window.alert(JSON.stringify(paramsObj));
             $q.all(promisesArray).then(function (data) {
                 var searchissues = [];
                 for (i = 0; i < data.length; i++) {
@@ -259,6 +259,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         searchissues.push(data[i][j]);
                     }
                 }
+                $window.alert(JSON.stringify(searchissues));
                 $scope.markers = [];
                 angular.forEach(searchissues, function (value, key) {
                     var issueid = value._id;
