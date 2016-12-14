@@ -385,7 +385,7 @@ appControllers
 												value,
 												key) {
 													var issueid = value._id;
-													var issuelink = "http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ issueid;
+													var issuelink = "http://"+$rootScope.Variables.city_name+".sense.city/#/issue_id="+ issueid;
 													var positionlat = value.loc.coordinates[1];
 													var positionlon = value.loc.coordinates[0];
 													var issue = value.issue;
