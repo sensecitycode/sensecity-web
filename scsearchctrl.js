@@ -166,36 +166,46 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         $scope.$on("leafletDirectiveMarker.click", function (event, args) {
             var marker3 = args.leafletObject;
             var popup = marker3.getPopup();
-            // marker3.bindPopup("Loading...");
+
             var issue_name;
-            Issue2MapService.get({issueID: marker3.options.issue_id}, function (resp) {
-                switch (resp.issue) {
+            var issue_image;
+
+            Issue2MapService.query({issueID: marker3.options.issue_id}, function (resp) {
+
+                switch (resp[0].issue) {
                     case "garbage":
-                        issue_name = "Καθαριότητας";
+                        issue_name = "Πρόβλημα Καθαριότητας";
                         break;
                     case "lighting":
-                        issue_name = "Φωτισμού";
+                        issue_name = "Πρόβλημα Ηλεκτροφωτισμού";
                         break;
                     case "plumbing":
-                        issue_name = "Ύδρευσης";
+                        issue_name = "Πρόβλημα Ύδρευσης";
                         break;
                     case "road-contructor":
-                        issue_name = "Δρόμου/Πεζοδρομίου";
+                        issue_name = "Πρόβλημα Πεζοδρομίου/Δρόμου/Πλατείας";
                         break;
                     case "protection-policy":
-                        issue_name = "Πολιτικής Προστασίας";
+                        issue_name = "Πρόβλημα Πολιτική Προστασία";
                         break;
                     case "green":
-                        issue_name = "Πρασίνου";
+                        issue_name = "Πρόβλημα Πρασίνου";
                         break;
                     case "enviroment":
-                        issue_name = "Περιβαντολλογικό";
-                        break;
+                        issue_name = "Πρόβλημα Περιβάλλοντος";
                     default:
                         break;
                 }
-                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp.value_desc + "<br><img src=" + resp.image_name + " style=height:200px><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html#?issue_id=" + resp._id + "\">Εξέλιξη προβλήματος!</a></center>");
+
+                if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
+                    issue_image = "/images/EmptyBox-Phone.png";
+                } else {
+                    issue_image = resp[0].image_name;
+                }
+
+                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
                 popup.update();
+
             });
         });
 
@@ -203,13 +213,19 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             $scope.startdate = $scope.startISOdate.getFullYear() + '-' + ($scope.startISOdate.getMonth() + 1) + '-' + $scope.startISOdate.getDate();
             $scope.enddate = $scope.endISOdate.getFullYear() + '-' + ($scope.endISOdate.getMonth() + 1) + '-' + $scope.endISOdate.getDate();
             var paramsObj = [];
-            var states = [];
+            var states = "";
+            var i = 0;
             angular.forEach($scope.searchState, function (state, sstate) {
                 if (state == true) {
-                    states.push(sstate);
+                    if (i == 0) {
+                        states += sstate;
+                        i++;
+                    } else {
+                        states += "|" + sstate;
+                    }
                 }
             });
-            
+
             angular.forEach($scope.searchIssue, function (state, problem) {
                 if (problem == "roadcontructor") {
                     problem = "road-contructor";
@@ -219,7 +235,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
 
                 if (state === true) {
-                    if (states == []) {
+                    if (states == "") {
                         paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0});
                     } else {
                         paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, status: states});
@@ -227,6 +243,14 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             });
             
+            if( paramsObj.length == 0){
+                if(states == ""){
+                paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate,image_field: 0});
+            }else{
+                paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate,image_field: 0,status: states});
+            }
+            }
+
             var promisesArray = [];
             for (index = 0; index < paramsObj.length; index++) {
                 promisesArray.push(doQuery(paramsObj[index]));
@@ -239,6 +263,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         searchissues.push(data[i][j]);
                     }
                 }
+
                 $scope.markers = [];
                 angular.forEach(searchissues, function (value, key) {
                     var issueid = value._id;
@@ -258,7 +283,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     } else {
                         message = 'Μη διαθέσιμη περιγραφή';
                     }
-                    var marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, /*"message":""+message+"<br><a href="+issuelink+">Δες με!</a>"*/};
+                    var marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br><a href=" + issuelink + ">Δες με!</a>"};
                     if (layer != 'reaction') {
                         marker.message = "Loading...";
                     }

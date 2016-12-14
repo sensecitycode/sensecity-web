@@ -6,8 +6,30 @@
 	"bugzilla_products": "_cityname_",
         "APIURL": "",
         "bugzilla": "",
+        "center": {
+                    "lat": "",
+                    "lng": "",
+                    "zoom": ""
+                },
+        "icons": {
+           "" : {
+            "type": "",
+            "prefix": "",
+            "icon": "",
+            "markerColor": ""
+           },
+           "" : {
+            "type": "",
+            "prefix": "",
+            "icon": "",
+            "markerColor": ""
+           }
+        },        
 	"ALLISSUESAPIURL": "",
 	"active_user_URL" : "",
+        "components_en": [],
+        "departments": [],
+        "departments_en": [],
 	"APIADMIN": "",
         "components": [],
         "activeTitles": [],

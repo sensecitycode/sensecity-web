@@ -243,20 +243,22 @@ appControllers
 									issue_name = "Πρόβλημα Καθαριότητας";
 									break;
 								case "lighting":
-									issue_name = "Πρόβλημα Φωτισμού";
+									issue_name = "Πρόβλημα Ηλεκτροφωτισμού";
 									break;
 								case "plumbing":
 									issue_name = "Πρόβλημα Ύδρευσης";
 									break;
 								case "road-contructor":
-									issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου/Πλατείας";
+									issue_name = "Πρόβλημα Πεζοδρομίου/Δρόμου/Πλατείας";
 									break;
 								case "protection-policy":
-									issue_name = "Πολιτική Προστασία";
+									issue_name = "Πρόβλημα Πολιτική Προστασία";
 									break;
 								case "green":
-									issue_name = "Πράσινο";
+									issue_name = "Πρόβλημα Πρασίνου";
 									break;
+                                                                case "enviroment":
+                                                                        issue_name = "Πρόβλημα Περιβάλλοντος";
 								default:
 									break;
 							}
@@ -268,7 +270,7 @@ appControllers
 								issue_image=resp[0].image_name;
 							}
 										
-							popup.setContent("<center><b>"+issue_name+"</b><br>"+resp[0].value_desc+"<br><img src=\""+issue_image+"\" style=\"height:200px\"><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ resp[0]._id+"\">Εξέλιξη προβλήματος!</a></center>");
+							popup.setContent("<center><b>"+issue_name+"</b><br>"+resp[0].value_desc+"<br><img src=\""+issue_image+"\" style=\"height:200px\"><br><a href=\"http://"+$rootScope.Variables.city_name+".sense.city/#/scissuemap="+ resp[0]._id+"\">Εξέλιξη προβλήματος!</a></center>");
 										popup.update();
 										
 						});
@@ -385,7 +387,7 @@ appControllers
 												value,
 												key) {
 													var issueid = value._id;
-													var issuelink = "http://"+$rootScope.Variables.city_name+".sense.city/scissuemap.html#?issue_id="+ issueid;
+													var issuelink = "http://"+$rootScope.Variables.city_name+".sense.city/#/issue_id="+ issueid;
 													var positionlat = value.loc.coordinates[1];
 													var positionlon = value.loc.coordinates[0];
 													var issue = value.issue;
@@ -485,6 +487,9 @@ appControllers
 												case 'green':
 													lastissue.issue = 'GREEN_ISSUE';
 													break;
+                                                                                                case 'enviroment':
+													lastissue.issue = 'ENVIRONMENT_ISSUE';
+													break;        
 												case 'angry':
 													lastissue.issue = 'MOOD';
 													break;
