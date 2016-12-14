@@ -243,7 +243,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             });
             
-            if( paramsObj == []){
+            if( paramsObj.length == 0){
                 $window.alert(JSON.stringify(paramsObj));
                 paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate,image_field: 0});
             }
