@@ -25,7 +25,7 @@ appServices.factory('Issue', function($resource , $rootScope) {
 
 
 appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
-    // console.log("DisplayIssues");
+    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+$rootScope.Variables.APIURL);
     return $resource($rootScope.Variables.APIURL+$rootScope.Variables.city_name,
         {}, {
         update: {
