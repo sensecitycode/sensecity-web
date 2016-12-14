@@ -487,6 +487,9 @@ appControllers
 												case 'green':
 													lastissue.issue = 'GREEN_ISSUE';
 													break;
+                                                                                                case 'enviroment':
+													lastissue.issue = 'ENVIRONMENT_ISSUE';
+													break;        
 												case 'angry':
 													lastissue.issue = 'MOOD';
 													break;
