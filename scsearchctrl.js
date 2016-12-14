@@ -194,7 +194,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     default:
                         break;
                 }
-                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp.value_desc + "<br><img src=" + resp.image_name + " style=height:200px><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html#?issue_id=" + resp._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp.value_desc + "<br><img src=" + resp.image_name + " style=height:200px><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp._id + "\">Εξέλιξη προβλήματος!</a></center>");
                 popup.update();
             });
         });
@@ -264,7 +264,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     } else {
                         message = 'Μη διαθέσιμη περιγραφή';
                     }
-                    var marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, /*"message":""+message+"<br><a href="+issuelink+">Δες με!</a>"*/};
+                    var marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message":""+message+"<br><a href="+issuelink+">Δες με!</a>"};
                     if (layer != 'reaction') {
                         marker.message = "Loading...";
                     }
