@@ -150,7 +150,7 @@
                                     </div>
                                     <div id="{{($index == activePanel) ? 'activePanel':''}}" ng-style="($index == activePanel)? {'height': '100%', 'opacity': '1', 'transition': 'height 0.3s linear'} : {'height': '0px', 'opacity': '0', 'transition': 'height 0.3s linear'}" ng-show="$index == activePanel">
                                         <div style="margin-top:10%" class="panel-body">
-                                            <form name="editableForm" ng-hide="panel.admin">
+                                            <form name="editableForm" ng-hide="panel.admin" style="font-size: 12px">
                                                 <div style="margin-bottom:3%;margin-left:1%">
                                                     <span class="title">Κατάσταση: </span>
                                                     <span>{{panel.status.gr}}</span>
@@ -194,43 +194,40 @@
                                                 <div class="bton_prim_orange" ng-hide="panel.admin" ng-click="admin(panel)" ><center><span class="glyphicon glyphicon-edit"></span> Διαχείριση</center></div>
                                             </form>
                                             <form name="editingForm"  ng-show="panel.admin">
-                                                <div>
+                                                <div style="font-size:12px">
                                                     <span class="title">Κατάσταση: </span>
 
-                                                    <button ng-show="selectedStatus.en != 'RESOLVED'" style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in statuses" data-placement="bottom" bs-select></button>
-                                                    <button ng-show="selectedStatus.en == 'RESOLVED'" style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in sresolved" data-placement="bottom" bs-select></button>
-                                                    <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" ng-show="selectedStatus.en == 'RESOLVED'" class="btn btn-default" ng-model="selectedResolution" data-html="1" data-toggle="true" bs-options="resolution.gr for resolution in resolutions" data-placement="bottom"  bs-select></button>                                                   
+                                                    <button ng-show="selectedStatus.en != 'RESOLVED'" style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in statuses" data-placement="bottom" bs-select></button>
+                                                    <button ng-show="selectedStatus.en == 'RESOLVED'" style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in sresolved" data-placement="bottom" bs-select></button>
+                                                    <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" ng-show="selectedStatus.en == 'RESOLVED'" class="btn btn-default" ng-model="selectedResolution" data-html="1" data-toggle="true" bs-options="resolution.gr for resolution in resolutions" data-placement="bottom"  bs-select></button>                                                   
                                                     <div ng-show="selectedStatus.en == 'IN_PROGRESS'">
                                                         <span class="title">Ανάθεση σε: </span>
-                                                        <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedComponent" data-html="1" data-toggle="true" bs-options="component for component in components" data-placement="bottom"  bs-select></button>                                                                               
+                                                        <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedComponent" data-html="1" data-toggle="true" bs-options="component for component in components" data-placement="bottom"  bs-select></button>                                                                               
                                                     </div>
                                                     <div>
                                                         <span class="title" >Προτεραιότητα: </span>
-                                                        <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedPriority.gr" data-html="1" data-toggle="true" bs-options="priority for priority in priorities" data-placement="bottom"  bs-select></button>                                                                               
+                                                        <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedPriority.gr" data-html="1" data-toggle="true" bs-options="priority for priority in priorities" data-placement="bottom"  bs-select></button>                                                                               
                                                     </div>
                                                     <div>
                                                         <span class="title" >Σπουδαιότητα: </span>
-                                                        <button style="font-size:13px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedSeverity.gr" data-html="1" data-toggle="true" bs-options="severity for severity in severities" data-placement="bottom"  bs-select></button>                                                                               
+                                                        <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedSeverity.gr" data-html="1" data-toggle="true" bs-options="severity for severity in severities" data-placement="bottom"  bs-select></button>                                                                               
                                                     </div>
                                                     <div style="position:relative;top:5px" ng-show="selectedStatus.en == 'RESOLVED' && selectedResolution.en == 'DUPLICATE'">
                                                         <span class="title">Διπλότυπο πρόβλημα: </span>
                                                         <input type="text" ng-model="duplicof" ng-blur="dupli_change($event, duplicof)">
                                                     </div>
                                                 </div>
-                                                <div style="position:relative;margin-top:3%">
+                                                <div style="position:relative;margin-top:3%;font-size:12px">
                                                     <div class="title" >Σχόλια: </div>
                                                     <textarea style="width: 95%;height:150px;margin-top:3%;resize:none" ng-disabled="selectedStatus.en == 'CONFIRMED'" type="text" class="form-control" ng-model="scomment" placeholder="περιγραφή ..."></textarea>
                                                 </div>
                                                 <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(panel, selectedStatus, selectedResolution, scomment, selectedComponent, selectedPriority, selectedSeverity, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
                                                 <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_red" ng-show="panel.admin" ng-click="resetPanel(panel)" ><center><span class="glyphicon glyphicon-remove"></span> Ακύρωση</center></div>
                                             </form>
-                                            <br />
                                             <hr style="position:relative;right:2%"/>
                                             <div ng-hide="panel.admin">
-                                                <h4 style="word-wrap:break-word;padding-right:35px">{{initial_desc}}</h4>
-                                                <br />
                                                 <center>
-                                                    <img ng-src="{{panel.image}}" width="60%" height="300px" alt="{{initial_desc}}" />
+                                                    <img ng-src="{{panel.image}}" width="60%" height="290px" alt="{{initial_desc}}" />
                                                 </center>
                                             </div>
                                             <div class="timeline-heading" style="padding-bottom: 10px;">                         
@@ -239,13 +236,13 @@
                                                 <center style="background-color:#191616;color:#d8dedf" class="comment-item">
                                                     <h4>Ιστορικό</h4>                                                                                                 
                                                 </center>
-                                                <div ng-repeat="progress in panel.history" class="comment-item">
+                                                <div ng-repeat="progress in panel.history" class="comment-item" style="font-size: 13px;">
                                                     <span ng-style="progress.style" ng-class="progress.class"></span>
                                                     <div class="comment-head">Κατάσταση: {{progress.state}}</div>
                                                     <br>
                                                     <div class="comment-head">Αναφορά: {{progress.timestamp}}</div>
                                                     <br><br>
-                                                    <p style="font-size: 16px">{{progress.text}}</p>
+                                                    <p style="font-size: 14px">{{progress.text}}</p>
                                                 </div>
                                             </div>
                                         </div>
