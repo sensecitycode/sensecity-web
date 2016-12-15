@@ -697,7 +697,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
                             var creation_time = value.creation_time;
                             var local_time = moment(creation_time).format('LLLL');
-                            var temp_time = local_time.split(", ");
+                            var temp_time = local_time.split(",");
                             switch(temp_time[0]){
                                 case "Monday":
                                     local_time = "Δευ";
