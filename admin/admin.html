@@ -24,8 +24,10 @@
 
         <!-- angular strap -->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
 
         <link href="./dist/angular-tooltips.min.css" rel="stylesheet" type="text/css" />
 
@@ -122,7 +124,7 @@
                         <li class="active">Προβλήματα</li>
                         <ul class="panel-controls" style="margin-top: 2px;">
                             <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_allclosedissues(); refresh()"><span tooltip-side="bottom" tooltips tooltip-template="Όλα τα προβλήματα"><a href="#" class="panel-completed"><span ng-style="(allclosedissues == false)? {'font-size':'13px'} : {'color':'#0c45c4','font-size':'13px'}" class="fa fa-building-o"></span></a></span></li> 
-                            <li ng-click="toggle_closedissues(); refresh()"><span tooltip-side="bottom" tooltips tooltip-template="Ανοιχτά τμήματος"><a href="#" class="panel-completed"><span ng-style="(closedissues == false)? {} : {'color':'green'}" class="glyphicon glyphicon-ok-sign"></span></a></span></li> 
+                            <li ng-click="toggle_closedissues(); refresh()"><span tooltip-side="bottom" tooltips tooltip-template="Ολοκληρωμένα τμήματος"><a href="#" class="panel-completed"><span ng-style="(closedissues == false)? {} : {'color':'green'}" class="glyphicon glyphicon-ok-sign"></span></a></span></li> 
                             <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_inprogressissues(); refresh()"><span tooltip-side="bottom" tooltip-size="small" tooltips tooltip-template="Σε εκτέλεση άλλων τμημάτων"><a href="#" class="panel-inprogress"><span ng-style="(assignissues == false) ? {} : {'color':'orange'}" class="glyphicon glyphicon-question-sign"></span></a></span></li> 
                         </ul>
                     </ul>
@@ -134,12 +136,7 @@
                     <div class="col-md-12">
 
                         <div style="width:48%;" class="timeline">
-                            <div style="padding:0" class="content-frame-top">
-                                <center style="margin-bottom: 3%;margin-top: -1.6%">
-                                    <h2 style="font-family:Open Sans, sans-serif;margin-bottom: 0px;font-size: 22px;">Επισκόπηση Προβλημάτων</h2>
-                                </center>
-                            </div>
-                            <div ng-hide="isloading" style="display:inline-block;min-width:300px;background-color:rgba(249, 249, 249, 0.53);width:100%;padding-left:1%;padding-right:1.5%;padding-bottom:4%;padding-top:4%">
+                            <div ng-hide="isloading" style="display:inline-block;min-width:300px;background-color:rgba(249, 249, 249, 0.53);width:100%;padding-left:1%;padding-right:1.5%;padding-bottom:4%;padding-top:1%">
 
                                 <div style="width:106%;margin-bottom:10px" ng-repeat="panel in panels" ng-class="($index == activePanel) ? 'timeline-item-active' :  'timeline-item'">
                                     <div class="timeline-item-content">
@@ -152,14 +149,14 @@
                                         <div style="margin-top:10%" class="panel-body">
                                             <form name="editableForm" ng-hide="panel.admin" style="font-size: 12px">
                                                 <div style="margin-bottom:3%;margin-left:1%">
+                                                    <span class="title">Τμήμα Ανάθεσης: </span>
+                                                    <span >{{ panel.component}}</span>
+                                                </div>  
+                                                <div style="margin-bottom:3%;margin-left:1%">
                                                     <span class="title">Κατάσταση: </span>
                                                     <span>{{panel.status.gr}}</span>
                                                     <span ng-show="panel.status.en == 'RESOLVED'"> ({{panel.resolution.gr}})</span>
-                                                </div>
-                                                <div ng-show="role != 'sensecityAdmin' && role != 'cityAdmin' || tabs.activeTitle != 'Όλα τα προβλήματα'" style="margin-bottom:3%;margin-left:1%">
-                                                    <span class="title">Τμήμα Ανάθεσης: </span>
-                                                    <span >{{ panel.component}}</span>
-                                                </div>                            
+                                                </div>                          
                                                 <div style="margin-bottom:3%;margin-left:1%">
                                                     <span class="title">Καταγραφη: </span>
                                                     <span >{{ panel.time}}</span>
@@ -202,7 +199,7 @@
                                                     <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" ng-show="selectedStatus.en == 'RESOLVED'" class="btn btn-default" ng-model="selectedResolution" data-html="1" data-toggle="true" bs-options="resolution.gr for resolution in resolutions" data-placement="bottom"  bs-select></button>                                                   
                                                     <div ng-show="selectedStatus.en == 'IN_PROGRESS'">
                                                         <span class="title">Ανάθεση σε: </span>
-                                                        <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedComponent" data-html="1" data-toggle="true" data-template="<style>font-size:12px;z-index:9999;</style>" bs-options="component for component in components" data-placement="bottom"  bs-select></button>                                                                               
+                                                        <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif;z-index:100" type="button" class="btn btn-default" ng-model="selectedComponent" data-html="1" data-toggle="true" bs-options="component for component in components" data-placement="bottom"  bs-select></button>                                                                               
                                                     </div>
                                                     <div>
                                                         <span class="title" >Προτεραιότητα: </span>
@@ -255,10 +252,9 @@
                         <div style="width:52%" class="col-md-6">                        
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
-                                    <h3 class="panel-title" ng-model="city">{{city}}</h3>
                                     <ul class="panel-controls" style="margin-top: 2px;">
                                         <li><a ng-click="removeFixed()" href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                                        <li ><a ng-click="refresh()"href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>                                       
+                                        <li ><span tooltip-side="bottom" tooltips tooltip-template="Ανανέωση προβλημάτων"><a ng-click="refresh()"href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></span></li>                                       
                                     </ul>
                                 </div>
                                 <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">

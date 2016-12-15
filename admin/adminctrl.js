@@ -7,7 +7,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
-appControllers.controller('adminController', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', '$location' , 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $rootScope, $window, $http, $cookieStore, $templateCache, $compile, $location, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
+appControllers.controller('adminController', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', '$location', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $rootScope, $window, $http, $cookieStore, $templateCache, $compile, $location, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
         var summary;
         var params;
         var tabchanged = 2;
@@ -20,28 +20,28 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         $scope.duplicof = "";
 
         $scope.nloaded = true;
-        
+
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
-        
-        var mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function(response) {
-			
-			$rootScope.Variables = {
-				city_name: sub_domain[0],
-				lat_center: response.lat_center,
-				long_center: response.long_center,
-				img_logo: "images/city_logos/"+response.city_name+".jpg",
-				bugzilla_products: response.bugzilla_products,
-				APIURL: response.APIURL,
-				bugzilla: response.bugzilla,
-				ALLISSUESAPIURL: response.ALLISSUESAPIURL,
-				activate_user_URL : response.active_user_URL,
-				APIADMIN: response.APIADMIN,
-				map_zoom:12
-			};
-			
-			return $rootScope;
-		});
+
+        var mainInfo = $http.get('../config/' + sub_domain[0] + '.json').success(function (response) {
+
+            $rootScope.Variables = {
+                city_name: sub_domain[0],
+                lat_center: response.lat_center,
+                long_center: response.long_center,
+                img_logo: "images/city_logos/" + response.city_name + ".jpg",
+                bugzilla_products: response.bugzilla_products,
+                APIURL: response.APIURL,
+                bugzilla: response.bugzilla,
+                ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+                activate_user_URL: response.active_user_URL,
+                APIADMIN: response.APIADMIN,
+                map_zoom: 12
+            };
+
+            return $rootScope;
+        });
 
         $scope.logout = function ($event) {
             $http.get('http://' + config.host + ':' + config.port + '/api/1.0/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
@@ -97,7 +97,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             var bottom = $('.xn-profile').position().top;
             var outerHeight = $('.xn-profile').height();
             if ($(window).scrollTop() > bottom + outerHeight && $(window).width() > 600) {
-                if (isfixed == 0) {
+                if (fixed == 0) {
                     $(".panel.panel-default").css({position: 'fixed', left: '58%', top: '3%', width: '40%'});
                 }
             } else {
@@ -152,6 +152,80 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         $scope.page_set = [];
 
         $scope.city = $cookieStore.get("city");
+
+        function timegr(local_time) { //edw olo
+            var temp_time = local_time.split(",");
+            switch (temp_time[0]) {
+                case "Monday":
+                    local_time = "Δευ,";
+                    break;
+                case "Tuesday":
+                    local_time = "Τρ,";
+                    break;
+                case "Wednesday":
+                    local_time = "Τετ,";
+                    break;
+                case "Thursday":
+                    local_time = "Πεμ,";
+                    break;
+                case "Friday":
+                    local_time = "Παρ,";
+                    break;
+                case "Saturday":
+                    local_time = "Σαβ,";
+                    break;
+                case "Sunday":
+                    local_time = "Κυρ,";
+                    break;
+            }
+            switch (temp_time[1].split(" ")[1]) {
+                case "January":
+                    local_time += temp_time[1].replace("January", "Ιαν") + ",";
+                    break;
+                case "February":
+                    local_time += temp_time[1].replace("February", "Φεβ") + ",";
+                    break;
+                case "March":
+                    local_time += temp_time[1].replace("March", "Μαρ") + ",";
+                    break;
+                case "April":
+                    local_time += temp_time[1].replace("April", "Απρ") + ",";
+                    break;
+                case "May":
+                    local_time += temp_time[1].replace("May", "Μάης") + ",";
+                    break;
+                case "June":
+                    local_time += temp_time[1].replace("June", "Ιουν") + ",";
+                    break;
+                case "July":
+                    local_time += temp_time[1].replace("July", "Ιουλ") + ",";
+                    break;
+                case "August":
+                    local_time += temp_time[1].replace("August", "Αυγ") + ",";
+                    break;
+                case "September":
+                    local_time += temp_time[1].replace("September", "Σεπ") + ",";
+                    break;
+                case "October":
+                    local_time += temp_time[1].replace("October", "Οκτ") + ",";
+                    break;
+                case "November":
+                    local_time += temp_time[1].replace("November", "Νοε") + ",";
+                    break;
+                case "December":
+                    local_time += temp_time[1].replace("December", "Δεκ") + ",";
+                    break;
+            }
+            switch (temp_time[2].substring(temp_time[2].length - 2)) {
+                case "AM":
+                    local_time += temp_time[2].replace("AM", "ΠΜ");
+                    break;
+                case "PM":
+                    local_time += temp_time[2].replace("PM", "ΜΜ");
+                    break;
+            }
+            return local_time;
+        }
 
         $scope.changeTab = function (index) {
             if (tabchanged == 2) {
@@ -467,7 +541,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     prefix: 'fa',
                     icon: 'tree',
                     markerColor: 'red'
-                },enviroment: {
+                }, enviroment: {
                     type: 'awesomeMarker',
                     prefix: 'fa',
                     icon: 'leaf',
@@ -697,6 +771,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
                             var creation_time = value.creation_time;
                             var local_time = moment(creation_time).format('LLLL');
+                            local_time = timegr(local_time); //edw
                             var time_fromNow = moment(creation_time).fromNow();
                             var parameter;
 
@@ -725,19 +800,20 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                 }
 
                                                 if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
+                                                    var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL')); //edw
                                                     if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
-                                                        history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
+                                                        history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});//edw
                                                     } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
-                                                        history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+                                                        history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});//edw
                                                     } else {
-                                                        history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                                                        history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});//edw
                                                     }
                                                 }
                                             }
 
                                             var panel =
                                                     {
-                                                        "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
+                                                        "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + "-" + value.url + ") -- " + time_fromNow, //edw
                                                         "style": panelTitle.status_style,
                                                         "icon": panelTitle.status_icon,
                                                         "time": local_time,
@@ -781,19 +857,19 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
                                             Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                 map_counter++;
-                                                if(issue[0] != undefined){
-                                                for (i = 0; i < $scope.panels.length; i++) {
-                                                    if ($scope.panels[i].mongoId[0] == issue[0]._id) {
-                                                        if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
-                                                            $scope.panels[i].image = issue[0].image_name;
-                                                        } else {
-                                                            $scope.panels[i].image = "../images/EmptyBox-Phone.png";
+                                                if (issue[0] != undefined) {
+                                                    for (i = 0; i < $scope.panels.length; i++) {
+                                                        if ($scope.panels[i].mongoId[0] == issue[0]._id) {
+                                                            if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
+                                                                $scope.panels[i].image = issue[0].image_name;
+                                                            } else {
+                                                                $scope.panels[i].image = "../images/EmptyBox-Phone.png";
+                                                            }
                                                         }
                                                     }
+                                                    $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
+                                                    $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                                 }
-                                                $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
-                                                $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
-                                            }
                                                 if (map_counter == total_counter) {
                                                     mapnloaded = false;
                                                     $(window).resize();
@@ -986,7 +1062,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                             case "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων":
                                                 comp = "clean";
                                                 break;
-                                        }                              
+                                        }
                                         $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                 function (response, status, headers, config) {
                                                 });
@@ -1234,6 +1310,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                 var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
                                 var creation_time = value.creation_time;
                                 var local_time = moment(creation_time).format('LLLL');
+                                local_time = timegr(local_time); //edw
                                 var time_fromNow = moment(creation_time).fromNow();
 
                                 if (!(value.component == "default")) {
@@ -1262,19 +1339,20 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                     }
 
                                                     if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
+                                                        var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL')); //edw
                                                         if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
-                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
+                                                            history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'}); //edw
                                                         } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
-                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+                                                            history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'}); //edw
                                                         } else {
-                                                            history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                                                            history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'}); //edw
                                                         }
                                                     }
                                                 }
 
                                                 var panel =
                                                         {
-                                                            "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
+                                                            "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + "-" + value.url + ") -- " + time_fromNow, //edw
                                                             "style": panelTitle.status_style,
                                                             "icon": panelTitle.status_icon,
                                                             "time": local_time,
@@ -1316,19 +1394,19 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                 }
                                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                                                     map_counter++;
-                                                    if(issue[0] != undefined ){
-                                                    for (i = 0; i < $scope.panels.length; i++) {
-                                                        if ($scope.panels[i].mongoId[0] == issue[0]._id) {
-                                                            if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
-                                                                $scope.panels[i].image = issue[0].image_name;
-                                                            } else {
-                                                                $scope.panels[i].image = "../images/EmptyBox-Phone.png";
+                                                    if (issue[0] != undefined) {
+                                                        for (i = 0; i < $scope.panels.length; i++) {
+                                                            if ($scope.panels[i].mongoId[0] == issue[0]._id) {
+                                                                if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
+                                                                    $scope.panels[i].image = issue[0].image_name;
+                                                                } else {
+                                                                    $scope.panels[i].image = "../images/EmptyBox-Phone.png";
+                                                                }
                                                             }
                                                         }
+                                                        $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
+                                                        $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                                     }
-                                                    $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
-                                                    $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
-                                                }
                                                     if (map_counter == total_counter) {
                                                         mapnloaded = false;
                                                         $(window).resize();
@@ -1337,7 +1415,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                         }
                                                     }
                                                 }, function (response) {
-                                                    map_counter++;                                 
+                                                    map_counter++;
                                                     if (map_counter == total_counter) {
                                                         mapnloaded = false;
                                                         $(window).resize();
