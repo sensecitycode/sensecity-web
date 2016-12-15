@@ -737,7 +737,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
                                             var panel =
                                                     {
-                                                        "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
+                                                        "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name +"-"+ value.url+") -- " + time_fromNow,
                                                         "style": panelTitle.status_style,
                                                         "icon": panelTitle.status_icon,
                                                         "time": local_time,
@@ -1274,7 +1274,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
                                                 var panel =
                                                         {
-                                                            "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + ") -- " + time_fromNow,
+                                                            "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name +"-"+ value.url+") -- " + time_fromNow,
                                                             "style": panelTitle.status_style,
                                                             "icon": panelTitle.status_icon,
                                                             "time": local_time,
