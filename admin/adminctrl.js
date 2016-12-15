@@ -698,9 +698,6 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             var creation_time = value.creation_time;
                             var local_time = moment(creation_time).format('LLLL');
                             var temp_time = local_time.split(",");
-                            $window.alert(temp_time[0]);
-                            $window.alert(temp_time[1]);
-                            $window.alert(temp_time[2]);
                             switch(temp_time[0]){
                                 case "Monday":
                                     local_time = "Δευ";
@@ -724,7 +721,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                     local_time = "Κυρ";
                                     break;  
                             }
-                            switch(temp_time[1]){
+                            switch(temp_time[1].split(" ")[1]){
                                 case "January":
                                     local_time += temp_time[1].replace("January", "Ιαν");
                                     break;
