@@ -147,7 +147,9 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'SAVE_NEW_ISSUE':'Send',
 		'WARNING_MSG':'Warning! ',
 		'WARNING_MSG_REQUIRED_FIELD':'The field is required!',
-		'SUBMIT_AND_CONTINUE':'Submit & Continue'
+		'SUBMIT_AND_CONTINUE':'Submit & Continue',
+		'NATURAL_DISASTERS':'Natural disasters',
+		'GROSS_PLOT':'Gross plot'
     });
    
     $translateProvider.translations('el', {
@@ -242,7 +244,9 @@ app.config(['$translateProvider', function ($translateProvider) {
 		'SAVE_NEW_ISSUE':'Αποστολή',
 		'WARNING_MSG':'Ειδοποίηση! ',
 		'WARNING_MSG_REQUIRED_FIELD':'Το πεδίο είναι υποχρεωτικό!',
-		'SUBMIT_AND_CONTINUE':'Απόθηκευση & Συνέχεια'
+		'SUBMIT_AND_CONTINUE':'Απόθηκευση & Συνέχεια',
+		'NATURAL_DISASTERS':'Θεομηνία',
+		'GROSS_PLOT':'Ακαθάριστο οικόπεδο'
       
     });
    

@@ -53,7 +53,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	                	            {id: 'other', name:'OTHER'}] 
 	                   },
 	                   {id: 'protection-policy', name: 'PROTECTION_POLICY_ISSUE', 
-	                	   types: [ {id: 'other', name:'OTHER'}] 
+	                	   types: [ {id: '1', name:'NATURAL_DISASTERS'},
+									{id: '2', name:'GROSS_PLOT'},
+									{id: 'other', name:'OTHER'}] 
 	                   },
 	                   {id: 'enviroment', name: 'ENVIROMENT_ISSUE', 
 	                	   types: [ {id: '1', name:'STRAY_ANIMALS'},
@@ -341,7 +343,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				$scope.issue.image_name =  $scope.uploadedPhotoFile ; //no-image
 			
 				var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : ['+$scope.lnglabeltxt+','+ $scope.latlabeltxt +'] }, "issue" : "'+ $scope.issueTypeSelect.id +'","device_id" : "'+$scope.issue.device_id+'", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name  + '","comments" : "'+$scope.commentstxt+'" }' ;				
-				console.log("txtpost ======>>>>>>>>"+txtpost);
+				
 				return $http(
 				{
 					method : 'POST',
