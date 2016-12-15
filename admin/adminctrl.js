@@ -12,7 +12,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         var params;
         var tabchanged = 2;
         var init = 1;
-        $scope.isfixed = 0;
+        var isfixed = 0;
         var mapnloaded = true;
 
         $scope.isloading = true;
@@ -67,9 +67,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $(window).on('resize', function () {
             if ($(".panel.panel-default").width() <= 600) { //isws prepei na checkaroume ean einai ston xarth
-                $scope.isfixed = 0;
+                isfixed = 0;
             } else {
-                $scope.isfixed = 1;
+                isfixed = 1;
             }
         });
 
@@ -97,7 +97,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             var bottom = $('.xn-profile').position().top;
             var outerHeight = $('.xn-profile').height();
             if ($(window).scrollTop() > bottom + outerHeight && $(window).width() > 600) {
-                if ($scope.isfixed == 0) {
+                if (fixed == 0) {
                     $(".panel.panel-default").css({position: 'fixed', left: '58%', top: '3%', width: '40%'});
                 }
             } else {
@@ -106,11 +106,11 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         });
 
         $scope.removeFixed = function () {
-            if ($scope.isfixed == 0) {
-                $scope.isfixed = 1;
+            if (isfixed == 0) {
+                isfixed = 1;
                 $(".panel.panel-default").removeAttr('style');
             } else {
-                $scope.isfixed = 0;
+                isfixed = 0;
             }
         };
 
