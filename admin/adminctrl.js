@@ -734,7 +734,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                     }
                                                 }
                                             }
-
+                                            $window.alert(JSON.stringify(value));
                                             var panel =
                                                     {
                                                         "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name +"-"+ value.url+") -- " + time_fromNow,
@@ -1270,8 +1270,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                             history.push({"text": com, "timestamp": moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'), "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
                                                         }
                                                     }
-                                                }
-
+                                                }                                              
+                                                
                                                 var panel =
                                                         {
                                                             "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name +"-"+ value.url+") -- " + time_fromNow,
