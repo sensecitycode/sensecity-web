@@ -699,7 +699,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             var local_time = moment(creation_time).format('LLLL');
                             var time_fromNow = moment(creation_time).fromNow();
                             var parameter;
-
+                            $window.alert("ok");
                             if (!(value.component == "default")) {
                                 $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment', {id: id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                         function (response, status, headers, config) {
