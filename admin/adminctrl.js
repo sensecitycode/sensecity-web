@@ -697,9 +697,79 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
                             var creation_time = value.creation_time;
                             var local_time = moment(creation_time).format('LLLL');
+                            var temp_time = local_time.split(", ");
+                            switch(temp_time[0]){
+                                case "Monday":
+                                    local_time = "Δευ";
+                                    break;
+                                case "Tuesday":
+                                    local_time = "Τρ";
+                                    break;
+                                case "Wednesday":
+                                    local_time = "Τετ";
+                                    break;
+                                case "Thursday":
+                                    local_time = "Πεμ";
+                                    break;
+                                case "Friday":
+                                    local_time = "Παρ";
+                                    break;
+                                case "Saturday":
+                                    local_time = "Σαβ";
+                                    break;
+                                case "Sunday":
+                                    local_time = "Κυρ";
+                                    break;  
+                            }
+                            switch(temp_time[1]){
+                                case "January":
+                                    local_time += temp_time[1].replace("January", "Ιαν");
+                                    break;
+                                case "February":
+                                    local_time += temp_time[1].replace("February", "Φεβ");
+                                    break;
+                                case "March":
+                                    local_time += temp_time[1].replace("March", "Μαρ");
+                                    break;
+                                case "April":
+                                    local_time += temp_time[1].replace("April", "Απρ");
+                                    break;
+                                case "May":
+                                    local_time += temp_time[1].replace("May", "Μάης");
+                                    break;
+                                case "June":
+                                    local_time += temp_time[1].replace("June", "Ιουν");
+                                    break;
+                                case "July":
+                                    local_time += temp_time[1].replace("July", "Ιουλ");
+                                    break;
+                                case "August":
+                                    local_time += temp_time[1].replace("August", "Αυγ");
+                                    break;
+                                case "September":
+                                    local_time += temp_time[1].replace("September", "Σεπ");
+                                    break;
+                                case "October":
+                                    local_time += temp_time[1].replace("October", "Οκτ");
+                                    break;
+                                case "November":
+                                    local_time += temp_time[1].replace("November", "Νοε");
+                                    break;
+                                case "December":
+                                    local_time += temp_time[1].replace("December", "Δεκ");
+                                    break;
+                            }
+                            switch(temp_time[2].substring(temp_time.length - 2)){
+                                case "AM":
+                                    local_time += temp_time[2].replace("AM", "ΠΜ");
+                                    break;
+                                case "PM":
+                                    local_time += temp_time[2].replace("PM", "ΜΜ");
+                                    break;    
+                            }
                             var time_fromNow = moment(creation_time).fromNow();
                             var parameter;
-                            $window.alert("ok");
+
                             if (!(value.component == "default")) {
                                 $http.post('http://' + config.host + ':' + config.port + '/api/1.0/admin/bugs/comment', {id: id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                         function (response, status, headers, config) {
@@ -734,10 +804,10 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                     }
                                                 }
                                             }
-                                            $window.alert(JSON.stringify(value));
+
                                             var panel =
                                                     {
-                                                        "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name +"-"+ value.url+") -- " + time_fromNow,
+                                                        "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name +"-"+ value.url+") -- " + time_fromNow, //edw
                                                         "style": panelTitle.status_style,
                                                         "icon": panelTitle.status_icon,
                                                         "time": local_time,
@@ -1274,7 +1344,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                 
                                                 var panel =
                                                         {
-                                                            "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name +"-"+ value.url+") -- " + time_fromNow,
+                                                            "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name +"-"+ value.url+") -- " + time_fromNow, //edw
                                                             "style": panelTitle.status_style,
                                                             "icon": panelTitle.status_icon,
                                                             "time": local_time,
