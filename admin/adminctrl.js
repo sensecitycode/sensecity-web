@@ -700,66 +700,66 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             var temp_time = local_time.split(",");
                             switch(temp_time[0]){
                                 case "Monday":
-                                    local_time = "Δευ";
+                                    local_time = "Δευ,";
                                     break;
                                 case "Tuesday":
-                                    local_time = "Τρ";
+                                    local_time = "Τρ,";
                                     break;
                                 case "Wednesday":
-                                    local_time = "Τετ";
+                                    local_time = "Τετ,";
                                     break;
                                 case "Thursday":
-                                    local_time = "Πεμ";
+                                    local_time = "Πεμ,";
                                     break;
                                 case "Friday":
-                                    local_time = "Παρ";
+                                    local_time = "Παρ,";
                                     break;
                                 case "Saturday":
-                                    local_time = "Σαβ";
+                                    local_time = "Σαβ,";
                                     break;
                                 case "Sunday":
-                                    local_time = "Κυρ";
+                                    local_time = "Κυρ,";
                                     break;  
                             }
                             switch(temp_time[1].split(" ")[1]){
                                 case "January":
-                                    local_time += temp_time[1].replace("January", "Ιαν");
+                                    local_time += temp_time[1].replace("January", "Ιαν")+",";
                                     break;
                                 case "February":
-                                    local_time += temp_time[1].replace("February", "Φεβ");
+                                    local_time += temp_time[1].replace("February", "Φεβ")+",";
                                     break;
                                 case "March":
-                                    local_time += temp_time[1].replace("March", "Μαρ");
+                                    local_time += temp_time[1].replace("March", "Μαρ")+",";
                                     break;
                                 case "April":
-                                    local_time += temp_time[1].replace("April", "Απρ");
+                                    local_time += temp_time[1].replace("April", "Απρ")+",";
                                     break;
                                 case "May":
-                                    local_time += temp_time[1].replace("May", "Μάης");
+                                    local_time += temp_time[1].replace("May", "Μάης")+",";
                                     break;
                                 case "June":
-                                    local_time += temp_time[1].replace("June", "Ιουν");
+                                    local_time += temp_time[1].replace("June", "Ιουν")+",";
                                     break;
                                 case "July":
-                                    local_time += temp_time[1].replace("July", "Ιουλ");
+                                    local_time += temp_time[1].replace("July", "Ιουλ")+",";
                                     break;
                                 case "August":
-                                    local_time += temp_time[1].replace("August", "Αυγ");
+                                    local_time += temp_time[1].replace("August", "Αυγ")+",";
                                     break;
                                 case "September":
-                                    local_time += temp_time[1].replace("September", "Σεπ");
+                                    local_time += temp_time[1].replace("September", "Σεπ")+",";
                                     break;
                                 case "October":
-                                    local_time += temp_time[1].replace("October", "Οκτ");
+                                    local_time += temp_time[1].replace("October", "Οκτ")+",";
                                     break;
                                 case "November":
-                                    local_time += temp_time[1].replace("November", "Νοε");
+                                    local_time += temp_time[1].replace("November", "Νοε")+",";
                                     break;
                                 case "December":
-                                    local_time += temp_time[1].replace("December", "Δεκ");
+                                    local_time += temp_time[1].replace("December", "Δεκ")+",";
                                     break;
                             }
-                            switch(temp_time[2].substring(temp_time.length - 2)){
+                            switch(temp_time[2].substring(temp_time[2].length - 2)){
                                 case "AM":
                                     local_time += temp_time[2].replace("AM", "ΠΜ");
                                     break;
