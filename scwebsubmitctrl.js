@@ -669,8 +669,9 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					$scope.NameTxt = "";
 					$scope.EmailTxt = "";
 					$scope.MobileTxt = "";
-					$scope.chkSelected_1 = false;
+					$scope.chkSelected_1 = true;
 					$scope.chkSelected_2 = false;
+					
 					$scope.chkSelected = false;
 					
 					$scope.submit_button = true;
