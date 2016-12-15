@@ -32,5 +32,8 @@
     "conf",
     "demo",
     "*.html"
-  ]
+  ],
+  "dependencies": {
+    "angular-strap": "^2.3.10"
+  }
 }
