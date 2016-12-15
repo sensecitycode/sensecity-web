@@ -94,7 +94,7 @@ body {
   width: 220px;
   float: left;
   position: relative;
-  z-index: 3;
+/*  z-index: 3;*/
 }
 .page-container .page-sidebar.page-sidebar-fixed {
   position: fixed;
