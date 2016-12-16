@@ -16,6 +16,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         var mapnloaded = true;
 
         $scope.isloading = true;
+        $scope.full = 0;
 
         $scope.duplicof = "";
 
@@ -109,8 +110,10 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             if (isfixed == 0) {
                 isfixed = 1;
                 $(".panel.panel-default").removeAttr('style');
+                $scope.full = 1;
             } else {
                 isfixed = 0;
+                $scope.full = 0;
             }
         };
 
