@@ -275,14 +275,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
           $scope.full_panel = function(){
 //        $(".panel-fullscreen").on("click", function () {
-            var test1 = $(this).parents(".panel");
-            var test2 = $(".panel.default-panel");
-            var test3 = $("mplah");
-            $window.alert(test1);
-            $window.alert(test2);
-            $window.alert(test3);
 //            panel_fullscreen($(this).parents(".panel"));
-//            panel_fullscreen($(".panel.default-panel"));
+            panel_fullscreen($(".panel.default-panel"));
             if ($scope.activePanel == -1) {
                 var map = leafletData.getMap("issuesmap").then(
                         function (map) {

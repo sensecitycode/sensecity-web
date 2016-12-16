@@ -25,7 +25,7 @@ appServices.factory('Issue', function($resource , $rootScope) {
 
 
 appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
-//    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+$rootScope.Variables.APIURL);
+    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+$rootScope.Variables.APIURL);
     return $resource($rootScope.Variables.APIURL+$rootScope.Variables.city_name,
         {}, {
         update: {
@@ -36,7 +36,7 @@ appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
 });
 
 appServices.factory('DisplayFeelingsService', function ( $resource , $rootScope) {
-//    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+$rootScope.Variables.APIURL);
+    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+$rootScope.Variables.feelingsURL);
     return $resource($rootScope.Variables.feelingsURL,
         {}, {
         update: {
