@@ -292,7 +292,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 );
             }
             return false;
-        }
+        };
 //        });
         //-----------------------------------------------------------------------
 //        $scope.valid = true;

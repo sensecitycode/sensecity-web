@@ -17,7 +17,6 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	
 var mainInfo = $http.get('/config/'+sub_domain[0]+'.json').success(function(response) {
 		
-		$window.alert(JSON.stringify(response));
 		$rootScope.Variables = {
 			city_name: sub_domain[0],
 			lat_center: response.lat_center,
@@ -33,8 +32,6 @@ var mainInfo = $http.get('/config/'+sub_domain[0]+'.json').success(function(resp
 			APIADMIN: response.APIADMIN,
 			map_zoom:response.zoom	
                  };
-                 
-                 $window.alert(JSON.stringify($rootScope.Variables));
                 
         return $rootScope;
     });
