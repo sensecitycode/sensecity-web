@@ -40,7 +40,7 @@ appServices.factory('DisplayFeelingsService', function ( $resource , $rootScope)
     return $resource($rootScope.Variables.APIURL+$rootScope.Variables.city_name,
         {}, {
         update: {
-          method: 'GET'
+          method: 'POST'
           // isArray: true
         }
     });

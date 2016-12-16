@@ -25,6 +25,7 @@ var mainInfo = $http.get('/config/'+sub_domain[0]+'.json').success(function(resp
 			img_logo: "images/city_logos/"+response.city_name+".jpg",
 			bugzilla_products: response.bugzilla_products,
 			APIURL: response.APIURL,
+                        feelingsURL: response.feelingsURL,
 			bugzilla: response.bugzilla,
 			ALLISSUESAPIURL: response.ALLISSUESAPIURL,
 			active_user_URL : response.active_user_URL,
