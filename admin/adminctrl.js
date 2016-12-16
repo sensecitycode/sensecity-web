@@ -112,7 +112,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         $scope.removeFixed = function () {
             if (isfixed == 0) {
                 isfixed = 1;
-                $(".panel.panel-default").removeAttr('style');
+                //$(".panel.panel-default").removeAttr('style');
+                $("#right-column").removeAttr('style');
                 $scope.full = 1;
             } else {
                 isfixed = 0;
