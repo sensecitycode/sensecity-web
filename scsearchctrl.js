@@ -306,7 +306,12 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     } else {
                         message = 'Μη διαθέσιμη περιγραφή';
                     }
-                    var marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br><a href=" + issuelink + ">Δες με!</a>"};
+                    var marker;
+                    if(issue == "angry" || issue == "neutral" || issue == "happy"){
+                        marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br>"};
+                    }else{
+                        marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br><a href=" + issuelink + ">Δες με!</a>"}; 
+                    }
                     if (layer != 'reaction') {
                         marker.message = "Loading...";
                     }
