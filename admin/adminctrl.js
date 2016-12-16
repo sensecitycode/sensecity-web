@@ -17,7 +17,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $scope.isloading = true;
         $scope.full = 0;
-        
+
         $scope.pimage = ""; //edw
         $scope.padmin = true; //edw
 
@@ -282,9 +282,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             }
         };
 
-          $scope.full_panel = function(){
+        $scope.full_panel = function () {
 //        $(".panel-fullscreen").on("click", function () {
-          panel_fullscreen($(".panel"));
+            panel_fullscreen($(".panel"));
             if ($scope.activePanel == -1) {
                 var map = leafletData.getMap("issuesmap").then(
                         function (map) {
@@ -799,6 +799,11 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                             for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                                 com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
                                                 if (com == "undefined") {
+                                                    com = "";
+                                                }
+
+                                                if (com.substring(0, 7) == "*** Bug") {
+
                                                     com = "";
                                                 }
                                                 var tag_pos;
@@ -1341,6 +1346,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                 for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                                     com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
                                                     if (com == "undefined") {
+                                                        com = "";
+                                                    }
+                                                    if (com.substring(0, 7) == "*** Bug") {
                                                         com = "";
                                                     }
 
