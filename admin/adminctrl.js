@@ -273,7 +273,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             }
         };
 
-        $(".panel-fullscreen").on("click", function () {
+          $scope.full_panel = function(){
+//        $(".panel-fullscreen").on("click", function () {
             var test1 = $(this).parents(".panel");
             var test2 = $(".panel.default-panel");
             var test3 = $("mplah");
@@ -298,7 +299,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 );
             }
             return false;
-        });
+        }
+//        });
         //-----------------------------------------------------------------------
 //        $scope.valid = true;
 //        $cookieStore.put('city','testweb');

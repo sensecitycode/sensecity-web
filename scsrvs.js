@@ -37,7 +37,7 @@ appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
 
 appServices.factory('DisplayFeelingsService', function ( $resource , $rootScope) {
 //    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+$rootScope.Variables.APIURL);
-    return $resource($rootScope.Variables.APIURL+$rootScope.Variables.city_name,
+    return $resource($rootScope.Variables.feelingsURL,
         {}, {
         update: {
           method: 'GET'
