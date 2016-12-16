@@ -35,8 +35,8 @@ appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
     });
 });
 
-appServices.factory('DisplayFeelingsService', function ( $resource , $rootScope) {
-    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+$rootScope.Variables.feelingsURL);
+appServices.factory('DisplayFeelingsService', function ($resource , $rootScope) {
+    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+JSON.stringify($rootScope.Variables));
     return $resource($rootScope.Variables.feelingsURL,
         {}, {
         update: {
