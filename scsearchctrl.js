@@ -321,6 +321,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             $scope.endISOdate = new Date();
             $scope.searchIssue = "";
             $scope.searchState = "";
+            $scope.searchFeeling = "";
             $scope.markers = [];
             $scope.center = {
                 lat: $rootScope.Variables.lat_center,

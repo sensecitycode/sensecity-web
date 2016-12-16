@@ -187,37 +187,32 @@ appControllers
 						overlays : {
 							garbage : {
 								type : 'group',
-								name : 'Προβλήματα Σκουπιδιών',
+								name : 'Σκουπιδιών',
 								visible : true
 							},
 							lighting : {
 								type : 'group',
-								name : 'Προβλήματα Φωτισμού',
+								name : ' Ηλεκτροφωτισμού',
 								visible : true
 							},
-							plumbing : {
-								type : 'group',
-								name : 'Προβλήματα Ύδρευσης',
-								visible : true
-							},
-							"road-contructor" : {
-								type : 'group',
-								name : 'Προβλήματα Οδοστρώματος',
-								visible : true
-							},
+//							"road-contructor" : {
+//								type : 'group',
+//								name : 'Προβλήματα Οδοστρώματος',
+//								visible : true
+//							},
 							"protection-policy" : {
 								type : 'group',
-								name : 'Πολιτική Προστασία',
+								name : 'Πολιτικής Προστασίας',
 								visible : true
 							},
 							"green" : {
 								type : 'group',
-								name : 'Πράσινο',
+								name : 'Πρασίνου',
 								visible : true
 							},
 							reaction : {
 								type : 'group',
-								name : 'Προβλήματα Πολιτών',
+								name : 'Πολιτών',
 								visible : true
 							}
 						}
