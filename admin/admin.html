@@ -171,7 +171,7 @@
                                                         <span >{{ panel.severity.gr}}</span>
                                                     </div>
                                                 </div>
-                                                <div style="display:inline-block">
+                                                <div style="display:inline-block;vertical-align: top">
                                                     <div style="visibility: hidden">
                                                         <span>{{panel.duplicof}}</span>
                                                     </div>    
@@ -253,7 +253,7 @@
                             </div>
                         </div>
 
-                        <div style="width:52%" class="col-md-6">                        
+                        <div style="width:52%;min-width:303px" class="col-md-6">                        
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
                                     <ul class="panel-controls" style="margin-top: 2px;">
@@ -264,11 +264,11 @@
                                 </div>
                                 <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">
                                     <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel == - 1">
-                                        <leaflet id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="525px" width="100%"  style="color:black;min-width:303px">
+                                        <leaflet id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="525px" width="100%"  style="color:black">
                                         </leaflet>
                                     </div>
                                     <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel != - 1">
-                                        <leaflet id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="525px" width="100%"  style="color:black;min-width:303px">
+                                        <leaflet id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="525px" width="100%"  style="color:black">
                                         </leaflet>
                                     </div>
                                 </div>
