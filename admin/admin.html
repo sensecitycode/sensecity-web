@@ -145,45 +145,49 @@
                                             <span class="issue_text" ng-click="itemClicked($index, $event); linkmap(panel)">{{ panel.title}}</span>
                                         </div>                                     
                                     </div>
-                                    <div id="{{($index == activePanel) ? 'activePanel':''}}" ng-style="($index == activePanel)? {'height': '100%', 'opacity': '1', 'transition': 'height 0.3s linear'} : {'height': '0px', 'opacity': '0', 'transition': 'height 0.3s linear'}" ng-show="$index == activePanel">
+                                    <div id="{{($index == activePanel) ? 'activePanel':''}}" ng-style="($index == activePanel)? {'height': '100%', 'opacity': '1', 'transition': 'height 0.3s linear','margin-top': '12 % '} : {'height': '0px', 'opacity': '0', 'transition': 'height 0.3s linear'}" ng-show="$index == activePanel">
                                         <div style="margin-top:10%" class="panel-body">
                                             <form name="editableForm" ng-hide="panel.admin" style="font-size: 12px">
-                                                <div style="margin-bottom:3%;margin-left:1%">
-                                                    <span class="title">Τμήμα Ανάθεσης: </span>
-                                                    <span >{{ panel.component}}</span>
-                                                </div>  
-                                                <div style="margin-bottom:3%;margin-left:1%">
-                                                    <span class="title">Κατάσταση: </span>
-                                                    <span>{{panel.status.gr}}</span>
-                                                    <span ng-show="panel.status.en == 'RESOLVED'"> ({{panel.resolution.gr}})</span>
-                                                </div>                          
-                                                <div style="margin-bottom:3%;margin-left:1%">
-                                                    <span class="title">Καταγραφη: </span>
-                                                    <span >{{ panel.time}}</span>
+                                                <div style="display:inline-block">
+                                                    <div style="margin-bottom:3%;margin-left:1%">
+                                                        <span class="title">Τμήμα Ανάθεσης: </span>
+                                                        <span >{{ panel.component}}</span>
+                                                    </div>  
+                                                    <div style="margin-bottom:3%;margin-left:1%">
+                                                        <span class="title">Κατάσταση: </span>
+                                                        <span>{{panel.status.gr}}</span>
+                                                        <span ng-show="panel.status.en == 'RESOLVED'"> ({{panel.resolution.gr}})</span>
+                                                    </div>                          
+                                                    <div style="margin-bottom:3%;margin-left:1%">
+                                                        <span class="title">Καταγραφη: </span>
+                                                        <span >{{ panel.time}}</span>
+                                                    </div>
+                                                    <div style="margin-bottom:3%;margin-left:1%">
+                                                        <span class="title">Προτεραιότητα: </span>
+                                                        <span >{{ panel.priority.gr}}</span>
+                                                    </div> 
+                                                    <div style="margin-bottom:3%;margin-left:1%">
+                                                        <span class="title">Σπουδαιότητα: </span>
+                                                        <span >{{ panel.severity.gr}}</span>
+                                                    </div>
                                                 </div>
-                                                <div style="margin-bottom:3%;margin-left:1%">
-                                                    <span class="title">Προτεραιότητα: </span>
-                                                    <span >{{ panel.priority.gr}}</span>
-                                                </div> 
-                                                <div style="margin-bottom:3%;margin-left:1%">
-                                                    <span class="title">Σπουδαιότητα: </span>
-                                                    <span >{{ panel.severity.gr}}</span>
-                                                </div> 
-                                                <div style="margin-bottom:3%;margin-left:1%">
-                                                    <span class="title">Ονοματεπώνυμο: </span>
-                                                    <span> {{panel.creator}}</span>
-                                                </div>
-                                                <div style="margin-bottom:3%;margin-left:1%">
-                                                    <span class="title">Τηλέφωνο: </span>
-                                                    <span> {{panel.tel}}</span>
-                                                </div>
-                                                <div style="margin-bottom:3%;margin-left:1%">
-                                                    <span class="title">e-mail: </span>
-                                                    <span> {{panel.email}}</span>
-                                                </div>                                             
-                                                <div style="visibility: hidden">
-                                                    <span>{{panel.duplicof}}</span>
-                                                </div>
+                                                <div style="display:inline-block">
+                                                    <div style="visibility: hidden">
+                                                        <span>{{panel.duplicof}}</span>
+                                                    </div>    
+                                                    <div style="margin-bottom:3%;margin-left:1%">
+                                                        <span class="title">Ονοματεπώνυμο: </span>
+                                                        <span> {{panel.creator}}</span>
+                                                    </div>
+                                                    <div style="margin-bottom:3%;margin-left:1%">
+                                                        <span class="title">Τηλέφωνο: </span>
+                                                        <span> {{panel.tel}}</span>
+                                                    </div>
+                                                    <div style="margin-bottom:3%;margin-left:1%">
+                                                        <span class="title">e-mail: </span>
+                                                        <span> {{panel.email}}</span>
+                                                    </div>
+                                                </div>    
                                                 <div ng-show="panel.comment != '' && panel.comment != 'undefined';" style="margin-bottom:2%;margin-left:1%;">
                                                     <div class="title">Σχόλια: </div>
                                                     <div style="border:solid 1px #cdd5d5;font-family:Open,sans-serif;padding: 8px 15px;border-radius:6px;margin-bottom:5%;margin-top:2%;width:95%;word-wrap: break-word">{{ panel.comment}}</div>
@@ -253,8 +257,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
                                     <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed();full_panel()" href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
-                                         <li ng-show="full == 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed();full_panel()" href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
+                                        <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed(); full_panel()" href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
+                                        <li ng-show="full == 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed(); full_panel()" href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
                                         <li><span tooltip-side="bottom" tooltips tooltip-template="Ανανέωση προβλημάτων"><a ng-click="refresh()"href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></span></li>                                       
                                     </ul>
                                 </div>
