@@ -17,6 +17,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $scope.isloading = true;
         $scope.full = 0;
+        
+        $scope.pimage = ""; //edw
+        $scope.padmin = true; //edw
 
         $scope.duplicof = "";
 
@@ -98,7 +101,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             var bottom = $('.xn-profile').position().top;
             var outerHeight = $('.xn-profile').height();
             if ($(window).scrollTop() > bottom + outerHeight && $(window).width() > 600) {
-                if (fixed == 0) {
+                if (isfixed == 0) {
                     $(".panel.panel-default").css({position: 'fixed', left: '58%', top: '3%', width: '40%'});
                 }
             } else {
@@ -616,13 +619,15 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     $scope.changeTab(0);
                 }
 
-                $scope.itemClicked = function ($index, event) {
+                $scope.itemClicked = function ($index, event) { //edw
                     if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
 //                            setTimeout(function () {
 //                                $("html,body").scrollTop($(event.target).offset().top - $("#activePanel").height());
 //                            }, 500);
 //                        } else {
+                        $scope.padmin = panels[$index].admin;
+                        $scope.pimage = panels[$index].image;
                         setTimeout(function () {
                             $("html,body").scrollTop($(event.target).offset().top);
                         }, 400);
@@ -631,6 +636,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                         $scope.activePanel = $index;
                         $scope.currentactive = $index;
                     } else {
+                        $scope.pimage = "";
+                        $scope.padmin = true;
                         $scope.activePanel = -1;
                         $scope.currentactive = -1;
                     }

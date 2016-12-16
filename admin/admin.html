@@ -226,9 +226,9 @@
                                                 <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_red" ng-show="panel.admin" ng-click="resetPanel(panel)" ><center><span class="glyphicon glyphicon-remove"></span> Ακύρωση</center></div>
                                             </form>
                                             <hr style="position:relative;right:2%"/>
-                                            <div ng-hide="panel.admin">
+                                            <div style="visibility:hidden">
                                                 <center>
-                                                    <img ng-src="{{panel.image}}" width="60%" height="290px" alt="{{initial_desc}}" />
+                                                    <img ng-src="{{panel.image}}" width="70%" height="290px" alt="{{initial_desc}}" />
                                                 </center>
                                             </div>
                                             <div class="timeline-heading" style="padding-bottom: 10px;">                         
@@ -255,25 +255,30 @@
 
                         <div style="width:52%" class="col-md-6">
                             <div style="min-width:303px">
-                            <div class="panel panel-default">
-                                <div class="panel-heading ui-draggable-handle">
-                                    <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed(); full_panel()" href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
-                                        <li ng-show="full == 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed(); full_panel()" href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
-                                        <li><span tooltip-side="bottom" tooltips tooltip-template="Ανανέωση προβλημάτων"><a ng-click="refresh()"href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></span></li>                                       
-                                    </ul>
-                                </div>
-                                <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">
-                                    <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel == - 1">
-                                        <leaflet id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="525px" width="100%"  style="color:black">
-                                        </leaflet>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading ui-draggable-handle">
+                                        <ul class="panel-controls" style="margin-top: 2px;">
+                                            <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed(); full_panel()" href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
+                                            <li ng-show="full == 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed(); full_panel()" href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
+                                            <li><span tooltip-side="bottom" tooltips tooltip-template="Ανανέωση προβλημάτων"><a ng-click="refresh()"href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></span></li>                                       
+                                        </ul>
                                     </div>
-                                    <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel != - 1">
-                                        <leaflet id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="525px" width="100%"  style="color:black">
-                                        </leaflet>
+                                    <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">
+                                        <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel == - 1">
+                                            <leaflet id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="525px" width="100%"  style="color:black">
+                                            </leaflet>
+                                        </div>
+                                        <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel != - 1">
+                                            <leaflet id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="525px" width="100%"  style="color:black">
+                                            </leaflet>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div ng-hide="padmin">
+                                <center>
+                                    <img ng-src="pimage" width="70%" height="290px" />
+                                </center>
                             </div>
                         </div>                    
                         <!-- END PAGE CONTENT WRAPPER -->               
