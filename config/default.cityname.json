@@ -5,6 +5,7 @@
 	"img_logo": "images/city_logos/_cityname_.jpg",
 	"bugzilla_products": "_cityname_",
         "APIURL": "",
+        "feelingsURL": "",
         "bugzilla": "",
         "center": {
                     "lat": "",

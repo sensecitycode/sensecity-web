@@ -35,6 +35,18 @@ appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
     });
 });
 
+appServices.factory('DisplayFeelingsService', function ( $resource , $rootScope) {
+    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+$rootScope.Variables.APIURL);
+    return $resource($rootScope.Variables.APIURL+$rootScope.Variables.city_name,
+        {}, {
+        update: {
+          method: 'GET'
+          // isArray: true
+        }
+    });
+});
+
+
 //single full issue (with image) via ID
 /*appServices.factory('Issue2MapService', function ( $resource , $rootScope) {
     // console.log("DisplayIssues");

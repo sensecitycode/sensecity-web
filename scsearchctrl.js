@@ -16,7 +16,7 @@ appControllers.directive('sidebarDirective', function () {
     };
 });
 
-appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', 'DisplayIssuesService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, DisplayIssuesService, Issue2MapService, leafletData) {
+appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', 'DisplayIssuesService','DisplayFeelingsService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, DisplayIssuesService, DisplayFeelingsService,Issue2MapService, leafletData) {
 
         $scope.state = true;
         $scope.toggleState = function () {
@@ -213,7 +213,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             $scope.startdate = $scope.startISOdate.getFullYear() + '-' + ($scope.startISOdate.getMonth() + 1) + '-' + $scope.startISOdate.getDate();
             $scope.enddate = $scope.endISOdate.getFullYear() + '-' + ($scope.endISOdate.getMonth() + 1) + '-' + $scope.endISOdate.getDate();
             var paramsObj = [];
+            var feelingsObj;
             var states = "";
+            var feelings = "";
             var i = 0;
             angular.forEach($scope.searchState, function (state, sstate) {
                 if (state == true) {
@@ -242,19 +244,39 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     }
                 }
             });
-            
-            if( paramsObj.length == 0){
-                if(states == ""){
-                paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate,image_field: 0});
-            }else{
-                paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate,image_field: 0,status: states});
+
+            i = 0;
+            angular.forEach($scope.searchFeeling, function (state, feeling) {
+                if (state == true) {
+                    if (i == 0) {
+                        feelings += feeling;
+                        i++;
+                    } else {
+                        feelings += "|" + feeling;
+                    }
+                }
+            });
+
+            if (paramsObj.length == 0) {
+                if (states == "") {
+                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0});
+                } else {
+                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states});
+                }
             }
+            
+            if(feelings != ""){
+                feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate,city: $rootScope.Variables.city_name,feeling: feelings};
+            }else{
+                feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate,city: $rootScope.Variables.city_name};
             }
 
             var promisesArray = [];
             for (index = 0; index < paramsObj.length; index++) {
                 promisesArray.push(doQuery(paramsObj[index]));
             }
+            
+            promisesArray.push(feelingsQuery(feelingsObj));
 
             $q.all(promisesArray).then(function (data) {
                 var searchissues = [];
@@ -310,6 +332,14 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         function doQuery(obj) {
             var d = $q.defer();
             DisplayIssuesService.query(obj, function (result) {
+                d.resolve(result);
+            });
+            return d.promise;
+        }
+        
+        function feelingsQuery(obj){
+            var d = $q.defer();
+            DisplayFeelingsService.query(obj, function (result) {
                 d.resolve(result);
             });
             return d.promise;
