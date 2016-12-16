@@ -226,11 +226,6 @@
                                                 <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_red" ng-show="panel.admin" ng-click="resetPanel(panel)" ><center><span class="glyphicon glyphicon-remove"></span> Ακύρωση</center></div>
                                             </form>
                                             <hr style="position:relative;right:2%"/>
-                                            <div style="visibility:hidden">
-                                                <center>
-                                                    <img ng-src="{{panel.image}}" width="70%" height="290px" alt="{{initial_desc}}" />
-                                                </center>
-                                            </div>
                                             <div class="timeline-heading" style="padding-bottom: 10px;">                         
                                             </div>                                        
                                             <div style="left: -4.1%;position:relative;width:102.6%;;margin-top:20px" class="timeline-body comments">
@@ -265,11 +260,11 @@
                                     </div>
                                     <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">
                                         <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel == - 1">
-                                            <leaflet id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="525px" width="100%"  style="color:black">
+                                            <leaflet id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="325px" width="100%"  style="color:black">
                                             </leaflet>
                                         </div>
                                         <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel != - 1">
-                                            <leaflet id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="525px" width="100%"  style="color:black">
+                                            <leaflet id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="325px" width="100%"  style="color:black">
                                             </leaflet>
                                         </div>
                                     </div>
@@ -277,7 +272,7 @@
                             </div>
                             <div ng-hide="padmin">
                                 <center>
-                                    <img ng-src="{{pimage}}" width="70%" height="290px" />
+                                    <img ng-src="{{pimage}}" width="70%" style="min-width:333px" height="280px" />
                                 </center>
                             </div>
                         </div>                    

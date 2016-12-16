@@ -1220,6 +1220,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             $scope.refresh = function () {
                 $scope.isloading = true;
                 $scope.nloaded = true;
+                $scope.pimage = ""; //edw
+                $scope.padmin = true; //edw
                 mapnloaded = true;
                 $http.get('http://' + config.host + ':' + config.port + '/api/1.0/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
                         function (response) {
