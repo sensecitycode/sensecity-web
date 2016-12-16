@@ -270,7 +270,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             }else{
                 feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate,city: $rootScope.Variables.city_name};
             }
-
+            
+            $window.alert(JSON.stringify(feelingsObj));
+            
             var promisesArray = [];
             for (index = 0; index < paramsObj.length; index++) {
                 promisesArray.push(doQuery(paramsObj[index]));
@@ -294,6 +296,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     var positionlon = value.loc.coordinates[0];
                     var issue = value.issue;
                     var layer = '';
+                    $window.alert(issue);
                     if (issue == "angry" || issue == "neutral" || issue == "happy") {
                         layer = 'reaction';
                     } else {
