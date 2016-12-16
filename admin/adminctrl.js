@@ -102,10 +102,12 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             var outerHeight = $('.xn-profile').height();
             if ($(window).scrollTop() > bottom + outerHeight && $(window).width() > 600) {
                 if (isfixed == 0) {
-                    $(".panel.panel-default").css({position: 'fixed', left: '58%', top: '3%', width: '40%'});
+                    //$(".panel.panel-default").css({position: 'fixed', left: '58%', top: '3%', width: '40%'});
+                    $("#right-column").css({position: 'fixed', left: '58%', top: '3%', width: '40%'}); //edw
                 }
             } else {
-                $(".panel.panel-default").removeAttr('style');
+                //$(".panel.panel-default").removeAttr('style');
+                $("#right-column").removeAttr('style'); //edw
             }
         });
 
@@ -113,7 +115,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             if (isfixed == 0) {
                 isfixed = 1;
                 //$(".panel.panel-default").removeAttr('style');
-                $("#right-column").removeAttr('style');
+                $("#right-column").removeAttr('style'); //edw
                 $scope.full = 1;
             } else {
                 isfixed = 0;
