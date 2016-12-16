@@ -802,7 +802,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                     com = "";
                                                 }
 
-                                                if (com.substring(0, 7) == "*** Bug") {
+                                                if (com.substring(0, 7) == "*** Bug") { //edw
 
                                                     com = "";
                                                 }
@@ -1348,7 +1348,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                                     if (com == "undefined") {
                                                         com = "";
                                                     }
-                                                    if (com.substring(0, 7) == "*** Bug") {
+                                                    if (com.substring(0, 7) == "*** Bug") { //edw
                                                         com = "";
                                                     }
 
