@@ -626,8 +626,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //                                $("html,body").scrollTop($(event.target).offset().top - $("#activePanel").height());
 //                            }, 500);
 //                        } else {
-                        $scope.padmin = panels[$index].admin;
-                        $scope.pimage = panels[$index].image;
+                        $scope.padmin = $scope.panels[$index].admin;
+                        $scope.pimage = $scope.panels[$index].image;
                         setTimeout(function () {
                             $("html,body").scrollTop($(event.target).offset().top);
                         }, 400);
