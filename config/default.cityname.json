@@ -29,6 +29,11 @@
 	"ALLISSUESAPIURL": "",
 	"active_user_URL" : "",
         "components_en": [],
+        "overlays": {},
+        "categories": [],
+        "issue_type_en": [],
+        "issue_type_gr": [],
+        "categories_issue": [],
         "departments": [],
         "departments_en": [],
 	"APIADMIN": "",
@@ -44,5 +49,11 @@
                     {
                     }],
         "": "",        
-        "host": ""
+        "host": "",
+        "translations_en": {
+        
+        },
+        "translations_gr" : {
+        
+        }
 }

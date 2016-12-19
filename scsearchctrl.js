@@ -16,76 +16,14 @@ appControllers.directive('sidebarDirective', function () {
     };
 });
 
-appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', 'DisplayIssuesService','DisplayFeelingsService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, DisplayIssuesService, DisplayFeelingsService,Issue2MapService, leafletData) {
+appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', 'DisplayIssuesService', 'DisplayFeelingsService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, DisplayIssuesService, DisplayFeelingsService, Issue2MapService, leafletData) {
 
         $scope.state = true;
         $scope.toggleState = function () {
             $scope.state = !$scope.state;
         };
 
-        var icons = {
-            garbage: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'trash-o',
-                markerColor: 'green'
-            },
-            "road-contructor": {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'road',
-                markerColor: 'cadetblue'
-            },
-            plumbing: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'umbrella',
-                markerColor: 'darkpuple'
-            },
-            lighting: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'lightbulb-o',
-                markerColor: 'orange'
-            },
-            "protection-policy": {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'shield',
-                markerColor: 'lightblue'
-            }, green: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'tree',
-                markerColor: 'lightgreen'
-            }, enviroment: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'leaf',
-                markerColor: 'darkgreen'
-            },
-            angry: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'frown-o',
-                markerColor: 'lightgreen',
-                iconColor: 'darkgreen'
-            },
-            neutral: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'meh-o',
-                markerColor: 'lightgreen',
-                iconColor: 'darkgreen'
-            },
-            happy: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'smile-o',
-                markerColor: 'lightgreen',
-                iconColor: 'darkgreen'
-            }
-        };
+        var icons = $rootScope.Variables.icons;
 
         $scope.center = {
             lat: $rootScope.Variables.lat_center,
@@ -105,47 +43,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     }
                 }
             },
-            overlays: {
-                garbage: {
-                    type: 'group',
-                    name: 'Σκουπιδιών',
-                    visible: true
-                },
-                lighting: {
-                    type: 'group',
-                    name: 'Φωτισμού',
-                    visible: true
-                },
-                plumbing: {
-                    type: 'group',
-                    name: 'Ύδρευσης',
-                    visible: true
-                },
-                "road-contructor": {
-                    type: 'group',
-                    name: 'Οδοστρώματος',
-                    visible: true
-                },
-                "protection-policy": {
-                    type: 'group',
-                    name: 'Πολιτικής Προστασίας',
-                    visible: true
-                },
-                "green": {
-                    type: 'group',
-                    name: 'Πρασίνου',
-                    visible: true
-                }, "enviroment": {
-                    type: 'group',
-                    name: 'Περιβαντολλογικά',
-                    visible: true
-                },
-                reaction: {
-                    type: 'group',
-                    name: 'Πολιτών',
-                    visible: true
-                }
-            }
+            overlays: $rootScope.Variables.overlays
         };
 
         var startdate = new Date();
@@ -172,29 +70,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
             Issue2MapService.query({issueID: marker3.options.issue_id}, function (resp) {
 
-                switch (resp[0].issue) {
-                    case "garbage":
-                        issue_name = "Πρόβλημα Καθαριότητας";
-                        break;
-                    case "lighting":
-                        issue_name = "Πρόβλημα Ηλεκτροφωτισμού";
-                        break;
-                    case "plumbing":
-                        issue_name = "Πρόβλημα Ύδρευσης";
-                        break;
-                    case "road-contructor":
-                        issue_name = "Πρόβλημα Πεζοδρομίου/Δρόμου/Πλατείας";
-                        break;
-                    case "protection-policy":
-                        issue_name = "Πρόβλημα Πολιτική Προστασία";
-                        break;
-                    case "green":
-                        issue_name = "Πρόβλημα Πρασίνου";
-                        break;
-                    case "enviroment":
-                        issue_name = "Πρόβλημα Περιβάλλοντος";
-                    default:
-                        break;
+                var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
+                if (resp_index != -1) {
+                    issue_name = $rootScope.Variables.departments_en[resp_index];
                 }
 
                 if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
@@ -264,18 +142,18 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states});
                 }
             }
-            
-            if(feelings != ""){
-                feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate,city: $rootScope.Variables.city_name,feeling: feelings};
-            }else{
-                feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate,city: $rootScope.Variables.city_name};
+
+            if (feelings != "") {
+                feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name, feeling: feelings};
+            } else {
+                feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name};
             }
-            
+
             var promisesArray = [];
             for (index = 0; index < paramsObj.length; index++) {
                 promisesArray.push(doQuery(paramsObj[index]));
             }
-            
+
             promisesArray.push(feelingsQuery(feelingsObj));
 
             $q.all(promisesArray).then(function (data) {
@@ -307,10 +185,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         message = 'Μη διαθέσιμη περιγραφή';
                     }
                     var marker;
-                    if(issue == "angry" || issue == "neutral" || issue == "happy"){
+                    if (issue == "angry" || issue == "neutral" || issue == "happy") {
                         marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br>"};
-                    }else{
-                        marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br><a href=" + issuelink + ">Δες με!</a>"}; 
+                    } else {
+                        marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br><a href=" + issuelink + ">Δες με!</a>"};
                     }
                     if (layer != 'reaction') {
                         marker.message = "Loading...";
@@ -343,8 +221,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             });
             return d.promise;
         }
-        
-        function feelingsQuery(obj){
+
+        function feelingsQuery(obj) {
             var d = $q.defer();
             DisplayFeelingsService.query(obj, function (result) {
                 d.resolve(result);

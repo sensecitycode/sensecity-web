@@ -848,6 +848,3 @@ appControllers.directive('fileModel', ['$parse', function ($parse) {
         }
     };
 }]);
-
-
-

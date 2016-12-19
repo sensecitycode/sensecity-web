@@ -23,14 +23,26 @@ var mainInfo = $http.get('/config/'+sub_domain[0]+'.json').success(function(resp
 			long_center: response.long_center,
 			img_logo: "images/city_logos/"+response.city_name+".jpg",
 			bugzilla_products: response.bugzilla_products,
+                        icons: response.icons,
 			APIURL: response.APIURL,
+                        components: response.components,
+                        components_en: response.components_en,
+                        overlays: response.overlays,
+                        categories: response.categories,
+                        categories_issue: response.categories_issue,
+                        departments: response.departments,
+                        departments_en: response.departments_en,
                         feelingsURL: response.feelingsURL,
 			bugzilla: response.bugzilla,
 			ALLISSUESAPIURL: response.ALLISSUESAPIURL,
 			active_user_URL : response.active_user_URL,
 			activate_user_URL : response.activate_user_URL,
 			APIADMIN: response.APIADMIN,
-			map_zoom:response.zoom	
+			map_zoom:response.zoom,
+                        translations_en: response.translations_en,
+                        transaltions_gr: response.translations_gr,
+                        issue_type_en: response.issue_type_en,
+                        issue_type_gr: response.issue_type_gr
                  };
                 
         return $rootScope;
@@ -41,7 +53,7 @@ var mainInfo = $http.get('/config/'+sub_domain[0]+'.json').success(function(resp
 
 
 
-appControllers.controller('allissuesCtrl', function($scope, $log, DisplayLast100IssuesService, BugService) {
+appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log, DisplayLast100IssuesService, BugService) {
 	$log.debug('inside allissuesCtrl controller');
 	
 
@@ -68,41 +80,12 @@ appControllers.controller('allissuesCtrl', function($scope, $log, DisplayLast100
 											lastissue.image_name = "images/EmptyBox-Phone.png";
 										}
 
-										switch (lastissue.issue) {
-										case 'garbage':
-												lastissue.issue = 'GARBAGE_ISSUE';
-											break;
-										case 'lighting':
-												lastissue.issue = 'LIGHTNING_ISSUE';
-											break;
-										case 'plumbing':
-												lastissue.issue = 'PLUMBING_ISSUE';
-											break;
-										case 'road-contructor':
-												lastissue.issue = 'ROAD_ISSUE';
-											break;
-										case 'protection-policy':
-												lastissue.issue = 'PROTECTION_POLICY_ISSUE';
-											break;
-										case 'green':
-												lastissue.issue = 'GREEN_ISSUE';
-											break;
-                                                                                case 'enviroment':
-                                                                                                lastissue.issue = 'ENVIRONMENT_ISSUE';
-                                                                                        break;
-										case 'angry':
-												lastissue.issue = 'MOOD';
-											break;
-										case 'neutral':
-												lastissue.issue = 'MOOD';
-											break;
-										case 'happy':
-												lastissue.issue = 'MOOD';
-											break;
-										default:
-											issue = '';
-											break;
-										}
+                                                                                var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
+                                                                                if(cat_index != -1){
+                                                                                  lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
+                                                                                }else{
+                                                                                  lastissue.issue = '';  
+                                                                                }
 
 										var today = new Date();
 										var create_day = new Date(

@@ -23,65 +23,7 @@ appControllers.controller('mainController', ['$scope','$q','DisplayIssuesService
       $scope.state = !$scope.state;
   };
 
-  var icons = {
-    garbage: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'trash-o',
-      markerColor: 'green'
-    },
-    "road-contructor": {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'road',
-      markerColor: 'cadetblue'
-    },
-    plumbing: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'umbrella',
-      markerColor: 'darkpuple'
-    },
-    lighting: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'lightbulb-o',
-      markerColor: 'orange'
-    },
-    "protection-policy": {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'lightbulb-o',
-      markerColor: 'orange'
-    },
-    green: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'lightbulb-o',
-      markerColor: 'orange'
-    },
-    angry: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'frown-o',
-      markerColor: 'lightgreen',
-      iconColor: 'darkgreen'
-    },
-    neutral: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'meh-o',
-      markerColor: 'lightgreen',
-      iconColor: 'darkgreen'
-    },
-    happy: {
-      type: 'awesomeMarker',
-      prefix: 'fa',
-      icon: 'smile-o',
-      markerColor: 'lightgreen',
-      iconColor: 'darkgreen'
-    }
-  };
+  var icons = $rootScope.Variables.icons;
 /*
   $scope.center= {
       lat: 38.248028,
@@ -107,43 +49,7 @@ appControllers.controller('mainController', ['$scope','$q','DisplayIssuesService
               }
           }
       },
-      overlays: {
-          garbage: {
-              type:'group',
-              name:'Προβλήματα Σκουπιδιών',
-              visible:true
-          },
-          lighting: {
-              type:'group',
-              name:'Προβλήματα Φωτισμού',
-              visible:true
-          },
-          plumbing: {
-              type:'group',
-              name:'Προβλήματα Ύδρευσης',
-              visible:true
-          },
-          "road-contructor": {
-              type:'group',
-              name:'Προβλήματα Οδοστρώματος',
-              visible:true
-          },
-          "protection-policy": {
-              type:'group',
-              name:'Πολιτική Προστασία',
-              visible:true
-          },
-          green: {
-              type:'group',
-              name:'Πράσινο',
-              visible:true
-          },
-          reaction: {
-              type:'group',
-              name:'Προβλήματα Πολιτών',
-              visible:true
-          }
-      }
+      overlays: $rootScope.Variables.overlays
   };
 
   var startdate = new Date();

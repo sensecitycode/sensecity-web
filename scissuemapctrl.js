@@ -1,77 +1,9 @@
-var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource','scissuemapapp.scissuemapsrvs'])
+var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource', 'scissuemapapp.scissuemapsrvs'])
         .constant("config", {"host": "api.sense.city", "port": "4000"});
 
-appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config',
-    function ($scope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config) {
-        var icons = {
-            garbage: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'trash-o',
-                markerColor: 'green'
-            },
-            "road-contructor": {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'road',
-                markerColor: 'cadetblue'
-            },
-            plumbing: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'umbrella',
-                markerColor: 'darkpuple'
-            },
-            lighting: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'lightbulb-o',
-                markerColor: 'orange'
-            },
-            angry: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'frown-o',
-                markerColor: 'lightgreen',
-                iconColor: 'darkgreen'
-            },
-            neutral: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'meh-o',
-                markerColor: 'lightgreen',
-                iconColor: 'darkgreen'
-            },
-            happy: {
-                type: 'awesomeMarker',
-                prefix: 'fa',
-                icon: 'smile-o',
-                markerColor: 'lightgreen',
-                iconColor: 'darkgreen'
-            },
-            staticGarbage: {
-                type: 'extraMarker',
-                icon: 'fa-trash-o',
-                prefix: 'fa',
-                markerColor: 'green',
-                shape: 'square'
-            },
-            staticGarbageRecycle: {
-                type: 'extraMarker',
-                prefix: 'fa',
-                icon: 'fa-trash-o',
-                markerColor: 'cyan',
-                shape: 'square'
-            },
-            staticLighting: {
-                type: 'extraMarker',
-                prefix: 'fa',
-                icon: 'fa-lightbulb-o',
-                markerColor: 'yellow',
-                shape: 'square'
-            }
-        };
-
+appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config',
+    function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config) {
+        var icons = $rootScope.Variables.icons;
 
         $scope.layers = {
             baselayers: {
@@ -95,8 +27,8 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
         $scope.completion = "---";
 
         //parse ?issue_id from URL
-        var issue_id = $location.$$url.replace('/scissuemap=','');
-        
+        var issue_id = $location.$$url.replace('/scissuemap=', '');
+
         Issue2MapService.query({issueID: issue_id}, function (issue) {
             console.log(issue);
 
@@ -124,57 +56,13 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
             var issue_name_new;
 
 
-
-            switch (issue[0].issue) {
-                case "garbage":
-                    if (localStorage.getItem("language") === 'en') {
-                        issue_name_new = 'Cleaning Problem';
-                    } else {
-                        issue_name_new = "Καθαριότητας";
-                    }
-                    break;
-                case "lighting":
-                    if (localStorage.getItem("language") === 'en') {
-                        issue_name_new = 'Lighting Problem';
-                    } else {
-                        issue_name_new = "Φωτισμού";
-                    }
-                    break;
-                case "plumbing":
-                    if (localStorage.getItem("language") === 'en') {
-                        issue_name_new = 'Plumbing Problem';
-                    } else {
-                        issue_name_new = "Ύδρευσης";
-                    }
-                    break;
-                case "road-contructor":
-                    if (localStorage.getItem("language") === 'en') {
-                        issue_name_new = 'Street/Sidewalk Problem';
-                    } else {
-                        issue_name_new = "Πρόβλημα Δρόμου/Πεζοδρομίου";
-                    }
-                case "protection-policy":
-                    if (localStorage.getItem("language") === 'en') {
-                        issue_name_new = 'Protection Policy';
-                    } else {
-                        issue_name_new = "Πολιτική Προστασία";
-                    }
-                case "green":
-                    if (localStorage.getItem("language") === 'en') {
-                        issue_name_new = 'Green';
-                    } else {
-                        issue_name_new = "Πράσινο";
-                    }
-                    break;
-                case "enviroment":
-                    if (localStorage.getItem("language") === 'en') {
-                        issue_name_new = 'Environment';
-                    } else {
-                        issue_name_new = "Περιβάλλον";
-                    }
-                    break;    
-                default:
-                    break;
+            var issue_index = $rootScope.Variables.categories.indexOf(issue[0].issue);
+            if (issue_index != -1) {
+                if (localStorage.getItem("language") === 'en') {
+                    issue_name_new = $rootScope.Variables.issue_type_en[issue_index];
+                } else {
+                    issue_name_new = $rootScope.Variables.issue_type_gr[issue_index];
+                }
             }
 
             $scope.issue_name_new = issue_name_new;
@@ -322,7 +210,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
             var resp_id = response[0].bug_id;
             var tag_pos;
             var dep_pos;
-            
+
             for (var i = 1; i < response[1].bugs[resp_id].comments.length; i++) {
 
                 var day;
@@ -340,18 +228,18 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
 
 
                 var tag_pos;
-                    switch (response[1].bugs[resp_id].comments[i].tags[0]) {
-                        case "CONFIRMED":
-                        case "IN_PROGRESS":
-                        case "RESOLVED":
-                            tag_pos = 0;
-                            dep_pos = 1;
-                            break;
-                        default:
-                            tag_pos = 1;
-                            dep_pos = 0;
-                            break;
-                    }
+                switch (response[1].bugs[resp_id].comments[i].tags[0]) {
+                    case "CONFIRMED":
+                    case "IN_PROGRESS":
+                    case "RESOLVED":
+                        tag_pos = 0;
+                        dep_pos = 1;
+                        break;
+                    default:
+                        tag_pos = 1;
+                        dep_pos = 0;
+                        break;
+                }
 
                 if (response[1].bugs[resp_id].comments[i].tags[tag_pos] == "CONFIRMED") {
                     color = {"background-color": "#e74c3c"};
@@ -406,48 +294,27 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                 year = time_parse[0];
 
                 time = response[1].bugs[resp_id].comments[i].time.substring(11, 19);
-                var temp_time = time.substring(0,2);
+                var temp_time = time.substring(0, 2);
                 var ntime = parseInt(temp_time);
                 ntime += 2;
-                if(ntime < 10){
-                    time = "0"+ ntime + time.substring(2);
-                }else if( ntime > 23){
-                   if( ntime == 24){
-                       ntime = 0;
-                    }else{
-                       ntime = 1; 
+                if (ntime < 10) {
+                    time = "0" + ntime + time.substring(2);
+                } else if (ntime > 23) {
+                    if (ntime == 24) {
+                        ntime = 0;
+                    } else {
+                        ntime = 1;
                     }
-                   time = "0"+ ntime + time.substring(2);
-                } else{
+                    time = "0" + ntime + time.substring(2);
+                } else {
                     time = ntime + time.substring(2);
                 }
                 if (response[1].bugs[resp_id].comments[i].text == 'undefined') {
                     show = false;
                 }
-                if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "all") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα επίλυσης προβλημάτων";
-                } else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "protection") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Αυτοτελές τμήμα Πολιτικής Προστασίας";
-                } else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "road-contructor") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Οδοποιίας";
-                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "garbage") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Αποκομιδής Απορριμμάτων & Ανακυκλώσιμων Υλικών";
-                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "lighting") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων Κτιρίων & Ηλεκτροφωτισμο";
-                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "green") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα πρασίνου";
-                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "transport") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Συγκοινωνιακού & Κυκλοφοριακού Σχεδιασμού";
-                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "infrastructure") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Αυτεπιστασίας Έργων Υποδομής";
-                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "shared") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Ελέγχου Κοινοχρήστων Χώρων";
-                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "studies") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Μελετών Έργων & Πρασίνο";
-                }else if (response[1].bugs[resp_id].comments[i].tags[dep_pos] == "clean") {
-                    response[1].bugs[resp_id].comments[i].tags[dep_pos] = "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων & Ειδικών Συνεργείων";
-                }
-                
+                var dep_index = $rootScope.Variables.components_en.indexOf(response[1].bugs[resp_id].comments[i].tags[dep_pos]);
+                response[1].bugs[resp_id].comments[i].tags[dep_pos] = $rootScope.Variables.components[dep_index];
+
                 var com = {
                     "content": response[1].bugs[resp_id].comments[i].text,
                     "type": type,
@@ -459,10 +326,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$location', '$window', '
                     "component": response[1].bugs[resp_id].comments[i].tags[dep_pos],
                     "show": show
                 };
-                
-                if(response[1].bugs[resp_id].comments[i].text.substr(2,3) != "***"){
+
+                if (response[1].bugs[resp_id].comments[i].text.substr(2, 3) != "***") {
                     $scope.comments.push(com);
-                }               
+                }
             }
         });
         /*	
