@@ -1,9 +1,4 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-var app = angular.module('login_fo', ['ngCookies'])
+var app = angular.module('login_fo', ['ngCookies','ngRoute'])
         .constant("config", {"host": "api.sense.city", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "4000", "bugzilla_path": "/bugzilla"});
 
 
@@ -12,9 +7,9 @@ var app = angular.module('login_fo', ['ngCookies'])
 //  function($httpProvider) {
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
-
 	
-app.controller('login_controller', ['$scope', '$window', '$http', '$cookieStore', '$location', 'config', function ($scope, $window, $http, $cookieStore, $location, config) {
+app.controller('login_controller', ['$scope', '$rootScope','$window', '$http', '$cookieStore', '$location', 'config', function ($scope, $rootScope,$window, $http, $cookieStore, $location, config) {
+        $("html").addClass("body-full-height");
         $scope.admin_user = "";
         $scope.lock = "";
         $scope.username_l = "";
@@ -37,8 +32,9 @@ app.controller('login_controller', ['$scope', '$window', '$http', '$cookieStore'
         
         $scope.authenticate_us = function (event) {
             var domain = $location.host().split(".");
-            var parameter = {username: $scope.username_l, password: $scope.password_l, city: domain[0]};                       
-            $http.post('http://api.sense.city:3000/api/1.0/dashboard', parameter).success(
+            //domain[0]
+            var parameter = {username: $scope.username_l, password: $scope.password_l, city: "testcity1"};                       
+            $http.post('http://api.sense.city:4000/api/1.0/dashboard', parameter).success(
                                 function (response, status, headers, cnfg) {
                                     response = response.split(';');
                                     if (response != "failure") {
@@ -48,8 +44,8 @@ app.controller('login_controller', ['$scope', '$window', '$http', '$cookieStore'
                                         $cookieStore.put('email', response[3]);
                                         $cookieStore.put('uuid', response[4]);
                                         $cookieStore.put('username', response[5]);
-
-                                        $window.location.href = "/admin/admin.html";
+                                        
+                                        $location.path("/admin");
 
                                     } else {
                                         $window.alert("Wrong credentials!");

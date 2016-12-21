@@ -1,8 +1,50 @@
-/*global require,module*/
-(function commonJS(require, module) {
-  'use strict';
+var app = angular.module('MainAdmin', ['ngCookies','ngRoute','login_fo','adminapp.adminctrl','adminapp.adminsrvs']);
 
-  require('./dist/angular-tooltips');
+app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
+            
+    $anchorScrollProvider.disableAutoScrolling();
 
-  module.exports = '720kb.tooltips';
-}(require, module));
+    $routeProvider.when('/admin', {
+        templateUrl: 'admin.html',
+        controller: 'adminController'
+    }).when('/login', {
+        templateUrl: 'login.html',
+        controller: 'login_controller'
+    });
+
+});
+
+app.controller('MainController',['$rootScope','$http','$window',function($rootScope,$http,$window){
+      
+        var mainInfo = $http.get('../sensecity-web/config/testcity1.json').success(function (response) {
+            
+            $rootScope.Variables = {
+                //city_name: sub_domain[0],
+                city_name: "testcity1",
+                lat_center: response.lat_center,
+                long_center: response.long_center,
+                img_logo: "images/city_logos/" + response.city_name + ".jpg",
+                bugzilla_products: response.bugzilla_products,
+                APIURL: response.APIURL,
+                bugzilla: response.bugzilla,
+                ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+                activate_user_URL: response.active_user_URL,
+                APIADMIN: response.APIADMIN,
+                components: response.components,
+                components_en : response.components_en,
+                icons: response.icons,
+                host: response.host,
+                activeTitles: response.activeTitles,
+                activeIcons: response.activeIcons,
+                depUsersTitle: response.depUserTitles,
+                depUserContent: response.depUserContent,
+                depUserIcons: response.depUserIcons,
+                cityAdminTabs: response.cityAdminTabs,
+                center: response.center,
+                map_zoom: 12
+            };
+
+            return $rootScope;
+        });   
+        
+}]);
