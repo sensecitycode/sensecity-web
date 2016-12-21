@@ -1,5 +1,5 @@
-var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource', 'scissuemapapp.scissuemapsrvs'])
-        .constant("config", {"host": "api.sense.city", "port": "4000"});
+var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource','scissuemapapp.scissuemapsrvs'])
+        .constant("config", {"host": "api.sense.city", "port": "3000"});
 
 appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config',
     function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config) {

@@ -38,6 +38,8 @@ var mainInfo = $http.get('/config/'+sub_domain[0]+'.json').success(function(resp
 			active_user_URL : response.active_user_URL,
 			activate_user_URL : response.activate_user_URL,
 			APIADMIN: response.APIADMIN,
+			map_zoom:response.zoom,	
+			host:response.host	
 			map_zoom:response.zoom,
                         translations_en: response.translations_en,
                         transaltions_gr: response.translations_gr,
