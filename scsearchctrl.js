@@ -22,15 +22,12 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         $scope.toggleState = function () {
             $scope.state = !$scope.state;
         };
-
         var icons = $rootScope.Variables.icons;
-
         $scope.center = {
             lat: $rootScope.Variables.lat_center,
             lng: $rootScope.Variables.long_center,
             zoom: 12
         };
-
         $scope.layers = {
             baselayers: {
                 openStreetMap: {
@@ -45,12 +42,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             },
             overlays: $rootScope.Variables.overlays
         };
-
         var startdate = new Date();
         startdate.setDate(startdate.getDate() - 30);
         $scope.startISOdate = startdate;
         $scope.endISOdate = new Date();
-
 //need to refresh the map layer after everything is rendered, otherwise it displays empty tiles
         $scope.invalidateTheMap = function () {
 
@@ -60,14 +55,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     }
             );
         };
-
         $scope.$on("leafletDirectiveMarker.click", function (event, args) {
             var marker3 = args.leafletObject;
             var popup = marker3.getPopup();
-
             var issue_name;
             var issue_image;
-
             Issue2MapService.query({issueID: marker3.options.issue_id}, function (resp) {
 
                 var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
@@ -83,10 +75,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                 popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
                 popup.update();
-
             });
         });
-
         $scope.submit = function () {
             $scope.startdate = $scope.startISOdate.getFullYear() + '-' + ($scope.startISOdate.getMonth() + 1) + '-' + $scope.startISOdate.getDate();
             $scope.enddate = $scope.endISOdate.getFullYear() + '-' + ($scope.endISOdate.getMonth() + 1) + '-' + $scope.endISOdate.getDate();
@@ -94,18 +84,23 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             var feelingsObj;
             var states = "";
             var feelings = "";
+            var component = angular.copy($rootScope.Variables.components);
             var i = 0;
             angular.forEach($scope.searchState, function (state, sstate) {
                 if (state == true) {
-                    if (i == 0) {
-                        states += sstate;
-                        i++;
+                    if (sstate != "default") {
+                        if (i == 0) {
+                            states += sstate;
+                            i++;
+                        } else {
+                            states += "|" + sstate;
+                        }
                     } else {
-                        states += "|" + sstate;
+                        component.push("default");
                     }
                 }
             });
-
+            
             angular.forEach($scope.searchIssue, function (state, problem) {
                 if (problem == "roadcontructor") {
                     problem = "road-contructor";
@@ -116,13 +111,12 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                 if (state === true) {
                     if (states == "") {
-                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0});
+                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, component: component});
                     } else {
-                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, status: states});
+                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, status: states, component: component});
                     }
                 }
             });
-
             i = 0;
             angular.forEach($scope.searchFeeling, function (state, feeling) {
                 if (state == true) {
@@ -134,12 +128,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     }
                 }
             });
-
             if (paramsObj.length == 0) {
                 if (states == "") {
-                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0});
+                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, component: component});
                 } else {
-                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states});
+                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, component: component});
                 }
             }
 
@@ -155,7 +148,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             }
 
             promisesArray.push(feelingsQuery(feelingsObj));
-
             $q.all(promisesArray).then(function (data) {
                 var searchissues = [];
                 for (i = 0; i < data.length; i++) {
@@ -172,7 +164,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     var positionlon = value.loc.coordinates[0];
                     var issue = value.issue;
                     var layer = '';
-
                     if (issue == "angry" || issue == "neutral" || issue == "happy") {
                         layer = 'reaction';
                     } else {
@@ -197,7 +188,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }, $scope.markers);
             });
         };
-
         $scope.reset = function () {
             var startdate = new Date();
             startdate.setDate(startdate.getDate() - 30);
@@ -213,7 +203,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 zoom: $rootScope.Variables.map_zoom
             };
         };
-
         function doQuery(obj) {
             var d = $q.defer();
             DisplayIssuesService.query(obj, function (result) {

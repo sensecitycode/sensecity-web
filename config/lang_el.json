@@ -19,10 +19,7 @@
         "IN_PROGRESS": "Ανάθεση/Σε Εκτέλεση",
         "RESOLVED": "Ολοκληρωμένα",
         "ISSUES_SINCE": "Προβλήματα από",
-        "ISSUE_DATE": [
-            "Ημερομηνία Συμβάντος",
-            "Ημερομηνία Συμβάντος"
-        ],
+        "ISSUE_DATE": "Ημερομηνία Συμβάντος",
         "SOLUTIONS_SINCE": "Λύσεις από",
         "ISSUES_LAST_X_DAYS": "Προβλήματα τελ.",
         "EVENTS_LAST_X_DAYS": "Συμβάντα τελ.",
@@ -94,5 +91,6 @@
         "WARNING_MSG_REQUIRED_FIELD": "Το πεδίο είναι υποχρεωτικό!",
         "SUBMIT_AND_CONTINUE": "Απόθηκευση & Συνέχεια",
         "NATURAL_DISASTERS": "Θεομηνία",
+        "ANONYMOUS": "Ανώνυμα",
         "GROSS_PLOT": "Ακαθάριστο οικόπεδο"
     }
