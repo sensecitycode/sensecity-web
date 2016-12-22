@@ -54,10 +54,10 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         $(window).on('resize', function () {
             if ($(".panel.panel-default").width() <= 600) { //isws prepei na checkaroume ean einai ston xarth
                 isfixed = 0;
-            } else {
+            } /*else {
 				console.log("test2");
                 isfixed = 1;
-            }
+            }*/
         });
 
         function authorizedu() {
