@@ -84,7 +84,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             var feelingsObj;
             var states = "";
             var feelings = "";
-            var component = angular.copy($rootScope.Variables.components);
+            var includeAnonymous = 0;
             var i = 0;
             angular.forEach($scope.searchState, function (state, sstate) {
                 if (state == true) {
@@ -96,7 +96,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             states += "|" + sstate;
                         }
                     } else {
-                        component.push("default");
+                        includeAnonymous = 1;
                     }
                 }
             });
@@ -111,9 +111,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                 if (state === true) {
                     if (states == "") {
-                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, component: component});
+                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, includeAnonymous: includeAnonymous});
                     } else {
-                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, status: states, component: component});
+                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, status: states, includeAnonymous: includeAnonymous});
                     }
                 }
             });
@@ -130,9 +130,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             });
             if (paramsObj.length == 0) {
                 if (states == "") {
-                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, component: component});
+                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, includeAnonymous: includeAnonymous});
                 } else {
-                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, component: component});
+                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
                 }
             }
 
