@@ -14,38 +14,7 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	
 	var url_path = $location.absUrl().split("//");
 	var sub_domain = url_path[1].split(".");
-	
-var mainInfo = $http.get('/config/'+sub_domain[0]+'.json').success(function(response) {
-		
-		$rootScope.Variables = {
-			city_name: sub_domain[0],
-			lat_center: response.lat_center,
-			long_center: response.long_center,
-			img_logo: "images/city_logos/"+response.city_name+".jpg",
-			bugzilla_products: response.bugzilla_products,
-                        icons: response.icons,
-			APIURL: response.APIURL,
-                        components: response.components,
-                        components_en: response.components_en,
-                        overlays: response.overlays,
-                        categories: response.categories,
-                        categories_issue: response.categories_issue,
-                        departments: response.departments,
-                        departments_en: response.departments_en,
-                        feelingsURL: response.feelingsURL,
-			bugzilla: response.bugzilla,
-			ALLISSUESAPIURL: response.ALLISSUESAPIURL,
-			active_user_URL : response.active_user_URL,
-			activate_user_URL : response.activate_user_URL,
-			APIADMIN: response.APIADMIN,
-                        issue_type_en: response.issue_type_en,
-                        issue_type_gr: response.issue_type_gr,
-			map_zoom:response.zoom,	
-			host:response.host	
-                 };
-                
-        return $rootScope;
-    });
+	//'/config/'+sub_domain[0]+'.json'
 	//console.log("response.city_name = " + Variables.city_name);
 	
 });

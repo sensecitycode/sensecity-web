@@ -10,7 +10,9 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
     }).when('/login', {
         templateUrl: 'login.html',
         controller: 'login_controller'
-    });
+    }).otherwise({
+        redirectTo: '/login'
+    });;
 
 });
 

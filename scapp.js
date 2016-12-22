@@ -3,8 +3,6 @@ var app = angular.module('scApp', ['mgcrea.ngStrap', 'scapp.controllers', 'sciss
     'ngResource', 'ngRoute', 'ui-leaflet', 'angular-loading-bar',
     'ngAnimate', 'pascalprecht.translate', 'ngCookies', 'countTo']);
 
-var translateProv;
-
 app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider,
         cfpLoadingBarProvider) {
 
@@ -56,14 +54,47 @@ app.controller('NavCtrl', ['$scope', '$location', '$rootScope', '$translate', fu
 
 
 app.config(['$translateProvider', function ($translateProvider) {
-        translateProv = $translateProvider;
+        $translateProvider.useStaticFilesLoader({
+            prefix: 'config/lang_',
+            suffix: '.json'
+        });
+
+        $translateProvider.preferredLanguage('el');
+        $translateProvider.useLocalStorage();
     }]);
 
-app.run(['$rootScope', function ($rootScope) {
-        translateProv.translations('en', $rootScope.Variables.translations_en);
+app.run(['$rootScope','$http', function ($rootScope, $http) {
+        var mainInfo = $http.get('config/testcity1.json').success(function (response) {
 
-        translateProv.translations('el', $rootScope.Variables.translations_gr);
+            $rootScope.Variables = {
+                //city_name: sub_domain[0],
+                city_name: "testcity1",
+                lat_center: response.lat_center,
+                long_center: response.long_center,
+                img_logo: "images/city_logos/" + response.city_name + ".jpg",
+                bugzilla_products: response.bugzilla_products,
+                icons: response.icons,
+                APIURL: response.APIURL,
+                components: response.components,
+                components_en: response.components_en,
+                overlays: response.overlays,
+                categories: response.categories,
+                categories_issue: response.categories_issue,
+                departments: response.departments,
+                departments_en: response.departments_en,
+                feelingsURL: response.feelingsURL,
+                bugzilla: response.bugzilla,
+                ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+                active_user_URL: response.active_user_URL,
+                activate_user_URL: response.activate_user_URL,
+                APIADMIN: response.APIADMIN,
+                issue_type_en: response.issue_type_en,
+                issue_type_gr: response.issue_type_gr,
+                map_zoom: response.zoom,
+                host: response.host
+            };
 
-        translateProv.preferredLanguage('el');
-        translateProv.useLocalStorage();
+            return $rootScope;
+        });
+
     }]);

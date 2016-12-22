@@ -162,12 +162,12 @@ appControllers
                                     + '-' + $scope.endISOdate.getDate();
 
                             var paramsObj = [];
-
-                            for (var i = 0; i < $rootScope.categories.length; i++) {
+                            
+                            for (var i = 0; i < $rootScope.Variables.categories.length; i++) {
                                 paramsObj.push({
                                     startdate: $scope.startdate,
                                     enddate: $scope.enddate,
-                                    issue: $rootScope.categories[i],
+                                    issue: $rootScope.Variables.categories[i],
                                     image_field: 0
                                 });
                             }
