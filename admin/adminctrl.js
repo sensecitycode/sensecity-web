@@ -81,12 +81,14 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $(document).on('scroll', function () {
             var bottom = $('.xn-profile').position().top;
-			console.log("bottom" + bottom);
+			console.log("bottom " + bottom);
             var outerHeight = $('.xn-profile').height();
-			console.log("outerHeight" + outerHeight);
-			console.log("window" + $(window).scrollTop());
+			console.log("outerHeight " + outerHeight);
+			console.log("window " + $(window).scrollTop());
+			console.log("isfixed " + isfixed);
             if ($(window).scrollTop() > bottom + outerHeight && $(window).width() > 600) {
                 if (isfixed == 0) {
+					console.log("fixed");
                     $("#right-column").css({position: 'fixed', left: '58%', top: '3%', width: '40%'});
                 }
             } else {
