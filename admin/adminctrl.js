@@ -81,7 +81,10 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $(document).on('scroll', function () {
             var bottom = $('.xn-profile').position().top;
+			console.log("bottom" + bottom);
             var outerHeight = $('.xn-profile').height();
+			console.log("outerHeight" + outerHeight);
+			console.log("window" + $(window).scrollTop());
             if ($(window).scrollTop() > bottom + outerHeight && $(window).width() > 600) {
                 if (isfixed == 0) {
                     $("#right-column").css({position: 'fixed', left: '58%', top: '3%', width: '40%'});
