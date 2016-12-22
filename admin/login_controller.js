@@ -32,8 +32,7 @@ app.controller('login_controller', ['$scope', '$rootScope','$window', '$http', '
         
         $scope.authenticate_us = function (event) {
             var domain = $location.host().split(".");
-            //domain[0]
-            var parameter = {username: $scope.username_l, password: $scope.password_l, city: "testcity1"};                       
+            var parameter = {username: $scope.username_l, password: $scope.password_l, city: domain[0]};                       
             $http.post('http://api.sense.city:4000/api/1.0/dashboard', parameter).success(
                                 function (response, status, headers, cnfg) {
                                     response = response.split(';');

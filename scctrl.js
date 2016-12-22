@@ -7,15 +7,6 @@ var appControllers = angular.module('scapp.controllers', ['pascalprecht.translat
 appControllers.controller('sensecityMainCtrl', function($scope, $log, $location, $rootScope,$http,$window) {
 	$log.debug('inside sensecityMainCtrl controller');
 	$scope.scvesrion = '20160712_trunk';
-	$scope.location = $location;
-	
-	
-	
-	
-	var url_path = $location.absUrl().split("//");
-	var sub_domain = url_path[1].split(".");
-	//'/config/'+sub_domain[0]+'.json'
-	//console.log("response.city_name = " + Variables.city_name);
 	
 });
 
