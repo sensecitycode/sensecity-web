@@ -6,35 +6,39 @@
             <div class="page-container">
 
                 <!-- START PAGE SIDEBAR -->
-                <div class="page-sidebar">
-                    <!-- START X-NAVIGATION -->
-                    <ul class="x-navigation">
-                        <li class="xn-logo">
-                            <a href="#/admin"><div style="left:-8px;position:relative;top:-2px"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
-                            <a href="#/admin" class="x-navigation-control"></a>
-                        </li>
-                        <li class="xn-profile">
-                            <a href="#/admin" class="profile-mini">
-                                <img src="assets/images/users/avatar.jpg" alt="John Doe"/>
-                            </a>
-                            <div class="profile">
-                                <div class="profile-data">
-                                    <div class="profile-data-name" ng-model="usrname">{{usrname}}</div>
-                                    <div class="profile-data-title" ng-model="usrrole">{{usrrole}}</div>
-                                </div>
-                            </div>                                                                        
-                        </li>
-                        <li class="xn-title">Περιήγηση</li>                
-                        <li class="xn-openable">
-                            <a href="#/admin"><span class="fa fa-desktop"></span> <span class="xn-text">Προβλήματα</span></a>
-                            <ul>
-                                <li ng-click="changeTab($index); refresh()" ng-repeat="tab in tabs" ng-class="($index == tabs.activeTab) ? 'active':''" data-title="{{ tab.title}}" name="{{ tab.title}}"><a href="#/admin"><i ng-class="tab.icon"></i>{{tab.title}}</a></li>                                                      
-                            </ul>
-                        </li>
+                <div class="page-sidebar page-sidebar-fixed scroll mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="height: 950px;">
+					<div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" tabindex="0">
+						<div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
+							<!-- START X-NAVIGATION -->
+							<ul class="x-navigation">
+								<li class="xn-logo">
+									<a href="#/admin"><div style="left:-8px;position:relative;top:-2px"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+									<a href="#/admin" class="x-navigation-control"></a>
+								</li>
+								<li class="xn-profile">
+									<a href="#/admin" class="profile-mini">
+										<img src="assets/images/users/avatar.jpg" alt="John Doe"/>
+									</a>
+									<div class="profile">
+										<div class="profile-data">
+											<div class="profile-data-name" ng-model="usrname">{{usrname}}</div>
+											<div class="profile-data-title" ng-model="usrrole">{{usrrole}}</div>
+										</div>
+									</div>                                                                        
+								</li>
+								<li class="xn-title">Περιήγηση</li>                
+								<li class="xn-openable">
+									<a href="#/admin"><span class="fa fa-desktop"></span> <span class="xn-text">Προβλήματα</span></a>
+									<ul>
+										<li ng-click="changeTab($index); refresh()" ng-repeat="tab in tabs" ng-class="($index == tabs.activeTab) ? 'active':''" data-title="{{ tab.title}}" name="{{ tab.title}}"><a href="#/admin"><i ng-class="tab.icon"></i>{{tab.title}}</a></li>                                                      
+									</ul>
+								</li>
 
-                    </ul>
-                    <!-- END X-NAVIGATION -->
-                </div>
+							</ul>
+							<!-- END X-NAVIGATION -->
+						</div>
+					</div>
+				</div>
                 <!-- END PAGE SIDEBAR -->
 
                 <!-- PAGE CONTENT -->
