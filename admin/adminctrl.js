@@ -90,7 +90,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             if ($(window).scrollTop() > bottom + outerHeight && $(window).width() > 600) {
                 if (isfixed == 0) {
 					console.log("fixed");
-                    $("#right-column").css({position: 'fixed', top: '3%'});
+                    $("#right-column").css({position: 'fixed', top: '3%', width : '41.6667%'});
                 }
             } else {
                 $("#right-column").removeAttr('style');
