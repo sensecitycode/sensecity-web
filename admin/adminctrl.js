@@ -55,6 +55,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             if ($(".panel.panel-default").width() <= 600) { //isws prepei na checkaroume ean einai ston xarth
                 isfixed = 0;
             } else {
+				console.log("test2");
                 isfixed = 1;
             }
         });
@@ -98,6 +99,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $scope.removeFixed = function () {
             if (isfixed == 0) {
+				console.log("test1");
                 isfixed = 1;
                 $("#right-column").removeAttr('style');
                 $scope.full = 1;
