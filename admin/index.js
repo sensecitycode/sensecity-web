@@ -16,13 +16,15 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
 
 });
 
-app.controller('MainController',['$rootScope','$http','$window',function($rootScope,$http,$window){
+app.controller('MainController',['$rootScope','$http','$window','$location',function($rootScope,$http,$window,$location){
       
-        var mainInfo = $http.get('../sensecity-web/config/testcity1.json').success(function (response) {
+        var mainInfo = $http.get('../config/testcity1.json').success(function (response) {
+            
+            var url_path = $location.absUrl().split("//");
+            var sub_domain = url_path[1].split(".");
             
             $rootScope.Variables = {
-                //city_name: sub_domain[0],
-                city_name: "testcity1",
+                city_name: sub_domain[0],
                 lat_center: response.lat_center,
                 long_center: response.long_center,
                 img_logo: "images/city_logos/" + response.city_name + ".jpg",
