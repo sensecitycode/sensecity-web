@@ -63,11 +63,10 @@ app.config(['$translateProvider', function ($translateProvider) {
         $translateProvider.useLocalStorage();
     }]);
 
-app.run(['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
+app.run(['$rootScope', '$http','$location', function ($rootScope, $http,$location) {
         var mainInfo = $http.get('config/testcity1.json').success(function (response) {
 
 
-            $scope.location = $location;
             var url_path = $location.absUrl().split("//");
             var sub_domain = url_path[1].split(".");
             
