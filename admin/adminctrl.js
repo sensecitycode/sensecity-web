@@ -15,6 +15,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         var init = 1;
         var isfixed = 0;
         var mapnloaded = true;
+        var small = 0;
 
         $scope.isloading = true;
         $scope.full = 0;
@@ -53,10 +54,24 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $(window).on('resize', function () {
             if ($(document).width() <= 992) {
+                small = 1;
                 isfixed = 0;
+                 $("#right-column").removeAttr('style');
             }else {
-				console.log("test2");
-                isfixed = 1;
+                var bottom = $('.xn-profile').position().top;
+            var outerHeight = $('.xn-profile').height();
+                if( small == 1 && $(window).scrollTop() > bottom + outerHeight){
+            if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
+                if( isfixed == 0){
+                    $("#right-column").css({position: 'fixed', top: '4%', width : $("#right-column").width()});
+                }
+            } else {
+                $("#right-column").removeAttr('style');
+            }
+                   small = 0;
+                }else if(small == 1 && $(window).scrollTop() <= bottom + outerHeight){
+                   small = 0; 
+                }
             }
         });
 
@@ -82,14 +97,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $(document).on('scroll', function () {
             var bottom = $('.xn-profile').position().top;
-			console.log("bottom " + bottom);
             var outerHeight = $('.xn-profile').height();
-			console.log("outerHeight " + outerHeight);
-			console.log("window " + $(window).scrollTop());
-			console.log("isfixed " + isfixed);
-            if ($(window).scrollTop() > bottom + outerHeight && $(window).width() > 600) {
-                if (isfixed == 0) {
-					console.log("fixed");
+            if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
+                if( isfixed == 0){
                     $("#right-column").css({position: 'fixed', top: '4%', width : $("#right-column").width()});
                 }
             } else {
@@ -99,13 +109,20 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $scope.removeFixed = function () {
             if (isfixed == 0) {
-				console.log("test1");
                 isfixed = 1;
                 $("#right-column").removeAttr('style');
-                $(document).scrollTop();
                 $scope.full = 1;
             } else {
                 isfixed = 0;
+                var bottom = $('.xn-profile').position().top;
+            var outerHeight = $('.xn-profile').height();
+            if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
+                if( isfixed == 0){
+                    $("#right-column").css({position: 'fixed', top: '4%', width : $("#right-column").width()});
+                }
+            } else {
+                $("#right-column").removeAttr('style');
+            }
                 $scope.full = 0;
             }
         };
