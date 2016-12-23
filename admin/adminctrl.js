@@ -52,7 +52,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //                });
 
         $(window).on('resize', function () {
-            if ($(".panel.panel-default").width() <= 600) { //isws prepei na checkaroume ean einai ston xarth
+            if ($(document).width() <= 992) {
                 isfixed = 0;
             }else {
 				console.log("test2");
@@ -90,7 +90,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             if ($(window).scrollTop() > bottom + outerHeight && $(window).width() > 600) {
                 if (isfixed == 0) {
 					console.log("fixed");
-                    $("#right-column").css({position: 'fixed', top: '3%', width : '41.6667%'});
+                    $("#right-column").css({position: 'fixed', top: '4%', width : $("#right-column").width()});
                 }
             } else {
                 $("#right-column").removeAttr('style');
@@ -102,6 +102,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 				console.log("test1");
                 isfixed = 1;
                 $("#right-column").removeAttr('style');
+                $(document).scrollTop();
                 $scope.full = 1;
             } else {
                 isfixed = 0;

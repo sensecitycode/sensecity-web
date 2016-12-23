@@ -188,7 +188,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             }
         });
 
-        var history = $resource('http://' + config.host + ':' + config.port + '/api/1.0/fullissue/' + issue_id,
+        var history = $resource($rootScope.Variables.APIADMIN+'/fullissue/' + issue_id,
                 {'query': {method: 'GET', isArray: true}});
         history.query(function (response) {
             //        var res = [{
