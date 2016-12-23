@@ -64,11 +64,13 @@ app.config(['$translateProvider', function ($translateProvider) {
     }]);
 
 app.run(['$rootScope', '$http','$location', function ($rootScope, $http,$location) {
-        var mainInfo = $http.get('../config/testcity1.json').success(function (response) {
+        var url_path = $location.absUrl().split("//");
+        var sub_domain = url_path[1].split(".");
+        
+        var mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function (response) {
 
 
-            var url_path = $location.absUrl().split("//");
-            var sub_domain = url_path[1].split(".");
+            
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],

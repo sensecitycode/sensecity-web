@@ -17,11 +17,12 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
 });
 
 app.controller('MainController',['$rootScope','$http','$window','$location',function($rootScope,$http,$window,$location){
-      
-        var mainInfo = $http.get('../config/testcity1.json').success(function (response) {
-            
-            var url_path = $location.absUrl().split("//");
+      var url_path = $location.absUrl().split("//");
             var sub_domain = url_path[1].split(".");
+            
+        var mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function (response) {
+            
+            
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],
