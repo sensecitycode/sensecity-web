@@ -601,7 +601,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 				}
 	
 				var jsonact_Data = '{ "id1" : "'+user_id+'", "id2": "web-site", "id3": "'+$scope.codeTxt+'"}';
-				
+				console.log(jsonact_Data);
 				return $http({
 					method : 'POST',
 					url : $rootScope.Variables.activate_user_URL,
@@ -610,7 +610,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 					},
 					data : jsonact_Data 
 				}).success(function(resp) {
-					
+					console.log(JSON.stringify(resp));
 					$scope.submit_button = false;
 					$scope.register_button = false;
 					$scope.verify_button = false;
