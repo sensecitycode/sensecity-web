@@ -64,7 +64,7 @@ app.config(['$translateProvider', function ($translateProvider) {
     }]);
 
 app.run(['$rootScope', '$http','$location', function ($rootScope, $http,$location) {
-        var mainInfo = $http.get('config/testcity1.json').success(function (response) {
+        var mainInfo = $http.get('../config/testcity1.json').success(function (response) {
 
 
             var url_path = $location.absUrl().split("//");

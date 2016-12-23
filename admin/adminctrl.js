@@ -16,7 +16,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         var isfixed = 0;
         var mapnloaded = true;
         var small = 0;
-
+        
         $scope.isloading = true;
         $scope.full = 0;
 
@@ -74,7 +74,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 }
             }
         });
-
+        
         function authorizedu() {
             if ($cookieStore.get("uuid") !== undefined) {
                 $scope.valid = true;
@@ -108,7 +108,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         });
 
         $scope.removeFixed = function () {
-            if (isfixed == 0) {
+            if ($scope.full == 0) {
                 isfixed = 1;
                 $("#right-column").removeAttr('style');
                 $scope.full = 1;

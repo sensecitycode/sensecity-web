@@ -17,7 +17,7 @@ appControllers.directive('sidebarDirective', function () {
 });
 
 appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', 'DisplayIssuesService', 'DisplayFeelingsService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, DisplayIssuesService, DisplayFeelingsService, Issue2MapService, leafletData) {
-
+        //$scope.issues = [{"class":"fa fa-trash-o","value": "garbage", "translate": "'GARBAGE_ISSUE' | translate"},{"class":"fa fa-lightbulb-o","value": "lighting", "translate": "'LIGHTNING_ISSUE' | translate"}];
         $scope.state = true;
         $scope.toggleState = function () {
             $scope.state = !$scope.state;
@@ -86,6 +86,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             var feelings = "";
             var includeAnonymous = 0;
             var i = 0;
+            
             angular.forEach($scope.searchState, function (state, sstate) {
                 if (state == true) {
                     if (sstate != "default") {

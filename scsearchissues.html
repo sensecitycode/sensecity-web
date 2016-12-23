@@ -12,9 +12,10 @@
 
         <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'ISSUES' | translate }}</div>
             <div ng-model="searchIssue" class="text-center" bs-checkbox-group>
+<!--                <label ng-repeat="issue in issues" class="btn btn-default"><i class="{{issue.class}}" ng-bind="$eval(issue.translate)"></i> <input type="checkbox" class="btn btn-default" data-value={{issue.value}}></label><br />-->
                 <label class="btn btn-default"><i class="fa fa-trash-o"></i> <input type="checkbox" class="btn btn-default" value="garbage" > {{ 'GARBAGE_ISSUE' | translate }}</label><br />
                 <label class="btn btn-default"><i class="fa fa-lightbulb-o"></i> <input type="checkbox" class="btn btn-default" value="lighting"> {{ 'LIGHTNING_ISSUE' | translate }}</label><br />
-                <!--                      <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="checkbox" class="btn btn-default" value="plumbing">  {{ 'PLUMBING_ISSUE' | translate }}</label><br />-->
+                                      <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="checkbox" class="btn btn-default" value="plumbing">  {{ 'PLUMBING_ISSUE' | translate }}</label><br />
                 <label class="btn btn-default"><i class="fa fa-road"></i> <input type="checkbox" class="btn btn-default" value="roadcontructor">  {{ 'ROAD_ISSUE' | translate }}</label><br />
                 <label class="btn btn-default"><i class="fa fa-shield"></i> <input type="checkbox" class="btn btn-default" value="protectionpolicy">  {{ 'PROTECTION_POLICY_ISSUE' | translate }}</label><br />
                 <label class="btn btn-default"><i class="fa fa-tree"></i> <input type="checkbox" class="btn btn-default" value="green">  {{ 'GREEN_ISSUE' | translate }}</label><br />
