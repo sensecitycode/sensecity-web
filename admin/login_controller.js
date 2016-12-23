@@ -1,5 +1,5 @@
 var app = angular.module('login_fo', ['ngCookies','ngRoute'])
-        .constant("config", {"host": "api.sense.city", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "4000", "bugzilla_path": "/bugzilla"});
+        .constant("config", {"host": "api.sense.city", "bugzilla_host": "nam.ece.upatras.gr:80", "port": "3000", "bugzilla_path": "/bugzilla"});
 
 
 //app.config([
