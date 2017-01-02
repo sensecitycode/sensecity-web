@@ -16,60 +16,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		};
 
 
-	$scope.availableIssues= [
-	                                     
-	                   {id: 'garbage', name: 'GARBAGE_ISSUE', 
-	                	   types: [ 
-	                	            {id: '1', name:'BROKENGARBAGE_BIN'},
-	                	            {id: '2', name:'BULKY_ITEMS'},
-	                	            {id: '3', name:'CUT_BRANCHES'},
-									{id: '4', name:'DEBRIS'},
-									{id: '5', name:'SQUARE_CLEANING'},
-									{id: '6', name:'MOTORIZED_SCANNING'},
-	                	            {id: 'other', name:'OTHER'}] 
-	                   },
-	                   {id: 'lighting', name: 'LIGHTNING_ISSUE', 
-	                	   types: [ 
-	                	            {id: '1', name:'GLOWING_LAMPS'},
-	                	            {id: '2', name:'BROKEN_ARM'},
-	                	            {id: '3', name:'INSUFFICIENT_LIGHTING'},
-	                	            {id: 'other', name:'OTHER'}] 
-	                   },
-	                   {id: 'plumbing', name: 'PLUMBING_ISSUE', 
-	                	   types: [ 
-	                	            {id: '1', name:'CLOGGED_WELL'},
-	                	            {id: '2', name:'BROKEN_WELL'},
-	                	            {id: 'other', name:'OTHER'}] 
-	                   },
-	                   {id: 'road-contructor', name: 'ROAD_ISSUE', 
-	                	   types: [ 
-	                	            {id: '1', name:'POTHOLES'},
-									{id: '2', name:'COMMON_AREA'},
-	                	            {id: '3', name:'BROKEN_PLATES'},
-	                	            {id: '4', name:'ABANDONED_CAR'},
-	                	            {id: '5', name:'OCCUPATION_PAVEMENT'},
-									{id: '6', name:'BROKEN_BENCH'},
-									{id: '7', name:'BOTCHERY'},
-	                	            {id: 'other', name:'OTHER'}] 
-	                   },
-	                   {id: 'protection-policy', name: 'PROTECTION_POLICY_ISSUE', 
-	                	   types: [ {id: '1', name:'NATURAL_DISASTERS'},
-									{id: '2', name:'GROSS_PLOT'},
-									{id: 'other', name:'OTHER'}] 
-	                   },
-	                   {id: 'enviroment', name: 'ENVIROMENT_ISSUE', 
-	                	   types: [ {id: '1', name:'STRAY_ANIMALS'},
-									{id: '2', name:'RECYCLE_ISSUE'},
-									{id: 'other', name:'OTHER'}] 
-	                   },
-	                   {id: 'green', name: 'GREEN_ISSUE', 
-	                	   types: [ 
-	                	            {id: '1', name:'CUTTING_GRASS'},
-	                	            {id: '2', name:'TREE_PRUNING'},
-	                	            {id: '3', name:'RODENT'},	                	            
-	                	            {id: 'other', name:'OTHER'}] 
-	                   }
-	                 ];
+	$scope.availableIssues= $rootScope.Variables.availableIssues;
 
 	
 	$scope.issueTypeSelect = $scope.availableIssues[0];

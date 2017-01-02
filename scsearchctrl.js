@@ -1,4 +1,4 @@
-var appControllers = angular.module('searchapp.controllers', []);
+var appControllers = angular.module('searchapp.controllers', ['ngSanitize']);
 
 
 appControllers.directive('sidebarDirective', function () {
@@ -17,7 +17,7 @@ appControllers.directive('sidebarDirective', function () {
 });
 
 appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', 'DisplayIssuesService', 'DisplayFeelingsService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, DisplayIssuesService, DisplayFeelingsService, Issue2MapService, leafletData) {
-        //$scope.issues = [{"class":"fa fa-trash-o","value": "garbage", "translate": "'GARBAGE_ISSUE' | translate"},{"class":"fa fa-lightbulb-o","value": "lighting", "translate": "'LIGHTNING_ISSUE' | translate"}];
+        $scope.issues = $rootScope.Variables.searchIssues;
         $scope.state = true;
         $scope.toggleState = function () {
             $scope.state = !$scope.state;
@@ -28,6 +28,17 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             lng: $rootScope.Variables.long_center,
             zoom: 12
         };
+        
+        var counter = 0; 
+        
+        $scope.checked_issue = function(index){
+            counter++;
+            if(counter == 2){
+                counter = 0;
+                $scope.issues[index].checked = !$scope.issues[index].checked;
+            }
+        };
+        
         $scope.layers = {
             baselayers: {
                 openStreetMap: {
@@ -101,20 +112,22 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     }
                 }
             });
-            
-            angular.forEach($scope.searchIssue, function (state, problem) {
-                if (problem == "roadcontructor") {
-                    problem = "road-contructor";
+
+            var issue_counter = 0;
+            angular.forEach($scope.issues, function (issue) {
+                
+                if (issue.value == "roadcontructor") {
+                    issue.value = "road-contructor";
                 }
-                if (problem == "protectionpolicy") {
-                    problem = "protection-policy";
+                if (issue.value == "protectionpolicy") {
+                    issue.value = "protection-policy";
                 }
 
-                if (state === true) {
+                if (issue.checked === true) {
                     if (states == "") {
-                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, includeAnonymous: includeAnonymous});
+                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: issue.value, image_field: 0, includeAnonymous: includeAnonymous});
                     } else {
-                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: problem, image_field: 0, status: states, includeAnonymous: includeAnonymous});
+                        paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: issue.value, image_field: 0, status: states, includeAnonymous: includeAnonymous});
                     }
                 }
             });

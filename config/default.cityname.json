@@ -48,6 +48,11 @@
                     },
                     {
                     }],
+        "availableIssues": [{"id": "",
+            "name": "",
+            "types": [
+                {"id":"","name":""},{"id":"","name":""}]}],
+        "searchIssues": [{"class":"","value": "", "translate": ""},{"class":"","value": "", "translate": ""}],
         "": "",        
         "host": ""
 }

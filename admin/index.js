@@ -7,11 +7,11 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
     $routeProvider.when('/admin', {
         templateUrl: 'admin.html',
         controller: 'adminController'
-    }).when('/login', {
+    }).when('/', {
         templateUrl: 'login.html',
         controller: 'login_controller'
     }).otherwise({
-        redirectTo: '/login'
+        redirectTo: '/'
     });;
 
 });
@@ -19,10 +19,9 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
 app.controller('MainController',['$rootScope','$http','$window','$location',function($rootScope,$http,$window,$location){
       var url_path = $location.absUrl().split("//");
             var sub_domain = url_path[1].split(".");
-            
-        var mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function (response) {
-            
-            
+            sub_domain[0] = "testcity1";
+
+        var mainInfo = $http.get('http://localhost:8383/sensecity-web/config/testcity1.json').success(function (response) {
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],
@@ -41,7 +40,7 @@ app.controller('MainController',['$rootScope','$http','$window','$location',func
                 host: response.host,
                 activeTitles: response.activeTitles,
                 activeIcons: response.activeIcons,
-                depUsersTitle: response.depUserTitles,
+                depUsersTitles: response.depUserTitles,
                 depUserContent: response.depUserContent,
                 depUserIcons: response.depUserIcons,
                 cityAdminTabs: response.cityAdminTabs,

@@ -67,7 +67,9 @@ app.run(['$rootScope', '$http','$location', function ($rootScope, $http,$locatio
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         
-        var mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function (response) {
+        sub_domain[0] = "testcity1";
+        
+        var mainInfo = $http.get('http://localhost:8383/sensecity-web/config/testcity1.json').success(function (response) {
 
 
             
@@ -95,6 +97,8 @@ app.run(['$rootScope', '$http','$location', function ($rootScope, $http,$locatio
                 APIADMIN: response.APIADMIN,
                 issue_type_en: response.issue_type_en,
                 issue_type_gr: response.issue_type_gr,
+                availableIssues: response.availableIssues,
+                searchIssues: response.searchIssues,
                 map_zoom: response.zoom,
                 host: response.host
             };
