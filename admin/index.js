@@ -19,9 +19,9 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
 app.controller('MainController',['$rootScope','$http','$window','$location',function($rootScope,$http,$window,$location){
       var url_path = $location.absUrl().split("//");
             var sub_domain = url_path[1].split(".");
-            sub_domain[0] = "testcity1";
-
-        var mainInfo = $http.get('http://localhost:8383/sensecity-web/config/testcity1.json').success(function (response) {
+//            sub_domain[0] = "testcity1";
+// 'http://localhost:8383/sensecity-web/config/testcity1.json'
+        var mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function (response) {
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],
@@ -40,7 +40,7 @@ app.controller('MainController',['$rootScope','$http','$window','$location',func
                 host: response.host,
                 activeTitles: response.activeTitles,
                 activeIcons: response.activeIcons,
-                depUsersTitles: response.depUserTitles,
+                depUserTitles: response.depUserTitles,
                 depUserContent: response.depUserContent,
                 depUserIcons: response.depUserIcons,
                 cityAdminTabs: response.cityAdminTabs,

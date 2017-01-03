@@ -66,10 +66,10 @@ app.config(['$translateProvider', function ($translateProvider) {
 app.run(['$rootScope', '$http','$location', function ($rootScope, $http,$location) {
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
-        
-        sub_domain[0] = "testcity1";
-        
-        var mainInfo = $http.get('http://localhost:8383/sensecity-web/config/testcity1.json').success(function (response) {
+
+//        sub_domain[0] = "testcity1";
+        //'http://localhost:8383/sensecity-web/config/testcity1.json'
+        var mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function (response) {
 
 
             

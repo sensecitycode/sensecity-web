@@ -29,7 +29,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
-        //sub_domain[0]
+       
         $scope.logout = function ($event) {
             $http.get($rootScope.Variables.host + '/api/1.0/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
                 $cookieStore.remove("uuid");
@@ -39,7 +39,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 $cookieStore.remove("email");
                 $cookieStore.remove("username");
                 $cookieStore.remove("bug_token");
-                $location.path("/login");
+                window.location = "index.html";
             });
         };
 
@@ -308,6 +308,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     $scope.role = "departmentUser";
                 }
                 var department = $cookieStore.get("department");
+
                 var dep_index = $rootScope.Variables.depUserTitles.indexOf(department);
                 $scope.tabs = [{
                         "title": $rootScope.Variables.depUserTitles[dep_index],
@@ -400,7 +401,103 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 $scope.currentactive = -1;
                 // $scope.linkmap($scope.panels[args.model.panelid]);
             });
+            
+            var displayFixedPoints = function () {
 
+                            console.log("city_name : " + $rootScope.Variables.city_name);
+
+                            var i = 0;
+                            
+                            var theFixedPoints = FixedPointsService.query(function () {
+                                angular.forEach(theFixedPoints, function (fixedpoint, key) {
+                                    var positionlat = fixedpoint.loc.coordinates[1];
+                                    var positionlon = fixedpoint.loc.coordinates[0];
+                                    i++;
+                                    if (fixedpoint.type === 'garbage') {
+                                        var garbageIcon = 'cyanGarbageBin';
+                                        var titlenote = "κάδος ανακύκλωσης";
+                                        if (fixedpoint.notes[0].ANAKIKLOSI == '0') {
+                                            garbageIcon = 'greenGarbageBin';
+                                            titlenote = "κάδος σκουπιδιών";
+                                        }
+
+                                        var marker = new L.marker([positionlat, positionlon], {
+                                            icon: L.ExtraMarkers.icon(icons[garbageIcon]),
+                                            title: titlenote
+                                        });
+
+                                        $scope.fixedmarkersGarbage.push(marker);
+                                    }
+
+                                    if (fixedpoint.type === 'fotistiko') {
+                                        var fixedLIcon = 'fixedLightning'
+                                        var titlenote = "φωτιστικό στοιχείο";
+
+                                        var marker = new L.marker([positionlat, positionlon], {
+                                            icon: L.ExtraMarkers.icon(icons[fixedLIcon]),
+                                            title: titlenote
+                                        });
+
+                                        $scope.fixedmarkersLightning.push(marker);
+                                    }
+
+                                });
+
+
+                                var markersGarbage = L.markerClusterGroup({
+                                    name: 'Κάδοι',
+                                    visible: true,
+                                    disableClusteringAtZoom: 19,
+                                    animateAddingMarkers: false,
+                                    spiderfyDistanceMultiplier: true,
+                                    singleMarkerMode: false,
+                                    showCoverageOnHover: true,
+                                    chunkedLoading: true
+                                });
+
+                                markersGarbage.addLayers($scope.fixedmarkersGarbage);
+                                leafletData.getMap().then(function (map) {
+                                    map.addLayer(markersGarbage);
+                                });
+
+                                var markersLightning = L.markerClusterGroup({
+                                    name: 'Φωτισμός',
+                                    visible: true,
+                                    disableClusteringAtZoom: 19,
+                                    animateAddingMarkers: false,
+                                    spiderfyDistanceMultiplier: true,
+                                    singleMarkerMode: false,
+                                    showCoverageOnHover: true,
+                                    chunkedLoading: true
+                                });
+
+
+                                markersLightning.addLayers($scope.fixedmarkersLightning);
+
+                                leafletData.getMap().then(function (map) {
+                                    map.addLayer(markersLightning);
+                                });
+
+                                var baseLayers = {
+                                    //'Open Street Map': osmLayer,
+                                    //'Google Maps':googleRoadmap,
+                                    //'Google Maps Satellite':googleHybrid,
+                                    //'Google Maps Traffic':googleTraffic
+                                };
+
+                                var overlays = {
+                                    "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>": markersGarbage,
+                                    "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
+                                };
+
+                                leafletData.getMap().then(function (map) {
+                                    L.control.layers(baseLayers, overlays).addTo(map);
+                                    map.invalidateSize(true);
+                                });
+
+                            });
+                        };
+            
             var pageload = function (callback) {
 
                 $scope.activePage = 1;
@@ -432,6 +529,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //                        }
                         $scope.activePanel = $index;
                         $scope.currentactive = $index;
+                        $(window).resize();
                     } else {
                         $scope.pimage = "";
                         $scope.padmin = true;
@@ -549,6 +647,18 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                 }
                             };
                         }
+                        var commentsArray = [];
+                        
+                        function CommentQuery(id) {
+                            var d = $q.defer();
+                            $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                                    function (response, status, headers, config) {
+                                      d.resolve(response);  
+                                    });
+
+                            return d.promise;
+                        }
+                        
                         angular.forEach(result, function (value, key) {
                             var issue_name = ToGrService.issueName(value.summary);
                             var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
@@ -562,7 +672,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             local_time = timegr(local_time);
                             var time_fromNow = moment(creation_time).fromNow();
                             var parameter;
-
+                            
+                          //  commentsArray.push(CommentQuery({id:id}));
+                            
                             if (!(value.component == "default")) {
                                 $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                         function (response, status, headers, config) {
@@ -681,6 +793,15 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                         });
                             }
                         }, $scope.panels);
+                        
+//                        $q
+//                                    .all(CommentsArray)
+//                                    .then(
+//                                            function (data) {
+//                                            //edw (valta kai sto refresh ean doulepsei)
+//                                            
+//                                            displayFixedPoints();
+//                                            });
                     });
                 };
             };

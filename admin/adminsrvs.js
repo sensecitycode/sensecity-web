@@ -27,16 +27,16 @@ appServices.factory('BugService', function ($resource, $cookieStore, EndPointSer
     );
 });
 
-appServices.factory('Issue2MapService', function ($resource, EndPointService) {
+appServices.factory('Issue2MapService', function ($resource, $rootScope) {
     // console.log("DisplayIssues");
-    return $resource(EndPointService.APIURL + '/api/1.0/fullissue/:issueID',
+    return $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
             {issueID: '@id'},{'query': {method: 'GET', isArray: true}}
     );
 });
 
-appServices.factory('FixPoints2MapService', function ($resource, EndPointService) {
+appServices.factory('FixPoints2MapService', function ($resource, $rootScope) {
     // console.log("DisplayFixPoints");
-    return $resource(EndPointService.APIURL + '/fixed-point/:long/:lat/50/:type',
+    return $resource($rootScope.Variables.APIADMIN + '/fixed-point/:long/:lat/50/:type',
             {
                 long: '@long',
                 lat: '@lat',
