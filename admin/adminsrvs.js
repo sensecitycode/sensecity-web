@@ -27,6 +27,20 @@ appServices.factory('BugService', function ($resource, $cookieStore, EndPointSer
     );
 });
 
+appServices.factory('FixedPointsService', function ( $resource/*, APIEndPointService*/, $rootScope) {
+    return $resource(
+        'json/'+$rootScope.Variables.city_name+'.json',
+        null,
+        {
+          search: {
+            method: 'GET',
+            headers:{'Content-Type':'application/json'},
+            isArray: true
+          }
+        }
+    );
+});
+
 appServices.factory('Issue2MapService', function ($resource, $rootScope) {
     // console.log("DisplayIssues");
     return $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',

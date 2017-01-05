@@ -206,11 +206,11 @@
 										</div>
 										<div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">
 											<div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel == - 1">
-												<leaflet id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="325px" width="100%"  style="color:black">
+												<leaflet style="z-index:3" id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="325px" width="100%"">
 												</leaflet>
 											</div>
 											<div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel != - 1">
-												<leaflet id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="325px" width="100%"  style="color:black">
+												<leaflet style="z-index:3" id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="325px" width="100%">
 												</leaflet>
 											</div>
 										</div>

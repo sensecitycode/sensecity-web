@@ -15,11 +15,12 @@
         <link rel="stylesheet" href="css/ionicons.min.css" />
         <!-- EOF CSS INCLUDE -->               
         <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
-        
+
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.js"></script>
         <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
         <script src="https://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-sanitize.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>
@@ -32,7 +33,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
 
         <link href="./dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
-        
+
         <script src="dist/angular-tooltips.min.js"></script>
 
         <!-- Angular administrationapp dependancies -->
@@ -44,30 +45,33 @@
 
         <!-- Moment Js Greek Locale Support -->
         <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
-        
+
         <script>
-            $(document).keypress(function(event){
+            $(document).keypress(function (event) {
                 var keycode = (event.keyCode ? event.keyCode : event.which);
-                if (keycode == '13'){
+                if (keycode == '13') {
                     $("#login_btn").click();
                 }
             });
         </script>
-        
+
         <!-- Map dependancies -->
-        <script src="./js/leaflet.js"></script>
-        <script src="./js/angular-simple-logger.js"></script>
-        <script src="./js/ui-leaflet.min.js"></script>
-        <script src="./js/leaflet.awesome-markers.js"></script>
-        <script src="./js/leaflet.extra-markers.min.js"></script>
-        <link rel="stylesheet" href="./css/leaflet.css" />
-        <link rel="stylesheet" href="./css/leaflet.awesome-markers.css">
-        <link rel="stylesheet" href="./css/leaflet.extra-markers.min.css">
-        <link rel="stylesheet" href="css/ionicons.min.css" >
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+
+        <script src="js/leaflet.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet.extra-markers.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.js"></script>
         <script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
-        
+
     </head>
     <body ng-view ng-app="MainAdmin" ng-cloak ng-controller="MainController">
 
