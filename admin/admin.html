@@ -1,4 +1,4 @@
-<div ng-show="nloaded" class="loading">
+<div data-ng-init="initialize()" ng-show="nloaded" class="loading">
             Loading&#8230;
         </div>
         <div ng-show="valid">
@@ -199,12 +199,15 @@
 									<div class="panel panel-default">
 										<div class="panel-heading ui-draggable-handle">
 											<ul class="panel-controls" style="margin-top: 2px;">
-												<li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed(); full_panel()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
-												<li ng-show="full == 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed(); full_panel()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
+                                                                                            <li ng-hide="full == 1 && street == 0"><span tooltip-side="bottom" tooltips tooltip-template="Δρόμοι"><a ng-click="removeFixeds()"href="#/admin" class="panel-fullscreen"><span class="fa fa-street-view"></span></a></span></li>  
+												<li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
+												<li ng-show="full == 1 && street != 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
 												<li><span tooltip-side="bottom" tooltips tooltip-template="Ανανέωση προβλημάτων"><a ng-click="refresh()"href="#/admin" class="panel-refresh"><span class="fa fa-refresh"></span></a></span></li>                                       
 											</ul>
 										</div>
 										<div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">
+                                                                                        <div ng-show="street == 1" id="smap" style="width:100%;padding-left:5px;padding-right:5px;height:325px" class="col-md-6"></div>
+                                                                                        <div ng-show="street== 0">
 											<div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel == - 1">
 												<leaflet style="z-index:3" id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="325px" width="100%"">
 												</leaflet>
@@ -213,6 +216,7 @@
 												<leaflet style="z-index:3" id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="325px" width="100%">
 												</leaflet>
 											</div>
+                                                                                        </div>
 										</div>
 									</div>
 								</div>
@@ -285,7 +289,8 @@
                 <script type="text/javascript" src="js/demo_dashboard.js"></script>
                 <!-- END TEMPLATE -->
                 <!-- END SCRIPTS -->
-            </div>        
+            </div>
+        
         </div>
         <div ng-show="!valid">
             Forbidden

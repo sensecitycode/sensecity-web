@@ -17,6 +17,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 var small = 0;
                 $scope.isloading = true;
                 $scope.full = 0;
+                $scope.street = 0;
                 $scope.pimage = "";
                 $scope.padmin = true;
                 $scope.duplicof = "";
@@ -44,7 +45,65 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //
 //                });
 
-                $(window).on('resize', function () {
+                var panorama;
+                $scope.initialize = function(){
+                // var fenway = {lat: 38.246453, lng: 21.735068};             
+
+
+                var fenway = {lat: 38.27942654793131, lng:  21.76288604736328};
+                        var panoOptions = {
+                        position: fenway,
+                                addressControlOptions: {
+                                position: google.maps.ControlPosition.BOTTOM_CENTER
+                                },
+                                linksControl: false,
+                                panControl: false,
+                                zoomControlOptions: {
+                                style: google.maps.ZoomControlStyle.SMALL
+                                },
+                                enableCloseButton: false
+                        };
+                        panorama = new google.maps.StreetViewPanorama(
+                                document.getElementById('smap'), panoOptions);
+                        
+                        var issue_array = [];
+                        var checkOptions = []
+                        for (var k = 1; k < $rootScope.Variables.departments_en.length; k++){
+                checkOptions[k] = {
+                gmap: panorama,
+                        title: $rootScope.Variables.departments_en[k],
+                        id: $rootScope.Variables.departments_en[k],
+                        label: $rootScope.Variables.departments_en[k],
+                        action: function(){
+                         
+                        }
+                }
+                issue_array.push(new checkBox(checkOptions[k]));
+                }
+
+                var ddDivOptions = {
+                items: issue_array,
+                        id: "myddOptsDiv"
+                }
+                //alert(ddDivOptions.items[1]);
+                var dropDownDiv = new dropDownOptionsDiv(ddDivOptions);
+                        var dropDownOptions = {
+                        gmap: panorama,
+                                name: 'Προβλήματα',
+                                id: 'ddControl',
+                                title: 'A custom drop down select with mixed elements',
+                                position: google.maps.ControlPosition.TOP_LEFT,
+                                dropDown: dropDownDiv
+                        }
+
+                var dropDown = new dropDownControl(dropDownOptions);
+                        $(window).resize(function() {
+                // (the 'map' here is the result of the created 'var map = ...' above)
+                google.maps.event.trigger(panorama, "resize");
+                });
+                        // map.setStreetView(panorama);
+                }
+        $(window).on('resize', function () {
         if ($(document).width() <= 992) {
         small = 1;
                 isfixed = 0;
@@ -107,6 +166,29 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         var outerHeight = $('.xn-profile').height();
                         if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
                 if (isfixed == 0){
+                $("#right-column").css({position: 'fixed', top: '4%', width : $("#right-column").width()});
+                }
+                } else {
+                $("#right-column").removeAttr('style');
+                }
+                $scope.full = 0;
+                }
+                };
+                $scope.removeFixeds = function () {
+                if ($scope.full == 0) {
+                $scope.street = 1;
+                        isfixed = 1;
+                        $("#right-column").removeAttr('style');
+                        $(window).resize();
+                        $scope.full = 1;
+                } else {
+                $scope.street = 0;
+                        isfixed = 0;
+                        var bottom = $('.xn-profile').position().top;
+                        var outerHeight = $('.xn-profile').height();
+                        if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
+                if (isfixed == 0){
+
                 $("#right-column").css({position: 'fixed', top: '4%', width : $("#right-column").width()});
                 }
                 } else {
@@ -372,11 +454,10 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.currentactive = - 1;
                         // $scope.linkmap($scope.panels[args.model.panelid]);
                 });
-                $scope.fixedmarkersGarbage = [];
-                $scope.fixedmarkersLightning = [];
                 var displayFixedPoints = function () {
-
-                console.log("city_name : " + $rootScope.Variables.city_name);
+                $scope.fixedmarkersGarbage = [];
+                        $scope.fixedmarkersLightning = [];
+                        console.log("city_name : " + $rootScope.Variables.city_name);
                         var i = 0;
                         var theFixedPoints = FixedPointsService.query(function () {
                         angular.forEach(theFixedPoints, function (fixedpoint, key) {
@@ -420,52 +501,50 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                         chunkedLoading: true
                                 });
                                 markersGarbage.addLayers($scope.fixedmarkersGarbage);
-                        leafletData.getMap("issuesmap").then(function (map) {
+                                leafletData.getMap("issuesmap").then(function (map) {
                         map.addLayer(markersGarbage);
                         });
-                        leafletData.getMap("panelmap").then(function (map) {
+                                leafletData.getMap("panelmap").then(function (map) {
                         map.addLayer(markersGarbage);
                         });
-
-                        var markersLightning = L.markerClusterGroup({
-                        name: 'Φωτισμός',
-                                visible: true,
-                                disableClusteringAtZoom: 19,
-                                animateAddingMarkers: false,
-                                spiderfyDistanceMultiplier: true,
-                                singleMarkerMode: false,
-                                showCoverageOnHover: true,
-                                chunkedLoading: true
-                        });
+                                var markersLightning = L.markerClusterGroup({
+                                name: 'Φωτισμός',
+                                        visible: true,
+                                        disableClusteringAtZoom: 19,
+                                        animateAddingMarkers: false,
+                                        spiderfyDistanceMultiplier: true,
+                                        singleMarkerMode: false,
+                                        showCoverageOnHover: true,
+                                        chunkedLoading: true
+                                });
                                 markersLightning.addLayers($scope.fixedmarkersLightning);
-                        leafletData.getMap("issuesmap").then(function (map) {
+                                leafletData.getMap("issuesmap").then(function (map) {
                         map.addLayer(markersLightning);
                         });
-                        leafletData.getMap("panelmap").then(function (map) {
+                                leafletData.getMap("panelmap").then(function (map) {
                         map.addLayer(markersLightning);
                         });
-
-                        var baseLayers = {
-                        //'Open Street Map': osmLayer,
-                        //'Google Maps':googleRoadmap,
-                        //'Google Maps Satellite':googleHybrid,
-                        //'Google Maps Traffic':googleTraffic
-                        };
+                                var baseLayers = {
+                                //'Open Street Map': osmLayer,
+                                //'Google Maps':googleRoadmap,
+                                //'Google Maps Satellite':googleHybrid,
+                                //'Google Maps Traffic':googleTraffic
+                                };
                                 var overlays = {
                                 "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>": markersGarbage,
                                         "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
                                 };
-                                if($scope.activePanel == - 1){
-                                leafletData.getMap("issuesmap").then(function (map) {
+                                if ($scope.activePanel == - 1){
+                        leafletData.getMap("issuesmap").then(function (map) {
                         L.control.layers(baseLayers, overlays).addTo(map);
                                 map.invalidateSize(true);
                         });
-                    }else{
-                                leafletData.getMap("panelmap").then(function (map) {
+                        } else{
+                        leafletData.getMap("panelmap").then(function (map) {
                         L.control.layers(baseLayers, overlays).addTo(map);
                                 map.invalidateSize(true);
                         });
-                    }
+                        }
                         });
                 };
                 var pageload = function (callback) {
@@ -491,6 +570,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //                        } else {
                 $scope.padmin = $scope.panels[$index].admin;
                         $scope.pimage = $scope.panels[$index].image;
+                panorama.setPosition(new google.maps.LatLng($scope.panels[$index].lat,$scope.panels[$index].lng));      
                         setTimeout(function () {
                         $("html,body").scrollTop($(event.target).offset().top);
                         }, 400);
@@ -709,12 +789,43 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 } else {
                                 $scope.panels[i].image = "../images/EmptyBox-Phone.png";
                                 }
+                                $scope.panels[i].lat = issue[0].loc.coordinates[1];
+                                $scope.panels[i].lng = issue[0].loc.coordinates[0];
                                 }
                                 }
                                 $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                         $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                 }
-                                if (map_counter == total_counter) {
+                                var issue_coords = new google.maps.LatLng(issue[0].loc.coordinates[1], issue[0].loc.coordinates[0]);
+                                        var issue_index = $rootScope.Variables.departments.indexOf(issue[0].issue);
+                                        var issueMarker = new google.maps.Marker({
+                                        position: issue_coords,
+                                                map: panorama,
+                                                icon: {
+                                                path: eval($rootScope.Variables.font_awesome_markers[issue_index]),
+                                                        scale: 0.5,
+                                                        strokeWeight: 0.2,
+                                                        strokeColor: 'black',
+                                                        strokeOpacity: 1,
+                                                        fillColor: "rgb(228, 44, 44)",
+                                                        fillOpacity: 0.7,
+                                                },
+                                                //icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00',
+                                                title: $rootScope.Variables.departments_en[issue_index]
+                                        });
+                                        issueMarker.info = new google.maps.InfoWindow({
+                                        content: issue[0].value_desc
+                                        });
+                                        google.maps.event.addListener(issueMarker, 'click', function() {
+                                        issueMarker.info.open(panorama, issueMarker);
+                                        });
+                                        var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
+                                        panorama.setPov({
+                                        heading: heading,
+                                                pitch: 0,
+                                                zoom: 1
+                                        });
+                                        if (map_counter == total_counter) {
                                 mapnloaded = false;
                                         if ($scope.isloading == false && mapnloaded == false) {
                                 $scope.nloaded = false;
@@ -841,12 +952,11 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.comment = "undefined";
                                 panel.comment = "undefined";
                         }
-                        $window.alert(JSON.stringify(obj));
-                                $http.post($rootScope.Variables.host + + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-                        $window.alert(JSON.stringify(result));
-                                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+
+                        $http.post($rootScope.Variables.host + + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+
+                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                 function (response, status, headers, conf) {
-                                $window.alert(JSON.stringify(response));
                                         var panel_index = $rootScope.Variables.components.indexOf(panel.component);
                                         var comp = $rootScope.Variables.components_en[panel_index];
                                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
