@@ -820,16 +820,16 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                         var issueMarker = new google.maps.Marker({
                                         position: issue_coords,
                                                 map: panorama,
-                                                icon: {
-                                                path: eval($rootScope.Variables.font_awesome_markers[issue_index]),
-                                                        scale: 0.5,
-                                                        strokeWeight: 0.2,
-                                                        strokeColor: 'black',
-                                                        strokeOpacity: 1,
-                                                        fillColor: "rgb(228, 44, 44)",
-                                                        fillOpacity: 0.7,
-                                                },
-                                                //icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00',
+//                                                icon: {
+//                                                path: eval($rootScope.Variables.font_awesome_markers[issue_index]),
+//                                                        scale: 0.5,
+//                                                        strokeWeight: 0.2,
+//                                                        strokeColor: 'black',
+//                                                        strokeOpacity: 1,
+//                                                        fillColor: "rgb(228, 44, 44)",
+//                                                        fillOpacity: 0.7,
+//                                                },
+                                                icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00',
                                                 title: $rootScope.Variables.departments_en[issue_index]
                                         });
                                         
