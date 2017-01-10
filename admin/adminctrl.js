@@ -46,10 +46,12 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //                });
 
                 var panorama;
+                var street_view_markers = [];
+                var checked_categories = [];
+                
                 $scope.initialize = function(){
                 // var fenway = {lat: 38.246453, lng: 21.735068};             
-
-
+                
                 var fenway = {lat: 38.27942654793131, lng:  21.76288604736328};
                         var panoOptions = {
                         position: fenway,
@@ -69,13 +71,29 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         var issue_array = [];
                         var checkOptions = []
                         for (var k = 1; k < $rootScope.Variables.departments_en.length; k++){
+                        checked_categories.push(true);    
                 checkOptions[k] = {
                 gmap: panorama,
                         title: $rootScope.Variables.departments_en[k],
                         id: $rootScope.Variables.departments_en[k],
                         label: $rootScope.Variables.departments_en[k],
                         action: function(){
-                         
+                           var index = $rootScope.Variables.departments_en.indexOf(this.title);
+                           checked_categories[index] = !checked_categories[index];
+                           for(var i = 0; i < street_view_markers.length;i++){
+//                               $window.alert(i);
+//                               $window.alert(street_view_markers[i].title);
+//                               $window.alert(this.title);
+                               if(street_view_markers[i].title == this.title){
+//                                   $window.alert(index);
+//                                   $window.alert(checked_categories[index]);
+                                   if(checked_categories[index] == false){
+                                       street_view_markers[i].setVisible(false);
+                                   }else{
+                                       street_view_markers[i].setVisible(true);
+                                   }
+                               }
+                           }
                         }
                 }
                 issue_array.push(new checkBox(checkOptions[k]));
@@ -780,6 +798,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 }
                                 }
                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
+                                street_view_markers = [];    
                                 map_counter++;
                                         if (issue[0] != undefined) {
                                 for (i = 0; i < $scope.panels.length; i++) {
@@ -813,12 +832,20 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                                 //icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00',
                                                 title: $rootScope.Variables.departments_en[issue_index]
                                         });
+                                        
+                                        var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
+                                        if( checked_categories[category_index] == false){
+                                            issueMarker.setVisible(false);
+                                        }else{
+                                            issueMarker.setVisible(true);
+                                        }
                                         issueMarker.info = new google.maps.InfoWindow({
                                         content: issue[0].value_desc
                                         });
                                         google.maps.event.addListener(issueMarker, 'click', function() {
                                         issueMarker.info.open(panorama, issueMarker);
                                         });
+                                        street_view_markers.push(issueMarker);
                                         var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
                                         panorama.setPov({
                                         heading: heading,
@@ -953,7 +980,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 panel.comment = "undefined";
                         }
 
-                        $http.post($rootScope.Variables.host + + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                 function (response, status, headers, conf) {
