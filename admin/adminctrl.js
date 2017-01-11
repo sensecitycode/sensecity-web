@@ -15,6 +15,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 var isfixed = 0;
                 var mapnloaded = true;
                 var small = 0;
+                var current_layer = 0;
                 $scope.isloading = true;
                 $scope.full = 0;
                 $scope.street = 0;
@@ -48,10 +49,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 var panorama;
                 var street_view_markers = [];
                 var checked_categories = [];
-                
                 $scope.initialize = function(){
                 // var fenway = {lat: 38.246453, lng: 21.735068};             
-                
+
                 var fenway = {lat: 38.27942654793131, lng:  21.76288604736328};
                         var panoOptions = {
                         position: fenway,
@@ -67,33 +67,27 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         };
                         panorama = new google.maps.StreetViewPanorama(
                                 document.getElementById('smap'), panoOptions);
-                        
                         var issue_array = [];
                         var checkOptions = []
                         for (var k = 1; k < $rootScope.Variables.departments_en.length; k++){
-                        checked_categories.push(true);    
-                checkOptions[k] = {
+                checked_categories.push(true);
+                        checkOptions[k] = {
                 gmap: panorama,
                         title: $rootScope.Variables.departments_en[k],
                         id: $rootScope.Variables.departments_en[k],
                         label: $rootScope.Variables.departments_en[k],
                         action: function(){
-                           var index = $rootScope.Variables.departments_en.indexOf(this.title);
-                           checked_categories[index] = !checked_categories[index];
-                           for(var i = 0; i < street_view_markers.length;i++){
-//                               $window.alert(i);
-//                               $window.alert(street_view_markers[i].title);
-//                               $window.alert(this.title);
-                               if(street_view_markers[i].title == this.title){
-//                                   $window.alert(index);
-//                                   $window.alert(checked_categories[index]);
-                                   if(checked_categories[index] == false){
-                                       street_view_markers[i].setVisible(false);
-                                   }else{
-                                       street_view_markers[i].setVisible(true);
-                                   }
-                               }
-                           }
+                        var index = $rootScope.Variables.departments_en.indexOf(this.title);
+                                checked_categories[index] = !checked_categories[index];
+                                for (var i = 0; i < street_view_markers.length; i++){
+                        if (street_view_markers[i].title == this.title){
+                        if (checked_categories[index] == false){
+                        street_view_markers[i].setVisible(false);
+                        } else{
+                        street_view_markers[i].setVisible(true);
+                        }
+                        }
+                        }
                         }
                 }
                 issue_array.push(new checkBox(checkOptions[k]));
@@ -103,7 +97,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 items: issue_array,
                         id: "myddOptsDiv"
                 }
-                //alert(ddDivOptions.items[1]);
+
                 var dropDownDiv = new dropDownOptionsDiv(ddDivOptions);
                         var dropDownOptions = {
                         gmap: panorama,
@@ -455,8 +449,11 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 // console.log(args);
                 // console.log(args.model.panelid);
                 // console.log($scope.panels[args.model.panelid]);
-                $scope.activePanel = args.model.panelid;
-                        $scope.currentactive = args.model.panelid;
+                $scope.currentactive = args.model.panelid;
+                        $scope.padmin = $scope.panels[$scope.currentactive].admin;
+                        $scope.pimage = $scope.panels[$scope.currentactive].image;
+                        panorama.setPosition(new google.maps.LatLng($scope.panels[$scope.currentactive].lat, $scope.panels[$scope.currentactive].lng));
+                        $scope.activePanel = args.model.panelid;
                         $scope.linkmap($scope.panels[args.model.panelid]);
                         setTimeout(function () {
                         $("html,body").scrollTop($(".timeline-item-active span").offset().top);
@@ -468,11 +465,23 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 // console.log(args);
                 // console.log(args.model.panelid);
                 // console.log($scope.panels[args.model.panelid]);
+
                 $scope.activePanel = - 1;
                         $scope.currentactive = - 1;
+                        displayFixedPoints();
                         // $scope.linkmap($scope.panels[args.model.panelid]);
                 });
+                var layers_ref;
+                var markersGarbage;
+                var markersLightning;
                 var displayFixedPoints = function () {
+                if ($scope.activePanel != - 1 && current_layer == 1){
+                leafletData.getMap("panelmap").then(function (map) {
+                layers_ref.removeFrom(map);
+                        map.removeLayer(markersGarbage);
+                        map.removeLayer(markersLightning);
+                });
+                }
                 $scope.fixedmarkersGarbage = [];
                         $scope.fixedmarkersLightning = [];
                         console.log("city_name : " + $rootScope.Variables.city_name);
@@ -508,7 +517,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         }
 
                         });
-                                var markersGarbage = L.markerClusterGroup({
+                                markersGarbage = L.markerClusterGroup({
                                 name: 'Κάδοι',
                                         visible: true,
                                         disableClusteringAtZoom: 19,
@@ -519,35 +528,41 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                         chunkedLoading: true
                                 });
                                 markersGarbage.addLayers($scope.fixedmarkersGarbage);
-                                leafletData.getMap("issuesmap").then(function (map) {
+                                if ($scope.activePanel == - 1){
+                        leafletData.getMap("issuesmap").then(function (map) {
                         map.addLayer(markersGarbage);
                         });
-                                leafletData.getMap("panelmap").then(function (map) {
+                        } else{
+                        leafletData.getMap("panelmap").then(function (map) {
                         map.addLayer(markersGarbage);
                         });
-                                var markersLightning = L.markerClusterGroup({
-                                name: 'Φωτισμός',
-                                        visible: true,
-                                        disableClusteringAtZoom: 19,
-                                        animateAddingMarkers: false,
-                                        spiderfyDistanceMultiplier: true,
-                                        singleMarkerMode: false,
-                                        showCoverageOnHover: true,
-                                        chunkedLoading: true
-                                });
+                        }
+                        markersLightning = L.markerClusterGroup({
+                        name: 'Φωτισμός',
+                                visible: true,
+                                disableClusteringAtZoom: 19,
+                                animateAddingMarkers: false,
+                                spiderfyDistanceMultiplier: true,
+                                singleMarkerMode: false,
+                                showCoverageOnHover: true,
+                                chunkedLoading: true
+                        });
                                 markersLightning.addLayers($scope.fixedmarkersLightning);
-                                leafletData.getMap("issuesmap").then(function (map) {
+                                if ($scope.activePanel == - 1){
+                        leafletData.getMap("issuesmap").then(function (map) {
                         map.addLayer(markersLightning);
                         });
-                                leafletData.getMap("panelmap").then(function (map) {
+                        } else{
+                        leafletData.getMap("panelmap").then(function (map) {
                         map.addLayer(markersLightning);
                         });
-                                var baseLayers = {
-                                //'Open Street Map': osmLayer,
-                                //'Google Maps':googleRoadmap,
-                                //'Google Maps Satellite':googleHybrid,
-                                //'Google Maps Traffic':googleTraffic
-                                };
+                        }
+                        var baseLayers = {
+                        //'Open Street Map': osmLayer,
+                        //'Google Maps':googleRoadmap,
+                        //'Google Maps Satellite':googleHybrid,
+                        //'Google Maps Traffic':googleTraffic
+                        };
                                 var overlays = {
                                 "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>": markersGarbage,
                                         "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
@@ -558,8 +573,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 map.invalidateSize(true);
                         });
                         } else{
-                        leafletData.getMap("panelmap").then(function (map) {
-                        L.control.layers(baseLayers, overlays).addTo(map);
+                        current_layer = 1;
+                                leafletData.getMap("panelmap").then(function (map) {
+                        layers_ref = L.control.layers(baseLayers, overlays).addTo(map); ;
                                 map.invalidateSize(true);
                         });
                         }
@@ -588,7 +604,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //                        } else {
                 $scope.padmin = $scope.panels[$index].admin;
                         $scope.pimage = $scope.panels[$index].image;
-                panorama.setPosition(new google.maps.LatLng($scope.panels[$index].lat,$scope.panels[$index].lng));      
+                        panorama.setPosition(new google.maps.LatLng($scope.panels[$index].lat, $scope.panels[$index].lng));
                         setTimeout(function () {
                         $("html,body").scrollTop($(event.target).offset().top);
                         }, 400);
@@ -597,7 +613,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.currentactive = $index;
                         $(window).resize();
                 } else {
-                $scope.pimage = "";
+                current_layer = 0;
+                        $scope.pimage = "";
                         $scope.padmin = true;
                         $scope.activePanel = - 1;
                         $scope.currentactive = - 1;
@@ -669,6 +686,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 
                 };
                         $scope.totalpages();
+                        displayFixedPoints();
                         $scope.bugsearchinit = function () {
 
                         $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#/admin">«</a></span></li>'
@@ -677,7 +695,6 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#/admin">{{page}}</a></span></li>';
                                 $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#/admin">></a></span></li>'
                                 + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
-                                displayFixedPoints();
                                 $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/search', params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
                         var total_counter = result.length;
@@ -797,9 +814,13 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 $scope.nloaded = false;
                                 }
                                 }
+                                for (var i = 0; i < street_view_markers.length; i++){
+                                        street_view_markers[i].setMap(null);
+                                }
+                                street_view_markers = [];
                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
-                                street_view_markers = [];    
-                                map_counter++;
+
+                                        map_counter++;
                                         if (issue[0] != undefined) {
                                 for (i = 0; i < $scope.panels.length; i++) {
                                 if ($scope.panels[i].mongoId[0] == issue[0]._id) {
@@ -809,7 +830,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 $scope.panels[i].image = "../images/EmptyBox-Phone.png";
                                 }
                                 $scope.panels[i].lat = issue[0].loc.coordinates[1];
-                                $scope.panels[i].lng = issue[0].loc.coordinates[0];
+                                        $scope.panels[i].lng = issue[0].loc.coordinates[0];
                                 }
                                 }
                                 $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
@@ -820,28 +841,18 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                         var issueMarker = new google.maps.Marker({
                                         position: issue_coords,
                                                 map: panorama,
-                                                icon: {
-                                                path: eval($rootScope.Variables.font_awesome_markers[issue_index]),
-                                                        scale: 0.5,
-                                                        strokeWeight: 0.2,
-                                                        strokeColor: 'black',
-                                                        strokeOpacity: 1,
-                                                        fillColor: "rgb(228, 44, 44)",
-                                                        fillOpacity: 0.7,
-                                                },
-                                                //icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00',
+                                                icon: './icons/' + issue[0].issue + '.png',
                                                 title: $rootScope.Variables.departments_en[issue_index]
                                         });
-                                        
                                         var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
-                                        if( checked_categories[category_index] == false){
-                                            issueMarker.setVisible(false);
-                                        }else{
-                                            issueMarker.setVisible(true);
-                                        }
-                                        issueMarker.info = new google.maps.InfoWindow({
-                                        content: issue[0].value_desc
-                                        });
+                                        if (checked_categories[category_index] == false){
+                                issueMarker.setVisible(false);
+                                } else{
+                                issueMarker.setVisible(true);
+                                }
+                                issueMarker.info = new google.maps.InfoWindow({
+                                content: issue[0].value_desc
+                                });
                                         google.maps.event.addListener(issueMarker, 'click', function() {
                                         issueMarker.info.open(panorama, issueMarker);
                                         });
@@ -875,8 +886,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 };
                 pageload(function (callback) {
                 });
+                var li = 0;
                 $scope.linkmap = function (panel) {
-
                 $scope.markers = [];
                         displayFixedPoints();
                         $scope.panel_issue = panel.issuenameGR;
@@ -984,7 +995,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 
                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                 function (response, status, headers, conf) {
-                                        var panel_index = $rootScope.Variables.components.indexOf(panel.component);
+                                var panel_index = $rootScope.Variables.components.indexOf(panel.component);
                                         var comp = $rootScope.Variables.components_en[panel_index];
                                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                         function (response, status, headers, config) {
@@ -1122,6 +1133,10 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.currentactive = - 1;
                 };
                 $scope.refresh = function () {
+                if (current_layer == 1){
+                current_layer = 0;
+                        displayFixedPoints();
+                }
                 $scope.isloading = true;
                         $scope.nloaded = true;
                         $scope.pimage = "";
@@ -1293,8 +1308,15 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.nloaded = false;
                         }
                         }
+                        
+                        for (var i = 0; i < street_view_markers.length; i++){
+                        street_view_markers[i].setMap(null);
+                        }
+                        street_view_markers = [];
+                        
                         Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
-                        map_counter++;
+
+                                map_counter++;
                                 if (issue[0] != undefined) {
                         for (i = 0; i < $scope.panels.length; i++) {
                         if ($scope.panels[i].mongoId[0] == issue[0]._id) {
@@ -1303,12 +1325,43 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         } else {
                         $scope.panels[i].image = "../images/EmptyBox-Phone.png";
                         }
+
+                        $scope.panels[i].lat = issue[0].loc.coordinates[1];
+                                $scope.panels[i].lng = issue[0].loc.coordinates[0];
                         }
                         }
                         $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                 $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                         }
-                        if (map_counter == total_counter) {
+                        var issue_coords = new google.maps.LatLng(issue[0].loc.coordinates[1], issue[0].loc.coordinates[0]);
+                                var issue_index = $rootScope.Variables.departments.indexOf(issue[0].issue);
+                                var issueMarker = new google.maps.Marker({
+                                position: issue_coords,
+                                        map: panorama,
+                                        icon: './icons/' + issue[0].issue + '.png',
+                                        title: $rootScope.Variables.departments_en[issue_index]
+                                });
+                                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
+                                if (checked_categories[category_index] == false){
+                        issueMarker.setVisible(false);
+                        } else{
+                        issueMarker.setVisible(true);
+                        }
+                        issueMarker.info = new google.maps.InfoWindow({
+                        content: issue[0].value_desc
+                        });
+                                google.maps.event.addListener(issueMarker, 'click', function() {
+                                issueMarker.info.open(panorama, issueMarker);
+                                });
+                                
+                                street_view_markers.push(issueMarker);
+                                var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
+                                panorama.setPov({
+                                heading: heading,
+                                        pitch: 0,
+                                        zoom: 1
+                                });
+                                if (map_counter == total_counter) {
                         mapnloaded = false;
                                 if ($scope.isloading == false && mapnloaded == false) {
                         $scope.nloaded = false;
