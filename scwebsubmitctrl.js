@@ -2,13 +2,80 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 
 
-appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http',
-                                            function($scope, $rootScope, $log, $location, leafletData, Issue, $translate, $http ) {
+appControllers.controller('scWebSubmit',  [ '$scope','$window' ,'$q', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http',
+                                            function($scope, $window, $q, $rootScope, $log, $location, leafletData, Issue, $translate, $http ) {
 	$log.debug('inside scWebSubmit controller');
 
 	$scope.showSuccessAlertName = false;
 	$scope.showSuccessAlertEmail = false;
 	
+        $scope.map_center = {
+                            lat: 37.787435,
+                            lng: 20.897801,
+                            zoom: 12
+                        };
+        
+        $scope.openStreetMap = {
+			name : 'OpenStreetMap',
+			type : 'xyz',
+			url : 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+			layerOptions : {
+				showOnSelector : true,
+				attribution : '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+				maxZoom: 19
+			}
+		};
+		
+  
+
+		
+		//We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
+		
+		var googleRoadmap = {
+					name : 'Google Map + Traffic',
+					layerType: 'ROADMAP',
+					type : 'google',	
+					layerOptions : {
+						showOnSelector : true,
+						attribution : 'xxx',
+						maxZoom: 20
+					}										
+		};
+		
+		var googleHybrid = {
+					name : 'Google Hybrid + Traffic',
+					layerType: 'HYBRID',
+					type : 'google',	
+					layerOptions : {
+						showOnSelector : true,
+						attribution : 'xxx',
+						maxZoom: 20
+					}										
+		};
+        
+                                                
+       $scope.layers = {
+			baselayers : {
+				openStreetMap: $scope.openStreetMap,
+				gR: googleRoadmap,
+				gH: googleHybrid
+				
+			},
+			overlays : {
+
+			}
+		};
+        
+        $scope.invalidateTheMap = function () {
+			leafletData.getMap().then(
+				    function (map) {
+				    	map.invalidateSize( true );
+				    }
+				);
+		 };                                        
+        
+        $q.all($rootScope.mainInfo).then(function (data) {
+        
 	$scope.map_center = {
 			lat : $rootScope.Variables.lat_center,
 			lng : $rootScope.Variables.long_center,
@@ -62,59 +129,8 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 	$scope.updateCompoType = function() {
 		$scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0] ;
 	}
-		
-	$scope.openStreetMap = {
-			name : 'OpenStreetMap',
-			type : 'xyz',
-			url : 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-			layerOptions : {
-				showOnSelector : true,
-				attribution : '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-				maxZoom: 19
-			}
-		};
-		
-  
 
-		
-		//We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
-		
-		var googleRoadmap = {
-					name : 'Google Map + Traffic',
-					layerType: 'ROADMAP',
-					type : 'google',	
-					layerOptions : {
-						showOnSelector : true,
-						attribution : 'xxx',
-						maxZoom: 20
-					}										
-		};
-		
-		var googleHybrid = {
-					name : 'Google Hybrid + Traffic',
-					layerType: 'HYBRID',
-					type : 'google',	
-					layerOptions : {
-						showOnSelector : true,
-						attribution : 'xxx',
-						maxZoom: 20
-					}										
-		};
-		
-		
-		
-		$scope.layers = {
-			baselayers : {
-				openStreetMap: $scope.openStreetMap,
-				gR: googleRoadmap,
-				gH: googleHybrid
-				
-			},
-			overlays : {
 
-			}
-		};
-		
 		$scope.$on('leafletDirectiveMap.overlayadd', function(event, o){
 				console.log( "overlayadd event " );
 				console.log( o.leafletEvent );
@@ -159,15 +175,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 		});
 	
 		//need to refresh the map layer after everything is rendered, otherwise it displays empty tiles
-		$scope.invalidateTheMap = function () {
-
-			leafletData.getMap().then(
-				    function (map) {
-				    	map.invalidateSize( true );
-				    }
-				);
-		 };
-		 
+		
 		 
 		$scope.submit_button = true;
 		$scope.register_button = false;
@@ -739,7 +747,7 @@ appControllers.controller('scWebSubmit',  [ '$scope', '$rootScope', '$log', '$lo
 						//$location.path("/test1");
 					});
 		}*/
-
+        });
 }]);
 
 

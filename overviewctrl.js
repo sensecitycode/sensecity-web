@@ -134,11 +134,11 @@ appControllers
                             lng: 20.897801,
                             zoom: 12
                         };
-
+                        
                         $q.all($rootScope.mainInfo).then(
                                 function (data) {
 
-                                    for(var i = Object.keys($rootScope.Variables.overlay_functions).length; i <= 10; i++){
+                                    for(var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++){
                                     $scope.removelayer(i);
                                 }
                                     
@@ -274,7 +274,6 @@ appControllers
                                                                                         || issue == "neutral"
                                                                                         || issue == "happy") {
                                                                                     layer = 'reaction';
-                                                                                    issue = 'reaction';
                                                                                 } else {
                                                                                     layer = issue;
                                                                                     calclast30daysIssues = calclast30daysIssues + 1;
@@ -289,7 +288,11 @@ appControllers
                                                                                     message = 'Μη διαθέσιμη περιγραφή';
                                                                                 }
                                                                                 
+                                                                                if(layer != 'reaction'){
                                                                                 var lindex = $rootScope.Variables.overlay_categories.indexOf(issue) + 1;
+                                                                            }else{
+                                                                                var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
+                                                                            }
                                                                                 layer = "layer"+ lindex;
                                                                                 
                                                                                 var marker = {
