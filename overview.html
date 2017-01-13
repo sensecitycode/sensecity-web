@@ -43,12 +43,12 @@
     <link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
 	<link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
 	
-<script src="js/leaflet.js"></script>
-<script src="js/ui-leaflet.min.js"></script>
+<!--<script src="js/leaflet.js"></script>-->
+<!--<script src="js/ui-leaflet.min.js"></script>
 <script src="js/leaflet.awesome-markers.js"></script>
 <script src="js/angular-simple-logger.js"></script>
 	<script src="js/leaflet.markercluster.js"></script>
-	<script src="js/leaflet.extra-markers.min.js"></script>
+	<script src="js/leaflet.extra-markers.min.js"></script>-->
 	
 	
 	 
@@ -123,9 +123,12 @@
 					</div>
 				</div>
 				<div id="mapcontent">
-					<leaflet lf-center="map_center" layers="layers" markers="markers"
+					<leaflet lf-center="map_center" id="issuemap" layers="layers" markers="markers"
 						height="100%" style="color:black;"></leaflet>
+                                                
 				</div>
+                            <button type="button" class="btn btn-default" ng-click="removeHillshadeLayer()" ng-disabled="!existsHillshadeLayer()">Remove Hillshade Overlay</button>
+                                                <button type="button" class="btn btn-default" ng-click="addHillshadeLayer()" ng-disabled="existsHillshadeLayer()">Add Hillshade Overlay</button>
 
 			</div>
 		</div>

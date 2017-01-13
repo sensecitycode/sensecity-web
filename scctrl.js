@@ -1,9 +1,6 @@
 var appControllers = angular.module('scapp.controllers', ['pascalprecht.translate','ngCookies', 'ngAnimate']);
 
 
-
-	
-	
 appControllers.controller('sensecityMainCtrl', function($scope, $log, $location, $rootScope,$http,$window) {
 	$log.debug('inside sensecityMainCtrl controller');
 	$scope.scvesrion = '20160712_trunk';

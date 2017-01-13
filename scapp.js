@@ -63,17 +63,16 @@ app.config(['$translateProvider', function ($translateProvider) {
         $translateProvider.useLocalStorage();
     }]);
 
-app.run(['$rootScope', '$http','$location', function ($rootScope, $http,$location) {
+app.run(['$rootScope', '$http','$location','$q', function ($rootScope, $http,$location,$q) {
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
 
         sub_domain[0] = "testcity1";
 //        '../config/'+sub_domain[0]+'.json'
         //'http://localhost:8383/sensecity-web/config/testcity1.json'
-        var mainInfo = $http.get('http://localhost:8383/sensecity-web/config/testcity1.json').success(function (response) {
+        var d = $q.defer();
 
-
-            
+        $rootScope.mainInfo = $http.get('http://localhost:8383/sensecity-web/config/testcity1.json').success(function (response) {
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],
@@ -101,10 +100,15 @@ app.run(['$rootScope', '$http','$location', function ($rootScope, $http,$locatio
                 availableIssues: response.availableIssues,
                 searchIssues: response.searchIssues,
                 map_zoom: response.zoom,
+                overlay_functions : response.overlay_functions,
+                overlay_categories : response.overlay_categories,
                 host: response.host
             };
-
+            
+            d.resolve(response);
+            
             return $rootScope;
         });
 
+        return d.promise;
     }]);

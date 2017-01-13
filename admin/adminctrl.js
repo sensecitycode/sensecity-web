@@ -478,8 +478,6 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 if ($scope.activePanel != - 1 && current_layer == 1){
                 leafletData.getMap("panelmap").then(function (map) {
                 layers_ref.removeFrom(map);
-                        map.removeLayer(markersGarbage);
-                        map.removeLayer(markersLightning);
                 });
                 }
                 $scope.fixedmarkersGarbage = [];
