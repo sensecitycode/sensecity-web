@@ -62,8 +62,8 @@ appControllers.controller('mainController', ['$scope','$q','DisplayIssuesService
       $scope.enddate = $scope.endISOdate.getFullYear()+'-' + ($scope.endISOdate.getMonth()+1) + '-'+$scope.endISOdate.getDate();
       var paramsObj= [];
       angular.forEach($scope.searchIssue, function(state,problem) {
-          if (problem == "roadcontructor"){
-              problem = "road-contructor";
+          if (problem == "roadconstructor"){
+              problem = "road-constructor";
           }
           if (state === true){
               paramsObj.push({startdate:$scope.startdate,enddate:$scope.enddate,issue:problem});

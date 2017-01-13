@@ -211,8 +211,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         var issue_counter = 0;
                         angular.forEach($scope.issues, function (issue) {
 
-                            if (issue.value == "roadcontructor") {
-                                issue.value = "road-contructor";
+                            if (issue.value == "roadconstructor") {
+                                issue.value = "road-constructor";
                             }
                             if (issue.value == "protectionpolicy") {
                                 issue.value = "protection-policy";
