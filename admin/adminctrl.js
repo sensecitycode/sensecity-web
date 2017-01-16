@@ -410,6 +410,95 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //                    }
         }
 
+        $scope.issue_data = function($index, panel, event){
+        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: panel.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                function (response, status, headers, config) {
+                var history = [];
+                        var com;
+                        var tag_pos;
+                        for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
+                com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
+                        if (com == "undefined") {
+                com = "";
+                }
+                if (com.substring(0, 7) == "*** Bug") {
+                com = "";
+                }
+
+                switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
+                case "CONFIRMED":
+                        case "IN_PROGRESS":
+                        case "RESOLVED":
+                        tag_pos = 0;
+                        break;
+                        default:
+                        tag_pos = 1;
+                        break;
+                }
+
+                if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
+                var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
+                        if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
+                history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
+                } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
+                history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+                } else {
+                history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                }
+                }
+                }
+                
+                if (panel.comment == undefined) {
+                panel.comment = '';
+                }
+                $scope.panels[panel.order].history = history;
+                        $scope.panels[panel.order].comment = com;
+                        $scope.itemClicked($index, event);
+                        $scope.linkmap(panel);
+                         $scope.nloaded = false;
+                        Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
+
+                        if (issue[0] != undefined) {
+                        if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
+                        $scope.panels[panel.order].image = issue[0].image_name;
+                        } else {
+                        $scope.panels[panel.order].image = "../images/EmptyBox-Phone.png";
+                        }
+                        $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
+                                $scope.panels[panel.order].lng = issue[0].loc.coordinates[0];
+                                $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
+                                $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
+                        }
+                        var issue_coords = new google.maps.LatLng(issue[0].loc.coordinates[1], issue[0].loc.coordinates[0]);
+                                var issue_index = $rootScope.Variables.departments.indexOf(issue[0].issue);
+                                var issueMarker = new google.maps.Marker({
+                                position: issue_coords,
+                                        map: panorama,
+                                        icon: './icons/' + issue[0].issue + '.png',
+                                        title: $rootScope.Variables.departments_en[issue_index]
+                                });
+                                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
+                                if (checked_categories[category_index] == false){
+                        issueMarker.setVisible(false);
+                        } else{
+                        issueMarker.setVisible(true);
+                        }
+                        issueMarker.info = new google.maps.InfoWindow({
+                        content: issue[0].value_desc
+                        });
+                                google.maps.event.addListener(issueMarker, 'click', function() {
+                                issueMarker.info.open(panorama, issueMarker);
+                                });
+                                var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
+                                panorama.setPov({
+                                heading: heading,
+                                        pitch: 0,
+                                        zoom: 1
+                                });
+                        });
+                });
+        }
+
         $scope.panels = [];
                 $scope.activePanel = [];
                 moment.locale('el');
@@ -449,15 +538,12 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 // console.log(args);
                 // console.log(args.model.panelid);
                 // console.log($scope.panels[args.model.panelid]);
-                $scope.currentactive = args.model.panelid;
-                        $scope.padmin = $scope.panels[$scope.currentactive].admin;
-                        $scope.pimage = $scope.panels[$scope.currentactive].image;
-                        panorama.setPosition(new google.maps.LatLng($scope.panels[$scope.currentactive].lat, $scope.panels[$scope.currentactive].lng));
-                        $scope.activePanel = args.model.panelid;
-                        $scope.linkmap($scope.panels[args.model.panelid]);
-                        setTimeout(function () {
-                        $("html,body").scrollTop($(".timeline-item-active span").offset().top);
-                        }, 400);
+                 $scope.nloaded = true;
+                 $scope.issue_data(args.model.panelid,$scope.panels[args.model.panelid],event);
+                //$scope.linkmap($scope.panels[args.model.panelid]);
+                       
+                       
+                       
                 });
                 $scope.$on("leafletDirectiveMarker.panelmap.click", function (event, args) {
                 // Args will contain the marker name and other relevant information
@@ -474,10 +560,13 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 var layers_ref;
                 var markersGarbage;
                 var markersLightning;
+                
                 var displayFixedPoints = function () {
                 if ($scope.activePanel != - 1 && current_layer == 1){
                 leafletData.getMap("panelmap").then(function (map) {
                 layers_ref.removeFrom(map);
+                map.removeLayer(markersGarbage);
+                map.removeLayer(markersLightning);
                 });
                 }
                 $scope.fixedmarkersGarbage = [];
@@ -593,6 +682,10 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 $scope.changeTab(0);
                 }
 
+                $scope.enable_loading = function(){
+                    $scope.nloaded = true;
+                }
+                
                 $scope.itemClicked = function ($index, event) {
                 if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
@@ -603,12 +696,14 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 $scope.padmin = $scope.panels[$index].admin;
                         $scope.pimage = $scope.panels[$index].image;
                         panorama.setPosition(new google.maps.LatLng($scope.panels[$index].lat, $scope.panels[$index].lng));
-                        setTimeout(function () {
-                        $("html,body").scrollTop($(event.target).offset().top);
-                        }, 400);
-//                        }
                         $scope.activePanel = $index;
                         $scope.currentactive = $index;
+                        setTimeout(function () {
+//                        $("html,body").scrollTop($(event.target).offset().top);
+//                        }, 400);
+                        $("html,body").scrollTop($('span:contains("'+$scope.panels[$index].title+'")').offset().top);
+                        //$("html,body").scrollTop($(".timeline-item-active span").offset().top);
+                        }, 400);
                         $(window).resize();
                 } else {
                 current_layer = 0;
@@ -718,7 +813,6 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         }
 
                         angular.forEach(result, function (value, key) {
-
                         var issue_name = ToGrService.issueName(value.summary);
                                 var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
                                 var description = CommentService.field(value.status);
@@ -730,49 +824,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 var local_time = moment(creation_time).format('LLLL');
                                 local_time = timegr(local_time);
                                 var time_fromNow = moment(creation_time).fromNow();
-                                if (!(value.component == "default")) {
-
-                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
-                                function (response, status, headers, config) {
-                                counter++;
-                                        var history = [];
-                                        var com;
-                                        var tag_pos;
-                                        for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
-                                com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
-                                        if (com == "undefined") {
-                                com = "";
-                                }
-                                if (com.substring(0, 7) == "*** Bug") {
-                                com = "";
-                                }
-
-                                switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
-                                case "CONFIRMED":
-                                        case "IN_PROGRESS":
-                                        case "RESOLVED":
-                                        tag_pos = 0;
-                                        break;
-                                        default:
-                                        tag_pos = 1;
-                                        break;
-                                }
-
-                                if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
-                                var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
-                                        if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
-                                history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
-                                } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
-                                history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
-                                } else {
-                                history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
-                                }
-                                }
-                                }
-
-                                var panel =
-                                {
-                                "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + "-" + value.url + ") -- " + time_fromNow,
+                                var panel = {
+                                "title": "#" + value.id + " (" + issue_name + "-" + value.url + ") -- " + time_fromNow,
                                         "style": panelTitle.status_style,
                                         "icon": panelTitle.status_icon,
                                         "time": local_time,
@@ -782,7 +835,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                         "creator": value.cf_creator,
                                         "tel": value.cf_mobile,
                                         "email": value.cf_email,
-                                        "id": Object.keys(response.bugs)[0],
+                                        "id": value.id,
                                         "status": panelTitle.status,
                                         "new_status": "",
                                         "resolution": panelTitle.resolution,
@@ -790,48 +843,27 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                         "component": value.component,
                                         "admin": false,
                                         "ArrayID": key,
+                                        "order": counter,
                                         "priority": {en: value.priority, gr: priority},
                                         "severity": {en: value.severity, gr: severity},
-                                        "comment": com,
                                         "initialdesc": value.cf_description,
                                         "mongoId": value.alias,
-                                        "history": history
+                                        "history": []
                                 };
-                                        if (panel.comment == undefined) {
-                                panel.comment = '';
-                                }
+                                counter++;
                                 $scope.panels.push(panel);
-                                        if (counter == total_counter) {
-                                counter = 0;
-                                        $(window).resize();
-                                        $scope.panels.sort(function (a, b) {
-                                        return b.id - a.id;
-                                        });
-                                        $scope.isloading = false;
-                                        if ($scope.isloading == false && mapnloaded == false) {
-                                $scope.nloaded = false;
-                                }
-                                }
-                                for (var i = 0; i < street_view_markers.length; i++){
-                                        street_view_markers[i].setMap(null);
-                                }
-                                street_view_markers = [];
                                 Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
 
-                                        map_counter++;
+                                map_counter++;
                                         if (issue[0] != undefined) {
-                                for (i = 0; i < $scope.panels.length; i++) {
-                                if ($scope.panels[i].mongoId[0] == issue[0]._id) {
                                 if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
-                                $scope.panels[i].image = issue[0].image_name;
+                                $scope.panels[panel.order].image = issue[0].image_name;
                                 } else {
-                                $scope.panels[i].image = "../images/EmptyBox-Phone.png";
+                                $scope.panels[panel.order].image = "../images/EmptyBox-Phone.png";
                                 }
-                                $scope.panels[i].lat = issue[0].loc.coordinates[1];
-                                        $scope.panels[i].lng = issue[0].loc.coordinates[0];
-                                }
-                                }
-                                $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
+                                $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
+                                        $scope.panels[panel.order].lng = issue[0].loc.coordinates[0];
+                                        $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                         $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
                                 }
                                 var issue_coords = new google.maps.LatLng(issue[0].loc.coordinates[1], issue[0].loc.coordinates[0]);
@@ -876,9 +908,11 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 }
                                 }
                                 });
-                                });
-                        }
                         }, $scope.panels);
+                                $scope.isloading = false;
+                                if ($scope.isloading == false && mapnloaded == false) {
+                        $scope.nloaded = false;
+                        }
                         });
                         };
                 };
@@ -890,6 +924,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         displayFixedPoints();
                         $scope.panel_issue = panel.issuenameGR;
                         $scope.initial_desc = panel.initialdesc;
+                        
                         Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
                         $scope.panel_image = issue[0].image_name;
                                 $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
@@ -1131,6 +1166,10 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.currentactive = - 1;
                 };
                 $scope.refresh = function () {
+                                for (var i = 0; i < street_view_markers.length; i++){
+                                        street_view_markers[i].setMap(null);
+                                }
+                                street_view_markers = [];
                 if (current_layer == 1){
                 current_layer = 0;
                         displayFixedPoints();
@@ -1212,171 +1251,106 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 $(".paging").html($compile($scope.pages)($scope));
                 }
                 angular.forEach(result, function (value, key) {
+                        var issue_name = ToGrService.issueName(value.summary);
+                                var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
+                                var description = CommentService.field(value.status);
+                                var id = value.id;
+                                var priority = PriorityTag.priority_type(value.priority);
+                                var severity = SeverityTag.severity_type(value.severity);
+                                var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
+                                var creation_time = value.creation_time;
+                                var local_time = moment(creation_time).format('LLLL');
+                                local_time = timegr(local_time);
+                                var time_fromNow = moment(creation_time).fromNow();
+                                var panel = {
+                                "title": "#" + value.id + " (" + issue_name + "-" + value.url + ") -- " + time_fromNow,
+                                        "style": panelTitle.status_style,
+                                        "icon": panelTitle.status_icon,
+                                        "time": local_time,
+                                        "issuelink": issuelink,
+                                        "issuenameGR": issue_name,
+                                        "issuenameEN": value.summary,
+                                        "creator": value.cf_creator,
+                                        "tel": value.cf_mobile,
+                                        "email": value.cf_email,
+                                        "id": value.id,
+                                        "status": panelTitle.status,
+                                        "new_status": "",
+                                        "resolution": panelTitle.resolution,
+                                        "new_resolution": "",
+                                        "component": value.component,
+                                        "admin": false,
+                                        "ArrayID": key,
+                                        "order": counter,
+                                        "priority": {en: value.priority, gr: priority},
+                                        "severity": {en: value.severity, gr: severity},
+                                        "initialdesc": value.cf_description,
+                                        "mongoId": value.alias,
+                                        "history": []
+                                };
+                                counter++;
+                                $scope.panels.push(panel);
+                                Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
 
-                var issue_name = ToGrService.issueName(value.summary);
-                        var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
-                        var description = CommentService.field(value.status);
-                        var id = value.id;
-                        var priority = PriorityTag.priority_type(value.priority);
-                        var severity = SeverityTag.severity_type(value.severity);
-                        var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
-                        var creation_time = value.creation_time;
-                        var local_time = moment(creation_time).format('LLLL');
-                        local_time = timegr(local_time);
-                        var time_fromNow = moment(creation_time).fromNow();
-                        if (!(value.component == "default")) {
-
-                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
-                        function (response, status, headers, config) {
-                        counter++;
-                                var history = [];
-                                var com;
-                                var tag_pos;
-                                for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
-                        com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
-                                if (com == "undefined") {
-                        com = "";
-                        }
-                        if (com.substring(0, 7) == "*** Bug") {
-                        com = "";
-                        }
-
-                        switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
-                        case "CONFIRMED":
-                                case "IN_PROGRESS":
-                                case "RESOLVED":
-                                tag_pos = 0;
-                                break;
-                                default:
-                                tag_pos = 1;
-                                break;
-                        }
-
-                        if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
-                        var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
-                                if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
-                        history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
-                        } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
-                        history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
-                        } else {
-                        history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
-                        }
-                        }
-                        }
-
-                        var panel =
-                        {
-                        "title": "#" + Object.keys(response.bugs)[0] + " (" + issue_name + "-" + value.url + ") -- " + time_fromNow,
-                                "style": panelTitle.status_style,
-                                "icon": panelTitle.status_icon,
-                                "time": local_time,
-                                "issuelink": issuelink,
-                                "issuenameGR": issue_name,
-                                "issuenameEN": value.summary,
-                                "creator": value.cf_creator,
-                                "tel": value.cf_mobile,
-                                "email": value.cf_email,
-                                "id": Object.keys(response.bugs)[0],
-                                "status": panelTitle.status,
-                                "new_status": "",
-                                "resolution": panelTitle.resolution,
-                                "new_resolution": "",
-                                "component": value.component,
-                                "admin": false,
-                                "ArrayID": key,
-                                "priority": {en: value.priority, gr: priority},
-                                "severity": {en: value.severity, gr: severity},
-                                "comment": com,
-                                "initialdesc": value.cf_description,
-                                "mongoId": value.alias,
-                                "history": history
-                        };
-                                if (panel.comment == undefined) {
-                        panel.comment = '';
-                        }
-                        $scope.panels.push(panel);
-                                if (counter == total_counter) {
-                        counter = 0;
-                                $(window).resize();
-                                $scope.panels.sort(function (a, b) {
-                                return b.id - a.id;
+                                map_counter++;
+                                        if (issue[0] != undefined) {
+                                if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
+                                $scope.panels[panel.order].image = issue[0].image_name;
+                                } else {
+                                $scope.panels[panel.order].image = "../images/EmptyBox-Phone.png";
+                                }
+                                $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
+                                        $scope.panels[panel.order].lng = issue[0].loc.coordinates[0];
+                                        $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
+                                        $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
+                                }
+                                var issue_coords = new google.maps.LatLng(issue[0].loc.coordinates[1], issue[0].loc.coordinates[0]);
+                                        var issue_index = $rootScope.Variables.departments.indexOf(issue[0].issue);
+                                        var issueMarker = new google.maps.Marker({
+                                        position: issue_coords,
+                                                map: panorama,
+                                                icon: './icons/' + issue[0].issue + '.png',
+                                                title: $rootScope.Variables.departments_en[issue_index]
+                                        });
+                                        var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
+                                        if (checked_categories[category_index] == false){
+                                issueMarker.setVisible(false);
+                                } else{
+                                issueMarker.setVisible(true);
+                                }
+                                issueMarker.info = new google.maps.InfoWindow({
+                                content: issue[0].value_desc
                                 });
+                                        google.maps.event.addListener(issueMarker, 'click', function() {
+                                        issueMarker.info.open(panorama, issueMarker);
+                                        });
+                                        street_view_markers.push(issueMarker);
+                                        var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
+                                        panorama.setPov({
+                                        heading: heading,
+                                                pitch: 0,
+                                                zoom: 1
+                                        });
+                                        if (map_counter == total_counter) {
+                                mapnloaded = false;
+                                        if ($scope.isloading == false && mapnloaded == false) {
+                                $scope.nloaded = false;
+                                }
+                                }
+                                }, function (response) {
+                                map_counter++;
+                                        if (map_counter == total_counter) {
+                                mapnloaded = false;
+                                        if ($scope.isloading == false && mapnloaded == false) {
+                                $scope.nloaded = false;
+                                }
+                                }
+                                });
+                        }, $scope.panels);
                                 $scope.isloading = false;
                                 if ($scope.isloading == false && mapnloaded == false) {
                         $scope.nloaded = false;
                         }
-                        }
-                        
-                        for (var i = 0; i < street_view_markers.length; i++){
-                        street_view_markers[i].setMap(null);
-                        }
-                        street_view_markers = [];
-                        
-                        Issue2MapService.query({issueID: panel.mongoId[0]}, function (issue) {
-
-                                map_counter++;
-                                if (issue[0] != undefined) {
-                        for (i = 0; i < $scope.panels.length; i++) {
-                        if ($scope.panels[i].mongoId[0] == issue[0]._id) {
-                        if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
-                        $scope.panels[i].image = issue[0].image_name;
-                        } else {
-                        $scope.panels[i].image = "../images/EmptyBox-Phone.png";
-                        }
-
-                        $scope.panels[i].lat = issue[0].loc.coordinates[1];
-                                $scope.panels[i].lng = issue[0].loc.coordinates[0];
-                        }
-                        }
-                        $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
-                                $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issuenameEN], "panelid": panel.ArrayID});
-                        }
-                        var issue_coords = new google.maps.LatLng(issue[0].loc.coordinates[1], issue[0].loc.coordinates[0]);
-                                var issue_index = $rootScope.Variables.departments.indexOf(issue[0].issue);
-                                var issueMarker = new google.maps.Marker({
-                                position: issue_coords,
-                                        map: panorama,
-                                        icon: './icons/' + issue[0].issue + '.png',
-                                        title: $rootScope.Variables.departments_en[issue_index]
-                                });
-                                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
-                                if (checked_categories[category_index] == false){
-                        issueMarker.setVisible(false);
-                        } else{
-                        issueMarker.setVisible(true);
-                        }
-                        issueMarker.info = new google.maps.InfoWindow({
-                        content: issue[0].value_desc
-                        });
-                                google.maps.event.addListener(issueMarker, 'click', function() {
-                                issueMarker.info.open(panorama, issueMarker);
-                                });
-                                
-                                street_view_markers.push(issueMarker);
-                                var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
-                                panorama.setPov({
-                                heading: heading,
-                                        pitch: 0,
-                                        zoom: 1
-                                });
-                                if (map_counter == total_counter) {
-                        mapnloaded = false;
-                                if ($scope.isloading == false && mapnloaded == false) {
-                        $scope.nloaded = false;
-                        }
-                        }
-                        }, function (response) {
-                        map_counter++;
-                                if (map_counter == total_counter) {
-                        mapnloaded = false;
-                                if ($scope.isloading == false && mapnloaded == false) {
-                        $scope.nloaded = false;
-                        }
-                        }
-                        });
-                        });
-                }
-                }, $scope.panels);
                 });
                 };
                         if (tabchanged == 0) {
