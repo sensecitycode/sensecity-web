@@ -121,11 +121,15 @@
 					<div style="font-size: 9px;">
 						* Η απεικόνιση των κάδων απορριμάτων δεν συνάδει με οποιαδήποτε οριστική χωροθέτηση αυτών.
 					</div>
+                                    
+                            
 				</div>
+                                             
 				<div id="mapcontent">
+                                     
 					<leaflet lf-center="map_center" id="issuemap" layers="layers" markers="markers"
-						height="100%" style="color:black;"></leaflet>
-                                                
+						height="100%" ></leaflet>
+                                             
 				</div>
                             <button type="button" class="btn btn-default" ng-click="removeHillshadeLayer()" ng-disabled="!existsHillshadeLayer()">Remove Hillshade Overlay</button>
                                                 <button type="button" class="btn btn-default" ng-click="addHillshadeLayer()" ng-disabled="existsHillshadeLayer()">Add Hillshade Overlay</button>
@@ -133,6 +137,7 @@
 			</div>
 		</div>
 		<div id="footer">
+
 			<div>
 				<div class="row" style="padding: 5px; width: 100%;">
 					<div ng-repeat="lastissue in lastissues"

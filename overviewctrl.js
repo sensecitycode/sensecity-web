@@ -40,6 +40,86 @@ appControllers
                             cfpLoadingBar,
                             $interval,
                             $translate) {
+                        $scope.leaflet_map = 0;
+                        var position = $("#overview").position();
+                        var width = $(document).width() - $("#aside").width();
+                        $("#streetview").attr('style', 'z-index:-1;width:' + width + 'px;position:absolute;height:' + $("#aside").height() + 'px;left:' + $("#aside").css("width"));
+                        var panorama;
+                        var street_view_markers = [];
+                        var checked_categories = [];
+
+                        $scope.initialize = function () {
+                            // var fenway = {lat: 38.246453, lng: 21.735068};
+                            
+                            var fenway = {lat: 38.27942654793131, lng: 21.76288604736328};
+                            var panoOptions = {
+                                position: fenway,
+                                addressControlOptions: {
+                                    position: google.maps.ControlPosition.BOTTOM_CENTER
+                                },
+                                linksControl: false,
+                                panControl: false,
+                                zoomControlOptions: {
+                                    style: google.maps.ZoomControlStyle.SMALL
+                                },
+                                enableCloseButton: false
+                            };
+                            panorama = new google.maps.StreetViewPanorama(
+                                    $('#streetview')[0], panoOptions);
+                            var issue_array = [];
+                            var checkOptions = [];
+                            for (var k = 1; k < $rootScope.Variables.departments_en.length; k++) {
+                                checked_categories.push(true);
+                                checkOptions[k] = {
+                                    gmap: panorama,
+                                    title: $rootScope.Variables.departments_en[k],
+                                    id: $rootScope.Variables.departments_en[k],
+                                    label: $rootScope.Variables.departments_en[k],
+                                    action: function () {
+                                        var index = $rootScope.Variables.departments_en.indexOf(this.title);
+                                        checked_categories[index] = !checked_categories[index];
+                                        for (var i = 0; i < street_view_markers.length; i++) {
+                                            if (street_view_markers[i].title == this.title) {
+                                                if (checked_categories[index] == false) {
+                                                    street_view_markers[i].setVisible(false);
+                                                } else {
+                                                    street_view_markers[i].setVisible(true);
+                                                }
+                                            }
+                                        }
+                                    }
+                                };
+                                // issue_array.push(new checkBox(checkOptions[k]));
+                            }
+
+//                                        var ddDivOptions = {
+//                                            items: issue_array,
+//                                            id: "myddOptsDiv"
+//                                        };
+//
+//                                        var dropDownDiv = new dropDownOptionsDiv(ddDivOptions);
+//                                        var dropDownOptions = {
+//                                            gmap: panorama,
+//                                            name: 'Προβλήματα',
+//                                            id: 'ddControl',
+//                                            title: 'A custom drop down select with mixed elements',
+//                                            position: google.maps.ControlPosition.TOP_LEFT,
+//                                            dropDown: dropDownDiv
+//                                        };
+//
+//                                        var dropDown = new dropDownControl(dropDownOptions);
+                            $(window).resize(function () {
+
+
+                                var position = $("#overview").position();
+                                var width = $(document).width() - $("#aside").width();
+                               
+                                google.maps.event.trigger(panorama, "resize");
+                            });
+
+                        };
+
+
                         angular.extend($scope, {
                             layercontrol: {
                                 icons: {
@@ -77,56 +157,65 @@ appControllers
                                             attribution: 'xxx',
                                             maxZoom: 20
                                         }
+                                    }, googleStreet: {
+                                        name: 'Google Street View',
+                                        layerType: 'HYBRID',
+                                        type: 'google',
+                                        layerOptions: {
+                                            showOnSelector: true,
+                                            attribution: 'xxx',
+                                            maxZoom: 20
+                                        }
                                     }
-                                },overlays: {
-                        layer1: {name: '',type: 'group',visible:true},layer2:{name: '',type: 'group',visible:true},layer3: {name: '',type: 'group',visible:true},layer4:{name: '',type: 'group',visible:true},layer5: {name: '',type: 'group',visible:true},layer6:{name: '',type: 'group',visible:true},layer7: {name: '',type: 'group',visible:true},layer8:{name: '',type: 'group',visible:true},layer9: {name: '',type: 'group',visible:true},layer10:{name: '',type: 'group',visible:true}}
+                                }, overlays: {
+                                    layer1: {name: '', type: 'group', visible: true}, layer2: {name: '', type: 'group', visible: true}, layer3: {name: '', type: 'group', visible: true}, layer4: {name: '', type: 'group', visible: true}, layer5: {name: '', type: 'group', visible: true}, layer6: {name: '', type: 'group', visible: true}, layer7: {name: '', type: 'group', visible: true}, layer8: {name: '', type: 'group', visible: true}, layer9: {name: '', type: 'group', visible: true}, layer10: {name: '', type: 'group', visible: true}}
                             },
                             addlayer: function (layer) {
-                                            if (layer == 1) {
-                                                eval($rootScope.Variables.overlay_functions.layer1);
-                                            }else if( layer == 2){
-                                                eval($rootScope.Variables.overlay_functions.layer2);
-                                            }else if( layer == 3){
-                                                eval($rootScope.Variables.overlay_functions.layer3);
-                                            }else if( layer == 4){
-                                                eval($rootScope.Variables.overlay_functions.layer4);
-                                            }else if( layer == 5){
-                                                eval($rootScope.Variables.overlay_functions.layer5);
-                                            }else if( layer == 6){
-                                                eval($rootScope.Variables.overlay_functions.layer6);
-                                            }else if( layer == 7){
-                                                eval($rootScope.Variables.overlay_functions.layer7);
-                                            }else if( layer == 8){
-                                                eval($rootScope.Variables.overlay_functions.layer8);
-                                            }else if( layer == 9){
-                                                eval($rootScope.Variables.overlay_functions.layer9);
-                                            }else if( layer == 10){
-                                                eval($rootScope.Variables.overlay_functions.layer10);
-                                            }
-                                        },
-                            removelayer: function(layer){
-                                            if (layer == 1) {
-                                                delete this.layers.overlays.layer1;
-                                            }else if( layer == 2){
-                                                delete this.layers.overlays.layer2;
-                                            }else if( layer == 3){
-                                                delete this.layers.overlays.layer3;
-                                            }else if( layer == 4){
-                                                delete this.layers.overlays.layer4;
-                                            }else if( layer == 5){
-                                                delete this.layers.overlays.layer5;
-                                            }else if( layer == 6){
-                                                delete this.layers.overlays.layer6;
-                                            }else if( layer == 7){
-                                                delete this.layers.overlays.layer7;
-                                            }else if( layer == 8){
-                                                delete this.layers.overlays.layer8;
-                                            }else if( layer == 9){
-                                                delete this.layers.overlays.layer9;
-                                            }else if( layer == 10){
-                                                delete this.layers.overlays.layer10;
-                                            }
-                                        }
+                                if (layer == 1) {
+                                    eval($rootScope.Variables.overlay_functions.layer1);
+                                } else if (layer == 2) {
+                                    eval($rootScope.Variables.overlay_functions.layer2);
+                                } else if (layer == 3) {
+                                    eval($rootScope.Variables.overlay_functions.layer3);
+                                } else if (layer == 4) {
+                                    eval($rootScope.Variables.overlay_functions.layer4);
+                                } else if (layer == 5) {
+                                    eval($rootScope.Variables.overlay_functions.layer5);
+                                } else if (layer == 6) {
+                                    eval($rootScope.Variables.overlay_functions.layer6);
+                                } else if (layer == 7) {
+                                    eval($rootScope.Variables.overlay_functions.layer7);
+                                } else if (layer == 8) {
+                                    eval($rootScope.Variables.overlay_functions.layer8);
+                                } else if (layer == 9) {
+                                    eval($rootScope.Variables.overlay_functions.layer9);
+                                } else if (layer == 10) {
+                                    eval($rootScope.Variables.overlay_functions.layer10);
+                                }
+                            },
+                            removelayer: function (layer) {
+                                if (layer == 1) {
+                                    delete this.layers.overlays.layer1;
+                                } else if (layer == 2) {
+                                    delete this.layers.overlays.layer2;
+                                } else if (layer == 3) {
+                                    delete this.layers.overlays.layer3;
+                                } else if (layer == 4) {
+                                    delete this.layers.overlays.layer4;
+                                } else if (layer == 5) {
+                                    delete this.layers.overlays.layer5;
+                                } else if (layer == 6) {
+                                    delete this.layers.overlays.layer6;
+                                } else if (layer == 7) {
+                                    delete this.layers.overlays.layer7;
+                                } else if (layer == 8) {
+                                    delete this.layers.overlays.layer8;
+                                } else if (layer == 9) {
+                                    delete this.layers.overlays.layer9;
+                                } else if (layer == 10) {
+                                    delete this.layers.overlays.layer10;
+                                }
+                            }
                         });
 
                         $scope.map_center = {
@@ -135,17 +224,28 @@ appControllers
                             zoom: 12
                         };
                         
+                        
+                            leafletData.getMap("overview").then(function (map) {
+                                        map.on('baselayerchange', function (e) {
+                                            $("#streetview").css('z-index', '1');
+                                            $(".leaflet-control-zoom").css("visibility", "hidden");
+                                            google.maps.event.trigger(panorama, "resize");
+                                        });
+                                    });
+                        
                         $q.all($rootScope.mainInfo).then(
                                 function (data) {
 
-                                    for(var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++){
-                                    $scope.removelayer(i);
-                                }
                                     
-                                    for(var i = 1; i <= Object.keys($rootScope.Variables.overlay_functions).length; i++){
-                                    $scope.addlayer(i);
-                                }
-                                    
+
+                                    for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
+                                        $scope.removelayer(i);
+                                    }
+
+                                    for (var i = 1; i <= Object.keys($rootScope.Variables.overlay_functions).length; i++) {
+                                        $scope.addlayer(i);
+                                    }
+
                                     $scope.lastdatesToCheck = 30;
                                     $scope.lastissues = [];
                                     $scope.markers = [];
@@ -168,6 +268,7 @@ appControllers
                                         lng: $rootScope.Variables.long_center,
                                         zoom: $rootScope.Variables.map_zoom
                                     };
+
 
 
                                     //We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
@@ -208,6 +309,7 @@ appControllers
                                     startdate.setDate(startdate.getDate() - $scope.lastdatesToCheck);
                                     $scope.startISOdate = startdate;
                                     $scope.endISOdate = new Date();
+                                    
 
                                     $scope.submitSearchLast30days = function () {
 
@@ -235,7 +337,9 @@ appControllers
                                                 image_field: 0
                                             });
                                         }
-
+                                        
+                                        
+                                        
                                         var promisesArray = [];
 
                                         for (index = 0; index < paramsObj.length; index++) {
@@ -287,14 +391,14 @@ appControllers
                                                                                 } else {
                                                                                     message = 'Μη διαθέσιμη περιγραφή';
                                                                                 }
-                                                                                
-                                                                                if(layer != 'reaction'){
-                                                                                var lindex = $rootScope.Variables.overlay_categories.indexOf(issue) + 1;
-                                                                            }else{
-                                                                                var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
-                                                                            }
-                                                                                layer = "layer"+ lindex;
-                                                                                
+
+                                                                                if (layer != 'reaction') {
+                                                                                    var lindex = $rootScope.Variables.overlay_categories.indexOf(issue) + 1;
+                                                                                } else {
+                                                                                    var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
+                                                                                }
+                                                                                layer = "layer" + lindex;
+
                                                                                 var marker = {
                                                                                     "layer": "" + layer + "",
                                                                                     "lat": +positionlat,
@@ -419,7 +523,7 @@ appControllers
                                         var problemsParam =
                                                 {
                                                     "method": "Bug.search",
-                                                    "params": [{"product": $rootScope.Variables.bugzilla_products, "order": "bug_id DESC", "cf_issues": ["garbage", "plumbing", "lighting", "road-contructor", "green", "protection-policy", "enviroment", "road-constructor", "environment"], "status": ["CONFIRMED", "IN_PROGRESS", "RESOLVED"], "resolution": ["---", "FIXED"], "f1": "creation_ts", "o1": "greaterthan", "v1": "2016-01-01", "include_fields": ["id"]}],
+                                                    "params": [{"product": $rootScope.Variables.bugzilla_products, "order": "bug_id DESC", "cf_issues": $rootScope.Variables.departments, "status": ["CONFIRMED", "IN_PROGRESS", "RESOLVED"], "resolution": ["---", "FIXED"], "f1": "creation_ts", "o1": "greaterthan", "v1": "2016-01-01", "include_fields": ["id"]}],
                                                     "id": 1
                                                 };
                                         BugService.search(problemsParam, function (result) {
@@ -533,6 +637,7 @@ appControllers
                                                 L.control.layers(baseLayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
+                                            
 
                                         });
                                     };

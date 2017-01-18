@@ -187,6 +187,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 }
                 };
                 $scope.removeFixeds = function () {
+                    if($scope.currentactive != - 1){
                 if ($scope.full == 0) {
                 $scope.street = 1;
                         isfixed = 1;
@@ -207,8 +208,10 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 $("#right-column").removeAttr('style');
                 }
                 $scope.full = 0;
+            }
                 }
                 };
+                
                 $scope.totalpages = function () {
                 if (($scope.assignissues == false || $scope.closedissues == true)) {
                 if (summary == "all") {
@@ -462,7 +465,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                         $scope.panels[panel.order].image = issue[0].image_name;
                         } else {
-                        $scope.panels[panel.order].image = "../images/EmptyBox-Phone.png";
+                        $scope.panels[panel.order].image = "../images/"+issue[0].issue+".png";
                         }
                         $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
                                 $scope.panels[panel.order].lng = issue[0].loc.coordinates[0];
@@ -569,9 +572,15 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 map.removeLayer(markersLightning);
                 });
                 }
+                
+                $scope.buildings_view = function(){
+                    if($scope.currentactive != -1){
+                    $window.open("https://www.google.gr/maps/@"+$scope.panels[$scope.currentactive].lat+","+$scope.panels[$scope.currentactive].lng+",200a,20y,41.27t/data=!3m1!1e3?hl=en");
+                }
+                }
+                
                 $scope.fixedmarkersGarbage = [];
                         $scope.fixedmarkersLightning = [];
-                        console.log("city_name : " + $rootScope.Variables.city_name);
                         var i = 0;
                         var theFixedPoints = FixedPointsService.query(function () {
                         angular.forEach(theFixedPoints, function (fixedpoint, key) {
@@ -859,7 +868,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                                 $scope.panels[panel.order].image = issue[0].image_name;
                                 } else {
-                                $scope.panels[panel.order].image = "../images/EmptyBox-Phone.png";
+                                $scope.panels[panel.order].image = "../images/"+issue[0].issue+".png";
                                 }
                                 $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
                                         $scope.panels[panel.order].lng = issue[0].loc.coordinates[0];
@@ -909,6 +918,12 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 }
                                 });
                         }, $scope.panels);
+                        
+//                        var loc_params = ;
+//                        $http.post($rootScope.Variables.host + '/api/1.0/issue/'+ $rootScope.Variables.city_name, params, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+//                            
+//                        });
+                        
                                 $scope.isloading = false;
                                 if ($scope.isloading == false && mapnloaded == false) {
                         $scope.nloaded = false;
@@ -1297,7 +1312,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                                 $scope.panels[panel.order].image = issue[0].image_name;
                                 } else {
-                                $scope.panels[panel.order].image = "../images/EmptyBox-Phone.png";
+                                $scope.panels[panel.order].image = "../images/"+issue[0].issue+".png";
                                 }
                                 $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
                                         $scope.panels[panel.order].lng = issue[0].loc.coordinates[0];

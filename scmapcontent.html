@@ -1,4 +1,4 @@
-<div id="aside" style="height: 550px;">
+<div id="aside" style="height: 550px">
 	<div>
 		<div class="calcItem">
 			<div class="calcValue" count-to="{{calcValue30daysIssues}}" duration="2" count-from="0" >{{calcValue30daysIssues}}</div>
@@ -29,8 +29,10 @@
 		</div>
 	</div>
 </div>
+
 <div id="mapcontent" style="height: 550px;">
-	<leaflet defaults="defaults"   lf-center="map_center" layers="layers" markers="markers"
+    <div  id="streetview"></div>
+	<leaflet defaults="defaults" id="overview"  lf-center="map_center" layers="layers" markers="markers"
 		height="100%" style="color:black;"></leaflet>
 </div>
 
@@ -39,5 +41,5 @@
 
 <div id="last6issues">
 	<div class="slide-animate" ng-include="'sclast6issues.html'"></div>
-	<div style="float: right;" > <a href="#/all_issues" style="color:#000000;" >{{ 'MORE' | translate }} &gt;&gt;</a> </div>
+	<div data-ng-init="initialize()" style="float: right;" > <a href="#/all_issues" style="color:#000000;" >{{ 'MORE' | translate }} &gt;&gt;</a> </div>
 </div>

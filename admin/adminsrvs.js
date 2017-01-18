@@ -97,7 +97,7 @@ appServices.factory('ToGrService', function () {
                 case "plumbing":
                     issue_name = "Πρόβλημα Ύδρευσης";
                     break;
-                case "road-contructor":
+                case "road-constructor":
                     issue_name = "Πρόβλημα Δρόμου/Πεζοδρομίου/Πλατείας";
                     break;
                 case "green":
@@ -106,7 +106,7 @@ appServices.factory('ToGrService', function () {
                 case "protection-policy":
                     issue_name = "Πρόβλημα Πολιτικής Προστασίας";
                     break;
-                case "enviroment":
+                case "environment":
                     issue_name = "Πρόβλημα Περιβάλλοντος";
                     break;    
                 default:
@@ -201,7 +201,7 @@ appServices.factory('Tab2BugzillaService', function () {
                     type = "lighting";
                     break;
                 case 3:
-                    type = "road-contructor";
+                    type = "road-constructor";
                     break;
                 case 4:
                     type = "protection-policy";
@@ -210,7 +210,7 @@ appServices.factory('Tab2BugzillaService', function () {
                     type = "green";
                     break;
                 case 6:
-                    type = "enviroment";
+                    type = "environment";
                     break;
                 case 7:
                     type = "plumbing";
