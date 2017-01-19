@@ -1,5 +1,5 @@
-var app = angular.module('scApp', ['mgcrea.ngStrap', 'scapp.controllers', 'scissuemapapp.scissuemapctrl', 'scwebsubmit.controllers', 'overviewapp.controllers',
-    'searchapp.controllers', 'scapp.services',
+var app = angular.module('scApp', ['mgcrea.ngStrap', 'scapp.controllers', 'scissuemapapp.scissuemapctrl', 'scwebsubmit.controllers', 'sense.controllers',
+    'searchapp.controllers', 'scapp.services','overviewapp.controllers',
     'ngResource', 'ngRoute', 'ui-leaflet', 'angular-loading-bar',
     'ngAnimate', 'pascalprecht.translate', 'ngCookies', 'countTo']);
 
@@ -27,8 +27,8 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider,
         templateUrl: 'scissuemap.html',
         controller: 'scissuemapctrl'
     }).when('/', {
-        templateUrl: 'scmapcontent.html',
-        controller: 'mainOverviewController'
+        templateUrl: 'sense.html',
+        controller: 'senseController'
     }).otherwise({
         redirectTo: '/'
     });

@@ -24,7 +24,7 @@ appControllers
                     '$scope',
                     '$window',
                     '$rootScope', '$http',
-                    '$q', 'leafletData',
+                    '$q', 'leafletData', 'leafletMapEvents',
                     'DisplayIssuesService',
                     'Issue2MapService',
                     'DisplayLast6IssuesService',
@@ -33,7 +33,7 @@ appControllers
                     'cfpLoadingBar',
                     '$interval',
                     '$translate',
-                    function ($scope, $window, $rootScope, $http, $q, leafletData,
+                    function ($scope, $window, $rootScope, $http, $q, leafletData, leafletMapEvents,
                             DisplayIssuesService,
                             Issue2MapService,
                             DisplayLast6IssuesService, BugService, FixedPointsService,
@@ -47,11 +47,11 @@ appControllers
                         var panorama;
                         var street_view_markers = [];
                         var checked_categories = [];
+                        var google_street_layer = false;
 
                         $scope.initialize = function () {
                             // var fenway = {lat: 38.246453, lng: 21.735068};
-                            
-                            var fenway = {lat: 38.27942654793131, lng: 21.76288604736328};
+                            var fenway = {lat: 38.24645352266985, lng: 21.735068952148438};
                             var panoOptions = {
                                 position: fenway,
                                 addressControlOptions: {
@@ -89,38 +89,78 @@ appControllers
                                         }
                                     }
                                 };
-                                // issue_array.push(new checkBox(checkOptions[k]));
+                                issue_array.push(new checkBox(checkOptions[k]));
                             }
 
-//                                        var ddDivOptions = {
-//                                            items: issue_array,
-//                                            id: "myddOptsDiv"
-//                                        };
-//
-//                                        var dropDownDiv = new dropDownOptionsDiv(ddDivOptions);
-//                                        var dropDownOptions = {
-//                                            gmap: panorama,
-//                                            name: 'Προβλήματα',
-//                                            id: 'ddControl',
-//                                            title: 'A custom drop down select with mixed elements',
-//                                            position: google.maps.ControlPosition.TOP_LEFT,
-//                                            dropDown: dropDownDiv
-//                                        };
-//
-//                                        var dropDown = new dropDownControl(dropDownOptions);
+                            var ddDivOptions = {
+                                items: issue_array,
+                                id: "myddOptsDiv"
+                            };
+
+                            var dropDownDiv = new dropDownOptionsDiv(ddDivOptions);
+                            var dropDownOptions = {
+                                gmap: panorama,
+                                name: 'Προβλήματα',
+                                id: 'ddControl',
+                                title: 'A custom drop down select with mixed elements',
+                                position: google.maps.ControlPosition.TOP_LEFT,
+                                dropDown: dropDownDiv
+                            };
+
+                            var dropDown = new dropDownControl(dropDownOptions);
                             $(window).resize(function () {
 
 
                                 var position = $("#overview").position();
                                 var width = $(document).width() - $("#aside").width();
-                               
-                                google.maps.event.trigger(panorama, "resize");
+                                if (google_street_layer) {
+                                    $("#streetview").attr('style', 'z-index:1;width:' + width + 'px;position:absolute;height:' + $("#aside").height() + 'px;left:' + $("#aside").css("width"));
+                                    google.maps.event.trigger(panorama, "resize");
+                                }
                             });
 
                         };
 
+                        
+                        $scope.$on('leafletDirectiveMap.overlayadd', function (event, o) {
+                            console.log("overlayadd event ");
+                            console.log(o.leafletEvent);
+                            console.log(o.leafletEvent.layer);
+                        });
 
+                        $scope.$on("leafletDirectiveMarker.click", function (event, args) {
+                            var marker3 = args.leafletObject;
+                            var popup = marker3.getPopup();
+
+                            var issue_name;
+                            var issue_image;
+
+                            Issue2MapService.query({issueID: marker3.options.issue_id}, function (resp) {
+
+                                var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
+                                if (resp_index != -1) {
+                                    issue_name = $rootScope.Variables.departments_en[resp_index];
+                                }
+
+                                if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
+                                    issue_image = "/images/EmptyBox-Phone.png";
+                                } else {
+                                    issue_image = resp[0].image_name;
+                                }
+
+                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                popup.update();
+
+                            });
+                        });
+                        
                         angular.extend($scope, {
+                            events : {
+                            map: {
+                                enable: leafletMapEvents.getAvailableMapEvents(),
+                                logic: 'emit'
+                            }
+                        },
                             layercontrol: {
                                 icons: {
                                     uncheck: "fa fa-toggle-off",
@@ -148,15 +188,6 @@ appControllers
                                             attribution: 'xxx',
                                             maxZoom: 20
                                         }
-                                    }, googleHybrid: {
-                                        name: 'Google Hybrid + Traffic',
-                                        layerType: 'HYBRID',
-                                        type: 'google',
-                                        layerOptions: {
-                                            showOnSelector: true,
-                                            attribution: 'xxx',
-                                            maxZoom: 20
-                                        }
                                     }, googleStreet: {
                                         name: 'Google Street View',
                                         layerType: 'HYBRID',
@@ -165,6 +196,15 @@ appControllers
                                             showOnSelector: true,
                                             attribution: 'xxx',
                                             maxZoom: 20
+                                        }
+                                    }, google3d: {
+                                        name: 'Google 3d buildings',
+                                        type: 'xyz',
+                                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                        layerOptions: {
+                                            showOnSelector: true,
+                                            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                                            maxZoom: 19
                                         }
                                     }
                                 }, overlays: {
@@ -223,20 +263,30 @@ appControllers
                             lng: 20.897801,
                             zoom: 12
                         };
+
                         
-                        
-                            leafletData.getMap("overview").then(function (map) {
-                                        map.on('baselayerchange', function (e) {
-                                            $("#streetview").css('z-index', '1');
-                                            $(".leaflet-control-zoom").css("visibility", "hidden");
-                                            google.maps.event.trigger(panorama, "resize");
-                                        });
-                                    });
-                        
+
+                        leafletData.getMap().then(function (map) {
+                            map.on('baselayerchange', function (e) {
+                                if (e.name == "Google Street View") {
+                                    google_street_layer = true;
+                                    $("#streetview").css('z-index', '1');
+                                    $(".leaflet-control-zoom").css("visibility", "hidden");
+                                    google.maps.event.trigger(panorama, "resize");
+                                }else {
+                                    google_street_layer = false;
+                                    $("#streetview").css('z-index', '-1');
+                                    $(".leaflet-control-zoom").css("visibility", "visible");
+                                    if(e.name == "Google 3d buildings"){
+                                        $window.open("https://www.google.gr/maps/@38.2447101,21.7348973,198a,20y,41.27t/data=!3m1!1e3?hl=en");
+                                    }
+                                }
+                            });
+                        });
+
                         $q.all($rootScope.mainInfo).then(
                                 function (data) {
 
-                                    
 
                                     for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
                                         $scope.removelayer(i);
@@ -273,46 +323,15 @@ appControllers
 
                                     //We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
 
-                                    $scope.$on('leafletDirectiveMap.overlayadd', function (event, o) {
-                                        console.log("overlayadd event ");
-                                        console.log(o.leafletEvent);
-                                        console.log(o.leafletEvent.layer);
-                                    });
 
-                                    $scope.$on("leafletDirectiveMarker.click", function (event, args) {
-                                        var marker3 = args.leafletObject;
-                                        var popup = marker3.getPopup();
-
-                                        var issue_name;
-                                        var issue_image;
-
-                                        Issue2MapService.query({issueID: marker3.options.issue_id}, function (resp) {
-
-                                            var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
-                                            if (resp_index != -1) {
-                                                issue_name = $rootScope.Variables.departments_en[resp_index];
-                                            }
-
-                                            if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
-                                                issue_image = "/images/EmptyBox-Phone.png";
-                                            } else {
-                                                issue_image = resp[0].image_name;
-                                            }
-
-                                            popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
-                                            popup.update();
-
-                                        });
-                                    });
 
                                     var startdate = new Date();
                                     startdate.setDate(startdate.getDate() - $scope.lastdatesToCheck);
                                     $scope.startISOdate = startdate;
                                     $scope.endISOdate = new Date();
-                                    
+
 
                                     $scope.submitSearchLast30days = function () {
-
                                         var calclast30daysIssues = 0;
                                         var calclast30daysEvents = 0;
 
@@ -337,9 +356,9 @@ appControllers
                                                 image_field: 0
                                             });
                                         }
-                                        
-                                        
-                                        
+
+
+
                                         var promisesArray = [];
 
                                         for (index = 0; index < paramsObj.length; index++) {
@@ -378,6 +397,7 @@ appControllers
                                                                                         || issue == "neutral"
                                                                                         || issue == "happy") {
                                                                                     layer = 'reaction';
+                                                                                    issue = 'reaction';
                                                                                 } else {
                                                                                     layer = issue;
                                                                                     calclast30daysIssues = calclast30daysIssues + 1;
@@ -413,10 +433,41 @@ appControllers
                                                                                 };
 
 
+
                                                                                 if (layer != 'reaction') {
                                                                                     marker.message = "Loading...";
                                                                                 }
                                                                                 $scope.markers.push(marker);
+                                                                                if (issue != "reaction") {
+                                                                                    var issue_coords = new google.maps.LatLng(positionlat, positionlon);
+                                                                                    var issue_index = $rootScope.Variables.departments.indexOf(issue);
+                                                                                    var issueMarker = new google.maps.Marker({
+                                                                                        position: issue_coords,
+                                                                                        map: panorama,
+                                                                                        icon: 'admin/icons/' + issue + '.png',
+                                                                                        title: $rootScope.Variables.departments_en[issue_index]
+                                                                                    });
+                                                                                    var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
+                                                                                    if (checked_categories[category_index] == false) {
+                                                                                        issueMarker.setVisible(false);
+                                                                                    } else {
+                                                                                        issueMarker.setVisible(true);
+                                                                                    }
+
+                                                                                    issueMarker.info = new google.maps.InfoWindow({
+                                                                                        content: "<span style=color:black>" + message + "</span>"
+                                                                                    });
+                                                                                    google.maps.event.addListener(issueMarker, 'click', function () {
+                                                                                        issueMarker.info.open(panorama, issueMarker);
+                                                                                    });
+                                                                                    street_view_markers.push(issueMarker);
+                                                                                    var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
+                                                                                    panorama.setPov({
+                                                                                        heading: heading,
+                                                                                        pitch: 0,
+                                                                                        zoom: 1
+                                                                                    });
+                                                                                }
 
                                                                             },
                                                                             $scope.markers);
@@ -637,7 +688,7 @@ appControllers
                                                 L.control.layers(baseLayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
-                                            
+
 
                                         });
                                     };

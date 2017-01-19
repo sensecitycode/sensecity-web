@@ -110,7 +110,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 
                 var dropDown = new dropDownControl(dropDownOptions);
                         $(window).resize(function() {
-                // (the 'map' here is the result of the created 'var map = ...' above)
+
                 google.maps.event.trigger(panorama, "resize");
                 });
                         // map.setStreetView(panorama);
