@@ -9,13 +9,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $window.alert(url);
         if( url[1] == "sense"){
             url = current.split("#/");
-             $window.alert(url);
             if( url[1] == "overview"){
-                 $window.alert(current.split(".")[0]+".sense.city/#/overview");
-                current.split(".")[0]+".sense.city/#/overview".reload();
+                document.location.href = current.split(".")[0]+".sense.city/#/overview";
             }else{
-                $window.alert(current.split(".")[0]+".sense.city");
-                current.split(".")[0]+".sense.city".reload();
+                document.location.href = current.split(".")[0]+".sense.city";
             }
         }
 });
