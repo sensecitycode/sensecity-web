@@ -257,8 +257,6 @@ appControllers
                                 }
                             }
                         });
-                        
-                        $window.alert("ok");
 
                         $scope.map_center = {
                             lat: 37.787435,
@@ -288,7 +286,6 @@ appControllers
 
                         $q.all($rootScope.mainInfo).then(
                                 function (data) {
-                                      $window.alert("ok1");
 
                                     for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
                                         $scope.removelayer(i);
