@@ -257,6 +257,8 @@ appControllers
                                 }
                             }
                         });
+                        
+                        $window.alert(JSON.stringify($scope.layers);
 
                         $scope.map_center = {
                             lat: 37.787435,
