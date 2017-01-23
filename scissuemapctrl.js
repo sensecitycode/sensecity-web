@@ -67,6 +67,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
             $scope.issue_name_new = issue_name_new;
             $scope.issue_value_desc = issue[0].value_desc;
+            $(window).resize();
         });
 
 
