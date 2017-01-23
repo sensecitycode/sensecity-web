@@ -128,8 +128,9 @@ appControllers
                                             }
                                         }
                         });
-                        $window.alert(JSON.stringify($scope.layers.baselayers));
-                        $window.alert("ok1");
+                        
+                        var baselayers = $scope.layers.baselayers;
+                        
                         $scope.map_center = {
                             lat: 37.787435,
                             lng: 20.897801,
@@ -138,8 +139,7 @@ appControllers
                         
                         $q.all($rootScope.mainInfo).then(
                                 function (data) {
-$window.alert(JSON.stringify($scope.layers.baselayers));
-                        $window.alert("ok2");
+
                                     for(var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++){
                                     $scope.removelayer(i);
                                 }
@@ -525,24 +525,15 @@ $window.alert(JSON.stringify($scope.layers.baselayers));
                                             };
 
                                             leafletData.getMap().then(function (map) {
-                                                $window.alert(JSON.stringify($scope.layers.baselayers));
-                                                L.control.layers(baseLayers, overlays).addTo(map);
+                                                L.control.layers(baselayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
 
                                         });
                                     };
-                                    $window.alert(JSON.stringify($scope.layers.baselayers));
-                        $window.alert("ok3");
                                     $scope.doCalcLast6Issues();
-                                    $window.alert(JSON.stringify($scope.layers.baselayers));
-                        $window.alert("ok4");
                                     $scope.submitSearchLast30days();
-                                    $window.alert(JSON.stringify($scope.layers.baselayers));
-                        $window.alert("ok5");
                                     $scope.doCalcFrom2016();
-                                    $window.alert(JSON.stringify($scope.layers.baselayers));
-                        $window.alert("ok6");
                                     $scope.displayFixedPoints();
 
                                     // set intervals to update
