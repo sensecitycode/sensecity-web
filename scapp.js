@@ -72,7 +72,7 @@ app.run(['$rootScope', '$http','$location','$q', function ($rootScope, $http,$lo
         //'http://localhost:8383/sensecity-web/config/testcity1.json'
         var d = $q.defer();
 
-        $rootScope.mainInfo = $http.get('http://localhost:8383/sensecity-web/config/testcity1.json').success(function (response) {
+        $rootScope.mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function (response) {
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],
