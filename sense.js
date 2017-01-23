@@ -1,4 +1,4 @@
-var appControllers = angular.module('sense.controllers', ['pascalprecht.translate']);
+var appControllers = angular.module('sense.controllers', ['pascalprecht.translate','ui-leaflet']);
 
 appControllers.directive('sidebarDirective', function () {
     return {

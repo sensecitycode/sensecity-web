@@ -2,7 +2,8 @@
 <div class="row" style="padding: 5px; width: 100%;">
 	<div ng-repeat="lastissue in lastissues"	class="issueitem col-lg-2 col-md-2 col-sm-2 col-xs-2"
 		style="padding-bottom: 5px;">
-			<a href="http://{{Variables.city_name}}.sense.city/#/scissuemap={{lastissue._id}}" style="text-decoration: none;"><center>
+<!--            http://{{Variables.city_name}}.sense.city/-->
+			<a href="http://localhost:8383/sensecity-web/scapp.html#/scissuemap={{lastissue._id}}" style="text-decoration: none;"><center>
 					<div class="thumbnail crop" style="padding: 0px;">
 						<img src={{lastissue.image_name}} alt="">
 					</div>
