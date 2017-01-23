@@ -121,7 +121,7 @@ appControllers
 
                         };
 
-                        
+
                         $scope.$on('leafletDirectiveMap.overlayadd', function (event, o) {
                             console.log("overlayadd event ");
                             console.log(o.leafletEvent);
@@ -153,14 +153,14 @@ appControllers
 
                             });
                         });
-                        
+
                         angular.extend($scope, {
-                            events : {
-                            map: {
-                                enable: leafletMapEvents.getAvailableMapEvents(),
-                                logic: 'emit'
-                            }
-                        },
+                            events: {
+                                map: {
+                                    enable: leafletMapEvents.getAvailableMapEvents(),
+                                    logic: 'emit'
+                                }
+                            },
                             layercontrol: {
                                 icons: {
                                     uncheck: "fa fa-toggle-off",
@@ -264,7 +264,7 @@ appControllers
                             zoom: 12
                         };
 
-                        
+
 
                         leafletData.getMap().then(function (map) {
                             map.on('baselayerchange', function (e) {
@@ -273,11 +273,11 @@ appControllers
                                     $("#streetview").css('z-index', '1');
                                     $(".leaflet-control-zoom").css("visibility", "hidden");
                                     google.maps.event.trigger(panorama, "resize");
-                                }else {
+                                } else {
                                     google_street_layer = false;
                                     $("#streetview").css('z-index', '-1');
                                     $(".leaflet-control-zoom").css("visibility", "visible");
-                                    if(e.name == "Google 3d buildings"){
+                                    if (e.name == "Google 3d buildings") {
                                         $window.open("https://www.google.gr/maps/@38.2447101,21.7348973,198a,20y,41.27t/data=!3m1!1e3?hl=en");
                                     }
                                 }
@@ -380,6 +380,10 @@ appControllers
                                                             }
 
                                                             $scope.markers = [];
+                                                            for (var i = 0; i < street_view_markers.length; i++) {
+                                                                street_view_markers[i].setMap(null);
+                                                            }
+                                                            street_view_markers = [];
                                                             angular
                                                                     .forEach(
                                                                             searchissues,

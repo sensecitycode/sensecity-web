@@ -870,7 +870,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 position: issue_coords,
                                         map: panorama,
                                         icon: './icons/' + value.issue + '.png',
-                                        title: $rootScope.Variables.departments_en[issue_index]
+                                        title: $rootScope.Variables.departments_en[issue_index],
+                                        visible: true
                                 });
                                 var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
                                 if (checked_categories[category_index] == false){
