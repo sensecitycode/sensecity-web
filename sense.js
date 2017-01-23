@@ -133,15 +133,43 @@ appControllers
                             lat: 37.787435,
                             lng: 20.897801,
                             zoom: 12
-                        };
-                        
-                        $window.alert(JSON.stringify($scope.layers.baselayers));
-                        
-                        $scope.$apply();
+                        };                  
                         
                         $q.all($rootScope.mainInfo).then(
                                 function (data) {
-                                    $window.alert(JSON.stringify($scope.layers.baselayers));
+                                    var baselayers = {layers: {
+                                baselayers: {
+                                    openStreetMap: {
+                                        name: 'OpenStreetMap',
+                                        type: 'xyz',
+                                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                        layerOptions: {
+                                            showOnSelector: true,
+                                            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                                            maxZoom: 19
+                                        }
+                                    },
+                                    googleRoadmap: {
+                                        name: 'Google Map + Traffic',
+                                        layerType: 'ROADMAP',
+                                        type: 'google',
+                                        layerOptions: {
+                                            showOnSelector: true,
+                                            attribution: 'xxx',
+                                            maxZoom: 20
+                                        }
+                                    }, googleHybrid: {
+                                        name: 'Google Hybrid + Traffic',
+                                        layerType: 'HYBRID',
+                                        type: 'google',
+                                        layerOptions: {
+                                            showOnSelector: true,
+                                            attribution: 'xxx',
+                                            maxZoom: 20
+                                        }
+                                    }
+                                }
+                            }};
                                     for(var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++){
                                     $scope.removelayer(i);
                                 }
@@ -527,7 +555,7 @@ appControllers
                                             };
 
                                             leafletData.getMap().then(function (map) {
-                                                L.control.layers($scope.layers.baseLayers, overlays).addTo(map);
+                                                L.control.layers(baseLayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
 
