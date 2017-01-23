@@ -5,19 +5,38 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
     function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config,leafletData) {
         var icons = $rootScope.Variables.icons;
         $scope.layers = {
-            baselayers: {
-                openStreetMap: {
-                    name: 'OpenStreetMap',
-                    type: 'xyz',
-                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    layerOptions: {
-                        showOnSelector: false,
-                        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-                    }
-                }
-            }
-        };
-        $window.alert(JSON.stringify($scope.layers));
+                                baselayers: {
+                                    openStreetMap: {
+                                        name: 'OpenStreetMap',
+                                        type: 'xyz',
+                                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                        layerOptions: {
+                                            showOnSelector: true,
+                                            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                                            maxZoom: 19
+                                        }
+                                    },
+                                    googleRoadmap: {
+                                        name: 'Google Map + Traffic',
+                                        layerType: 'ROADMAP',
+                                        type: 'google',
+                                        layerOptions: {
+                                            showOnSelector: true,
+                                            attribution: 'xxx',
+                                            maxZoom: 20
+                                        }
+                                    }, googleHybrid: {
+                                        name: 'Google Hybrid + Traffic',
+                                        layerType: 'HYBRID',
+                                        type: 'google',
+                                        layerOptions: {
+                                            showOnSelector: true,
+                                            attribution: 'xxx',
+                                            maxZoom: 20
+                                        }
+                                    }
+                                }
+                            }
 
         $scope.center = {};
         $scope.markers = {};
