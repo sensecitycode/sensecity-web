@@ -135,12 +135,8 @@ appControllers
                             zoom: 12
                         };                  
                         
-                        
-                        $window.alert(JSON.stringify($scope.layers.baselayers));
-                        
                         $q.all($rootScope.mainInfo).then(
                                 function (data) {
-                                $window.alert(JSON.stringify($scope.layers.baselayers));
                                     for(var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++){
                                     $scope.removelayer(i);
                                 }
