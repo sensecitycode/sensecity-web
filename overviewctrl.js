@@ -681,7 +681,7 @@ appControllers
                                             };
 
                                             leafletData.getMap().then(function (map) {
-                                                L.control.layers(baseLayers, overlays).addTo(map);
+                                                L.control.layers($scope.layers.baseLayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
 
@@ -695,8 +695,9 @@ appControllers
                                     $scope.displayFixedPoints();
 
                                     // set intervals to update
-                                    var updtime = 1 * 60 * 1000; // every 5 minutes
+                                    var updtime = 5 * 60 * 1000; // every 5 minutes
                                     $interval($scope.doCalcLast6Issues, updtime);
                                     $interval($scope.submitSearchLast30days, updtime);
+                                    $scope.$apply();
                                 });
                     }]);

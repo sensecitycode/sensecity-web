@@ -127,10 +127,8 @@ appControllers
                                                 delete this.layers.overlays.layer10;
                                             }
                                         }
-                        });
-                        
-                        var baselayers = $scope.layers.baselayers.val();
-                        
+                        });                       
+                 
                         $scope.map_center = {
                             lat: 37.787435,
                             lng: 20.897801,
@@ -524,7 +522,7 @@ appControllers
                                             };
 
                                             leafletData.getMap().then(function (map) {
-                                                L.control.layers(baselayers, overlays).addTo(map);
+                                                L.control.layers($scope.layers.baseLayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
 
@@ -536,8 +534,9 @@ appControllers
                                     $scope.displayFixedPoints();
 
                                     // set intervals to update
-                                    var updtime = 1 * 60 * 1000; // every 5 minutes
+                                    var updtime = 5 * 60 * 1000; // every 5 minutes
                                     $interval($scope.doCalcLast6Issues, updtime);
                                     $interval($scope.submitSearchLast30days, updtime);
+                                    $scope.$apply();
                                 });
                     }]);
