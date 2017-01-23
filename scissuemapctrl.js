@@ -11,11 +11,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             url = current.split("#/");
              $window.alert(url);
             if( url[1] == "overview"){
-                 $window.alert(current.split(".")[0]+"sense.city/#/overview");
-                current.split(".")[0]+"/sense.city/#/overview".reload();
+                 $window.alert(current.split(".")[0]+".sense.city/#/overview");
+                current.split(".")[0]+".sense.city/#/overview".reload();
             }else{
-                $window.alert(current.split(".")[0]+"sense.city");
-                current.split(".")[0]+"/sense.city".reload();
+                $window.alert(current.split(".")[0]+".sense.city");
+                current.split(".")[0]+".sense.city".reload();
             }
         }
 });
