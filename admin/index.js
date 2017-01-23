@@ -20,8 +20,8 @@ app.controller('MainController',['$rootScope','$http','$window','$location',func
       var url_path = $location.absUrl().split("//");
             var sub_domain = url_path[1].split(".");
            sub_domain[0] = "testcity1";
-//'../config/'+sub_domain[0]+'.json'
-        var mainInfo = $http.get('http://localhost:8383/sensecity-web/config/testcity1.json').success(function (response) {
+//
+        var mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function (response) {
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],
