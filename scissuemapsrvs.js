@@ -2,7 +2,6 @@ var appServices = angular.module('scissuemapapp.scissuemapsrvs', []);
 
 appServices.factory('EndPointService', function () {
     return {
-        bugzillaURL: "http://api.sense.city:4001/bugs/search",
         APIURL: "http://api.sense.city:4000"
     };
 });

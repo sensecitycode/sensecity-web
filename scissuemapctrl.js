@@ -6,14 +6,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         var icons = $rootScope.Variables.icons;
      $rootScope.$on('$locationChangeStart', function (event, current, previous) {
         var url = current.split(".");
-        $window.alert(url);
+
         if( url[1] == "sense"){
             url = current.split("#/");
-            if( url[1] == "overview"){
-                document.location.href = current.split(".")[0]+".sense.city/#/overview";
-            }else{
                 document.location.href = current.split(".")[0]+".sense.city";
-            }
         }
 });
         $scope.layers = {
