@@ -5,19 +5,19 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
     function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config) {
         var icons = $rootScope.Variables.icons;
 
-        $scope.layers = {
-            baselayers: {
-                openStreetMap: {
-                    name: 'OpenStreetMap',
-                    type: 'xyz',
-                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    layerOptions: {
-                        showOnSelector: false,
-                        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-                    }
-                }
-            }
-        };
+//        $scope.layers = {
+//            baselayers: {
+//                openStreetMap: {
+//                    name: 'OpenStreetMap',
+//                    type: 'xyz',
+//                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+//                    layerOptions: {
+//                        showOnSelector: false,
+//                        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+//                    }
+//                }
+//            }
+//        };
 
         $scope.center = {};
         $scope.markers = {};
@@ -31,7 +31,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
         Issue2MapService.query({issueID: issue_id}, function (issue) {
             console.log(issue);
-
+$window.alert("ok");
             $scope.issue_image = issue[0].image_name;
             $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 16};
             $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[issue[0].issue]}];
@@ -67,6 +67,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
             $scope.issue_name_new = issue_name_new;
             $scope.issue_value_desc = issue[0].value_desc;
+            
             $(window).resize();
         });
 
