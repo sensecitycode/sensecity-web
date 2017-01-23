@@ -4,7 +4,7 @@ var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource
 appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config','leafletData',
     function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config,leafletData) {
         var icons = $rootScope.Variables.icons;
-        $scope.layers = {
+       angular.extend($scope , {
                                 baselayers: {
                                     openStreetMap: {
                                         name: 'OpenStreetMap',
@@ -36,7 +36,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                         }
                                     }
                                 }
-                            }
+                            });
 
         $scope.center = {};
         $scope.markers = {};
