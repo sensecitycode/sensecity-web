@@ -1,4 +1,4 @@
-var appControllers = angular.module('sense.controllers', ['pascalprecht.translate','ui-leaflet']);
+var appControllers = angular.module('sense.controllers', ['pascalprecht.translate']);
 
 appControllers.directive('sidebarDirective', function () {
     return {
@@ -17,8 +17,7 @@ appControllers.directive('sidebarDirective', function () {
 
 
 
-appControllers
-        .controller(
+appControllers.controller(
                 'senseController',
                 [
                     '$scope',
@@ -127,16 +126,17 @@ appControllers
                                                 delete this.layers.overlays.layer10;
                                             }
                                         }
-                        });                       
-                 
+                        });
+
                         $scope.map_center = {
                             lat: 37.787435,
                             lng: 20.897801,
                             zoom: 12
-                        };                  
+                        };
                         
                         $q.all($rootScope.mainInfo).then(
                                 function (data) {
+
                                     for(var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++){
                                     $scope.removelayer(i);
                                 }
@@ -516,26 +516,33 @@ appControllers
                                                 map.addLayer(markersLightning);
                                             });
 
+                                            var baseLayers = {
+                                                //'Open Street Map': osmLayer,
+                                                //'Google Maps':googleRoadmap,
+                                                //'Google Maps Satellite':googleHybrid,
+                                                //'Google Maps Traffic':googleTraffic
+                                            };
+
                                             var overlays = {
                                                 "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>": markersGarbage,
                                                 "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
                                             };
 
                                             leafletData.getMap().then(function (map) {
-
-                                                L.control.layers($scope.layers.baselayers, overlays).addTo(map);
+                                                L.control.layers(baseLayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
 
                                         });
                                     };
+
                                     $scope.doCalcLast6Issues();
                                     $scope.submitSearchLast30days();
                                     $scope.doCalcFrom2016();
                                     $scope.displayFixedPoints();
 
                                     // set intervals to update
-                                    var updtime = 5 * 60 * 1000; // every 5 minutes
+                                    var updtime = 1 * 60 * 1000; // every 5 minutes
                                     $interval($scope.doCalcLast6Issues, updtime);
                                     $interval($scope.submitSearchLast30days, updtime);
                                 });
