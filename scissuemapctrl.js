@@ -4,7 +4,6 @@ var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource
 appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config','leafletData',
     function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config,leafletData) {
         var icons = $rootScope.Variables.icons;
-$window.alert(JSON.stringify($scope.layers));
         $scope.layers = {
             baselayers: {
                 openStreetMap: {
@@ -15,25 +14,7 @@ $window.alert(JSON.stringify($scope.layers));
                         showOnSelector: false,
                         attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
                     }
-                },googleRoadmap: {
-                                        name: 'Google Map + Traffic',
-                                        layerType: 'ROADMAP',
-                                        type: 'google',
-                                        layerOptions: {
-                                            showOnSelector: true,
-                                            attribution: 'xxx',
-                                            maxZoom: 20
-                                        }
-                                    }, googleHybrid: {
-                                        name: 'Google Hybrid + Traffic',
-                                        layerType: 'HYBRID',
-                                        type: 'google',
-                                        layerOptions: {
-                                            showOnSelector: true,
-                                            attribution: 'xxx',
-                                            maxZoom: 20
-                                        }
-                                    }
+                }
             }
         };
         $window.alert(JSON.stringify($scope.layers));
