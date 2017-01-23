@@ -4,7 +4,17 @@ var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource
 appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config','leafletData',
     function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config,leafletData) {
         var icons = $rootScope.Variables.icons;
-
+     $rootScope.$on('$locationChangeStart', function (event, current, previous) {
+        var url = current.split(".");
+        if( url[1] == "sense"){
+            url = current.split("#/");
+            if( url[1] == "overview"){
+                $location.$$url.split(".")[0]+"sense.city/#/overview".reload();
+            }else{
+                $location.$$url.split(".")[0]+"sense.city".reload();
+            }
+        }
+});
         $scope.layers = {
             baselayers: {
                 openStreetMap: {

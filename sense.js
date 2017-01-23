@@ -522,6 +522,7 @@ appControllers
                                             };
 
                                             leafletData.getMap().then(function (map) {
+
                                                 L.control.layers($scope.layers.baselayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
