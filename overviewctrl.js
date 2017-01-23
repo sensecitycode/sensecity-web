@@ -675,13 +675,6 @@ appControllers
                                                 map.addLayer(markersLightning);
                                             });
 
-                                            var baseLayers = {
-                                                //'Open Street Map': osmLayer,
-                                                //'Google Maps':googleRoadmap,
-                                                //'Google Maps Satellite':googleHybrid,
-                                                //'Google Maps Traffic':googleTraffic
-                                            };
-
                                             var overlays = {
                                                 "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>": markersGarbage,
                                                 "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning

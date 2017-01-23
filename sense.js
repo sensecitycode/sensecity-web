@@ -128,7 +128,7 @@ appControllers
                                             }
                                         }
                         });
-
+                        $window.alert(JSON.stringify($scope.layers.baselayers));
                         $scope.map_center = {
                             lat: 37.787435,
                             lng: 20.897801,
@@ -517,19 +517,13 @@ appControllers
                                                 map.addLayer(markersLightning);
                                             });
 
-                                            var baseLayers = {
-                                                //'Open Street Map': osmLayer,
-                                                //'Google Maps':googleRoadmap,
-                                                //'Google Maps Satellite':googleHybrid,
-                                                //'Google Maps Traffic':googleTraffic
-                                            };
-
                                             var overlays = {
                                                 "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>": markersGarbage,
                                                 "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
                                             };
 
                                             leafletData.getMap().then(function (map) {
+                                                $window.alert(JSON.stringify($scope.layers.baselayers));
                                                 L.control.layers(baseLayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
