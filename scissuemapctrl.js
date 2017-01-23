@@ -1,8 +1,8 @@
 var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource','scissuemapapp.scissuemapsrvs'])
         .constant("config", {"host": "api.sense.city", "port": "3000"});
 
-appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config',
-    function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config) {
+appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config','leafletData',
+    function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config,leafletData) {
         var icons = $rootScope.Variables.icons;
 
         $scope.layers = {
@@ -67,7 +67,9 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             $scope.issue_name_new = issue_name_new;
             $scope.issue_value_desc = issue[0].value_desc;
             
-            $(window).resize();
+            leafletData.getMap().then(function (map) {
+                                                map.invalidateSize(true);
+                                            });
         });
 
 
