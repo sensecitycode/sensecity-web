@@ -522,7 +522,6 @@ appControllers
                                             };
 
                                             leafletData.getMap().then(function (map) {
-                                                $window.alert(JSON.stringify($scope.layers.baselayers));
                                                 L.control.layers($scope.layers.baselayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
