@@ -63,16 +63,20 @@ app.config(['$translateProvider', function ($translateProvider) {
         $translateProvider.useLocalStorage();
     }]);
 
-app.run(['$rootScope', '$http','$location','$q', function ($rootScope, $http,$location,$q) {
+app.run(['$rootScope', '$http','$location','$q','$window', function ($rootScope, $http,$location,$q,$window) {
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
+        var url;
 
-        sub_domain[0] = "testcity1";
-//        '../config/'+sub_domain[0]+'.json'
-        //'http://localhost:8383/sensecity-web/config/testcity1.json'
+        if( sub_domain[0].split(":").length > 1){
+            url = "http://localhost:8383/sensecity-web/config/testcity1.json";
+            sub_domain[0] = "testcity1";
+        }else{
+            url = '../config/'+sub_domain[0]+'.json';
+        }
         var d = $q.defer();
 
-        $rootScope.mainInfo = $http.get('../config/'+sub_domain[0]+'.json').success(function (response) {
+        $rootScope.mainInfo = $http.get(url).success(function (response) {
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],
