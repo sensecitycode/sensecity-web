@@ -1,44 +1,23 @@
-var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource', 'scissuemapapp.scissuemapsrvs'])
+var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource','scissuemapapp.scissuemapsrvs'])
         .constant("config", {"host": "api.sense.city", "port": "3000"});
 
-appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config', 'leafletData',
-    function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config, leafletData) {
+appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config','leafletData',
+    function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config,leafletData) {
         var icons = $rootScope.Variables.icons;
 
-        angular.extend($scope, {
-            layers: {
-                baselayers: {
-                    openStreetMap: {
-                        name: 'OpenStreetMap',
-                        type: 'xyz',
-                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                        layerOptions: {
-                            showOnSelector: true,
-                            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-                            maxZoom: 19
-                        }
-                    },
-                    googleRoadmap: {
-                        name: 'Google Map + Traffic',
-                        layerType: 'ROADMAP',
-                        type: 'google',
-                        layerOptions: {
-                            showOnSelector: true,
-                            attribution: 'xxx',
-                            maxZoom: 20
-                        }
-                    }, googleHybrid: {
-                        name: 'Google Hybrid + Traffic',
-                        layerType: 'HYBRID',
-                        type: 'google',
-                        layerOptions: {
-                            showOnSelector: true,
-                            attribution: 'xxx',
-                            maxZoom: 20
-                        }
+        $scope.layers = {
+            baselayers: {
+                openStreetMap: {
+                    name: 'OpenStreetMap',
+                    type: 'xyz',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    layerOptions: {
+                        showOnSelector: false,
+                        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
                     }
                 }
-            }});
+            }
+        };
 
         $scope.center = {};
         $scope.markers = {};
@@ -87,10 +66,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
             $scope.issue_name_new = issue_name_new;
             $scope.issue_value_desc = issue[0].value_desc;
-
+            
             leafletData.getMap().then(function (map) {
-                map.invalidateSize(true);
-            });
+                                                map.invalidateSize(true);
+                                            });
         });
 
 
@@ -212,7 +191,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             }
         });
 
-        var history = $resource($rootScope.Variables.APIADMIN + '/fullissue/' + issue_id,
+        var history = $resource($rootScope.Variables.APIADMIN+'/fullissue/' + issue_id,
                 {'query': {method: 'GET', isArray: true}});
         history.query(function (response) {
             //        var res = [{
