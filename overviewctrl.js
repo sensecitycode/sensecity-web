@@ -698,6 +698,5 @@ appControllers
                                     var updtime = 5 * 60 * 1000; // every 5 minutes
                                     $interval($scope.doCalcLast6Issues, updtime);
                                     $interval($scope.submitSearchLast30days, updtime);
-                                    $scope.$apply();
                                 });
                     }]);
