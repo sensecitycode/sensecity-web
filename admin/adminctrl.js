@@ -16,6 +16,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 var mapnloaded = true;
                 var small = 0;
                 var current_layer = 0;
+                var search_button = 0;
                 $scope.isloading = true;
                 $scope.full = 0;
                 $scope.street = 0;
@@ -23,6 +24,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 $scope.padmin = true;
                 $scope.duplicof = "";
                 $scope.nloaded = true;
+                $scope.semail = "";
+                $scope.smobile = "";
                 var url_path = $location.absUrl().split("//");
                 var sub_domain = url_path[1].split(".");
                 $scope.logout = function ($event) {
@@ -152,6 +155,10 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 
         function userole() {
         $scope.usrrole = $cookieStore.get("role");
+        }
+
+        $scope.issue_search = function(){
+        search_button = 1;
         }
 
         authorizedu();
@@ -324,7 +331,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 }
 
         $scope.changeTab = function (index) {
-        if (tabchanged == 2) {
+        search_button = 0;
+                if (tabchanged == 2) {
         tabchanged = 0;
         } else {
         tabchanged = 1;
@@ -1119,19 +1127,25 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $cookieStore.remove("bug_token");
                 }
                 };
-                $scope.toggle_closedissues = function () {
-                if ($scope.closedissues == false) {
-                $scope.closedissues = true;
-                        $scope.allclosedissues = false;
-                        $scope.assignissues = false;
-                } else {
-                $scope.closedissues = false;
+                $scope.reset_search = function(){
+                search_button = 0;
                 }
-                $scope.activePanel = - 1;
-                        $scope.currentactive = - 1;
-                };
+
+        $scope.toggle_closedissues = function () {
+        search_button = 0;
+                if ($scope.closedissues == false) {
+        $scope.closedissues = true;
+                $scope.allclosedissues = false;
+                $scope.assignissues = false;
+        } else {
+        $scope.closedissues = false;
+        }
+        $scope.activePanel = - 1;
+                $scope.currentactive = - 1;
+        };
                 $scope.toggle_allclosedissues = function () {
-                if ($scope.allclosedissues == false) {
+                search_button = 0;
+                        if ($scope.allclosedissues == false) {
                 $scope.allclosedissues = true;
                         $scope.closedissues = false;
                         $scope.assignissues = false;
@@ -1142,7 +1156,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.currentactive = - 1;
                 };
                 $scope.toggle_inprogressissues = function () {
-                if ($scope.assignissues == false) {
+                search_button = 0;
+                        if ($scope.assignissues == false) {
                 $scope.assignissues = true;
                         $scope.allclosedissues = false;
                         $scope.closedissues = false;
@@ -1227,7 +1242,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 
                 $scope.bugsearch = function () {
 
-                $(".xn-openable").attr("class", "xn-openable active");
+//                $(".xn-openable").first().attr("class", "xn-openable active");
                         $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#/admin">«</a></span></li>'
                         + '<li ng-click="totalpages();refreshPages(startPage - 5,2);refresh()"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#/admin"><</a></span></li>';
                         $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#/admin">{{page}}</a></span></li>';
@@ -1235,7 +1250,11 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
                         params.city = $rootScope.Variables.city_name;
                         params.status = params.status.join("|");
-                        $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                        if (search_button == 1){
+                params.email = $scope.semail;
+                        params.mobile = $scope.smobile;
+                }
+                $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
                 var total_counter = result.length;
                         var counter = 0;

@@ -27,7 +27,7 @@ app.controller('MainController',['$rootScope','$http','$window','$location',func
         }else{
             url = '../config/'+sub_domain[0]+'.json';
         }
-        var mainInfo = $http.get('url').success(function (response) {
+        var mainInfo = $http.get(url).success(function (response) {
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],

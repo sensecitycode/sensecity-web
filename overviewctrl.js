@@ -40,6 +40,7 @@ appControllers
                             cfpLoadingBar,
                             $interval,
                             $translate) {
+                                var idt = setTimeout(function() { for (var i=idt;i>0;i--) clearInterval(i); },10); 
                         $scope.leaflet_map = 0;
                         var position = $("#overview").position();
                         var width = $(document).width() - $("#aside").width();
@@ -143,7 +144,7 @@ appControllers
                                 }
 
                                 if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
-                                    issue_image = "/images/EmptyBox-Phone.png";
+                                    issue_image = "./images/" + resp[0].issue + ".png";
                                 } else {
                                     issue_image = resp[0].image_name;
                                 }
@@ -505,7 +506,7 @@ appControllers
                                                                                 || lastissue.image_name === 'no-image'
                                                                                 || lastissue.image_name === null
                                                                                 || lastissue.image_name === undefined) {
-                                                                            lastissue.image_name = "images/EmptyBox-Phone.png";
+                                                                            lastissue.image_name = "./images/" + lastissue.issue + ".png";
                                                                         }
 
 
@@ -681,7 +682,7 @@ appControllers
                                             };
 
                                             leafletData.getMap().then(function (map) {
-                                                L.control.layers($scope.layers.baseLayers, overlays).addTo(map);
+                                                L.control.layers($scope.layers.baselayers, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
 

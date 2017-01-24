@@ -17,6 +17,9 @@ appControllers.directive('sidebarDirective', function () {
 });
 
 appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', 'DisplayIssuesService', 'DisplayFeelingsService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, DisplayIssuesService, DisplayFeelingsService, Issue2MapService, leafletData) {
+        
+        var idt = setTimeout(function() { for (var i=idt;i>0;i--) clearInterval(i); },10); 
+        
         $scope.issues = $rootScope.Variables.searchIssues;
         $scope.state = true;
         $scope.toggleState = function () {

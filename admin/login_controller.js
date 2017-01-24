@@ -31,11 +31,13 @@ app.controller('login_controller', ['$scope', '$rootScope','$window', '$http', '
         };
         
         $scope.authenticate_us = function (event) {
-            var domain = $location.host().split(".");
-            if(domain[0].split(":") > 2){
+            var domain;
+            if($location.host() == "localhost"){
+             domain = [];
              domain[0] = "testcity1";   
+            }else{
+              domain = $location.host().split(".");  
             }
-            
             var parameter = {username: $scope.username_l, password: $scope.password_l, city: domain[0]};                       
             $http.post($rootScope.Variables.APIADMIN+'/dashboard', parameter).success(
                                 function (response, status, headers, cnfg) {
