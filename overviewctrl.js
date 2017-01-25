@@ -506,7 +506,10 @@ appControllers
                                                                                 || lastissue.image_name === 'no-image'
                                                                                 || lastissue.image_name === null
                                                                                 || lastissue.image_name === undefined) {
+                                                                            lastissue.width = "80%";
                                                                             lastissue.image_name = "./images/" + lastissue.issue + ".png";
+                                                                        }else{
+                                                                            lastissue.width = "100%";
                                                                         }
 
 

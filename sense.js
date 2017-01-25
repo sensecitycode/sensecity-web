@@ -226,8 +226,8 @@ appControllers.controller(
                                         .getFullYear()
                                         + '-'
                                         + ($scope.endISOdate.getMonth() + 1)
-                                        + '-' + $scope.endISOdate.getDate();
-
+                                        + '-' + $scope.endISOdate.getDate();                              
+                                
                                 var paramsObj = [];
 
                                 for (var i = 0; i < $rootScope.Variables.categories.length; i++) {
@@ -235,7 +235,7 @@ appControllers.controller(
                                         startdate: $scope.startdate,
                                         enddate: $scope.enddate,
                                         issue: $rootScope.Variables.categories[i],
-                                        image_field: 0
+//                                        image_field: 0
                                     });
                                 }
 
@@ -351,6 +351,9 @@ appControllers.controller(
                                                                         || lastissue.image_name === null
                                                                         || lastissue.image_name === undefined) {
                                                                     lastissue.image_name = "./images/" + lastissue.issue + ".png";
+                                                                    lastissue.width = "80%";
+                                                                }else{
+                                                                    lastissue.width = "100%";
                                                                 }
 
                                                                 var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);

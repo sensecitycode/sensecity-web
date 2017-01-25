@@ -25,6 +25,21 @@ appServices.factory('Issue2MapService', function ( $resource, APIEndPointService
     return $resource('http://xxx.sense.city:4000/api/fullissue/:issueID', {issueID: '@id'},{'query':{ method:'GET', isArray:true}});
 });
 */
+
+appServices.factory('BugService', function ( $resource/*, APIEndPointService*/, $rootScope) {
+//    return $resource(
+//        //APIEndPointService.bugzilla,
+//		$rootScope.Variables.bugzilla,
+//        {
+//          search: {
+//            method: 'POST',
+//            headers:{'Content-Type':'application/json'},
+//            isArray: true
+//          }
+//        }
+//    );
+});
+
 appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
     return $resource($rootScope.Variables.APIURL + $rootScope.Variables.city_name + '?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1',
@@ -34,20 +49,6 @@ appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndP
           // isArray: true
         }
     });
-});
-
-appServices.factory('BugService', function ( $resource/*, APIEndPointService*/, $rootScope) {
-    return $resource(
-        //APIEndPointService.bugzilla,
-		$rootScope.Variables.bugzilla,
-        {
-          search: {
-            method: 'POST',
-            headers:{'Content-Type':'application/json'},
-            isArray: true
-          }
-        }
-    );
 });
 
 appServices.factory('FixedPointsService', function ( $resource/*, APIEndPointService*/, $rootScope) {

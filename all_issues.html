@@ -7,7 +7,7 @@
 			style="background-color: #FFFFFF; border-width: 1px; border-color: #967f7f; border-style: dotted; border-radius: 10px;">
 			<a href="http://{{Variables.city_name}}.sense.city/#/scissuemap={{lastissue._id}}" style="text-decoration: none;"><center>
 					<div class="thumbnail crop" style="padding: 0px;">
-						<img src={{lastissue.image_name}} alt="">
+						<img class="img-responsive" width={{lastissue.width}} height="239" src={{lastissue.image_name}} alt="">
 					</div>
 				</center>
 				<div class="caption"
@@ -23,7 +23,6 @@
 						translate }}
 					<p style="margin-top: -12px; font-size: 10px;">&nbsp;{{lastissue.status
 						| translate}}&nbsp;</p>
-					</p>
 
 				</div></a>
 		</div>

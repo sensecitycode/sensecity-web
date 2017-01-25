@@ -9,10 +9,9 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 
 
 
-appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log, DisplayLast100IssuesService, BugService) {
+appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window, DisplayLast100IssuesService, BugService) {
 	$log.debug('inside allissuesCtrl controller');
 	
-
 	$scope.allissues = [];
 	
 	$scope.doCalcAllIssues = function() {
@@ -33,8 +32,11 @@ appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log, Dis
 												|| lastissue.image_name === 'no-image'
 												|| lastissue.image_name === null
 												|| lastissue.image_name === undefined) {
-											lastissue.image_name = "images/EmptyBox-Phone.png";
-										}
+											lastissue.image_name = "./images/"+lastissue.issue+".png";
+                                                                                        lastissue.width = "80%";
+										}else{
+                                                                                    lastissue.width = "100%";
+                                                                                }
 
                                                                                 var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
                                                                                 if(cat_index != -1){

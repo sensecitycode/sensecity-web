@@ -486,9 +486,11 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 
                 if (issue[0] != undefined) {
                 if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
-                $scope.panels[panel.order].image = issue[0].image_name;
+                $(".img-responsive").attr("width", "100%");
+                        $scope.panels[panel.order].image = issue[0].image_name;
                 } else {
-                $scope.panels[panel.order].image = "../images/" + issue[0].issue + ".png";
+                $(".img-responsive").attr("width", "60%");
+                        $scope.panels[panel.order].image = "../images/" + issue[0].issue + ".png";
                 }
                 $scope.pimage = $scope.panels[panel.order].image;
                         $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
@@ -1243,7 +1245,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 $scope.bugsearch = function () {
 
 //                $(".xn-openable").first().attr("class", "xn-openable active");
-                        $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#/admin">«</a></span></li>'
+                $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#/admin">«</a></span></li>'
                         + '<li ng-click="totalpages();refreshPages(startPage - 5,2);refresh()"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#/admin"><</a></span></li>';
                         $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#/admin">{{page}}</a></span></li>';
                         $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#/admin">></a></span></li>'
