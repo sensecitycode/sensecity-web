@@ -252,7 +252,6 @@ appControllers.controller(
                                         .all(promisesArray)
                                         .then(
                                                 function (data) {
-                                                    $window.alert(data.length)
                                                     var searchissues = [];
 
                                                     for (i = 0; i < data.length; i++) {
