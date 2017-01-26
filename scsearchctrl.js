@@ -187,6 +187,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         });
                     });
                     $scope.submit = function () {
+                        $scope.markers = [];
                         $scope.startdate = $scope.startISOdate.getFullYear() + '-' + ($scope.startISOdate.getMonth() + 1) + '-' + $scope.startISOdate.getDate();
                         $scope.enddate = $scope.endISOdate.getFullYear() + '-' + ($scope.endISOdate.getMonth() + 1) + '-' + $scope.endISOdate.getDate();
                         var paramsObj = [];
@@ -324,7 +325,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     };
                     function doQuery(obj) {
                         var d = $q.defer();
-                        $window.alert(JSON.stringify(obj));
                         DisplayIssuesService.query(obj, function (result) {
                             d.resolve(result);
                         });
