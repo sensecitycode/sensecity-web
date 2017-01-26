@@ -12,11 +12,14 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 var params;
                 var tabchanged = 2;
                 var init = 1;
+                var issue_index;
                 var isfixed = 0;
+                var issue_desc;
                 var mapnloaded = true;
                 var small = 0;
                 var current_layer = 0;
                 var search_button = 0;
+                var strvcounter = 0;
                 $scope.isloading = true;
                 $scope.full = 0;
                 $scope.street = 0;
@@ -81,7 +84,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         id: $rootScope.Variables.departments_en[k],
                         label: $rootScope.Variables.departments_en[k],
                         action: function(){
-                        var index = $rootScope.Variables.departments_en.indexOf(this.title);
+                        var index = $rootScope.Variables.departments_en.indexOf(this.title) - 1;
                                 checked_categories[index] = !checked_categories[index];
                                 for (var i = 0; i < street_view_markers.length; i++){
                         if (street_view_markers[i].title == this.title){
@@ -160,6 +163,74 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
         $scope.issue_search = function(){
         search_button = 1;
         }
+
+        function checkNearestStreetView(panoData){
+        if (strvcounter < 20){
+        var issue_index = $rootScope.Variables.departments.indexOf($scope.panels[strvcounter].issue);
+                var issueMarker = new google.maps.Marker({
+                position: panoData.location.latLng,
+                        map: panorama,
+                        icon: './icons/' + $scope.panels[strvcounter].issue + '.png',
+                        title: $rootScope.Variables.departments_en[issue_index],
+                        visible: true
+                });
+                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
+                if (checked_categories[category_index] == false){
+        issueMarker.setVisible(false);
+        } else{
+        issueMarker.setVisible(true);
+        }
+        issueMarker.info = new google.maps.InfoWindow({
+        content: $scope.panels[strvcounter].value_desc
+        });
+                google.maps.event.addListener(issueMarker, 'click', function() {
+                issueMarker.info.open(panorama, issueMarker);
+                });
+                street_view_markers.push(issueMarker);
+                strvcounter++;
+                if(strvcounter < 20 ){
+                var issue_coords = new google.maps.LatLng($scope.panels[strvcounter].lat, $scope.panels[strvcounter].lng);
+                var webService = new google.maps.StreetViewService();
+                webService.getPanoramaByLocation(issue_coords, 500, checkNearestStreetView);
+            }else{
+                strvcounter = 0;
+            }
+        } else{
+
+        }
+
+//        if (panoData){
+//
+//        if (panoData.location){
+//
+//        if (panoData.location.latLng){
+//        panorama.setPano(panoData.location.pano);
+//                var issueMarker = new google.maps.Marker({
+//                position: panoData.location.latLng,
+//                        map: panorama,
+//                        icon: './icons/' + $rootScope.Variables.departments[issue_index] + '.png',
+//                        title: $rootScope.Variables.departments_en[issue_index]
+//                });
+//                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title) - 1;
+//                if (checked_categories[category_index] == false){
+//        issueMarker.setVisible(false);
+//        } else{
+//        issueMarker.setVisible(true);
+//        }
+//        issueMarker.info = new google.maps.InfoWindow({
+//        content: issue_desc
+//        });
+//                google.maps.event.addListener(issueMarker, 'click', function() {
+//                issueMarker.info.open(panorama, issueMarker);
+//                });
+//                var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
+//               
+        //panorama.setPosition({lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0]});
+//        }
+//        }
+//        }
+        }
+
 
         authorizedu();
                 username();
@@ -486,10 +557,10 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 
                 if (issue[0] != undefined) {
                 if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
-                $(".img-responsive").attr("width", "100%");
+                $scope.image_width = "100%";
                         $scope.panels[panel.order].image = issue[0].image_name;
                 } else {
-                $(".img-responsive").attr("width", "60%");
+                $scope.image_width = "60%";
                         $scope.panels[panel.order].image = "../images/" + issue[0].issue + ".png";
                 }
                 $scope.pimage = $scope.panels[panel.order].image;
@@ -498,32 +569,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                         $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issue], "panelid": panel.ArrayID});
                 }
-                var issue_coords = new google.maps.LatLng(issue[0].loc.coordinates[1], issue[0].loc.coordinates[0]);
-                        var issue_index = $rootScope.Variables.departments.indexOf(issue[0].issue);
-                        var issueMarker = new google.maps.Marker({
-                        position: issue_coords,
-                                map: panorama,
-                                icon: './icons/' + issue[0].issue + '.png',
-                                title: $rootScope.Variables.departments_en[issue_index]
-                        });
-                        var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
-                        if (checked_categories[category_index] == false){
-                issueMarker.setVisible(false);
-                } else{
-                issueMarker.setVisible(true);
-                }
-                issueMarker.info = new google.maps.InfoWindow({
-                content: issue[0].value_desc
-                });
-                        google.maps.event.addListener(issueMarker, 'click', function() {
-                        issueMarker.info.open(panorama, issueMarker);
-                        });
-                        var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
-                        panorama.setPov({
-                        heading: heading,
-                                pitch: 0,
-                                zoom: 1
-                        });
+                panorama.setPosition(street_view_markers[panel.order].position);
                 });
         }
 
@@ -871,43 +917,19 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                         "order": counter,
                                         "mongoId": value._id,
                                         "id": value.bug_id,
-                                        "issue": value.issue
+                                        "issue": value.issue,
+                                        "value_desc": value.value_desc
                                 };
                                 $scope.panels.push(panel);
-                                var issue_coords = new google.maps.LatLng(value.loc.coordinates[0], value.loc.coordinates[1]);
-                                var issue_index = $rootScope.Variables.departments.indexOf(value.issue);
-                                var issueMarker = new google.maps.Marker({
-                                position: issue_coords,
-                                        map: panorama,
-                                        icon: './icons/' + value.issue + '.png',
-                                        title: $rootScope.Variables.departments_en[issue_index],
-                                        visible: true
-                                });
-                                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
-                                if (checked_categories[category_index] == false){
-                        issueMarker.setVisible(false);
-                        } else{
-                        issueMarker.setVisible(true);
-                        }
-                        issueMarker.info = new google.maps.InfoWindow({
-                        content: value.value_desc
-                        });
-                                google.maps.event.addListener(issueMarker, 'click', function() {
-                                issueMarker.info.open(panorama, issueMarker);
-                                });
-                                street_view_markers.push(issueMarker);
                                 $scope.panels[panel.order].lat = value.loc.coordinates[1];
                                 $scope.panels[panel.order].lng = value.loc.coordinates[0];
                                 $scope.center = {lat: value.loc.coordinates[1], lng: value.loc.coordinates[0], zoom: 17};
                                 $scope.ALLmarkers.push({"lat": value.loc.coordinates[1], "lng": value.loc.coordinates[0], "icon": icons[value.issue], "panelid": panel.ArrayID});
-                                var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
-                                panorama.setPov({
-                                heading: heading,
-                                        pitch: 0,
-                                        zoom: 1
-                                });
                                 counter++;
                         }, $scope.panels);
+                                var webService = new google.maps.StreetViewService();
+                                var issue_coords = new google.maps.LatLng($scope.panels[0].lat, $scope.panels[0].lng);
+                                webService.getPanoramaByLocation(issue_coords, 500, checkNearestStreetView);
                                 $scope.isloading = false;
                                 $scope.nloaded = false;
                                 $(window).resize();
@@ -1305,42 +1327,19 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 "order": counter,
                                 "mongoId": value._id,
                                 "id": value.bug_id,
-                                "issue": value.issue
+                                "issue": value.issue,
+                                "value_desc": value.value_desc
                         };
                         $scope.panels.push(panel);
-                        var issue_coords = new google.maps.LatLng(value.loc.coordinates[0], value.loc.coordinates[1]);
-                        var issue_index = $rootScope.Variables.departments.indexOf(value.issue);
-                        var issueMarker = new google.maps.Marker({
-                        position: issue_coords,
-                                map: panorama,
-                                icon: './icons/' + value.issue + '.png',
-                                title: $rootScope.Variables.departments_en[issue_index]
-                        });
-                        var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
-                        if (checked_categories[category_index] == false){
-                issueMarker.setVisible(false);
-                } else{
-                issueMarker.setVisible(true);
-                }
-                issueMarker.info = new google.maps.InfoWindow({
-                content: value.value_desc
-                });
-                        google.maps.event.addListener(issueMarker, 'click', function() {
-                        issueMarker.info.open(panorama, issueMarker);
-                        });
-                        street_view_markers.push(issueMarker);
                         $scope.panels[panel.order].lat = value.loc.coordinates[1];
                         $scope.panels[panel.order].lng = value.loc.coordinates[0];
                         $scope.center = {lat: value.loc.coordinates[1], lng: value.loc.coordinates[0], zoom: 17};
                         $scope.ALLmarkers.push({"lat": value.loc.coordinates[1], "lng": value.loc.coordinates[0], "icon": icons[value.issue], "panelid": panel.ArrayID});
-                        var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
-                        panorama.setPov({
-                        heading: heading,
-                                pitch: 0,
-                                zoom: 1
-                        });
                         counter++;
                 }, $scope.panels);
+                        var webService = new google.maps.StreetViewService();
+                        var issue_coords = new google.maps.LatLng($scope.panels[0].lat, $scope.panels[0].lng);
+                        webService.getPanoramaByLocation(issue_coords, 500, checkNearestStreetView);
                         $scope.isloading = false;
                         $scope.nloaded = false;
                         $(window).resize();

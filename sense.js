@@ -230,14 +230,16 @@ appControllers.controller(
                                 
                                 var paramsObj = [];
 
-                                for (var i = 0; i < $rootScope.Variables.categories.length; i++) {
+                               // for (var i = 0; i < $rootScope.Variables.categories.length; i++) {
                                     paramsObj.push({
+                                        city: $rootScope.Variables.city_name,
                                         startdate: $scope.startdate,
                                         enddate: $scope.enddate,
-                                        issue: $rootScope.Variables.categories[i],
+                                        
+                                //        issue: $rootScope.Variables.categories[i]
 //                                        image_field: 0
                                     });
-                                }
+                              //  }
 
                                 var promisesArray = [];
 
