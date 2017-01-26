@@ -261,7 +261,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                         promisesArray.push(feelingsQuery(feelingsObj));
                         $q.all(promisesArray).then(function (data) {
-                            console.log(JSON.stringify(datas));
+                            console.log(JSON.stringify(data));
                             var searchissues = [];
                             for (i = 0; i < data.length; i++) {
                                 for (j = 0; j < data[i].length; j++) {
