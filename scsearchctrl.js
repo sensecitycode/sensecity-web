@@ -223,9 +223,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                             if (issue.checked === true) {
                                 if (states == "") {
-                                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: issue.value, image_field: 0, includeAnonymous: includeAnonymous});
+                                    paramsObj.push({city: $rootScope.Variables.city_name,startdate: $scope.startdate, enddate: $scope.enddate, issue: issue.value, image_field: 0, includeAnonymous: includeAnonymous});
                                 } else {
-                                    paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, issue: issue.value, image_field: 0, status: states, includeAnonymous: includeAnonymous});
+                                    paramsObj.push({city: $rootScope.Variables.city_name,startdate: $scope.startdate, enddate: $scope.enddate, issue: issue.value, image_field: 0, status: states, includeAnonymous: includeAnonymous});
                                 }
                             }
                         });
@@ -242,9 +242,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         });
                         if (paramsObj.length == 0) {
                             if (states == "") {
-                                paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, includeAnonymous: includeAnonymous});
+                                paramsObj.push({city: $rootScope.Variables.city_name,startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, includeAnonymous: includeAnonymous});
                             } else {
-                                paramsObj.push({startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
+                                paramsObj.push({city: $rootScope.Variables.city_name,startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
                             }
                         }
 
@@ -261,8 +261,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                         promisesArray.push(feelingsQuery(feelingsObj));
                         $q.all(promisesArray).then(function (data) {
-                            
-                                                    $window.alert(JSON.stringify(data));
                             var searchissues = [];
                             for (i = 0; i < data.length; i++) {
                                 for (j = 0; j < data[i].length; j++) {
@@ -325,6 +323,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     };
                     function doQuery(obj) {
                         var d = $q.defer();
+                        $window.alert(JSON.stringify(obj));
                         DisplayIssuesService.query(obj, function (result) {
                             d.resolve(result);
                         });
