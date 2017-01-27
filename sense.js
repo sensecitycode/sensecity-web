@@ -27,15 +27,15 @@ appControllers.controller(
             'DisplayIssuesService',
             'Issue2MapService',
             'DisplayLast6IssuesService',
-            'BugService',
             'FixedPointsService',
+            'DisplayFeelingsService',
             'cfpLoadingBar',
             '$interval',
             '$translate',
             function ($scope, $window, $rootScope, $http, $q, leafletData,
                     DisplayIssuesService,
                     Issue2MapService,
-                    DisplayLast6IssuesService, BugService, FixedPointsService,
+                    DisplayLast6IssuesService, FixedPointsService,DisplayFeelingsService,
                     cfpLoadingBar,
                     $interval,
                     $translate) {
@@ -149,7 +149,8 @@ appControllers.controller(
                                 $scope.addlayer(i);
                             }
 
-                            $scope.lastdatesToCheck = 30;
+                            $scope.lastdatesToCheck = 1000 * 60 * 60 * 24 * 30;
+                            $scope.daysToCheck = 30;
                             $scope.lastissues = [];
                             $scope.markers = [];
                             $scope.fixedmarkersGarbage = [];
@@ -159,10 +160,10 @@ appControllers.controller(
                                 $scope.state = !$scope.state;
                             };
 
-                            $scope.calcValue30daysIssues = '0';
-                            $scope.calcValue30daysEvents = '0';
-                            $scope.calcValueProblemsFrom2016 = '0';
-                            $scope.calcValueSolutionFrom2016 = '0';
+                            $scope.calcValue30daysIssues = 0;
+                            $scope.calcValue30daysEvents = 0;
+                            $scope.calcValueProblemsFrom2017 = 0;
+                            $scope.calcValueSolutionFrom2017 = 0;
 
                             var icons = $rootScope.Variables.icons;
 
@@ -207,15 +208,13 @@ appControllers.controller(
                                 });
                             });
 
-                            var startdate = new Date();
-                            startdate.setDate(startdate.getDate() - $scope.lastdatesToCheck);
+                            var startdate = new Date(2017, 0, 1);
+                            var today = new Date();
+                            startdate.setDate(startdate.getDate());
                             $scope.startISOdate = startdate;
                             $scope.endISOdate = new Date();
 
                             $scope.submitSearchLast30days = function () {
-
-                                var calclast30daysIssues = 0;
-                                var calclast30daysEvents = 0;
 
                                 $scope.startdate = $scope.startISOdate
                                         .getFullYear()
@@ -226,38 +225,52 @@ appControllers.controller(
                                         .getFullYear()
                                         + '-'
                                         + ($scope.endISOdate.getMonth() + 1)
-                                        + '-' + $scope.endISOdate.getDate();                              
-                                
+                                        + '-' + $scope.endISOdate.getDate();
+
                                 var paramsObj = [];
 
-                               // for (var i = 0; i < $rootScope.Variables.categories.length; i++) {
-                                    paramsObj.push({
-                                        city: $rootScope.Variables.city_name,
-                                        startdate: $scope.startdate,
-                                        enddate: $scope.enddate,
-                                        
-                                //        issue: $rootScope.Variables.categories[i]
-//                                        image_field: 0
-                                    });
-                              //  }
+                                paramsObj.push({
+                                    city: $rootScope.Variables.city_name,
+                                    startdate: $scope.startdate,
+                                    enddate: $scope.enddate,
+                                    includeAnonymous: 1,
+                                    status: "CONFIRMED|IN_PROGRESS|RESOLVED",
+                                    image_field: 0
+                                });
+                                
+                                var feelingsObj = [];
+
+                                feelingsObj.push({
+                                    city: $rootScope.Variables.city_name,
+                                    startdate: $scope.startdate,
+                                    enddate: $scope.enddate
+                                });
 
                                 var promisesArray = [];
-
-                                for (index = 0; index < paramsObj.length; index++) {
-                                    promisesArray
-                                            .push(doQuery(paramsObj[index]));
-                                }
+                                promisesArray
+                                        .push(doQuery(paramsObj[0]));
+                                promisesArray.push(dofQuery(feelingsObj[0]));
 
                                 $q
                                         .all(promisesArray)
                                         .then(
                                                 function (data) {
                                                     var searchissues = [];
-
                                                     for (i = 0; i < data.length; i++) {
                                                         for (j = 0; j < data[i].length; j++) {
-                                                            searchissues
-                                                                    .push(data[i][j]);
+                                                            if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1 && data[i][j].status != "RESOLVED" && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
+                                                                $scope.calcValue30daysIssues++;
+                                                                searchissues.push(data[i][j]);
+                                                            } 
+                                                            if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1 && data[i][j].status == "RESOLVED") {
+                                                                    $scope.calcValueSolutionFrom2017++;
+                                                                }
+                                                             if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1 && data[i][j].status != "RESOLVED") {
+                                                                    $scope.calcValueProblemsFrom2017++;
+                                                                }
+                                                            if ( Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
+                                                                $scope.calcValue30daysEvents++;
+                                                            }
                                                         }
                                                     }
 
@@ -281,10 +294,8 @@ appControllers.controller(
                                                                             layer = 'reaction';
                                                                         } else {
                                                                             layer = issue;
-                                                                            calclast30daysIssues = calclast30daysIssues + 1;
                                                                         }
-
-                                                                        calclast30daysEvents = calclast30daysEvents + 1;
+                                                                        
                                                                         var message = '';
 
                                                                         if (value.value_desc) {
@@ -324,8 +335,6 @@ appControllers.controller(
 
 
                                                     //$scope.markers = $scope.markers.concat( $scope.fixedmarkersLazyLoaded );
-                                                    $scope.calcValue30daysIssues = calclast30daysIssues;
-                                                    $scope.calcValue30daysEvents = calclast30daysEvents;
                                                 });
                             };
 
@@ -333,6 +342,16 @@ appControllers.controller(
                             function doQuery(obj) {
                                 var d = $q.defer();
                                 DisplayIssuesService.query(obj,
+                                        function (result) {
+                                            d.resolve(result);
+                                        });
+
+                                return d.promise;
+                            }
+
+                            function dofQuery(obj) {
+                                var d = $q.defer();
+                                DisplayFeelingsService.query(obj,
                                         function (result) {
                                             d.resolve(result);
                                         });
@@ -354,7 +373,7 @@ appControllers.controller(
                                                                         || lastissue.image_name === undefined) {
                                                                     lastissue.image_name = "./images/" + lastissue.issue + ".png";
                                                                     lastissue.width = "80%";
-                                                                }else{
+                                                                } else {
                                                                     lastissue.width = "100%";
                                                                 }
 
@@ -392,27 +411,6 @@ appControllers.controller(
 
                                                                 lastissue.create_at = datediff;
                                                                 lastissue.create_at_unit = datediffunit;
-                                                                /*var bugParams =
-                                                                 {
-                                                                 "method": "Bug.get",
-                                                                 "params": [{"ids":lastissue._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
-                                                                 "id": 1
-                                                                 };
-                                                                 BugService.search(bugParams, function(result) {
-                                                                 switch (result[0].status) {
-                                                                 case 'CONFIRMED':
-                                                                 result.status = 'CONFIRMED';
-                                                                 break;
-                                                                 case 'IN_PROGRESS':
-                                                                 result.status = 'IN_PROGRESS';
-                                                                 break;
-                                                                 case 'RESOLVED':
-                                                                 result.status = 'RESOLVED';
-                                                                 break;
-                                                                 }
-                                                                 lastissue.status = result.status;
-                                                                 });
-                                                                 */
 
                                                             });
                                         });
@@ -421,32 +419,6 @@ appControllers.controller(
 
                                 $scope.lastissues = theLastIssues;
                             };
-
-                            $scope.doCalcFrom2016 = function () {
-                                var problemsParam =
-                                        {
-                                            "method": "Bug.search",
-                                            "params": [{"product": $rootScope.Variables.bugzilla_products, "order": "bug_id DESC", "cf_issues": ["garbage", "plumbing", "lighting", "road-contructor", "green", "protection-policy", "enviroment", "road-constructor", "environment"], "status": ["CONFIRMED", "IN_PROGRESS", "RESOLVED"], "resolution": ["---", "FIXED"], "f1": "creation_ts", "o1": "greaterthan", "v1": "2016-01-01", "include_fields": ["id"]}],
-                                            "id": 1
-                                        };
-                                BugService.search(problemsParam, function (result) {
-                                    $scope.calcValueProblemsFrom2016 = result.length;
-                                });
-
-                                var solutionsParam =
-                                        {
-                                            "method": "Bug.search",
-                                            "params": [{"product": $rootScope.Variables.bugzilla_products, "order": "bug_id DESC", "status": "RESOLVED", "resolution": "FIXED", "f1": "resolution", "o1": "changedafter", "v1": "2016-01-01", "include_fields": ["id"]}],
-                                            "id": 1
-                                        };
-
-                                BugService.search(solutionsParam, function (result) {
-                                    $scope.calcValueSolutionFrom2016 = result.length;
-                                });
-
-                            };
-
-                            console.log("city_name11 : " + $rootScope.Variables.city_name);
 
                             $scope.displayFixedPoints = function () {
 
@@ -546,7 +518,6 @@ appControllers.controller(
 
                             $scope.doCalcLast6Issues();
                             $scope.submitSearchLast30days();
-                            $scope.doCalcFrom2016();
                             $scope.displayFixedPoints();
 
                             // set intervals to update

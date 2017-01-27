@@ -56,7 +56,7 @@ appServices.factory('DisplayFeelingsService', function ($resource , $rootScope) 
 
 appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
-    return $resource( $rootScope.Variables.APIURL +$rootScope.Variables.city_name+'?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1',
+    return $resource( $rootScope.Variables.APIURL+'?city='+$rootScope.Variables.city_name+'&startdate=2017-01-01&sort=-1&limit=6&list_issue=1&image_field=1',
         {}, {
         update: {
           method: 'GET'
@@ -68,7 +68,7 @@ appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndP
 
 appServices.factory('DisplayLast100IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
-    return $resource( $rootScope.Variables.APIURL + $rootScope.Variables.city_name+'?startdate=2016-03-15&sort=-1&limit=100&list_issue=1&image_field=1',
+    return $resource( $rootScope.Variables.APIURL+'?city='+ $rootScope.Variables.city_name+'&startdate=2017-01-01&sort=-1&limit=100&list_issue=1&image_field=1',
         {}, {
         update: {
           method: 'GET'

@@ -324,6 +324,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         };
                     };
                     function doQuery(obj) {
+                                                    $window.alert(JSON.stringify(obj));
                         var d = $q.defer();
                         DisplayIssuesService.query(obj, function (result) {
                             d.resolve(result);
