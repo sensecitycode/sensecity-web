@@ -255,6 +255,7 @@ appControllers.controller(
                                         .all(promisesArray)
                                         .then(
                                                 function (data) {
+                                                    console.log(JSON.stringify(data));
                                                     var searchissues = [];
                                                     for (i = 0; i < data.length; i++) {
                                                         for (j = 0; j < data[i].length; j++) {
