@@ -258,7 +258,7 @@ appControllers.controller(
                                                     var searchissues = [];
                                                     for (i = 0; i < data.length; i++) {
                                                         for (j = 0; j < data[i].length; j++) {
-                                                            if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1 && data[i][j].status != "RESOLVED" && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
+                                                            if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1  && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
                                                                 $scope.calcValue30daysIssues++;
                                                                 searchissues.push(data[i][j]);
                                                             } 
