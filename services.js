@@ -12,7 +12,7 @@ appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointS
         {}, {
         update: {
           method: 'GET'
-          // isArray: true
+          ,isArray: true
         }
     });
 });
