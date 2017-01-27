@@ -311,11 +311,6 @@ appControllers
                                         $scope.state = !$scope.state;
                                     };
 
-                                    $scope.calcValue30daysIssues = 0;
-                                    $scope.calcValue30daysEvents = 0;
-                                    $scope.calcValueProblemsFrom2017 = 0;
-                                    $scope.calcValueSolutionFrom2017 = 0;
-
                                     var icons = $rootScope.Variables.icons;
 
                                     $scope.map_center = {
@@ -337,6 +332,12 @@ appControllers
 
 
                                     $scope.submitSearchLast30days = function () {
+                                        
+                                        
+                                    $scope.calcValue30daysIssues = 0;
+                                    $scope.calcValue30daysEvents = 0;
+                                    $scope.calcValueProblemsFrom2017 = 0;
+                                    $scope.calcValueSolutionFrom2017 = 0;
 
                                         $scope.startdate = $scope.startISOdate
                                                 .getFullYear()
@@ -682,7 +683,7 @@ appControllers
                                             };
 
                                             leafletData.getMap().then(function (map) {
-                                                L.control.layers($scope.layers.baselayers, overlays).addTo(map);
+                                                L.control.layers(overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
 
