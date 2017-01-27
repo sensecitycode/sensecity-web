@@ -260,7 +260,9 @@ appControllers.controller(
                                                         for (j = 0; j < data[i].length; j++) {
                                                             if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1  && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
                                                                 $scope.calcValue30daysIssues++;
-                                                                searchissues.push(data[i][j]);
+                                                                if(data[i][j].status != "RESOLVED"){
+                                                                        searchissues.push(data[i][j]);
+                                                                    }
                                                             } 
                                                             if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1 && data[i][j].status == "RESOLVED") {
                                                                     $scope.calcValueSolutionFrom2017++;
