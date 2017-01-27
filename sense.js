@@ -512,7 +512,7 @@ appControllers.controller(
                                     };
 
                                     leafletData.getMap().then(function (map) {
-                                        L.control.layers(overlays).addTo(map);
+                                        L.control.layers({},overlays).addTo(map);
                                         map.invalidateSize(true);
                                     });
 
