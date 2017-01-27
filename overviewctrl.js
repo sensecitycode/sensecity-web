@@ -46,7 +46,8 @@ appControllers
                         $scope.leaflet_map = 0;
                         var today = new Date();
                         var position = $("#overview").position();
-                        var width = $(document).width() - $("#aside").width();
+                        var width = $("#last6issues").width() - $("#aside").width();
+                        var mwidth = $(document).width();
                         $("#streetview").attr('style', 'z-index:-1;width:' + width + 'px;position:absolute;height:' + $("#aside").height() + 'px;left:' + $("#aside").css("width"));
                         var panorama;
                         var street_view_markers = [];
