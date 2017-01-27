@@ -1,23 +1,68 @@
-var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource','scissuemapapp.scissuemapsrvs'])
+var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource', 'scissuemapapp.scissuemapsrvs'])
         .constant("config", {"host": "api.sense.city", "port": "3000"});
 
-appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config','leafletData',
-    function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config,leafletData) {
+appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config', 'leafletData',
+    function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config, leafletData) {
         var icons = $rootScope.Variables.icons;
-        var idt = setTimeout(function() { for (var i=idt;i>0;i--) clearInterval(i); },10); 
-     $rootScope.$on('$locationChangeStart', function (event, current, previous) {
-        var url = current.split(".");
+        var panorama;
+        var position = $("#map").position();
+        var width = $("#map").width();
+        $("#streetview").attr('style', 'z-index:-1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px;left:' + $("#map").css("width"));
+        $scope.initialize = function () {
+            // var fenway = {lat: 38.246453, lng: 21.735068};
+            var fenway = {lat: 38.24645352266985, lng: 21.735068952148438};
+            var panoOptions = {
+                position: fenway,
+                addressControlOptions: {
+                    position: google.maps.ControlPosition.BOTTOM_CENTER
+                },
+                linksControl: false,
+                panControl: false,
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.SMALL
+                },
+                enableCloseButton: false
+            };
+            panorama = new google.maps.StreetViewPanorama(
+                    $('#streetview')[0], panoOptions);
 
-        if( url[1] == "sense"){
-            url = current.split("#/");
-            event.preventDefault();
-            document.location.href = current.split(".")[0]+".sense.city";
-        }
-});
+            $(window).resize(function () {
+
+
+                var position = $("#map").position();
+                var width = $(document).width() - $("#map").width();
+               // if (google_street_layer) {
+                    $("#streetview").attr('style', 'z-index:1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px;left:' + $("#map").css("width"));
+                    google.maps.event.trigger(panorama, "resize");
+                //}
+            });
+
+        };
+        var idt = setTimeout(function () {
+            for (var i = idt; i > 0; i--)
+                clearInterval(i);
+        }, 10);
+        $rootScope.$on('$locationChangeStart', function (event, current, previous) {
+            var url = current.split(".");
+
+            if (url[1] == "sense") {
+                url = current.split("#/");
+                event.preventDefault();
+                document.location.href = current.split(".")[0] + ".sense.city";
+            }
+        });
         $scope.layers = {
             baselayers: {
                 openStreetMap: {
                     name: 'OpenStreetMap',
+                    type: 'xyz',
+                    url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    layerOptions: {
+                        showOnSelector: false,
+                        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+                    }
+                }, closeStreetMap: {
+                    name: 'Google Street View',
                     type: 'xyz',
                     url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     layerOptions: {
@@ -34,9 +79,18 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $scope.submit = "";
         $scope.assignment = "---";
         $scope.completion = "---";
-        
+
+        leafletData.getMap().then(function (map) {
+            map.on('baselayerchange', function (e) {
+                if (e.name == "Google Street View") {
+                     $("#streetview").css('z-index', '1');
+                     google.maps.event.trigger(panorama, "resize");
+                }
+            });
+        });
+
         function timeline(response) {
-            
+
             $scope.comments = [];
             var resp_id = response[0].bug_id;
             var tag_pos;
@@ -162,19 +216,20 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     $scope.comments.push(com);
                 }
             }
-        };
+        }
+        ;
 
-        
+
         //parse ?issue_id from URL
         var issue_id = $location.$$url.replace('/scissuemap=', '');
 
         Issue2MapService.query({issueID: issue_id}, function (issue) {
             console.log(issue);
-            if( issue[0].image_name != "" && issue[0].image_name != "no-image"){
-            $scope.issue_image = issue[0].image_name;
-        }else{
-            $scope.issue_image = "./images/"+issue[0].issue+".png";
-        }
+            if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
+                $scope.issue_image = issue[0].image_name;
+            } else {
+                $scope.issue_image = "./images/" + issue[0].issue + ".png";
+            }
             $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 16};
             $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[issue[0].issue]}];
 
@@ -209,13 +264,13 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
             $scope.issue_name_new = issue_name_new;
             $scope.issue_value_desc = issue[0].value_desc;
-            
+
             leafletData.getMap().then(function (map) {
-                                                map.invalidateSize(true);
-                                            });
-            
+                map.invalidateSize(true);
+            });
+
             timeline(issue);
 
         });
-        
-            }]);
+
+    }]);

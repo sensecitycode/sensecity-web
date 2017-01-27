@@ -49,7 +49,7 @@
 
 
     </head>
-    <body ng-app="scissuemapapp" ng-cloak ng-controller="scissuemapctrl">
+    <body ng-app="scissuemapapp" ng-cloak ng-controller="scissuemapctrl" ng-init="initialize()">
 
         <div class="col-md-12" id="title_h1" style="background-color: #FFFFFF;padding: 20px;">
             <span style="color:#000000; font-size:28px;"><b>{{issue_name_new}}</b>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</span><span style="color:#000000; font-size:22px;">{{issue_value_desc}}</span>
@@ -58,6 +58,7 @@
         <div class="col-md-12 " style="background-color: #FFFFFF;">
             <br>
             <div class="col-lg-8">
+                <div  id="streetview"></div>
                 <div id="map" style="color: black; height:50vh;">
                     <leaflet lf-center="center" layers="layers" markers="markers" height="50vh"></leaflet>
                 </div>
