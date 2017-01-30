@@ -231,9 +231,6 @@ appControllers.controller(
                                         + (( "0" + ($scope.endISOdate.getMonth() + 1)).slice(-2))
                                         + '-' + ( "0" + $scope.endISOdate.getDate()).slice(-2);
                                 
-                                $window.alert($scope.startdate);
-                                $window.alert($scope.enddate);
-                                
                                 var paramsObj = [];
 
                                 paramsObj.push({
