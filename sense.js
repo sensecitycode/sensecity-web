@@ -223,14 +223,17 @@ appControllers.controller(
                                 $scope.startdate = $scope.startISOdate
                                         .getFullYear()
                                         + '-'
-                                        + ($scope.startISOdate.getMonth() + 1)
-                                        + '-' + $scope.startISOdate.getDate();
+                                        + (("0" + ($scope.startISOdate.getMonth() + 1)).slice(-2))
+                                        + '-' + ( "0" + $scope.startISOdate.getDate()).slice(-2);
                                 $scope.enddate = $scope.endISOdate
                                         .getFullYear()
                                         + '-'
-                                        + ($scope.endISOdate.getMonth() + 1)
-                                        + '-' + $scope.endISOdate.getDate();
-
+                                        + (( "0" + ($scope.endISOdate.getMonth() + 1)).slice(-2))
+                                        + '-' + ( "0" + $scope.endISOdate.getDate()).slice(-2);
+                                
+                                $window.alert($scope.startdate);
+                                $window.alert($scope.enddate);
+                                
                                 var paramsObj = [];
 
                                 paramsObj.push({

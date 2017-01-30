@@ -344,15 +344,15 @@ appControllers
                                     $scope.calcValueSolutionFrom2017 = 0;
 
                                         $scope.startdate = $scope.startISOdate
-                                                .getFullYear()
-                                                + '-'
-                                                + ($scope.startISOdate.getMonth() + 1)
-                                                + '-' + $scope.startISOdate.getDate();
-                                        $scope.enddate = $scope.endISOdate
-                                                .getFullYear()
-                                                + '-'
-                                                + ($scope.endISOdate.getMonth() + 1)
-                                                + '-' + $scope.endISOdate.getDate();
+                                        .getFullYear()
+                                        + '-'
+                                        + (("0" + ($scope.startISOdate.getMonth() + 1)).slice(-2))
+                                        + '-' + ( "0" + $scope.startISOdate.getDate()).slice(-2);
+                                $scope.enddate = $scope.endISOdate
+                                        .getFullYear()
+                                        + '-'
+                                        + (( "0" + ($scope.endISOdate.getMonth() + 1)).slice(-2))
+                                        + '-' + ( "0" + $scope.endISOdate.getDate()).slice(-2);
 
                                         var paramsObj = [];
 

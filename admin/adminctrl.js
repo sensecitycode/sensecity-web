@@ -87,7 +87,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         var index = $rootScope.Variables.departments_en.indexOf(this.title) - 1;
                                 checked_categories[index] = !checked_categories[index];
                                 for (var i = 0; i < $scope.street_view_markers.length; i++){
-                        if ($scope.street_view_markers[i].title == this.title){
+                        if ($scope.street_view_markers[i] != "ncoords" && $scope.street_view_markers[i].title == this.title){
                         if (checked_categories[index] == false){
                         $scope.street_view_markers[i].setVisible(false);
                         } else{
@@ -590,7 +590,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                         $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issue], "panelid": panel.ArrayID});
                 }
+                if($scope.street_view_markers[panel.order] != "ncoords"){
                 panorama.setPosition($scope.street_view_markers[panel.order].position);
+            }
                 });
         }
 
@@ -1214,7 +1216,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 };
                 $scope.refresh = function () {
                 for (var i = 0; i < $scope.street_view_markers.length; i++){
+                    if($scope.street_view_markers[i] != "ncoords"){
                 $scope.street_view_markers[i].setMap(null);
+            }
                 }
                 $scope.street_view_markers = [];
                         if (current_layer == 1){
