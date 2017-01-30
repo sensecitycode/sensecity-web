@@ -259,16 +259,16 @@ appControllers.controller(
                                                     var searchissues = [];
                                                     for (i = 0; i < data.length; i++) {
                                                         for (j = 0; j < data[i].length; j++) {
-                                                            if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1  && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
+                                                            if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1  && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
                                                                 $scope.calcValue30daysIssues++;
                                                                 if(data[i][j].status != "RESOLVED"){
                                                                         searchissues.push(data[i][j]);
                                                                     }
                                                             } 
-                                                            if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1 && data[i][j].status == "RESOLVED") {
+                                                            if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1 && data[i][j].status == "RESOLVED") {
                                                                     $scope.calcValueSolutionFrom2017++;
                                                                 }
-                                                             if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1) {
+                                                             if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1) {
                                                                     $scope.calcValueProblemsFrom2017++;
                                                                 }
                                                             if ( Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
