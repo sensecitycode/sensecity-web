@@ -260,12 +260,9 @@ appControllers.controller(
                                         .then(
                                                 function (data) {
                                                     var searchissues = [];
-                                                    var cf_auth = 0;
+                                                    console.log(JSON.stringify(data));
                                                     for (i = 0; i < data.length; i++) {
                                                         for (j = 0; j < data[i].length; j++) {
-                                                            if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1 ){
-                                                                cf_auth++;
-                                                            }
                                                             if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1  && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
                                                                 $scope.calcValue30daysIssues++;
                                                                 if(data[i][j].status != "RESOLVED"){
