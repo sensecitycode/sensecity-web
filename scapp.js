@@ -75,6 +75,37 @@ app.run(['$rootScope', '$http','$location','$q','$window', function ($rootScope,
             url = '../config/'+sub_domain[0]+'.json';
         }
         var d = $q.defer();
+        
+        $rootScope.Variables = {
+                city_name: "",
+                lat_center: "",
+                long_center: "",
+                img_logo: "",
+                bugzilla_products: "",
+                icons: "",
+                APIURL: "",
+                components: "",
+                components_en: "",
+                overlays: "",
+                categories: "",
+                categories_issue: "",
+                departments: "",
+                departments_en: "",
+                feelingsURL: "",
+                bugzilla: "",
+                ALLISSUESAPIURL: "",
+                active_user_URL: "",
+                activate_user_URL: "",
+                APIADMIN: "",
+                issue_type_en: "",
+                issue_type_gr: "",
+                availableIssues: "",
+                searchIssues: "",
+                map_zoom: "",
+                overlay_functions : "",
+                overlay_categories : "",
+                host: ""
+            };
 
         $rootScope.mainInfo = $http.get(url).success(function (response) {
             

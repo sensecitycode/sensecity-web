@@ -53,7 +53,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 //                });
 
                 var panorama;
-                var street_view_markers = [];
+                $scope.street_view_markers = [];
                 var checked_categories = [];
                 $scope.initialize = function(){
 
@@ -86,12 +86,12 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         action: function(){
                         var index = $rootScope.Variables.departments_en.indexOf(this.title) - 1;
                                 checked_categories[index] = !checked_categories[index];
-                                for (var i = 0; i < street_view_markers.length; i++){
-                        if (street_view_markers[i].title == this.title){
+                                for (var i = 0; i < $scope.street_view_markers.length; i++){
+                        if ($scope.street_view_markers[i].title == this.title){
                         if (checked_categories[index] == false){
-                        street_view_markers[i].setVisible(false);
+                        $scope.street_view_markers[i].setVisible(false);
                         } else{
-                        street_view_markers[i].setVisible(true);
+                        $scope.street_view_markers[i].setVisible(true);
                         }
                         }
                         }
@@ -159,6 +159,14 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
         function userole() {
         $scope.usrrole = $cookieStore.get("role");
         }
+        
+        $scope.check_panorama = function(coords){
+            if( coords == "ncoords"){
+                return true;
+            }else{
+                return false;
+            }
+        }
 
         $scope.issue_search = function(){
         search_button = 1;
@@ -166,6 +174,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 
         function checkNearestStreetView(panoData){
         if (strvcounter < 20){
+            if(panoData != null){
+                
         var issue_index = $rootScope.Variables.departments.indexOf($scope.panels[strvcounter].issue);
                 var issueMarker = new google.maps.Marker({
                 position: panoData.location.latLng,
@@ -186,17 +196,28 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 google.maps.event.addListener(issueMarker, 'click', function() {
                 issueMarker.info.open(panorama, issueMarker);
                 });
-                street_view_markers.push(issueMarker);
+                $scope.street_view_markers.push(issueMarker);
                 strvcounter++;
-                if(strvcounter < 20 ){
+                if(strvcounter < 20 ){   
                 var issue_coords = new google.maps.LatLng($scope.panels[strvcounter].lat, $scope.panels[strvcounter].lng);
                 var webService = new google.maps.StreetViewService();
-                webService.getPanoramaByLocation(issue_coords, 500, checkNearestStreetView);
+                webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
             }else{
                 strvcounter = 0;
             }
+        }else{
+            $scope.street_view_markers.push("ncoords");
+            strvcounter++;
+            if(strvcounter < 20 ){
+                var issue_coords = new google.maps.LatLng($scope.panels[strvcounter].lat, $scope.panels[strvcounter].lng);
+                var webService = new google.maps.StreetViewService();
+                webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
+            }else{
+                strvcounter = 0;
+            }
+        }
         } else{
-
+            strvcounter = 0;
         }
 
 //        if (panoData){
@@ -569,7 +590,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                         $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issue], "panelid": panel.ArrayID});
                 }
-                panorama.setPosition(street_view_markers[panel.order].position);
+                panorama.setPosition($scope.street_view_markers[panel.order].position);
                 });
         }
 
@@ -929,7 +950,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         }, $scope.panels);
                                 var webService = new google.maps.StreetViewService();
                                 var issue_coords = new google.maps.LatLng($scope.panels[0].lat, $scope.panels[0].lng);
-                                webService.getPanoramaByLocation(issue_coords, 500, checkNearestStreetView);
+                                webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
                                 $scope.isloading = false;
                                 $scope.nloaded = false;
                                 $(window).resize();
@@ -1192,10 +1213,10 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.currentactive = - 1;
                 };
                 $scope.refresh = function () {
-                for (var i = 0; i < street_view_markers.length; i++){
-                street_view_markers[i].setMap(null);
+                for (var i = 0; i < $scope.street_view_markers.length; i++){
+                $scope.street_view_markers[i].setMap(null);
                 }
-                street_view_markers = [];
+                $scope.street_view_markers = [];
                         if (current_layer == 1){
                 current_layer = 0;
                         displayFixedPoints();
@@ -1339,7 +1360,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 }, $scope.panels);
                         var webService = new google.maps.StreetViewService();
                         var issue_coords = new google.maps.LatLng($scope.panels[0].lat, $scope.panels[0].lng);
-                        webService.getPanoramaByLocation(issue_coords, 500, checkNearestStreetView);
+                        webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
                         $scope.isloading = false;
                         $scope.nloaded = false;
                         $(window).resize();
