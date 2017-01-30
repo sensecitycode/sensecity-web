@@ -260,7 +260,6 @@ appControllers.controller(
                                         .then(
                                                 function (data) {
                                                     var searchissues = [];
-                                                    console.log(JSON.stringify(data));
                                                     for (i = 0; i < data.length; i++) {
                                                         for (j = 0; j < data[i].length; j++) {
                                                             if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1  && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
@@ -280,7 +279,6 @@ appControllers.controller(
                                                             }
                                                         }
                                                     }
-                                                    $window.alert(cf_auth);
 
                                                     $scope.markers = [];
                                                     angular
