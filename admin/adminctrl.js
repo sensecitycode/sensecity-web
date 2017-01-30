@@ -20,6 +20,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 var current_layer = 0;
                 var search_button = 0;
                 var strvcounter = 0;
+                var total_counter;
                 $scope.isloading = true;
                 $scope.full = 0;
                 $scope.street = 0;
@@ -173,7 +174,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
         }
 
         function checkNearestStreetView(panoData){
-        if (strvcounter < 20){
+        if (strvcounter < total_counter){
             if(panoData != null){
                 
         var issue_index = $rootScope.Variables.departments.indexOf($scope.panels[strvcounter].issue);
@@ -198,7 +199,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 });
                 $scope.street_view_markers.push(issueMarker);
                 strvcounter++;
-                if(strvcounter < 20 ){   
+                if(strvcounter < total_counter ){   
                 var issue_coords = new google.maps.LatLng($scope.panels[strvcounter].lat, $scope.panels[strvcounter].lng);
                 var webService = new google.maps.StreetViewService();
                 webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
@@ -208,7 +209,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
         }else{
             $scope.street_view_markers.push("ncoords");
             strvcounter++;
-            if(strvcounter < 20 ){
+            if(strvcounter < total_counter ){
                 var issue_coords = new google.maps.LatLng($scope.panels[strvcounter].lat, $scope.panels[strvcounter].lng);
                 var webService = new google.maps.StreetViewService();
                 webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
@@ -893,7 +894,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 params.city = $rootScope.Variables.city_name;
                                 params.status = params.status.join("|");
                                 $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-                        var total_counter = result.length;
+                        total_counter = result.length;
                                 var counter = 0;
                                 var map_counter = 0;
                                 if (total_counter == 0) {
@@ -1305,7 +1306,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 }
                 $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
-                var total_counter = result.length;
+                total_counter = result.length;
                         var counter = 0;
                         var map_counter = 0;
                         if (total_counter == 0) {
