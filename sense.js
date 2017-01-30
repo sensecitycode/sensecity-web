@@ -206,6 +206,9 @@ appControllers.controller(
 
                             var startdate = new Date(2017, 0, 1);
                             var today = new Date();
+
+                            today = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+                            today = today.getTime();
                             startdate.setDate(startdate.getDate());
                             $scope.startISOdate = startdate;
                             $scope.endISOdate = new Date();
