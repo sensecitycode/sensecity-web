@@ -278,6 +278,7 @@ appControllers
                                     $("#streetview").css('z-index', '1');
                                     $(".leaflet-control-zoom").css("visibility", "hidden");
                                     google.maps.event.trigger(panorama, "resize");
+                                   $(window).resize();
                                 } else {
                                     google_street_layer = false;
                                     $("#streetview").css('z-index', '-1');
@@ -380,7 +381,6 @@ appControllers
                                                 .then(
                                                         function (data) {
                                                             var searchissues = [];
-
                                                             for (i = 0; i < data.length; i++) {
                                                                 for (j = 0; j < data[i].length; j++) {
                                                                     if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1 && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
