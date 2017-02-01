@@ -24,7 +24,7 @@ appControllers
                     '$scope',
                     '$window',
                     '$rootScope', '$http',
-                    '$q','$location', 'leafletData', 'leafletMapEvents',
+                    '$q', '$location', 'leafletData', 'leafletMapEvents',
                     'DisplayIssuesService',
                     'Issue2MapService',
                     'DisplayLast6IssuesService', 'DisplayFeelingsService',
@@ -32,7 +32,7 @@ appControllers
                     'cfpLoadingBar',
                     '$interval',
                     '$translate',
-                    function ($scope, $window, $rootScope, $http, $q, $location,leafletData, leafletMapEvents,
+                    function ($scope, $window, $rootScope, $http, $q, $location, leafletData, leafletMapEvents,
                             DisplayIssuesService,
                             Issue2MapService,
                             DisplayLast6IssuesService, DisplayFeelingsService, FixedPointsService,
@@ -148,12 +148,16 @@ appControllers
                                 }
 
                                 if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
-                                    issue_image = "./images/" + resp[0].issue + ".png";
+                                    resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
                                 } else {
                                     issue_image = resp[0].image_name;
                                 }
 
-                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
+                                    popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                } else {
+                                    popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                }
                                 popup.update();
 
                             });
@@ -541,7 +545,7 @@ appControllers
                                                                                 || lastissue.image_name === null
                                                                                 || lastissue.image_name === undefined) {
                                                                             lastissue.width = "80%";
-                                                                            lastissue.image_name = "./images/" + lastissue.issue + ".png";
+                                                                            lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
                                                                         } else {
                                                                             lastissue.width = "100%";
                                                                         }
@@ -553,7 +557,7 @@ appControllers
                                                                         } else {
                                                                             lastissue.issue = '';
                                                                         }
-                                                                        
+
                                                                         var today = new Date();
                                                                         var create_day = new Date(
                                                                                 lastissue.create_at);

@@ -212,7 +212,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 return;
                             }
                             var active = true;
-                            for (k = 0; k < $scope.issues.length; k++) {
+                            for (var k = 0; k < $scope.issues.length; k++) {
                                 if ($scope.issues[k].checked == true) {
                                     active = false;
                                     $scope.criteria_selected = active;
@@ -253,7 +253,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 return;
                             }
                             var active = true;
-                            for (k = 0; k < $scope.issues.length; k++) {
+                            for (var k = 0; k < $scope.issues.length; k++) {
                                 if ($scope.issues[k].checked == true) {
                                     active = false;
                                     $scope.criteria_selected = active;
@@ -285,12 +285,17 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
 
                             if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
-                                issue_image = "/images/EmptyBox-Phone.png";
+                                resp[0].class = "fa fa-"+$rootScope.Variables.icons[resp[0].issue].icon;
                             } else {
                                 issue_image = resp[0].image_name;
                             }
 
-                            popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                            if(!(resp[0].image_name === ''|| resp[0].image_name === 'no-image'|| resp[0].image_name === null || resp[0].image_name === undefined)){
+                                       popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>"); 
+                                    }else{
+                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='"+resp[0].class+"' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                    }
+                            
                             popup.update();
                         });
                     });

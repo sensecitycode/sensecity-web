@@ -26,21 +26,21 @@
         <hr>
 
         <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'STATES' | translate }}</div>
-            <div ng-model="searchState" ng-click="activate_searchb()" class="text-center" bs-checkbox-group>
-                <label class="btn btn-default"><i class="glyphicon glyphicon-exclamation-sign"></i> <input type="checkbox" class="btn btn-default" value="CONFIRMED" > {{ 'OPEN' | translate }}</label><br />
-                <label class="btn btn-default"><i class="glyphicon glyphicon-question-sign"></i> <input type="checkbox" class="btn btn-default" value="IN_PROGRESS"> {{ 'IN_PROGRESS' | translate }}</label><br />
-                <label class="btn btn-default"><i class="glyphicon glyphicon-ok-sign"></i> <input type="checkbox" class="btn btn-default" value="RESOLVED">  {{ 'RESOLVED' | translate }}</label><br />
-                <label class="btn btn-default"><i class="fa fa-user-circle-o"></i> <input type="checkbox" class="btn btn-default" value="default">  {{ 'ANONYMOUS' | translate }}</label><br />
+            <div ng-model="searchState" class="text-center" bs-checkbox-group>
+                <label ng-click="activate_searchb()" class="btn btn-default"><i class="glyphicon glyphicon-exclamation-sign"></i> <input type="checkbox" class="btn btn-default" value="CONFIRMED" > {{ 'OPEN' | translate }}</label><br />
+                <label ng-click="activate_searchb()" class="btn btn-default"><i class="glyphicon glyphicon-question-sign"></i> <input type="checkbox" class="btn btn-default" value="IN_PROGRESS"> {{ 'IN_PROGRESS' | translate }}</label><br />
+                <label ng-click="activate_searchb()" class="btn btn-default"><i class="glyphicon glyphicon-ok-sign"></i> <input type="checkbox" class="btn btn-default" value="RESOLVED">  {{ 'RESOLVED' | translate }}</label><br />
+                <label ng-click="activate_searchb()" class="btn btn-default"><i class="fa fa-user-circle-o"></i> <input type="checkbox" class="btn btn-default" value="default">  {{ 'ANONYMOUS' | translate }}</label><br />
             </div>
         </div>
 
         <hr>
 
         <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'MOOD' | translate }}</div>
-            <div ng-model="searchFeeling" ng-click="activate_searchb()" bs-checkbox-group >
-                <label class="btn btn-default"><i class="fa fa-smile-o"></i> <input type="checkbox" class="btn btn-default" value="happy"> {{ 'MOODPOSITIVE' | translate }}</label><br />
-                <label class="btn btn-default"><i class="fa fa-meh-o"></i> <input type="checkbox" class="btn btn-default" value="neutral"> {{ 'MOODNEUTRAL' | translate }}</label><br />
-                <label class="btn btn-default"><i class="fa fa-frown-o"></i> <input type="checkbox" class="btn btn-default" value="angry"> {{ 'MOODNEGATIVE' | translate }}</label><br />
+            <div ng-model="searchFeeling" bs-checkbox-group >
+                <label ng-click="activate_searchb()" class="btn btn-default"><i class="fa fa-smile-o"></i> <input type="checkbox" class="btn btn-default" value="happy"> {{ 'MOODPOSITIVE' | translate }}</label><br />
+                <label ng-click="activate_searchb()" class="btn btn-default"><i class="fa fa-meh-o"></i> <input type="checkbox" class="btn btn-default" value="neutral"> {{ 'MOODNEUTRAL' | translate }}</label><br />
+                <label ng-click="activate_searchb()" class="btn btn-default"><i class="fa fa-frown-o"></i> <input type="checkbox" class="btn btn-default" value="angry"> {{ 'MOODNEGATIVE' | translate }}</label><br />
             </div>
         </div>
 

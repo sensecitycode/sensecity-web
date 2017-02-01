@@ -33,7 +33,7 @@ appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$win
 												|| lastissue.image_name === 'no-image'
 												|| lastissue.image_name === null
 												|| lastissue.image_name === undefined) {
-											lastissue.image_name = "./images/"+lastissue.issue+".png";
+											lastissue.class = "fa fa-"+$rootScope.Variables.icons[lastissue.issue].icon;
                                                                                         lastissue.width = "80%";
 										}else{
                                                                                     lastissue.width = "100%";

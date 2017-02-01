@@ -9,7 +9,7 @@
         <meta name="generator" content="Codeply">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
         <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
         
         <link rel="stylesheet" href="css/leaflet.css" />
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
@@ -65,7 +65,10 @@
 
             </div>
             <div class="col-lg-4" id="image_div" style="color:#000;height: 50%;overflow-x: hidden;">
-                <center><img class="img-responsive" ng-show=" issue_image != 'no-image'" ng-src="{{issue_image}}" style="height: 50vh;"/></center>
+                <center>
+                    <img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" class="img-responsive" width={{lastissue.width}} src={{lastissue.image_name}} alt="" height="50vh">
+                                        <i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue_class}} style="font-size:12em;color:black;height:50vh"></i>
+                </center>
             </div>
             <br>
         </div>
