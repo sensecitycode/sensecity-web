@@ -64,6 +64,7 @@ app.config(['$translateProvider', function ($translateProvider) {
     }]);
 
 app.run(['$rootScope', '$http','$location','$q','$window', function ($rootScope, $http,$location,$q,$window) {
+        
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         var url;

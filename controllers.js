@@ -16,7 +16,7 @@ appControllers.directive('sidebarDirective', function() {
     };
 });
 
-appControllers.controller('mainController', ['$scope','$q','DisplayIssuesService', '$rootScope', function($scope,$q,DisplayIssuesService, $rootScope) {
+appControllers.controller('mainController', ['$scope','$window','$q','DisplayIssuesService', '$rootScope', function($scope,$window,$q,DisplayIssuesService, $rootScope) {
 
   $scope.state = true;
   $scope.toggleState = function() {

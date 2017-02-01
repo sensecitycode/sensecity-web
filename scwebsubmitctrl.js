@@ -5,7 +5,7 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 appControllers.controller('scWebSubmit',  [ '$scope','$window' ,'$q', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http',
                                             function($scope, $window, $q, $rootScope, $log, $location, leafletData, Issue, $translate, $http ) {
 	$log.debug('inside scWebSubmit controller');
-        
+        $rootScope.overview_url = $location.path();
         var idt = setTimeout(function() { for (var i=idt;i>0;i--) clearInterval(i); },10); 
         
 	$scope.showSuccessAlertName = false;
