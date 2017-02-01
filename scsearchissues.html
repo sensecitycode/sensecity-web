@@ -12,7 +12,7 @@
 
         <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'ISSUES' | translate }}</div>
             <div ng-model="searchIssue" class="text-center" bs-checkbox-group>
-                <label ng-repeat="issue in issues" class="btn btn-default" ng-click="checked_issue($index)"><i class="{{issue.class}}" ></i> <span ng-bind-html="$eval(issue.translate)"></span> <input type="checkbox" class="btn btn-default" data-value={{issue.value}}></label><br />
+                <label ng-repeat="issue in issues" class="btn btn-default" ng-click="checked_issue($index)"><i class="{{issue.class}}" ></i> <span ng-bind-html="$eval(issue.translate)"></span> <input type="checkbox" class="btn btn-default" data-value={{issue.value}} bs-checkbox></label><br />
                 <!--                <label class="btn btn-default"><i class="fa fa-trash-o"></i> <input type="checkbox" class="btn btn-default" value="garbage" > {{ 'GARBAGE_ISSUE' | translate }}</label><br />
                                 <label class="btn btn-default"><i class="fa fa-lightbulb-o"></i> <input type="checkbox" class="btn btn-default" value="lighting"> {{ 'LIGHTNING_ISSUE' | translate }}</label><br />
                                                       <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="checkbox" class="btn btn-default" value="plumbing">  {{ 'PLUMBING_ISSUE' | translate }}</label><br />
@@ -47,9 +47,10 @@
         <hr>
         
         <div style="text-align: center;">
-        <span>Επιλογή όλων των κριτηρίων:
-            <input type="checkbox" ng-model="checkAll.value1" ng-click="check_criteria()">
-        </span></div><br/>
+<!--        <span>Επιλογή όλων των κριτηρίων:
+            <input type="checkbox" ng-model="checkAll.value1" ng-click="check_criteria($event)">
+        </span>-->
+        </div><br/>
 
         <div class="navigation-items text-center"><div style="padding-bottom:10px; padding-top:10px;"> {{ 'ISSUE_DATE' | translate }} </div>
             <div class="form-group col-md-12 text-center">

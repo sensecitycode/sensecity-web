@@ -26,7 +26,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         $scope.checkAll = {
             value1: false
         };
-        
+
         $scope.criteria_selected = true;
 
         $scope.issues = $rootScope.Variables.searchIssues;
@@ -159,48 +159,56 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                     var counter = 0;
                     var counter1 = 0;
-                    
-                    $scope.check_criteria = function(){
-                      if($scope.checkAll.value1 == true){
-                          for (k = 0; k < $scope.issues.length; k++) {
-                             $scope.issues[k].checked = true; 
-                          }
-                          
-                      }else{
-                          for (k = 0; k < $scope.issues.length; k++) {
-                             $scope.issues[k].checked = false; 
-                          }
-                          $scope.searchIssue = "";
-                        $scope.searchState = "";
-                        $scope.searchFeeling = "";
-                          $scope.criteria_selected = true;
-                      }  
-                    };
-                    
-                    $scope.activate_searchb = function(){
+
+//                    $scope.check_criteria = function($event){
+//                        $scope.searchIssue = "";
+//                        $scope.searchState = "";
+//                        $scope.searchFeeling = "";
+//                      if($scope.checkAll.value1 == true){
+//                          for (k = 0; k < $scope.issues.length; k++) {
+//                             $scope.issues[k].checked = true; 
+//                          }
+//                          $(".ng-not-empty").click();
+//                          $("label:has(.btn.btn-default)").attr("ng-model","btn btn-default active");
+//                          $scope.criteria_selected = false;
+//                      }else{
+//                          for (k = 0; k < $scope.issues.length; k++) {
+//                             $scope.issues[k].checked = false; 
+//                          }
+//                          $scope.searchIssue = "";
+//                        $scope.searchState = "";
+//                        $scope.searchFeeling = "";
+//                        $("label:has(.btn.btn-default)").attr("class","btn btn-default");
+//                        $('input:checkbox').not($event.currentTarget).attr("class","btn btn-default ng-valid ng-dirty ng-valid-parse ng-touched ng-empty");
+//                        $('input:checkbox').not($event.currentTarget).click();   
+//                        $scope.criteria_selected = true;
+//                      }  
+//                    };
+
+                    $scope.activate_searchb = function () {
                         counter1++;
                         if (counter1 == 2) {
-                          counter1 = 0;
+                            counter1 = 0;
                             var state_active = true;
                             var feelings_active = true;
-                            angular.forEach($scope.searchState,function(value,key){
-                              if( value == true){
-                                  state_active = false;
-                                  $scope.criteria_selected = false;
-                                  return;
-                              }  
+                            angular.forEach($scope.searchState, function (value, key) {
+                                if (value == true) {
+                                    state_active = false;
+                                    $scope.criteria_selected = false;
+                                    return;
+                                }
                             });
-                            if(state_active == false){
+                            if (state_active == false) {
                                 return;
                             }
-                            angular.forEach($scope.searchFeeling,function(value,key){
-                              if( value == true){
-                                  feelings_active = false;
-                                  $scope.criteria_selected = false;
-                                  return;
-                              }  
+                            angular.forEach($scope.searchFeeling, function (value, key) {
+                                if (value == true) {
+                                    feelings_active = false;
+                                    $scope.criteria_selected = false;
+                                    return;
+                                }
                             });
-                            if(feelings_active == false){
+                            if (feelings_active == false) {
                                 return;
                             }
                             var active = true;
@@ -214,7 +222,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             if (active == true) {
                                 $scope.criteria_selected = true;
                             }
-                    }
+                        }
                     };
 
                     $scope.checked_issue = function (index) {
@@ -224,24 +232,24 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             $scope.issues[index].checked = !$scope.issues[index].checked;
                             var state_active = true;
                             var feelings_active = true;
-                            angular.forEach($scope.searchState,function(value,key){
-                              if( value == true){
-                                  state_active = false;
-                                  $scope.criteria_selected = false;
-                                  return;
-                              }  
+                            angular.forEach($scope.searchState, function (value, key) {
+                                if (value == true) {
+                                    state_active = false;
+                                    $scope.criteria_selected = false;
+                                    return;
+                                }
                             });
-                            if(state_active == false){
+                            if (state_active == false) {
                                 return;
                             }
-                            angular.forEach($scope.searchFeeling,function(value,key){
-                              if( value == true){
-                                  feelings_active = false;
-                                  $scope.criteria_selected = false;
-                                  return;
-                              }  
+                            angular.forEach($scope.searchFeeling, function (value, key) {
+                                if (value == true) {
+                                    feelings_active = false;
+                                    $scope.criteria_selected = false;
+                                    return;
+                                }
                             });
-                            if(feelings_active == false){
+                            if (feelings_active == false) {
                                 return;
                             }
                             var active = true;
@@ -342,25 +350,23 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
                         });
                         if (paramsObj.length == 0) {
-                            if (states == "") {
-                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, includeAnonymous: includeAnonymous});
-                            } else {
-                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
-                            }
-                        }
+                            if (states != "") {
 
-                        if (feelings != "") {
-                            feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name, feeling: feelings};
-                        } else {
-                            feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name};
+                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
                         }
+                    }
 
                         var promisesArray = [];
+                        
+                        if (feelings != "") {
+                            feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name, feeling: feelings};
+                            promisesArray.push(feelingsQuery(feelingsObj));
+                        }
+
                         for (index = 0; index < paramsObj.length; index++) {
                             promisesArray.push(doQuery(paramsObj[index]));
                         }
 
-                        promisesArray.push(feelingsQuery(feelingsObj));
                         $q.all(promisesArray).then(function (data) {
                             console.log(JSON.stringify(data));
                             var searchissues = [];
@@ -418,8 +424,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         $scope.searchFeeling = "";
                         $scope.markers = [];
                         for (k = 0; k < $scope.issues.length; k++) {
-                             $scope.issues[k].checked = false; 
-                          }
+                            $scope.issues[k].checked = false;
+                        }
                         $scope.criteria_selected = true;
                         $scope.center = {
                             lat: $rootScope.Variables.lat_center,
