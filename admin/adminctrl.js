@@ -487,6 +487,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
         $scope.role = "departmentUser";
         }
         var department = $cookieStore.get("department");
+                $window.alert(JSON.stringify($rootScope.Variables.depUserTitles));
+                $window.alert(department);
                 var dep_index = $rootScope.Variables.depUserTitles.indexOf(department);
                 $scope.tabs = [{
                 "title": $rootScope.Variables.depUserTitles[dep_index],

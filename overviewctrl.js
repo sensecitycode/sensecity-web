@@ -24,15 +24,15 @@ appControllers
                     '$scope',
                     '$window',
                     '$rootScope', '$http',
-                    '$q', 'leafletData', 'leafletMapEvents',
+                    '$q','$location', 'leafletData', 'leafletMapEvents',
                     'DisplayIssuesService',
                     'Issue2MapService',
-                    'DisplayLast6IssuesService','DisplayFeelingsService',
+                    'DisplayLast6IssuesService', 'DisplayFeelingsService',
                     'FixedPointsService',
                     'cfpLoadingBar',
                     '$interval',
                     '$translate',
-                    function ($scope, $window, $rootScope, $http, $q, leafletData, leafletMapEvents,
+                    function ($scope, $window, $rootScope, $http, $q, $location,leafletData, leafletMapEvents,
                             DisplayIssuesService,
                             Issue2MapService,
                             DisplayLast6IssuesService, DisplayFeelingsService, FixedPointsService,
@@ -44,9 +44,7 @@ appControllers
                                 clearInterval(i);
                         }, 10);
                         $scope.leaflet_map = 0;
-                        var today = new Date();
-                        today = new Date(today.getFullYear(),today.getMonth(),today.getDate());
-                        today = today.getTime();
+                        $rootScope.overview_url = $location.path();
                         var position = $("#overview").position();
                         var width = $("#last6issues").width() - $("#aside").width();
                         var mwidth = $(document).width();
@@ -280,7 +278,7 @@ appControllers
                                     $("#streetview").css('z-index', '1');
                                     $(".leaflet-control-zoom").css("visibility", "hidden");
                                     google.maps.event.trigger(panorama, "resize");
-                                   $(window).resize();
+                                    $(window).resize();
                                 } else {
                                     google_street_layer = false;
                                     $("#streetview").css('z-index', '-1');
@@ -295,6 +293,8 @@ appControllers
                         $q.all($rootScope.mainInfo).then(
                                 function (data) {
 
+
+
                                     for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
                                         $scope.removelayer(i);
                                     }
@@ -305,7 +305,7 @@ appControllers
 
                                     $scope.lastdatesToCheck = 1000 * 60 * 60 * 24 * 30;
                                     $scope.daysToCheck = 30;
-                                    
+
                                     $scope.lastissues = [];
                                     $scope.markers = [];
                                     $scope.fixedmarkersGarbage = [];
@@ -330,29 +330,33 @@ appControllers
 
 
                                     var startdate = new Date(2017, 0, 1);
+                                    var today = new Date();
+
+                                    today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                                    today = today.getTime();
                                     startdate.setDate(startdate.getDate());
                                     $scope.startISOdate = startdate;
                                     $scope.endISOdate = new Date();
 
 
                                     $scope.submitSearchLast30days = function () {
-                                        
-                                        
-                                    $scope.calcValue30daysIssues = 0;
-                                    $scope.calcValue30daysEvents = 0;
-                                    $scope.calcValueProblemsFrom2017 = 0;
-                                    $scope.calcValueSolutionFrom2017 = 0;
+
+
+                                        $scope.calcValue30daysIssues = 0;
+                                        $scope.calcValue30daysEvents = 0;
+                                        $scope.calcValueProblemsFrom2017 = 0;
+                                        $scope.calcValueSolutionFrom2017 = 0;
 
                                         $scope.startdate = $scope.startISOdate
-                                        .getFullYear()
-                                        + '-'
-                                        + (("0" + ($scope.startISOdate.getMonth() + 1)).slice(-2))
-                                        + '-' + ( "0" + $scope.startISOdate.getDate()).slice(-2);
-                                $scope.enddate = $scope.endISOdate
-                                        .getFullYear()
-                                        + '-'
-                                        + (( "0" + ($scope.endISOdate.getMonth() + 1)).slice(-2))
-                                        + '-' + ( "0" + $scope.endISOdate.getDate()).slice(-2);
+                                                .getFullYear()
+                                                + '-'
+                                                + (("0" + ($scope.startISOdate.getMonth() + 1)).slice(-2))
+                                                + '-' + ("0" + $scope.startISOdate.getDate()).slice(-2);
+                                        $scope.enddate = $scope.endISOdate
+                                                .getFullYear()
+                                                + '-'
+                                                + (("0" + ($scope.endISOdate.getMonth() + 1)).slice(-2))
+                                                + '-' + ("0" + $scope.endISOdate.getDate()).slice(-2);
 
                                         var paramsObj = [];
 
@@ -387,9 +391,9 @@ appControllers
                                                                 for (j = 0; j < data[i].length; j++) {
                                                                     if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1 && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
                                                                         $scope.calcValue30daysIssues++;
-                                                                        if(data[i][j].status != "RESOLVED"){
-                                                                        searchissues.push(data[i][j]);
-                                                                    }
+                                                                        if (data[i][j].status != "RESOLVED") {
+                                                                            searchissues.push(data[i][j]);
+                                                                        }
                                                                     }
                                                                     if (data[i][j].hasOwnProperty("status") && data[i][j].cf_authenticate == 1 && data[i][j].status == "RESOLVED") {
                                                                         $scope.calcValueSolutionFrom2017++;
@@ -513,16 +517,16 @@ appControllers
 
                                         return d.promise;
                                     }
-                                    
-                                    function dofQuery(obj) {
-                                var d = $q.defer();
-                                DisplayFeelingsService.query(obj,
-                                        function (result) {
-                                            d.resolve(result);
-                                        });
 
-                                return d.promise;
-                            }
+                                    function dofQuery(obj) {
+                                        var d = $q.defer();
+                                        DisplayFeelingsService.query(obj,
+                                                function (result) {
+                                                    d.resolve(result);
+                                                });
+
+                                        return d.promise;
+                                    }
 
                                     $scope.doCalcLast6Issues = function () {
                                         var theLastIssues = DisplayLast6IssuesService
@@ -549,7 +553,8 @@ appControllers
                                                                         } else {
                                                                             lastissue.issue = '';
                                                                         }
-
+                                                                        
+                                                                        var today = new Date();
                                                                         var create_day = new Date(
                                                                                 lastissue.create_at);
 
@@ -686,7 +691,7 @@ appControllers
                                             };
 
                                             leafletData.getMap().then(function (map) {
-                                                L.control.layers({},overlays).addTo(map);
+                                                L.control.layers({}, overlays).addTo(map);
                                                 map.invalidateSize(true);
                                             });
 

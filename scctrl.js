@@ -4,16 +4,17 @@ var appControllers = angular.module('scapp.controllers', ['pascalprecht.translat
 appControllers.controller('sensecityMainCtrl', function($scope, $log, $location, $rootScope,$http,$window) {
 	$log.debug('inside sensecityMainCtrl controller');
 	$scope.scvesrion = '20160712_trunk';
-	
+	$rootScope.overview_url = $location.path();
 });
 
 
 
-appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window, DisplayLast100IssuesService, BugService) {
+appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window,$location, DisplayLast100IssuesService, BugService) {
 	$log.debug('inside allissuesCtrl controller');
 	
 	$scope.allissues = [];
-	
+	$rootScope.overview_url = $location.path();
+        
 	$scope.doCalcAllIssues = function() {
 		var tmpIssues = DisplayLast100IssuesService
 				.query(function() {

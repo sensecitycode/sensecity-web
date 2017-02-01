@@ -13,20 +13,20 @@
         <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'ISSUES' | translate }}</div>
             <div ng-model="searchIssue" class="text-center" bs-checkbox-group>
                 <label ng-repeat="issue in issues" class="btn btn-default" ng-click="checked_issue($index)"><i class="{{issue.class}}" ></i> <span ng-bind-html="$eval(issue.translate)"></span> <input type="checkbox" class="btn btn-default" data-value={{issue.value}}></label><br />
-<!--                <label class="btn btn-default"><i class="fa fa-trash-o"></i> <input type="checkbox" class="btn btn-default" value="garbage" > {{ 'GARBAGE_ISSUE' | translate }}</label><br />
-                <label class="btn btn-default"><i class="fa fa-lightbulb-o"></i> <input type="checkbox" class="btn btn-default" value="lighting"> {{ 'LIGHTNING_ISSUE' | translate }}</label><br />
-                                      <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="checkbox" class="btn btn-default" value="plumbing">  {{ 'PLUMBING_ISSUE' | translate }}</label><br />
-                <label class="btn btn-default"><i class="fa fa-road"></i> <input type="checkbox" class="btn btn-default" value="roadcontructor">  {{ 'ROAD_ISSUE' | translate }}</label><br />
-                <label class="btn btn-default"><i class="fa fa-shield"></i> <input type="checkbox" class="btn btn-default" value="protectionpolicy">  {{ 'PROTECTION_POLICY_ISSUE' | translate }}</label><br />
-                <label class="btn btn-default"><i class="fa fa-tree"></i> <input type="checkbox" class="btn btn-default" value="green">  {{ 'GREEN_ISSUE' | translate }}</label><br />
-                <label class="btn btn-default"><i class="fa fa-leaf"></i> <input type="checkbox" class="btn btn-default" value="enviroment">  {{ 'ENVIRONMENT_ISSUE' | translate }}</label><br />-->
+                <!--                <label class="btn btn-default"><i class="fa fa-trash-o"></i> <input type="checkbox" class="btn btn-default" value="garbage" > {{ 'GARBAGE_ISSUE' | translate }}</label><br />
+                                <label class="btn btn-default"><i class="fa fa-lightbulb-o"></i> <input type="checkbox" class="btn btn-default" value="lighting"> {{ 'LIGHTNING_ISSUE' | translate }}</label><br />
+                                                      <label class="btn btn-default"><i class="fa fa-umbrella"></i> <input type="checkbox" class="btn btn-default" value="plumbing">  {{ 'PLUMBING_ISSUE' | translate }}</label><br />
+                                <label class="btn btn-default"><i class="fa fa-road"></i> <input type="checkbox" class="btn btn-default" value="roadcontructor">  {{ 'ROAD_ISSUE' | translate }}</label><br />
+                                <label class="btn btn-default"><i class="fa fa-shield"></i> <input type="checkbox" class="btn btn-default" value="protectionpolicy">  {{ 'PROTECTION_POLICY_ISSUE' | translate }}</label><br />
+                                <label class="btn btn-default"><i class="fa fa-tree"></i> <input type="checkbox" class="btn btn-default" value="green">  {{ 'GREEN_ISSUE' | translate }}</label><br />
+                                <label class="btn btn-default"><i class="fa fa-leaf"></i> <input type="checkbox" class="btn btn-default" value="enviroment">  {{ 'ENVIRONMENT_ISSUE' | translate }}</label><br />-->
             </div>
         </div>
 
         <hr>
 
         <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'STATES' | translate }}</div>
-            <div ng-model="searchState" class="text-center" bs-checkbox-group>
+            <div ng-model="searchState" ng-click="activate_searchb()" class="text-center" bs-checkbox-group>
                 <label class="btn btn-default"><i class="glyphicon glyphicon-exclamation-sign"></i> <input type="checkbox" class="btn btn-default" value="CONFIRMED" > {{ 'OPEN' | translate }}</label><br />
                 <label class="btn btn-default"><i class="glyphicon glyphicon-question-sign"></i> <input type="checkbox" class="btn btn-default" value="IN_PROGRESS"> {{ 'IN_PROGRESS' | translate }}</label><br />
                 <label class="btn btn-default"><i class="glyphicon glyphicon-ok-sign"></i> <input type="checkbox" class="btn btn-default" value="RESOLVED">  {{ 'RESOLVED' | translate }}</label><br />
@@ -37,7 +37,7 @@
         <hr>
 
         <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'MOOD' | translate }}</div>
-            <div ng-model="searchFeeling" bs-checkbox-group >
+            <div ng-model="searchFeeling" ng-click="activate_searchb()" bs-checkbox-group >
                 <label class="btn btn-default"><i class="fa fa-smile-o"></i> <input type="checkbox" class="btn btn-default" value="happy"> {{ 'MOODPOSITIVE' | translate }}</label><br />
                 <label class="btn btn-default"><i class="fa fa-meh-o"></i> <input type="checkbox" class="btn btn-default" value="neutral"> {{ 'MOODNEUTRAL' | translate }}</label><br />
                 <label class="btn btn-default"><i class="fa fa-frown-o"></i> <input type="checkbox" class="btn btn-default" value="angry"> {{ 'MOODNEGATIVE' | translate }}</label><br />
@@ -45,6 +45,11 @@
         </div>
 
         <hr>
+        
+        <div style="text-align: center;">
+        <span>Επιλογή όλων των κριτηρίων:
+            <input type="checkbox" ng-model="checkAll.value1" ng-click="check_criteria()">
+        </span></div><br/>
 
         <div class="navigation-items text-center"><div style="padding-bottom:10px; padding-top:10px;"> {{ 'ISSUE_DATE' | translate }} </div>
             <div class="form-group col-md-12 text-center">
@@ -56,7 +61,7 @@
         </div>
 
 
-        <div class="text-center"><button type="button" class="btn btn-success" ng-click="submit()">{{ 'MENUSEARCH' | translate }}</button><button type="button" class="btn btn-danger" ng-click="reset()">{{ 'MENUCLEAN' | translate }}</button></div><br />
+        <div class="text-center"><button ng-disabled="criteria_selected" type="button" class="btn btn-success" ng-click="submit()">{{ 'MENUSEARCH' | translate }}</button><button ng-disabled="criteria_selected" type="button" class="btn btn-danger" ng-click="reset()">{{ 'MENUCLEAN' | translate }}</button></div><br />
 
 
     </div>

@@ -16,10 +16,19 @@ appControllers.directive('sidebarDirective', function () {
     };
 });
 
-appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', 'DisplayIssuesService', 'DisplayFeelingsService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, DisplayIssuesService, DisplayFeelingsService, Issue2MapService, leafletData) {
+appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'DisplayIssuesService', 'DisplayFeelingsService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, $location, DisplayIssuesService, DisplayFeelingsService, Issue2MapService, leafletData) {
+        $rootScope.overview_url = $location.path();
+        var idt = setTimeout(function () {
+            for (var i = idt; i > 0; i--)
+                clearInterval(i);
+        }, 10);
+
+        $scope.checkAll = {
+            value1: false
+        };
         
-        var idt = setTimeout(function() { for (var i=idt;i>0;i--) clearInterval(i); },10); 
-        
+        $scope.criteria_selected = true;
+
         $scope.issues = $rootScope.Variables.searchIssues;
         $scope.state = true;
         $scope.toggleState = function () {
@@ -149,12 +158,103 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     };
 
                     var counter = 0;
+                    var counter1 = 0;
+                    
+                    $scope.check_criteria = function(){
+                      if($scope.checkAll.value1 == true){
+                          for (k = 0; k < $scope.issues.length; k++) {
+                             $scope.issues[k].checked = true; 
+                          }
+                          
+                      }else{
+                          for (k = 0; k < $scope.issues.length; k++) {
+                             $scope.issues[k].checked = false; 
+                          }
+                          $scope.searchIssue = "";
+                        $scope.searchState = "";
+                        $scope.searchFeeling = "";
+                          $scope.criteria_selected = true;
+                      }  
+                    };
+                    
+                    $scope.activate_searchb = function(){
+                        counter1++;
+                        if (counter1 == 2) {
+                          counter1 = 0;
+                            var state_active = true;
+                            var feelings_active = true;
+                            angular.forEach($scope.searchState,function(value,key){
+                              if( value == true){
+                                  state_active = false;
+                                  $scope.criteria_selected = false;
+                                  return;
+                              }  
+                            });
+                            if(state_active == false){
+                                return;
+                            }
+                            angular.forEach($scope.searchFeeling,function(value,key){
+                              if( value == true){
+                                  feelings_active = false;
+                                  $scope.criteria_selected = false;
+                                  return;
+                              }  
+                            });
+                            if(feelings_active == false){
+                                return;
+                            }
+                            var active = true;
+                            for (k = 0; k < $scope.issues.length; k++) {
+                                if ($scope.issues[k].checked == true) {
+                                    active = false;
+                                    $scope.criteria_selected = active;
+                                    break;
+                                }
+                            }
+                            if (active == true) {
+                                $scope.criteria_selected = true;
+                            }
+                    }
+                    };
 
                     $scope.checked_issue = function (index) {
                         counter++;
                         if (counter == 2) {
                             counter = 0;
                             $scope.issues[index].checked = !$scope.issues[index].checked;
+                            var state_active = true;
+                            var feelings_active = true;
+                            angular.forEach($scope.searchState,function(value,key){
+                              if( value == true){
+                                  state_active = false;
+                                  $scope.criteria_selected = false;
+                                  return;
+                              }  
+                            });
+                            if(state_active == false){
+                                return;
+                            }
+                            angular.forEach($scope.searchFeeling,function(value,key){
+                              if( value == true){
+                                  feelings_active = false;
+                                  $scope.criteria_selected = false;
+                                  return;
+                              }  
+                            });
+                            if(feelings_active == false){
+                                return;
+                            }
+                            var active = true;
+                            for (k = 0; k < $scope.issues.length; k++) {
+                                if ($scope.issues[k].checked == true) {
+                                    active = false;
+                                    $scope.criteria_selected = active;
+                                    break;
+                                }
+                            }
+                            if (active == true) {
+                                $scope.criteria_selected = true;
+                            }
                         }
                     };
 
@@ -224,9 +324,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                             if (issue.checked === true) {
                                 if (states == "") {
-                                    paramsObj.push({city: $rootScope.Variables.city_name,startdate: $scope.startdate, enddate: $scope.enddate, issue: issue.value, image_field: 0, includeAnonymous: includeAnonymous});
+                                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue.value, image_field: 0, includeAnonymous: includeAnonymous});
                                 } else {
-                                    paramsObj.push({city: $rootScope.Variables.city_name,startdate: $scope.startdate, enddate: $scope.enddate, issue: issue.value, image_field: 0, status: states, includeAnonymous: includeAnonymous});
+                                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue.value, image_field: 0, status: states, includeAnonymous: includeAnonymous});
                                 }
                             }
                         });
@@ -243,9 +343,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         });
                         if (paramsObj.length == 0) {
                             if (states == "") {
-                                paramsObj.push({city: $rootScope.Variables.city_name,startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, includeAnonymous: includeAnonymous});
+                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, includeAnonymous: includeAnonymous});
                             } else {
-                                paramsObj.push({city: $rootScope.Variables.city_name,startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
+                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
                             }
                         }
 
@@ -290,11 +390,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                     message = 'Μη διαθέσιμη περιγραφή';
                                 }
                                 var marker;
-                                if(layer != 'reaction'){
-                                                                                var lindex = $rootScope.Variables.overlay_categories.indexOf(issue) + 1;
-                                                                            }else{
-                                                                                var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
-                                                                            }
+                                if (layer != 'reaction') {
+                                    var lindex = $rootScope.Variables.overlay_categories.indexOf(issue) + 1;
+                                } else {
+                                    var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
+                                }
                                 layer = "layer" + lindex;
                                 if (issue == "angry" || issue == "neutral" || issue == "happy") {
                                     marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br>"};
@@ -317,6 +417,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         $scope.searchState = "";
                         $scope.searchFeeling = "";
                         $scope.markers = [];
+                        for (k = 0; k < $scope.issues.length; k++) {
+                             $scope.issues[k].checked = false; 
+                          }
+                        $scope.criteria_selected = true;
                         $scope.center = {
                             lat: $rootScope.Variables.lat_center,
                             lng: $rootScope.Variables.long_center,

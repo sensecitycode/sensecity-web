@@ -23,7 +23,7 @@ appControllers.controller(
             '$scope',
             '$window',
             '$rootScope', '$http',
-            '$q', 'leafletData',
+            '$q','$location', 'leafletData',
             'DisplayIssuesService',
             'Issue2MapService',
             'DisplayLast6IssuesService',
@@ -32,13 +32,15 @@ appControllers.controller(
             'cfpLoadingBar',
             '$interval',
             '$translate',
-            function ($scope, $window, $rootScope, $http, $q, leafletData,
+            function ($scope, $window, $rootScope, $http, $q, $location,leafletData,
                     DisplayIssuesService,
                     Issue2MapService,
                     DisplayLast6IssuesService, FixedPointsService,DisplayFeelingsService,
                     cfpLoadingBar,
                     $interval,
                     $translate) {
+                        
+                        $rootScope.overview_url = $location.path();
                 var idt = setTimeout(function () {
                     for (var i = idt; i > 0; i--)
                         clearInterval(i);
