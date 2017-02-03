@@ -55,6 +55,7 @@ appServices.factory('DisplayFeelingsService', function ($resource , $rootScope) 
 
 appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
+    if($rootScope.Variables.APIURL != ""){
     return $resource( $rootScope.Variables.APIURL+'?city='+$rootScope.Variables.city_name+'&startdate=2017-01-01&sort=-1&limit=6&list_issue=1&image_field=1',
         {}, {
         update: {
@@ -62,6 +63,7 @@ appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndP
           // isArray: true
         }
     });
+   }
 });
 
 
