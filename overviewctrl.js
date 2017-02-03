@@ -62,8 +62,7 @@ appControllers
                         var google_street_layer = false;
 
                         $scope.initialize = function () {
-                            // var fenway = {lat: 38.246453, lng: 21.735068};
-                            var fenway = {lat: 38.24645352266985, lng: 21.735068952148438};
+                            var fenway = $rootScope.Variables.google_init_coords;
                             var panoOptions = {
                                 position: fenway,
                                 addressControlOptions: {
