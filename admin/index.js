@@ -1,4 +1,4 @@
-var app = angular.module('MainAdmin', ['ngCookies','ngRoute','ngSanitize','ngResource','login_fo','adminapp.adminctrl','adminapp.adminsrvs']);
+var app = angular.module('MainAdmin', ['ngCookies','ngRoute','ngResource','login_fo','adminapp.adminctrl','adminapp.adminsrvs']);
 
 app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
             
