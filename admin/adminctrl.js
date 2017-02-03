@@ -160,13 +160,13 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
         function userole() {
         $scope.usrrole = $cookieStore.get("role");
         }
-        
+
         $scope.check_panorama = function(coords){
-            if( coords == "ncoords"){
-                return true;
-            }else{
-                return false;
-            }
+        if (coords == "ncoords"){
+        return true;
+        } else{
+        return false;
+        }
         }
 
         $scope.issue_search = function(){
@@ -175,8 +175,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 
         function checkNearestStreetView(panoData){
         if (strvcounter < total_counter){
-            if(panoData != null){
-                
+        if (panoData != null){
+
         var issue_index = $rootScope.Variables.departments.indexOf($scope.panels[strvcounter].issue);
                 var issueMarker = new google.maps.Marker({
                 position: panoData.location.latLng,
@@ -199,26 +199,26 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 });
                 $scope.street_view_markers.push(issueMarker);
                 strvcounter++;
-                if(strvcounter < total_counter ){   
-                var issue_coords = new google.maps.LatLng($scope.panels[strvcounter].lat, $scope.panels[strvcounter].lng);
+                if (strvcounter < total_counter){
+        var issue_coords = new google.maps.LatLng($scope.panels[strvcounter].lat, $scope.panels[strvcounter].lng);
                 var webService = new google.maps.StreetViewService();
                 webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
-            }else{
-                strvcounter = 0;
-            }
-        }else{
-            $scope.street_view_markers.push("ncoords");
-            strvcounter++;
-            if(strvcounter < total_counter ){
-                var issue_coords = new google.maps.LatLng($scope.panels[strvcounter].lat, $scope.panels[strvcounter].lng);
-                var webService = new google.maps.StreetViewService();
-                webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
-            }else{
-                strvcounter = 0;
-            }
+        } else{
+        strvcounter = 0;
         }
         } else{
-            strvcounter = 0;
+        $scope.street_view_markers.push("ncoords");
+                strvcounter++;
+                if (strvcounter < total_counter){
+        var issue_coords = new google.maps.LatLng($scope.panels[strvcounter].lat, $scope.panels[strvcounter].lng);
+                var webService = new google.maps.StreetViewService();
+                webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
+        } else{
+        strvcounter = 0;
+        }
+        }
+        } else{
+        strvcounter = 0;
         }
 
 //        if (panoData){
@@ -580,10 +580,15 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 if (issue[0] != undefined) {
                 if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                 $scope.image_width = "100%";
+                        $scope.panels[panel.order].image = "";
+                        $scope.pclass = "";
                         $scope.panels[panel.order].image = issue[0].image_name;
                 } else {
                 $scope.image_width = "60%";
-                        $scope.panels[panel.order].image = "../images/" + issue[0].issue + ".png";
+                        $scope.panels[panel.order].image = "";
+                        $scope.pclass = "";
+                        $scope.panels[panel.order].image = issue[0].image_name;
+                        $scope.pclass = "fa fa-" + $rootScope.Variables.icons[issue[0].issue].icon;
                 }
                 $scope.pimage = $scope.panels[panel.order].image;
                         $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
@@ -591,9 +596,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                         $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issue], "panelid": panel.ArrayID});
                 }
-                if($scope.street_view_markers[panel.order] != "ncoords"){
+                if ($scope.street_view_markers[panel.order] != "ncoords"){
                 panorama.setPosition($scope.street_view_markers[panel.order].position);
-            }
+                }
                 });
         }
 
@@ -652,6 +657,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
 
                 $scope.activePanel = - 1;
                         $scope.currentactive = - 1;
+                        $scope.pimage = "";
+                        $scope.pclass = "";
                         displayFixedPoints();
                         // $scope.linkmap($scope.panels[args.model.panelid]);
                 });
@@ -1031,6 +1038,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.comment = null;
                 };
                 $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, seldpriority, seldseverity, e) {
+                 $scope.pimage = "";
+                 $scope.pclass = "";
                 if ($cookieStore.get("uuid") != undefined) {
                 panel.status = seldstatus;
                         panel.priority.en = PriorityTagEn.priority_type(panel.priority.gr);
@@ -1217,9 +1226,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 };
                 $scope.refresh = function () {
                 for (var i = 0; i < $scope.street_view_markers.length; i++){
-                    if($scope.street_view_markers[i] != "ncoords"){
+                if ($scope.street_view_markers[i] != "ncoords"){
                 $scope.street_view_markers[i].setMap(null);
-            }
+                }
                 }
                 $scope.street_view_markers = [];
                         if (current_layer == 1){
