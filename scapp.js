@@ -105,6 +105,7 @@ app.run(['$rootScope', '$http','$location','$q','$window', function ($rootScope,
                 map_zoom: "",
                 overlay_functions : "",
                 overlay_categories : "",
+                google_buildings:"",
                 host: ""
             };
 
@@ -138,6 +139,7 @@ app.run(['$rootScope', '$http','$location','$q','$window', function ($rootScope,
                 map_zoom: response.zoom,
                 overlay_functions : response.overlay_functions,
                 overlay_categories : response.overlay_categories,
+                google_buildings: response.google_buildings,
                 host: response.host
             };
             

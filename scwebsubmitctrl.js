@@ -310,7 +310,6 @@ appControllers.controller('scWebSubmit',  [ '$scope','$window' ,'$q', '$rootScop
 					},
 					data : txtpost 
 				}).success(function(resp) {
-					console.log("test ======>>>>>>>>"+JSON.stringify(resp));
 					my_id=resp._id;
 					$scope.myText = resp.policy_description;
 					
