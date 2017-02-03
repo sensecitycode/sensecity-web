@@ -47,7 +47,7 @@ appServices.factory('FixPointsMarkerService', function () {
 
 appServices.factory('FixPoints2MapService', function ($resource, $rootScope) {
     // console.log("DisplayFixPoints");
-    return $resource($rootScope.Variables.host+'/fix_point/:long/:lat/50/:type',
+    return $resource($rootScope.Variables.host+'/fix_point/:long/:lat/50/data',
         {
 					long:'@long',
 					lat:'@lat',
