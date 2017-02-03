@@ -61,6 +61,7 @@ appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndP
           method: 'GET'
           // isArray: true
         }
+    });
 });
 
 
