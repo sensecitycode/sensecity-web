@@ -70,11 +70,12 @@ app.run(['$rootScope', '$http','$location','$q','$window', function ($rootScope,
         var url;
 
         if( sub_domain[0].split(":").length > 1){
-            url = "http://localhost:8383/sensecity-web/config/testcity1.json";
+            url = "./config/testcity1.json";
             sub_domain[0] = "testcity1";
         }else{
             url = '../config/'+sub_domain[0]+'.json';
         }
+        
         var d = $q.defer();
         
         $rootScope.Variables = {
