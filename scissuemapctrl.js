@@ -31,8 +31,9 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             panorama = new google.maps.StreetViewPanorama(
                     $('#streetview')[0], panoOptions);
 
-            $(window).resize(function () {
-
+        };
+        
+        $(window).resize(function () {
 
                 var position = $("#map").position();
                 var width = $("#map").width();
@@ -43,8 +44,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     $window.alert("ok3");
                 }
             });
-
-        };
+        
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
@@ -101,7 +101,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     google_street_layer = true;
                      $("#streetview").css('z-index', '1');
                      $(".leaflet-control-zoom").css("visibility", "hidden");
-                     $(window).trigger('resize');
+                     $(window).resize();
                      $window.alert("ok1");
                      //google.maps.event.trigger(panorama, "resize");
                 }else{
