@@ -53,7 +53,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     $("#streetview").attr('style', 'z-index:1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px;');
                     google.maps.event.trigger(panorama, "resize");
                 }
-            });
+            };
         
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
