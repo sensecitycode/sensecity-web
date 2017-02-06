@@ -30,10 +30,8 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             };
             panorama = new google.maps.StreetViewPanorama(
                     $('#streetview')[0], panoOptions);
-
-        };
-        
-        $(window).resize(function () {
+            
+            $(window).resize(function () {
 
                 var position = $("#map").position();
                 var width = $("#map").width();
@@ -42,6 +40,18 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     $("#streetview").attr('style', 'z-index:1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px;');
                     google.maps.event.trigger(panorama, "resize");
                     $window.alert("ok3");
+                }
+            });
+
+        };
+        
+        function res() {
+
+                var position = $("#map").position();
+                var width = $("#map").width();
+                if (google_street_layer) {
+                    $("#streetview").attr('style', 'z-index:1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px;');
+                    google.maps.event.trigger(panorama, "resize");
                 }
             });
         
@@ -101,8 +111,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     google_street_layer = true;
                      $("#streetview").css('z-index', '1');
                      $(".leaflet-control-zoom").css("visibility", "hidden");
-                     $(window).resize();
-                     $window.alert("ok1");
+                     res();
                      //google.maps.event.trigger(panorama, "resize");
                 }else{
                     google_street_layer = false;
