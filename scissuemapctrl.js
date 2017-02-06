@@ -101,7 +101,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     google_street_layer = true;
                      $("#streetview").css('z-index', '1');
                      $(".leaflet-control-zoom").css("visibility", "hidden");
-                     $(window).resize();
+                     $(window).trigger('resize');
                      $window.alert("ok1");
                      //google.maps.event.trigger(panorama, "resize");
                 }else{
