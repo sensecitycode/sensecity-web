@@ -36,10 +36,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
                 var position = $("#map").position();
                 var width = $("#map").width();
+                $window.alert("ok2");
                 if (google_street_layer) {
                     $("#streetview").attr('style', 'z-index:1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px;');
-                    $window.alert("ok");
                     google.maps.event.trigger(panorama, "resize");
+                    $window.alert("ok3");
                 }
             });
 
@@ -101,6 +102,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                      $("#streetview").css('z-index', '1');
                      $(".leaflet-control-zoom").css("visibility", "hidden");
                      $(window).resize();
+                     $window.alert("ok1");
                      //google.maps.event.trigger(panorama, "resize");
                 }else{
                     google_street_layer = false;
