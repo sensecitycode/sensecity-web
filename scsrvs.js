@@ -13,6 +13,7 @@ appServices.factory('APIEndPointService', function() {
 
 //Issue Resource
 appServices.factory('Issue', function($resource , $rootScope,$window) {
+    if($rootScope.Variables.APIURL != ""){
 	return $resource($rootScope.Variables.APIADMIN + "issue/:id",
 		{id : "@id"	}, {
 		"update" : {
@@ -20,10 +21,14 @@ appServices.factory('Issue', function($resource , $rootScope,$window) {
 		}
 
 	});
+    }else{
+        return "";
+    }
 });
 
 appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
 //    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+$rootScope.Variables.APIURL);
+    if($rootScope.Variables.APIURL != ""){
     return $resource($rootScope.Variables.APIURL,
         {}, {
         update: {
@@ -31,10 +36,14 @@ appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
           // isArray: true
         }
     });
+    }else{
+        return "";
+    }
 });
 
 appServices.factory('DisplayFeelingsService', function ($resource , $rootScope) {
 //    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+JSON.stringify($rootScope.Variables));
+    if($rootScope.Variables.APIURL != ""){
     return $resource($rootScope.Variables.feelingsURL,
         {}, {
         update: {
@@ -42,6 +51,9 @@ appServices.factory('DisplayFeelingsService', function ($resource , $rootScope) 
           // isArray: true
         }
     });
+    }else{
+        return "";
+    }
 });
 
 
@@ -71,6 +83,7 @@ appServices.factory('DisplayLast6IssuesService', function ( $resource/*, APIEndP
 
 appServices.factory('DisplayLast100IssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
+    if($rootScope.Variables.APIURL != ""){
     return $resource( $rootScope.Variables.APIURL+'?city='+ $rootScope.Variables.city_name+'&startdate=2017-01-01&sort=-1&limit=100&list_issue=1&image_field=1',
         {}, {
         update: {
@@ -78,9 +91,13 @@ appServices.factory('DisplayLast100IssuesService', function ( $resource/*, APIEn
           // isArray: true
         }
     });
+    }else{
+        return "";
+    }
 });
 
 appServices.factory('BugService', function ( $resource/*, APIEndPointService*/, $rootScope) {
+    if($rootScope.Variables.APIURL != ""){
     return $resource(
         $rootScope.Variables.bugzilla,
         null,
@@ -92,9 +109,13 @@ appServices.factory('BugService', function ( $resource/*, APIEndPointService*/, 
           }
         }
     );
+    }else{
+        return "";
+    }
 });
 
 appServices.factory('FixedPointsService', function ( $resource/*, APIEndPointService*/, $rootScope) {
+    if($rootScope.Variables.APIURL != ""){
     return $resource(
         'json/'+$rootScope.Variables.city_name+'.json',
         null,
@@ -106,4 +127,7 @@ appServices.factory('FixedPointsService', function ( $resource/*, APIEndPointSer
           }
         }
     );
+    }else{
+        return "";
+    }
 });
