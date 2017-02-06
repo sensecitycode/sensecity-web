@@ -38,6 +38,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 var width = $("#map").width();
                 if (google_street_layer) {
                     $("#streetview").attr('style', 'z-index:1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px;');
+                    $window.alert("ok");
                     google.maps.event.trigger(panorama, "resize");
                 }
             });
