@@ -1,4 +1,4 @@
-var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.tooltips', 'adminapp'])
+var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanitize', 'ngCsv', '720kb.tooltips', 'adminapp'])
         .constant("config", {"host": "api.sense.city", "bugzilla_host": "nam.ece.upatras.gr", "port": "4000", "bugzilla_path": "/bugzilla"});
 //appControllers.config([
 //  '$httpProvider',
@@ -21,6 +21,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 var search_button = 0;
                 var strvcounter = 0;
                 var total_counter;
+                var issues_Array = [{id:"Κωδικός Προβλήματος", department:"Τμήμα Ανάθεσης Προβλήματος", description:"Περιγραφή Προβλήματος", state:"Κατάσταση Προβλήματος", date:"Καταγραφή Προβλήματος", priority:"Προτεραιότητα Προβλήματος", severity:"Σπουδαιότητα Προβλήματος", name:"Ονοματεπώνυμο Πολίτη", telephone:"Τηλέφωνο Πολίτη", email:"E-mail Πολίτη"}];
                 $scope.isloading = true;
                 $scope.full = 0;
                 $scope.street = 0;
@@ -56,73 +57,112 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                 var panorama;
                 $scope.street_view_markers = [];
                 var checked_categories = [];
-                $scope.initialize = function(){
-
-                // var fenway = {lat: 38.246453, lng: 21.735068};             
-
-                var fenway = {lat: 38.27942654793131, lng:  21.76288604736328};
-                        var panoOptions = {
-                        position: fenway,
-                                addressControlOptions: {
-                                position: google.maps.ControlPosition.BOTTOM_CENTER
-                                },
-                                linksControl: false,
-                                panControl: false,
-                                zoomControlOptions: {
-                                style: google.maps.ZoomControlStyle.SMALL
-                                },
-                                enableCloseButton: false
-                        };
-                        panorama = new google.maps.StreetViewPanorama(
-                                document.getElementById('smap'), panoOptions);
-                        var issue_array = [];
-                        var checkOptions = []
-                        for (var k = 1; k < $rootScope.Variables.departments_en.length; k++){
-                checked_categories.push(true);
-                        checkOptions[k] = {
-                gmap: panorama,
-                        title: $rootScope.Variables.departments_en[k],
-                        id: $rootScope.Variables.departments_en[k],
-                        label: $rootScope.Variables.departments_en[k],
-                        action: function(){
-                        var index = $rootScope.Variables.departments_en.indexOf(this.title) - 1;
-                                checked_categories[index] = !checked_categories[index];
-                                for (var i = 0; i < $scope.street_view_markers.length; i++){
-                        if ($scope.street_view_markers[i] != "ncoords" && $scope.street_view_markers[i].title == this.title){
-                        if (checked_categories[index] == false){
-                        $scope.street_view_markers[i].setVisible(false);
-                        } else{
-                        $scope.street_view_markers[i].setVisible(true);
+                
+                function doQuery(sparams) {
+                var d = $q.defer();
+                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/search', sparams, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                            for (var j = 0; j < $scope.panels.length; j++){
+                if ($scope.panels[j].id == sparams.id){
+                var priority = PriorityTag.priority_type(result[0].priority);
+                        var severity = SeverityTag.severity_type(result[0].severity);
+                        var state;
+                        if($scope.panels[j].status == 'CONFIRMED'){
+                            state = 'ΑΝΟΙΧΤΟ';
+                        }else if($scope.panels[j].status == 'IN_PROGRESS'){
+                            state = 'ΣΕ ΕΚΤΕΛΕΣΗ';
+                        }else{
+                            state = 'ΟΛΟΚΛΗΡΩΘΗΚΕ';
                         }
-                        }
-                        }
-                        }
+                        issues_Array[j+1] = {id: $scope.panels[j].id, department: result[0].component, description: $scope.panels[j].value_desc, state: state, date: $scope.panels[j].time, priority: priority, severity: severity, name: result[0].cf_creator, telephone: result[0].cf_mobile, email: result[0].cf_email};
+                        break;
                 }
-                issue_array.push(new checkBox(checkOptions[k]));
                 }
-
-                var ddDivOptions = {
-                items: issue_array,
-                        id: "myddOptsDiv"
-                }
-
-                var dropDownDiv = new dropDownOptionsDiv(ddDivOptions);
-                        var dropDownOptions = {
-                        gmap: panorama,
-                                name: 'Προβλήματα',
-                                id: 'ddControl',
-                                title: 'A custom drop down select with mixed elements',
-                                position: google.maps.ControlPosition.TOP_LEFT,
-                                dropDown: dropDownDiv
-                        }
-
-                var dropDown = new dropDownControl(dropDownOptions);
-                        $(window).resize(function() {
-
-                google.maps.event.trigger(panorama, "resize");
+                d.resolve("");
                 });
-                        // map.setStreetView(panorama);
+                        return d.promise;
                 }
+
+        $scope.csv = function(){
+        var csv_promises = [];
+        var l = 0;
+        var deferred = $q.defer();
+                angular.forEach($scope.panels, function (value, key) {
+                var sparams = {"id": value.id, "include_fields": [ "component", "status", "resolution", "cf_mobile", "cf_email", "cf_creator", "severity", "priority", "severity"]};
+                        csv_promises.push(doQuery(sparams));
+                });
+                $q.all(csv_promises).then(function(data){
+                    return deferred.resolve(issues_Array);
+                });
+           return deferred.promise;     
+        }
+
+        $scope.initialize = function(){
+
+        // var fenway = {lat: 38.246453, lng: 21.735068};             
+
+        var fenway = {lat: 38.27942654793131, lng:  21.76288604736328};
+                var panoOptions = {
+                position: fenway,
+                        addressControlOptions: {
+                        position: google.maps.ControlPosition.BOTTOM_CENTER
+                        },
+                        linksControl: false,
+                        panControl: false,
+                        zoomControlOptions: {
+                        style: google.maps.ZoomControlStyle.SMALL
+                        },
+                        enableCloseButton: false
+                };
+                panorama = new google.maps.StreetViewPanorama(
+                        document.getElementById('smap'), panoOptions);
+                var issue_array = [];
+                var checkOptions = []
+                for (var k = 1; k < $rootScope.Variables.departments_en.length; k++){
+        checked_categories.push(true);
+                checkOptions[k] = {
+        gmap: panorama,
+                title: $rootScope.Variables.departments_en[k],
+                id: $rootScope.Variables.departments_en[k],
+                label: $rootScope.Variables.departments_en[k],
+                action: function(){
+                var index = $rootScope.Variables.departments_en.indexOf(this.title) - 1;
+                        checked_categories[index] = !checked_categories[index];
+                        for (var i = 0; i < $scope.street_view_markers.length; i++){
+                if ($scope.street_view_markers[i] != "ncoords" && $scope.street_view_markers[i].title == this.title){
+                if (checked_categories[index] == false){
+                $scope.street_view_markers[i].setVisible(false);
+                } else{
+                $scope.street_view_markers[i].setVisible(true);
+                }
+                }
+                }
+                }
+        }
+        issue_array.push(new checkBox(checkOptions[k]));
+        }
+
+        var ddDivOptions = {
+        items: issue_array,
+                id: "myddOptsDiv"
+        }
+
+        var dropDownDiv = new dropDownOptionsDiv(ddDivOptions);
+                var dropDownOptions = {
+                gmap: panorama,
+                        name: 'Προβλήματα',
+                        id: 'ddControl',
+                        title: 'A custom drop down select with mixed elements',
+                        position: google.maps.ControlPosition.TOP_LEFT,
+                        dropDown: dropDownDiv
+                }
+
+        var dropDown = new dropDownControl(dropDownOptions);
+                $(window).resize(function() {
+
+        google.maps.event.trigger(panorama, "resize");
+        });
+                // map.setStreetView(panorama);
+        }
         $(window).on('resize', function () {
         if ($(document).width() <= 992) {
         small = 1;
@@ -515,7 +555,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
         }
 
         $scope.issue_data = function($index, panel, event){
-        var sparams = {"id": panel.id, "include_fields": [ "component", "status", "resolution", "cf_mobile", "cf_email", "cf_creator", "severity", "priority"]};
+        var sparams = {"id": panel.id, "include_fields": [ "component", "status", "resolution", "cf_mobile", "cf_email", "cf_creator", "severity", "priority", "severity"]};
                 $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/search', sparams, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
         var priority = PriorityTag.priority_type(result[0].priority);
                 var severity = SeverityTag.severity_type(result[0].severity);
@@ -922,7 +962,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                                 }
                                 };
                         }
-
+//edw meta
                         angular.forEach(result, function (value, key) {
                         var issue_name = ToGrService.issueName(value.issue);
                                 var panelTitle = ToGrService.statusTitle(value.status, value.resolution);
@@ -1038,9 +1078,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', '720kb.t
                         $scope.comment = null;
                 };
                 $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, seldpriority, seldseverity, e) {
-                 $scope.pimage = "";
-                 $scope.pclass = "";
-                if ($cookieStore.get("uuid") != undefined) {
+                $scope.pimage = "";
+                        $scope.pclass = "";
+                        if ($cookieStore.get("uuid") != undefined) {
                 panel.status = seldstatus;
                         panel.priority.en = PriorityTagEn.priority_type(panel.priority.gr);
                         panel.severity.en = SeverityTagEn.severity_type(panel.severity.gr);
