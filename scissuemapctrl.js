@@ -66,7 +66,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 //document.location.href = current.split(".")[0] + ".sense.city";
                 $window.alert(current);
                  $window.alert(previous);
-                document.location.href = current;
+                window.location.href = current;
             }
         });
         $scope.layers = {
