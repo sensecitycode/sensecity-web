@@ -61,9 +61,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             var url = current.split(".");
 
             if (url[1] == "sense") {
-                url = current.split("#/");
+               // url = current.split("#/");
                 event.preventDefault();
-                document.location.href = current.split(".")[0] + ".sense.city";
+                //document.location.href = current.split(".")[0] + ".sense.city";
+                document.location.href = current;
             }
         });
         $scope.layers = {
