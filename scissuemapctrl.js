@@ -62,10 +62,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
             if (url[1] == "sense") {
                 url = current.split("#/");
-                $window.alert(url[1]);
+                if(url[1].indexOf("scissuemap") != 1){
                 event.preventDefault();
                 //document.location.href = current.split(".")[0] + ".sense.city";
                 window.location.href = current;
+              }
             }
         });
         $scope.layers = {
