@@ -81,6 +81,18 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 });
                         return d.promise;
                 }
+                
+        $scope.geocode = function () {
+                var geocoder = new google.maps.Geocoder();
+                var address = $('#address').val()+ "," + $rootScope.Variables.city_address;
+                geocoder.geocode({'address': address}, function (results, status) {
+                    if (status === 'OK') {
+                        $scope.ALLcenter = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng(), zoom: 17};
+                    } else {
+                        $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισάγατε. Παρακαλώ δοκιμάστε ξανά.");
+                    }
+                });
+            };        
 
         $scope.csv = function(){
         var csv_promises = [];

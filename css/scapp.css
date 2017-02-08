@@ -48,9 +48,8 @@ textarea:focus, input:focus{
     padding-left:7px;
     padding-right:7px;
     padding-top: 0.5%;
-    padding-bottom: 0.4%;
-    left: 1%;
-    top:1px;
+    padding-bottom: 0.5%;
+    top:0.4px;
     font-family:'Helvetica Neue','Arial,sans-serif';
 }   
 

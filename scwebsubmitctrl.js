@@ -162,7 +162,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
             $scope.geocode = function () {
                 var geocoder = new google.maps.Geocoder();
-                var address = $('#address').val();
+                var address = $('#address').val() + "," + $rootScope.Variables.city_address;
                 geocoder.geocode({'address': address}, function (results, status) {
                     if (status === 'OK') {
                         var latlng = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};

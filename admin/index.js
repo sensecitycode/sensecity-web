@@ -31,6 +31,7 @@ app.controller('MainController',['$rootScope','$http','$window','$location',func
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],
+                city_address: response.city_address,
                 lat_center: response.lat_center,
                 long_center: response.long_center,
                 img_logo: "images/city_logos/" + response.city_name + ".jpg",
