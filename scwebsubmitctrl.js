@@ -7,7 +7,18 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         $log.debug('inside scWebSubmit controller');
         $rootScope.overview_url = $location.path();
         $scope.markers = [];
-
+        
+        $scope.colours = [{
+		name: "Red",
+		hex: "#F21B1B"
+	}, {
+		name: "Blue",
+		hex: "#1B66F2"
+	}, {
+		name: "Green",
+		hex: "#07BA16"
+	}];
+        
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
                 clearInterval(i);

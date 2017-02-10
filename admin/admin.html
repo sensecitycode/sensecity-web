@@ -38,19 +38,24 @@
                         <li class="xn-openable">
                             <a href="#/admin"><span class="fa fa-search"></span> <span class="xn-text">Αναζήτηση</span></a>
                             <ul class="col-md-12">
-                            <li style="margin-top:5%" class="input-group">
+                                <li style="margin-top:5%" class="input-group">
                                 <div class="col-md-12">
-                                <input ng-model="semail" type="text" class="form-control" placeholder="e-mail">
+                                <input ng-model="sbugid" type="text" class="form-control" placeholder="Αριθμός προβλήματος">
                                 </div>   
                             </li>
                             <li style="margin-top:5%" class="input-group">
                                 <div class="col-md-12">
-                                <input ng-model="smobile" type="text" class="form-control" placeholder="mobile">
+                                <input ng-model="semail" type="text" class="form-control" placeholder="E-mail">
+                                </div>   
+                            </li>
+                            <li style="margin-top:5%" class="input-group">
+                                <div class="col-md-12">
+                                <input ng-model="smobile" type="text" class="form-control" placeholder="Κινητό">
                                 </div>   
                             </li>
                             <li style="text-align:center;margin-top:5%" class="input-group-btn">
                                 <div class="col-md-8">
-                                    <button ng-click="issue_search();refresh()" class="bton bton-primary"><span  style="margin-right: 5%;" class="fa fa-search"></span>Αναζήτηση</button>
+                                    <button ng-click="issue_search()" class="bton bton-primary"><span style="margin-right: 5%;" class="fa fa-search"></span>Αναζήτηση</button>
                                 </div>
                                 </li>
                             </ul>
@@ -221,7 +226,7 @@
                         <div style="min-width:303px">
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
-                                    <div id="floating-panel">
+                                    <div ng-hide="street == 1" id="floating-panel">
       <input id="address" class="col-xs-6" style="padding-left:5px;padding-right:5px;height: 30px;font-size:12px;font-family: 'Roboto','sans-serif'" type="textbox" placeholder="Εισάγετε τη διεύθυνση...">
       <div id="submit" class="col-xs-6" ng-click="geocode()">Αναζήτηση Διεύθυνσης</div>
     </div>
