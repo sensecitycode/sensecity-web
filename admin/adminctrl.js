@@ -388,7 +388,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         delete parameter['offset'];
                         delete parameter['image_fields'];
                 } else{
-                if (($scope.assignissues == false || $scope.closedissues == true)) {
+                    
+                if (($scope.allclosedissues == false && $scope.assignissues == false) || $scope.closedissues == true) {
                 if (summary == "all") {
                 parameter = {"city": $cookieStore.get("city"), "departments": $scope.component, "status": params.status, "startdate":"2016-08-01"};
                 } else {
@@ -396,16 +397,16 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 }
                 } else {
                 if (summary == "all") {
-                parameter = {"city": $cookieStore.get("city"), "departments": $rootScope.Variables.components.split("|"), "status": params.status, "startdate":"2016-08-01"};
+                parameter = {"city": $cookieStore.get("city"), "departments": $rootScope.Variables.components.join("|"), "status": params.status, "startdate":"2016-08-01"};
                 } else {
-                parameter = {"city": $cookieStore.get("city"), "departments": $rootScope.Variables.components.split("|"), "status": params.status, "issue": summary, "startdate":"2016-08-01"};
+                parameter = {"city": $cookieStore.get("city"), "departments": $rootScope.Variables.components.join("|"), "status": params.status, "issue": summary, "startdate":"2016-08-01"};
                 }
                 }
-                }
-
+                }       
+                
                 $http.get($rootScope.Variables.host + '/api/1.0/issue', {params:parameter, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                         function (response, status, headers, conf) {
-                        $scope.total_pages = Math.ceil(response.length / 20);
+                            $scope.total_pages = Math.ceil(response.length / 20);
                                 if (init == 0) {
                         if (tabchanged == 1 || sreset == 1) {
                         tabchanged = 0;
@@ -1264,12 +1265,13 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 }
                 };
                 $scope.reset_search = function(){
-                search_button = 0;
+                        if(search_button == 1){
+                        search_button = 0;
                         sreset = 1;
+                    }
                 }
 
         $scope.toggle_closedissues = function () {
-        search_button = 0;
                 if ($scope.closedissues == false) {
         $scope.closedissues = true;
                 $scope.allclosedissues = false;
@@ -1281,7 +1283,6 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 $scope.currentactive = - 1;
         };
                 $scope.toggle_allclosedissues = function () {
-                search_button = 0;
                         if ($scope.allclosedissues == false) {
                 $scope.allclosedissues = true;
                         $scope.closedissues = false;
@@ -1293,7 +1294,6 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         $scope.currentactive = - 1;
                 };
                 $scope.toggle_inprogressissues = function () {
-                search_button = 0;
                         if ($scope.assignissues == false) {
                 $scope.assignissues = true;
                         $scope.allclosedissues = false;
@@ -1400,8 +1400,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 params.status = params.status.join("|");
                 }
                 }
+                
                         $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-                if (result[0] != undefined && Object.keys(result[0]).length != 0){
+                            if (result[0] != undefined && Object.keys(result[0]).length != 0){
                 total_counter = result.length;
                         var counter = 0;
                         var map_counter = 0;
