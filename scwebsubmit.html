@@ -14,9 +14,13 @@
 </md-menu>-->
                           <div id="floating-panel">
                               
-      <input id="address" style="width:52%;padding-left:5px;padding-right:5px;font-size:14px;font-family: 'Roboto','sans-serif'" type="textbox" placeholder="Εισάγετε τη διεύθυνση...">
+      <input id="address" list="taddress" style="width:52%;padding-left:5px;padding-right:5px;font-size:14px;font-family: 'Roboto','sans-serif'" type="textbox" placeholder="Εισάγετε τη διεύθυνση...">
       <div id="submit" ng-click="geocode()">Αναζήτηση Διεύθυνσης</div>
     </div>
+
+<datalist id="taddress">
+  <option ng-repeat="adr in addresses" value="{{adr.name}}">
+</datalist>
 			<leaflet lf-center="map_center" layers="layers" 
                             height="100%" markers="markers" style="color:black"  >
                                      

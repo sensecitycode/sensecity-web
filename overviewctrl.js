@@ -25,20 +25,14 @@ appControllers
                     '$window',
                     '$rootScope', '$http',
                     '$q', '$location', 'leafletData', 'leafletMapEvents',
-                    'DisplayIssuesService',
-                    'Issue2MapService',
-                    'DisplayLast6IssuesService', 'DisplayFeelingsService',
-                    'FixedPointsService',
                     'cfpLoadingBar',
                     '$interval',
                     '$translate',
+                    '$resource',
                     function ($scope, $window, $rootScope, $http, $q, $location, leafletData, leafletMapEvents,
-                            DisplayIssuesService,
-                            Issue2MapService,
-                            DisplayLast6IssuesService, DisplayFeelingsService, FixedPointsService,
                             cfpLoadingBar,
                             $interval,
-                            $translate) {
+                            $translate, $resource) {
                         var idt = setTimeout(function () {
                             for (var i = idt; i > 0; i--)
                                 clearInterval(i);
@@ -87,7 +81,7 @@ appControllers
                                     id: $rootScope.Variables.departments_en[k],
                                     label: $rootScope.Variables.departments_en[k],
                                     action: function () {
-                                        var index = $rootScope.Variables.departments_en.indexOf(this.title) -1;
+                                        var index = $rootScope.Variables.departments_en.indexOf(this.title) - 1;
                                         checked_categories[index] = !checked_categories[index];
                                         for (var i = 0; i < street_view_markers.length; i++) {
                                             if (street_view_markers[i] != "ncoords" && street_view_markers[i].title == this.title) {
@@ -131,54 +125,54 @@ appControllers
                             });
 
                         };
-                        
-                        function checkNearestStreetView(panoData){
-        if (strvcounter < total_counter){
-        if (panoData != null){
 
-        var issue_index = $rootScope.Variables.departments.indexOf(issue_list[strvcounter]);
-                var issueMarker = new google.maps.Marker({
-                position: panoData.location.latLng,
-                        map: panorama,
-                        icon: './admin/icons/' + issue_list[strvcounter] + '.png',
-                        title: $rootScope.Variables.departments_en[issue_index],
-                        visible: true
-                });
-                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
-                if (checked_categories[category_index] == false){
-        issueMarker.setVisible(false);
-        } else{
-        issueMarker.setVisible(true);
-        }
-        issueMarker.info = new google.maps.InfoWindow({
-        content: '<span style="color:black">'+value_desc_list[strvcounter]+'</span>'
-        });
-                google.maps.event.addListener(issueMarker, 'click', function() {
-                issueMarker.info.open(panorama, issueMarker);
-                });
-                street_view_markers.push(issueMarker);
-                strvcounter++;
-                if (strvcounter < total_counter){
-        var issue_coords = new google.maps.LatLng(icoords_lat[strvcounter], icoords_lng[strvcounter]);
-                var webService = new google.maps.StreetViewService();
-                webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
-        } else{
-        strvcounter = 0;
-        }
-        } else{
-        street_view_markers.push("ncoords");
-                strvcounter++;
-                if (strvcounter < total_counter){
-        var issue_coords = new google.maps.LatLng(icoords_lat[strvcounter], icoords_lng[strvcounter]);
-                var webService = new google.maps.StreetViewService();
-                webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
-        } else{
-        strvcounter = 0;
-        }
-        }
-        } else{
-        strvcounter = 0;
-        }
+                        function checkNearestStreetView(panoData) {
+                            if (strvcounter < total_counter) {
+                                if (panoData != null) {
+
+                                    var issue_index = $rootScope.Variables.departments.indexOf(issue_list[strvcounter]);
+                                    var issueMarker = new google.maps.Marker({
+                                        position: panoData.location.latLng,
+                                        map: panorama,
+                                        icon: './admin/icons/' + issue_list[strvcounter] + '.png',
+                                        title: $rootScope.Variables.departments_en[issue_index],
+                                        visible: true
+                                    });
+                                    var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
+                                    if (checked_categories[category_index] == false) {
+                                        issueMarker.setVisible(false);
+                                    } else {
+                                        issueMarker.setVisible(true);
+                                    }
+                                    issueMarker.info = new google.maps.InfoWindow({
+                                        content: '<span style="color:black">' + value_desc_list[strvcounter] + '</span>'
+                                    });
+                                    google.maps.event.addListener(issueMarker, 'click', function () {
+                                        issueMarker.info.open(panorama, issueMarker);
+                                    });
+                                    street_view_markers.push(issueMarker);
+                                    strvcounter++;
+                                    if (strvcounter < total_counter) {
+                                        var issue_coords = new google.maps.LatLng(icoords_lat[strvcounter], icoords_lng[strvcounter]);
+                                        var webService = new google.maps.StreetViewService();
+                                        webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
+                                    } else {
+                                        strvcounter = 0;
+                                    }
+                                } else {
+                                    street_view_markers.push("ncoords");
+                                    strvcounter++;
+                                    if (strvcounter < total_counter) {
+                                        var issue_coords = new google.maps.LatLng(icoords_lat[strvcounter], icoords_lng[strvcounter]);
+                                        var webService = new google.maps.StreetViewService();
+                                        webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
+                                    } else {
+                                        strvcounter = 0;
+                                    }
+                                }
+                            } else {
+                                strvcounter = 0;
+                            }
 
 //        if (panoData){
 //
@@ -206,11 +200,11 @@ appControllers
 //                });
 //                var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
 //               
-        //panorama.setPosition({lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0]});
+                            //panorama.setPosition({lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0]});
 //        }
 //        }
 //        }
-        }
+                        }
 
 
                         $scope.$on('leafletDirectiveMap.overlayadd', function (event, o) {
@@ -226,7 +220,9 @@ appControllers
                             var issue_name;
                             var issue_image;
 
-                            Issue2MapService.query({issueID: marker3.options.issue_id}, function (resp) {
+                            $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+                                    {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
+                            ).query({issueID: marker3.options.issue_id}, function (resp) {
 
                                 var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
                                 if (resp_index != -1) {
@@ -499,9 +495,9 @@ appControllers
 
                                                             $scope.markers = [];
                                                             for (var i = 0; i < street_view_markers.length; i++) {
-                                                                if (street_view_markers[i] != "ncoords"){
-                                                                street_view_markers[i].setMap(null);
-                                                            }
+                                                                if (street_view_markers[i] != "ncoords") {
+                                                                    street_view_markers[i].setMap(null);
+                                                                }
                                                             }
                                                             street_view_markers = [];
                                                             total_counter = searchissues.length;
@@ -570,9 +566,9 @@ appControllers
 
                                                                             },
                                                                             $scope.markers);
-                                                                            var issue_coords = new google.maps.LatLng(icoords_lat[0], icoords_lng[0]);
-                                                                            var webService = new google.maps.StreetViewService();
-                                                                            webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
+                                                            var issue_coords = new google.maps.LatLng(icoords_lat[0], icoords_lng[0]);
+                                                            var webService = new google.maps.StreetViewService();
+                                                            webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
 
                                                             //$scope.markers = $scope.markers.concat( $scope.fixedmarkersLazyLoaded );
                                                         });
@@ -581,7 +577,13 @@ appControllers
 
                                     function doQuery(obj) {
                                         var d = $q.defer();
-                                        DisplayIssuesService.query(obj,
+                                        $resource(/*APIEndPointService.APIURL*/$rootScope.Variables.APIURL,
+                                                {}, {
+                                            update: {
+                                                method: 'GET'
+                                                        //,isArray: true
+                                            }
+                                        }).query(obj,
                                                 function (result) {
                                                     d.resolve(result);
                                                 });
@@ -591,7 +593,12 @@ appControllers
 
                                     function dofQuery(obj) {
                                         var d = $q.defer();
-                                        DisplayFeelingsService.query(obj,
+                                        $resource($rootScope.Variables.feelingsURL,
+                                                {}, {
+                                            update: {
+                                                method: 'GET'
+                                            }
+                                        }).query(obj,
                                                 function (result) {
                                                     d.resolve(result);
                                                 });
@@ -600,82 +607,86 @@ appControllers
                                     }
 
                                     $scope.doCalcLast6Issues = function () {
-                                        var theLastIssues = DisplayLast6IssuesService
-                                                .query(function () {
-                                                    angular
-                                                            .forEach(
-                                                                    theLastIssues,
-                                                                    function (lastissue,
-                                                                            key) {
-                                                                        if (lastissue.image_name === ''
-                                                                                || lastissue.image_name === 'no-image'
-                                                                                || lastissue.image_name === null
-                                                                                || lastissue.image_name === undefined) {
-                                                                            lastissue.width = "80%";
-                                                                            lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
-                                                                        } else {
-                                                                            lastissue.width = "100%";
-                                                                        }
+                                        var theLastIssues = $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&limit=6&list_issue=1&image_field=1',
+                                                {}, {
+                                            update: {
+                                                method: 'GET'
+                                            }
+                                        }).query(function () {
+                                            angular
+                                                    .forEach(
+                                                            theLastIssues,
+                                                            function (lastissue,
+                                                                    key) {
+                                                                if (lastissue.image_name === ''
+                                                                        || lastissue.image_name === 'no-image'
+                                                                        || lastissue.image_name === null
+                                                                        || lastissue.image_name === undefined) {
+                                                                    lastissue.width = "80%";
+                                                                    lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
+                                                                } else {
+                                                                    lastissue.width = "100%";
+                                                                }
 
 
-                                                                        var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
-                                                                        if (cat_index != -1) {
-                                                                            lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
-                                                                        } else {
-                                                                            lastissue.issue = '';
-                                                                        }
+                                                                var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
+                                                                if (cat_index != -1) {
+                                                                    lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
+                                                                } else {
+                                                                    lastissue.issue = '';
+                                                                }
 
-                                                                        var today = new Date();
-                                                                        var create_day = new Date(
-                                                                                lastissue.create_at);
+                                                                var today = new Date();
+                                                                var create_day = new Date(
+                                                                        lastissue.create_at);
 
-                                                                        var seconds = (today
-                                                                                .getTime() - create_day
-                                                                                .getTime()) / 1000;
+                                                                var seconds = (today
+                                                                        .getTime() - create_day
+                                                                        .getTime()) / 1000;
 
-                                                                        var datediff = '';
-                                                                        var datediffunit = '';
+                                                                var datediff = '';
+                                                                var datediffunit = '';
 
-                                                                        if (seconds < 60) {
-                                                                            datediff = seconds;
-                                                                            datediffunit = "SECS";
-                                                                        } else if (seconds < 3600) {
-                                                                            datediff = Math.floor(seconds / 60);
-                                                                            datediffunit = "MINUTES";
-                                                                        } else if (seconds < 86400) {
-                                                                            datediff = Math.floor(seconds / 3600);
-                                                                            datediffunit = "HOURS";
-                                                                        } else {
-                                                                            datediff = Math.floor(seconds / 86400);
-                                                                            datediffunit = "DAYS";
-                                                                        }
+                                                                if (seconds < 60) {
+                                                                    datediff = seconds;
+                                                                    datediffunit = "SECS";
+                                                                } else if (seconds < 3600) {
+                                                                    datediff = Math.floor(seconds / 60);
+                                                                    datediffunit = "MINUTES";
+                                                                } else if (seconds < 86400) {
+                                                                    datediff = Math.floor(seconds / 3600);
+                                                                    datediffunit = "HOURS";
+                                                                } else {
+                                                                    datediff = Math.floor(seconds / 86400);
+                                                                    datediffunit = "DAYS";
+                                                                }
 
-                                                                        lastissue.create_at = datediff;
-                                                                        lastissue.create_at_unit = datediffunit;
-                                                                        /*var bugParams =
-                                                                         {
-                                                                         "method": "Bug.get",
-                                                                         "params": [{"ids":lastissue._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
-                                                                         "id": 1
-                                                                         };
-                                                                         BugService.search(bugParams, function(result) {
-                                                                         switch (result[0].status) {
-                                                                         case 'CONFIRMED':
-                                                                         result.status = 'CONFIRMED';
-                                                                         break;
-                                                                         case 'IN_PROGRESS':
-                                                                         result.status = 'IN_PROGRESS';
-                                                                         break;
-                                                                         case 'RESOLVED':
-                                                                         result.status = 'RESOLVED';
-                                                                         break;
-                                                                         }
-                                                                         lastissue.status = result.status;
-                                                                         });
-                                                                         */
+                                                                lastissue.create_at = datediff;
+                                                                lastissue.create_at_unit = datediffunit;
+                                                                /*var bugParams =
+                                                                 {
+                                                                 "method": "Bug.get",
+                                                                 "params": [{"ids":lastissue._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+                                                                 "id": 1
+                                                                 };
+                                                                 BugService.search(bugParams, function(result) {
+                                                                 switch (result[0].status) {
+                                                                 case 'CONFIRMED':
+                                                                 result.status = 'CONFIRMED';
+                                                                 break;
+                                                                 case 'IN_PROGRESS':
+                                                                 result.status = 'IN_PROGRESS';
+                                                                 break;
+                                                                 case 'RESOLVED':
+                                                                 result.status = 'RESOLVED';
+                                                                 break;
+                                                                 }
+                                                                 lastissue.status = result.status;
+                                                                 });
+                                                                 */
 
-                                                                    });
-                                                });
+                                                            });
+                                        });
                                         // query() returns all the last 6
                                         // issues
 
@@ -686,7 +697,17 @@ appControllers
 
                                         var i = 0;
 
-                                        var theFixedPoints = FixedPointsService.query(function () {
+                                        var theFixedPoints = $resource(
+                                                'json/' + $rootScope.Variables.city_name + '.json',
+                                                null,
+                                                {
+                                                    search: {
+                                                        method: 'GET',
+                                                        headers: {'Content-Type': 'application/json'},
+                                                        isArray: true
+                                                    }
+                                                }
+                                        ).query(function () {
                                             angular.forEach(theFixedPoints, function (fixedpoint, key) {
                                                 var positionlat = fixedpoint.loc.coordinates[1];
                                                 var positionlon = fixedpoint.loc.coordinates[0];

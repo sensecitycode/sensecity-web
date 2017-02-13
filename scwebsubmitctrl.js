@@ -8,17 +8,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         $rootScope.overview_url = $location.path();
         $scope.markers = [];
         
-        $scope.colours = [{
-		name: "Red",
-		hex: "#F21B1B"
-	}, {
-		name: "Blue",
-		hex: "#1B66F2"
-	}, {
-		name: "Green",
-		hex: "#07BA16"
-	}];
-        
+        $scope.addresses=[];
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
@@ -173,9 +163,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
             $scope.geocode = function () {
                 var geocoder = new google.maps.Geocoder();
-                var address = $('#address').val() + "," + $rootScope.Variables.city_address;
+                var address = "λήθης 1";//$('#address').val() + "," + $rootScope.Variables.city_address;
                 geocoder.geocode({'address': address}, function (results, status) {
                     if (status === 'OK') {
+                        if(results.length == 1){
                         var latlng = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
                         var mainMarker = {
                             lat: latlng.lat,
@@ -191,6 +182,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.markers.push(mainMarker);
                         $scope.latlabeltxt = results[0].geometry.location.lat();
                         $scope.lnglabeltxt = results[0].geometry.location.lng();
+                    }else{
+                        for(var l = 0 ; l < results.length;l++){
+                            $scope.addresses.push({name :results[l].formatted_address});
+                        }
+                    }
                     } else {
                         $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισάγατε. Παρακαλώ δοκιμάστε ξανά.");
                     }

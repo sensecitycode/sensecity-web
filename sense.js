@@ -23,24 +23,17 @@ appControllers.controller(
             '$scope',
             '$window',
             '$rootScope', '$http',
-            '$q','$location', 'leafletData',
-            'DisplayIssuesService',
-            'Issue2MapService',
-            'DisplayLast6IssuesService',
-            'FixedPointsService',
-            'DisplayFeelingsService',
+            '$q', '$location', 'leafletData',
             'cfpLoadingBar',
             '$interval',
             '$translate',
-            function ($scope, $window, $rootScope, $http, $q, $location,leafletData,
-                    DisplayIssuesService,
-                    Issue2MapService,
-                    DisplayLast6IssuesService, FixedPointsService,DisplayFeelingsService,
+            '$resource',
+            function ($scope, $window, $rootScope, $http, $q, $location, leafletData,
                     cfpLoadingBar,
                     $interval,
-                    $translate) {
-                        
-                        $rootScope.overview_url = $location.path();
+                    $translate, $resource) {
+
+                $rootScope.overview_url = $location.path();
                 var idt = setTimeout(function () {
                     for (var i = idt; i > 0; i--)
                         clearInterval(i);
@@ -187,7 +180,9 @@ appControllers.controller(
                                 var issue_name;
                                 var issue_image;
 
-                                Issue2MapService.query({issueID: marker3.options.issue_id}, function (resp) {
+                                $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+                                        {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
+                                ).query({issueID: marker3.options.issue_id}, function (resp) {
 
                                     var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
                                     if (resp_index != -1) {
@@ -195,14 +190,14 @@ appControllers.controller(
                                     }
 
                                     if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
-                                        resp[0].class = "fa fa-"+$rootScope.Variables.icons[resp[0].issue].icon;
+                                        resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
                                     } else {
                                         issue_image = resp[0].image_name;
                                     }
-                                    if(!(resp[0].image_name === ''|| resp[0].image_name === 'no-image'|| resp[0].image_name === null || resp[0].image_name === undefined)){
-                                       popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>"); 
-                                    }else{
-                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='"+resp[0].class+"' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                    if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
+                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                    } else {
+                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
                                     }
                                     popup.update();
 
@@ -212,30 +207,30 @@ appControllers.controller(
                             var startdate = new Date(2017, 0, 1);
                             var today = new Date();
 
-                            today = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+                            today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
                             today = today.getTime();
                             startdate.setDate(startdate.getDate());
                             $scope.startISOdate = startdate;
                             $scope.endISOdate = new Date();
 
                             $scope.submitSearchLast30days = function () {
-                                
-                                  $scope.calcValue30daysIssues = 0;
-                            $scope.calcValue30daysEvents = 0;
-                            $scope.calcValueProblemsFrom2017 = 0;
-                            $scope.calcValueSolutionFrom2017 = 0;
+
+                                $scope.calcValue30daysIssues = 0;
+                                $scope.calcValue30daysEvents = 0;
+                                $scope.calcValueProblemsFrom2017 = 0;
+                                $scope.calcValueSolutionFrom2017 = 0;
 
                                 $scope.startdate = $scope.startISOdate
                                         .getFullYear()
                                         + '-'
                                         + (("0" + ($scope.startISOdate.getMonth() + 1)).slice(-2))
-                                        + '-' + ( "0" + $scope.startISOdate.getDate()).slice(-2);
+                                        + '-' + ("0" + $scope.startISOdate.getDate()).slice(-2);
                                 $scope.enddate = $scope.endISOdate
                                         .getFullYear()
                                         + '-'
-                                        + (( "0" + ($scope.endISOdate.getMonth() + 1)).slice(-2))
-                                        + '-' + ( "0" + $scope.endISOdate.getDate()).slice(-2);
-                                
+                                        + (("0" + ($scope.endISOdate.getMonth() + 1)).slice(-2))
+                                        + '-' + ("0" + $scope.endISOdate.getDate()).slice(-2);
+
                                 var paramsObj = [];
 
                                 paramsObj.push({
@@ -246,7 +241,7 @@ appControllers.controller(
                                     status: "CONFIRMED|IN_PROGRESS|RESOLVED",
                                     image_field: 0
                                 });
-        
+
                                 var feelingsObj = [];
 
                                 feelingsObj.push({
@@ -267,19 +262,19 @@ appControllers.controller(
                                                     var searchissues = [];
                                                     for (i = 0; i < data.length; i++) {
                                                         for (j = 0; j < data[i].length; j++) {
-                                                            if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1  && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
+                                                            if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1 && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
                                                                 $scope.calcValue30daysIssues++;
-                                                                if(data[i][j].status != "RESOLVED"){
-                                                                        searchissues.push(data[i][j]);
-                                                                    }
-                                                            } 
+                                                                if (data[i][j].status != "RESOLVED") {
+                                                                    searchissues.push(data[i][j]);
+                                                                }
+                                                            }
                                                             if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1 && data[i][j].status == "RESOLVED") {
-                                                                    $scope.calcValueSolutionFrom2017++;
-                                                                }
-                                                             if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1) {
-                                                                    $scope.calcValueProblemsFrom2017++;
-                                                                }
-                                                            if ( Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
+                                                                $scope.calcValueSolutionFrom2017++;
+                                                            }
+                                                            if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1) {
+                                                                $scope.calcValueProblemsFrom2017++;
+                                                            }
+                                                            if (Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
                                                                 $scope.calcValue30daysEvents++;
                                                             }
                                                         }
@@ -306,7 +301,7 @@ appControllers.controller(
                                                                         } else {
                                                                             layer = issue;
                                                                         }
-                                                                        
+
                                                                         var message = '';
 
                                                                         if (value.value_desc) {
@@ -352,7 +347,12 @@ appControllers.controller(
 
                             function doQuery(obj) {
                                 var d = $q.defer();
-                                DisplayIssuesService.query(obj,
+                                $resource($rootScope.Variables.APIURL,
+                                        {}, {
+                                    update: {
+                                        method: 'GET'
+                                    }
+                                }).query(obj,
                                         function (result) {
                                             d.resolve(result);
                                         });
@@ -362,7 +362,12 @@ appControllers.controller(
 
                             function dofQuery(obj) {
                                 var d = $q.defer();
-                                DisplayFeelingsService.query(obj,
+                                $resource($rootScope.Variables.APIURL,
+                                        {}, {
+                                    update: {
+                                        method: 'GET'
+                                    }
+                                }).query(obj,
                                         function (result) {
                                             d.resolve(result);
                                         });
@@ -371,60 +376,64 @@ appControllers.controller(
                             }
 
                             $scope.doCalcLast6Issues = function () {
-                                var theLastIssues = DisplayLast6IssuesService
-                                        .query(function () {
-                                            angular
-                                                    .forEach(
-                                                            theLastIssues,
-                                                            function (lastissue,
-                                                                    key) {
-                                                                if (lastissue.image_name === ''
-                                                                        || lastissue.image_name === 'no-image'
-                                                                        || lastissue.image_name === null
-                                                                        || lastissue.image_name === undefined) {
-                                                                    lastissue.class = "fa fa-"+$rootScope.Variables.icons[lastissue.issue].icon;
-                                                                    lastissue.width = "80%";
-                                                                } else {
-                                                                    lastissue.width = "100%";
-                                                                }
+                                var theLastIssues = $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&limit=6&list_issue=1&image_field=1',
+                                        {}, {
+                                    update: {
+                                        method: 'GET'
+                                    }
+                                }).query(function () {
+                                    angular
+                                            .forEach(
+                                                    theLastIssues,
+                                                    function (lastissue,
+                                                            key) {
+                                                        if (lastissue.image_name === ''
+                                                                || lastissue.image_name === 'no-image'
+                                                                || lastissue.image_name === null
+                                                                || lastissue.image_name === undefined) {
+                                                            lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
+                                                            lastissue.width = "80%";
+                                                        } else {
+                                                            lastissue.width = "100%";
+                                                        }
 
-                                                                var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
-                                                                if (cat_index != -1) {
-                                                                    lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
-                                                                } else {
-                                                                    lastissue.issue = '';
-                                                                }
+                                                        var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
+                                                        if (cat_index != -1) {
+                                                            lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
+                                                        } else {
+                                                            lastissue.issue = '';
+                                                        }
 
-                                                                var today = new Date();
-                                                                var create_day = new Date(
-                                                                        lastissue.create_at);
+                                                        var today = new Date();
+                                                        var create_day = new Date(
+                                                                lastissue.create_at);
 
-                                                                var seconds = (today
-                                                                        .getTime() - create_day
-                                                                        .getTime()) / 1000;
+                                                        var seconds = (today
+                                                                .getTime() - create_day
+                                                                .getTime()) / 1000;
 
-                                                                var datediff = '';
-                                                                var datediffunit = '';
+                                                        var datediff = '';
+                                                        var datediffunit = '';
 
-                                                                if (seconds < 60) {
-                                                                    datediff = seconds;
-                                                                    datediffunit = "SECS";
-                                                                } else if (seconds < 3600) {
-                                                                    datediff = Math.floor(seconds / 60);
-                                                                    datediffunit = "MINUTES";
-                                                                } else if (seconds < 86400) {
-                                                                    datediff = Math.floor(seconds / 3600);
-                                                                    datediffunit = "HOURS";
-                                                                } else {
-                                                                    datediff = Math.floor(seconds / 86400);
-                                                                    datediffunit = "DAYS";
-                                                                }
+                                                        if (seconds < 60) {
+                                                            datediff = seconds;
+                                                            datediffunit = "SECS";
+                                                        } else if (seconds < 3600) {
+                                                            datediff = Math.floor(seconds / 60);
+                                                            datediffunit = "MINUTES";
+                                                        } else if (seconds < 86400) {
+                                                            datediff = Math.floor(seconds / 3600);
+                                                            datediffunit = "HOURS";
+                                                        } else {
+                                                            datediff = Math.floor(seconds / 86400);
+                                                            datediffunit = "DAYS";
+                                                        }
 
-                                                                lastissue.create_at = datediff;
-                                                                lastissue.create_at_unit = datediffunit;
+                                                        lastissue.create_at = datediff;
+                                                        lastissue.create_at_unit = datediffunit;
 
-                                                            });
-                                        });
+                                                    });
+                                });
                                 // query() returns all the last 6
                                 // issues
 
@@ -437,7 +446,17 @@ appControllers.controller(
 
                                 var i = 0;
 
-                                var theFixedPoints = FixedPointsService.query(function () {
+                                var theFixedPoints = $resource(
+                                        'json/' + $rootScope.Variables.city_name + '.json',
+                                        null,
+                                        {
+                                            search: {
+                                                method: 'GET',
+                                                headers: {'Content-Type': 'application/json'},
+                                                isArray: true
+                                            }
+                                        }
+                                ).query(function () {
                                     angular.forEach(theFixedPoints, function (fixedpoint, key) {
                                         var positionlat = fixedpoint.loc.coordinates[1];
                                         var positionlon = fixedpoint.loc.coordinates[0];
@@ -520,7 +539,7 @@ appControllers.controller(
                                     };
 
                                     leafletData.getMap().then(function (map) {
-                                        L.control.layers({},overlays).addTo(map);
+                                        L.control.layers({}, overlays).addTo(map);
                                         map.invalidateSize(true);
                                     });
 

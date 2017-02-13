@@ -15,6 +15,10 @@
 @import "animate/animate.min.css";
 
 
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
 /* PREDEFINED CLASSES */
 .clearfix {
   zoom: 1;

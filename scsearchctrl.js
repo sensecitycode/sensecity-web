@@ -16,7 +16,7 @@ appControllers.directive('sidebarDirective', function () {
     };
 });
 
-appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'DisplayIssuesService', 'DisplayFeelingsService', 'Issue2MapService', 'leafletData', function ($scope, $window, $rootScope, $q, $location, DisplayIssuesService, DisplayFeelingsService, Issue2MapService, leafletData) {
+appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource) {
         $rootScope.overview_url = $location.path();
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
@@ -277,7 +277,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         var popup = marker3.getPopup();
                         var issue_name;
                         var issue_image;
-                        Issue2MapService.query({issueID: marker3.options.issue_id}, function (resp) {
+                        $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+                                {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
+                        ).query({issueID: marker3.options.issue_id}, function (resp) {
 
                             var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
                             if (resp_index != -1) {
@@ -285,17 +287,17 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
 
                             if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
-                                resp[0].class = "fa fa-"+$rootScope.Variables.icons[resp[0].issue].icon;
+                                resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
                             } else {
                                 issue_image = resp[0].image_name;
                             }
 
-                            if(!(resp[0].image_name === ''|| resp[0].image_name === 'no-image'|| resp[0].image_name === null || resp[0].image_name === undefined)){
-                                       popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>"); 
-                                    }else{
-                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='"+resp[0].class+"' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
-                                    }
-                            
+                            if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
+                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                            } else {
+                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                            }
+
                             popup.update();
                         });
                     });
@@ -358,11 +360,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             if (states != "") {
 
                                 paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
+                            }
                         }
-                    }
 
                         var promisesArray = [];
-                        
+
                         if (feelings != "") {
                             feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name, feeling: feelings};
                             promisesArray.push(feelingsQuery(feelingsObj));
@@ -440,7 +442,12 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     };
                     function doQuery(obj) {
                         var d = $q.defer();
-                        DisplayIssuesService.query(obj, function (result) {
+                        $resource($rootScope.Variables.APIURL,
+                                {}, {
+                            update: {
+                                method: 'GET'
+                            }
+                        }).query(obj, function (result) {
                             d.resolve(result);
                         });
                         return d.promise;
@@ -448,7 +455,12 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                     function feelingsQuery(obj) {
                         var d = $q.defer();
-                        DisplayFeelingsService.query(obj, function (result) {
+                        $resource($rootScope.Variables.feelingsURL,
+                                {}, {
+                            update: {
+                                method: 'GET'
+                            }
+                        }).query(obj, function (result) {
                             d.resolve(result);
                         });
                         return d.promise;
