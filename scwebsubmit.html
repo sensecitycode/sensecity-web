@@ -1,5 +1,4 @@
 
-	<div  ng-controller="scWebSubmit" >
 		
 		<div class="col-md-8"> 
 			<div style="height: 800px">
@@ -14,12 +13,13 @@
 </md-menu>-->
                           <div id="floating-panel">
                               
-      <input id="address" list="taddress" style="width:52%;padding-left:5px;padding-right:5px;font-size:14px;font-family: 'Roboto','sans-serif'" type="textbox" placeholder="Εισάγετε τη διεύθυνση...">
-      <div id="submit" ng-click="geocode()">Αναζήτηση Διεύθυνσης</div>
+      <input id="address" list="taddress" style="width:52%;padding-left:5px;padding-right:5px;font-size:14px;font-family: 'Questrial','Helvetica Neue','Arial','sans-serif'" type="textbox" placeholder="Εισάγετε τη διεύθυνση...">
+      <div id="submit" style="font-size: 12px;line-height: 2" class="btn btn-info">Αναζήτηση Διεύθυνσης</div>
     </div>
 
 <datalist id="taddress">
-  <option ng-repeat="adr in addresses" value="{{adr.name}}">
+  <!--<option ng-repeat="adr in addresses" value="{{adr.name}}">-->
+  
 </datalist>
 			<leaflet lf-center="map_center" layers="layers" 
                             height="100%" markers="markers" style="color:black"  >
@@ -118,40 +118,44 @@
 			</style>
 
 			<div class="eponymous" ng-show='issubmit_isseu_form()'>
-				<div class="form-group">
-					<label for="lng" style="color: #000000; font-weight: 300;" id="msg_label_long">{{'LONGTITUDE' | translate}}</label>
-					<input ng-model="latlabeltxt" type="text" class="form-control" id="lng" placeholder="{{'LONGTITUDE' | translate}}" readonly >
+				<div class="form-group" style="margin-bottom:12px"> 
+					<label for="lng" style="color: #000000; font-weight: 300" id="msg_label_long">{{'LONGTITUDE' | translate}}</label>
+					<input ng-model="latlabeltxt" style="background-color: #ccc !important;border-color:rgb(161, 164, 170) !important;color:#222 !important"  class="form-control" id="lng" placeholder="{{'LONGTITUDE' | translate}}" readonly >
 				</div>
-				<div class="form-group">
-					<label for="lat" style="color: #000000; font-weight: 300;" id="msg_label_lat">{{'LATTITUDE' | translate}}</label>
-					<input ng-model="lnglabeltxt" type="text" class="form-control" id="lat" placeholder="{{'LATTITUDE' | translate}}" readonly >
+				<div class="form-group" style="margin-bottom:12px">
+					<label for="lat" style="color: #000000; font-weight: 300" id="msg_label_lat">{{'LATTITUDE' | translate}}</label>
+					<input ng-model="lnglabeltxt" style="background-color: #ccc !important;border-color:rgb(161, 164, 170) !important;color:#222 !important" type="text" class="form-control" id="lat" placeholder="{{'LATTITUDE' | translate}}" readonly >
 				</div>
-				<div class="form-group">
+                            <div class="form-group" style="margin-bottom:12px">
+					<label for="address" style="color: #000000; font-weight: 300;" id="msg_label_address">{{'ADDRESS' | translate}}</label>
+					<input ng-model="address" type="text" class="form-control" ng-focus="disable_next()" ng-blur="geocode(1)" id="address" placeholder="{{'ADDRESS' | translate}}">
+				</div>
+				<div class="form-group" style="margin-bottom:12px">
 					<label for="type-issue" style="color: #000000; font-weight: 300;" id="msg_label_type">{{ 'PROBLEMTYPE' | translate}}</label>
 					<select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" class="form-control" ng-change="updateCompoType()"></select>
 					
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin-bottom:12px">
 					<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_problem_detail">{{ 'PROBLEM' | translate}}</label>
 					
 					<select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" ng-model="issueSubTypeSelect" class="form-control" ng-change="issueSubTypeSelectChanged()"></select>
 				
 				</div>
-				<div class="form-group"  ng-show='isOtherSelected()'>
+				<div class="form-group" style="margin-bottom:12px" ng-show='isOtherSelected()'>
 					<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'DESCRIPTION' | translate}}</label>
 					<input ng-model="otherDescriptionTxt" type="text" class="form-control" value="" placeholder="{{ 'DESCRIPTION' | translate }}"   >
 				</div>
-				<div class="form-group" >
+				<div class="form-group" style="margin-bottom:12px" >
 					<label for="commentstxt" style="color: #000000; font-weight: 300;" >{{ 'MESSAGE_ISSUE' | translate}}</label>
 					<input ng-model="commentstxt" type="text" class="form-control" value="" placeholder="{{ 'MESSAGE_ISSUE' | translate }}"   >
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin-bottom:12px">
 					<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">{{ 'PHOTO' | translate}}</label>
 					<input type="file" id="input_file"   class="form-control" file-model="uploadedPhotoFile" placeholder=""   />
 				</div>
 			</div>
 			
-			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_button' ng-click="setStep(1)" />
+			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null || coords_search == 1" ng-show='submit_button' ng-click="setStep(1)" />
 			
 				<div class="eponymous" ng-show='iseponymous()'>
 					<p style="color:#000000;"><span ng-bind="myText"></span></p>
@@ -209,7 +213,3 @@
 				
 				<div id="try_another_issue"></div>
 			</div>
-			
-			
-    </div>
-

@@ -26,6 +26,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         $scope.checkAll = {
             value1: false
         };
+        
+        $scope.issue_id = "";
 
         $scope.criteria_selected = true;
 
@@ -184,13 +186,57 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 //                        $scope.criteria_selected = true;
 //                      }  
 //                    };
-
+                    
+                    $scope.activate_text = function () {
+                            var state_active = true;
+                            var feelings_active = true;
+                            if($scope.issue_id != ""){
+                                $scope.criteria_selected = false;
+                                return;
+                            }
+                            angular.forEach($scope.searchState, function (value, key) {
+                                if (value == true) {
+                                    state_active = false;
+                                    $scope.criteria_selected = false;
+                                    return;
+                                }
+                            });
+                            if (state_active == false) {
+                                return;
+                            }
+                            angular.forEach($scope.searchFeeling, function (value, key) {
+                                if (value == true) {
+                                    feelings_active = false;
+                                    $scope.criteria_selected = false;
+                                    return;
+                                }
+                            });
+                            if (feelings_active == false) {
+                                return;
+                            }
+                            var active = true;
+                            for (var k = 0; k < $scope.issues.length; k++) {
+                                if ($scope.issues[k].checked == true) {
+                                    active = false;
+                                    $scope.criteria_selected = active;
+                                    break;
+                                }
+                            }
+                            if (active == true) {
+                                $scope.criteria_selected = true;
+                            }
+                    };
+                    
                     $scope.activate_searchb = function () {
                         counter1++;
                         if (counter1 == 2) {
                             counter1 = 0;
                             var state_active = true;
                             var feelings_active = true;
+                            if($scope.issue_id != ""){
+                                $scope.criteria_selected = false;
+                                return;
+                            }
                             angular.forEach($scope.searchState, function (value, key) {
                                 if (value == true) {
                                     state_active = false;
@@ -232,6 +278,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             $scope.issues[index].checked = !$scope.issues[index].checked;
                             var state_active = true;
                             var feelings_active = true;
+                            if($scope.issue_id != ""){
+                                $scope.criteria_selected = false;
+                                return;
+                            }
                             angular.forEach($scope.searchState, function (value, key) {
                                 if (value == true) {
                                     state_active = false;
@@ -311,7 +361,46 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         var feelings = "";
                         var includeAnonymous = 0;
                         var i = 0;
-
+                        
+                        if($scope.issue_id != ""){
+                            var obj = {city: $rootScope.Variables.city_name,bug_id: $scope.issue_id};
+                            $resource($rootScope.Variables.APIURL,
+                                {}, {
+                            update: {
+                                method: 'GET'
+                            }
+                        }).query(obj, function (result) {
+                            $scope.markers = [];
+                            var issueid = result[0]._id;
+                                var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + issueid;
+                                var positionlat = result[0].loc.coordinates[1];
+                                var positionlon = result[0].loc.coordinates[0];
+                                var issue = result[0].issue;
+                                var layer = issue;
+                                var message = '';
+                                if (result[0].value_desc) {
+                                    message = result.value_desc;
+                                } else {
+                                    message = 'Μη διαθέσιμη περιγραφή';
+                                }
+                                var marker;
+                                if (layer != 'reaction') {
+                                    var lindex = $rootScope.Variables.overlay_categories.indexOf(issue) + 1;
+                                } else {
+                                    var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
+                                }
+                                layer = "layer" + lindex;
+                                if (issue == "angry" || issue == "neutral" || issue == "happy") {
+                                    marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br>"};
+                                } else {
+                                    marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br><a href=" + issuelink + ">Δες με!</a>"};
+                                }
+                                if (layer != 'reaction') {
+                                    marker.message = "Loading...";
+                                }
+                                $scope.markers.push(marker);
+                        });
+                        }else{
                         angular.forEach($scope.searchState, function (state, sstate) {
                             if (state == true) {
                                 if (sstate != "default") {
@@ -375,7 +464,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         }
 
                         $q.all(promisesArray).then(function (data) {
-                            console.log(JSON.stringify(data));
                             var searchissues = [];
                             for (i = 0; i < data.length; i++) {
                                 for (j = 0; j < data[i].length; j++) {
@@ -420,6 +508,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 this.push(marker);
                             }, $scope.markers);
                         });
+                      }
                     };
                     $scope.reset = function () {
                         var startdate = new Date();
@@ -429,6 +518,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         $scope.searchIssue = "";
                         $scope.searchState = "";
                         $scope.searchFeeling = "";
+                        $scope.issue_id = "";
                         $scope.markers = [];
                         for (k = 0; k < $scope.issues.length; k++) {
                             $scope.issues[k].checked = false;

@@ -7,17 +7,35 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         $log.debug('inside scWebSubmit controller');
         $rootScope.overview_url = $location.path();
         $scope.markers = [];
-        
-        $scope.addresses=[];
+        var mylocation_en = 0;
+
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
         }, 10);
 
+        navigator.geolocation.getCurrentPosition(function(pos){
+            var mylocation_marker = {
+                                lat: pos.coords.latitude,
+                                lng: pos.coords.longitude,
+                                icon: {
+                                    type: 'awesomeMarker',
+                                    prefix: 'fa',
+                                    icon: 'smile-o',
+                                    markerColor: 'blue'
+                                }
+                            };
+            $scope.markers.unshift(mylocation_marker);
+            mylocation_en = 1;
+            
+        });
+
         $scope.latlabeltxt = null;
 
         $scope.showSuccessAlertName = false;
         $scope.showSuccessAlertEmail = false;
+        $scope.coords_search = 0;
+        $scope.address = "";
 
         $scope.map_center = {
             lat: 37.787435,
@@ -83,6 +101,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
             );
         };
+        
+        $scope.disable_next = function(){
+            $scope.coords_search = 1;
+        };
 
         function onmapclick(event) {
             //newMarker = new L.marker(event.latlng, {icon: redMarker}, {draggable: true});
@@ -96,14 +118,21 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     markerColor: 'red'
                 }
             };
+            
+            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+event.latlng.lat+","+event.latlng.lng+"&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM").success(function(result){
+                $scope.address = result.results[0].formatted_address;
+            });
+            
+            if($scope.markers.length == 2 || mylocation_en == 0){
             $scope.markers.pop();
+        }
             $scope.markers.push(mainMarker);
+            
 
 
             $scope.latlabeltxt = event.latlng.lat;
             $scope.lnglabeltxt = event.latlng.lng;
-        }
-        ;
+        };
 
         $q.all($rootScope.mainInfo).then(function (data) {
 
@@ -161,37 +190,66 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 return true;
             };
 
-            $scope.geocode = function () {
+            $scope.geocode = function (address) {
                 var geocoder = new google.maps.Geocoder();
-                var address = $('#address').val() + "," + $rootScope.Variables.city_address;
+                if( address == 1){
+                    var address = $scope.address + "," + $rootScope.Variables.city_address;
+                }else{
+                    var address = $('#address').val() + "," + $rootScope.Variables.city_address;
+                }
+                if($scope.address != ""){
                 geocoder.geocode({'address': address}, function (results, status) {
                     if (status === 'OK') {
-                        if(results.length == 1){
-                        var latlng = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
-                        var mainMarker = {
-                            lat: latlng.lat,
-                            lng: latlng.lng,
-                            icon: {
-                                type: 'awesomeMarker',
-                                prefix: 'fa',
-                                icon: 'info-circle',
-                                markerColor: 'red'
-                            }
-                        };
-                        $scope.markers.pop();
-                        $scope.markers.push(mainMarker);
-                        $scope.latlabeltxt = results[0].geometry.location.lat();
-                        $scope.lnglabeltxt = results[0].geometry.location.lng();
-                    }else{
-                        for(var l = 0 ; l < results.length;l++){
-                            $scope.addresses.push({name :results[l].formatted_address});
+                        if (results.length == 1) {
+                            var latlng = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
+                            var mainMarker = {
+                                lat: latlng.lat,
+                                lng: latlng.lng,
+                                icon: {
+                                    type: 'awesomeMarker',
+                                    prefix: 'fa',
+                                    icon: 'info-circle',
+                                    markerColor: 'red'
+                                }
+                            };
+                            $scope.map_center = {
+                                lat: results[0].geometry.location.lat(),
+                                lng: results[0].geometry.location.lng(),
+                                zoom: 18
+                            };
+                            $scope.address = results[0].formatted_address;
+                            if($scope.markers.length == 2 || mylocation_en == 0){
+                            $scope.markers.pop();
                         }
-                    }
+                            $scope.markers.push(mainMarker);
+                            $scope.latlabeltxt = results[0].geometry.location.lat();
+                            $scope.lnglabeltxt = results[0].geometry.location.lng();
+                        } else {
+                            var addresses_options = "";
+                            for (var l = 0; l < results.length; l++) {
+                                addresses_options += "<option>" + results[l].formatted_address + "</option>";
+                            }
+                            $("#taddress").html(addresses_options);
+                            $('#address').flexdatalist('reset');
+                            $('#address').flexdatalist({
+                                minLength: 0
+                            });
+
+                            $("#address-flexdatalist").focus();
+                        }
+                        $scope.coords_search = 0;
                     } else {
-                        $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισάγατε. Παρακαλώ δοκιμάστε ξανά.");
+                        $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισαγάγατε. Παρακαλώ δοκιμάστε ξανά.");
                     }
                 });
+            }else{
+                                        $scope.coords_search = 0;
+                                    }
             };
+
+            $("#submit").click(function () {
+                $scope.geocode();
+            });
 
             $scope.updateCompoType = function () {
                 $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];

@@ -1,4 +1,5 @@
-{
+{       "BUG_ID": "Issue Number",
+        "ADDRESS": "Address",
         "MENUREPORT": "Report issue",
         "MENUSEARCH": "Search",
         "MENUOVERVIEW": "Overview",

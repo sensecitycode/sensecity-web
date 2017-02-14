@@ -41,22 +41,7 @@ a {
 
 textarea:focus, input:focus{
     outline: none;
-}
-
-#submit{
-    background-color:#1e1717;
-    color:white;
-    position:relative;
-    display:inline-block;
-    cursor:pointer;
-    padding-left:7px;
-    padding-right:7px;
-    padding-top: 0.5%;
-    padding-bottom: 0.5%;
-    top:0.4px;
-    font-family:'Helvetica Neue','Arial,sans-serif';
-}   
-
+} 
 
 #container {
     display: table;
