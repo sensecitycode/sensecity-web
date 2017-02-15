@@ -1,0 +1,276 @@
+<link href="../lightbox/dist/css/lightbox.css" rel="stylesheet">
+        <script src="../lightbox/dist/js/lightbox.js"></script>
+<div ng-show="valid">
+    <!-- START PAGE CONTAINER -->
+    <div class="page-container" data-ng-init="initialize()">
+
+        <!-- START PAGE SIDEBAR -->
+        <div class="page-sidebar page-sidebar-fixed scroll mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="height: 950px;">
+            <div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" tabindex="0">
+                <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
+                    <!-- START X-NAVIGATION -->
+                    <ul class="x-navigation">
+                        <li class="xn-logo">
+                            <a href="#/admin"><div style="left:-8px;position:relative;top:-2px"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a href="#/admin" class="x-navigation-control"></a>
+                        </li>
+                        <li class="xn-profile">
+                            <a href="#/admin" class="profile-mini">
+                                <img src="assets/images/users/avatar.jpg" alt="John Doe"/>
+                            </a>
+                            <div class="profile">
+                                <div class="profile-data">
+                                    <div class="profile-data-name" ng-model="usrname">{{usrname}}</div>
+                                    <div class="profile-data-title" ng-model="usrrole">{{usrrole}}</div>
+                                </div>
+                            </div>                                                                        
+                        </li>
+                    </ul>
+                    <!-- END X-NAVIGATION -->
+                </div>
+            </div>
+        </div>
+        <!-- END PAGE SIDEBAR -->
+
+        <!-- PAGE CONTENT -->
+        <div class="page-content" style="height:100%">
+
+            <!-- START X-NAVIGATION VERTICAL -->
+            <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                <!-- TOGGLE NAVIGATION -->
+                <!-- END TOGGLE NAVIGATION -->
+                <!-- SEARCH -->   
+                <!-- END SEARCH -->
+                <!-- SIGN OUT -->
+                <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle"><i style="margin-right:10px" ng-class="tabs.activeIcon"></i>{{tabs.activeTitle}}</span></center></li>
+                <li class="xn-icon-button pull-right">
+                    <a href="#/admin" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
+                </li> 
+                <!-- END SIGN OUT -->
+                <!-- MESSAGES -->
+                <!-- END MESSAGES -->
+                <!-- TASKS -->
+                <!-- END TASKS -->
+            </ul>
+            <!-- END X-NAVIGATION VERTICAL -->                     
+
+            <!-- START BREADCRUMB -->
+            <ul class="breadcrumb">
+                <li><a href="#/admin">Αρχική</a></li>                    
+                <li class="active">Προβλήματα</li>
+            </ul>
+
+
+            <!-- END BREADCRUMB -->                       
+
+            <!-- PAGE CONTENT WRAPPER -->
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div style="" class="timeline">
+                        <div style="display:inline-block;min-width:300px;background-color:rgba(249, 249, 249, 0.53);width:100%;padding-left:1%;padding-right:1.5%;padding-bottom:4%;padding-top:1%">
+                             <div style="width:106%;margin-bottom:10px" class='timeline-item-active'>    
+                            <div class="timeline-item-content">
+                                    <div style="padding-right:26px" class="timeline-body">
+                                        <span ng-class="panel.icon" ng-style="panel.style"></span>
+                                        <span class="issue_text">{{ panel.title}}</span>
+                                    </div>                                     
+                                </div>
+                                    <div style="margin-top:12%" class="panel-body">
+                                        <form name="editableForm" ng-hide="panel.admin" style="font-size: 12px">
+                                            <div style="display:inline-block">
+                                                <div style="margin-bottom:2%;margin-left:1%">
+                                                    <span class="title">Τμήμα Ανάθεσης: </span>
+                                                    <span >{{ panel.component}}</span>
+                                                </div>  
+                                                <div style="margin-bottom:2%;margin-left:1%">
+                                                    <span class="title">Κατάσταση: </span>
+                                                    <span>{{panel.status.gr}}</span>
+                                                    <span ng-show="panel.status.en == 'RESOLVED'"> ({{panel.resolution.gr}})</span>
+                                                </div>                          
+                                                <div style="margin-bottom:2%;margin-left:1%">
+                                                    <span class="title">Καταγραφη: </span>
+                                                    <span >{{ panel.time}}</span>
+                                                </div>
+                                                <div style="margin-bottom:2%;margin-left:1%">
+                                                    <span class="title">Προτεραιότητα: </span>
+                                                    <span >{{ panel.priority.gr}}</span>
+                                                </div> 
+                                                <div style="margin-bottom:2%;margin-left:1%">
+                                                    <span class="title">Σπουδαιότητα: </span>
+                                                    <span >{{ panel.severity.gr}}</span>
+                                                </div>
+                                            </div>
+                                            <div style="display:inline-block;vertical-align: top">
+                                                <div style="visibility: hidden">
+                                                    <span>{{panel.duplicof}}</span>
+                                                </div>    
+                                                <div style="margin-bottom:2%;margin-left:1%">
+                                                    <span class="title">Ονοματεπώνυμο: </span>
+                                                    <span> {{panel.creator}}</span>
+                                                </div>
+                                                <div style="margin-bottom:2%;margin-left:1%">
+                                                    <span class="title">Τηλέφωνο: </span>
+                                                    <span> {{panel.tel}}</span>
+                                                </div>
+                                                <div style="margin-bottom:2%;margin-left:1%">
+                                                    <span class="title">e-mail: </span>
+                                                    <span> {{panel.email}}</span>
+                                                </div>
+                                            </div>    
+                                            <div ng-show="panel.comment != '' && panel.comment != 'undefined';" style="margin-bottom:2%;margin-left:1%;">
+                                                <div class="title">Σχόλια: </div>
+                                                <div style="border:solid 1px #cdd5d5;font-family:Open,sans-serif;padding: 8px 15px;border-radius:6px;margin-bottom:5%;margin-top:2%;width:95%;word-wrap: break-word">{{ panel.comment}}</div>
+                                            </div>
+                                            <div class="bton_prim_orange" ng-hide="panel.admin" ng-click="admin(panel)" ><center><span class="glyphicon glyphicon-edit"></span> Διαχείριση</center></div>
+                                        </form>
+                                        <form name="editingForm"  ng-show="panel.admin">
+                                            <div style="font-size:12px">
+                                                <span class="title">Κατάσταση: </span>
+
+                                                <button ng-hide="panel.status.en == 'RESOLVED'" style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in statuses" data-placement="bottom" bs-select></button>
+                                                <button ng-show="panel.status.en == 'RESOLVED'" style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedStatus" data-html="1" data-toggle="true" bs-options="status.gr for status in sresolved" data-placement="bottom" bs-select></button>
+                                                <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" ng-show="selectedStatus.en == 'RESOLVED'" class="btn btn-default" ng-model="selectedResolution" data-html="1" data-toggle="true" bs-options="resolution.gr for resolution in resolutions" data-placement="bottom"  bs-select></button>                                                   
+                                                <div ng-show="selectedStatus.en == 'IN_PROGRESS'">
+                                                    <span class="title">Ανάθεση σε: </span>
+                                                    <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif;z-index:100" type="button" class="btn btn-default" ng-model="selectedComponent" data-html="1" data-toggle="true" bs-options="component for component in components" data-placement="bottom"  bs-select></button>                                                                               
+                                                </div>
+                                                <div>
+                                                    <span class="title" >Προτεραιότητα: </span>
+                                                    <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedPriority.gr" data-html="1" data-toggle="true" bs-options="priority for priority in priorities" data-placement="bottom"  bs-select></button>                                                                               
+                                                </div>
+                                                <div>
+                                                    <span class="title" >Σπουδαιότητα: </span>
+                                                    <button style="font-size:12px;margin-bottom:1%;margin-left:1%;font-family:Open,sans-serif" type="button" class="btn btn-default" ng-model="selectedSeverity.gr" data-html="1" data-toggle="true" bs-options="severity for severity in severities" data-placement="bottom"  bs-select></button>                                                                               
+                                                </div>
+                                                <div style="position:relative;top:5px" ng-show="selectedStatus.en == 'RESOLVED' && selectedResolution.en == 'DUPLICATE'">
+                                                    <span class="title">Διπλότυπο πρόβλημα: </span>
+                                                    <input type="text" ng-model="duplicof" ng-blur="dupli_change($event, duplicof)">
+                                                </div>
+                                            </div>
+                                            <div style="position:relative;margin-top:3%;font-size:12px">
+                                                <div class="title" >Σχόλια: </div>
+                                                <textarea style="width: 95%;height:150px;margin-top:3%;resize:none" ng-disabled="selectedStatus.en == 'CONFIRMED'" type="text" class="form-control" ng-model="scomment" placeholder="περιγραφή ..."></textarea>
+                                            </div>
+                                            <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(panel, selectedStatus, selectedResolution, scomment, selectedComponent, selectedPriority, selectedSeverity, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
+                                            <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_red" ng-show="panel.admin" ng-click="resetPanel(panel)" ><center><span class="glyphicon glyphicon-remove"></span> Ακύρωση</center></div>
+                                        </form>
+                                        <hr style="position:relative;right:2%"/>
+                                        <div class="timeline-heading" style="padding-bottom: 10px;">                         
+                                        </div>                                        
+                                        <div style="left: -4.1%;position:relative;width:102.6%;;margin-top:20px" class="timeline-body comments">
+                                            <center style="background-color:#191616;color:#d8dedf" class="comment-item">
+                                                <h4>Ιστορικό</h4>                                                                                                 
+                                            </center>
+                                            <div ng-repeat="progress in panel.history" class="comment-item" style="font-size: 13px;">
+                                                <span ng-style="progress.style" ng-class="progress.class"></span>
+                                                <div class="comment-head">Κατάσταση: {{progress.state}}</div>
+                                                <br>
+                                                <div class="comment-head">Αναφορά: {{progress.timestamp}}</div>
+                                                <br><br>
+                                                <p style="font-size: 14px">{{progress.text}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                             </div>
+                            <div class="paging"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="right-column" style="" >
+                        <div style="min-width:303px">
+                            <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <ul class="panel-controls" style="margin-top: 2px;">
+                                        <li ng-hide="(full == 1 && street == 0) || check_panorama(street_view_marker)"><span tooltip-side="bottom" tooltips tooltip-template="Δρόμοι"><a ng-click="removeFixeds()"href="#/admin" class="panel-fullscreen"><span class="fa fa-street-view"></span></a></span></li>
+                                        <li><span style="cursor:pointer" tooltip-side="bottom" tooltips tooltip-template="3D Κτίρια"><a ng-click="buildings_view()"><span class="fa fa-eercast"></span></a></span></li>
+                                        <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
+                                        <li ng-show="full == 1 && street != 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>                           
+                                    </ul>
+                                </div>
+                                <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">                              
+                                        <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6">
+                                            <leaflet style="z-index:3" id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="325px" width="100%"">
+                                            </leaflet>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-hide="padmin">
+                            <center>
+                                <!--<a data-lightbox="image-1" href="http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Nice/nice-overview-coastline-xlarge.jpg">-->
+                                    <img ng-if="pimage != '' && pimage != 'no-image'&& pimage != null && pimage != undefined" id="issue_image" src="" width="90%" height="250vh" style="background-position:center;background-size:cover;background-image:url('{{pimage}}')" />
+                            <!--</a>-->
+                                <i ng-if="pimage == ''|| pimage == 'no-image'|| pimage == null || pimage == undefined" class={{pclass}} style="font-size:12em;color:black"></i>
+                            </center>
+                        </div>
+                    </div>        
+                </div>
+                <!-- END PAGE CONTENT WRAPPER -->               
+            </div>
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+
+        <!-- MESSAGE BOX-->
+        <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
+                    <div class="mb-content">
+                        <p>Are you sure you want to log out?</p>                    
+                        <p>Press No if youwant to continue work. Press Yes to logout current user.</p>
+                    </div>
+                    <div class="mb-footer">
+                        <div class="pull-right">
+                            <button ng-click="logout($event)" style="border-radius:0px" class="btn btn-success btn-lg">Yes</button>
+                            <button style="border-radius:0px" class="btn btn-default btn-lg mb-control-close">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
+        <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
+        <!-- END PRELOADS -->                  
+
+        <!-- START SCRIPTS -->
+        <!-- START PLUGINS -->
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
+        <!-- END PLUGINS -->
+
+        <!-- START THIS PAGE PLUGINS-->        
+        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>        
+        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+        <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+
+        <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
+        <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>       
+        <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
+        <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
+        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
+        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>                
+        <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>                 
+<!--        <script>$(".xn-openable").first().attr("class", "xn-openable active");</script>-->
+        <script type="text/javascript" src="js/plugins/moment.min.js"></script>
+        <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
+        <!-- END THIS PAGE PLUGINS-->        
+
+        <!-- START TEMPLATE -->
+        <!--        <script type="text/javascript" src="js/settings.js"></script>-->
+
+        <script type="text/javascript" src="js/plugins.js"></script>        
+        <script type="text/javascript" src="js/actions.js"></script>
+
+        <script type="text/javascript" src="js/demo_dashboard.js"></script>
+        <!-- END TEMPLATE -->
+        <!-- END SCRIPTS -->
+    </div>
+
+</div>
+<div ng-show="!valid">
+    Forbidden
+</div>

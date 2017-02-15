@@ -282,37 +282,6 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
         } else{
         strvcounter = 0;
         }
-
-//        if (panoData){
-//
-//        if (panoData.location){
-//
-//        if (panoData.location.latLng){
-//        panorama.setPano(panoData.location.pano);
-//                var issueMarker = new google.maps.Marker({
-//                position: panoData.location.latLng,
-//                        map: panorama,
-//                        icon: './icons/' + $rootScope.Variables.departments[issue_index] + '.png',
-//                        title: $rootScope.Variables.departments_en[issue_index]
-//                });
-//                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title) - 1;
-//                if (checked_categories[category_index] == false){
-//        issueMarker.setVisible(false);
-//        } else{
-//        issueMarker.setVisible(true);
-//        }
-//        issueMarker.info = new google.maps.InfoWindow({
-//        content: issue_desc
-//        });
-//                google.maps.event.addListener(issueMarker, 'click', function() {
-//                issueMarker.info.open(panorama, issueMarker);
-//                });
-//                var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), issue_coords);
-//               
-        //panorama.setPosition({lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0]});
-//        }
-//        }
-//        }
         }
 
 
@@ -388,7 +357,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         delete parameter['offset'];
                         delete parameter['image_fields'];
                 } else{
-                    
+
                 if (($scope.allclosedissues == false && $scope.assignissues == false) || $scope.closedissues == true) {
                 if (summary == "all") {
                 parameter = {"city": $cookieStore.get("city"), "departments": $scope.component, "status": params.status, "startdate":"2016-08-01"};
@@ -402,16 +371,16 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 parameter = {"city": $cookieStore.get("city"), "departments": $rootScope.Variables.components.join("|"), "status": params.status, "issue": summary, "startdate":"2016-08-01"};
                 }
                 }
-                }       
-                
+                }
+
                 $http.get($rootScope.Variables.host + '/api/1.0/issue', {params:parameter, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                         function (response, status, headers, conf) {
-                            $scope.total_pages = Math.ceil(response.length / 20);
+                        $scope.total_pages = Math.ceil(response.length / 20);
                                 if (init == 0) {
                         if (tabchanged == 1 || sreset == 1) {
                         tabchanged = 0;
-                        if (sreset == 1){
-                                params.offset = 0;
+                                if (sreset == 1){
+                        params.offset = 0;
                                 sreset = 0;
                         }
                         $scope.refreshPages(1);
@@ -867,7 +836,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
                 $scope.startPage = 1;
                 } else {
-                        $scope.startPage = $scope.total_pages - 4;
+                $scope.startPage = $scope.total_pages - 4;
                 }
                 } else if ((startPage - 1) % 5 != 0 && arrow_type != 4) {
                 $scope.startPage = startPage + 5 - ($scope.total_pages % 5);
@@ -924,6 +893,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 }
 
                 $scope.itemClicked = function ($index, event) {
+                    
+                    $window.location.href = 'http://'+$rootScope.Variables.city_name+'.sense.city/admin/index.html#/issuepage='+$scope.panels[$index].id;
                 if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
 //                            setTimeout(function () {
@@ -1265,14 +1236,14 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 }
                 };
                 $scope.reset_search = function(){
-                        if(search_button == 1){
-                        search_button = 0;
+                if (search_button == 1){
+                search_button = 0;
                         sreset = 1;
-                    }
+                }
                 }
 
         $scope.toggle_closedissues = function () {
-                if ($scope.closedissues == false) {
+        if ($scope.closedissues == false) {
         $scope.closedissues = true;
                 $scope.allclosedissues = false;
                 $scope.assignissues = false;
@@ -1283,7 +1254,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 $scope.currentactive = - 1;
         };
                 $scope.toggle_allclosedissues = function () {
-                        if ($scope.allclosedissues == false) {
+                if ($scope.allclosedissues == false) {
                 $scope.allclosedissues = true;
                         $scope.closedissues = false;
                         $scope.assignissues = false;
@@ -1294,7 +1265,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         $scope.currentactive = - 1;
                 };
                 $scope.toggle_inprogressissues = function () {
-                        if ($scope.assignissues == false) {
+                if ($scope.assignissues == false) {
                 $scope.assignissues = true;
                         $scope.allclosedissues = false;
                         $scope.closedissues = false;
@@ -1400,9 +1371,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 params.status = params.status.join("|");
                 }
                 }
-                
-                        $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-                            if (result[0] != undefined && Object.keys(result[0]).length != 0){
+
+                $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                if (result[0] != undefined && Object.keys(result[0]).length != 0){
                 total_counter = result.length;
                         var counter = 0;
                         var map_counter = 0;

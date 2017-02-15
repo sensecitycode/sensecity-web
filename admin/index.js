@@ -1,4 +1,4 @@
-var app = angular.module('MainAdmin', ['ngCookies','ngRoute','ngResource','login_fo','adminapp.adminctrl','adminapp.adminsrvs']);
+var app = angular.module('MainAdmin', ['ngCookies','ngRoute','ngResource','login_fo',,'issuepage','adminapp.adminctrl','adminapp.adminsrvs']);
 
 app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
             
@@ -7,6 +7,9 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
     $routeProvider.when('/admin', {
         templateUrl: 'admin.html',
         controller: 'adminController'
+    }).when('/issuepage=:issue_id',{
+        templateUrl: 'issuepage.html',
+        controller: 'issuepage_controller'
     }).when('/', {
         templateUrl: 'login.html',
         controller: 'login_controller'
