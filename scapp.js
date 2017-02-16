@@ -7,11 +7,12 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider,
         cfpLoadingBarProvider) {
 
     $anchorScrollProvider.disableAutoScrolling();
-
+    
+    $locationProvider.hashPrefix('!');
     cfpLoadingBarProvider.includeSpinner = true;
     cfpLoadingBarProvider.includeBar = true;
 
-    $routeProvider.when('/overview', {
+    $routeProvider.when('overview', {
         templateUrl: 'scmapcontent.html',
         controller: 'mainOverviewController'
     }).when('/web_report', {

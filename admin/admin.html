@@ -1,5 +1,5 @@
 <link href="../lightbox/dist/css/lightbox.css" rel="stylesheet">
-        <script src="../lightbox/dist/js/lightbox.js"></script>
+<script src="../lightbox/dist/js/lightbox.js"></script>
 <div data-ng-init="initialize()" ng-show="nloaded" class="loading">
     Loading&#8230;
 </div>
@@ -39,24 +39,24 @@
                             <a href="#/admin"><span class="fa fa-search"></span> <span class="xn-text">Αναζήτηση</span></a>
                             <ul class="col-md-12">
                                 <li style="margin-top:5%" class="input-group">
-                                <div class="col-md-12">
-                                <input ng-model="sbugid" type="text" class="form-control" placeholder="Αριθμός προβλήματος">
-                                </div>   
-                            </li>
-                            <li style="margin-top:5%" class="input-group">
-                                <div class="col-md-12">
-                                <input ng-model="semail" type="text" class="form-control" placeholder="E-mail">
-                                </div>   
-                            </li>
-                            <li style="margin-top:5%" class="input-group">
-                                <div class="col-md-12">
-                                <input ng-model="smobile" type="text" class="form-control" placeholder="Κινητό">
-                                </div>   
-                            </li>
-                            <li style="text-align:center;margin-top:5%" class="input-group-btn">
-                                <div class="col-md-8">
-                                    <button ng-click="issue_search()" class="bton bton-primary"><span style="margin-right: 5%;" class="fa fa-search"></span>Αναζήτηση</button>
-                                </div>
+                                    <div class="col-md-12">
+                                        <input ng-model="sbugid" type="text" class="form-control" placeholder="Αριθμός προβλήματος">
+                                    </div>   
+                                </li>
+                                <li style="margin-top:5%" class="input-group">
+                                    <div class="col-md-12">
+                                        <input ng-model="semail" type="text" class="form-control" placeholder="E-mail">
+                                    </div>   
+                                </li>
+                                <li style="margin-top:5%" class="input-group">
+                                    <div class="col-md-12">
+                                        <input ng-model="smobile" type="text" class="form-control" placeholder="Κινητό">
+                                    </div>   
+                                </li>
+                                <li style="text-align:center;margin-top:5%" class="input-group-btn">
+                                    <div class="col-md-8">
+                                        <button ng-click="issue_search()" class="bton bton-primary"><span style="margin-right: 5%;" class="fa fa-search"></span>Αναζήτηση</button>
+                                    </div>
                                 </li>
                             </ul>
                         </li>
@@ -79,7 +79,7 @@
                 <!-- END SEARCH -->
                 <!-- SIGN OUT -->
                 <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle"><i style="margin-right:10px" ng-class="tabs.activeIcon"></i>{{tabs.activeTitle}}</span></center></li>
-                <li class="xn-icon-button pull-right">
+                <li ng-click="signout_popup()" class="xn-icon-button pull-right">
                     <a href="#/admin" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
                 </li> 
                 <!-- END SIGN OUT -->
@@ -95,9 +95,9 @@
                 <li><a href="#/admin">Αρχική</a></li>                    
                 <li class="active">Προβλήματα</li>
                 <ul class="panel-controls" style="margin-top: 2px;">
-                    <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_allclosedissues();reset_search(); refresh()"><span tooltip-side="bottom" tooltips tooltip-template="Όλα τα προβλήματα"><a href="#/admin" class="panel-completed"><span ng-style="(allclosedissues == false)? {'font-size':'13px'} : {'color':'#0c45c4','font-size':'13px'}" class="fa fa-building-o"></span></a></span></li> 
-                    <li ng-click="toggle_closedissues();reset_search(); refresh()"><span tooltip-side="bottom" tooltips tooltip-template="Ολοκληρωμένα τμήματος"><a href="#/admin" class="panel-completed"><span ng-style="(closedissues == false)? {} : {'color':'green'}" class="glyphicon glyphicon-ok-sign"></span></a></span></li> 
-                    <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_inprogressissues();reset_search(); refresh()"><span tooltip-side="bottom" tooltip-size="small" tooltips tooltip-template="Σε εκτέλεση άλλων τμημάτων"><a href="#/admin" class="panel-inprogress"><span ng-style="(assignissues == false) ? {} : {'color':'orange'}" class="glyphicon glyphicon-question-sign"></span></a></span></li>
+                    <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_allclosedissues(); reset_search(); refresh()"><span tooltip-side="bottom" tooltips tooltip-template="Όλα τα προβλήματα"><a href="#/admin" class="panel-completed"><span ng-style="(allclosedissues == false)? {'font-size':'13px'} : {'color':'#0c45c4','font-size':'13px'}" class="fa fa-building-o"></span></a></span></li> 
+                    <li ng-click="toggle_closedissues(); reset_search(); refresh()"><span tooltip-side="bottom" tooltips tooltip-template="Ολοκληρωμένα τμήματος"><a href="#/admin" class="panel-completed"><span ng-style="(closedissues == false)? {} : {'color':'green'}" class="glyphicon glyphicon-ok-sign"></span></a></span></li> 
+                    <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_inprogressissues(); reset_search(); refresh()"><span tooltip-side="bottom" tooltip-size="small" tooltips tooltip-template="Σε εκτέλεση άλλων τμημάτων"><a href="#/admin" class="panel-inprogress"><span ng-style="(assignissues == false) ? {} : {'color':'orange'}" class="glyphicon glyphicon-question-sign"></span></a></span></li>
                     <li><span tooltip-side="bottom" tooltips tooltip-template="Εξαγωγή προβλημάτων σε CSV" ng-csv="csv()" filename="issues.csv"><a href="#/admin"><span class="fa fa-arrow-down"></span></a></span></li>
                 </ul>
             </ul>
@@ -165,7 +165,7 @@
                                                 <div class="title">Σχόλια: </div>
                                                 <div style="border:solid 1px #cdd5d5;font-family:Open,sans-serif;padding: 8px 15px;border-radius:6px;margin-bottom:5%;margin-top:2%;width:95%;word-wrap: break-word">{{ panel.comment}}</div>
                                             </div>
-                                            <div class="bton_prim_orange" ng-hide="panel.admin" ng-click="admin(panel)" ><center><span class="glyphicon glyphicon-edit"></span> Διαχείριση</center></div>
+                                            <div class="bton_prim_orange" ng-hide="panel.admin" ng-click="admin()" ><center><span class="glyphicon glyphicon-edit"></span> Διαχείριση</center></div>
                                         </form>
                                         <form name="editingForm"  ng-show="panel.admin">
                                             <div style="font-size:12px">
@@ -195,7 +195,7 @@
                                                 <div class="title" >Σχόλια: </div>
                                                 <textarea style="width: 95%;height:150px;margin-top:3%;resize:none" ng-disabled="selectedStatus.en == 'CONFIRMED'" type="text" class="form-control" ng-model="scomment" placeholder="περιγραφή ..."></textarea>
                                             </div>
-                                            <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(panel, selectedStatus, selectedResolution, scomment, selectedComponent, selectedPriority, selectedSeverity, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
+                                            <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(selectedStatus, selectedResolution, scomment, selectedComponent, selectedPriority, selectedSeverity, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
                                             <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_red" ng-show="panel.admin" ng-click="resetPanel(panel)" ><center><span class="glyphicon glyphicon-remove"></span> Ακύρωση</center></div>
                                         </form>
                                         <hr style="position:relative;right:2%"/>
@@ -227,15 +227,15 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
                                     <div ng-hide="street == 1" id="floating-panel">
-      <input id="address" class="col-xs-6" style="padding-left:5px;padding-right:5px;height: 30px;font-size:12px;font-family: 'Roboto','sans-serif'" type="textbox" placeholder="Εισάγετε τη διεύθυνση...">
-      <div id="submit" class="col-xs-6" ng-click="geocode()">Αναζήτηση Διεύθυνσης</div>
-    </div>
+                                        <input id="address" class="col-xs-6" style="padding-left:5px;padding-right:5px;height: 30px;font-size:12px;font-family: 'Roboto','sans-serif'" type="textbox" placeholder="Εισάγετε τη διεύθυνση...">
+                                        <div id="submit" class="col-xs-6" ng-click="geocode()">Αναζήτηση Διεύθυνσης</div>
+                                    </div>
                                     <ul class="panel-controls" style="margin-top: 2px;">
                                         <li ng-hide="(full == 1 && street == 0) || currentactive == - 1 || check_panorama(street_view_markers[currentactive])"><span tooltip-side="bottom" tooltips tooltip-template="Δρόμοι"><a ng-click="removeFixeds()"href="#/admin" class="panel-fullscreen"><span class="fa fa-street-view"></span></a></span></li>
                                         <li ng-hide ="currentactive == - 1"><span style="cursor:pointer" tooltip-side="bottom" tooltips tooltip-template="3D Κτίρια"><a ng-click="buildings_view()"><span class="fa fa-eercast"></span></a></span></li>
                                         <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
                                         <li ng-show="full == 1 && street != 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
-                                        <li><span tooltip-side="bottom" tooltips tooltip-template="Ανανέωση προβλημάτων"><a ng-click="reset_search();refresh()"href="#/admin" class="panel-refresh"><span class="fa fa-refresh"></span></a></span></li>                            
+                                        <li><span tooltip-side="bottom" tooltips tooltip-template="Ανανέωση προβλημάτων"><a ng-click="reset_search(); refresh()"href="#/admin" class="panel-refresh"><span class="fa fa-refresh"></span></a></span></li>                            
                                     </ul>
                                 </div>
                                 <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">                              
@@ -256,9 +256,9 @@
                         <div ng-hide="padmin">
                             <center>
                                 <!--<a data-lightbox="image-1" href="http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Nice/nice-overview-coastline-xlarge.jpg">-->
-                                    <img ng-if="pimage != '' && pimage != 'no-image'&& pimage != null && pimage != undefined" id="issue_image" src="" width="90%" height="250vh" style="background-position:center;background-size:cover;background-image:url('{{pimage}}')" />
-                            <!--</a>-->
-                                <i ng-if="pimage == ''|| pimage == 'no-image'|| pimage == null || pimage == undefined" class={{pclass}} style="font-size:12em;color:black"></i>
+                                <img ng-if="pimage != '' && pimage != 'no-image' && pimage != null && pimage != undefined" id="issue_image" src="" width="90%" height="250vh" style="background-position:center;background-size:cover;background-image:url('{{pimage}}')" />
+                                <!--</a>-->
+                                <i ng-if="pimage == '' || pimage == 'no-image' || pimage == null || pimage == undefined" class={{pclass}} style="font-size:12em;color:black"></i>
                             </center>
                         </div>
                     </div>        
@@ -281,7 +281,7 @@
                     <div class="mb-footer">
                         <div class="pull-right">
                             <button ng-click="logout($event)" style="border-radius:0px" class="btn btn-success btn-lg">Yes</button>
-                            <button style="border-radius:0px" class="btn btn-default btn-lg mb-control-close">No</button>
+                            <button ng-click="signout_popdown()" style="border-radius:0px" class="btn btn-default btn-lg mb-control-close">No</button>
                         </div>
                     </div>
                 </div>
@@ -311,15 +311,14 @@
         <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
         <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>                
         <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>                 
-<!--        <script>$(".xn-openable").first().attr("class", "xn-openable active");</script>-->
+        <!--        <script>$(".xn-openable").first().attr("class", "xn-openable active");</script>-->
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
         <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
         <!-- END THIS PAGE PLUGINS-->        
 
         <!-- START TEMPLATE -->
         <!--        <script type="text/javascript" src="js/settings.js"></script>-->
-
-        <script type="text/javascript" src="js/plugins.js"></script>        
+        <!--<script type="text/javascript" src="js/plugins.js"></script>-->  
         <script type="text/javascript" src="js/actions.js"></script>
 
         <script type="text/javascript" src="js/demo_dashboard.js"></script>

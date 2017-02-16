@@ -1,9 +1,11 @@
-var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource', 'scissuemapapp.scissuemapsrvs'])
+var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource', 'scissuemapapp.scissuemapsrvs','angularUtils.directives.dirDisqus'])
         .constant("config", {"host": "api.sense.city", "port": "3000"});
+
 
 appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config', 'leafletData',
     function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config, leafletData) {
         $rootScope.overview_url = $location.path();
+        var issue_id = $location.$$url.replace('/scissuemap=', '');
         var icons = $rootScope.Variables.icons;
         var panorama;
         var svissue;
@@ -11,6 +13,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         var glat=38.24645352266985;
         var glng=21.735068952148438;
         var google_street_layer = false;
+        $scope.disqusConfig = {
+    disqus_shortname: 'sense-city',
+    disqus_identifier: issue_id,
+    disqus_url: window.location.href
+};
         var position = $("#map").position();
         var width = $("#map").width();
         $("#streetview").attr('style', 'z-index:-1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px');
@@ -271,8 +278,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
 
         //parse ?issue_id from URL
-        var issue_id = $location.$$url.replace('/scissuemap=', '');
-
+        $scope.disqus_id = issue_id;
         Issue2MapService.query({issueID: issue_id}, function (issue) {
             if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                 $scope.issue_image = issue[0].image_name;

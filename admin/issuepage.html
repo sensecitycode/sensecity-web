@@ -11,11 +11,11 @@
                     <!-- START X-NAVIGATION -->
                     <ul class="x-navigation">
                         <li class="xn-logo">
-                            <a href="#/admin"><div style="left:-8px;position:relative;top:-2px"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
-                            <a href="#/admin" class="x-navigation-control"></a>
+                            <a ng-href={{link}}><div style="left:-8px;position:relative;top:-2px"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a ng-href={{link}} class="x-navigation-control"></a>
                         </li>
                         <li class="xn-profile">
-                            <a href="#/admin" class="profile-mini">
+                            <a ng-href={{link}} class="profile-mini">
                                 <img src="assets/images/users/avatar.jpg" alt="John Doe"/>
                             </a>
                             <div class="profile">
@@ -42,9 +42,9 @@
                 <!-- SEARCH -->   
                 <!-- END SEARCH -->
                 <!-- SIGN OUT -->
-                <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle"><i style="margin-right:10px" ng-class="tabs.activeIcon"></i>{{tabs.activeTitle}}</span></center></li>
-                <li class="xn-icon-button pull-right">
-                    <a href="#/admin" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
+                <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle"><i style="margin-right:10px" ng-class="panel.activeIcon"></i>{{panel.issuenameGR}}</span></center></li>
+                <li ng-click="signout_popup()" class="xn-icon-button pull-right">
+                    <a ng-href={{link}} class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
                 </li> 
                 <!-- END SIGN OUT -->
                 <!-- MESSAGES -->
@@ -56,7 +56,7 @@
 
             <!-- START BREADCRUMB -->
             <ul class="breadcrumb">
-                <li><a href="#/admin">Αρχική</a></li>                    
+                <li><a ng-href={{link}}>Αρχική</a></li>                    
                 <li class="active">Προβλήματα</li>
             </ul>
 
@@ -66,13 +66,13 @@
             <!-- PAGE CONTENT WRAPPER -->
             <div class="col-md-12">
                 <div class="col-md-6">
-                    <div style="" class="timeline">
+                    <div style="" ng-show="loaded == 1" class="timeline">
                         <div style="display:inline-block;min-width:300px;background-color:rgba(249, 249, 249, 0.53);width:100%;padding-left:1%;padding-right:1.5%;padding-bottom:4%;padding-top:1%">
                              <div style="width:106%;margin-bottom:10px" class='timeline-item-active'>    
                             <div class="timeline-item-content">
                                     <div style="padding-right:26px" class="timeline-body">
                                         <span ng-class="panel.icon" ng-style="panel.style"></span>
-                                        <span class="issue_text">{{ panel.title}}</span>
+                                        <span class="issue_text" style="cursor:default;text-decoration:none">{{panel.title}}</span>
                                     </div>                                     
                                 </div>
                                     <div style="margin-top:12%" class="panel-body">
@@ -121,7 +121,7 @@
                                                 <div class="title">Σχόλια: </div>
                                                 <div style="border:solid 1px #cdd5d5;font-family:Open,sans-serif;padding: 8px 15px;border-radius:6px;margin-bottom:5%;margin-top:2%;width:95%;word-wrap: break-word">{{ panel.comment}}</div>
                                             </div>
-                                            <div class="bton_prim_orange" ng-hide="panel.admin" ng-click="admin(panel)" ><center><span class="glyphicon glyphicon-edit"></span> Διαχείριση</center></div>
+                                            <div class="bton_prim_orange" ng-hide="panel.admin" ng-click="admin()" ><center><span class="glyphicon glyphicon-edit"></span> Διαχείριση</center></div>
                                         </form>
                                         <form name="editingForm"  ng-show="panel.admin">
                                             <div style="font-size:12px">
@@ -182,14 +182,15 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
                                     <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li ng-hide="(full == 1 && street == 0) || check_panorama(street_view_marker)"><span tooltip-side="bottom" tooltips tooltip-template="Δρόμοι"><a ng-click="removeFixeds()"href="#/admin" class="panel-fullscreen"><span class="fa fa-street-view"></span></a></span></li>
+                                        <li ng-hide="(full == 1 && street == 0) || check_panorama(street_view_marker)"><span tooltip-side="bottom" tooltips tooltip-template="Δρόμοι"><a ng-click="removeFixeds()" ng-href={{link}} class="panel-fullscreen"><span class="fa fa-street-view"></span></a></span></li>
                                         <li><span style="cursor:pointer" tooltip-side="bottom" tooltips tooltip-template="3D Κτίρια"><a ng-click="buildings_view()"><span class="fa fa-eercast"></span></a></span></li>
-                                        <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
-                                        <li ng-show="full == 1 && street != 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>                           
+                                        <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed()" ng-href={{link}} class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
+                                        <li ng-show="full == 1 && street != 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed()" ng-href={{link}} class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>                           
                                     </ul>
                                 </div>
-                                <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">                              
-                                        <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6">
+                                <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">
+                                        <div ng-show="street == 1" id="smap" style="width:100%;padding-left:5px;padding-right:5px;height:325px" class="col-md-6"></div>
+                                         <div ng-show="street == 0" style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6">
                                             <leaflet style="z-index:3" id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="325px" width="100%"">
                                             </leaflet>
                                         </div>
@@ -199,7 +200,7 @@
                         <div ng-hide="padmin">
                             <center>
                                 <!--<a data-lightbox="image-1" href="http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Nice/nice-overview-coastline-xlarge.jpg">-->
-                                    <img ng-if="pimage != '' && pimage != 'no-image'&& pimage != null && pimage != undefined" id="issue_image" src="" width="90%" height="250vh" style="background-position:center;background-size:cover;background-image:url('{{pimage}}')" />
+                                    <img class="img-responsive" ng-if="pimage != '' && pimage != 'no-image'&& pimage != null && pimage != undefined" id="issue_image" src="{{pimage}}" width="90%;" />
                             <!--</a>-->
                                 <i ng-if="pimage == ''|| pimage == 'no-image'|| pimage == null || pimage == undefined" class={{pclass}} style="font-size:12em;color:black"></i>
                             </center>
@@ -224,7 +225,7 @@
                     <div class="mb-footer">
                         <div class="pull-right">
                             <button ng-click="logout($event)" style="border-radius:0px" class="btn btn-success btn-lg">Yes</button>
-                            <button style="border-radius:0px" class="btn btn-default btn-lg mb-control-close">No</button>
+                            <button ng-click="signout_popdown()" style="border-radius:0px" class="btn btn-default btn-lg mb-control-close">No</button>
                         </div>
                     </div>
                 </div>
@@ -261,10 +262,8 @@
 
         <!-- START TEMPLATE -->
         <!--        <script type="text/javascript" src="js/settings.js"></script>-->
-
-        <script type="text/javascript" src="js/plugins.js"></script>        
+<!--        <script type="text/javascript" src="js/plugins.js"></script>-->
         <script type="text/javascript" src="js/actions.js"></script>
-
         <script type="text/javascript" src="js/demo_dashboard.js"></script>
         <!-- END TEMPLATE -->
         <!-- END SCRIPTS -->

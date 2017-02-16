@@ -83,6 +83,14 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         return d.promise;
                 }
 
+        $scope.signout_popup = function(){
+        $("#mb-signout").attr("class", "message-box animated fadeIn open");
+        }
+
+        $scope.signout_popdown = function(){
+        $("#mb-signout").attr("class", "message-box animated fadeIn");
+        }
+
         $scope.geocode = function () {
         var geocoder = new google.maps.Geocoder();
                 var address = $('#address').val() + "," + $rootScope.Variables.city_address;
@@ -893,9 +901,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 }
 
                 $scope.itemClicked = function ($index, event) {
-                    
-                    $window.location.href = 'http://'+$rootScope.Variables.city_name+'.sense.city/admin/index.html#/issuepage='+$scope.panels[$index].id;
-                if ($scope.currentactive != $index) {
+
+                $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+                        if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
 //                            setTimeout(function () {
 //                                $("html,body").scrollTop($(event.target).offset().top - $("#activePanel").height());

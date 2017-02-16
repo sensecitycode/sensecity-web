@@ -1,14 +1,20 @@
 var app = angular.module('issuepage', ['adminapp']);
 
-app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$location','ToGrService', 'PriorityTag', 'SeverityTag','FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $location,ToGrService, PriorityTag, SeverityTag,FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, leafletData) {
+app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$location', 'ToGrService', 'PriorityTag', 'SeverityTag', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService','leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $location, ToGrService, PriorityTag, SeverityTag, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, CommentService,leafletData) {
 
         var panorama;
         var isfixed = 0;
         var small = 0;
-        var panel;
+        var icons = $rootScope.Variables.icons;
+        $scope.panel;
         $scope.full = 0;
+        $scope.street = 0;
+        $scope.loaded = 0;
+        $scope.ALLcenter = $rootScope.Variables.center;
+        $scope.ALLmarkers = [];
 
         var issue_id = $location.$$url.replace('/issuepage=', '');
+        $scope.link = $location.absUrl();
 
         $scope.logout = function ($event) {
             $http.get($rootScope.Variables.host + '/api/1.0/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
@@ -22,7 +28,15 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 window.location = "index.html";
             });
         };
+        
+        $scope.signout_popup = function(){
+        $("#mb-signout").attr("class", "message-box animated fadeIn open");
+        }
 
+        $scope.signout_popdown = function(){
+        $("#mb-signout").attr("class", "message-box animated fadeIn");
+        }
+        
         $scope.initialize = function () {
 
             // var fenway = {lat: 38.246453, lng: 21.735068};             
@@ -41,7 +55,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
             };
             panorama = new google.maps.StreetViewPanorama(
                     document.getElementById('smap'), panoOptions);
-            
+
             $(window).resize(function () {
 
                 google.maps.event.trigger(panorama, "resize");
@@ -96,26 +110,28 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         };
 
         function checkNearestStreetView(panoData) {
+            if (panoData != null) {
+                var issue_index = $rootScope.Variables.departments.indexOf($scope.panel.issue);
+                var issueMarker = new google.maps.Marker({
+                    position: panoData.location.latLng,
+                    map: panorama,
+                    icon: './icons/' + $scope.panel.issue + '.png',
+                    title: $rootScope.Variables.departments_en[issue_index],
+                    visible: true
+                });
+                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
+                issueMarker.info = new google.maps.InfoWindow({
+                    content: $scope.panel.value_desc
+                });
+                google.maps.event.addListener(issueMarker, 'click', function () {
+                    issueMarker.info.open(panorama, issueMarker);
+                });
+                $scope.street_view_marker = issueMarker;
 
-            var issue_index = $rootScope.Variables.departments.indexOf($scope.panels[strvcounter].issue);
-            var issueMarker = new google.maps.Marker({
-                position: panoData.location.latLng,
-                map: panorama,
-                icon: './icons/' + $scope.panels[strvcounter].issue + '.png',
-                title: $rootScope.Variables.departments_en[issue_index],
-                visible: true
-            });
-            var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
-            issueMarker.info = new google.maps.InfoWindow({
-                content: $scope.panels[strvcounter].value_desc
-            });
-            google.maps.event.addListener(issueMarker, 'click', function () {
-                issueMarker.info.open(panorama, issueMarker);
-            });
-            $scope.street_view_marker = issueMarker;
-//        var issue_coords = new google.maps.LatLng($scope.panels[strvcounter].lat, $scope.panels[strvcounter].lng);
-//                var webService = new google.maps.StreetViewService();
-//                webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
+                panorama.setPosition($scope.street_view_marker.position);
+            } else {
+                $scope.street_view_marker = "ncoords";
+            }
         }
 
         authorizedu();
@@ -142,28 +158,26 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
             }
         };
         $scope.removeFixeds = function () {
-            if ($scope.currentactive != -1) {
-                if ($scope.full == 0) {
-                    $scope.street = 1;
-                    isfixed = 1;
-                    $("#right-column").removeAttr('style');
-                    $(window).resize();
-                    $scope.full = 1;
-                } else {
-                    $scope.street = 0;
-                    isfixed = 0;
-                    var bottom = $('.xn-profile').position().top;
-                    var outerHeight = $('.xn-profile').height();
-                    if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
-                        if (isfixed == 0) {
+            if ($scope.full == 0) {
+                $scope.street = 1;
+                isfixed = 1;
+                $("#right-column").removeAttr('style');
+                $(window).resize();
+                $scope.full = 1;
+            } else {
+                $scope.street = 0;
+                isfixed = 0;
+                var bottom = $('.xn-profile').position().top;
+                var outerHeight = $('.xn-profile').height();
+                if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
+                    if (isfixed == 0) {
 
-                            $("#right-column").css({position: 'fixed', top: '4%', width: $("#right-column").width()});
-                        }
-                    } else {
-                        $("#right-column").removeAttr('style');
+                        $("#right-column").css({position: 'fixed', top: '4%', width: $("#right-column").width()});
                     }
-                    $scope.full = 0;
+                } else {
+                    $("#right-column").removeAttr('style');
                 }
+                $scope.full = 0;
             }
         };
         $scope.city = $cookieStore.get("city");
@@ -241,121 +255,128 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
             return local_time;
         }
 
-        var map = leafletData.getMap("issuesmap").then(
-                function (map) {
-                    map.invalidateSize(true);
-                }
 
-        );
+        $(document).on("click", ".panel-fullscreen", function () {
+
+            panel_fullscreen($(".panel"));
+            var map = leafletData.getMap("issuesmap").then(
+                    function (map) {
+                        map.invalidateSize(true);
+                    }
+
+            );
+        });
 
         if ($scope.valid) {
-            $scope.issue_data = function ($index, panel, event) {
-                var sparams = {"id": issue_id};
-                $http.get($rootScope.Variables.APIURL, sparams, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-                    $window.alert("mphke");
-                    var priority = PriorityTag.priority_type(result[0].priority);
-                    var severity = SeverityTag.severity_type(result[0].severity);
-                    var panelTitle = ToGrService.statusTitle(result[0].status, result[0].resolution);
-                    $scope.panels[panel.order].status = panelTitle.status;
-                    $scope.panels[panel.order].resolution = panelTitle.resolution;
-                    $scope.panels[panel.order].email = result[0].cf_email;
-                    $scope.panels[panel.order].tel = result[0].cf_mobile;
-                    $scope.panels[panel.order].creator = result[0].cf_creator;
-                    $scope.panels[panel.order].component = result[0].component;
-                    $scope.panels[panel.order].severity = {en: result[0].severity, gr: severity};
-                    $scope.panels[panel.order].priority = {en: result[0].priority, gr: priority};
+            var sparams = {"city": $scope.city, "bug_id": issue_id, "image_field": 1};
+            $http.get("http://api.sense.city:4000/api/1.0/issue", {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                var issue_name = ToGrService.issueName(result[0].issue);
+                var panelTitle = ToGrService.statusTitle(result[0].status, result[0].resolution);
+                var description = CommentService.field(result[0].status);
+                var id = result[0].id;
+                var priority = PriorityTag.priority_type(result[0].priority);
+                var severity = SeverityTag.severity_type(result[0].severity);
+                var panelTitle = ToGrService.statusTitle(result[0].status, result[0].resolution);
+                var creation_time = result[0].create_at;
+                var local_time = moment(creation_time).format('LLLL');
+                local_time = timegr(local_time);
+                var time_fromNow = moment(creation_time).fromNow();
+                var activeIcon = "fa fa-" + $rootScope.Variables.icons[result[0].issue].icon;
+                $scope.panel = {
+                    "title": "#" + result[0].bug_id + " (" + issue_name + "-" + result[0].value_desc + ") -- " + time_fromNow,
+                    "style": panelTitle.status_style,
+                    "issuenameGR": issue_name,
+                    "issuenameEN": result[0].issue,
+                    "icon": panelTitle.status_icon,
+                    "time": local_time,
+                    "status": {gr:"Ανοιχτό"},
+                    "admin": false,
+                    "mongoId": result[0]._id,
+                    "id": result[0].bug_id,
+                    "issue": result[0].issue,
+                    "value_desc": result[0].value_desc,
+                    "image_name": result[0].image_name,
+                    "lat": result[0].loc.coordinates[1],
+                    "lng": result[0].loc.coordinates[0],
+                    "activeIcon": activeIcon
+                };
+                
+                var issue_coords = new google.maps.LatLng($scope.panel.lat, $scope.panel.lng);
+                var webService = new google.maps.StreetViewService();
+                webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
+                
+                $scope.ALLmarkers = [{"lat": $scope.panel.lat, "lng": $scope.panel.lng, "icon": icons[$scope.panel.issue]}];
+                $scope.ALLcenter = {"lat": $scope.panel.lat, "lng": $scope.panel.lng, "zoom": 17};
+                
+                
+                $scope.panel.component = result[0].component;
+                $scope.panel.resolution = panelTitle.resolution;
+                $scope.panel.email = result[0].cf_email;
+                $scope.panel.tel = result[0].cf_mobile;
+                $scope.panel.creator = result[0].cf_creator;
+                $scope.panel.severity = {en: result[0].severity, gr: severity};
+                $scope.panel.priority = {en: result[0].priority, gr: priority};
 
-                    var panel = {
-                        "title": "#" + value.bug_id + " (" + issue_name + "-" + value.value_desc + ") -- " + time_fromNow,
-                        "style": panelTitle.status_style,
-                        "issuenameGR": issue_name,
-                        "issuenameEN": value.issue,
-                        "icon": panelTitle.status_icon,
-                        "time": local_time,
-                        "status": value.status,
-                        "admin": false,
-                        "ArrayID": key,
-                        "order": counter,
-                        "mongoId": value._id,
-                        "id": value.bug_id,
-                        "issue": value.issue,
-                        "value_desc": value.value_desc
-                    };
-                });
-                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: panel.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
-                        function (response, status, headers, config) {
-                            var history = [];
-                            var com;
-                            var tag_pos;
-                            for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
-                                com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
-                                if (com == "undefined") {
-                                    com = "";
-                                }
-                                if (com.substring(0, 7) == "*** Bug") {
-                                    com = "";
-                                }
-
-                                switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
-                                    case "CONFIRMED":
-                                    case "IN_PROGRESS":
-                                    case "RESOLVED":
-                                        tag_pos = 0;
-                                        break;
-                                    default:
-                                        tag_pos = 1;
-                                        break;
-                                }
-
-                                if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
-                                    var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
-                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
-                                        history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
-                                    } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
-                                        history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
-                                    } else {
-                                        history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
-                                    }
-                                }
+            $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: $scope.panel.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                    function (response, status, headers, config) {
+                        var history = [];
+                        var com;
+                        var tag_pos;
+                        for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
+                            com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
+                            if (com == "undefined") {
+                                com = "";
+                            }
+                            if (com.substring(0, 7) == "*** Bug") {
+                                com = "";
                             }
 
-                            if (panel.comment == undefined) {
-                                panel.comment = '';
+                            switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
+                                case "CONFIRMED":
+                                case "IN_PROGRESS":
+                                case "RESOLVED":
+                                    tag_pos = 0;
+                                    break;
+                                default:
+                                    tag_pos = 1;
+                                    break;
                             }
-                            $scope.panels[panel.order].history = history;
-                            $scope.panels[panel.order].comment = com;
-                            $scope.itemClicked($index, event);
-                            $scope.linkmap(panel);
-                            $scope.nloaded = false;
-                        });
-                Issue2MapService.query({issueID: panel.mongoId}, function (issue) {
 
-                    if (issue[0] != undefined) {
-                        if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
-                            $scope.image_width = "100%";
-                            $scope.panels[panel.order].image = "";
-                            $scope.pclass = "";
-                            $scope.panels[panel.order].image = issue[0].image_name;
-                        } else {
-                            $scope.image_width = "60%";
-                            $scope.panels[panel.order].image = "";
-                            $scope.pclass = "";
-                            $scope.panels[panel.order].image = issue[0].image_name;
-                            $scope.pclass = "fa fa-" + $rootScope.Variables.icons[issue[0].issue].icon;
+                            if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
+                                var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
+                                if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
+                                    history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
+                                } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
+                                    history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+                                } else {
+                                    history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                                }
+                            }
                         }
-                        $scope.pimage = $scope.panels[panel.order].image;
-                        $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
-                        $scope.panels[panel.order].lng = issue[0].loc.coordinates[0];
-                        $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
-                        $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issue], "panelid": panel.ArrayID});
+
+                        if ($scope.panel.comment == undefined) {
+                            $scope.panel.comment = '';
+                        }
+                        $scope.panel.history = history;
+                        $scope.panel.comment = com;
+
+                    if ($scope.panel.image_name != "" && $scope.panel.image_name != "no-image") {
+                        $scope.image_width = "100%";
+                        $scope.panel.image = "";
+                        $scope.pclass = "";
+                        $scope.panel.image = $scope.panel.image_name;
+                    } else {
+                        $scope.image_width = "60%";
+                        $scope.panel.image = "";
+                        $scope.pclass = "";
+                        $scope.panel.image = $scope.panel.image_name;
+                        $scope.pclass = "fa fa-" + $rootScope.Variables.icons[$scope.panel.issue].icon;
                     }
-                    if ($scope.street_view_markers[panel.order] != "ncoords") {
-                        panorama.setPosition($scope.street_view_marker.position);
-                    }
-                });
-            };
-            $scope.ALLcenter = $rootScope.Variables.center;
-            $scope.ALLmarkers = [];
+                    $scope.pimage = $scope.panel.image;
+                    $scope.loaded = 1;
+                    });
+                    });
+
             $scope.defaults = {
                 scrollWheelZoom: false
             };
@@ -379,16 +400,13 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 prefix: 'fa',
                 markerColor: 'red'
             };
-            var layers_ref;
+
             var markersGarbage;
             var markersLightning;
-            var icons = $rootScope.Variables.icons;
             var displayFixedPoints = function () {
 
                 $scope.buildings_view = function () {
-                    if ($scope.currentactive != -1) {
-                        $window.open("https://www.google.gr/maps/@" + panel.lat + "," + panel.lng + ",200a,20y,41.27t/data=!3m1!1e3?hl=en");
-                    }
+                        $window.open("https://www.google.gr/maps/@" + $scope.panel.lat + "," + $scope.panel.lng + ",200a,20y,41.27t/data=!3m1!1e3?hl=en");
                 };
 
                 $scope.fixedmarkersGarbage = [];
@@ -436,9 +454,9 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                         chunkedLoading: true
                     });
                     markersGarbage.addLayers($scope.fixedmarkersGarbage);
-                        leafletData.getMap("issuesmap").then(function (map) {
-                            map.addLayer(markersGarbage);
-                        });
+                    leafletData.getMap("issuesmap").then(function (map) {
+                        map.addLayer(markersGarbage);
+                    });
                     markersLightning = L.markerClusterGroup({
                         name: 'Φωτισμός',
                         visible: true,
@@ -450,9 +468,9 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                         chunkedLoading: true
                     });
                     markersLightning.addLayers($scope.fixedmarkersLightning);
-                        leafletData.getMap("issuesmap").then(function (map) {
-                            map.addLayer(markersLightning);
-                        });
+                    leafletData.getMap("issuesmap").then(function (map) {
+                        map.addLayer(markersLightning);
+                    });
                     var baseLayers = {
                         //'Open Street Map': osmLayer,
                         //'Google Maps':googleRoadmap,
@@ -463,39 +481,39 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                         "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>": markersGarbage,
                         "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
                     };
-                        leafletData.getMap("issuesmap").then(function (map) {
-                            L.control.layers(baseLayers, overlays).addTo(map);
-                            map.invalidateSize(true);
-                        });
+                    leafletData.getMap("issuesmap").then(function (map) {
+                        L.control.layers(baseLayers, overlays).addTo(map);
+                        map.invalidateSize(true);
+                    });
                 });
             };
 
             displayFixedPoints();
 
-            $scope.admin = function (panel) {
+            $scope.admin = function () {
 
                 $scope.selectedStatus = null;
                 $scope.selectedResolution = null;
-                panel.admin = true;
+                $scope.panel.admin = true;
                 $scope.statuses = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Σε εκτέλεση", "en": "IN_PROGRESS"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
                 $scope.sresolved = [{"gr": "Ανοιχτό", "en": "CONFIRMED"}, {"gr": "Ολοκληρωμένο", "en": "RESOLVED"}];
                 $scope.resolutions = [{"gr": "Αποκατάσταση", "en": "FIXED"}, {"gr": "Εσφαλμένη Αναφορά", "en": "INVALID"}, {"gr": "Μη αποκατάσταση / Απόρριψη από Δήμο", "en": "WONTFIX"}, {"gr": "Έχει ήδη αναφερθεί σε άλλο αίτημα", "en": "DUPLICATE"}];
                 $scope.priorities = ["Υψηλή", "Κανονική", "Χαμηλή"];
                 $scope.severities = ["Κρίσιμο", "Μείζον", "Κανονικό", "Ελάσσον", "Μηδαμινό", "Βελτίωση"];
                 $scope.components = $rootScope.Variables.components;
-                $scope.selectedComponent = panel.component;
-                $scope.selectedPriority = {en: panel.priority.en, gr: panel.priority.gr};
-                $scope.selectedSeverity = {en: panel.severity.en, gr: panel.severity.gr};
-                $scope.selectedResolution = {en: panel.resolution.en, gr: panel.resolution.gr};
-                $scope.selectedStatus = panel.status;
-                $scope.comment = panel.comment;
-                $scope.duplicof = panel.duplicof;
-               //$scope.duplicof = panel;
+                $scope.selectedComponent = $scope.panel.component;
+                $scope.selectedPriority = {en: $scope.priority.en, gr: $scope.panel.priority.gr};
+                $scope.selectedSeverity = {en: $scope.panel.severity.en, gr: $scope.panel.severity.gr};
+                $scope.selectedResolution = {en: $scope.panel.resolution.en, gr: $scope.panel.resolution.gr};
+                $scope.selectedStatus = $scope.panel.status;
+                $scope.comment = $scope.panel.comment;
+                $scope.duplicof = $scope.panel.duplicof;
+                //$scope.duplicof = $scope.panel;
 
 
-                if (panel.resolution.gr !== undefined)
+                if ($scope.panel.resolution.gr !== undefined)
                 {
-                    $scope.selectedResolution = {"en": panel.resolution.en, "gr": panel.resolution.gr};
+                    $scope.selectedResolution = {"en": $scope.panel.resolution.en, "gr": $scope.panel.resolution.gr};
                 } else {
                     $scope.selectedResolution = {"en": "FIXED", "gr": "Αποκατάσταση"};
                 }
@@ -506,146 +524,146 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 $scope.selectedResolution = null;
             };
 
-            $scope.resetPanel = function (panel) {
-                panel.admin = false;
+            $scope.resetPanel = function () {
+                $scope.panel.admin = false;
                 $scope.selectedStatus = null;
                 $scope.selectedResolution = null;
                 $scope.comment = null;
             };
 
-            $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, seldpriority, seldseverity, e) {
+            $scope.submit = function ( seldstatus, seldResolution, seldcomment, seldcomponent, seldpriority, seldseverity, e) {
                 $scope.pimage = "";
                 $scope.pclass = "";
                 if ($cookieStore.get("uuid") != undefined) {
-                    panel.status = seldstatus;
-                    panel.priority.en = PriorityTagEn.priority_type(panel.priority.gr);
-                    panel.severity.en = SeverityTagEn.severity_type(panel.severity.gr);
-                    panel.resolution.en = ResolutionTagEn.resolution_type(panel.resolution.gr);
-                    if (panel.status.en == "RESOLVED")
+                    $scope.panel.status = seldstatus;
+                    $scope.panel.priority.en = PriorityTagEn.priority_type($scope.panel.priority.gr);
+                    $scope.panel.severity.en = SeverityTagEn.severity_type($scope.panel.severity.gr);
+                    $scope.panel.resolution.en = ResolutionTagEn.resolution_type($scope.panel.resolution.gr);
+                    if ($scope.panel.status.en == "RESOLVED")
                     {
-                        panel.resolution = seldResolution;
+                        $scope.panel.resolution = seldResolution;
                     } else
                     {
-                        panel.resolution = {"en": ""};
+                        $scope.panel.resolution = {"en": ""};
                     }
-                    panel.comment = seldcomment;
-                    panel.component = seldcomponent;
-                    panel.admin = false;
+                    $scope.panel.comment = seldcomment;
+                    $scope.panel.component = seldcomponent;
+                    $scope.panel.admin = false;
                     function update() {
                         var obj;
-                        if (panel.status.en == "RESOLVED")
+                        if ($scope.panel.status.en == "RESOLVED")
                         {
-                            if (panel.resolution.en == "DUPLICATE") {
-                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "resolution": panel.resolution.en, "dupe_of": $scope.duplicof, "priority": panel.priority.en, "severity": panel.severity.en, "reset_assigned_to": true};
+                            if ($scope.panel.resolution.en == "DUPLICATE") {
+                                obj = {"ids": [$scope.panel.id], "status": $scope.panel.status.en, "product": $cookieStore.get("city"), "component": $scope.panel.component, "resolution": $scope.panel.resolution.en, "dupe_of": $scope.duplicof, "priority": $scope.panel.priority.en, "severity": $scope.panel.severity.en, "reset_assigned_to": true};
                             } else {
-                                obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "priority": panel.priority.en, "severity": panel.severity.en, "reset_assigned_to": true};
+                                obj = {"ids": [$scope.panel.id], "status": $scope.panel.status.en, "product": $cookieStore.get("city"), "component": $scope.panel.component, "priority": $scope.panel.priority.en, "severity": $scope.panel.severity.en, "reset_assigned_to": true};
                             }
                         } else {
-                            obj = {"ids": [panel.id], "status": panel.status.en, "product": $cookieStore.get("city"), "component": panel.component, "priority": panel.priority.en, "severity": panel.severity.en, "reset_assigned_to": true};
+                            obj = {"ids": [$scope.panel.id], "status": $scope.panel.status.en, "product": $cookieStore.get("city"), "component": $scope.panel.component, "priority": $scope.panel.priority.en, "severity": $scope.panel.severity.en, "reset_assigned_to": true};
                         }
-                        if (panel.status.en == "RESOLVED")
+                        if ($scope.panel.status.en == "RESOLVED")
                         {
-                            obj.resolution = panel.resolution.en;
+                            obj.resolution = $scope.panel.resolution.en;
                         }
-                        if (panel.status.en == "CONFIRMED") {
+                        if ($scope.panel.status.en == "CONFIRMED") {
                             $scope.comment = "undefined";
-                            panel.comment = "undefined";
+                            $scope.panel.comment = "undefined";
                         }
 
                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
                             $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                     function (response, status, headers, conf) {
-                                        var panel_index = $rootScope.Variables.components.indexOf(panel.component);
+                                        var panel_index = $rootScope.Variables.components.indexOf($scope.panel.component);
                                         var comp = $rootScope.Variables.components_en[panel_index];
-                                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/tags', {"add": [$scope.panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                 function (response, status, headers, config) {
                                                 });
                                     });
                             var panelTitle = ToGrService.statusTitle(seldstatus.en, seldResolution.en);
-                            panel.style = panelTitle.status_style;
-                            panel.icon = panelTitle.status_icon;
+                            $scope.panel.style = panelTitle.status_style;
+                            $scope.panel.icon = panelTitle.status_icon;
                         });
                     }
                     if ($scope.selectedStatus.gr == 'Ανοιχτό') {
-                        if ($scope.selectedStatus.gr != panel.status.gr) {
-                            panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
-                            panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
-                            panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
-                            if (panel.comment == undefined || panel.comment == "") {
-                                panel.comment = "undefined";
+                        if ($scope.selectedStatus.gr != $scope.panel.status.gr) {
+                            $scope.panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
+                            $scope.panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
+                            $scope.panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
+                            if ($scope.panel.comment == undefined || $scope.panel.comment == "") {
+                                $scope.panel.comment = "undefined";
                             }
                             if ($scope.comment == "") {
                                 $scope.comment = "undefined";
                             }
-                            $scope.comment = panel.comment;
+                            $scope.comment = $scope.panel.comment;
                             update();
-                            if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.selectedComponent && $scope.assignissues == false && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                            if (($scope.panel.status.gr == 'Σε εκτέλεση' && $scope.panel.component != $scope.selectedComponent && $scope.assignissues == false && $scope.allclosedissues == false) || ($scope.panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && $scope.panel.component != $scope.component)))) {
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
                                     $scope.currentactive = -1;
                                 }, 3000);
                             }
-                            $scope.selectedStatus = panel.status;
-                            $scope.component = panel.component;
+                            $scope.selectedStatus = $scope.panel.status;
+                            $scope.component = $scope.panel.component;
                             panel.priority = seldpriority;
                             panel.severity = seldseverity;
                         }
                     } else if ($scope.selectedStatus.gr == 'Σε εκτέλεση') {
-                        if (panel.comment == undefined || panel.comment == "") {
-                            panel.comment = "undefined";
+                        if ($scope.panel.comment == undefined || $scope.panel.comment == "") {
+                            $scope.panel.comment = "undefined";
                         }
                         if ($scope.comment == "") {
                             $scope.comment = "undefined";
                         }
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
-                            $scope.comment = panel.comment;
-                            panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
-                            panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
-                            panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
-                            if (panel.status == "Ανοιχτό") {
-                                panel.comment = "undefined";
-                                $scope.comment = panel.comment;
+                        if ($scope.selectedStatus.gr != $scope.panel.status.gr || $scope.selectedComponent != $scope.panel.component || $scope.panel.comment != $scope.comment || $scope.selectedPriority.gr != $scope.panel.priority.gr || $scope.selectedSeverity.gr != $scope.panel.severity.gr) {
+                            $scope.comment = $scope.panel.comment;
+                            $scope.panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
+                            $scope.panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
+                            $scope.panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
+                            if ($scope.panel.status == "Ανοιχτό") {
+                                $scope.panel.comment = "undefined";
+                                $scope.comment = $scope.panel.comment;
                             }
                             update();
-                            if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.selectedComponent && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                            if (($scope.panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && $scope.panel.component != $scope.selectedComponent && $scope.allclosedissues == false) || ($scope.panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && $scope.panel.component != $scope.component)))) {
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
                                     $scope.currentactive = -1;
                                 }, 3000);
                             }
-                            $scope.selectedStatus = panel.status;
-                            $scope.selectedResolution = panel.resolution;
+                            $scope.selectedStatus = $scope.panel.status;
+                            $scope.selectedResolution = $scope.panel.resolution;
                         }
                     } else if ($scope.selectedStatus.gr == 'Ολοκληρωμένο') {
-                        if (panel.comment == undefined || panel.comment == "") {
-                            panel.comment = "undefined";
+                        if ($scope.panel.comment == undefined || $scope.panel.comment == "") {
+                            $scope.panel.comment = "undefined";
                         }
-                        if (panel.status == "Ανοιχτό") {
-                            panel.comment = "undefined";
-                            $scope.comment = panel.comment;
+                        if ($scope.panel.status == "Ανοιχτό") {
+                            $scope.panel.comment = "undefined";
+                            $scope.comment = $scope.panel.comment;
                         }
-                        if ($scope.selectedStatus.gr != panel.status.gr || $scope.selectedComponent != panel.component || panel.comment != $scope.comment || $scope.selectedResolution.en != panel.resolution.en || $scope.selectedResolution.gr != panel.resolution.gr || $scope.duplicof != panel.duplicof || $scope.selectedPriority.gr != panel.priority.gr || $scope.selectedSeverity.gr != panel.severity.gr) {
-                            $scope.comment = panel.comment;
-                            panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
-                            panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
-                            panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
-                            if (panel.status == "Ανοιχτό") {
-                                panel.status = "undefined";
-                                $scope.comment = panel.comment;
+                        if ($scope.selectedStatus.gr != $scope.panel.status.gr || $scope.selectedComponent != $scope.panel.component || $scope.panel.comment != $scope.comment || $scope.selectedResolution.en != $scope.panel.resolution.en || $scope.selectedResolution.gr != $scope.panel.resolution.gr || $scope.duplicof != $scope.panel.duplicof || $scope.selectedPriority.gr != $scope.panel.priority.gr || $scope.selectedSeverity.gr != $scope.panel.severity.gr) {
+                            $scope.comment = $scope.panel.comment;
+                            $scope.panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
+                            $scope.panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
+                            $scope.panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
+                            if ($scope.panel.status == "Ανοιχτό") {
+                                $scope.panel.status = "undefined";
+                                $scope.comment = $scope.panel.comment;
                             }
                             update();
-                            if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.selectedComponent && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+                            if (($scope.panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && $scope.panel.component != $scope.selectedComponent && $scope.allclosedissues == false) || ($scope.panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && $scope.panel.component != $scope.component)))) {
                                 setTimeout(function () {
                                     $(e.target).closest(".timeline-item-active").remove();
                                     $scope.activePanel = -1;
                                     $scope.currentactive = -1;
                                 }, 3000);
                             }
-                            $scope.selectedStatus = panel.status;
-                            $scope.selectedResolution = panel.resolution;
+                            $scope.selectedStatus = $scope.panel.status;
+                            $scope.selectedResolution = $scope.panel.resolution;
                         }
                     }
 
