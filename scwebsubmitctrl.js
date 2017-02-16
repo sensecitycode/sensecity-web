@@ -398,6 +398,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 },
                                 data: txtpost
                             }).success(function (resp) {
+                                $window.alert(JSON.stringify(resp));
                         my_id = resp._id;
                         $scope.myText = resp.policy_description;
 
