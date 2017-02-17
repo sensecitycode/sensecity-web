@@ -43,7 +43,7 @@
                 <!-- END SEARCH -->
                 <!-- SIGN OUT -->
                 <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle"><i style="margin-right:10px" ng-class="panel.activeIcon"></i>{{panel.issuenameGR}}</span></center></li>
-                <li ng-click="signout_popup()" class="xn-icon-button pull-right">
+                <li ng-click="signout_popup()" id="logout_but" class="xn-icon-button pull-right">
                     <a ng-href={{link}} class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
                 </li> 
                 <!-- END SIGN OUT -->
@@ -262,7 +262,7 @@
 
         <!-- START TEMPLATE -->
         <!--        <script type="text/javascript" src="js/settings.js"></script>-->
-<!--        <script type="text/javascript" src="js/plugins.js"></script>-->
+        <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>
         <script type="text/javascript" src="js/demo_dashboard.js"></script>
         <!-- END TEMPLATE -->

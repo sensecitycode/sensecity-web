@@ -198,6 +198,15 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
         });
                 // map.setStreetView(panorama);
         }
+        
+        $("body").on("click",".xn-openable",function(){
+           $(this).attr("class","xn-openable active"); 
+        });
+        
+        $("body").on("click",".xn-openable.active",function(){
+           $(this).attr("class","xn-openable") 
+        });
+        
         $(window).on('resize', function () {
         if ($(document).width() <= 992) {
         small = 1;

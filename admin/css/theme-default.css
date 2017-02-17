@@ -15,6 +15,10 @@
 @import "animate/animate.min.css";
 
 
+#logout_but{
+    z-index:99
+}
+
 input::-webkit-calendar-picker-indicator {
   display: none;
 }
