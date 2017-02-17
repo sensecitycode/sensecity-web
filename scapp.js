@@ -29,7 +29,8 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider,
         controller: 'scissuemapctrl'
     }).when('/', {
         templateUrl: 'sense.html',
-        controller: 'senseController'
+        controller: 'senseController',
+        reloadOnSearch: false
     }).otherwise({
         redirectTo: '/'
     });

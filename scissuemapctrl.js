@@ -2,8 +2,8 @@ var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource
         .constant("config", {"host": "api.sense.city", "port": "3000"});
 
 
-appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config', 'leafletData',
-    function ($scope, $rootScope, $location, $window, $resource, $http, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config, leafletData) {
+appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http','$route','$templateCache','BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config', 'leafletData',
+    function ($scope, $rootScope, $location, $window, $resource, $http,$route , $templateCache,BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config, leafletData) {
         $rootScope.overview_url = $location.path();
         var issue_id = $location.$$url.replace('/scissuemap=', '');
         var icons = $rootScope.Variables.icons;
@@ -13,6 +13,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         var glat=38.24645352266985;
         var glng=21.735068952148438;
         var google_street_layer = false;
+
+$scope.$on('$routeChangeStart', function(event, next, current) {
+    $route.reload();
+    $window.location.reload();
+});
         $scope.disqusConfig = {
     disqus_shortname: 'sense-city',
     disqus_identifier: issue_id,

@@ -398,9 +398,14 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 },
                                 data: txtpost
                             }).success(function (resp) {
-                                $window.alert(JSON.stringify(resp));
+                                $http({
+                method:"GET",
+                url: $rootScope.Variables.APIADMIN+"/city_policy?coordinates=["+$scope.lnglabeltxt+","+$scope.latlabeltxt+"]&issue="+$scope.issueTypeSelect.id             
+                                }).success(function(msg){                
+                                    
                         my_id = resp._id;
-                        $scope.myText = resp.policy_description;
+                        resp.anonymous = msg[0].anonymous;
+                        $scope.myText = msg[0].policy_desc;
 
 
                         if (resp.anonymous == "false") {
@@ -463,9 +468,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             $scope.verify_button = false;
                             $scope.submit_eponymous_button = true;
                         }
-
+                        });
                     });
-                } else if (step == 2) {
+                }
+                else if (step == 2) {
                     console.log("Step 2");
                     if (!$scope.chkSelected) { //if you sent an issue as anonymous
 
@@ -645,6 +651,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     };
 
                     var jsonact_Data = '{ "id1" : "' + user_id + '", "id2": "web-site", "id3": "' + $scope.codeTxt + '"}';
+                    
                     console.log(jsonact_Data);
                     return $http({
                         method: 'POST',
@@ -678,7 +685,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                     console.log("Step 4");
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
-
+                    
                     return $http({
                         method: 'POST',
                         url: $rootScope.Variables.APIURL + my_id,
