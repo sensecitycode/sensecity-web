@@ -197,7 +197,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 }else{
                     var address = $('#address').val() + "," + $rootScope.Variables.city_address;
                 }
-                if($scope.address != ""){
+                if(address != ""){
                 geocoder.geocode({'address': address}, function (results, status) {
                     if (status === 'OK') {
                         if (results.length == 1) {

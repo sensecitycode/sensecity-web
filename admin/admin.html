@@ -227,9 +227,11 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
                                     <div ng-hide="street == 1" id="floating-panel">
-                                        <input id="address" class="col-xs-6" style="padding-left:5px;padding-right:5px;height: 30px;font-size:12px;font-family: 'Roboto','sans-serif'" type="textbox" placeholder="Εισάγετε τη διεύθυνση...">
+                                        <input id="address" list="taddress" class="col-xs-6" style="padding-left:5px;padding-right:5px;height: 30px;font-size:12px;font-family: 'Roboto','sans-serif'" type="textbox" placeholder="Εισάγετε τη διεύθυνση...">
                                         <div id="submit" class="col-xs-6" ng-click="geocode()">Αναζήτηση Διεύθυνσης</div>
                                     </div>
+                                    <datalist id="taddress">
+                                    </datalist>
                                     <ul class="panel-controls" style="margin-top: 2px;">
                                         <li ng-hide="(full == 1 && street == 0) || currentactive == - 1 || check_panorama(street_view_markers[currentactive])"><span tooltip-side="bottom" tooltips tooltip-template="Δρόμοι"><a ng-click="removeFixeds()"href="#/admin" class="panel-fullscreen"><span class="fa fa-street-view"></span></a></span></li>
                                         <li ng-hide ="currentactive == - 1"><span style="cursor:pointer" tooltip-side="bottom" tooltips tooltip-template="3D Κτίρια"><a ng-click="buildings_view()"><span class="fa fa-eercast"></span></a></span></li>

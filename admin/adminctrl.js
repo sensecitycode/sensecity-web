@@ -96,7 +96,22 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 var address = $('#address').val() + "," + $rootScope.Variables.city_address;
                 geocoder.geocode({'address': address}, function (results, status) {
                 if (status === 'OK') {
+                    if (results.length == 1) {
                 $scope.ALLcenter = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng(), zoom: 17};
+                    }else{
+                        var addresses_options = "";
+                        for (var l = 0; l < results.length; l++) {
+                                addresses_options += "<option>" + results[l].formatted_address + "</option>";
+                            }
+
+                            $("#taddress").html(addresses_options);
+                            $('#address').flexdatalist('reset');
+                            $('#address').flexdatalist({
+                                minLength: 0
+                            });
+
+                            $("#address-flexdatalist").focus();
+                    }
                 } else {
                 $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισάγατε. Παρακαλώ δοκιμάστε ξανά.");
                 }
