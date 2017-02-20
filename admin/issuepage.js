@@ -1,10 +1,11 @@
 var app = angular.module('issuepage', ['adminapp']);
 
 app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$location', 'ToGrService', 'PriorityTag', 'SeverityTag', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService','leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $location, ToGrService, PriorityTag, SeverityTag, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, CommentService,leafletData) {
-
+        
         var panorama;
         var isfixed = 0;
         var small = 0;
+        var nav_toggle = 0;
         var icons = $rootScope.Variables.icons;
         $scope.panel;
         $scope.full = 0;
@@ -56,34 +57,33 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
             panorama = new google.maps.StreetViewPanorama(
                     document.getElementById('smap'), panoOptions);
 
-            $(window).resize(function () {
-
-                google.maps.event.trigger(panorama, "resize");
-            });
+//            $(window).resize(function () {
+//                google.maps.event.trigger(panorama, "resize");
+//            });
         };
 
-        $(window).on('resize', function () {
-            if ($(document).width() <= 992) {
-                small = 1;
-                isfixed = 0;
-                $("#right-column").removeAttr('style');
-            } else {
-                var bottom = $('.xn-profile').position().top;
-                var outerHeight = $('.xn-profile').height();
-                if (small == 1 && $(window).scrollTop() > bottom + outerHeight) {
-                    if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
-                        if (isfixed == 0) {
-                            $("#right-column").css({position: 'fixed', top: '4%', width: $("#right-column").width()});
-                        }
-                    } else {
-                        $("#right-column").removeAttr('style');
-                    }
-                    small = 0;
-                } else if (small == 1 && $(window).scrollTop() <= bottom + outerHeight) {
-                    small = 0;
-                }
-            }
-        });
+//        $(window).on('resize', function () {
+//            if ($(document).width() <= 992) {
+//                small = 1;
+//                isfixed = 0;
+//                $("#right-column").removeAttr('style');
+//            } else {
+//                var bottom = $('.xn-profile').position().top;
+//                var outerHeight = $('.xn-profile').height();
+//                if (small == 1 && $(window).scrollTop() > bottom + outerHeight) {
+//                    if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
+//                        if (isfixed == 0) {
+//                            $("#right-column").css({position: 'fixed', top: '4%', width: $("#right-column").width()});
+//                        }
+//                    } else {
+//                        $("#right-column").removeAttr('style');
+//                    }
+//                    small = 0;
+//                } else if (small == 1 && $(window).scrollTop() <= bottom + outerHeight) {
+//                    small = 0;
+//                }
+//            }
+//        });
 
         function authorizedu() {
             if ($cookieStore.get("uuid") !== undefined) {
@@ -137,24 +137,48 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         authorizedu();
         username();
         userole();
-
+        
+        $scope.nav_toggle = function(){
+            if(nav_toggle == 0){
+                $(".x-navigation").first().attr("class", "x-navigation x-navigation-open");
+                nav_toggle = 1;
+            }else{
+                $(".x-navigation.x-navigation-open").attr("class", "x-navigation");
+                nav_toggle = 0
+            }
+        }
+        
         $scope.removeFixed = function () {
             if ($scope.full == 0) {
                 isfixed = 1;
                 $("#right-column").removeAttr('style');
                 $scope.full = 1;
+                panel_fullscreen($(".panel"));
+            var map = leafletData.getMap("issuesmap").then(
+                    function (map) {
+                        map.invalidateSize(true);
+                    }
+
+            );
             } else {
                 isfixed = 0;
-                var bottom = $('.xn-profile').position().top;
-                var outerHeight = $('.xn-profile').height();
-                if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
-                    if (isfixed == 0) {
-                        $("#right-column").css({position: 'fixed', top: '4%', width: $("#right-column").width()});
-                    }
-                } else {
-                    $("#right-column").removeAttr('style');
-                }
+//                var bottom = $('.xn-profile').position().top;
+//                var outerHeight = $('.xn-profile').height();
+//                if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
+//                    if (isfixed == 0) {
+//                        $("#right-column").css({position: 'fixed', top: '4%', width: $("#right-column").width()});
+//                    }
+//                } else {
+//                    $("#right-column").removeAttr('style');
+//                }
                 $scope.full = 0;
+                panel_fullscreen($(".panel"));
+            var map = leafletData.getMap("issuesmap").then(
+                    function (map) {
+                        map.invalidateSize(true);
+                    }
+
+            );
             }
         };
         $scope.removeFixeds = function () {
@@ -162,22 +186,33 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 $scope.street = 1;
                 isfixed = 1;
                 $("#right-column").removeAttr('style');
-                $(window).resize();
                 $scope.full = 1;
+                panel_fullscreen($(".panel"));
+                setTimeout(function(){
+               google.maps.event.trigger(panorama, "resize");},1);
             } else {
                 $scope.street = 0;
                 isfixed = 0;
-                var bottom = $('.xn-profile').position().top;
-                var outerHeight = $('.xn-profile').height();
-                if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
-                    if (isfixed == 0) {
-
-                        $("#right-column").css({position: 'fixed', top: '4%', width: $("#right-column").width()});
-                    }
-                } else {
-                    $("#right-column").removeAttr('style');
-                }
+//                var bottom = $('.xn-profile').position().top;
+//                var outerHeight = $('.xn-profile').height();
+//                if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
+//                    if (isfixed == 0) {
+//
+//                        $("#right-column").css({position: 'fixed', top: '4%', width: $("#right-column").width()});
+//                    }
+//                } else {
+//                    $("#right-column").removeAttr('style');
+//                }
                 $scope.full = 0;
+                panel_fullscreen($(".panel"));
+//                setTimeout(function(){leafletData.getMap("issuesmap").then(
+//                    function (map) {
+//                        $window.alert(map);
+//                        map.invalidateSize(true);
+//                    }
+//
+//            );},5000);
+                
             }
         };
         $scope.city = $cookieStore.get("city");
@@ -256,16 +291,10 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         }
 
 
-        $(document).on("click", ".panel-fullscreen", function () {
-
-            panel_fullscreen($(".panel"));
-            var map = leafletData.getMap("issuesmap").then(
-                    function (map) {
-                        map.invalidateSize(true);
-                    }
-
-            );
-        });
+//        $(".panel-fullscreen").click( function () {
+//
+//            
+//        });
 
         if ($scope.valid) {
             var sparams = {"city": $scope.city, "bug_id": issue_id, "image_field": 1};
@@ -678,5 +707,6 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     $cookieStore.remove("bug_token");
                 }
             };
+            $(window).resize();
         }
     }]);

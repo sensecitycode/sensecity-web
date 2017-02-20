@@ -328,8 +328,7 @@ function page_content_onresize(){
 }
 
 /* PANEL FUNCTIONS */
-function panel_fullscreen(panel){    
-    
+function panel_fullscreen(panel){
     if(panel.hasClass("panel-fullscreened")){
         panel.removeClass("panel-fullscreened").unwrap();
         panel.find(".panel-body,.chart-holder").css("height","");

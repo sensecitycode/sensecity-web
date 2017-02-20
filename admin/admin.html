@@ -15,7 +15,7 @@
                     <ul class="x-navigation">
                         <li class="xn-logo">
                             <a href="#/admin"><div style="left:-8px;position:relative;top:-2px"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
-                            <a href="#/admin" class="x-navigation-control"></a>
+                            <a href="#/admin" ng-click="nav_toggle()" class="x-navigation-control"></a>
                         </li>
                         <li class="xn-profile">
                             <a href="#/admin" class="profile-mini">
@@ -241,17 +241,8 @@
                                     </ul>
                                 </div>
                                 <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">                              
-                                    <div ng-show="street == 1" id="smap" style="width:100%;padding-left:5px;padding-right:5px;height:325px" class="col-md-6"></div>
-                                    <div ng-show="street == 0">
-                                        <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel == - 1">
                                             <leaflet style="z-index:3" id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="325px" width="100%"">
                                             </leaflet>
-                                        </div>
-                                        <div style="width:100%;padding-left:5px;padding-right:5px" class="col-md-6" ng-if="activePanel != - 1">
-                                            <leaflet style="z-index:3" id="panelmap" lf-center="center" event-broadcast="events" layers="layers" markers="markers" defaults="defaults" height="325px" width="100%">
-                                            </leaflet>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -319,9 +310,9 @@
         <!-- END THIS PAGE PLUGINS-->        
 
         <!-- START TEMPLATE -->
-        <!--        <script type="text/javascript" src="js/settings.js"></script>-->
-        <script type="text/javascript" src="js/plugins.js"></script>  
+                <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>
+       
 
         <script type="text/javascript" src="js/demo_dashboard.js"></script>
         <!-- END TEMPLATE -->

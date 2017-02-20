@@ -577,11 +577,11 @@ $(function() {
         }
     }();
     
-    //formElements.init();
-    //uiElements.init();
+    formElements.init();
+    uiElements.init();
     templatePlugins.init();    
     
-    //fullCalendar.init();
+    fullCalendar.init();
     
     /* My Custom Progressbar */
     $.mpb = function(action,options){

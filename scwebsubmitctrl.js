@@ -239,6 +239,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         }
                         $scope.coords_search = 0;
                     } else {
+                        $scope.coords_search = 0;
                         $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισαγάγατε. Παρακαλώ δοκιμάστε ξανά.");
                     }
                 });
