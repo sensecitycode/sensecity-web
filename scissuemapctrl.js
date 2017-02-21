@@ -18,6 +18,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $scope.$on('$routeChangeStart', function (event, next, current) {
             if(ft == 1){
                 ft = 0;
+                $window.alert(JSON.stringify(next.$$route.originalPath));
             $window.location.replace("#!/"+next.$$route.originalPath);
             $window.location.reload();
         }
