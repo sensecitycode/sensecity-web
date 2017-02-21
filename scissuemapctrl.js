@@ -15,10 +15,9 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         var google_street_layer = false;
 
         $scope.$on('$routeChangeStart', function (event, next, current) {
-            $window.alert(JSON.stringify(next));
-            $window.alert(JSON.stringify(current));
-//            $window.location.replace("#!/"+next.originalPath);
-//            $window.location.reload();
+            $window.alert(JSON.stringify(next.$$route.originalPath));
+            $window.location.replace("#!/"+next.$$route.originalPath);
+            $window.location.reload();
         });
         $scope.disqusConfig = {
             disqus_shortname: 'sense-city',
