@@ -14,7 +14,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         var glng = 21.735068952148438;
         var google_street_layer = false;
 
-        $scope.$on('$routeChangeStart', function (event, next, current) {
+        $scope.$on('$locationChangeStart', function (event, next, current) {
             $window.location.reload();
         });
         $scope.disqusConfig = {
