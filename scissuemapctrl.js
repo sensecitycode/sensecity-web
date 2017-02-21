@@ -17,8 +17,8 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $scope.$on('$routeChangeStart', function (event, next, current) {
             $window.alert(JSON.stringify(next));
             $window.alert(JSON.stringify(current));
-            $window.location.replace("#!/"+next.originalPath);
-            $window.location.reload();
+//            $window.location.replace("#!/"+next.originalPath);
+//            $window.location.reload();
         });
         $scope.disqusConfig = {
             disqus_shortname: 'sense-city',
