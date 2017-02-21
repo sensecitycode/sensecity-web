@@ -19,7 +19,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             if(ft == 1){
                 ft = 0;
                 $window.alert(JSON.stringify(next.$$route.originalPath));
-            $window.location.replace("#!/"+next.$$route.originalPath);
+            $window.location.replace("#!"+next.$$route.originalPath);
             $window.location.reload();
         }
         });
