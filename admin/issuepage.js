@@ -1,7 +1,6 @@
 var app = angular.module('issuepage', ['adminapp']);
 
-app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$location', 'ToGrService', 'PriorityTag', 'SeverityTag', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService','leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $location, ToGrService, PriorityTag, SeverityTag, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, CommentService,leafletData) {
-        
+app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$location', 'ToGrService', 'PriorityTag', 'SeverityTag','PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService','leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $location, ToGrService, PriorityTag, SeverityTag,PriorityTagEn, SeverityTagEn, ResolutionTagEn, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, CommentService,leafletData) {
         var panorama;
         var isfixed = 0;
         var small = 0;
@@ -111,24 +110,24 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
         function checkNearestStreetView(panoData) {
             if (panoData != null) {
-                var issue_index = $rootScope.Variables.departments.indexOf($scope.panel.issue);
-                var issueMarker = new google.maps.Marker({
-                    position: panoData.location.latLng,
-                    map: panorama,
-                    icon: './icons/' + $scope.panel.issue + '.png',
-                    title: $rootScope.Variables.departments_en[issue_index],
-                    visible: true
-                });
-                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
-                issueMarker.info = new google.maps.InfoWindow({
-                    content: $scope.panel.value_desc
-                });
-                google.maps.event.addListener(issueMarker, 'click', function () {
-                    issueMarker.info.open(panorama, issueMarker);
-                });
-                $scope.street_view_marker = issueMarker;
+//                var issue_index = $rootScope.Variables.departments.indexOf($scope.panel.issue);
+//                var issueMarker = new google.maps.Marker({
+//                    position: panoData.location.latLng,
+//                    map: panorama,
+//                    icon: './icons/' + $scope.panel.issue + '.png',
+//                    title: $rootScope.Variables.departments_en[issue_index],
+//                    visible: true
+//                });
+//                var category_index = $rootScope.Variables.departments_en.indexOf(issueMarker.title);
+//                issueMarker.info = new google.maps.InfoWindow({
+//                    content: $scope.panel.value_desc
+//                });
+//                google.maps.event.addListener(issueMarker, 'click', function () {
+//                    issueMarker.info.open(panorama, issueMarker);
+//                });
+//                $scope.street_view_marker = issueMarker;
 
-                panorama.setPosition($scope.street_view_marker.position);
+                //panorama.setPosition($scope.street_view_marker.position);
             } else {
                 $scope.street_view_marker = "ncoords";
             }
@@ -329,6 +328,8 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     "lng": result[0].loc.coordinates[0],
                     "activeIcon": activeIcon
                 };
+                
+                $scope.link_street = "http://localhost:8383/sensecity-web/admin/index.html#/issuecoords="+$scope.panel.lat+","+$scope.panel.lng;
                 
                 var issue_coords = new google.maps.LatLng($scope.panel.lat, $scope.panel.lng);
                 var webService = new google.maps.StreetViewService();
@@ -531,9 +532,9 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 $scope.severities = ["Κρίσιμο", "Μείζον", "Κανονικό", "Ελάσσον", "Μηδαμινό", "Βελτίωση"];
                 $scope.components = $rootScope.Variables.components;
                 $scope.selectedComponent = $scope.panel.component;
-                $scope.selectedPriority = {en: $scope.priority.en, gr: $scope.panel.priority.gr};
-                $scope.selectedSeverity = {en: $scope.panel.severity.en, gr: $scope.panel.severity.gr};
-                $scope.selectedResolution = {en: $scope.panel.resolution.en, gr: $scope.panel.resolution.gr};
+//                $scope.selectedPriority = {en: $scope.priority.en, gr: $scope.panel.priority.gr};
+//                $scope.selectedSeverity = {en: $scope.panel.severity.en, gr: $scope.panel.severity.gr};
+//                $scope.selectedResolution = {en: $scope.panel.resolution.en, gr: $scope.panel.resolution.gr};
                 $scope.selectedStatus = $scope.panel.status;
                 $scope.comment = $scope.panel.comment;
                 $scope.duplicof = $scope.panel.duplicof;
@@ -580,6 +581,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     $scope.panel.admin = false;
                     function update() {
                         var obj;
+                        $window.alert("ok");
                         if ($scope.panel.status.en == "RESOLVED")
                         {
                             if ($scope.panel.resolution.en == "DUPLICATE") {
@@ -598,7 +600,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                             $scope.comment = "undefined";
                             $scope.panel.comment = "undefined";
                         }
-
+                        
                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
 
                             $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(

@@ -182,7 +182,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
                                     <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li ng-hide="(full == 1 && street == 0) || check_panorama(street_view_marker)"><span tooltip-side="bottom" tooltips tooltip-template="Δρόμοι"><a ng-click="removeFixeds()" ng-href={{link}} class="panel-fullscreen"><span class="fa fa-street-view"></span></a></span></li>
+                                        <li ng-hide="(full == 1 && street == 0) || check_panorama(street_view_marker)"><span tooltip-side="bottom" tooltips tooltip-template="Δρόμοι"><a ng-click="removeFixeds()" ng-href={{link_street}} class="panel-fullscreen"><span class="fa fa-street-view"></span></a></span></li>
                                         <li><span style="cursor:pointer" tooltip-side="bottom" tooltips tooltip-template="3D Κτίρια"><a ng-click="buildings_view()"><span class="fa fa-eercast"></span></a></span></li>
                                         <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed()" ng-href={{link}} class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
                                         <li ng-show="full == 1 && street != 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed()" ng-href={{link}} class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>                           
@@ -259,7 +259,6 @@
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
         <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
         <!-- END THIS PAGE PLUGINS-->        
-
         <!-- START TEMPLATE -->
         <!--        <script type="text/javascript" src="js/settings.js"></script>-->
         <script type="text/javascript" src="js/plugins.js"></script>
