@@ -14,7 +14,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         var glng = 21.735068952148438;
         var google_street_layer = false;
 
-        $scope.$on('$routeChangeSuccess', function (event, next, current) {
+        $scope.$on('$routeChangeStart', function (event, next, current) {
             $window.alert($window.location);
             $window.alert(JSON.stringify(next));
             $window.alert(JSON.stringify(current));
