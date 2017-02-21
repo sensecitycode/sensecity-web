@@ -16,6 +16,8 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
         $scope.$on('$routeChangeSuccess', function (event, next, current) {
             $window.alert($window.location);
+            $window.alert(JSON.stringify(next));
+            $window.alert(JSON.stringify(current));
                     //.reload();
         });
         $scope.disqusConfig = {
