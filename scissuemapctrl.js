@@ -13,11 +13,14 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         var glat = 38.24645352266985;
         var glng = 21.735068952148438;
         var google_street_layer = false;
-
+        var ft = 1;
+        
         $scope.$on('$routeChangeStart', function (event, next, current) {
-            $window.alert(JSON.stringify(next.$$route.originalPath));
+            if(ft == 1){
+                ft = 0;
             $window.location.replace("#!/"+next.$$route.originalPath);
             $window.location.reload();
+        }
         });
         $scope.disqusConfig = {
             disqus_shortname: 'sense-city',
