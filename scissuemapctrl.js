@@ -15,8 +15,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         var google_street_layer = false;
 
         $scope.$on('$routeChangeStart', function (event, next, current) {
-            $window.location = "testcity1.sense.city/#/web_report";
-            $window.alert(JSON.stringify(next));
+            $window.location.replace("#!/"+next.originalPath);
             $window.location.reload();
         });
         $scope.disqusConfig = {
