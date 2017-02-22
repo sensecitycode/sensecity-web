@@ -1,36 +1,55 @@
-var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource', 'scissuemapapp.scissuemapsrvs', 'angularUtils.directives.dirDisqus'])
+var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource','ngCookies','ngAnimate','pascalprecht.translate', 'scissuemapapp.scissuemapsrvs', 'angularUtils.directives.dirDisqus'])
         .constant("config", {"host": "api.sense.city", "port": "3000"});
 
 
-appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', '$route', '$templateCache', 'BugService', 'ToGrService', 'Issue2MapService', 'FixPoints2MapService', 'FixPointsMarkerService', 'config', 'leafletData',
-    function ($scope, $rootScope, $location, $window, $resource, $http, $route, $templateCache, BugService, ToGrService, Issue2MapService, FixPoints2MapService, FixPointsMarkerService, config, leafletData) {
+appControllers.config(['$translateProvider', function ($translateProvider) {
+        $translateProvider.useStaticFilesLoader({
+            prefix: 'config/lang_',
+            suffix: '.json'
+        });
+
+        $translateProvider.preferredLanguage('el');
+        $translateProvider.useLocalStorage();
+    }]);
+
+appControllers.controller('NavCtrl', ['$scope', '$location', '$rootScope', '$translate', function ($scope, $location, $rootScope, $translate) {
+
+        //$scope.user = $rootScope.fstoreuser;
+
+        $scope.navClass = function (page) {
+            var currentRoute = $location.path().substring(1) || 'home';
+            return page === currentRoute ? 'active' : '';
+        };
+
+
+        $scope.changeLanguage = function (langKey) {
+            $translate.use(langKey);
+        };
+
+    }]);
+
+appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'ToGrService', 'config', 'leafletData',
+    function ($scope, $rootScope, $location, $window, $resource, $http, ToGrService, config, leafletData) {
         $rootScope.overview_url = $location.path();
-        var issue_id = $location.$$url.replace('/scissuemap=', '');
-        var icons = $rootScope.Variables.icons;
+        var issue_id = window.location.toString().split('=')[1];;
+
         var panorama;
         var svissue;
         var svtitle;
         var glat = 38.24645352266985;
         var glng = 21.735068952148438;
         var google_street_layer = false;
-        var ft = 1;
-        
-        $scope.$on('$routeChangeStart', function (event, next, current) {
-            if(ft == 1){
-                ft = 0;
-                $window.alert(JSON.stringify(next.$$route.originalPath));
-            $window.location.replace("#!"+next.$$route.originalPath);
-            $window.location.reload();
+        var url_path = $location.absUrl().split("//");
+        var sub_domain = url_path[1].split(".");
+        var url;
+
+        if( sub_domain[0].split(":").length > 1){
+            url = "./config/testcity1.json";
+            sub_domain[0] = "testcity1";
+        }else{
+            url = '../config/'+sub_domain[0]+'.json';
         }
-        });
-        $scope.disqusConfig = {
-            disqus_shortname: 'sense-city',
-            disqus_identifier: issue_id,
-            disqus_url: window.location.href
-        };
-        var position = $("#map").position();
-        var width = $("#map").width();
-        $("#streetview").attr('style', 'z-index:-1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px');
+        
         $scope.initialize = function () {
             var fenway = {lat: 38.24645352266985, lng: 21.735068952148438};
             var panoOptions = {
@@ -59,30 +78,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             });
 
         };
-
-        function res() {
-
-            var position = $("#map").position();
-            var width = $("#map").width();
-            if (google_street_layer) {
-                $("#streetview").attr('style', 'z-index:1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px;');
-                google.maps.event.trigger(panorama, "resize");
-            }
-        }
-        ;
-
-        var idt = setTimeout(function () {
-            for (var i = idt; i > 0; i--)
-                clearInterval(i);
-        }, 10);
-        $rootScope.$on('$locationChangeStart', function (event, current, previous) {
-            var url = current.split(".");
-
-            if (url[1] == "sense") {
-                event.preventDefault();
-                document.location.href = current.split(".")[0] + ".sense.city";
-            }
-        });
+        
         $scope.layers = {
             baselayers: {
                 openStreetMap: {
@@ -115,6 +111,86 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
         $scope.center = {};
         $scope.markers = {};
+        
+        $scope.disqusConfig = {
+            disqus_shortname: 'sense-city',
+            disqus_identifier: issue_id,
+            disqus_url: window.location.href
+        };
+
+        $rootScope.mainInfo = $http.get(url).success(function (response) {
+            
+            $rootScope.Variables = {
+                city_name: sub_domain[0],
+                city_address: response.city_address,
+                lat_center: response.lat_center,
+                long_center: response.long_center,
+                img_logo: "images/city_logos/" + response.city_name + ".jpg",
+                icons: response.icons,
+                APIURL: response.APIURL,
+                components: response.components,
+                components_en: response.components_en,
+                overlays: response.overlays,
+                categories: response.categories,
+                categories_issue: response.categories_issue,
+                departments: response.departments,
+                departments_en: response.departments_en,
+                feelingsURL: response.feelingsURL,
+                bugzilla: response.bugzilla,
+                ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+                active_user_URL: response.active_user_URL,
+                activate_user_URL: response.activate_user_URL,
+                APIADMIN: response.APIADMIN,
+                issue_type_en: response.issue_type_en,
+                issue_type_gr: response.issue_type_gr,
+                availableIssues: response.availableIssues,
+                searchIssues: response.searchIssues,
+                map_zoom: response.zoom,
+                overlay_functions : response.overlay_functions,
+                overlay_categories : response.overlay_categories,
+                google_init_coords: response.google_init_coords,
+                google_buildings: response.google_buildings,
+                host: response.host
+            };
+
+//        var ft = 1;
+//        for(var key in $route.routes){
+//           $templateCache.remove($route.routes[key].templateUrl);
+//           delete($route.routes[key]);
+//        }
+        //$templateCache.remove($route.routes["/overview"].templateUrl);
+        //$templateCache.removeAll();
+        //delete($route.routes);
+         //       $window.alert(JSON.stringify($route.routes));
+         
+         var icons = $rootScope.Variables.icons;
+        var position = $("#map").position();
+        var width = $("#map").width();
+        $("#streetview").attr('style', 'z-index:-1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px');
+
+        function res() {
+
+            var position = $("#map").position();
+            var width = $("#map").width();
+            if (google_street_layer) {
+                $("#streetview").attr('style', 'z-index:1;width:' + width + 'px;position:absolute;height:' + $("#map").height() + 'px;');
+                google.maps.event.trigger(panorama, "resize");
+            }
+        }
+        ;
+
+        var idt = setTimeout(function () {
+            for (var i = idt; i > 0; i--)
+                clearInterval(i);
+        }, 10);
+        $rootScope.$on('$locationChangeStart', function (event, current, previous) {
+            var url = current.split(".");
+
+            if (url[1] == "sense") {
+                event.preventDefault();
+                document.location.href = current.split(".")[0] + ".sense.city";
+            }
+        });
 
         $scope.submit = "";
         $scope.assignment = "---";
@@ -291,7 +367,9 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
         //parse ?issue_id from URL
         $scope.disqus_id = issue_id;
-        Issue2MapService.query({issueID: issue_id}, function (issue) {
+        $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+            {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
+    ).query({issueID: issue_id}, function (issue) {
             if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                 $scope.issue_image = issue[0].image_name;
             } else {
@@ -317,9 +395,36 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     type = issue[0].issue;
                 }
 
-                FixPoints2MapService.query({long: issue[0].loc.coordinates[0], lat: issue[0].loc.coordinates[1], type: type}, function (fix_points) {
+                $resource($rootScope.Variables.host+'/fix_point/:long/:lat/50/data',
+        {
+					long:'@long',
+					lat:'@lat',
+					type:"@type"
+				}
+			).query({long: issue[0].loc.coordinates[0], lat: issue[0].loc.coordinates[1], type: type}, function (fix_points) {
                     angular.forEach(fix_points, function (value, key) {
-                        var icon = FixPointsMarkerService.icon(value);
+                        var icon = {
+        icon: function (fixPoint) {
+            var icon;
+            if (fixPoint.type == "garbage")
+            {
+                switch (fixPoint.notes[0].ANAKIKLOSI) {
+                    case "0":
+                        icon = "staticGarbage";
+                        break;
+                    case "1":
+                        icon = "staticGarbageRecycle";
+                        break;
+                    default:
+                        break;
+                }
+            } else
+            {
+                icon = "staticLighting";
+            }
+            return icon;
+        }
+    }.icon(value);
                         $scope.markers.push({"lat": value.loc.coordinates[1], "lng": value.loc.coordinates[0], "icon": icons[icon]});
                     });
                 });
@@ -347,5 +452,5 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             timeline(issue);
 
         });
-
+        });
     }]);

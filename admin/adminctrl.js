@@ -8,6 +8,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
         appControllers.controller('adminController', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', '$location', '$q', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $rootScope, $window, $http, $cookieStore, $templateCache, $compile, $location, $q, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
         $("html").removeClass("body-full-height");
+                $scope.$on('$routeChangeStart', function (next, last) {
+                $(document).off("scroll");
+                });
                 var summary;
                 var params;
                 var tabchanged = 2;
@@ -91,15 +94,15 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
         $scope.signout_popdown = function(){
         $("#mb-signout").attr("class", "message-box animated fadeIn");
         }
-        
+
         $scope.nav_toggle = function(){
-            if(nav_toggle == 0){
-                $(".x-navigation").first().attr("class", "x-navigation x-navigation-open");
+        if (nav_toggle == 0){
+        $(".x-navigation").first().attr("class", "x-navigation x-navigation-open");
                 nav_toggle = 1;
-            }else{
-                $(".x-navigation.x-navigation-open").attr("class", "x-navigation");
+        } else{
+        $(".x-navigation.x-navigation-open").attr("class", "x-navigation");
                 nav_toggle = 0
-            }
+        }
         }
 
         $scope.geocode = function () {
@@ -379,7 +382,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 $scope.street = 1;
                         isfixed = 1;
                         $("#right-column").removeAttr('style');
-                        $(window).resize();
+                        //$(window).resize();
+                        $(window).trigger('resize');
                         $scope.full = 1;
                         $scope.panel_fullscreen($(".panel"));
                         if ($scope.activePanel == - 1) {
@@ -966,8 +970,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
                 $scope.itemClicked = function ($index, event) {
 
-//                $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id; 
-                $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+                $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+//                $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
                         if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
 //                            setTimeout(function () {
@@ -976,7 +980,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 //                        } else {
                 $scope.padmin = $scope.panels[$index].admin;
                         $scope.pimage = $scope.panels[$index].image;
-                        panorama.setPosition(new google.maps.LatLng($scope.panels[$index].lat, $scope.panels[$index].lng));
+                        // panorama.setPosition(new google.maps.LatLng($scope.panels[$index].lat, $scope.panels[$index].lng));
                         $scope.activePanel = $index;
                         $scope.currentactive = $index;
                         //setTimeout(function () {
@@ -985,7 +989,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         //$("html,body").scrollTop($('span:contains("' + $scope.panels[$index].title + '")').offset().top);
                         //$("html,body").scrollTop($(".timeline-item-active span").offset().top);
                         // }, 400);
-                        $(window).resize();
+                        //$(window).resize();
+                        $(window).trigger('resize');
                 } else {
                 current_layer = 0;
                         $scope.pimage = "";
@@ -1087,7 +1092,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 //                                webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
                                 $scope.isloading = false;
                                 $scope.nloaded = false;
-                                $(window).resize();
+                                //$(window).resize();
+                                 $(window).trigger('resize');
                         });
                         };
                 };
@@ -1503,12 +1509,13 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         $scope.ALLmarkers.push({"lat": value.loc.coordinates[1], "lng": value.loc.coordinates[0], "icon": icons[value.issue], "panelid": panel.ArrayID});
                         counter++;
                 }, $scope.panels);
-                        var webService = new google.maps.StreetViewService();
-                        var issue_coords = new google.maps.LatLng($scope.panels[0].lat, $scope.panels[0].lng);
-                        webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
+//                        var webService = new google.maps.StreetViewService();
+//                        var issue_coords = new google.maps.LatLng($scope.panels[0].lat, $scope.panels[0].lng);
+//                        webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);
                         $scope.isloading = false;
                         $scope.nloaded = false;
-                        $(window).resize();
+                        //  $(window).resize();
+                        $(window).trigger('resize');
                 } else{
                 mapnloaded = false;
                         $scope.isloading = false;

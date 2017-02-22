@@ -333,8 +333,8 @@ function panel_fullscreen(panel){
         panel.removeClass("panel-fullscreened").unwrap();
         panel.find(".panel-body,.chart-holder").css("height","");
         panel.find(".panel-fullscreen .fa").removeClass("fa-compress").addClass("fa-expand");        
-        
-        $(window).resize();
+       // $(window).resize("100px");
+      // $(window).trigger('resize');
     }else{
         var head    = panel.find(".panel-heading");
         var body    = panel.find(".panel-body");
@@ -356,8 +356,8 @@ function panel_fullscreen(panel){
         
         panel.addClass("panel-fullscreened").wrap('<div class="panel-fullscreen-wrap"></div>');        
         panel.find(".panel-fullscreen .fa").removeClass("fa-expand").addClass("fa-compress");
-        
-        $(window).resize();
+        //$(window).resize("100px");
+      // $(window).trigger('resize');
     }
 }
 

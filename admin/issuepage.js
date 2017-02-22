@@ -1,6 +1,8 @@
 var app = angular.module('issuepage', ['adminapp']);
 
 app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$location', 'ToGrService', 'PriorityTag', 'SeverityTag','PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService','leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $location, ToGrService, PriorityTag, SeverityTag,PriorityTagEn, SeverityTagEn, ResolutionTagEn, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, CommentService,leafletData) {
+        
+        
         var panorama;
         var isfixed = 0;
         var small = 0;
@@ -581,7 +583,6 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     $scope.panel.admin = false;
                     function update() {
                         var obj;
-                        $window.alert("ok");
                         if ($scope.panel.status.en == "RESOLVED")
                         {
                             if ($scope.panel.resolution.en == "DUPLICATE") {
@@ -709,6 +710,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     $cookieStore.remove("bug_token");
                 }
             };
-            $(window).resize();
+            //$(window).resize("px");
+            setTimeout(function(){$(window).trigger('resize')},1000);
         }
     }]);

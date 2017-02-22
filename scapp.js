@@ -24,9 +24,6 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider,
     }).when('/all_issues', {
         templateUrl: 'all_issues.html',
         controller: 'allissuesCtrl'
-    }).when('/scissuemap=:issue_id', {
-        templateUrl: 'scissuemap.html',
-        controller: 'scissuemapctrl'
     }).when('/', {
         templateUrl: 'sense.html',
         controller: 'senseController',
