@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="css/leaflet.css" />
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
         <script src="js/leaflet.js"></script>
+
         <link rel="stylesheet" href="css/styles.css" />
 <!--        <style>
       #map, #pano {
@@ -46,6 +47,8 @@
         <link rel="stylesheet" href="_css/animate.min.css" />
         
         <script src="_js/angular-translate.min.js"></script>
+        <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
+        <script src="admin/dist/angular-tooltips.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
 <script
@@ -76,7 +79,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#!/">
+				<a class="navbar-brand" href="/#!/">
 				<i
 		class="ion-ios-analytics-outline"></i> sense.city <sup
 		style="font-size: 55%">beta</sup>
@@ -119,10 +122,11 @@
         <div class="col-md-12 " style="background-color: #FFFFFF;">
             <br>
             <div class="col-lg-8">
-                <div  id="streetview"></div>
-                <div id="map" style="color: black; height:50vh;">
+                <div id="map-bar"><div style="display:table-cell;text-align:right;vertical-align: middle;font-size:20px"><span tooltip-side="top" tooltip-size="small" tooltips tooltip-template="Χάρτης" style="cursor:pointer" ng-click="change_icon('Χάρτης')"><span class="fa fa-map" id="map-icons-active"></span></span><span style="cursor:pointer" tooltip-size="small" tooltip-side="top" tooltips tooltip-template="Δρόμος" ng-click="change_icon('Δρόμος')"><span class="fa fa-street-view" id="map-icons"></span></span><span style="cursor:pointer" tooltip-size="small" tooltip-side="top" tooltips tooltip-template="3D Κτίρια" ng-click="change_icon('3D Κτίρια')"><span id="map-icons" style="margin-right:12px;" class="fa fa-eercast"></span></span></div></div>
+                <div id="map" style="color: black; height:50vh">
+                    <div id="streetview"></div>
                     <leaflet lf-center="center" layers="layers" markers="markers" height="50vh"></leaflet>
-                </div>
+                    </div>
 
             </div>
             <div class="col-lg-4" id="image_div" style="color:#000;height: 50%;overflow-x: hidden;">

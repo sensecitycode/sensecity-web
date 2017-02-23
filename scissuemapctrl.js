@@ -1,4 +1,4 @@
-var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource','ngCookies','ngAnimate','pascalprecht.translate', 'scissuemapapp.scissuemapsrvs', 'angularUtils.directives.dirDisqus'])
+var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource','ngCookies','ngAnimate','720kb.tooltips','pascalprecht.translate', 'scissuemapapp.scissuemapsrvs', 'angularUtils.directives.dirDisqus'])
         .constant("config", {"host": "api.sense.city", "port": "3000"});
 
 
@@ -79,6 +79,25 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
         };
         
+        $scope.change_icon = function(icon_type){
+            $("#map-icons-active").attr("id","map-icons");
+            if(icon_type == "Χάρτης"){
+               $(".fa.fa-map").attr("id","map-icons-active");
+               google_street_layer = false;
+               $(".leaflet-control-zoom").css("visibility", "visible");
+               $("#streetview").css('z-index', '-1');
+                res();
+            }else if(icon_type == "Δρόμος"){
+               $(".fa.fa-street-view").attr("id","map-icons-active");
+                google_street_layer = true;
+                $("#streetview").css('z-index', '1');
+                $(".leaflet-control-zoom").css("visibility", "hidden");
+            }else{
+               $(".fa.fa-eercast").attr("id","map-icons-active"); 
+               $window.open("https://www.google.gr/maps/@" + glat + "," + glng + ",198a,20y,41.27t/data=!3m1!1e3?hl=en");
+            }
+        };
+        
         $scope.layers = {
             baselayers: {
                 openStreetMap: {
@@ -86,7 +105,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     type: 'xyz',
                     url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     layerOptions: {
-                        showOnSelector: true,
+                        showOnSelector: false,
                         attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
                     }
                 }, googleStreetView: {
@@ -94,7 +113,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     type: 'xyz',
                     url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     layerOptions: {
-                        showOnSelector: true,
+                        showOnSelector: false,
                         attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
                     }
                 }, google3dBuildings: {
@@ -102,7 +121,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     type: 'xyz',
                     url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     layerOptions: {
-                        showOnSelector: true,
+                        showOnSelector: false,
                         attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
                     }
                 }
@@ -183,35 +202,35 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
         }, 10);
-        $rootScope.$on('$locationChangeStart', function (event, current, previous) {
-            var url = current.split(".");
-
-            if (url[1] == "sense") {
-                event.preventDefault();
-                document.location.href = current.split(".")[0] + ".sense.city";
-            }
-        });
+//        $rootScope.$on('$locationChangeStart', function (event, current, previous) {
+//            var url = current.split(".");
+//
+//            if (url[1] == "sense") {
+//                event.preventDefault();
+//                document.location.href = current.split(".")[0] + ".sense.city";
+//            }
+//        });
 
         $scope.submit = "";
         $scope.assignment = "---";
         $scope.completion = "---";
 
         leafletData.getMap().then(function (map) {
-            map.on('baselayerchange', function (e) {
-                if (e.name == "Google Street View") {
-                    google_street_layer = true;
-                    $("#streetview").css('z-index', '1');
-                    $(".leaflet-control-zoom").css("visibility", "hidden");
-                    res();
-                } else {
-                    google_street_layer = false;
-                    $(".leaflet-control-zoom").css("visibility", "visible");
-                    $("#streetview").css('z-index', '-1');
-                    if (e.name == "Google 3d buildings") {
-                        $window.open("https://www.google.gr/maps/@" + glat + "," + glng + ",198a,20y,41.27t/data=!3m1!1e3?hl=en");
-                    }
-                }
-            });
+//            map.on('baselayerchange', function (e) {
+//                if (e.name == "Google Street View") {
+//                    google_street_layer = true;
+//                    $("#streetview").css('z-index', '1');
+//                    $(".leaflet-control-zoom").css("visibility", "hidden");
+//                    res();
+//                } else {
+//                    google_street_layer = false;
+//                    $(".leaflet-control-zoom").css("visibility", "visible");
+//                    $("#streetview").css('z-index', '-1');
+//                    if (e.name == "Google 3d buildings") {
+//                        $window.open("https://www.google.gr/maps/@" + glat + "," + glng + ",198a,20y,41.27t/data=!3m1!1e3?hl=en");
+//                    }
+//                }
+//            });
         });
 
         function checkNearestStreetView(panoData) {
@@ -224,7 +243,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     visible: true
                 });
                 issueMarker.info = new google.maps.InfoWindow({
-                    content: '<span style="color:black">' + $scope.issue_value_desc + '</span>'
+                    content: '<span style="color:black;">' + $scope.issue_value_desc + '</span>'
                 });
                 google.maps.event.addListener(issueMarker, 'click', function () {
                     issueMarker.info.open(panorama, issueMarker);

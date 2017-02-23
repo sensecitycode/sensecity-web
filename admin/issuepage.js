@@ -112,6 +112,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
         function checkNearestStreetView(panoData) {
             if (panoData != null) {
+                $scope.link_street = "http://localhost:8383/sensecity-web/admin/index.html#/issuecoords="+panoData.location.latLng.lat()+","+panoData.location.latLng.lng();
 //                var issue_index = $rootScope.Variables.departments.indexOf($scope.panel.issue);
 //                var issueMarker = new google.maps.Marker({
 //                    position: panoData.location.latLng,
@@ -331,8 +332,8 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     "activeIcon": activeIcon
                 };
                 
-                $scope.link_street = "http://localhost:8383/sensecity-web/admin/index.html#/issuecoords="+$scope.panel.lat+","+$scope.panel.lng;
-                
+                $cookieStore.put("desc",$scope.panel.value_desc);
+                $cookieStore.put("issue",$scope.panel.issue);
                 var issue_coords = new google.maps.LatLng($scope.panel.lat, $scope.panel.lng);
                 var webService = new google.maps.StreetViewService();
                 webService.getPanoramaByLocation(issue_coords, 200, checkNearestStreetView);

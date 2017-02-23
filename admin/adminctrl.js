@@ -212,11 +212,15 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 // map.setStreetView(panorama);
         }
 
-        $("body").on("click", ".xn-openable", function(){
+        $("body").on("click", ".xn-openable", function(event){
+            if($(event.target).attr('class') == undefined || $(event.target).attr('class') == 'xn-openable active' || $(event.target).attr('class') == 'xn-openable'){
         $(this).attr("class", "xn-openable active");
+    }
         });
-                $("body").on("click", ".xn-openable.active", function(){
+                $("body").on("click", ".xn-openable.active", function(event){
+              if($(event.target).attr('class') == undefined || $(event.target).attr('class') == 'xn-openable active' || $(event.target).attr('class') == 'xn-openable'){
         $(this).attr("class", "xn-openable")
+    }
         });
 //                $(window).on('resize', function () {
 //        if ($(document).width() <= 992) {

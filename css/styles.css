@@ -56,6 +56,26 @@ p {
     margin-bottom: 20px;
 }
 
+#map-bar{
+    background-color: #25303B;
+    height: 45px;
+    border-color: #484949;
+    border-width: 2px;
+    border-bottom: 0px;
+    width: 100%;
+    border-style: solid;
+    display: table;
+}
+
+#map-icons{
+    margin: 10px 9px;
+}
+
+#map-icons-active{
+    margin: 10px 9px;
+    color: #90d4fc; 
+}
+
 .wide-space {
     letter-spacing: 1.6px;
 }
