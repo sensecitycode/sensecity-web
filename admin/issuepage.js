@@ -300,19 +300,27 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
         if ($scope.valid) {
             var sparams = {"city": $scope.city, "bug_id": issue_id, "image_field": 1};
-            $http.get("http://api.sense.city:4000/api/1.0/issue", {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+            $http.get("http://api.sense.city:4000/api/1.0/admin/issue", {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                 var issue_name = ToGrService.issueName(result[0].issue);
                 var panelTitle = ToGrService.statusTitle(result[0].status, result[0].resolution);
                 var description = CommentService.field(result[0].status);
                 var id = result[0].id;
-                var priority = PriorityTag.priority_type(result[0].priority);
-                var severity = SeverityTag.severity_type(result[0].severity);
+                var priority = PriorityTag.priority_type(result[0].bug_priority);
+                var severity = SeverityTag.severity_type(result[0].bug_severity);
                 var panelTitle = ToGrService.statusTitle(result[0].status, result[0].resolution);
                 var creation_time = result[0].create_at;
                 var local_time = moment(creation_time).format('LLLL');
                 local_time = timegr(local_time);
                 var time_fromNow = moment(creation_time).fromNow();
                 var activeIcon = "fa fa-" + $rootScope.Variables.icons[result[0].issue].icon;
+                var status_gr;
+                if( result[0].status == "CONFIRMED"){
+                    status_gr = "Ανοιχτό";
+                }else if(result[0].status == "IN_PROGRESS"){
+                    status_gr = "Σε εκτέλεση";
+                }else{
+                    status_gr = "Ολοκληρωμένο";
+                }
                 $scope.panel = {
                     "title": "#" + result[0].bug_id + " (" + issue_name + "-" + result[0].value_desc + ") -- " + time_fromNow,
                     "style": panelTitle.status_style,
@@ -320,7 +328,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     "issuenameEN": result[0].issue,
                     "icon": panelTitle.status_icon,
                     "time": local_time,
-                    "status": {gr:"Ανοιχτό"},
+                    "status": { en:result[0].status, gr: status_gr},
                     "admin": false,
                     "mongoId": result[0]._id,
                     "id": result[0].bug_id,
@@ -342,13 +350,14 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 $scope.ALLcenter = {"lat": $scope.panel.lat, "lng": $scope.panel.lng, "zoom": 17};
                 
                 
-                $scope.panel.component = result[0].component;
+                $scope.panel.component = result[0].bug_component;
                 $scope.panel.resolution = panelTitle.resolution;
-                $scope.panel.email = result[0].cf_email;
-                $scope.panel.tel = result[0].cf_mobile;
-                $scope.panel.creator = result[0].cf_creator;
-                $scope.panel.severity = {en: result[0].severity, gr: severity};
-                $scope.panel.priority = {en: result[0].priority, gr: priority};
+                $scope.panel.email = result[0].email;
+                $scope.panel.tel = result[0].phone;
+                $scope.panel.creator = result[0].name;
+
+                $scope.panel.severity = {en: result[0].bug_severity, gr: severity};
+                $scope.panel.priority = {en: result[0].bug_priority, gr: priority};
 
             $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: $scope.panel.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                     function (response, status, headers, config) {
@@ -535,9 +544,9 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 $scope.severities = ["Κρίσιμο", "Μείζον", "Κανονικό", "Ελάσσον", "Μηδαμινό", "Βελτίωση"];
                 $scope.components = $rootScope.Variables.components;
                 $scope.selectedComponent = $scope.panel.component;
-//                $scope.selectedPriority = {en: $scope.priority.en, gr: $scope.panel.priority.gr};
-//                $scope.selectedSeverity = {en: $scope.panel.severity.en, gr: $scope.panel.severity.gr};
-//                $scope.selectedResolution = {en: $scope.panel.resolution.en, gr: $scope.panel.resolution.gr};
+                $scope.selectedPriority = {en: $scope.panel.priority.en, gr: $scope.panel.priority.gr};
+                $scope.selectedSeverity = {en: $scope.panel.severity.en, gr: $scope.panel.severity.gr};
+                $scope.selectedResolution = {en: $scope.panel.resolution.en, gr: $scope.panel.resolution.gr};
                 $scope.selectedStatus = $scope.panel.status;
                 $scope.comment = $scope.panel.comment;
                 $scope.duplicof = $scope.panel.duplicof;
