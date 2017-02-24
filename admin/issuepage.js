@@ -612,6 +612,8 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                         var comp = $rootScope.Variables.components_en[panel_index];
                                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/tags', {"add": [$scope.panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                 function (response, status, headers, config) {
+                                                     setTimeout(function(){
+                                     google.maps.event.trigger(panorama, "resize");},1);
                                                 });
                                     });
                             var panelTitle = ToGrService.statusTitle(seldstatus.en, seldResolution.en);
