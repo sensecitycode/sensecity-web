@@ -44,12 +44,6 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         }
         
         $("html").removeClass("body-full-height");
-                $scope.$on('$routeChangeStart', function (next, last) {
-                leafletData.getMap("issuesmap").then(
-                        function (map) {
-                          mapref.removeFrom(map);
-                        });
-                });
         
         $scope.initialize = function () {
 
