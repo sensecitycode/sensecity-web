@@ -10,6 +10,12 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
         $("html").removeClass("body-full-height");
                 $scope.$on('$routeChangeStart', function (next, last) {
                 $(document).off("scroll");
+                leafletData.getMap("issuesmap").then(
+                        function (map) {
+                          mapref.removeFrom(map);
+                          map.removeLayer(markersGarbage);
+                        map.removeLayer(markersLightning);
+                        });
                 });
                 var summary;
                 var params;
@@ -60,32 +66,32 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 //
 //                });
 
-                var panorama;
-                $scope.street_view_markers = [];
-                var checked_categories = [];
-                function doQuery(sparams) {
-                var d = $q.defer();
-                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/search', sparams, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-                for (var j = 0; j < $scope.panels.length; j++){
-                if ($scope.panels[j].id == sparams.id){
-                var priority = PriorityTag.priority_type(result[0].priority);
-                        var severity = SeverityTag.severity_type(result[0].severity);
-                        var state;
-                        if ($scope.panels[j].status == 'CONFIRMED'){
-                state = 'ΑΝΟΙΧΤΟ';
-                } else if ($scope.panels[j].status == 'IN_PROGRESS'){
-                state = 'ΣΕ ΕΚΤΕΛΕΣΗ';
-                } else{
-                state = 'ΟΛΟΚΛΗΡΩΘΗΚΕ';
-                }
-                issues_Array[j + 1] = {id: $scope.panels[j].id, department: result[0].component, description: $scope.panels[j].value_desc, state: state, date: $scope.panels[j].time, priority: priority, severity: severity, name: result[0].cf_creator, telephone: result[0].cf_mobile, email: result[0].cf_email};
-                        break;
-                }
-                }
-                d.resolve("");
-                });
-                        return d.promise;
-                }
+//                var panorama;
+//                $scope.street_view_markers = [];
+//                var checked_categories = [];
+//                function doQuery(sparams) {
+//                var d = $q.defer();
+//                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/search', sparams, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+//                for (var j = 0; j < $scope.panels.length; j++){
+//                if ($scope.panels[j].id == sparams.id){
+//                var priority = PriorityTag.priority_type(result[0].priority);
+//                        var severity = SeverityTag.severity_type(result[0].severity);
+//                        var state;
+//                        if ($scope.panels[j].status == 'CONFIRMED'){
+//                state = 'ΑΝΟΙΧΤΟ';
+//                } else if ($scope.panels[j].status == 'IN_PROGRESS'){
+//                state = 'ΣΕ ΕΚΤΕΛΕΣΗ';
+//                } else{
+//                state = 'ΟΛΟΚΛΗΡΩΘΗΚΕ';
+//                }
+//                issues_Array[j + 1] = {id: $scope.panels[j].id, department: result[0].component, description: $scope.panels[j].value_desc, state: state, date: $scope.panels[j].time, priority: priority, severity: severity, name: result[0].cf_creator, telephone: result[0].cf_mobile, email: result[0].cf_email};
+//                        break;
+//                }
+//                }
+//                d.resolve("");
+//                });
+//                        return d.promise;
+//                }
 
         $scope.signout_popup = function(){
         $("#mb-signout").attr("class", "message-box animated fadeIn open");
@@ -144,73 +150,73 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         return deferred.promise;
                 }
 
-        $scope.initialize = function(){
+//        $scope.initialize = function(){
 
         // var fenway = {lat: 38.246453, lng: 21.735068};             
 
-        var fenway = {lat: 38.27942654793131, lng:  21.76288604736328};
-                var panoOptions = {
-                position: fenway,
-                        addressControlOptions: {
-                        position: google.maps.ControlPosition.BOTTOM_CENTER
-                        },
-                        linksControl: false,
-                        panControl: false,
-                        zoomControlOptions: {
-                        style: google.maps.ZoomControlStyle.SMALL
-                        },
-                        enableCloseButton: false
-                };
-                panorama = new google.maps.StreetViewPanorama(
-                        document.getElementById('smap'), panoOptions);
-                var issue_array = [];
-                var checkOptions = []
-                for (var k = 1; k < $rootScope.Variables.departments_en.length; k++){
-        checked_categories.push(true);
-                checkOptions[k] = {
-        gmap: panorama,
-                title: $rootScope.Variables.departments_en[k],
-                id: $rootScope.Variables.departments_en[k],
-                label: $rootScope.Variables.departments_en[k],
-                action: function(){
-                var index = $rootScope.Variables.departments_en.indexOf(this.title) - 1;
-                        checked_categories[index] = !checked_categories[index];
-                        for (var i = 0; i < $scope.street_view_markers.length; i++){
-                if ($scope.street_view_markers[i] != "ncoords" && $scope.street_view_markers[i].title == this.title){
-                if (checked_categories[index] == false){
-                $scope.street_view_markers[i].setVisible(false);
-                } else{
-                $scope.street_view_markers[i].setVisible(true);
-                }
-                }
-                }
-                }
-        }
-        issue_array.push(new checkBox(checkOptions[k]));
-        }
-
-        var ddDivOptions = {
-        items: issue_array,
-                id: "myddOptsDiv"
-        }
-
-        var dropDownDiv = new dropDownOptionsDiv(ddDivOptions);
-                var dropDownOptions = {
-                gmap: panorama,
-                        name: 'Προβλήματα',
-                        id: 'ddControl',
-                        title: 'A custom drop down select with mixed elements',
-                        position: google.maps.ControlPosition.TOP_LEFT,
-                        dropDown: dropDownDiv
-                }
-
-        var dropDown = new dropDownControl(dropDownOptions);
+//        var fenway = {lat: 38.27942654793131, lng:  21.76288604736328};
+//                var panoOptions = {
+//                position: fenway,
+//                        addressControlOptions: {
+//                        position: google.maps.ControlPosition.BOTTOM_CENTER
+//                        },
+//                        linksControl: false,
+//                        panControl: false,
+//                        zoomControlOptions: {
+//                        style: google.maps.ZoomControlStyle.SMALL
+//                        },
+//                        enableCloseButton: false
+//                };
+//                panorama = new google.maps.StreetViewPanorama(
+//                        document.getElementById('smap'), panoOptions);
+//                var issue_array = [];
+//                var checkOptions = []
+//                for (var k = 1; k < $rootScope.Variables.departments_en.length; k++){
+//        checked_categories.push(true);
+//                checkOptions[k] = {
+//        gmap: panorama,
+//                title: $rootScope.Variables.departments_en[k],
+//                id: $rootScope.Variables.departments_en[k],
+//                label: $rootScope.Variables.departments_en[k],
+//                action: function(){
+//                var index = $rootScope.Variables.departments_en.indexOf(this.title) - 1;
+//                        checked_categories[index] = !checked_categories[index];
+//                        for (var i = 0; i < $scope.street_view_markers.length; i++){
+//                if ($scope.street_view_markers[i] != "ncoords" && $scope.street_view_markers[i].title == this.title){
+//                if (checked_categories[index] == false){
+//                $scope.street_view_markers[i].setVisible(false);
+//                } else{
+//                $scope.street_view_markers[i].setVisible(true);
+//                }
+//                }
+//                }
+//                }
+//        }
+//        issue_array.push(new checkBox(checkOptions[k]));
+//        }
+//
+//        var ddDivOptions = {
+//        items: issue_array,
+//                id: "myddOptsDiv"
+//        }
+//
+//        var dropDownDiv = new dropDownOptionsDiv(ddDivOptions);
+//                var dropDownOptions = {
+//                gmap: panorama,
+//                        name: 'Προβλήματα',
+//                        id: 'ddControl',
+//                        title: 'A custom drop down select with mixed elements',
+//                        position: google.maps.ControlPosition.TOP_LEFT,
+//                        dropDown: dropDownDiv
+//                }
+//
+//        var dropDown = new dropDownControl(dropDownOptions);
 //                $(window).resize(function() {
 //
 //        google.maps.event.trigger(panorama, "resize");
 //        });
                 // map.setStreetView(panorama);
-        }
+     //   }
 
         $("body").on("click", ".xn-openable", function(event){
             if($(event.target).attr('class') == undefined || $(event.target).attr('class') == 'xn-openable active' || $(event.target).attr('class') == 'xn-openable'){
@@ -380,64 +386,64 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 );
                 }
                 };
-                $scope.removeFixeds = function () {
-                if ($scope.currentactive != - 1){
-                if ($scope.full == 0) {
-                $scope.street = 1;
-                        isfixed = 1;
-                        $("#right-column").removeAttr('style');
+//                $scope.removeFixeds = function () {
+//                if ($scope.currentactive != - 1){
+//                if ($scope.full == 0) {
+//                $scope.street = 1;
+//                        isfixed = 1;
+//                        $("#right-column").removeAttr('style');
                         //$(window).resize();
-                        $(window).trigger('resize');
-                        $scope.full = 1;
-                        $scope.panel_fullscreen($(".panel"));
-                        if ($scope.activePanel == - 1) {
-                var map = leafletData.getMap("issuesmap").then(
-                        function (map) {
-                        map.invalidateSize(true);
-                        }
-
-                );
-                } else {
-                var map = leafletData.getMap("panelmap").then(
-                        function (map) {
-                        map.invalidateSize(true);
-                        }
-
-                );
-                }
-                } else {
-                $scope.street = 0;
-                        isfixed = 0;
-                        var bottom = $('.xn-profile').position().top;
-                        var outerHeight = $('.xn-profile').height();
-                        if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
-                if (isfixed == 0){
-
-                $("#right-column").css({position: 'fixed', top: '4%', width : $("#right-column").width()});
-                }
-                } else {
-                $("#right-column").removeAttr('style');
-                }
-                $scope.full = 0;
-                        $scope.panel_fullscreen($(".panel"));
-                        if ($scope.activePanel == - 1) {
-                var map = leafletData.getMap("issuesmap").then(
-                        function (map) {
-                        map.invalidateSize(true);
-                        }
-
-                );
-                } else {
-                var map = leafletData.getMap("panelmap").then(
-                        function (map) {
-                        map.invalidateSize(true);
-                        }
-
-                );
-                }
-                }
-                }
-                };
+//                        $(window).trigger('resize');
+//                        $scope.full = 1;
+//                        $scope.panel_fullscreen($(".panel"));
+//                        if ($scope.activePanel == - 1) {
+//                var map = leafletData.getMap("issuesmap").then(
+//                        function (map) {
+//                        map.invalidateSize(true);
+//                        }
+//
+//                );
+//                } else {
+//                var map = leafletData.getMap("panelmap").then(
+//                        function (map) {
+//                        map.invalidateSize(true);
+//                        }
+//
+//                );
+//                }
+//                } else {
+//                $scope.street = 0;
+//                        isfixed = 0;
+//                        var bottom = $('.xn-profile').position().top;
+//                        var outerHeight = $('.xn-profile').height();
+//                        if ($(window).scrollTop() > bottom + outerHeight && $(window).width() >= 992) {
+//                if (isfixed == 0){
+//
+//                $("#right-column").css({position: 'fixed', top: '4%', width : $("#right-column").width()});
+//                }
+//                } else {
+//                $("#right-column").removeAttr('style');
+//                }
+//                $scope.full = 0;
+//                        $scope.panel_fullscreen($(".panel"));
+//                        if ($scope.activePanel == - 1) {
+//                var map = leafletData.getMap("issuesmap").then(
+//                        function (map) {
+//                        map.invalidateSize(true);
+//                        }
+//
+//                );
+//                } else {
+//                var map = leafletData.getMap("panelmap").then(
+//                        function (map) {
+//                        map.invalidateSize(true);
+//                        }
+//
+//                );
+//                }
+//                }
+//                }
+//                };
                 $scope.totalpages = function () {
                 if (params.status != undefined && params.status instanceof Array){
                 params.status = params.status.join("|");
@@ -580,8 +586,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
         $scope.tabs.activeTab = index;
                 $scope.tabs.activeTitle = $rootScope.Variables.activeTitles[index];
                 $scope.tabs.activeIcon = $rootScope.Variables.activeIcons[index];
-                $scope.activePanel = - 1;
-                $scope.currentactive = - 1;
+//                $scope.activePanel = - 1;
+//                $scope.currentactive = - 1;
 //            else if (issue == 'plumbing') {
 //                $scope.tabs.activeTitle = "Ύδρευσης/Αποχέτευσης";
 //                $scope.tabs.activeIcon = "fa fa-umbrella";
@@ -658,53 +664,56 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 $scope.panels[panel.order].component = result[0].component;
                 $scope.panels[panel.order].severity = {en: result[0].severity, gr: severity};
                 $scope.panels[panel.order].priority = {en: result[0].priority, gr: priority};
-        });
-                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: panel.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
-                function (response, status, headers, config) {
-                var history = [];
-                        var com;
-                        var tag_pos;
-                        for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
-                com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
-                        if (com == "undefined") {
-                com = "";
-                }
-                if (com.substring(0, 7) == "*** Bug") {
-                com = "";
-                }
-
-                switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
-                case "CONFIRMED":
-                        case "IN_PROGRESS":
-                        case "RESOLVED":
-                        tag_pos = 0;
-                        break;
-                        default:
-                        tag_pos = 1;
-                        break;
-                }
-
-                if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
-                var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
-                        if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
-                history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
-                } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
-                history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
-                } else {
-                history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
-                }
-                }
-                }
-
-                if (panel.comment == undefined) {
-                panel.comment = '';
-                }
-                $scope.panels[panel.order].history = history;
-                        $scope.panels[panel.order].comment = com;
-                        $scope.itemClicked($index, event);
+                $scope.itemClicked($index, event);
                         $scope.linkmap(panel);
                         $scope.nloaded = false;
-                });
+        });
+//                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: panel.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+//                function (response, status, headers, config) {
+//                var history = [];
+//                        var com;
+//                        var tag_pos;
+//                        for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
+//                com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
+//                        if (com == "undefined") {
+//                com = "";
+//                }
+//                if (com.substring(0, 7) == "*** Bug") {
+//                com = "";
+//                }
+//
+//                switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
+//                case "CONFIRMED":
+//                        case "IN_PROGRESS":
+//                        case "RESOLVED":
+//                        tag_pos = 0;
+//                        break;
+//                        default:
+//                        tag_pos = 1;
+//                        break;
+//                }
+//
+//                if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
+//                var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
+//                        if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
+//                history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
+//                } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
+//                history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+//                } else {
+//                history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+//                }
+//                }
+//                }
+//
+//                if (panel.comment == undefined) {
+//                panel.comment = '';
+//                }
+//                $scope.panels[panel.order].history = history;
+//                        $scope.panels[panel.order].comment = com;
+//                        $scope.itemClicked($index, event);
+//                        $scope.linkmap(panel);
+//                        $scope.nloaded = false;
+//                });
                 Issue2MapService.query({issueID: panel.mongoId}, function (issue) {
 
                 if (issue[0] != undefined) {
@@ -733,7 +742,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
         }
 
         $scope.panels = [];
-                $scope.activePanel = [];
+        //        $scope.activePanel = [];
                 moment.locale('el');
                 $scope.closedissues = false;
                 $scope.assignissues = false;
@@ -785,8 +794,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 // console.log(args.model.panelid);
                 // console.log($scope.panels[args.model.panelid]);
 
-                $scope.activePanel = - 1;
-                        $scope.currentactive = - 1;
+              //  $scope.activePanel = - 1;
+              //          $scope.currentactive = - 1;
                         $scope.pimage = "";
                         $scope.pclass = "";
                         displayFixedPoints();
@@ -796,19 +805,19 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 var markersGarbage;
                 var markersLightning;
                 var displayFixedPoints = function () {
-                if ($scope.activePanel != - 1 && current_layer == 1){
-                leafletData.getMap("panelmap").then(function (map) {
-                layers_ref.removeFrom(map);
-                        map.removeLayer(markersGarbage);
-                        map.removeLayer(markersLightning);
-                });
-                }
+//                if ($scope.activePanel != - 1 && current_layer == 1){
+//                leafletData.getMap("panelmap").then(function (map) {
+//                layers_ref.removeFrom(map);
+//                        map.removeLayer(markersGarbage);
+//                        map.removeLayer(markersLightning);
+//                });
+//                }
 
-                $scope.buildings_view = function(){
-                if ($scope.currentactive != - 1){
-                $window.open("https://www.google.gr/maps/@" + $scope.panels[$scope.currentactive].lat + "," + $scope.panels[$scope.currentactive].lng + ",200a,20y,41.27t/data=!3m1!1e3?hl=en");
-                }
-                }
+//                $scope.buildings_view = function(){
+//                if ($scope.currentactive != - 1){
+//                $window.open("https://www.google.gr/maps/@" + $scope.panels[$scope.currentactive].lat + "," + $scope.panels[$scope.currentactive].lng + ",200a,20y,41.27t/data=!3m1!1e3?hl=en");
+//                }
+//                }
 
                 $scope.fixedmarkersGarbage = [];
                         $scope.fixedmarkersLightning = [];
@@ -855,15 +864,15 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                                         chunkedLoading: true
                                 });
                                 markersGarbage.addLayers($scope.fixedmarkersGarbage);
-                                if ($scope.activePanel == - 1){
+//                                if ($scope.activePanel == - 1){
                         leafletData.getMap("issuesmap").then(function (map) {
                         map.addLayer(markersGarbage);
                         });
-                        } else{
-                        leafletData.getMap("panelmap").then(function (map) {
-                        map.addLayer(markersGarbage);
-                        });
-                        }
+//                        } else{
+//                        leafletData.getMap("panelmap").then(function (map) {
+//                        map.addLayer(markersGarbage);
+//                        });
+//                        }
                         markersLightning = L.markerClusterGroup({
                         name: 'Φωτισμός',
                                 visible: true,
@@ -875,15 +884,15 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                                 chunkedLoading: true
                         });
                                 markersLightning.addLayers($scope.fixedmarkersLightning);
-                                if ($scope.activePanel == - 1){
+//                                if ($scope.activePanel == - 1){
                         leafletData.getMap("issuesmap").then(function (map) {
                         map.addLayer(markersLightning);
                         });
-                        } else{
-                        leafletData.getMap("panelmap").then(function (map) {
-                        map.addLayer(markersLightning);
-                        });
-                        }
+//                        } else{
+//                        leafletData.getMap("panelmap").then(function (map) {
+//                        map.addLayer(markersLightning);
+//                        });
+//                        }
                         var baseLayers = {
                         //'Open Street Map': osmLayer,
                         //'Google Maps':googleRoadmap,
@@ -894,18 +903,18 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                                 "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>": markersGarbage,
                                         "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
                                 };
-                                if ($scope.activePanel == - 1){
+ //                               if ($scope.activePanel == - 1){
                         leafletData.getMap("issuesmap").then(function (map) {
-                        L.control.layers(baseLayers, overlays).addTo(map);
+                                L.control.layers(baseLayers, overlays).addTo(map);
                                 map.invalidateSize(true);
                         });
-                        } else{
-                        current_layer = 1;
-                                leafletData.getMap("panelmap").then(function (map) {
-                        layers_ref = L.control.layers(baseLayers, overlays).addTo(map); ;
-                                map.invalidateSize(true);
-                        });
-                        }
+//                        } else{
+//                        current_layer = 1;
+//                                leafletData.getMap("panelmap").then(function (map) {
+//                        layers_ref = L.control.layers(baseLayers, overlays).addTo(map); ;
+//                                map.invalidateSize(true);
+//                        });
+//                        }
                         });
                 };
                 $scope.refreshPages = function (startPage, arrow_type) {
@@ -958,8 +967,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 var pageload = function (callback) {
                 $scope.activePage = 1;
                         $scope.startPage = 1;
-                        $scope.activePanel = - 1;
-                        $scope.currentactive = - 1;
+//                        $scope.activePanel = - 1;
+//                        $scope.currentactive = - 1;
                         $scope.pageIndex = 1;
                         $scope.isloading = true;
                         if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("role") == "sensecityAdmin") {
@@ -974,19 +983,19 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
                 $scope.itemClicked = function ($index, event) {
 
-//                $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
-                $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
-                        if ($scope.currentactive != $index) {
+                $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+                //$window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+              //          if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
 //                            setTimeout(function () {
 //                                $("html,body").scrollTop($(event.target).offset().top - $("#activePanel").height());
 //                            }, 500);
 //                        } else {
-                $scope.padmin = $scope.panels[$index].admin;
-                        $scope.pimage = $scope.panels[$index].image;
+       //         $scope.padmin = $scope.panels[$index].admin;
+       //                 $scope.pimage = $scope.panels[$index].image;
                         // panorama.setPosition(new google.maps.LatLng($scope.panels[$index].lat, $scope.panels[$index].lng));
-                        $scope.activePanel = $index;
-                        $scope.currentactive = $index;
+       //                 $scope.activePanel = $index;
+       //                 $scope.currentactive = $index;
                         //setTimeout(function () {
 //                        $("html,body").scrollTop($(event.target).offset().top);
 //                        }, 400);
@@ -994,14 +1003,14 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         //$("html,body").scrollTop($(".timeline-item-active span").offset().top);
                         // }, 400);
                         //$(window).resize();
-                        $(window).trigger('resize');
-                } else {
-                current_layer = 0;
-                        $scope.pimage = "";
-                        $scope.padmin = true;
-                        $scope.activePanel = - 1;
-                        $scope.currentactive = - 1;
-                }
+       //                 $(window).trigger('resize');
+//                } else {
+//                current_layer = 0;
+//                        $scope.pimage = "";
+//                        $scope.padmin = true;
+//                        $scope.activePanel = - 1;
+//                        $scope.currentactive = - 1;
+//                }
                 };
                         var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
                         $scope.component = $rootScope.Variables.components[0];
@@ -1106,7 +1115,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 var li = 0;
                 $scope.linkmap = function (panel) {
                 $scope.markers = [];
-                        displayFixedPoints();
+                       // displayFixedPoints();
                         $scope.panel_issue = panel.issuenameGR;
                         $scope.initial_desc = panel.initialdesc;
                         Issue2MapService.query({issueID: panel.mongoId}, function (issue) {
@@ -1238,13 +1247,13 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 }
                 $scope.comment = panel.comment;
                         update();
-                        if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.selectedComponent && $scope.assignissues == false && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
-                setTimeout(function () {
-                $(e.target).closest(".timeline-item-active").remove();
-                        $scope.activePanel = - 1;
-                        $scope.currentactive = - 1;
-                }, 3000);
-                }
+ //                       if ((panel.status.gr == 'Σε εκτέλεση' && panel.component != $scope.selectedComponent && $scope.assignissues == false && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+//                setTimeout(function () {
+//                $(e.target).closest(".timeline-item-active").remove();
+//                        $scope.activePanel = - 1;
+//                        $scope.currentactive = - 1;
+              //  }, 3000);
+ //               }
                 $scope.selectedStatus = panel.status;
                         $scope.component = panel.component;
                         panel.priority = seldpriority;
@@ -1267,13 +1276,13 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         $scope.comment = panel.comment;
                 }
                 update();
-                        if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.selectedComponent && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
-                setTimeout(function () {
-                $(e.target).closest(".timeline-item-active").remove();
-                        $scope.activePanel = - 1;
-                        $scope.currentactive = - 1;
-                }, 3000);
-                }
+//                        if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.selectedComponent && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+//                setTimeout(function () {
+//                $(e.target).closest(".timeline-item-active").remove();
+//                        $scope.activePanel = - 1;
+//                        $scope.currentactive = - 1;
+//                }, 3000);
+//                }
                 $scope.selectedStatus = panel.status;
                         $scope.selectedResolution = panel.resolution;
                 }
@@ -1295,13 +1304,13 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         $scope.comment = panel.comment;
                 }
                 update();
-                        if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.selectedComponent && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
-                setTimeout(function () {
-                $(e.target).closest(".timeline-item-active").remove();
-                        $scope.activePanel = - 1;
-                        $scope.currentactive = - 1;
-                }, 3000);
-                }
+//                        if ((panel.status.gr == 'Σε εκτέλεση' && $scope.assignissues == false && panel.component != $scope.selectedComponent && $scope.allclosedissues == false) || (panel.status.gr == 'Ολοκληρωμένο' && (($scope.closedissues == false && $scope.allclosedissues == false) || ($scope.closedissues == true && panel.component != $scope.component)))) {
+//                setTimeout(function () {
+//                $(e.target).closest(".timeline-item-active").remove();
+//                        $scope.activePanel = - 1;
+//                        $scope.currentactive = - 1;
+//                }, 3000);
+//                }
                 $scope.selectedStatus = panel.status;
                         $scope.selectedResolution = panel.resolution;
                 }
@@ -1333,8 +1342,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
         } else {
         $scope.closedissues = false;
         }
-        $scope.activePanel = - 1;
-                $scope.currentactive = - 1;
+//        $scope.activePanel = - 1;
+//                $scope.currentactive = - 1;
         };
                 $scope.toggle_allclosedissues = function () {
                 if ($scope.allclosedissues == false) {
@@ -1344,8 +1353,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 } else {
                 $scope.allclosedissues = false;
                 }
-                $scope.activePanel = - 1;
-                        $scope.currentactive = - 1;
+//                $scope.activePanel = - 1;
+//                        $scope.currentactive = - 1;
                 };
                 $scope.toggle_inprogressissues = function () {
                 if ($scope.assignissues == false) {
@@ -1355,16 +1364,16 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 } else {
                 $scope.assignissues = false;
                 }
-                $scope.activePanel = - 1;
-                        $scope.currentactive = - 1;
+//                $scope.activePanel = - 1;
+//                        $scope.currentactive = - 1;
                 };
                 $scope.refresh = function () {
-                for (var i = 0; i < $scope.street_view_markers.length; i++){
-                if ($scope.street_view_markers[i] != "ncoords"){
-                $scope.street_view_markers[i].setMap(null);
-                }
-                }
-                $scope.street_view_markers = [];
+//                for (var i = 0; i < $scope.street_view_markers.length; i++){
+//                if ($scope.street_view_markers[i] != "ncoords"){
+//                $scope.street_view_markers[i].setMap(null);
+//                }
+//                }
+//                $scope.street_view_markers = [];
                         if (current_layer == 1){
                 current_layer = 0;
                         displayFixedPoints();
@@ -1386,8 +1395,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                                 $cookieStore.remove("username");
                         }
                         });
-                        $scope.activePanel = - 1;
-                        $scope.currentactive = - 1;
+//                        $scope.activePanel = - 1;
+//                        $scope.currentactive = - 1;
                         var query_component = [];
                         if ($cookieStore.get("uuid") != "undefined") {
                 $scope.panels = [];

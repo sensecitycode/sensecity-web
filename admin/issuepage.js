@@ -2,7 +2,6 @@ var app = angular.module('issuepage', ['adminapp']);
 
 app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$location', 'ToGrService', 'PriorityTag', 'SeverityTag','PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService','leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $location, ToGrService, PriorityTag, SeverityTag,PriorityTagEn, SeverityTagEn, ResolutionTagEn, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, CommentService,leafletData) {
         
-        
         var panorama;
         var isfixed = 0;
         var small = 0;
@@ -14,7 +13,12 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         $scope.loaded = 0;
         $scope.ALLcenter = $rootScope.Variables.center;
         $scope.ALLmarkers = [];
-
+        
+        leafletData.getMap("issuesmap").then(
+                        function (map) {
+                          console.log(map);
+                        });
+        
         var issue_id = $location.$$url.replace('/issuepage=', '');
         $scope.link = $location.absUrl();
 
@@ -38,6 +42,14 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         $scope.signout_popdown = function(){
         $("#mb-signout").attr("class", "message-box animated fadeIn");
         }
+        
+        $("html").removeClass("body-full-height");
+                $scope.$on('$routeChangeStart', function (next, last) {
+                leafletData.getMap("issuesmap").then(
+                        function (map) {
+                          mapref.removeFrom(map);
+                        });
+                });
         
         $scope.initialize = function () {
 
@@ -449,7 +461,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
             var markersGarbage;
             var markersLightning;
             var displayFixedPoints = function () {
-
+                
                 $scope.buildings_view = function () {
                         $window.open("https://www.google.gr/maps/@" + $scope.panel.lat + "," + $scope.panel.lng + ",200a,20y,41.27t/data=!3m1!1e3?hl=en");
                 };

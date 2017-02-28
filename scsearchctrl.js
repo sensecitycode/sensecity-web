@@ -343,9 +343,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
 
                             if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
-                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
                             } else {
-                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
                             }
 
                             popup.update();
@@ -372,7 +372,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         }).query(obj, function (result) {
                             $scope.markers = [];
                             var issueid = result[0]._id;
-                                var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + issueid;
+                                var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + issueid;
                                 var positionlat = result[0].loc.coordinates[1];
                                 var positionlon = result[0].loc.coordinates[0];
                                 var issue = result[0].issue;
@@ -474,7 +474,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             $scope.markers = [];
                             angular.forEach(searchissues, function (value, key) {
                                 var issueid = value._id;
-                                var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/#/scissuemap=" + issueid;
+                                var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + issueid;
                                 var positionlat = value.loc.coordinates[1];
                                 var positionlon = value.loc.coordinates[0];
                                 var issue = value.issue;

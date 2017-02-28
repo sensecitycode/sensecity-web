@@ -233,8 +233,6 @@
                                     <datalist id="taddress">
                                     </datalist>
                                     <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li ng-hide="(full == 1 && street == 0) || currentactive == - 1 || check_panorama(street_view_markers[currentactive])"><span tooltip-side="bottom" tooltips tooltip-template="Δρόμοι"><a ng-click="removeFixeds()"href="#/admin" class="panel-fullscreen"><span class="fa fa-street-view"></span></a></span></li>
-                                        <li ng-hide ="currentactive == - 1"><span style="cursor:pointer" tooltip-side="bottom" tooltips tooltip-template="3D Κτίρια"><a ng-click="buildings_view()"><span class="fa fa-eercast"></span></a></span></li>
                                         <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
                                         <li ng-show="full == 1 && street != 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed()" href="#/admin" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
                                         <li><span tooltip-side="bottom" tooltips tooltip-template="Ανανέωση προβλημάτων"><a ng-click="reset_search(); refresh()"href="#/admin" class="panel-refresh"><span class="fa fa-refresh"></span></a></span></li>                            
