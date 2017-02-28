@@ -306,7 +306,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
         if ($scope.valid) {
             var sparams = {"city": $scope.city, "bug_id": issue_id, "image_field": 1};
-            $http.get($rootScope.APIADMIN+"/admin/issue", {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+            $http.get($rootScope.Variables.APIADMIN+"/admin/issue", {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                 var issue_name = ToGrService.issueName(result[0].issue);
                 var panelTitle = ToGrService.statusTitle(result[0].status, result[0].resolution);
                 var description = CommentService.field(result[0].status);
