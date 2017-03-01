@@ -224,6 +224,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             $scope.markers.push(mainMarker);
                             $scope.latlabeltxt = results[0].geometry.location.lat();
                             $scope.lnglabeltxt = results[0].geometry.location.lng();
+                                           leafletData.getMap().then(
+                    function (map) {
+                        map.invalidateSize(true);
+                    }
+            );
+                            
                         } else {
                             var addresses_options = "";
                             for (var l = 0; l < results.length; l++) {
@@ -236,6 +242,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             });
 
                             $("#address-flexdatalist").focus();
+                               
                         }
                         $scope.coords_search = 0;
                     } else {
@@ -249,7 +256,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
 
             $("#submit").click(function () {
-                $scope.geocode();
+              $scope.geocode();
+//                $scope.map_center = {lat: 38.246639,lng: ‎21.734573, zoom: 18};
+
             });
 
             $scope.updateCompoType = function () {

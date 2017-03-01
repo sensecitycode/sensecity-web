@@ -117,8 +117,13 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 geocoder.geocode({'address': address}, function (results, status) {
                 if (status === 'OK') {
                 if (results.length == 1) {
-                $scope.ALLcenter = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng(), zoom: 17};
-                } else{
+                $scope.ALLcenter = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng(), zoom: 18};
+                             leafletData.getMap().then(
+                    function (map) {
+                        map.invalidateSize(true);
+                    }
+            );
+                 } else{
                 var addresses_options = "";
                         for (var l = 0; l < results.length; l++) {
                 addresses_options += "<option>" + results[l].formatted_address + "</option>";
@@ -282,7 +287,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 searchparams.mobile = $scope.smobile;
                 searchparams.city = $rootScope.Variables.city_name;
                 $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: searchparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-        $scope.total_pages = Math.ceil(result.length / 20);
+                    $scope.total_pages = Math.ceil(result.length / 20);
                 $scope.refreshPages(1);
                 $scope.refresh();
         });
@@ -444,7 +449,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 //                }
 //                }
 //                };
-                $scope.totalpages = function () {
+                $scope.totalpages = function (newstart,arrow) {
                 if (params.status != undefined && params.status instanceof Array){
                 params.status = params.status.join("|");
                 }
@@ -476,6 +481,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
                 $http.get($rootScope.Variables.host + '/api/1.0/issue', {params:parameter, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                         function (response, status, headers, conf) {
+                            $window.alert(response.length);
                         $scope.total_pages = Math.ceil(response.length / 20);
                                 if (init == 0) {
                         if (tabchanged == 1 || sreset == 1) {
@@ -486,6 +492,10 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         }
                         $scope.refreshPages(1);
                                 $scope.bugsearch();
+                        }else{
+                            $window.alert(newstart+" "+arrow);
+                           refreshPages(newstart,arrow);
+                           refresh();
                         }
                         } else {
                         init = 0;
@@ -918,7 +928,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         });
                 };
                 $scope.refreshPages = function (startPage, arrow_type) {
-                if (startPage <= 0) {
+                 if (startPage <= 0) {
                 $scope.startPage = 1;
                 } else if (startPage + 4 > $scope.total_pages) {
                 if ($scope.total_pages < 5) {
@@ -983,8 +993,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
                 $scope.itemClicked = function ($index, event) {
 
-              //  $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
-                $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+                $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+               // $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
               //          if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
 //                            setTimeout(function () {
@@ -1033,12 +1043,12 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         displayFixedPoints();
                         $scope.bugsearchinit = function () {
 
-                        $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#/admin">«</a></span></li>'
-                                + '<li ng-click="totalpages();refreshPages(startPage - 5,2);refresh()"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#/admin"><</a></span></li>';
+                        $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages(1,1);"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#/admin">«</a></span></li>'
+                                + '<li ng-click="totalpages(startPage - 5,2)"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#/admin"><</a></span></li>';
                                 $scope.refreshPages(1);
                                 $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#/admin">{{page}}</a></span></li>';
-                                $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#/admin">></a></span></li>'
-                                + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
+                                $scope.pages += '<li ng-click="totalpages(startPage + 5,3)"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#/admin">></a></span></li>'
+                                + '<li ng-click="totalpages(total_pages - 4,4)"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
                                 params.city = $rootScope.Variables.city_name;
                                 $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                         total_counter = result.length;
@@ -1443,13 +1453,12 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 }
 
                 $scope.bugsearch = function () {
-
 //                $(".xn-openable").first().attr("class", "xn-openable active");
-                $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages();refreshPages(1,1);refresh()"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#/admin">«</a></span></li>'
-                        + '<li ng-click="totalpages();refreshPages(startPage - 5,2);refresh()"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#/admin"><</a></span></li>';
+                $scope.pages = '<ul style="margin-bottom: -3%;margin-top:12%" class="pagination pagination-sm pull-right"><li ng-click="totalpages(1,1);"><span tooltip-side="left" tooltips tooltip-template="Πρώτη σελίδα"><a href="#/admin">«</a></span></li>'
+                        + '<li ng-click="totalpages(startPage-5,2);"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#/admin"><</a></span></li>';
                         $scope.pages += '<li ng-repeat="page in page_set"  ng-click="updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#/admin">{{page}}</a></span></li>';
-                        $scope.pages += '<li ng-click="totalpages();refreshPages(startPage + 5,3);refresh()"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#/admin">></a></span></li>'
-                        + '<li ng-click="totalpages();refreshPages(total_pages - 4,4);refresh()"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
+                        $scope.pages += '<li ng-click="totalpages(startPage + 5 ,3)"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#/admin">></a></span></li>'
+                        + '<li ng-click="totalpages(total_pages-4,4)"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
                         if (search_button == 1){
                 delete params['departments'];
                         delete params['status'];

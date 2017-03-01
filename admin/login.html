@@ -9,21 +9,21 @@
                     </center>
                 </div>    
                 <div class="login-body">
-                    <div class="login-title"><strong>Log In</strong> to your account</div>
+                    <div class="login-title"><strong>Είσοδος</strong> στο λογαριασμό</div>
                     <form action="admin.html" class="form-horizontal" method="post">
                         <div class="form-group">
                             <div class="col-md-12">
-                                <input type="text" class="form-control" placeholder="Username" ng-model="username_l" ng-focus="user_focus($event)" ng-blur="user_blur($event, username_l)"/>
+                                <input type="text" class="form-control" placeholder="Όνομα Χρήστη" ng-model="username_l" ng-focus="user_focus($event)" ng-blur="user_blur($event, username_l)"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
-                                <input type="password" class="form-control" placeholder="Password" ng-model="password_l" ng-focus="lock_focus($event)" ng-blur="lock_blur($event, password_l)"/>
+                                <input type="password" class="form-control" placeholder="Κωδικός" ng-model="password_l" ng-focus="lock_focus($event)" ng-blur="lock_blur($event, password_l)"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <div ng-click="authenticate_us($event)" id="login_btn" class="col-md-6" style="display:table; width: 100%">
-                                <center style="display:table-cell" class="btn btn-info btn-block">Log In</center>
+                                <center style="display:table-cell" class="btn btn-info btn-block">Είσοδος</center>
                             </div>
                         </div>                  
                     </form>

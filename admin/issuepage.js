@@ -612,6 +612,9 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                         }
                         
                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                            if($scope.panel.comment == undefined){
+                                $scope.panel.comment = "undefined";
+                            }
                             $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.panel.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                     function (response, status, headers, conf) {
                                         var panel_index = $rootScope.Variables.components.indexOf($scope.panel.component);
