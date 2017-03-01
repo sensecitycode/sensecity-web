@@ -481,7 +481,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
                 $http.get($rootScope.Variables.host + '/api/1.0/issue', {params:parameter, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                         function (response, status, headers, conf) {
-                            $window.alert(response.length);
+                           // $window.alert(response.length);
                         $scope.total_pages = Math.ceil(response.length / 20);
                                 if (init == 0) {
                         if (tabchanged == 1 || sreset == 1) {
@@ -493,7 +493,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         $scope.refreshPages(1);
                                 $scope.bugsearch();
                         }else{
-                            $window.alert(newstart+" "+arrow);
+                           // $window.alert(newstart+" "+arrow);
                            refreshPages(newstart,arrow);
                            refresh();
                         }
