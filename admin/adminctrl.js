@@ -993,8 +993,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
                 $scope.itemClicked = function ($index, event) {
 
-                $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
-               // $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+             //   $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+                $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
               //          if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
 //                            setTimeout(function () {
