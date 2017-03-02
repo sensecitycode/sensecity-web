@@ -14,6 +14,21 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         $scope.ALLcenter = $rootScope.Variables.center;
         $scope.ALLmarkers = [];
         
+        $scope.layers = {
+                baselayers: {
+                    openStreetMap: {
+                        name: 'OpenStreetMap',
+                        type: 'xyz',
+                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        layerOptions: {
+                            showOnSelector: false,
+                            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+                        }
+                    }
+                }
+
+            };
+        
         leafletData.getMap("issuesmap").then(
                         function (map) {
                           console.log(map);
@@ -92,9 +107,9 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 //            }
 //        });
 
-        function authorizedu() {
-            if ($cookieStore.get("uuid") !== undefined) {
-                $scope.valid = true;
+        function authorizedu(city,department) {
+            if ($cookieStore.get("uuid") !== undefined && $cookieStore.get("department") == department && $cookieStore.get("city") == city) {
+                        $scope.valid = true;
             } else {
                 $scope.valid = false;
             }
@@ -142,7 +157,6 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
             }
         }
 
-        authorizedu();
         username();
         userole();
         
@@ -152,7 +166,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 nav_toggle = 1;
             }else{
                 $(".x-navigation.x-navigation-open").attr("class", "x-navigation");
-                nav_toggle = 0
+                nav_toggle = 0;
             }
         }
         
@@ -304,9 +318,11 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 //            
 //        });
 
-        if ($scope.valid) {
-            var sparams = {"city": $scope.city, "bug_id": issue_id, "image_field": 1};
+            var sparams = { "bug_id": issue_id, "image_field": 1};
             $http.get($rootScope.Variables.APIADMIN+"/admin/issue", {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                //authorizedu(result[0].bug_component);
+                $scope.valid = true;
+                if ($scope.valid) {
                 var issue_name = ToGrService.issueName(result[0].issue);
                 var panelTitle = ToGrService.statusTitle(result[0].status, result[0].resolution);
                 var description = CommentService.field(result[0].status);
@@ -426,25 +442,12 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     $scope.pimage = $scope.panel.image;
                     $scope.loaded = 1;
                     });
-                    });
+                    
 
             $scope.defaults = {
                 scrollWheelZoom: false
             };
-            $scope.layers = {
-                baselayers: {
-                    openStreetMap: {
-                        name: 'OpenStreetMap',
-                        type: 'xyz',
-                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                        layerOptions: {
-                            showOnSelector: false,
-                            attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-                        }
-                    }
-                }
-
-            };
+            
             var redMarker = {
                 type: 'awesomeMarker',
                 icon: 'info-circle',
@@ -622,7 +625,10 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/tags', {"add": [$scope.panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                 function (response, status, headers, config) {
                                                      setTimeout(function(){
-                                     google.maps.event.trigger(panorama, "resize");},1);
+                                     //google.maps.event.trigger(panorama, "resize");},1
+                                              $window.location.href = "index.html#/admin";
+                                          },2000);
+                                    
                                                 });
                                     });
                             var panelTitle = ToGrService.statusTitle(seldstatus.en, seldResolution.en);
@@ -722,7 +728,6 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 //                            $scope.selectedResolution = $scope.panel.resolution;
                         }
                     }
-
                 } else {
                     $scope.valid = false;
                     $cookieStore.remove("uuid");
@@ -734,6 +739,8 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     $cookieStore.remove("bug_token");
                 }
             };
+            }
+            });
             //$(window).resize("px");
-        }
+
     }]);
