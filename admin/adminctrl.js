@@ -12,8 +12,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 $(document).off("scroll");
                         leafletData.getMap("issuesmap").then(
                         function (map) {
-                        mapref.removeFrom(map);
-                                map.removeLayer(markersGarbage);
+                        map.removeLayer(markersGarbage);
                                 map.removeLayer(markersLightning);
                         });
                 });
@@ -21,22 +20,21 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 var params;
                 var tabchanged = 2;
                 var init = 1;
-                var issue_index;
+                //var issue_index;
                 var nav_toggle = 0;
                 var isfixed = 0;
-                var issue_desc;
                 var mapnloaded = true;
-                var small = 0;
-                var current_layer = 0;
+                //var small = 0;
+                //var current_layer = 0;
                 var search_button = 0;
-                var strvcounter = 0;
+                // var strvcounter = 0;
                 var sreset = 0;
                 var total_counter;
                 var issues_Array = [{id:"Κωδικός Προβλήματος", department:"Τμήμα Ανάθεσης Προβλήματος", description:"Περιγραφή Προβλήματος", state:"Κατάσταση Προβλήματος", date:"Καταγραφή Προβλήματος", priority:"Προτεραιότητα Προβλήματος", severity:"Σπουδαιότητα Προβλήματος", name:"Ονοματεπώνυμο Πολίτη", telephone:"Τηλέφωνο Πολίτη", email:"E-mail Πολίτη"}];
                 $scope.isloading = true;
                 $scope.full = 0;
-                $scope.street = 0;
-                $scope.pimage = "";
+                //$scope.street = 0;
+                // $scope.pimage = "";
                 $scope.padmin = true;
                 $scope.duplicof = "";
                 $scope.nloaded = true;
@@ -69,33 +67,33 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 //                var panorama;
 //                $scope.street_view_markers = [];
 //                var checked_categories = [];
-//                function doQuery(sparams) {
-//                var d = $q.defer();
-//                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/search', sparams, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-//                for (var j = 0; j < $scope.panels.length; j++){
-//                if ($scope.panels[j].id == sparams.id){
-//                var priority = PriorityTag.priority_type(result[0].priority);
-//                        var severity = SeverityTag.severity_type(result[0].severity);
-//                        var state;
-//                        if ($scope.panels[j].status == 'CONFIRMED'){
-//                state = 'ΑΝΟΙΧΤΟ';
-//                } else if ($scope.panels[j].status == 'IN_PROGRESS'){
-//                state = 'ΣΕ ΕΚΤΕΛΕΣΗ';
-//                } else{
-//                state = 'ΟΛΟΚΛΗΡΩΘΗΚΕ';
-//                }
-//                issues_Array[j + 1] = {id: $scope.panels[j].id, department: result[0].component, description: $scope.panels[j].value_desc, state: state, date: $scope.panels[j].time, priority: priority, severity: severity, name: result[0].cf_creator, telephone: result[0].cf_mobile, email: result[0].cf_email};
-//                        break;
-//                }
-//                }
-//                d.resolve("");
-//                });
-//                        return d.promise;
-//                }
-
-                $scope.signout_popup = function(){
-                $("#mb-signout").attr("class", "message-box animated fadeIn open");
+                function doQuery(sparams) {
+                var d = $q.defer();
+                        $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params:sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                for (var j = 0; j < $scope.panels.length; j++){
+                if ($scope.panels[j].id == sparams.bug_id){
+                var priority = PriorityTag.priority_type(result[0].bug_priority);
+                        var severity = SeverityTag.severity_type(result[0].bug_severity);
+                        var state;
+                        if ($scope.panels[j].status == 'CONFIRMED'){
+                state = 'ΑΝΟΙΧΤΟ';
+                } else if ($scope.panels[j].status == 'IN_PROGRESS'){
+                state = 'ΣΕ ΕΚΤΕΛΕΣΗ';
+                } else{
+                state = 'ΟΛΟΚΛΗΡΩΘΗΚΕ';
                 }
+                issues_Array[j + 1] = {id: $scope.panels[j].id, department: result[0].bug_component, description: $scope.panels[j].value_desc, state: state, date: $scope.panels[j].time, priority: priority, severity: severity, name: result[0].name, telephone: result[0].phone, email: result[0].email};
+                        break;
+                }
+                }
+                d.resolve("");
+                });
+                        return d.promise;
+                }
+
+        $scope.signout_popup = function(){
+        $("#mb-signout").attr("class", "message-box animated fadeIn open");
+        }
 
         $scope.signout_popdown = function(){
         $("#mb-signout").attr("class", "message-box animated fadeIn");
@@ -146,7 +144,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         var l = 0;
                         var deferred = $q.defer();
                         angular.forEach($scope.panels, function (value, key) {
-                        var sparams = {"id": value.id, "include_fields": [ "component", "status", "resolution", "cf_mobile", "cf_email", "cf_creator", "severity", "priority", "severity"]};
+                        //var sparams = {"id": value.id, "include_fields": [ "component", "status", "resolution", "cf_mobile", "cf_email", "cf_creator", "severity", "priority", "severity"]};
+                        var sparams = {"bug_id": value.id};
                                 csv_promises.push(doQuery(sparams));
                         });
                         $q.all(csv_promises).then(function(data){
@@ -490,7 +489,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
                 $http.get($rootScope.Variables.host + '/api/1.0/issue', {params:parameter, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                         function (response, status, headers, conf) {
-                                $scope.total_pages = Math.ceil(response.length / 20);
+                        $scope.total_pages = Math.ceil(response.length / 20);
                                 if (init == 0) {
                         if (tabchanged == 1 || sreset == 1) {
                         tabchanged = 0;
@@ -499,9 +498,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                                 sreset = 0;
                         }
                         $scope.refreshPages(1);
-                        
-                        params = parameter;
-                        params.limit = 20;
+                                params = parameter;
+                                params.limit = 20;
                                 $scope.bugsearch();
                         } else{
                         $scope.refreshPages(newstart, arrow);
@@ -617,6 +615,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                 $scope.tabs.activeTitle = $scope.tabs[index].title;
                 $scope.tabs.activeIcon = $scope.tabs[index].icon;
         }
+
+        //vale kai total_pages gia to first page
         };
 //                $(document).on("click", ".panel-fullscreen", function () {
 //
@@ -734,31 +734,31 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 //                        $scope.linkmap(panel);
 //                        $scope.nloaded = false;
 //                });
-                Issue2MapService.query({issueID: panel.mongoId}, function (issue) {
-
-                if (issue[0] != undefined) {
-                if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
-                $scope.image_width = "100%";
-                        $scope.panels[panel.order].image = "";
-                        $scope.pclass = "";
-                        $scope.panels[panel.order].image = issue[0].image_name;
-                } else {
-                $scope.image_width = "60%";
-                        $scope.panels[panel.order].image = "";
-                        $scope.pclass = "";
-                        $scope.panels[panel.order].image = issue[0].image_name;
-                        $scope.pclass = "fa fa-" + $rootScope.Variables.icons[issue[0].issue].icon;
-                }
-                $scope.pimage = $scope.panels[panel.order].image;
-                        $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
-                        $scope.panels[panel.order].lng = issue[0].loc.coordinates[0];
-                        $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
-                        $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issue], "panelid": panel.ArrayID});
-                }
+//                Issue2MapService.query({issueID: panel.mongoId}, function (issue) {
+//
+//                if (issue[0] != undefined) {
+//                if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
+//                $scope.image_width = "100%";
+//                        $scope.panels[panel.order].image = "";
+//                        $scope.pclass = "";
+//                        $scope.panels[panel.order].image = issue[0].image_name;
+//                } else {
+//                $scope.image_width = "60%";
+//                        $scope.panels[panel.order].image = "";
+//                        $scope.pclass = "";
+//                        $scope.panels[panel.order].image = issue[0].image_name;
+//                        $scope.pclass = "fa fa-" + $rootScope.Variables.icons[issue[0].issue].icon;
+//                }
+//                $scope.pimage = $scope.panels[panel.order].image;
+//                        $scope.panels[panel.order].lat = issue[0].loc.coordinates[1];
+//                        $scope.panels[panel.order].lng = issue[0].loc.coordinates[0];
+//                        $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
+//                        $scope.ALLmarkers.push({"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issue], "panelid": panel.ArrayID});
+//                }
 //                if ($scope.street_view_markers[panel.order] != "ncoords"){
 //                panorama.setPosition($scope.street_view_markers[panel.order].position);
 //                }
-                });
+                //               });
         }
 
         $scope.panels = [];
@@ -807,7 +807,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
 
                 });
-                $scope.$on("leafletDirectiveMarker.panelmap.click", function (event, args) {
+//                $scope.$on("leafletDirectiveMarker.panelmap.click", function (event, args) {
                 // Args will contain the marker name and other relevant information
                 // console.log("Leaflet Click");
                 // console.log(args);
@@ -816,11 +816,11 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
                 //  $scope.activePanel = - 1;
                 //          $scope.currentactive = - 1;
-                $scope.pimage = "";
-                        $scope.pclass = "";
-                        displayFixedPoints();
-                        // $scope.linkmap($scope.panels[args.model.panelid]);
-                });
+//                $scope.pimage = "";
+//                        $scope.pclass = "";
+//                        displayFixedPoints();
+                // $scope.linkmap($scope.panels[args.model.panelid]);
+                //               });
                 var layers_ref;
                 var markersGarbage;
                 var markersLightning;
@@ -991,39 +991,41 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 //                        $scope.currentactive = - 1;
                         $scope.pageIndex = 1;
                         $scope.isloading = true;
-                        if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("role") == "sensecityAdmin") {
-                $scope.changeTab($scope.tabs.activeTab);
-                } else {
-                $scope.changeTab(0);
-                }
+//                        if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("role") == "sensecityAdmin") {
+//                $scope.changeTab($scope.tabs.activeTab);
+//                } else {
+                        $scope.changeTab(0);
+                        //}
 
-                $scope.enable_loading = function(){
-                $scope.nloaded = true;
-                }
+                        $scope.enable_loading = function(){
+                        $scope.nloaded = true;
+                        }
 
                 $scope.itemClicked = function ($index, event) {
-
-                   $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
-               // $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
-                        //          if ($scope.currentactive != $index) {
+                if ($window.location.href.toString().indexOf(":") != - 1){
+                $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+                } else{
+                $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+                }
+                //          if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
 //                            setTimeout(function () {
 //                                $("html,body").scrollTop($(event.target).offset().top - $("#activePanel").height());
 //                            }, 500);
 //                        } else {
-                        //         $scope.padmin = $scope.panels[$index].admin;
-                        //                 $scope.pimage = $scope.panels[$index].image;
-                        // panorama.setPosition(new google.maps.LatLng($scope.panels[$index].lat, $scope.panels[$index].lng));
-                        //                 $scope.activePanel = $index;
-                        //                 $scope.currentactive = $index;
-                        //setTimeout(function () {
+                //         $scope.padmin = $scope.panels[$index].admin;
+                //                 $scope.pimage = $scope.panels[$index].image;
+                // panorama.setPosition(new google.maps.LatLng($scope.panels[$index].lat, $scope.panels[$index].lng));
+                //                 $scope.activePanel = $index;
+                //                 $scope.currentactive = $index;
+                //setTimeout(function () {
 //                        $("html,body").scrollTop($(event.target).offset().top);
 //                        }, 400);
-                        //$("html,body").scrollTop($('span:contains("' + $scope.panels[$index].title + '")').offset().top);
-                        //$("html,body").scrollTop($(".timeline-item-active span").offset().top);
-                        // }, 400);
-                        //$(window).resize();
-                        //                 $(window).trigger('resize');
+                //$("html,body").scrollTop($('span:contains("' + $scope.panels[$index].title + '")').offset().top);
+                //$("html,body").scrollTop($(".timeline-item-active span").offset().top);
+                // }, 400);
+                //$(window).resize();
+                //                 $(window).trigger('resize');
 //                } else {
 //                current_layer = 0;
 //                        $scope.pimage = "";
@@ -1139,8 +1141,8 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         $scope.panel_issue = panel.issuenameGR;
                         $scope.initial_desc = panel.initialdesc;
                         Issue2MapService.query({issueID: panel.mongoId}, function (issue) {
-                        $scope.panel_image = issue[0].image_name;
-                                $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
+                        // $scope.panel_image = issue[0].image_name;
+                        $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                                 $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issue]}];
 //--------FIXED POINTS
 //                    if (issue[0].issue == "garbage" || "lighting") {
@@ -1395,13 +1397,13 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 //                }
 //                }
 //                $scope.street_view_markers = [];
-                if (current_layer == 1){
-                current_layer = 0;
-                        displayFixedPoints();
-                }
+//                if (current_layer == 1){
+//                current_layer = 0;
+                //    displayFixedPoints();
+                //  }
                 $scope.isloading = true;
                         $scope.nloaded = true;
-                        $scope.pimage = "";
+                        //   $scope.pimage = "";
                         $scope.padmin = true
                         mapnloaded = true;
                         $http.get($rootScope.Variables.host + '/api/1.0/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
@@ -1471,16 +1473,16 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         $scope.pages += '<li ng-click="totalpages(startPage + 5 ,3)"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#/admin">></a></span></li>'
                         + '<li ng-click="totalpages(total_pages-4,4)"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
                         if (search_button == 1){
-                        params.bug_id = $scope.sbugid;
+                params.bug_id = $scope.sbugid;
                         params.email = $scope.semail;
                         params.mobile = $scope.smobile;
                         params.city = $rootScope.Variables.city_name;
                 } else{
-                    delete params['bug_id'];
-                    delete params['email'];
-                    delete params['mobile'];
-                    $scope.panels = [];
-                params.city = $rootScope.Variables.city_name;
+                delete params['bug_id'];
+                        delete params['email'];
+                        delete params['mobile'];
+                        $scope.panels = [];
+                        params.city = $rootScope.Variables.city_name;
                         if (params.status != undefined && params.status instanceof Array){
                 params.status = params.status.join("|");
                 }
@@ -1516,7 +1518,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
                         var id = value.id;
                         var priority = PriorityTag.priority_type(value.priority);
                         var severity = SeverityTag.severity_type(value.severity);
-                        var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
+                        //    var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
                         var creation_time = value.create_at;
                         var local_time = moment(creation_time).format('LLLL');
                         local_time = timegr(local_time);

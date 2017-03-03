@@ -7,6 +7,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         var small = 0;
         var nav_toggle = 0;
         var icons = $rootScope.Variables.icons;
+        $scope.valid = true;
         $scope.panel;
         $scope.full = 0;
         $scope.street = 0;
