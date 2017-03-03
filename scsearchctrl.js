@@ -347,7 +347,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             } else {
                                 popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
                             }
-
+                            
+                            popup.options.maxWidth = "auto";
                             popup.update();
                         });
                     });

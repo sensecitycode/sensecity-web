@@ -135,7 +135,7 @@ appControllers.controller(
 
                 $q.all($rootScope.mainInfo).then(
                         function (data) {
-
+                            console.log(JSON.stringify($rootScope.Variables));
                             for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
                                 $scope.removelayer(i);
                             }
@@ -174,6 +174,7 @@ appControllers.controller(
                             });
 
                             $scope.$on("leafletDirectiveMarker.click", function (event, args) {
+                                
                                 var marker3 = args.leafletObject;
                                 var popup = marker3.getPopup();
 
@@ -199,6 +200,7 @@ appControllers.controller(
                                     } else {
                                         popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
                                     }
+                                    popup.options.maxWidth = "auto";
                                     popup.update();
 
                                 });
