@@ -533,6 +533,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     };
                     function doQuery(obj) {
                         var d = $q.defer();
+                        console.log(JSON.stringify(obj));
+                        console.log($rootScope.Variables.APIURL);
                         $resource($rootScope.Variables.APIURL,
                                 {}, {
                             update: {
