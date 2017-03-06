@@ -135,7 +135,7 @@ appControllers.controller(
 
                 $q.all($rootScope.mainInfo).then(
                         function (data) {
-                            console.log(JSON.stringify($rootScope.Variables));
+                            console.log("sense: "+JSON.stringify($rootScope.Variables));
                             for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
                                 $scope.removelayer(i);
                             }
