@@ -1,0 +1,59 @@
+{
+	"city_name": "_cityname_",
+	"lat_center": _latitude_,
+	"long_center": _longtitude_,
+	"img_logo": "images/city_logos/_cityname_.jpg",
+	"bugzilla_products": "_cityname_",
+        "APIURL": "",
+        "feelingsURL": "",
+        "bugzilla": "",
+        "center": {
+                    "lat": "",
+                    "lng": "",
+                    "zoom": ""
+                },
+        "icons": {
+           "" : {
+            "type": "",
+            "prefix": "",
+            "icon": "",
+            "markerColor": ""
+           },
+           "" : {
+            "type": "",
+            "prefix": "",
+            "icon": "",
+            "markerColor": ""
+           }
+        },        
+	"ALLISSUESAPIURL": "",
+	"active_user_URL" : "",
+        "components_en": [],
+        "overlays": {},
+        "categories": [],
+        "issue_type_en": [],
+        "issue_type_gr": [],
+        "categories_issue": [],
+        "departments": [],
+        "font_awesome_markers": [],
+        "departments_en": [],
+	"APIADMIN": "",
+        "components": [],
+        "activeTitles": [],
+        "activeIcons": [],
+        "depUserTitles": [],
+        "depUserContent": [],
+        "depUserIcons": [],
+        "cityAdminTabs": [
+                    {
+                    },
+                    {
+                    }],
+        "availableIssues": [{"id": "",
+            "name": "",
+            "types": [
+                {"id":"","name":""},{"id":"","name":""}]}],
+        "searchIssues": [{"class":"","value": "", "translate": ""},{"class":"","value": "", "translate": ""}],
+        "": "",        
+        "host": ""
+}

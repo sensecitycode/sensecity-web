@@ -1,0 +1,32 @@
+
+<div class="row" style="padding: 20px; width: 100%;">
+	<div ng-repeat="lastissue in allissues"
+		class="issueitem col-lg-2 col-md-2 col-sm-2 col-xs-2"
+		style="padding-bottom: 5px;">
+		<div
+			style="background-color: #FFFFFF; border-width: 1px; border-color: #967f7f; border-style: dotted; border-radius: 10px;">
+			<a href="http://{{Variables.city_name}}.sense.city/scissuemap.html?issue={{lastissue._id}}" style="text-decoration: none;"><center>
+					<div class="thumbnail crop" style="padding: 0px;">
+						<img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" class="img-responsive" width={{lastissue.width}} src={{lastissue.image_name}} alt="" height="239">
+                                        <i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:12em;color:black"></i>
+					</div>
+				</center>
+				<div class="caption"
+					style="color: #000000; padding-left: 13px; padding-right: 5px; margin-top: -10px;">
+					<p style="font-size: 13px;">
+						<b>{{lastissue.issue | translate}}</b>
+					</p>
+
+					<p style="font-size: 14px; height: 40px; margin-top: -10px;">{{lastissue.value_desc}}</p>
+					<p style="margin-top: -12px; font-size: 10px;">
+						<i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{ 'SINCE_TIME' |
+						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
+						translate }}
+					<p style="margin-top: -12px; font-size: 10px;">&nbsp;{{lastissue.status
+						| translate}}&nbsp;</p>
+
+				</div></a>
+		</div>
+	</div>
+
+</div>

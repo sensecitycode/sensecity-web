@@ -1,0 +1,45 @@
+<div id="aside" style="height: 550px">
+	<div>
+		<div class="calcItem">
+			<div class="calcValue" count-to="{{calcValue30daysIssues}}" duration="2" count-from="0" >{{calcValue30daysIssues}}</div>
+			<div class="calcValueDescription">
+				{{ 'ISSUES_LAST_X_DAYS' | translate }} <br /> {{daysToCheck}}
+				{{ 'DAYS' | translate }}
+			</div>
+		</div>
+		<div class="calcItem">
+			<div class="calcValue"  count-to="{{calcValue30daysEvents}}" duration="2" count-from="0" >{{calcValue30daysEvents}}</div>
+			<div class="calcValueDescription">
+				{{ 'EVENTS_LAST_X_DAYS' | translate }} <br /> {{daysToCheck}}
+				{{ 'DAYS' | translate }}
+			</div>
+		</div>
+		<div class="calcItem">
+			<div class="calcValue"   count-to="{{calcValueProblemsFrom2017}}" duration="2" count-from="0"
+				ng-class="{calcValuenull: calcValue.value === 'N/A'}">{{calcValueProblemsFrom2017}}</div>
+			<div class="calcValueDescription">{{ 'ISSUES_SINCE' | translate
+				}} 1/1/2017</div>
+		</div>
+		<div class="calcItem">
+			<div class="calcValue" count-to="{{calcValueSolutionFrom2017}}" duration="2" count-from="0"
+				ng-class="{calcValuenull: calcValue.value === 'N/A'} ">{{calcValueSolutionFrom2017}}</div>
+			<div class="calcValueDescription">
+				{{ 'SOLUTIONS_SINCE' | translate }} <br /> 1/1/2017
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="mapcontent" style="height: 550px;">
+    <div  id="streetview" style="width:100% !important;"></div>
+	<leaflet defaults="defaults"  lf-center="map_center" event-broadcast="events" layers="layers" markers="markers"
+		height="100%" style="color:black;"></leaflet>
+</div>
+
+
+	<div style="font-size: 9px;">{{ 'PATRASDISCLAIMER' | translate }}</div>
+
+<div id="last6issues">
+	<div class="slide-animate" ng-include="'sclast6issues.html'"></div>
+	<div data-ng-init="initialize()" style="float: right;" > <a href="#!/all_issues" style="color:#000000;" >{{ 'MORE' | translate }} &gt;&gt;</a> </div>
+</div>
