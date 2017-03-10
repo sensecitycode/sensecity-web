@@ -246,7 +246,7 @@ $(document).ready(function(){
     });
     /* END MESSAGES LOADING */
     
-    x_navigation();
+    //x_navigation();
 });
 
 $(function(){            
@@ -469,13 +469,13 @@ function x_navigation_minimize(action){
 
 function x_navigation(){
     
-    $(".x-navigation-control").click(function(){
-        $(this).parents(".x-navigation").toggleClass("x-navigation-open");
-        
-        onresize();
-        
-        return false;
-    });
+//    $(".x-navigation-control").click(function(){
+//        $(this).parents(".x-navigation").toggleClass("x-navigation-open");
+//        
+//        onresize();
+//        
+//        return false;
+//    });
 
     if($(".page-navigation-toggled").length > 0){
         x_navigation_minimize("close");
@@ -505,26 +505,7 @@ function x_navigation(){
         
     });
     
-    $(".x-navigation li").click(function(event){
-        event.stopPropagation();
-        
-        var li = $(this);
-                
-            if(li.children("ul").length > 0 || li.children(".panel").length > 0 || $(this).hasClass("xn-profile") > 0){
-                if(li.hasClass("active")){
-                    li.removeClass("active");
-                    //li.find("li.active").removeClass("active");
-                }else
-                    li.addClass("active");
-                    
-                onresize();
-                
-                if($(this).hasClass("xn-profile") > 0)
-                    return true;
-                else
-                    return false;
-            }                                     
-    });
+
     
     /* XN-SEARCH */
     $(".xn-search").on("click",function(){

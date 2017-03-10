@@ -1,16 +1,13 @@
 var app = angular.module('scApp', ['mgcrea.ngStrap', 'scapp.controllers', 'scissuemapapp.scissuemapctrl', 'scwebsubmit.controllers', 'sense.controllers',
     'searchapp.controllers', 'scapp.services','overviewapp.controllers',
-    'ngResource', 'ngRoute', 'ui-leaflet', 'angular-loading-bar',
+    'ngResource', 'ngRoute', 'ui-leaflet',
     'ngAnimate', 'pascalprecht.translate', 'ngCookies', 'countTo']);
 
-app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider,
-        cfpLoadingBarProvider) {
+app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
 
     $anchorScrollProvider.disableAutoScrolling();
     
     $locationProvider.hashPrefix('!');
-    cfpLoadingBarProvider.includeSpinner = true;
-    cfpLoadingBarProvider.includeBar = true;
 
     $routeProvider.when('/overview', {
         templateUrl: 'scmapcontent.html',
@@ -113,7 +110,6 @@ app.run(['$rootScope', '$http','$location','$q','$window', function ($rootScope,
             };
 
         $rootScope.mainInfo = $http.get(url).success(function (response) {
-            
             $rootScope.Variables = {
                 city_name: sub_domain[0],
                 city_address: response.city_address,

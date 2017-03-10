@@ -12,8 +12,6 @@
 
         <link rel="stylesheet" href="_css/bootstrap.min.css" />
         <link rel="stylesheet" href="_css/animate.min.css" />
-
-        <link rel="stylesheet" href="css/loading-bar.css" />
         <link rel="stylesheet" href="css/scapp.css" />
         <link rel="stylesheet" href="css/sidebar.css">
 
@@ -79,8 +77,6 @@
         <script src="scissuemapctrl.js"></script>
         <script src="scissuemapsrvs.js"></script>
 
-        <script src="js/loading-bar.js"></script>
-
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.13.1/angular-translate-loader-static-files.min.js"></script>
         <script type="text/javascript" src="admin/js/gdropdown.js"></script>
         <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
@@ -98,16 +94,33 @@
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
     </head>
     <body ng-app="scApp" ng-controller="sensecityMainCtrl">
-
+        
         <div class="page-container">
                 <div ng-include="'scheader.html'"></div>        
             <div class="page-content">
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
                     <div ng-include="'scnavbar.html'"></div>
                 </ul>
-                <div ng-view autoscroll="true"></div>
+                
+                <div ng-view autoscroll="true"> </div>
+                </div>
 
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script',
+                    '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-73253016-1', 'auto');
+            ga('send', 'pageview');
+        </script>
             </div>
-        </div>
     </body>
 </html>

@@ -15,8 +15,6 @@ appControllers.directive('sidebarDirective', function () {
 });
 
 
-
-
 appControllers.controller(
         'senseController',
         [
@@ -24,12 +22,10 @@ appControllers.controller(
             '$window',
             '$rootScope', '$http',
             '$q', '$location', 'leafletData',
-            'cfpLoadingBar',
             '$interval',
             '$translate',
             '$resource',
             function ($scope, $window, $rootScope, $http, $q, $location, leafletData,
-                    cfpLoadingBar,
                     $interval,
                     $translate, $resource) {
 
@@ -38,7 +34,129 @@ appControllers.controller(
                     for (var i = idt; i > 0; i--)
                         clearInterval(i);
                 }, 10);
-
+                
+//              $(document).ready(function(){
+//                $.getScript("js/plugins/jquery/jquery.min.js");
+//                    $.getScript("js/plugins/jquery/jquery-ui.min.js");
+//                    $.getScript("js/plugins/bootstrap/bootstrap.min.js");
+//                    $.getScript("js/plugins/icheck/icheck.min.js");
+//                    $.getScript("js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js");
+//                    $.getScript("js/plugins/scrolltotop/scrolltopcontrol.js");
+//                    $.getScript("js/plugins/sparkline/jquery.sparkline.min.js");
+//                    $.getScript("js/plugins/rickshaw/d3.v3.js");
+//                    $.getScript("js/plugins/rickshaw/rickshaw.min.js");
+//                    $.getScript("js/plugins/bootstrap/bootstrap-datepicker.js");
+//                    $.getScript("js/plugins/owl/owl.carousel.min.js");
+//                    $.getScript("js/plugins/moment.min.js");
+//                    $.getScript("js/plugins/daterangepicker/daterangepicker.js");
+//                    $.getScript("js/plugins.js");
+//                    $.getScript("js/actions.js");
+//                });
+//   
+   
+//                             function page_content_onresize1(){
+//    $(".page-content,.content-frame-body,.content-frame-right,.content-frame-left").css("width","").css("height","");
+//
+//    var content_minus = 0;
+//    content_minus = ($(".page-container-boxed").length > 0) ? 40 : content_minus;
+//    content_minus += ($(".page-navigation-top-fixed").length > 0) ? 50 : 0;
+//    
+//    var content = $(".page-content");
+//    var sidebar = $(".page-sidebar");
+//    
+//    if(content.height() < $(document).height() - content_minus){        
+//        content.height($(document).height() - content_minus);
+//        //$(".xn-title").height($(window).height() - $(".page-sidebar").height());
+//    }        
+//    
+//    if(sidebar.height() > content.height()){        
+//        content.height(sidebar.height());
+//    }
+////    content.height(0);
+//    if($(window).width() > 1024){
+//        
+//        if($(".page-sidebar").hasClass("scroll")){
+//            if($("body").hasClass("page-container-boxed")){
+//                var doc_height = $(document).height() - 40;
+//            }else{
+//                var doc_height = $(window).height();
+//            }
+//           $(".page-sidebar").height(doc_height);
+//          
+//       }
+//       
+//        if($(".content-frame-body").height() < $(document).height()-162){
+//            $(".content-frame-body,.content-frame-right,.content-frame-left").height($(document).height()-162);            
+//        }else{
+//            $(".content-frame-right,.content-frame-left").height($(".content-frame-body").height());
+//        }
+//        
+//        $(".content-frame-left").show();
+//        $(".content-frame-right").show();
+//    }else{
+//        $(".content-frame-body").height($(".content-frame").height()-80);
+//        $(".xn-title").removeAttr("style");
+//        if($(".page-sidebar").hasClass("scroll"))
+//           $(".page-sidebar").css("height","");
+//    }
+//    
+//    if($(window).width() < 1200){
+//        if($("body").hasClass("page-container-boxed")){
+//            $("body").removeClass("page-container-boxed").data("boxed","1");
+//        }
+//    }else{
+//        if($("body").data("boxed") === "1"){
+//            $("body").addClass("page-container-boxed").data("boxed","");
+//        }
+//    }
+//}
+//
+//       function onresize1(timeout){    
+//    timeout = timeout ? timeout : 200;
+//
+//    setTimeout(function(){
+//        page_content_onresize1();
+//    },timeout);
+//    
+//}
+             
+//if($rootScope.test == 1){
+//    $rootScope.test = 0;
+//                        $(".x-navigation li").click(function(event){  //edw
+//        event.stopPropagation();
+//        
+//        var li = $(this);
+//                
+//            if(li.children("ul").length > 0 || li.children(".panel").length > 0 || $(this).hasClass("xn-profile") > 0){
+//                if(li.hasClass("active")){
+//                    li.removeClass("active");
+//                    //li.find("li.active").removeClass("active");
+//                }else
+//                    li.addClass("active");
+//                    
+//               onresize1();
+//                
+//                if($(this).hasClass("xn-profile") > 0)
+//                    return true;
+//                else
+//                    return false;
+//            }                                     
+//    });
+//    }
+       if( $rootScope.test == 1){
+           $rootScope.test = 0;
+        $(document).on("click",".xn-openable",function(event){
+            $(this).attr("class", "xn-openable active");
+        });
+        
+        $(document).on("click",".xn-openable.active",function(event){
+            $(this).attr("class", "xn-openable");
+        });
+        
+        $(document).on("click",".x-navigation-control",function(event){
+            $(this).parents(".x-navigation").toggleClass("x-navigation-open");
+        });
+    }
                 angular.extend($scope, {
                     layercontrol: {
                         icons: {
@@ -133,9 +251,12 @@ appControllers.controller(
                     lng: 20.897801,
                     zoom: 12
                 };
-
+                
                 $q.all($rootScope.mainInfo).then(
                         function (data) {
+                                leafletData.getMap("issuesmap").then(function (map) {
+                                        map.scrollWheelZoom.disable();
+                                    });
                             console.log("sense: "+JSON.stringify($rootScope.Variables));
                             for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
                                 $scope.removelayer(i);
@@ -164,7 +285,6 @@ appControllers.controller(
                                 lng: $rootScope.Variables.long_center,
                                 zoom: $rootScope.Variables.map_zoom
                             };
-
 
                             //We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
 
@@ -341,8 +461,7 @@ appControllers.controller(
 
                                                                     },
                                                                     $scope.markers);
-
-
+                                                                    
                                                     //$scope.markers = $scope.markers.concat( $scope.fixedmarkersLazyLoaded );
                                                 });
                             };
@@ -508,7 +627,7 @@ appControllers.controller(
                                     });
 
                                     markersGarbage.addLayers($scope.fixedmarkersGarbage);
-                                    leafletData.getMap().then(function (map) {
+                                    leafletData.getMap("issuesmap").then(function (map) {
                                         map.addLayer(markersGarbage);
                                     });
 
@@ -526,7 +645,7 @@ appControllers.controller(
 
                                     markersLightning.addLayers($scope.fixedmarkersLightning);
 
-                                    leafletData.getMap().then(function (map) {
+                                    leafletData.getMap("issuesmap").then(function (map) {
                                         map.addLayer(markersLightning);
                                     });
 
@@ -542,7 +661,7 @@ appControllers.controller(
                                         "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
                                     };
 
-                                    leafletData.getMap().then(function (map) {
+                                    leafletData.getMap("issuesmap").then(function (map) {
                                         L.control.layers({}, overlays).addTo(map);
                                         map.invalidateSize(true);
                                     });
