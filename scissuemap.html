@@ -131,7 +131,7 @@
             </div>
             <div class="col-lg-4" id="image_div" style="color:#000;height: 50%;overflow-x: hidden;">
                 <center>
-                    <img ng-if="!(issue_image === ''|| issue_image === 'no-image'|| issue_image === null || issue_image === undefined)" class="img-responsive" width={{lastissue.width}} src={{issue_image}} alt="" height="50vh">
+                    <img ng-if="!(issue_image === ''|| issue_image === 'no-image'|| issue_image === null || issue_image === undefined)" class="img-responsive" width={{lastissue.width}} ng-src={{issue_image}} alt="" height="50vh">
                                         <i ng-if="issue_image === ''|| issue_image === 'no-image'|| issue_image === null || issue_image === undefined" class={{lastissue_class}} style="font-size:12em;color:black;height:50vh"></i>
                 </center>
             </div>
@@ -192,7 +192,7 @@ s.setAttribute('data-timestamp', +new Date());
         <div id="footer" style="background-color:#D0D0D0;margin-top:10px">
             <div class="row" style="margin-left: 0px; margin-right: 0px;" >
 	<div class="col-xs-12 col-sm-3 column">
-		<img src="{{Variables.img_logo}}"
+		<img ng-src={{Variables.img_logo}}
 			style="width: 69px;">
 		<img src="images/upatras_logo.png"
 			style="width: 174px;">
