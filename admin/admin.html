@@ -1,6 +1,6 @@
 <link href="../lightbox/dist/css/lightbox.css" rel="stylesheet">
 <script src="../lightbox/dist/js/lightbox.js"></script>
-<div data-ng-init="initialize()" ng-show="nloaded" class="loading">
+<div data-ng-init="initialize()" ng-show="nloaded" class="loading_bar">
     Loading&#8230;
 </div>
 <div ng-show="valid">
@@ -18,9 +18,6 @@
                             <a href="#/admin" ng-click="nav_toggle()" class="x-navigation-control"></a>
                         </li>
                         <li class="xn-profile">
-                            <a href="#/admin" class="profile-mini">
-                                <img src="assets/images/users/avatar.jpg" alt="John Doe"/>
-                            </a>
                             <div class="profile">
                                 <div class="profile-data">
                                     <div class="profile-data-name" ng-model="usrname">{{usrname}}</div>
@@ -244,14 +241,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-hide="padmin">
-                            <center>
-                                <!--<a data-lightbox="image-1" href="http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Nice/nice-overview-coastline-xlarge.jpg">-->
-                                <img ng-if="pimage != '' && pimage != 'no-image' && pimage != null && pimage != undefined" id="issue_image" src="" width="90%" height="250vh" style="background-position:center;background-size:cover;background-image:url('{{pimage}}')" />
-                                <!--</a>-->
-                                <i ng-if="pimage == '' || pimage == 'no-image' || pimage == null || pimage == undefined" class={{pclass}} style="font-size:12em;color:black"></i>
-                            </center>
-                        </div>
                     </div>        
                 </div>
                 <!-- END PAGE CONTENT WRAPPER -->               
@@ -288,31 +277,18 @@
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
         <!-- END PLUGINS -->
-
-        <!-- START THIS PAGE PLUGINS-->        
-        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>        
+      
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
         <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
-
-        <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
-        <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>       
-        <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
-        <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
-        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
-        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
-        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>                
-        <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>                 
+     
         <!--        <script>$(".xn-openable").first().attr("class", "xn-openable active");</script>-->
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
-        <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
         <!-- END THIS PAGE PLUGINS-->        
 
         <!-- START TEMPLATE -->
                 <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>
-       
 
-        <script type="text/javascript" src="js/demo_dashboard.js"></script>
         <!-- END TEMPLATE -->
         <!-- END SCRIPTS -->
     </div>

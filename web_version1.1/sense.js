@@ -143,8 +143,8 @@ appControllers.controller(
 //            }                                     
 //    });
 //    }
-       if( $rootScope.test == 1){
-           $rootScope.test = 0;
+       if( $rootScope.aft == 1){
+           $rootScope.aft = 0;
         $(document).on("click",".xn-openable",function(event){
             $(this).attr("class", "xn-openable active");
         });

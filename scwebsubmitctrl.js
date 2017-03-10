@@ -2,12 +2,66 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 
 
-appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http',
-    function ($scope, $window, $q, $rootScope, $log, $location, leafletData, Issue, $translate, $http) {
+appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData','$resource', '$translate', '$http',
+    function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $resource,  $translate, $http) {
+
         $log.debug('inside scWebSubmit controller');
         $rootScope.overview_url = $location.path();
         $scope.markers = [];
         var mylocation_en = 0;
+        
+             var url_path = $location.absUrl().split("//");
+        var sub_domain = url_path[1].split(".");
+        var url;
+
+        if( sub_domain[0].split(":").length > 1){
+            url = "./config/testcity1.json";
+            sub_domain[0] = "testcity1";
+        }else{
+            url = '../config/'+sub_domain[0]+'.json';
+        }
+        
+        var d = $q.defer();
+                $scope.mainInfo = $http.get(url).success(function (response) {
+            
+            $rootScope.Variables = {
+                city_name: sub_domain[0],
+                city_address: response.city_address,
+                lat_center: response.lat_center,
+                long_center: response.long_center,
+                img_logo: "images/city_logos/" + response.city_name + ".jpg",
+                icons: response.icons,
+                APIURL: response.APIURL,
+                components: response.components,
+                components_en: response.components_en,
+                overlays: response.overlays,
+                categories: response.categories,
+                categories_issue: response.categories_issue,
+                departments: response.departments,
+                departments_en: response.departments_en,
+                feelingsURL: response.feelingsURL,
+                bugzilla: response.bugzilla,
+                ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+                active_user_URL: response.active_user_URL,
+                activate_user_URL: response.activate_user_URL,
+                APIADMIN: response.APIADMIN,
+                issue_type_en: response.issue_type_en,
+                issue_type_gr: response.issue_type_gr,
+                availableIssues: response.availableIssues,
+                searchIssues: response.searchIssues,
+                map_zoom: response.zoom,
+                overlay_functions : response.overlay_functions,
+                overlay_categories : response.overlay_categories,
+                google_init_coords: response.google_init_coords,
+                google_buildings: response.google_buildings,
+                host: response.host
+            };
+            
+            d.resolve(response);
+            
+            
+            return $rootScope;
+        });
 
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
@@ -134,7 +188,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             $scope.lnglabeltxt = event.latlng.lng;
         };
 
-        $q.all($rootScope.mainInfo).then(function (data) {
+        $q.all([$scope.mainInfo]).then(function (data) {
 
             leafletData.getMap().then(function (map) {
                 map.on('click', onmapclick);
@@ -300,7 +354,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                 $translate($scope.issueSubTypeSelect.name).then(function (h) {
                     $scope.otherDescriptionTxt = h;
-                    console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
                 }, function (translationId) {
                     //$scope.otherDescriptionTxt = translationId;
                 });
@@ -386,7 +439,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         return true;
                     };
 
-                    $scope.issue = new Issue();
+                    $scope.issue = $resource($rootScope.Variables.APIADMIN + "issue/:id",
+		{id : "@id"	}, {
+		"update" : {
+			method : "PUT"
+		}});
 
                     var desc = $scope.otherDescriptionTxt;
 
@@ -662,7 +719,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                     var jsonact_Data = '{ "id1" : "' + user_id + '", "id2": "web-site", "id3": "' + $scope.codeTxt + '"}';
                     
-                    console.log(jsonact_Data);
                     return $http({
                         method: 'POST',
                         url: $rootScope.Variables.activate_user_URL,
@@ -671,7 +727,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         },
                         data: jsonact_Data
                     }).success(function (resp) {
-                        console.log(JSON.stringify(resp));
                         $scope.submit_button = false;
                         $scope.register_button = false;
                         $scope.verify_button = false;
@@ -793,7 +848,6 @@ appControllers.directive('fileModel', ['$parse', function ($parse) {
                         //modelSetter(scope, element[0].files[0]);
                         if (filesSelected.size > 0)
                         {
-                            console.log('size>0');
                             var base64image_name = '';
                             var fileToLoad = filesSelected;
                             r = new FileReader();
@@ -801,7 +855,7 @@ appControllers.directive('fileModel', ['$parse', function ($parse) {
                             r.onloadend = function (e) { //callback after files finish loading
                                 base64image_name = e.target.result;
 
-                                console.log(base64image_name.replace(/^data:image\/(png|jpg);base64,/, "")); //replace regex if you want to rip off the base 64 "header"
+                                base64image_name.replace(/^data:image\/(png|jpg);base64,/, ""); //replace regex if you want to rip off the base 64 "header"
                                 //here you can send data over your server as desired
                                 modelSetter(scope, base64image_name);
 

@@ -16,7 +16,7 @@ appControllers.directive('sidebarDirective', function () {
     };
 });
 
-appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource) {
+appControllers.controller('searchIssueController', ['$scope', '$window','$http', '$rootScope', '$q', '$location', 'leafletData', '$resource', function ($scope, $window, $http,$rootScope, $q, $location, leafletData, $resource) {
         $rootScope.overview_url = $location.path();
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
@@ -31,11 +31,62 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
         $scope.criteria_selected = true;
 
-        $scope.issues = $rootScope.Variables.searchIssues;
         $scope.state = true;
         $scope.toggleState = function () {
             $scope.state = !$scope.state;
         };
+        
+             var url_path = $location.absUrl().split("//");
+        var sub_domain = url_path[1].split(".");
+        var url;
+
+        if( sub_domain[0].split(":").length > 1){
+            url = "./config/testcity1.json";
+            sub_domain[0] = "testcity1";
+        }else{
+            url = '../config/'+sub_domain[0]+'.json';
+        }
+        
+        var d = $q.defer();
+                $scope.mainInfo = $http.get(url).success(function (response) {
+            
+            $rootScope.Variables = {
+                city_name: sub_domain[0],
+                city_address: response.city_address,
+                lat_center: response.lat_center,
+                long_center: response.long_center,
+                img_logo: "images/city_logos/" + response.city_name + ".jpg",
+                icons: response.icons,
+                APIURL: response.APIURL,
+                components: response.components,
+                components_en: response.components_en,
+                overlays: response.overlays,
+                categories: response.categories,
+                categories_issue: response.categories_issue,
+                departments: response.departments,
+                departments_en: response.departments_en,
+                feelingsURL: response.feelingsURL,
+                bugzilla: response.bugzilla,
+                ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+                active_user_URL: response.active_user_URL,
+                activate_user_URL: response.activate_user_URL,
+                APIADMIN: response.APIADMIN,
+                issue_type_en: response.issue_type_en,
+                issue_type_gr: response.issue_type_gr,
+                availableIssues: response.availableIssues,
+                searchIssues: response.searchIssues,
+                map_zoom: response.zoom,
+                overlay_functions : response.overlay_functions,
+                overlay_categories : response.overlay_categories,
+                google_init_coords: response.google_init_coords,
+                google_buildings: response.google_buildings,
+                host: response.host
+            };
+            
+            d.resolve(response);
+            
+            return $rootScope;
+        });
 
         $scope.invalidateTheMap = function () {
 
@@ -141,9 +192,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             zoom: 12
         };
 
-        $q.all($rootScope.mainInfo).then(
+        $q.all([$scope.mainInfo]).then(
                 function (data) {
-
+                            $scope.issues = $rootScope.Variables.searchIssues;
                     for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
                         $scope.removelayer(i);
                     }

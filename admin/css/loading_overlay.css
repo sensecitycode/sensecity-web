@@ -9,7 +9,7 @@ and open the template in the editor.
 */
 
 /* Absolute Center Spinner */
-.loading {
+.loading_bar {
   position: fixed;
   z-index: 999;
   height: 2em;
@@ -23,7 +23,7 @@ and open the template in the editor.
 }
 
 /* Transparent Overlay */
-.loading:before {
+.loading_bar:before {
   content: '';
   display: block;
   position: fixed;
@@ -35,7 +35,7 @@ and open the template in the editor.
 }
 
 /* :not(:required) hides these rules from IE9 and below */
-.loading:not(:required) {
+.loading_bar:not(:required) {
   /* hide "loading..." text */
   font: 0/0 a;
   color: transparent;
@@ -44,7 +44,7 @@ and open the template in the editor.
   border: 0;
 }
 
-.loading:not(:required):after {
+.loading_bar:not(:required):after {
   content: '';
   display: block;
   font-size: 10px;
