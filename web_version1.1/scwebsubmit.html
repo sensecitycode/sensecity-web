@@ -1,143 +1,218 @@
-<!--<link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>               -->
-<div class="page-content-wrap">                
-                
-                    <div class="row">
-                        <div class="col-md-12">
-                                            <div class="block" style="top:10px;position:relative">
-                                <h2>Αναφορά Προβλήματος</h2>
-                                <div class="wizard show-submit">
-
-                                    <ul>
-                                        <li>
-                                            <a href="#step-1">
-                                                <span class="stepNumber">1</span>
-                                                <span class="stepDesc">Step 1<br /><small>Step 1 description</small></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#step-2">
-                                                <span class="stepNumber">2</span>
-                                                <span class="stepDesc">Step 2<br /><small>Step 2 description</small></span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#step-3">
-                                                <span class="stepNumber">3</span>
-                                                <span class="stepDesc">Step 3<br /><small>Step 3 description</small></span>                   
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#step-4">
-                                                <span class="stepNumber">4</span>
-                                                <span class="stepDesc">Step 4<br /><small>Step 4 description</small></span>                   
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div id="step-1">
-                                        <div class="row">
-                                        <div class="col-md-6">
-                                        <form action="" role="form" class="form-horizontal">
-                                       <div class="form-group">
-                                            <label class="col-md-2 control-label">Γεωγραφικό Μήκος</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Your name"/>
-                                            </div>
-                                        </div>
-                                            <div class="form-group">
-                                            <label class="col-md-2 control-label">Γεωγραφικό Πλάτος</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Your name"/>
-                                            </div>
-                                        </div>
-                                            <div class="form-group">
-                                            <label class="col-md-2 control-label">Διεύθυνση</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Your name"/>
-                                            </div>
-                                        </div>
-                                        </form>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <form action="" role="form" class="form-horizontal">
-                                       <div class="form-group">
-                                            <label class="col-md-2 control-label">Τύπος Προβλήματος</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Your name"/>
-                                            </div>
-                                        </div>
-                                                <div class="form-group">
-                                            <label class="col-md-2 control-label">Πρόβλημα</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Your name"/>
-                                            </div>
-                                        </div>
-                                                <div class="form-group">
-                                            <label class="col-md-2 control-label">Φωτογραφία</label>
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" placeholder="Your name"/>
-                                            </div>
-                                        </div>
-                                            </form>
-                                        </div>
-                                        </div>
-                                        <br>
-                                        <div class="row">
-                                        <div class="col-md-12">
-                                            <form action="" role="form" class="form-horizontal">
-                                                 <div class="form-group">
-                                            <label class="col-md-1 control-label">Σχόλια</label>
-                                            <div class="col-md-11">
-                                                <textarea class="form-control" rows="5" placeholder="Your name"></textarea>
-                                            </div>
-                                        </div>
-                                            </form>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div id="step-2">
-                                        <h4>Step 2 Content</h4>
-                                        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-                                    </div>                      
-                                    <div id="step-3">
-                                        <h4>Step 3 Content</h4>
-                                        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-                                    </div>
-                                    <div id="step-4">
-                                        <h4>Step 4 Content</h4>
-                                        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-                                    </div>                           
-
-                                </div>
+<link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>               
+<div class="page-content-wrap">
+    <h2 style="left:8px;margin-top:10px;position:relative">Αναφορά Προβλήματος</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="wizard show-submit">
+                <ul>
+                    <li>
+                        <a href="#step-1">
+                            <span class="stepNumber">1</span>
+                            <span class="stepDesc">Step 1<br /><small>Step 1 description</small></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#step-2">
+                            <span class="stepNumber">2</span>
+                            <span class="stepDesc">Step 2<br /><small>Step 2 description</small></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#step-3">
+                            <span class="stepNumber">3</span>
+                            <span class="stepDesc">Step 3<br /><small>Step 3 description</small></span>                   
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#step-4">
+                            <span class="stepNumber">4</span>
+                            <span class="stepDesc">Step 4<br /><small>Step 4 description</small></span>                   
+                        </a>
+                    </li>
+                </ul>
+                <div class="col-md-6" style="top:10px;position:relative">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title-box" style="font-weight:600;font-size:14px;">
+                                <h3> Χάρτης Προβλημάτων</h3>
+                                <span style="display:block;margin-top:7.5px">Επιλέξτε το σημείο του προβλήματος</span>
+                                <br>
                             </div>
+                        </div>
+                        <div class="panel-body panel-body-map">                              
+                            <leaflet style="z-index:3" id="issuesmap" lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="400px" width="100%"">
+                            </leaflet>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6" style="top:10px;position:relative">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title-box" style="font-weight:600;font-size:14px;">
+                                <h3>Στοιχεία προβλήματος</h3>
+                                <span>Αν θέλετε να προωθηθεί και να εξετασθεί το αίτημά σας από το Δήμο Πατρέων θα πρέπει η αναφορά να γίνει επώνυμη. Εναλλακτικά συνεχίστε με απλή ανώνυμη αναφορά.</span>
+                            </div>
+                        </div>
+                                <div class="panel-body">
+                        <div id="step-1">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form action="" role="form" class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label  class="col-md-5 control-label text-left">Γεωγραφ. Μήκος</label>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control" placeholder="Γεωγραφ. Μήκος"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label text-left">Γεωγραφ. Πλάτος</label>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control" placeholder="Γεωγραφ. Πλάτος"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label text-left">Διεύθυνση</label>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control" placeholder="Διεύθυνση"/>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <form action="" role="form" class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label text-left">Τύπος Προβλήμ.</label>
+                                                    <div class="col-md-7">                                        
+                                                        <select class="form-control select">
+                                                            <option>Option 1</option>
+                                                            <option>Option 2</option>
+                                                            <option>Option 3</option>
+                                                            <option>Option 4</option>
+                                                            <option>Option 5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label text-left">Πρόβλημα</label>
+                                                    <div class="col-md-7">                                        
+                                                        <select class="form-control select">
+                                                            <option>Option 1</option>
+                                                            <option>Option 2</option>
+                                                            <option>Option 3</option>
+                                                            <option>Option 4</option>
+                                                            <option>Option 5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label text-left">Φωτογραφία</label>
+                                                    <div class="col-md-7">
+                                                        <input type="file" class="fileinput" name="filename1" id="filename1"/>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <form action="" role="form" class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-md-1 control-label">Σχόλια</label>
+                                                    <div class="col-md-11">
+                                                        <textarea class="form-control" rows="5" placeholder="Σχόλια"></textarea>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div id="step-2">
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <p style="font-size:14px;cursor:default" class="check"><input type="checkbox" class="icheckbox"/> Επώνυμη καταγγελία</p>
+                                        </div>
+                                        <div class="col-md-6" style="text-align:center;margin-top:5px">
+                                            <p style="font-size:14px">  Θέλω να ενημερωθώ με email ή sms.</p>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:20px">
+                                        <div class="col-md-6">
+                                            <form action="" role="form" class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label  class="col-md-5 control-label text-left">Ονοματεπώνυμο</label>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control" placeholder="Ονοματεπώνυμο"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label text-left">E-mail</label>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control" placeholder="E-mail"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label text-left">Κινητό</label>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control" placeholder="Κινητό"/>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-12">                                    
+                                                <label class="check"><input type="checkbox" class="icheckbox"/>E-mail</label>
+                                            </div>
+                                            <div class="col-md-12">                                    
+                                                <label class="check"><input type="checkbox" class="icheckbox"/>Κινητό</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div id="step-3">
+                            <h4>Step 3 Content</h4>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+                        </div>
+                        <div id="step-4">
+                            <h4>Step 4 Content</h4>
+                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+                        </div>
+                        <div id="testaki"></div>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
-        <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
-        <!-- END PRELOADS -->                
-        
-    <!-- START SCRIPTS -->
-        <!-- START PLUGINS -->
-        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>                
-        <!-- END PLUGINS -->
-        
-        <!-- THIS PAGE PLUGINS -->    
-        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
-        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
-        
-        <script type="text/javascript" src="js/plugins/smartwizard/jquery.smartWizard-2.0.min.js"></script>        
-        <script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.js"></script>
-        <!-- END PAGE PLUGINS -->
-        
-        <script type="text/javascript" src="js/plugins.js"></script>        
-        <script type="text/javascript" src="js/actions.js"></script>   
+<audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
+<!-- END PRELOADS -->                
+
+<!-- START SCRIPTS -->
+<!-- START PLUGINS -->
+<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>                
+<!-- END PLUGINS -->
+
+<!-- THIS PAGE PLUGINS -->    
+<script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+
+<script type="text/javascript" src="js/plugins/smartwizard/jquery.smartWizard-2.0.min.js"></script>        
+<script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.js"></script>
+<!-- END PAGE PLUGINS -->
+<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-file-input.js"></script>
+<script type="text/javascript" src="js/plugins.js"></script>        
+<script type="text/javascript" src="js/actions.js"></script>   
 <!--
-		
-		<div class="col-md-8"> 
-			<div style="height: 800px">
+                
+                <div class="col-md-8"> 
+                        <div style="height: 800px">
                             <md-menu>
   Trigger element is a md-button with an icon 
  <md-button ng-click="$mdMenu.open($event)" class="md-icon-button" aria-label="Open sample menu">
@@ -156,195 +231,195 @@
 <datalist id="taddress">
   
 </datalist>
-			<leaflet lf-center="map_center" layers="layers" 
+                        <leaflet lf-center="map_center" layers="layers" 
                             height="100%" markers="markers" style="color:black"  >
                                      
                         </leaflet>
-			</div>
-			<div  after-render="invalidateTheMap"></div>
-		</div>
-		
-		<div class="col-md-4" > 
-			<br />
-			<div class="stepwizard" style="color:#000000;">
-				<div class="stepwizard-row">
-					<div class="stepwizard-step">
-						<button type="button" class="btn btn-primary1 btn-circle" ng-disabled="step1()" >1</button>
-						<p>Αναφορά Προβλήματος</p>
-					</div>
-					<div class="stepwizard-step">
-						<button type="button" class="btn btn-default btn-circle" ng-disabled="step2()">2</button>
-						<p>Επώνυμη αναφορά</p>
-					</div>
-					<div class="stepwizard-step">
-						<button type="button" class="btn btn-default btn-circle" ng-disabled="step3()">3</button>
-						<p>Πιστοποίηση email</p>
-					</div> 
-					<div class="stepwizard-step">
-						<button type="button" class="btn btn-default btn-circle" ng-disabled="step4()">4</button>
-						<p>Καταχώριση αναφοράς</p>
-					</div> 
-				</div>
-			</div>
-			
-			<style>
-				
-				.stepwizard-step p{
-					color:#000000;
-					font-size:12px;
-				}
-				
-				.btn.btn-primary {
-					background-color: rgb(16, 15, 150);
-					border: 1px solid #f0f0f0;
-					border-color: #e2e2e2;
-					-webkit-transition: all .35s;
-					-moz-transition: all .35s;
-					transition: all .35s;
-				}
+                        </div>
+                        <div  after-render="invalidateTheMap"></div>
+                </div>
+                
+                <div class="col-md-4" > 
+                        <br />
+                        <div class="stepwizard" style="color:#000000;">
+                                <div class="stepwizard-row">
+                                        <div class="stepwizard-step">
+                                                <button type="button" class="btn btn-primary1 btn-circle" ng-disabled="step1()" >1</button>
+                                                <p>Αναφορά Προβλήματος</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                                <button type="button" class="btn btn-default btn-circle" ng-disabled="step2()">2</button>
+                                                <p>Επώνυμη αναφορά</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                                <button type="button" class="btn btn-default btn-circle" ng-disabled="step3()">3</button>
+                                                <p>Πιστοποίηση email</p>
+                                        </div> 
+                                        <div class="stepwizard-step">
+                                                <button type="button" class="btn btn-default btn-circle" ng-disabled="step4()">4</button>
+                                                <p>Καταχώριση αναφοράς</p>
+                                        </div> 
+                                </div>
+                        </div>
+                        
+                        <style>
+                                
+                                .stepwizard-step p{
+                                        color:#000000;
+                                        font-size:12px;
+                                }
+                                
+                                .btn.btn-primary {
+                                        background-color: rgb(16, 15, 150);
+                                        border: 1px solid #f0f0f0;
+                                        border-color: #e2e2e2;
+                                        -webkit-transition: all .35s;
+                                        -moz-transition: all .35s;
+                                        transition: all .35s;
+                                }
 
-				.stepwizard-step p {
-					margin-top: 10px;    
-				}
+                                .stepwizard-step p {
+                                        margin-top: 10px;    
+                                }
 
-				.stepwizard-row {
-					display: table-row;
-				}
+                                .stepwizard-row {
+                                        display: table-row;
+                                }
 
-				.stepwizard {
-					display: table;     
-					width: 100%;
-					position: relative;
-				}
+                                .stepwizard {
+                                        display: table;     
+                                        width: 100%;
+                                        position: relative;
+                                }
 
-				.stepwizard-step button[disabled] {
-					opacity: 1 !important;
-					filter: alpha(opacity=100) !important;
-				}
+                                .stepwizard-step button[disabled] {
+                                        opacity: 1 !important;
+                                        filter: alpha(opacity=100) !important;
+                                }
 
-				.stepwizard-row:before {
-					top: 14px;
-					bottom: 0;
-					position: absolute;
-					content: " ";
-					width: 100%;
-					height: 1px;
-					background-color: #ccc;
-					z-order: 0;
-					
-				}
+                                .stepwizard-row:before {
+                                        top: 14px;
+                                        bottom: 0;
+                                        position: absolute;
+                                        content: " ";
+                                        width: 100%;
+                                        height: 1px;
+                                        background-color: #ccc;
+                                        z-order: 0;
+                                        
+                                }
 
-				.stepwizard-step {    
-					display: table-cell;
-					text-align: center;
-					position: relative;
-				}
+                                .stepwizard-step {    
+                                        display: table-cell;
+                                        text-align: center;
+                                        position: relative;
+                                }
 
-				.btn-circle {
-				  width: 30px;
-				  height: 30px;
-				  text-align: center;
-				  padding: 6px 0;
-				  font-size: 14px;
-				  line-height: 1.428571429;
-				  border-radius: 15px;
-				}
+                                .btn-circle {
+                                  width: 30px;
+                                  height: 30px;
+                                  text-align: center;
+                                  padding: 6px 0;
+                                  font-size: 14px;
+                                  line-height: 1.428571429;
+                                  border-radius: 15px;
+                                }
 
-			</style>
+                        </style>
 
-			<div class="eponymous" ng-show='issubmit_isseu_form()'>
-				<div class="form-group" style="margin-bottom:12px"> 
-					<label for="lng" style="color: #000000; font-weight: 300" id="msg_label_long">{{'LONGTITUDE' | translate}}</label>
-					<input ng-model="latlabeltxt" style="background-color: #ccc !important;border-color:rgb(161, 164, 170) !important;color:#222 !important"  class="form-control" id="lng" placeholder="{{'LONGTITUDE' | translate}}" readonly >
-				</div>
-				<div class="form-group" style="margin-bottom:12px">
-					<label for="lat" style="color: #000000; font-weight: 300" id="msg_label_lat">{{'LATTITUDE' | translate}}</label>
-					<input ng-model="lnglabeltxt" style="background-color: #ccc !important;border-color:rgb(161, 164, 170) !important;color:#222 !important" type="text" class="form-control" id="lat" placeholder="{{'LATTITUDE' | translate}}" readonly >
-				</div>
+                        <div class="eponymous" ng-show='issubmit_isseu_form()'>
+                                <div class="form-group" style="margin-bottom:12px"> 
+                                        <label for="lng" style="color: #000000; font-weight: 300" id="msg_label_long">{{'LONGTITUDE' | translate}}</label>
+                                        <input ng-model="latlabeltxt" style="background-color: #ccc !important;border-color:rgb(161, 164, 170) !important;color:#222 !important"  class="form-control" id="lng" placeholder="{{'LONGTITUDE' | translate}}" readonly >
+                                </div>
+                                <div class="form-group" style="margin-bottom:12px">
+                                        <label for="lat" style="color: #000000; font-weight: 300" id="msg_label_lat">{{'LATTITUDE' | translate}}</label>
+                                        <input ng-model="lnglabeltxt" style="background-color: #ccc !important;border-color:rgb(161, 164, 170) !important;color:#222 !important" type="text" class="form-control" id="lat" placeholder="{{'LATTITUDE' | translate}}" readonly >
+                                </div>
                             <div class="form-group" style="margin-bottom:12px">
-					<label for="address" style="color: #000000; font-weight: 300;" id="msg_label_address">{{'ADDRESS' | translate}}</label>
-					<input ng-model="address" type="text" class="form-control" ng-focus="disable_next()" ng-blur="geocode(1)" id="address" placeholder="{{'ADDRESS' | translate}}">
-				</div>
-				<div class="form-group" style="margin-bottom:12px">
-					<label for="type-issue" style="color: #000000; font-weight: 300;" id="msg_label_type">{{ 'PROBLEMTYPE' | translate}}</label>
-					<select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" class="form-control" ng-change="updateCompoType()"></select>
-					
-				</div>
-				<div class="form-group" style="margin-bottom:12px">
-					<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_problem_detail">{{ 'PROBLEM' | translate}}</label>
-					
-					<select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" ng-model="issueSubTypeSelect" class="form-control" ng-change="issueSubTypeSelectChanged()"></select>
-				
-				</div>
-				<div class="form-group" style="margin-bottom:12px" ng-show='isOtherSelected()'>
-					<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'DESCRIPTION' | translate}}</label>
-					<input ng-model="otherDescriptionTxt" type="text" class="form-control" value="" placeholder="{{ 'DESCRIPTION' | translate }}"   >
-				</div>
-				<div class="form-group" style="margin-bottom:12px" >
-					<label for="commentstxt" style="color: #000000; font-weight: 300;" >{{ 'MESSAGE_ISSUE' | translate}}</label>
-					<input ng-model="commentstxt" type="text" class="form-control" value="" placeholder="{{ 'MESSAGE_ISSUE' | translate }}"   >
-				</div>
-				<div class="form-group" style="margin-bottom:12px">
-					<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">{{ 'PHOTO' | translate}}</label>
-					<input type="file" id="input_file"   class="form-control" file-model="uploadedPhotoFile" placeholder=""   />
-				</div>
-			</div>
-			
-			<input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null || coords_search == 1" ng-show='submit_button' ng-click="setStep(1)" />
-			
-				<div class="eponymous" ng-show='iseponymous()'>
-					<p style="color:#000000;"><span ng-bind="myText"></span></p>
-					<div class="form-group" style="color:#000000;">					
-						<input ng-model="chkSelected" ng-change="stateChanged()" type="checkbox" class="" value="{{ 'EPONYMOUS_REPORT' | translate}}" style=" width: 25px; height: 25px;"> {{ 'EPONYMOUS_REPORT' | translate}}
-					</div>
-					<div class="write_user_data" ng-show='chkSelected'>
-						<div class="form-group">
-							<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_NAME' | translate}}</label>
-							<input ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_NAME' | translate }}"   >
-							<div class="alert alert-warning" ng-show="showSuccessAlertName">
-								<button type="button" class="close" data-ng-click="switchBoolName('showSuccessAlert')">×</button> <strong>{{'WARNING_MSG' | translate}}</strong> {{'WARNING_MSG_REQUIRED_FIELD' | translate}}
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_EMAIL' | translate}}</label>
-							<input ng-model="EmailTxt" name="EmailTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_EMAIL' | translate }}"   >
-							<div class="alert alert-warning" ng-show="showSuccessAlertEmail">
-								<button type="button" class="close" data-ng-click="switchBoolEmail('showSuccessAlert')">×</button> <strong>{{'WARNING_MSG' | translate}}</strong> {{'WARNING_MSG_REQUIRED_FIELD' | translate}}
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_MOBILE' | translate}}</label>
-							<input ng-model="MobileTxt" ng-readonly="!chkSelected" type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_MOBILE' | translate }}"   >
-						</div>
-						<p style="color:#000000;">{{ 'MESSAGE_USER' | translate }}</p>
-						<div class="form-group" style="color:#000000;">					
-							<input ng-model="chkSelected_1" ng-disabled="true" ng-checked="true" ng-readonly="true" checked="checked" ng-change="stateChanged_email()" type="checkbox" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" style=" width: 25px; height: 25px;"> 
-							{{ 'EMAIL_USER' | translate}}
-						</div>
-						<div class="form-group" style="color:#000000;">					
-							<input ng-model="chkSelected_2" ng-disabled="true" ng-checked="false" ng-readonly="true" ng-change="stateChanged_sms()" type="checkbox" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" style=" width: 25px; height: 25px;"> 
-							{{ 'SMS_USER' | translate}}
-						</div>
-					</div>
-				</div>
-				
-				
-				
-				<input id="btnregister" class="btn btn-info" value="{{ 'CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='register_button'  ng-click="setStep(2)" />
-				
-				
-				<div class="isnotverify" ng-show='isnotverify()'>
-					<p style="color:#000000;"><span ng-bind="myText"></span></p>
-					<div class="form-group" style="color:#000000;">					
-						<label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
-						<input ng-model="codeTxt" type="text" class="form-control" value="" placeholder="{{ 'VERIFY_CODE' | translate }}"   >
-					</div>
-					<input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT_AND_CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' ng-click="setStep(3)" />
-				</div>
-				<div class="is_finalsubmit" ng-show='is_finalsubmit()'>
-					<label for="verify" style="color: #000000; font-weight: 300;" >Αποστολή αναφοράς προβλήματος!</label><br />
-					<input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'SAVE_NEW_ISSUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' ng-click="setStep(4)" />
-				</div>
-				
-				<div id="try_another_issue"></div>
-			</div>-->
+                                        <label for="address" style="color: #000000; font-weight: 300;" id="msg_label_address">{{'ADDRESS' | translate}}</label>
+                                        <input ng-model="address" type="text" class="form-control" ng-focus="disable_next()" ng-blur="geocode(1)" id="address" placeholder="{{'ADDRESS' | translate}}">
+                                </div>
+                                <div class="form-group" style="margin-bottom:12px">
+                                        <label for="type-issue" style="color: #000000; font-weight: 300;" id="msg_label_type">{{ 'PROBLEMTYPE' | translate}}</label>
+                                        <select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" class="form-control" ng-change="updateCompoType()"></select>
+                                        
+                                </div>
+                                <div class="form-group" style="margin-bottom:12px">
+                                        <label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_problem_detail">{{ 'PROBLEM' | translate}}</label>
+                                        
+                                        <select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" ng-model="issueSubTypeSelect" class="form-control" ng-change="issueSubTypeSelectChanged()"></select>
+                                
+                                </div>
+                                <div class="form-group" style="margin-bottom:12px" ng-show='isOtherSelected()'>
+                                        <label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'DESCRIPTION' | translate}}</label>
+                                        <input ng-model="otherDescriptionTxt" type="text" class="form-control" value="" placeholder="{{ 'DESCRIPTION' | translate }}"   >
+                                </div>
+                                <div class="form-group" style="margin-bottom:12px" >
+                                        <label for="commentstxt" style="color: #000000; font-weight: 300;" >{{ 'MESSAGE_ISSUE' | translate}}</label>
+                                        <input ng-model="commentstxt" type="text" class="form-control" value="" placeholder="{{ 'MESSAGE_ISSUE' | translate }}"   >
+                                </div>
+                                <div class="form-group" style="margin-bottom:12px">
+                                        <label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">{{ 'PHOTO' | translate}}</label>
+                                        <input type="file" id="input_file"   class="form-control" file-model="uploadedPhotoFile" placeholder=""   />
+                                </div>
+                        </div>
+                        
+                        <input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null || coords_search == 1" ng-show='submit_button' ng-click="setStep(1)" />
+                        
+                                <div class="eponymous" ng-show='iseponymous()'>
+                                        <p style="color:#000000;"><span ng-bind="myText"></span></p>
+                                        <div class="form-group" style="color:#000000;">					
+                                                <input ng-model="chkSelected" ng-change="stateChanged()" type="checkbox" class="" value="{{ 'EPONYMOUS_REPORT' | translate}}" style=" width: 25px; height: 25px;"> {{ 'EPONYMOUS_REPORT' | translate}}
+                                        </div>
+                                        <div class="write_user_data" ng-show='chkSelected'>
+                                                <div class="form-group">
+                                                        <label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_NAME' | translate}}</label>
+                                                        <input ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_NAME' | translate }}"   >
+                                                        <div class="alert alert-warning" ng-show="showSuccessAlertName">
+                                                                <button type="button" class="close" data-ng-click="switchBoolName('showSuccessAlert')">×</button> <strong>{{'WARNING_MSG' | translate}}</strong> {{'WARNING_MSG_REQUIRED_FIELD' | translate}}
+                                                        </div>
+                                                </div>
+                                                <div class="form-group">
+                                                        <label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_EMAIL' | translate}}</label>
+                                                        <input ng-model="EmailTxt" name="EmailTxt" ng-readonly="!chkSelected"  type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_EMAIL' | translate }}"   >
+                                                        <div class="alert alert-warning" ng-show="showSuccessAlertEmail">
+                                                                <button type="button" class="close" data-ng-click="switchBoolEmail('showSuccessAlert')">×</button> <strong>{{'WARNING_MSG' | translate}}</strong> {{'WARNING_MSG_REQUIRED_FIELD' | translate}}
+                                                        </div>
+                                                </div>
+                                                <div class="form-group">
+                                                        <label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'EPONYMOUS_MOBILE' | translate}}</label>
+                                                        <input ng-model="MobileTxt" ng-readonly="!chkSelected" type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_MOBILE' | translate }}"   >
+                                                </div>
+                                                <p style="color:#000000;">{{ 'MESSAGE_USER' | translate }}</p>
+                                                <div class="form-group" style="color:#000000;">					
+                                                        <input ng-model="chkSelected_1" ng-disabled="true" ng-checked="true" ng-readonly="true" checked="checked" ng-change="stateChanged_email()" type="checkbox" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" style=" width: 25px; height: 25px;"> 
+                                                        {{ 'EMAIL_USER' | translate}}
+                                                </div>
+                                                <div class="form-group" style="color:#000000;">					
+                                                        <input ng-model="chkSelected_2" ng-disabled="true" ng-checked="false" ng-readonly="true" ng-change="stateChanged_sms()" type="checkbox" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" style=" width: 25px; height: 25px;"> 
+                                                        {{ 'SMS_USER' | translate}}
+                                                </div>
+                                        </div>
+                                </div>
+                                
+                                
+                                
+                                <input id="btnregister" class="btn btn-info" value="{{ 'CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='register_button'  ng-click="setStep(2)" />
+                                
+                                
+                                <div class="isnotverify" ng-show='isnotverify()'>
+                                        <p style="color:#000000;"><span ng-bind="myText"></span></p>
+                                        <div class="form-group" style="color:#000000;">					
+                                                <label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
+                                                <input ng-model="codeTxt" type="text" class="form-control" value="" placeholder="{{ 'VERIFY_CODE' | translate }}"   >
+                                        </div>
+                                        <input id="btnverify" class="btn btn-info" type="submit" value="{{ 'SUBMIT_AND_CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='verify_button' ng-click="setStep(3)" />
+                                </div>
+                                <div class="is_finalsubmit" ng-show='is_finalsubmit()'>
+                                        <label for="verify" style="color: #000000; font-weight: 300;" >Αποστολή αναφοράς προβλήματος!</label><br />
+                                        <input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'SAVE_NEW_ISSUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' ng-click="setStep(4)" />
+                                </div>
+                                
+                                <div id="try_another_issue"></div>
+                        </div>-->

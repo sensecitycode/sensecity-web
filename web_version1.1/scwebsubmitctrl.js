@@ -13,7 +13,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
         }, 10);
-
+        
+        leafletData.getMap("issuesmap").then(function (map) {
+                                        map.scrollWheelZoom.disable();
+                                    });
+        
         navigator.geolocation.getCurrentPosition(function(pos){
             var mylocation_marker = {
                                 lat: pos.coords.latitude,
