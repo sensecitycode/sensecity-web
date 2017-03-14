@@ -94,17 +94,14 @@
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
     </head>
     <body ng-app="scApp" ng-controller="sensecityMainCtrl">
-        
-        <div class="page-container">
-                <div ng-include="'scheader.html'"></div>        
+        <div class="page-container"> 
             <div class="page-content">
-                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                <ul class="x-navigation  x-navigation-horizontal">
                     <div ng-include="'scnavbar.html'"></div>
                 </ul>
-                
                 <div ng-view autoscroll="true"> </div>
                 </div>
-
+                
         <script>
             (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;

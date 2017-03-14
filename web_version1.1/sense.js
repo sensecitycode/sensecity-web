@@ -34,7 +34,7 @@ appControllers.controller(
                     for (var i = idt; i > 0; i--)
                         clearInterval(i);
                 }, 10);
-                
+
 //              $(document).ready(function(){
 //                $.getScript("js/plugins/jquery/jquery.min.js");
 //                    $.getScript("js/plugins/jquery/jquery-ui.min.js");
@@ -143,7 +143,8 @@ appControllers.controller(
 //            }                                     
 //    });
 //    }
-       if( $rootScope.aft == 1){
+
+       if( $rootScope.aft == 0){
            $rootScope.aft = 0;
         $(document).on("click",".xn-openable",function(event){
             $(this).attr("class", "xn-openable active");

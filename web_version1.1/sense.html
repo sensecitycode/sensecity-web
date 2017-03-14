@@ -1,74 +1,92 @@
                 <div class="page-content-wrap">
                     <div class="row">
-                        <div class="col-md-7" style="top:50px;z-index:20">
+                        
+                        <div class="col-md-9" style="top:10px;z-index:20">
+                            <!--<div class="col-md-12" style="top:10px;z-index:20">-->
+                             <div class="col-md-3">
+                                 <div class="widget widget-default widget-item-icon">
+                                 <div class="widget-item-left">
+                                    <span class="fa fa-map-marker"></span>
+                                </div> 
+                            <div class="widget-data" style="word-break:break-all">
+                                    <div class="widget-title">Προβληματα</div>                                                                        
+                                        <div class="widget-subtitle">Τελ. 30 ημέρες</div>
+                                        <div class="widget-int">3,548</div>
+                                </div> 
+                                 </div>
+                        </div>
+                            <div class="col-md-3">
+                            <div class="widget widget-default widget-item-icon">
+                                 <div class="widget-item-left">
+                                    <span class="fa fa-exclamation"></span>
+                                </div> 
+                            <div class="widget-data" style="word-break:break-all">
+                                    <div class="widget-title">Συμβαντα</div>                                                                        
+                                        <div class="widget-subtitle">Τελ. 30 ημέρες</div>
+                                        <div class="widget-int">3,548</div>
+                                </div> 
+                                 </div>       
+                        </div>
+                            <div class="col-md-3">
+                                <div class="widget widget-default widget-item-icon">
+                                 <div class="widget-item-left">
+                                    <span class="fa fa-calendar"></span>
+                                </div> 
+                            <div class="widget-data" style="word-break:break-all">
+                                    <div class="widget-title">Προβληματα</div>                                                                        
+                                        <div class="widget-subtitle">Από 1/1/2017</div>
+                                        <div class="widget-int">3,548</div>
+                                </div> 
+                                 </div>       
+                        </div>
+                            <div class="col-md-3">
+                                <div class="widget widget-default widget-item-icon">
+                                 <div class="widget-item-left">
+                                    <span class="fa fa-check-circle"></span>
+                                </div> 
+                            <div class="widget-data" style="word-break:break-all">
+                                    <div class="widget-title">Λυσεις</div>                                                                        
+                                        <div class="widget-subtitle">Από 1/1/2017</div>
+                                        <div class="widget-int">3,548</div>
+                                </div> 
+                                 </div>       
+                        </div>
+                        <!--</div>-->
                             <div class="panel panel-default">
-                                <div class="panel-heading" style="text-align: center">
-                                        <h3  class="panel-title" style="font-weight:600;font-size:14px;">Χάρτης Προβλημάτων</h3>
+                                <div class="panel-heading">
+                                        <div  class="panel-title-box" style="font-weight:600;font-size:14px;">
+                                            <h3> Χάρτης Προβλημάτων</h3>
+                                            <span>Προβλήματα σε εκτέλεση</span>
+                                        </div>
                                     <ul class="panel-controls">
                                         <li><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
                                         <li><span tooltip-side="bottom" tooltips tooltip-template="Ανανέωση προβλημάτων"><a ng-click="reset_search(); refresh()"href="#!/" class="panel-refresh"><span class="fa fa-refresh"></span></a></span></li>                            
                                     </ul>
                                 </div>
                                 <div class="panel-body panel-body-map">                              
-                                            <leaflet style="z-index:3" id="issuesmap" lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="470px" width="100%"">
+                                            <leaflet style="z-index:3" id="issuesmap" lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="400px" width="100%"">
                                             </leaflet>
                                 </div>
                             </div>
 
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="panel-title-box" style="text-align:center;float:none">
-                                        <h3>Στατιστικά</h3>
-                                    </div>                                  
-                                </div>                                
-                                <div class="panel-body padding-0">
-                                    
-                            <div class="widget widget-default widget-carousel row">
-                                    <div class="col-md-3" >                                    
-                                        <div class="widget-title">Προβληματα τελ. 30 ημερες</div>
-                                        <div class="widget-int">1,695</div>
-                                       <div class="horizontal-bar">
-                                            &nbsp;
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">                                    
-                                        <div class="widget-title">Συμβαντα τελ. 30 ημερες</div>
-                                        <div class="widget-int">1,695</div>
-                                        <div class="horizontal-bar">
-                                            &nbsp;
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">                                    
-                                        <div class="widget-title">Προβληματα απο 1/1/2017</div>
-                                        <div class="widget-int">1,977</div>
-                                       <div class="horizontal-bar">
-                                            &nbsp;
-                                        </div>
-                                    </div>
-                                <div class="col-md-3">                                    
-                                        <div class="widget-title">Λυσεις απο 1/1/2017</div>
-                                        <div class="widget-int">1,977</div>
-                                        <div class="horizontal-bar">
-                                            &nbsp;
-                                        </div>
-                                    </div> 
-                            </div> 
-                                </div>                                    
-                            </div>
                         </div>
                         
                         
-                        <div class="col-md-3" style="top:50px;">
+                        <div class="col-md-3" style="top:10px;">
                             <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <div class="panel-title-box" style="text-align:center;float:none">
-                                        <h3>Τελευταία Προβλήματα</h3>
-                                    </div>                                  
+                                    <div  class="panel-title-box" style="font-weight:600;font-size:14px;">
+                                            <h3> Τελευταία Προβλήματα</h3>
+                                            <span>Τελευταία 6 προβλήματα</span>
+                                        </div> 
+                                    <ul class="panel-controls">
+                                        <li><span tooltip-side="bottom" tooltips tooltip-template="Περισσότερα Προβήματα"><a href="#!/" class="panel-fullscreen"><span class="fa fa-eye"></span></a></span></li>                    
+                                    </ul>
                                 </div>                                
                                 <div class="panel-body padding-0">
                                     
-                            <div class="widget widget-default widget-carousel">
+                            <div class="widget widget-default widget-carousel" style="box-shadow:none">
                                 <div class="owl-carousel" id="owl-example">
                                     <div class="col-md-3">
                             <!-- CONTACT ITEM -->
@@ -78,17 +96,14 @@
                                         <img height="100" src="img/markers_default.png" alt="Nadia Ali">
                                     </div>
                                     <div class="profile-data">
-                                        <div class="profile-data-name">Nadia Ali</div>
-                                        <div class="profile-data-title">Singer-Songwriter</div>
-                                    </div>
-                                    <div class="profile-controls">
-                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
+                                        <div class="profile-data-name">Πρόβλημα</div>
+                                        <div class="profile-data-title">Περιγραφή</div>
                                     </div>
                                 </div>                                
                                 <div class="panel-body">                                    
                                     <div class="contact-info">
-                                        <p><small>Mobile</small><br>(555) 555-55-55</p>
+                                        <p><small>Κατάσταση</small><br>(555) 555-55-55</p>
+                                        <p><small>Αναφορά</small><br>(555) 555-55-55</p>
 <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
                                         <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>
@@ -106,10 +121,6 @@
                                     <div class="profile-data">
                                         <div class="profile-data-name">Nadia Ali</div>
                                         <div class="profile-data-title">Singer-Songwriter</div>
-                                    </div>
-                                    <div class="profile-controls">
-                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
                                     </div>
                                 </div>                                
                                 <div class="panel-body">                                    
@@ -126,8 +137,9 @@
                             </div> 
                                 </div>                                    
                             </div>
-                            <div><a data-height="353" class="twitter-timeline" href="https://twitter.com/TwitterDev">Tweets by TwitterDev</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-                        </div>
+                                            <a data-width="100%" data-height="320" class="twitter-timeline"  href="https://twitter.com/hashtag/patra" data-widget-id="841271929285820416">#patra Tweets</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
                         </div>
                         </div>
                     
@@ -159,4 +171,4 @@
         
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>
-        
+        <script>$(document).ready(function(){$(window).trigger('resize')});;</script>

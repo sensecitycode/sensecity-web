@@ -159,10 +159,10 @@ $(document).ready(function(){
     
     /* PANELS */
     
-    $(".panel-fullscreen").on("click",function(){
-        panel_fullscreen($(this).parents(".panel"));
-        return false;
-    });
+//    $(".panel-fullscreen").on("click",function(){
+//        panel_fullscreen($(this).parents(".panel"));
+//        return false;
+//    });
     
     $(".panel-collapse").on("click",function(){
         panel_collapse($(this).parents(".panel"));
@@ -246,7 +246,7 @@ $(document).ready(function(){
     });
     /* END MESSAGES LOADING */
     
-    //x_navigation();
+    x_navigation();
 });
 
 $(function(){            
@@ -283,13 +283,12 @@ function page_content_onresize(){
     
     if(content.height() < $(document).height() - content_minus){        
         content.height($(document).height() - content_minus);
-        //$(".xn-title").height($(window).height() - $(".page-sidebar").height());
     }        
     
     if(sidebar.height() > content.height()){        
         content.height(sidebar.height());
     }
-//    content.height(0);
+    
     if($(window).width() > 1024){
         
         if($(".page-sidebar").hasClass("scroll")){
@@ -299,7 +298,7 @@ function page_content_onresize(){
                 var doc_height = $(window).height();
             }
            $(".page-sidebar").height(doc_height);
-          
+           
        }
        
         if($(".content-frame-body").height() < $(document).height()-162){
@@ -312,7 +311,7 @@ function page_content_onresize(){
         $(".content-frame-right").show();
     }else{
         $(".content-frame-body").height($(".content-frame").height()-80);
-        $(".xn-title").removeAttr("style");
+        
         if($(".page-sidebar").hasClass("scroll"))
            $(".page-sidebar").css("height","");
     }
@@ -469,13 +468,13 @@ function x_navigation_minimize(action){
 
 function x_navigation(){
     
-//    $(".x-navigation-control").click(function(){
-//        $(this).parents(".x-navigation").toggleClass("x-navigation-open");
-//        
-//        onresize();
-//        
-//        return false;
-//    });
+    $(".x-navigation-control").click(function(){
+        $(this).parents(".x-navigation").toggleClass("x-navigation-open");
+        
+        onresize();
+        
+        return false;
+    });
 
     if($(".page-navigation-toggled").length > 0){
         x_navigation_minimize("close");
@@ -505,7 +504,26 @@ function x_navigation(){
         
     });
     
-
+    $(".x-navigation li").click(function(event){
+        event.stopPropagation();
+        
+        var li = $(this);
+                
+            if(li.children("ul").length > 0 || li.children(".panel").length > 0 || $(this).hasClass("xn-profile") > 0){
+                if(li.hasClass("active")){
+                    li.removeClass("active");
+                    //li.find("li.active").removeClass("active");
+                }else
+                    li.addClass("active");
+                    
+                onresize();
+                
+                if($(this).hasClass("xn-profile") > 0)
+                    return true;
+                else
+                    return false;
+            }                                     
+    });
     
     /* XN-SEARCH */
     $(".xn-search").on("click",function(){
@@ -544,4 +562,3 @@ Object.size = function(obj) {
     }
     return size;
 };
-/* EOF NEW OBJECT(GET SIZE OF ARRAY) */
