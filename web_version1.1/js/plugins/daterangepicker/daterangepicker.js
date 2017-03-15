@@ -212,7 +212,7 @@
                     // options object for reusability in multiple daterangepicker instances
                     this.locale.daysOfWeek = options.locale.daysOfWeek.slice();
                 }
-
+                
                 if (typeof options.locale.monthNames === 'object') {
                   this.locale.monthNames = options.locale.monthNames.slice();
                 }
@@ -294,7 +294,7 @@
             }
 
             var start, end, range;
-
+            
             //if no start/end dates set, check if an input element contains initial values
             if (typeof options.startDate === 'undefined' && typeof options.endDate === 'undefined') {
                 if ($(this.element).is('input[type=text]')) {
@@ -475,7 +475,7 @@
         updateFromControl: function () {
             if (!this.element.is('input')) return;
             if (!this.element.val().length) return;
-
+            
             var dateString = this.element.val().split(this.separator),
                 start = null,
                 end = null;
@@ -761,7 +761,6 @@
             var row = title.substr(1, 1);
             var col = title.substr(3, 1);
             var cal = $(e.target).parents('.calendar');
-
             var startDate, endDate;
             if (cal.hasClass('left')) {
                 startDate = this.leftCalendar.calendar[row][col];

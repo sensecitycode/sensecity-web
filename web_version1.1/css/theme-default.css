@@ -390,7 +390,7 @@ body.page-container-boxed .page-container {
   -o-transition: color 200ms ease;
   transition: color 200ms ease;
 }
-.x-navigation li > a:hover {
+.x-navigation li > #disabled_list:hover {
   background: #262a33;
   color:#fff;
   -webkit-transition: all 200ms ease;
@@ -457,6 +457,16 @@ body.page-container-boxed .page-container {
   -o-transition: all 200ms ease;
   transition: all 200ms ease;
 }
+
+#active_list{
+  color:#fff;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;  
+}
+
 .x-navigation li.active > a .fa,
 .x-navigation li.active > a .glyphicon {
   color: #fff;

@@ -22,7 +22,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
         }, 10);
-
+        
+         leafletData.getMap("issuesmap").then(function (map) {
+                                        map.scrollWheelZoom.disable();
+                                    });
+        
         $scope.checkAll = {
             value1: false
         };
