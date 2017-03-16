@@ -19,6 +19,11 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
         templateUrl: 'scsearchissues.html',
         controller: 'searchIssueController'
     }).when('/more', {
+//        templateUrl: 'all_issues.html',
+//        controller: 'allissuesCtrl'
+templateUrl: 'scissuemap.html',
+        controller: 'allissuesCtrl'
+    }).when('/all', {
         templateUrl: 'all_issues.html',
         controller: 'allissuesCtrl'
     }).when('/', {
