@@ -79,8 +79,6 @@ app.run(['$rootScope', '$http','$location','$q','$window', function ($rootScope,
         
         var d = $q.defer();
         
-        console.log("scapp: "+url);
-        
         $rootScope.Variables = {
                 city_name: "",
                 city_address: "",
@@ -150,7 +148,6 @@ app.run(['$rootScope', '$http','$location','$q','$window', function ($rootScope,
             
             d.resolve(response);
             
-            console.log("scapp: "+JSON.stringify($rootScope.Variables));
             
             return $rootScope;
         });

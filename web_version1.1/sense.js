@@ -1,4 +1,4 @@
-var appControllers = angular.module('sense.controllers', ['pascalprecht.translate']);
+var appControllers = angular.module('sense.controllers', []);
 
 appControllers.directive('sidebarDirective', function () {
     return {
@@ -159,7 +159,31 @@ appControllers.controller(
 //            $(this).parents(".x-navigation").toggleClass("x-navigation-open");
 //        });
 //    }
+                $scope.full = 0;
+                
+                 $scope.removeFixed = function (event) {
+                if ($scope.full == 0) {
+                        $("#right-column").removeAttr('style');
+                        $scope.full = 1;
+                        panel_fullscreen($(event.currentTarget).closest(".panel"));
+                        var map = leafletData.getMap().then(
+                        function (map) {
+                        map.invalidateSize(true);
+                        }
 
+                );
+                } else {
+                $scope.full = 0;
+                        panel_fullscreen($(event.currentTarget).closest(".panel"));
+                        var map = leafletData.getMap().then(
+                        function (map) {
+                        map.invalidateSize(true);
+                        }
+
+                );
+                }
+                };
+                
                 var url_path = $location.absUrl().split("//");
                 var sub_domain = url_path[1].split(".");
                 var url;
@@ -172,6 +196,8 @@ appControllers.controller(
                 }
 
                 var d = $q.defer();
+                
+
 
                 $rootScope.mainInfo = $http.get(url).success(function (response) {
 
@@ -300,6 +326,8 @@ appControllers.controller(
                         }
                     }
                 });
+                
+                        
 
                 $scope.map_center = {
                     lat: 37.787435,
@@ -311,10 +339,41 @@ appControllers.controller(
                         function (data) {
                             $.getScript("js/plugins.js");
                             $.getScript("js/actions.js");
-                            leafletData.getMap("issuesmap").then(function (map) {
+$scope.$on("leafletDirectiveMarker.click",function (event, args) {
+    
+                                var marker3 = args.leafletObject;
+                                var popup = marker3.getPopup();
+
+                                var issue_name;
+                                var issue_image;
+
+                                $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+                                        {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
+                                ).query({issueID: marker3.options.issue_id}, function (resp) {
+
+                                    var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
+                                    if (resp_index != -1) {
+                                        issue_name = $rootScope.Variables.departments_en[resp_index];
+                                    }
+
+                                    if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
+                                        resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
+                                    } else {
+                                        issue_image = resp[0].image_name;
+                                    }
+                                    if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
+                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                    } else {
+                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                    }
+                                    popup.options.maxWidth = "auto";
+                                    popup.update();
+
+                                });
+                            });
+                            leafletData.getMap().then(function (map) {
                                 map.scrollWheelZoom.disable();
                             });
-                            console.log("sense: " + JSON.stringify($rootScope.Variables));
                             for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
                                 $scope.removelayer(i);
                             }
@@ -351,38 +410,7 @@ appControllers.controller(
                                 console.log(o.leafletEvent.layer);
                             });
 
-                            $scope.$on("leafletDirectiveMarker.click", function (event, args) {
-
-                                var marker3 = args.leafletObject;
-                                var popup = marker3.getPopup();
-
-                                var issue_name;
-                                var issue_image;
-
-                                $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
-                                        {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
-                                ).query({issueID: marker3.options.issue_id}, function (resp) {
-
-                                    var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
-                                    if (resp_index != -1) {
-                                        issue_name = $rootScope.Variables.departments_en[resp_index];
-                                    }
-
-                                    if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
-                                        resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
-                                    } else {
-                                        issue_image = resp[0].image_name;
-                                    }
-                                    if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
-                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
-                                    } else {
-                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
-                                    }
-                                    popup.options.maxWidth = "auto";
-                                    popup.update();
-
-                                });
-                            });
+                    
 
                             var startdate = new Date(2017, 0, 1);
                             var today = new Date();
@@ -676,7 +704,7 @@ appControllers.controller(
                                     if ($(".owl-carousel").length > 0 && oft == 0) {
                                         oft = 1;
                                         $(".owl-carousel").owlCarousel({mouseDrag: false, touchDrag: true, slideSpeed: 300, paginationSpeed: 400, singleItem: true, navigation: false, autoPlay: true});
-
+                                        $(window).resize()
                                     }
                                 }, 1000);
 
@@ -685,7 +713,6 @@ appControllers.controller(
 
                             $scope.displayFixedPoints = function () {
 
-                                console.log("city_name : " + $rootScope.Variables.city_name);
 
                                 var i = 0;
 
@@ -747,7 +774,7 @@ appControllers.controller(
                                     });
 
                                     markersGarbage.addLayers($scope.fixedmarkersGarbage);
-                                    leafletData.getMap("issuesmap").then(function (map) {
+                                    leafletData.getMap().then(function (map) {
                                         map.addLayer(markersGarbage);
                                     });
 
@@ -765,7 +792,7 @@ appControllers.controller(
 
                                     markersLightning.addLayers($scope.fixedmarkersLightning);
 
-                                    leafletData.getMap("issuesmap").then(function (map) {
+                                    leafletData.getMap().then(function (map) {
                                         map.addLayer(markersLightning);
                                     });
 
@@ -781,7 +808,7 @@ appControllers.controller(
                                         "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
                                     };
 
-                                    leafletData.getMap("issuesmap").then(function (map) {
+                                    leafletData.getMap().then(function (map) {
                                         L.control.layers({}, overlays).addTo(map);
                                         map.invalidateSize(true);
                                     });
@@ -794,7 +821,7 @@ appControllers.controller(
                             $scope.displayFixedPoints();
 
                             // set intervals to update
-                            var updtime = 0.2 * 60 * 1000; // every 5 minutes
+                            var updtime = 5 * 60 * 1000; // every 5 minutes
                             $interval($scope.doCalcLast6Issues, updtime);
                             $interval($scope.submitSearchLast30days, updtime);
                         });

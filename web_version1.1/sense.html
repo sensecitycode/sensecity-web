@@ -45,7 +45,16 @@
         <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
         <script src="js/dirdisqus.js"></script>
 
-        <!-- Map dependancies -->
+
+        <script src="js/leaflet.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet.extra-markers.min.js"></script>
+        <script src="js/angular-count-to.min.js"></script>
+        
+                <!-- Map dependancies -->
         <link rel="stylesheet" href="css/leaflet.css" />
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
         <link rel="stylesheet" href="css/ionicons.min.css" />
@@ -55,13 +64,6 @@
         <!--<link rel="stylesheet" href="css/style.css" />-->
         <link rel="stylesheet" type="text/css" href="admin/css/gdropdown.css" />
 
-        <script src="js/leaflet.js"></script>
-        <script src="js/ui-leaflet.min.js"></script>
-        <script src="js/leaflet.awesome-markers.js"></script>
-        <script src="js/angular-simple-logger.js"></script>
-        <script src="js/leaflet.markercluster.js"></script>
-        <script src="js/leaflet.extra-markers.min.js"></script>
-        <script src="js/angular-count-to.min.js"></script>
 
         <!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
         <script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
@@ -92,8 +94,9 @@
 
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+        
     </head>
-    <body ng-app="scApp" ng-controller="senseController">
+    <body ng-app="scApp" ng-controller="senseController" ng-cloak>
 <div class="page-container"> 
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
@@ -169,12 +172,12 @@
                                             <span>Προβλήματα σε εκτέλεση</span>
                                         </div>
                                     <ul class="panel-controls">
-                                        <li><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
-                                        <li><span tooltip-side="bottom" tooltips tooltip-template="Ανανέωση προβλημάτων"><a ng-click="reset_search(); refresh()"href="#!/" class="panel-refresh"><span class="fa fa-refresh"></span></a></span></li>                            
+                                        <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed($event)" href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
+                                        <li ng-show="full == 1"><span tooltip-side="bottom" tooltips tooltip-template="Σμίκρυνση"><a ng-click="removeFixed($event)" href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>                 
                                     </ul>
                                 </div>
                                 <div class="panel-body panel-body-map">                              
-                                            <leaflet style="z-index:3" id="issuesmap" lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="400px" width="100%"">
+                                            <leaflet style="z-index:3"  lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="400px" width="100%"">
                                             </leaflet>
                                 </div>
                             </div>
@@ -191,7 +194,7 @@
                                             <span>Τελευταία 6 προβλήματα</span>
                                         </div> 
                                     <ul class="panel-controls">
-                                        <li><span tooltip-side="bottom" tooltips tooltip-template="Περισσότερα Προβήματα"><a href="#!/" class="panel-fullscreen"><span class="fa fa-eye"></span></a></span></li>                    
+                                        <li><span tooltip-side="bottom" tooltips tooltip-template="Περισσότερα Προβήματα"><a href="/more"><span class="fa fa-eye"></span></a></span></li>                    
                                     </ul>
                                 </div>                                
                                 <div class="panel-body padding-0">
@@ -241,8 +244,6 @@
             </div>
 </div>
 
-        
-        
         </body>
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
