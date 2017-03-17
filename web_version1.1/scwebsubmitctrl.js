@@ -4,6 +4,61 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http',
     function ($scope, $window, $q, $rootScope, $log, $location, leafletData, Issue, $translate, $http) {
+
+        var url_path = $location.absUrl().split("//");
+        var sub_domain = url_path[1].split(".");
+        var url;
+
+        if (sub_domain[0].split(":").length > 1) {
+            url = "./config/testcity1.json";
+            sub_domain[0] = "testcity1";
+        } else {
+            url = '../config/' + sub_domain[0] + '.json';
+        }
+
+        var d = $q.defer();
+
+
+
+        $rootScope.mainInfo = $http.get(url).success(function (response) {
+
+            $rootScope.Variables = {
+                city_name: sub_domain[0],
+                city_address: response.city_address,
+                lat_center: response.lat_center,
+                long_center: response.long_center,
+                img_logo: "images/city_logos/" + response.city_name + ".jpg",
+                icons: response.icons,
+                APIURL: response.APIURL,
+                components: response.components,
+                components_en: response.components_en,
+                overlays: response.overlays,
+                categories: response.categories,
+                categories_issue: response.categories_issue,
+                departments: response.departments,
+                departments_en: response.departments_en,
+                feelingsURL: response.feelingsURL,
+                bugzilla: response.bugzilla,
+                ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+                active_user_URL: response.active_user_URL,
+                activate_user_URL: response.activate_user_URL,
+                APIADMIN: response.APIADMIN,
+                issue_type_en: response.issue_type_en,
+                issue_type_gr: response.issue_type_gr,
+                availableIssues: response.availableIssues,
+                searchIssues: response.searchIssues,
+                map_zoom: response.zoom,
+                overlay_functions: response.overlay_functions,
+                overlay_categories: response.overlay_categories,
+                google_init_coords: response.google_init_coords,
+                google_buildings: response.google_buildings,
+                host: response.host
+            };
+
+            d.resolve(response);
+            return d.promise;
+        });
+
         $log.debug('inside scWebSubmit controller');
         $rootScope.overview_url = $location.path();
         $scope.markers = [];
@@ -13,25 +68,25 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
         }, 10);
-        
+
         leafletData.getMap("issuesmap").then(function (map) {
-                                        map.scrollWheelZoom.disable();
-                                    });
-        
-        navigator.geolocation.getCurrentPosition(function(pos){
+            map.scrollWheelZoom.disable();
+        });
+
+        navigator.geolocation.getCurrentPosition(function (pos) {
             var mylocation_marker = {
-                                lat: pos.coords.latitude,
-                                lng: pos.coords.longitude,
-                                icon: {
-                                    type: 'awesomeMarker',
-                                    prefix: 'fa',
-                                    icon: 'smile-o',
-                                    markerColor: 'blue'
-                                }
-                            };
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude,
+                icon: {
+                    type: 'awesomeMarker',
+                    prefix: 'fa',
+                    icon: 'smile-o',
+                    markerColor: 'blue'
+                }
+            };
             $scope.markers.unshift(mylocation_marker);
             mylocation_en = 1;
-            
+
         });
 
         $scope.latlabeltxt = null;
@@ -105,9 +160,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
             );
         };
-        
-        $scope.disable_next = function(){
-            $scope.coords_search = 1;
+
+        $scope.disable_next = function () {
+            $(".btn.btn-default.pull-right").attr("class", "btn btn-default pull-right disabled");
         };
 
         function onmapclick(event) {
@@ -122,23 +177,27 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     markerColor: 'red'
                 }
             };
-            
-            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+event.latlng.lat+","+event.latlng.lng+"&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM").success(function(result){
+
+            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latlng.lat + "," + event.latlng.lng + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM").success(function (result) {
                 $scope.address = result.results[0].formatted_address;
             });
-            
-            if($scope.markers.length == 2 || mylocation_en == 0){
-            $scope.markers.pop();
-        }
+
+            if ($scope.markers.length == 2 || mylocation_en == 0) {
+                $scope.markers.pop();
+            }
             $scope.markers.push(mainMarker);
-            
+
 
 
             $scope.latlabeltxt = event.latlng.lat;
             $scope.lnglabeltxt = event.latlng.lng;
-        };
+        }
+        ;
 
-        $q.all($rootScope.mainInfo).then(function (data) {
+        $q.all([$rootScope.mainInfo]).then(function (data) {
+
+            $.getScript("js/plugins.js");
+            $.getScript("js/actions.js");
 
             leafletData.getMap().then(function (map) {
                 map.on('click', onmapclick);
@@ -152,7 +211,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
 
             $scope.availableIssues = $rootScope.Variables.availableIssues;
-
 
             $scope.issueTypeSelect = $scope.availableIssues[0];
             $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
@@ -196,78 +254,110 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
             $scope.geocode = function (address) {
                 var geocoder = new google.maps.Geocoder();
-                if( address == 1){
+                if (address == 1) {
                     var address = $scope.address + "," + $rootScope.Variables.city_address;
-                }else{
+                } else {
                     var address = $('#address').val() + "," + $rootScope.Variables.city_address;
                 }
-                if(address != ""){
-                geocoder.geocode({'address': address}, function (results, status) {
-                    if (status === 'OK') {
-                        if (results.length == 1) {
-                            var latlng = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
-                            var mainMarker = {
-                                lat: latlng.lat,
-                                lng: latlng.lng,
-                                icon: {
-                                    type: 'awesomeMarker',
-                                    prefix: 'fa',
-                                    icon: 'info-circle',
-                                    markerColor: 'red'
-                                }
-                            };
-                            $scope.map_center = {
-                                lat: results[0].geometry.location.lat(),
-                                lng: results[0].geometry.location.lng(),
-                                zoom: 18
-                            };
-                            $scope.address = results[0].formatted_address;
-                            if($scope.markers.length == 2 || mylocation_en == 0){
-                            $scope.markers.pop();
-                        }
-                            $scope.markers.push(mainMarker);
-                            $scope.latlabeltxt = results[0].geometry.location.lat();
-                            $scope.lnglabeltxt = results[0].geometry.location.lng();
-                                           leafletData.getMap().then(
-                    function (map) {
-                        map.invalidateSize(true);
-                    }
-            );
-                            
-                        } else {
-                            var addresses_options = "";
-                            for (var l = 0; l < results.length; l++) {
-                                addresses_options += "<option>" + results[l].formatted_address + "</option>";
-                            }
-                            $("#taddress").html(addresses_options);
-                            $('#address').flexdatalist('reset');
-                            $('#address').flexdatalist({
-                                minLength: 0
-                            });
-
-                            $("#address-flexdatalist").focus();
-                               
-                        }
-                        $scope.coords_search = 0;
-                    } else {
-                        $scope.coords_search = 0;
-                        $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισαγάγατε. Παρακαλώ δοκιμάστε ξανά.");
-                    }
-                });
-            }else{
-                                        $scope.coords_search = 0;
+                if (address != "") {
+                    geocoder.geocode({'address': address}, function (results, status) {
+                        if (status === 'OK') {
+                            if (results.length == 1) {
+                                var latlng = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
+                                var mainMarker = {
+                                    lat: latlng.lat,
+                                    lng: latlng.lng,
+                                    icon: {
+                                        type: 'awesomeMarker',
+                                        prefix: 'fa',
+                                        icon: 'info-circle',
+                                        markerColor: 'red'
                                     }
+                                };
+                                $scope.map_center = {
+                                    lat: results[0].geometry.location.lat(),
+                                    lng: results[0].geometry.location.lng(),
+                                    zoom: 18
+                                };
+                                $scope.address = results[0].formatted_address;
+                                if ($scope.markers.length == 2 || mylocation_en == 0) {
+                                    $scope.markers.pop();
+                                }
+                                $scope.markers.push(mainMarker);
+                                $scope.latlabeltxt = results[0].geometry.location.lat();
+                                $scope.lnglabeltxt = results[0].geometry.location.lng();
+                                leafletData.getMap().then(
+                                        function (map) {
+                                            map.invalidateSize(true);
+                                        }
+                                );
+
+                            } else {
+                                var addresses_options = "";
+                                for (var l = 0; l < results.length; l++) {
+                                    addresses_options += "<option>" + results[l].formatted_address + "</option>";
+                                }
+                                $("#taddress").html(addresses_options);
+                                $('#address').flexdatalist('reset');
+                                $('#address').flexdatalist({
+                                    minLength: 0
+                                });
+
+                                $("#address-flexdatalist").focus();
+
+                            }
+                            $(".btn.btn-default.pull-right.disabled").attr("class", "btn btn-default pull-right");
+                        } else {
+                            $(".btn.btn-default.pull-right.disabled").attr("class", "btn btn-default pull-right");
+                            $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισαγάγατε. Παρακαλώ δοκιμάστε ξανά.");
+                        }
+                    });
+                } else {
+                    $(".btn.btn-default.pull-right.disabled").attr("class", "btn btn-default pull-right");
+                }
             };
 
-            $("#submit").click(function () {
-              $scope.geocode();
+            $("#subt").click(function () {
+                $scope.geocode();
 //                $scope.map_center = {lat: 38.246639,lng: ‎21.734573, zoom: 18};
 
             });
 
-            $scope.updateCompoType = function () {
-                $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
-            };
+            $(document).ready(function () {
+                $('#available_issues').on('change', function () {
+                    var selected = $(this).find("option:selected").val();
+                    var index;
+                    for (var i = 0; i < $scope.availableIssues.length; i++) {
+                        if ($scope.availableIssues[i].id == selected) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    $scope.issueTypeSelect = $scope.availableIssues[index];
+                    $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
+                    $scope.$apply();
+                    $('#issuetype_select').selectpicker('refresh');
+                });
+
+                $("#issuetype_select").on('change', function () {
+                    var selected = $(this).find("option:selected").val();
+                    var index;
+                    for (var i = 0; i < $scope.issueTypeSelect.types.length; i++) {
+                        if ($scope.issueTypeSelect.types[i].id == selected) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[index];
+                    $translate($scope.issueSubTypeSelect.name).then(function (h) {
+                        $scope.otherDescriptionTxt = h;
+                        console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
+                    }, function (translationId) {
+                        //$scope.otherDescriptionTxt = translationId;
+                    });
+                });
+            });
+
 
 
             $scope.$on('leafletDirectiveMap.overlayadd', function (event, o) {
@@ -300,18 +390,13 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
 
             //translate immediately when change
-            $scope.issueSubTypeSelectChanged = function () {
-
-                $translate($scope.issueSubTypeSelect.name).then(function (h) {
-                    $scope.otherDescriptionTxt = h;
-                    console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
-                }, function (translationId) {
-                    //$scope.otherDescriptionTxt = translationId;
-                });
-
-            };
             //this executes the first time just once in the init of page
-            $scope.issueSubTypeSelectChanged();
+            $translate($scope.issueSubTypeSelect.name).then(function (h) {
+                $scope.otherDescriptionTxt = h;
+                console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
+            }, function (translationId) {
+                //$scope.otherDescriptionTxt = translationId;
+            });
 
             /*$scope.submit_Eponymous = function submit(){
              
@@ -412,80 +497,79 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 },
                                 data: txtpost
                             }).success(function (resp) {
-                                $http({
-                method:"GET",
-                url: $rootScope.Variables.APIADMIN+"/city_policy?coordinates=["+$scope.lnglabeltxt+","+$scope.latlabeltxt+"]&issue="+$scope.issueTypeSelect.id             
-                                }).success(function(msg){                
-                                    
-                        my_id = resp._id;
-                        resp.anonymous = msg[0].anonymous;
-                        $scope.myText = msg[0].policy_desc;
+                        $http({
+                            method: "GET",
+                            url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + $scope.lnglabeltxt + "," + $scope.latlabeltxt + "]&issue=" + $scope.issueTypeSelect.id
+                        }).success(function (msg) {
+
+                            my_id = resp._id;
+                            resp.anonymous = msg[0].anonymous;
+                            $scope.myText = msg[0].policy_desc;
 
 
-                        if (resp.anonymous == "false") {
-                            $scope.issubmit_isseu_form = function () {
-                                return false;
-                            };
+                            if (resp.anonymous == "false") {
+                                $scope.issubmit_isseu_form = function () {
+                                    return false;
+                                };
 
 
-                            $scope.iseponymous = function () {
-                                return true;
-                            };
+                                $scope.iseponymous = function () {
+                                    return true;
+                                };
 
-                            $scope.write_user_data = function () {
-                                return true;
-                            };
+                                $scope.write_user_data = function () {
+                                    return true;
+                                };
 
-                            $scope.isnotverify = function () {
-                                return false;
-                            };
+                                $scope.isnotverify = function () {
+                                    return false;
+                                };
 
-                            $scope.submit_button = false;
-                            $scope.register_button = true;
-                            $scope.verify_button = false;
-                            $scope.submit_eponymous_button = false;
-                        } else {
-                            $scope.issubmit_isseu_form = function () {
-                                return false;
-                            };
+                                $scope.submit_button = false;
+                                $scope.register_button = true;
+                                $scope.verify_button = false;
+                                $scope.submit_eponymous_button = false;
+                            } else {
+                                $scope.issubmit_isseu_form = function () {
+                                    return false;
+                                };
 
-                            $scope.iseponymous = function () {
-                                return false;
-                            };
-                            $scope.write_user_data = function () {
-                                return false;
-                            };
-                            $scope.isnotverify = function () {
-                                return false;
-                            };
-                            $scope.is_finalsubmit = function () {
-                                return true;
-                            };
-                            $scope.step1 = function () {
-                                return false;
-                            };
+                                $scope.iseponymous = function () {
+                                    return false;
+                                };
+                                $scope.write_user_data = function () {
+                                    return false;
+                                };
+                                $scope.isnotverify = function () {
+                                    return false;
+                                };
+                                $scope.is_finalsubmit = function () {
+                                    return true;
+                                };
+                                $scope.step1 = function () {
+                                    return false;
+                                };
 
-                            $scope.step2 = function () {
-                                return false;
-                            };
+                                $scope.step2 = function () {
+                                    return false;
+                                };
 
-                            $scope.step3 = function () {
-                                return false;
-                            };
+                                $scope.step3 = function () {
+                                    return false;
+                                };
 
-                            $scope.step4 = function () {
-                                return false;
-                            };
+                                $scope.step4 = function () {
+                                    return false;
+                                };
 
-                            $scope.submit_button = false;
-                            $scope.register_button = false;
-                            $scope.verify_button = false;
-                            $scope.submit_eponymous_button = true;
-                        }
+                                $scope.submit_button = false;
+                                $scope.register_button = false;
+                                $scope.verify_button = false;
+                                $scope.submit_eponymous_button = true;
+                            }
                         });
                     });
-                }
-                else if (step == 2) {
+                } else if (step == 2) {
                     console.log("Step 2");
                     if (!$scope.chkSelected) { //if you sent an issue as anonymous
 
@@ -665,7 +749,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     };
 
                     var jsonact_Data = '{ "id1" : "' + user_id + '", "id2": "web-site", "id3": "' + $scope.codeTxt + '"}';
-                    
+
                     console.log(jsonact_Data);
                     return $http({
                         method: 'POST',
@@ -699,7 +783,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                     console.log("Step 4");
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
-                    
+
                     return $http({
                         method: 'POST',
                         url: $rootScope.Variables.APIURL + my_id,

@@ -1,4 +1,116 @@
-<link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>               
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>sense.city</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="sense.city" />
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300'
+              rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="_css/bootstrap.min.css" />
+        <link rel="stylesheet" href="_css/animate.min.css" />
+        <link rel="stylesheet" href="css/scapp.css" />
+        <link rel="stylesheet" href="css/sidebar.css">
+
+
+        <!-- angular dep -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-resource.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-route.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-animate.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-touch.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-cookies.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
+        <script src="_js/angular-translate.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
+
+
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
+
+
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+        <script src="js/dirdisqus.js"></script>
+
+
+        <script src="js/leaflet.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet.extra-markers.min.js"></script>
+        <script src="js/angular-count-to.min.js"></script>
+        
+                <!-- Map dependancies -->
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+        <!--<link rel="stylesheet" href="css/style.css" />-->
+        <link rel="stylesheet" type="text/css" href="admin/css/gdropdown.css" />
+
+
+        <!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
+        <script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
+        <script src="js/Google.js"></script>
+        <!-- Angular scapp dependancies -->
+        <script src="scctrl.js"></script>
+        <script src="sense.js"></script>
+        <script src="scwebsubmitctrl.js"></script>
+        <script src="scsearchctrl.js"></script>
+        <script src="overviewctrl.js"></script>
+        <script src="scapp.js"></script>
+        <script src="scsrvs.js"></script>
+        <script src="scissuemapctrl.js"></script>
+        <script src="scissuemapsrvs.js"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.13.1/angular-translate-loader-static-files.min.js"></script>
+        <script type="text/javascript" src="admin/js/gdropdown.js"></script>
+        <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
+        <script src="admin/dist/angular-tooltips.min.js"></script>
+
+        <!-- new section -->          
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+        
+    </head>
+    <body ng-app="scApp" ng-controller="scWebSubmit" ng-cloak>
+<div class="page-container"> 
+            <div class="page-content">
+                <ul class="x-navigation  x-navigation-horizontal">
+                    <div>
+                    <li class="xn-logo" style="background-color: #1caf9a;
+    border-bottom: 1px solid #1caf9a;">
+                            <a id="senselogo" href="#" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a  href="#" style="color:white" id="nav_control" class="x-navigation-control"></a>
+                        </li> 
+<li ng-class="navClass('web_report')" ><a id="active_list" href="#!/web_report">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-class="navClass('search')"><a id="disabled_list" href="/search">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-class="navClass('more')"><a href="/more">{{'MENUMORE' | translate }}</a></li>
+                    </div>
+                </ul>                         
 <div class="page-content-wrap">
     <h2 style="left:8px;margin-top:10px;position:relative">Αναφορά Προβλήματος</h2>
     <div class="row">
@@ -8,25 +120,25 @@
                     <li>
                         <a href="#step-1">
                             <span class="stepNumber">1</span>
-                            <span class="stepDesc">Step 1<br /><small>Step 1 description</small></span>
+                            <span class="stepDesc">{{'STEP'| translate}} 1<br /><small>{{'STEP'| translate}} 1 {{'DESCRIPTION'| translate}}</small></span>
                         </a>
                     </li>
                     <li>
                         <a href="#step-2">
                             <span class="stepNumber">2</span>
-                            <span class="stepDesc">Step 2<br /><small>Step 2 description</small></span>
+                            <span class="stepDesc">{{'STEP'| translate}} 2<br /><small>{{'STEP'| translate}} 2 {{'DESCRIPTION'| translate}}</small></span>
                         </a>
                     </li>
                     <li>
                         <a href="#step-3">
                             <span class="stepNumber">3</span>
-                            <span class="stepDesc">Step 3<br /><small>Step 3 description</small></span>                   
+                            <span class="stepDesc">{{'STEP'| translate}} 3<br /><small>{{'STEP'| translate}} 3 {{'DESCRIPTION'| translate}}</small></span>                   
                         </a>
                     </li>
                     <li>
                         <a href="#step-4">
                             <span class="stepNumber">4</span>
-                            <span class="stepDesc">Step 4<br /><small>Step 4 description</small></span>                   
+                            <span class="stepDesc">{{'STEP'| translate}} 4<br /><small>{{'STEP'| translate}} 4 {{'DESCRIPTION'| translate}}</small></span>                   
                         </a>
                     </li>
                 </ul>
@@ -41,8 +153,8 @@
                                 </div>
                                 <div class="col-md-5" style="margin-top:10px">
                                                                             <div class="input-group push-down-10">
-                                                <input type="text" class="form-control" placeholder="Αναζήτηση Διεύθυνσης..." />
-                                                <span  class="input-group-addon"><span style="font-size: 13px; color: #FFF;line-height: 28px" class="fa fa-search"></span></span>
+                                                <input id="address" list="taddress" type="text" class="form-control" placeholder="Αναζήτηση Διεύθυνσης..." />
+                                                <span style="cursor:pointer" id="subt" class="input-group-addon"><span style="font-size: 13px; color: #FFF;line-height: 28px" class="fa fa-search"></span></span>
                                             </div> 
                                 </div>
                             </div>
@@ -68,21 +180,21 @@
                                         <div class="col-md-6">
                                             <form action="" role="form" class="form-horizontal">
                                                 <div class="form-group">
-                                                    <label  class="col-md-5 control-label text-left">Γεωγραφ. Μήκος</label>
+                                                    <label  class="col-md-5 control-label text-left">{{'LONGTITUDE' | translate}}</label>
                                                     <div class="col-md-7">
-                                                        <input disabled type="text" class="form-control" placeholder="Γεωγραφ. Μήκος"/>
+                                                        <input ng-model="lnglabeltxt" disabled type="text" class="form-control" placeholder="{{'LONGTITUDE' | translate}}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">Γεωγραφ. Πλάτος</label>
+                                                    <label class="col-md-5 control-label text-left">{{'LATTITUDE' | translate}}</label>
                                                     <div class="col-md-7">
-                                                        <input disabled type="text" class="form-control" placeholder="Γεωγραφ. Πλάτος"/>
+                                                        <input ng-model="latlabeltxt" disabled type="text" class="form-control" placeholder="{{'LATTITUDE' | translate}}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">Διεύθυνση</label>
+                                                    <label class="col-md-5 control-label text-left">{{'ADDRESS' | translate}}</label>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" placeholder="Διεύθυνση"/>
+                                                        <input ng-model="address" ng-focus="disable_next()" ng-blur="geocode(1)" type="text" class="form-control" placeholder="{{'ADDRESS' | translate}}"/>
                                                     </div>
                                                 </div>
                                             </form>
@@ -90,33 +202,29 @@
                                         <div class="col-md-6">
                                             <form action="" role="form" class="form-horizontal">
                                                 <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">Τύπος Προβλήμ.</label>
+                                                    <label class="col-md-5 control-label text-left">{{'PROBLEMTYPE' | translate}}</label>
                                                     <div class="col-md-7">                                        
-                                                        <select class="form-control select">
-                                                            <option>Option 1</option>
-                                                            <option>Option 2</option>
-                                                            <option>Option 3</option>
-                                                            <option>Option 4</option>
-                                                            <option>Option 5</option>
+                                                        <select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" id='available_issues' class="form-control select">
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">Πρόβλημα</label>
+                                                    <label class="col-md-5 control-label text-left">{{ 'PROBLEM' | translate}}</label>
                                                     <div class="col-md-7">                                        
-                                                        <select class="form-control select">
-                                                            <option>Option 1</option>
-                                                            <option>Option 2</option>
-                                                            <option>Option 3</option>
-                                                            <option>Option 4</option>
-                                                            <option>Option 5</option>
+                                                        <select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" id='issuetype_select' ng-model="issueSubTypeSelect" class="form-control select">
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">Φωτογραφία</label>
+                                                <div  ng-show='isOtherSelected()' class="form-group">
+                                                    <label class="col-md-5 control-label text-left">{{'DESCRIPTION' | translate}}</label>
                                                     <div class="col-md-7">
-                                                        <input type="file" class="fileinput" name="filename1" id="filename1"/>
+                                                        <input ng-model="otherDescriptionTxt"  type="text" class="form-control" placeholder="{{'DESCRIPTION' | translate}}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label text-left">{{'PHOTO' | translate}}</label>
+                                                    <div class="col-md-7">
+                                                        <input type="file" class="fileinput" name="filename1" id="input_file"/>
                                                     </div>
                                                 </div>
                                             </form>
@@ -127,9 +235,9 @@
                                         <div class="col-md-12">
                                             <form action="" role="form" class="form-horizontal">
                                                 <div class="form-group">
-                                                    <label class="col-md-1 control-label">Σχόλια</label>
+                                                    <label class="col-md-1 control-label">{{'MESSAGE_ISSUE' | translate}}</label>
                                                     <div class="col-md-11">
-                                                        <textarea class="form-control" rows="5" placeholder="Σχόλια"></textarea>
+                                                        <textarea ng-model="commentstxt" class="form-control" rows="5" placeholder="{{'MESSAGE_ISSUE' | translate}}"></textarea>
                                                     </div>
                                                 </div>
                                             </form>
@@ -149,21 +257,21 @@
                                         <div class="col-md-6">
                                             <form action="" role="form" class="form-horizontal">
                                                 <div class="form-group">
-                                                    <label  class="col-md-5 control-label text-left">Ονοματεπώνυμο</label>
+                                                    <label  class="col-md-5 control-label text-left">{{'EPONYMOUS_NAME' | translate}}</label>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" placeholder="Ονοματεπώνυμο"/>
+                                                        <input ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_NAME' | translate}}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">E-mail</label>
+                                                    <label class="col-md-5 control-label text-left">{{'EPONYMOUS_EMAIL' | translate }}</label>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" placeholder="E-mail"/>
+                                                        <input ng-model="EmailTxt" name="EmailTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_EMAIL' | translate }}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">Κινητό</label>
+                                                    <label class="col-md-5 control-label text-left">{{'EPONYMOUS_MOBILE' | translate }}</label>
                                                     <div class="col-md-7">
-                                                        <input type="text" class="form-control" placeholder="Κινητό"/>
+                                                        <input ng-model="MobileTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_MOBILE' | translate }}"/>
                                                     </div>
                                                 </div>
                                             </form>
@@ -194,6 +302,12 @@
         </div>
     </div>
 </div>
+            </div>
+</div>
+        
+<datalist id="taddress">
+  
+</datalist>        
 
 <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
 <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
@@ -215,8 +329,8 @@
 <!-- END PAGE PLUGINS -->
 <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
 <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-file-input.js"></script>
-<script type="text/javascript" src="js/plugins.js"></script>        
-<script type="text/javascript" src="js/actions.js"></script>   
+    </body>
+</html>
 <!--
                 
                 <div class="col-md-8"> 

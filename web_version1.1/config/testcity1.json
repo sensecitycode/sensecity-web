@@ -258,6 +258,39 @@
                     "name": "OTHER"
                 }
             ]
+        },{
+            "id": "lighting",
+            "name": "LIGHTNING_ISSUE",
+            "types": [
+                {
+                    "id": "1",
+                    "name": "BROKENGARBAE_BIN"
+                },
+                {
+                    "id": "2",
+                    "name": "BULY_ITEMS"
+                },
+                {
+                    "id": "3",
+                    "name": "CT_BRANCHES"
+                },
+                {
+                    "id": "4",
+                    "name": "DBRIS"
+                },
+                {
+                    "id": "5",
+                    "name": "SQURE_CLEANING"
+                },
+                {
+                    "id": "6",
+                    "name": "MOTORIED_SCANNING"
+                },
+                {
+                    "id": "other",
+                    "name": "OTHR"
+                }
+            ]
         }],
     "searchIssues": [{"class":"fa fa-trash-o","value": "garbage", "translate": "'GARBAGE_ISSUE' | translate","checked": false},
         {"class":"fa fa-lightbulb-o","value": "lighting", "translate": "'LIGHTNING_ISSUE' | translate","checked": false},
