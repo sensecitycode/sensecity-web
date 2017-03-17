@@ -341,7 +341,7 @@ $(function() {
         var uiOwlCarousel = function(){
             
             if($(".owl-carousel").length > 0){
-                $(".owl-carousel").owlCarousel({mouseDrag: false, touchDrag: true, slideSpeed: 300, paginationSpeed: 400, singleItem: true, navigation: false,autoPlay: true});
+//                $(".owl-carousel").owlCarousel({mouseDrag: false, touchDrag: true, slideSpeed: 300, paginationSpeed: 400, singleItem: true, navigation: false,autoPlay: true});
             }
             
         }//End OWL Carousel
@@ -412,12 +412,12 @@ $(function() {
            
        }// End sparkline              
        
-        $(window).resize(function(){
-            if($(".owl-carousel").length > 0){
-                $(".owl-carousel").data('owlCarousel').destroy();
-                uiOwlCarousel();
-            }
-        });
+//        $(window).resize(function(){
+//            if($(".owl-carousel").length > 0){
+//                $(".owl-carousel").data('owlCarousel').destroy();
+//                uiOwlCarousel();
+//            }
+//        });
        
         return {
             init: function(){

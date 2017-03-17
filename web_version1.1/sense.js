@@ -14,6 +14,7 @@ appControllers.directive('sidebarDirective', function () {
     };
 });
 
+var oft = 0;
 
 appControllers.controller(
         'senseController',
@@ -53,7 +54,7 @@ appControllers.controller(
 //                    $.getScript("js/actions.js");
 //                });
 //   
-   
+
 //                             function page_content_onresize1(){
 //    $(".page-content,.content-frame-body,.content-frame-right,.content-frame-left").css("width","").css("height","");
 //
@@ -119,7 +120,7 @@ appControllers.controller(
 //    },timeout);
 //    
 //}
-             
+
 //if($rootScope.test == 1){
 //    $rootScope.test = 0;
 //                        $(".x-navigation li").click(function(event){  //edw
@@ -144,20 +145,73 @@ appControllers.controller(
 //    });
 //    }
 
-       if( $rootScope.aft == 0){
-           $rootScope.aft = 0;
-        $(document).on("click",".xn-openable",function(event){
-            $(this).attr("class", "xn-openable active");
-        });
-        
-        $(document).on("click",".xn-openable.active",function(event){
-            $(this).attr("class", "xn-openable");
-        });
-        
-        $(document).on("click",".x-navigation-control",function(event){
-            $(this).parents(".x-navigation").toggleClass("x-navigation-open");
-        });
-    }
+//       if( $rootScope.aft == 0){
+//           $rootScope.aft = 0;
+//        $(document).on("click",".xn-openable",function(event){
+//            $(this).attr("class", "xn-openable active");
+//        });
+//        
+//        $(document).on("click",".xn-openable.active",function(event){
+//            $(this).attr("class", "xn-openable");
+//        });
+//        
+//        $(document).on("click",".x-navigation-control",function(event){
+//            $(this).parents(".x-navigation").toggleClass("x-navigation-open");
+//        });
+//    }
+
+                var url_path = $location.absUrl().split("//");
+                var sub_domain = url_path[1].split(".");
+                var url;
+
+                if (sub_domain[0].split(":").length > 1) {
+                    url = "./config/testcity1.json";
+                    sub_domain[0] = "testcity1";
+                } else {
+                    url = '../config/' + sub_domain[0] + '.json';
+                }
+
+                var d = $q.defer();
+
+                $rootScope.mainInfo = $http.get(url).success(function (response) {
+
+                    $rootScope.Variables = {
+                        city_name: sub_domain[0],
+                        city_address: response.city_address,
+                        lat_center: response.lat_center,
+                        long_center: response.long_center,
+                        img_logo: "images/city_logos/" + response.city_name + ".jpg",
+                        icons: response.icons,
+                        APIURL: response.APIURL,
+                        components: response.components,
+                        components_en: response.components_en,
+                        overlays: response.overlays,
+                        categories: response.categories,
+                        categories_issue: response.categories_issue,
+                        departments: response.departments,
+                        departments_en: response.departments_en,
+                        feelingsURL: response.feelingsURL,
+                        bugzilla: response.bugzilla,
+                        ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+                        active_user_URL: response.active_user_URL,
+                        activate_user_URL: response.activate_user_URL,
+                        APIADMIN: response.APIADMIN,
+                        issue_type_en: response.issue_type_en,
+                        issue_type_gr: response.issue_type_gr,
+                        availableIssues: response.availableIssues,
+                        searchIssues: response.searchIssues,
+                        map_zoom: response.zoom,
+                        overlay_functions: response.overlay_functions,
+                        overlay_categories: response.overlay_categories,
+                        google_init_coords: response.google_init_coords,
+                        google_buildings: response.google_buildings,
+                        host: response.host
+                    };
+
+                    d.resolve(response);
+                    return d.promise;
+                });
+
                 angular.extend($scope, {
                     layercontrol: {
                         icons: {
@@ -252,13 +306,15 @@ appControllers.controller(
                     lng: 20.897801,
                     zoom: 12
                 };
-                
-                $q.all($rootScope.mainInfo).then(
+
+                $q.all([$rootScope.mainInfo]).then(
                         function (data) {
-                                leafletData.getMap("issuesmap").then(function (map) {
-                                        map.scrollWheelZoom.disable();
-                                    });
-                            console.log("sense: "+JSON.stringify($rootScope.Variables));
+                            $.getScript("js/plugins.js");
+                            $.getScript("js/actions.js");
+                            leafletData.getMap("issuesmap").then(function (map) {
+                                map.scrollWheelZoom.disable();
+                            });
+                            console.log("sense: " + JSON.stringify($rootScope.Variables));
                             for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
                                 $scope.removelayer(i);
                             }
@@ -296,7 +352,7 @@ appControllers.controller(
                             });
 
                             $scope.$on("leafletDirectiveMarker.click", function (event, args) {
-                                
+
                                 var marker3 = args.leafletObject;
                                 var popup = marker3.getPopup();
 
@@ -462,7 +518,7 @@ appControllers.controller(
 
                                                                     },
                                                                     $scope.markers);
-                                                                    
+
                                                     //$scope.markers = $scope.markers.concat( $scope.fixedmarkersLazyLoaded );
                                                 });
                             };
@@ -498,70 +554,133 @@ appControllers.controller(
                                 return d.promise;
                             }
 
+                            var lsissues = 0;
                             $scope.doCalcLast6Issues = function () {
+
                                 var theLastIssues = $resource($rootScope.Variables.APIURL,
-                                        {city: $rootScope.Variables.city_name,startdate:"2017-01-01",sort: "-1", limit: "6",list_issue: "1", image_field: "1"}, {
-                                        query: {
+                                        {city: $rootScope.Variables.city_name, startdate: "2017-01-01", sort: "-1", limit: "6", list_issue: "1", image_field: "1"}, {
+                                    query: {
                                         method: 'GET',
                                         isArray: true
                                     }
                                 }).query(function () {
-                                    angular
-                                            .forEach(
-                                                    theLastIssues,
-                                                    function (lastissue,
-                                                            key) {
-                                                        if (lastissue.image_name === ''
-                                                                || lastissue.image_name === 'no-image'
-                                                                || lastissue.image_name === null
-                                                                || lastissue.image_name === undefined) {
-                                                            lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
-                                                            lastissue.width = "80%";
-                                                        } else {
-                                                            lastissue.width = "100%";
-                                                        }
+                                    if (lsissues == 1) {
+                                        for (var i = 0; i < theLastIssues.length; i++) {
+                                            $scope.lastissues[i].value_desc = theLastIssues[i].value_desc;
+                                            if (theLastIssues[i].image_name === ''
+                                                    || theLastIssues[i].image_name === 'no-image'
+                                                    || theLastIssues[i].image_name === null
+                                                    || theLastIssues[i].image_name === undefined) {
+                                                $scope.lastissues[i].class = "fa fa-" + $rootScope.Variables.icons[theLastIssues[i].issue].icon;
+                                                $scope.lastissues[i].width = "80%";
+                                            } else {
+                                                $scope.lastissues[i].width = "100%";
+                                            }
 
-                                                        var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
-                                                        if (cat_index != -1) {
-                                                            lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
-                                                        } else {
-                                                            lastissue.issue = '';
-                                                        }
+                                            var cat_index = $rootScope.Variables.categories.indexOf(theLastIssues[i].issue);
+                                            if (cat_index != -1) {
+                                                $scope.lastissues[i].issue = $rootScope.Variables.categories_issue[cat_index];
+                                            } else {
+                                                $scope.lastissues[i].issue = '';
+                                            }
 
-                                                        var today = new Date();
-                                                        var create_day = new Date(
-                                                                lastissue.create_at);
+                                            var today = new Date();
+                                            var create_day = new Date(
+                                                    theLastIssues[i].create_at);
 
-                                                        var seconds = (today
-                                                                .getTime() - create_day
-                                                                .getTime()) / 1000;
+                                            var seconds = (today
+                                                    .getTime() - create_day
+                                                    .getTime()) / 1000;
 
-                                                        var datediff = '';
-                                                        var datediffunit = '';
+                                            var datediff = '';
+                                            var datediffunit = '';
 
-                                                        if (seconds < 60) {
-                                                            datediff = seconds;
-                                                            datediffunit = "SECS";
-                                                        } else if (seconds < 3600) {
-                                                            datediff = Math.floor(seconds / 60);
-                                                            datediffunit = "MINUTES";
-                                                        } else if (seconds < 86400) {
-                                                            datediff = Math.floor(seconds / 3600);
-                                                            datediffunit = "HOURS";
-                                                        } else {
-                                                            datediff = Math.floor(seconds / 86400);
-                                                            datediffunit = "DAYS";
-                                                        }
+                                            if (seconds < 60) {
+                                                datediff = seconds;
+                                                datediffunit = "SECS";
+                                            } else if (seconds < 3600) {
+                                                datediff = Math.floor(seconds / 60);
+                                                datediffunit = "MINUTES";
+                                            } else if (seconds < 86400) {
+                                                datediff = Math.floor(seconds / 3600);
+                                                datediffunit = "HOURS";
+                                            } else {
+                                                datediff = Math.floor(seconds / 86400);
+                                                datediffunit = "DAYS";
+                                            }
 
-                                                        lastissue.create_at = datediff;
-                                                        lastissue.create_at_unit = datediffunit;
+                                            $scope.lastissues[i].create_at = datediff;
+                                            $scope.lastissues[i].create_at_unit = datediffunit;
+                                        }
+                                    }
+                                    if (lsissues == 0) {
+                                        lsissues = 1;
+                                        angular
+                                                .forEach(
+                                                        theLastIssues,
+                                                        function (lastissue,
+                                                                key) {
+                                                            if (lastissue.image_name === ''
+                                                                    || lastissue.image_name === 'no-image'
+                                                                    || lastissue.image_name === null
+                                                                    || lastissue.image_name === undefined) {
+                                                                lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
+                                                                lastissue.width = "80%";
+                                                            } else {
+                                                                lastissue.width = "100%";
+                                                            }
 
-                                                    });
+                                                            var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
+                                                            if (cat_index != -1) {
+                                                                lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
+                                                            } else {
+                                                                lastissue.issue = '';
+                                                            }
+
+                                                            var today = new Date();
+                                                            var create_day = new Date(
+                                                                    lastissue.create_at);
+
+                                                            var seconds = (today
+                                                                    .getTime() - create_day
+                                                                    .getTime()) / 1000;
+
+                                                            var datediff = '';
+                                                            var datediffunit = '';
+
+                                                            if (seconds < 60) {
+                                                                datediff = seconds;
+                                                                datediffunit = "SECS";
+                                                            } else if (seconds < 3600) {
+                                                                datediff = Math.floor(seconds / 60);
+                                                                datediffunit = "MINUTES";
+                                                            } else if (seconds < 86400) {
+                                                                datediff = Math.floor(seconds / 3600);
+                                                                datediffunit = "HOURS";
+                                                            } else {
+                                                                datediff = Math.floor(seconds / 86400);
+                                                                datediffunit = "DAYS";
+                                                            }
+
+                                                            lastissue.create_at = datediff;
+                                                            lastissue.create_at_unit = datediffunit;
+                                                        });
+                                        $scope.lastissues = theLastIssues;
+                                    }
                                 });
+
                                 // query() returns all the last 6
                                 // issues
+                                setTimeout(function () {
+//                                    alert(oft);
+                                    if ($(".owl-carousel").length > 0 && oft == 0) {
+                                        oft = 1;
+                                        $(".owl-carousel").owlCarousel({mouseDrag: false, touchDrag: true, slideSpeed: 300, paginationSpeed: 400, singleItem: true, navigation: false, autoPlay: true});
 
-                                $scope.lastissues = theLastIssues;
+                                    }
+                                }, 1000);
+
+
                             };
 
                             $scope.displayFixedPoints = function () {
@@ -675,7 +794,7 @@ appControllers.controller(
                             $scope.displayFixedPoints();
 
                             // set intervals to update
-                            var updtime = 5 * 60 * 1000; // every 5 minutes
+                            var updtime = 0.2 * 60 * 1000; // every 5 minutes
                             $interval($scope.doCalcLast6Issues, updtime);
                             $interval($scope.submitSearchLast30days, updtime);
                         });

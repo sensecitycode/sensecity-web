@@ -1,4 +1,114 @@
-                <div class="page-content-wrap">
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>sense.city</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="sense.city" />
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300'
+              rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="_css/bootstrap.min.css" />
+        <link rel="stylesheet" href="_css/animate.min.css" />
+        <link rel="stylesheet" href="css/scapp.css" />
+        <link rel="stylesheet" href="css/sidebar.css">
+
+
+        <!-- angular dep -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-resource.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-route.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-animate.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-touch.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-cookies.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
+        <script src="_js/angular-translate.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
+
+
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
+
+
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+        <script src="js/dirdisqus.js"></script>
+
+        <!-- Map dependancies -->
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+        <!--<link rel="stylesheet" href="css/style.css" />-->
+        <link rel="stylesheet" type="text/css" href="admin/css/gdropdown.css" />
+
+        <script src="js/leaflet.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet.extra-markers.min.js"></script>
+        <script src="js/angular-count-to.min.js"></script>
+
+        <!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
+        <script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
+        <script src="js/Google.js"></script>
+        <!-- Angular scapp dependancies -->
+        <script src="scctrl.js"></script>
+        <script src="sense.js"></script>
+        <script src="scwebsubmitctrl.js"></script>
+        <script src="scsearchctrl.js"></script>
+        <script src="overviewctrl.js"></script>
+        <script src="scapp.js"></script>
+        <script src="scsrvs.js"></script>
+        <script src="scissuemapctrl.js"></script>
+        <script src="scissuemapsrvs.js"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.13.1/angular-translate-loader-static-files.min.js"></script>
+        <script type="text/javascript" src="admin/js/gdropdown.js"></script>
+        <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
+        <script src="admin/dist/angular-tooltips.min.js"></script>
+
+        <!-- new section -->          
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+    </head>
+    <body ng-app="scApp" ng-controller="senseController">
+<div class="page-container"> 
+            <div class="page-content">
+                <ul class="x-navigation  x-navigation-horizontal">
+                    <div>
+                    <li class="xn-logo" style="background-color: #1caf9a;
+    border-bottom: 1px solid #1caf9a;">
+                            <a id="senselogo" href="#" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a  href="#" style="color:white" id="nav_control" class="x-navigation-control"></a>
+                        </li> 
+<li ng-class="navClass('web_report')" ><a id="active_list" href="#!/web_report">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-class="navClass('search')"><a id="disabled_list" href="/search">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-class="navClass('more')"><a href="/more">{{'MENUMORE' | translate }}</a></li>
+                    </div>
+                </ul>               
+<div class="page-content-wrap">
                     <div class="row">
                         
                         <div class="col-md-9" style="top:10px;z-index:20">
@@ -11,7 +121,7 @@
                             <div class="widget-data" style="word-break:break-all">
                                     <div class="widget-title">Προβληματα</div>                                                                        
                                         <div class="widget-subtitle">Τελ. 30 ημέρες</div>
-                                        <div class="widget-int">3,548</div>
+                                        <div class="widget-int calcValue" count-to="{{calcValue30daysIssues}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue30daysIssues}}</div>
                                 </div> 
                                  </div>
                         </div>
@@ -23,7 +133,7 @@
                             <div class="widget-data" style="word-break:break-all">
                                     <div class="widget-title">Συμβαντα</div>                                                                        
                                         <div class="widget-subtitle">Τελ. 30 ημέρες</div>
-                                        <div class="widget-int">3,548</div>
+                                        <div class="widget-int calcValue" count-to="{{calcValue30daysEvents}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue30daysEvents}}</div>
                                 </div> 
                                  </div>       
                         </div>
@@ -33,9 +143,9 @@
                                     <span class="fa fa-calendar"></span>
                                 </div> 
                             <div class="widget-data" style="word-break:break-all">
-                                    <div class="widget-title">Προβληματα</div>                                                                        
+                                    <div class="widget-title" >Προβληματα</div>                                                                        
                                         <div class="widget-subtitle">Από 1/1/2017</div>
-                                        <div class="widget-int">3,548</div>
+                                        <div class="widget-int calcValue" count-to="{{calcValueProblemsFrom2017}}" duration="2" count-from="0" style="text-shadow:none">{{calcValueProblemsFrom2017}}</div>
                                 </div> 
                                  </div>       
                         </div>
@@ -47,7 +157,7 @@
                             <div class="widget-data" style="word-break:break-all">
                                     <div class="widget-title">Λυσεις</div>                                                                        
                                         <div class="widget-subtitle">Από 1/1/2017</div>
-                                        <div class="widget-int">3,548</div>
+                                        <div class="widget-int calcValue" count-to="{{calcValueSolutionFrom2017}}" duration="2" count-from="0" style="text-shadow:none">{{calcValueSolutionFrom2017}}</div>
                                 </div> 
                                  </div>       
                         </div>
@@ -88,44 +198,26 @@
                                     
                             <div class="widget widget-default widget-carousel" style="box-shadow:none">
                                 <div class="owl-carousel" id="owl-example">
-                                    <div class="col-md-3">
+                                    <div ng-repeat="lastissue in lastissues" class="col-md-3">
                             <!-- CONTACT ITEM -->
                             <div class="panel panel-default">
                                 <div class="panel-body profile">
                                     <div class="profile-image">
-                                        <img height="100" src="img/markers_default.png" alt="Nadia Ali">
+                                        <img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" ng-src={{lastissue.image_name}} alt="" height="100">
+                                        <i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:12em;color:white"></i>
                                     </div>
                                     <div class="profile-data">
-                                        <div class="profile-data-name">Πρόβλημα</div>
-                                        <div class="profile-data-title">Περιγραφή</div>
+                                        <div class="profile-data-name">{{lastissue.issue | translate}}</div>
+                                        <div class="profile-data-title">{{lastissue.value_desc}}</div>
                                     </div>
                                 </div>                                
                                 <div class="panel-body">                                    
                                     <div class="contact-info">
-                                        <p><small>Κατάσταση</small><br>(555) 555-55-55</p>
-                                        <p><small>Αναφορά</small><br>(555) 555-55-55</p>
-<!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
-                                        <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
-                                    </div>
-                                </div>                                
-                            </div>
-                            <!-- END CONTACT ITEM -->
-                        </div>
-                                    <div class="col-md-3">
-                            <!-- CONTACT ITEM -->
-                            <div class="panel panel-default">
-                                <div class="panel-body profile">
-                                    <div class="profile-image">
-                                        <img height="100" src="img/markers_default.png" alt="Nadia Ali">
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">Nadia Ali</div>
-                                        <div class="profile-data-title">Singer-Songwriter</div>
-                                    </div>
-                                </div>                                
-                                <div class="panel-body">                                    
-                                    <div class="contact-info">
-                                        <p><small>Mobile</small><br>(555) 555-55-55</p>
+                                        <p><small>Κατάσταση</small><br>{{lastissue.status
+						| translate}}</p>
+                                        <p><small>Αναφορά</small><br>{{ 'SINCE_TIME' |
+						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
+						translate }}</p>
 <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
                                         <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>
@@ -138,7 +230,7 @@
                                 </div>                                    
                             </div>
                                             <a data-width="100%" data-height="320" class="twitter-timeline"  href="https://twitter.com/hashtag/patra" data-widget-id="841271929285820416">#patra Tweets</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";js.setAttribute('onload', "twttr.events.bind('rendered',function(e) {$(window).trigger('resize')});");fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
                         </div>
                         </div>
@@ -146,6 +238,12 @@
 
                     </div>
                 </div>
+            </div>
+</div>
+
+        
+        
+        </body>
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
@@ -168,7 +266,4 @@
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
         <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
          <!--END THIS PAGE PLUGINS-->        
-        
-        <script type="text/javascript" src="js/plugins.js"></script>        
-        <script type="text/javascript" src="js/actions.js"></script>
-        <script>$(document).ready(function(){$(window).trigger('resize')});;</script>
+</html>

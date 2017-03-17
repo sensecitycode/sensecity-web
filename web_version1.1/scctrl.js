@@ -5,8 +5,7 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	$log.debug('inside sensecityMainCtrl controller');
 	$scope.scvesrion = '20160712_trunk';
 	$rootScope.overview_url = $location.path();
-        
-        $rootScope.aft = 1;
+
 });
 
 

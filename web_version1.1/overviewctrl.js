@@ -54,7 +54,6 @@ appControllers
                         var street_view_markers = [];
                         var checked_categories = [];
                         var google_street_layer = false;
-
                         $scope.initialize = function () {
                             var fenway = $rootScope.Variables.google_init_coords;
                             var panoOptions = {

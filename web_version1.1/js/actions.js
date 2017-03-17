@@ -470,7 +470,7 @@ function x_navigation(){
     
     $(".x-navigation-control").click(function(){
         $(this).parents(".x-navigation").toggleClass("x-navigation-open");
-        
+
         onresize();
         
         return false;
