@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="css/sidebar.css">
 
 
+
         <!-- angular dep -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script
@@ -45,7 +46,6 @@
         <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
         <script src="js/dirdisqus.js"></script>
 
-
         <script src="js/leaflet.js"></script>
         <script src="js/ui-leaflet.min.js"></script>
         <script src="js/leaflet.awesome-markers.js"></script>
@@ -71,7 +71,7 @@
         <!-- Angular scapp dependancies -->
         <script src="scctrl.js"></script>
         <script src="sense.js"></script>
-        <script src="scwebsubmitctrl.js"></script>
+<!--        <script src="scwebsubmitctrl.js"></script>-->
         <script src="scsearchctrl.js"></script>
         <script src="overviewctrl.js"></script>
         <script src="scapp.js"></script>
@@ -96,7 +96,7 @@
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
         
     </head>
-    <body ng-app="scApp" ng-controller="scWebSubmit" ng-cloak>
+    <body ng-app="scApp" ng-controller="scWebSubmit" ng-cloak id="wscontrl">
 <div class="page-container"> 
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
@@ -120,25 +120,25 @@
                     <li>
                         <a href="#step-1">
                             <span class="stepNumber">1</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 1<br /><small>{{'STEP'| translate}} 1 {{'DESCRIPTION'| translate}}</small></span>
+                            <span class="stepDesc">{{'STEP'| translate}} 1<br /><small>Αναφορά Προβλήματος</small></span>
                         </a>
                     </li>
                     <li>
                         <a href="#step-2">
                             <span class="stepNumber">2</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 2<br /><small>{{'STEP'| translate}} 2 {{'DESCRIPTION'| translate}}</small></span>
+                            <span class="stepDesc">{{'STEP'| translate}} 2<br /><small>Επώνυμη αναφορά</small></span>
                         </a>
                     </li>
                     <li>
                         <a href="#step-3">
                             <span class="stepNumber">3</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 3<br /><small>{{'STEP'| translate}} 3 {{'DESCRIPTION'| translate}}</small></span>                   
+                            <span class="stepDesc">{{'STEP'| translate}} 3<br /><small>Πιστοποίηση email</small></span>                   
                         </a>
                     </li>
                     <li>
                         <a href="#step-4">
                             <span class="stepNumber">4</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 4<br /><small>{{'STEP'| translate}} 4 {{'DESCRIPTION'| translate}}</small></span>                   
+                            <span class="stepDesc">{{'STEP'| translate}} 4<br /><small>Καταχώριση αναφοράς</small></span>                   
                         </a>
                     </li>
                 </ul>
@@ -224,7 +224,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-5 control-label text-left">{{'PHOTO' | translate}}</label>
                                                     <div class="col-md-7">
-                                                        <input type="file" class="fileinput" name="filename1" id="input_file"/>
+                                                        <input type="file" file-model="uploadedPhotoFile" class="fileinput" name="filename1" id="input_file"/>
                                                     </div>
                                                 </div>
                                             </form>
@@ -247,25 +247,25 @@
                         <div id="step-2">
                                     <div class="form-group">
                                         <div class="col-md-6">
-                                            <p style="font-size:14px;cursor:default" class="check"><input type="checkbox" class="icheckbox"/> Επώνυμη καταγγελία</p>
+                                            <p style="font-size:14px;cursor:default" class="check"><input ng-model="chkSelected" type="checkbox" id="epon" class="icheckbox"/> Επώνυμη καταγγελία</p>
                                         </div>
-                                        <div class="col-md-6" style="text-align:center;margin-top:5px">
+                                        <div ng-show="chkSelected" class="col-md-6" style="text-align:center;margin-top:5px">
                                             <p style="font-size:14px">  Θέλω να ενημερωθώ με email ή sms.</p>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top:20px">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" ng-show="chkSelected">
                                             <form action="" role="form" class="form-horizontal">
                                                 <div class="form-group">
                                                     <label  class="col-md-5 control-label text-left">{{'EPONYMOUS_NAME' | translate}}</label>
                                                     <div class="col-md-7">
-                                                        <input ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_NAME' | translate}}"/>
+                                                        <input id="nametxt" ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_NAME' | translate}}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-md-5 control-label text-left">{{'EPONYMOUS_EMAIL' | translate }}</label>
                                                     <div class="col-md-7">
-                                                        <input ng-model="EmailTxt" name="EmailTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_EMAIL' | translate }}"/>
+                                                        <input id="emailtxt" ng-model="EmailTxt" name="EmailTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_EMAIL' | translate }}"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -276,23 +276,42 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" ng-show="chkSelected">
                                             <div class="col-md-12">                                    
-                                                <label class="check"><input type="checkbox" class="icheckbox"/>E-mail</label>
+                                                <label class="check"><input type="checkbox" ng-model="chkSelected_1" disabled="true" readonly="true" checked="checked" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" class="icheckbox"/>{{ 'EMAIL_USER' | translate}}</label>
                                             </div>
                                             <div class="col-md-12">                                    
-                                                <label class="check"><input type="checkbox" class="icheckbox"/>Κινητό</label>
+                                                <label class="check"><input type="checkbox" ng-model="chkSelected_2" disabled="true" readonly="true" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" class="icheckbox"/>{{ 'SMS_USER' | translate}}</label>
                                             </div>
                                         </div>
                                     </div>
                         </div>
                         <div id="step-3">
-                            <h4>Step 3 Content</h4>
-                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+                            <div class="col-md-6" ng-show='isnotverify()'>
+                                <form action="" role="form" class="form-horizontal">
+                                <div class="form-group">
+                                                    <label class="col-md-5 control-label text-left">{{ 'VERIFY_CODE' | translate}}</label>
+                                                    <div class="col-md-5">
+                                                        <input ng-model="codeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
+                                                    </div>
+                                                    <div ng-show="valid != null && valid == true" class="col-md-1">
+                                                    <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
+                                                    </div>
+                                                    <div ng-show="valid != null && valid == false" class="col-md-1">
+                                                    <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div id="cert" class="btn btn-primary"><span></span>Πιστοποίηση</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                </form>
+                            </div>
+                            <p style="font-size:14px" ng-hide='isnotverify() || chkSelected==false'>Το e-mail σας έχει πιστοποιηθεί. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
+                            <p style="font-size:14px" ng-show='chkSelected==false'>Η ανώνυμη αναφορά δεν απαιτεί πιστοποίηση e-mail. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
                         </div>
-                        <div id="step-4">
-                            <h4>Step 4 Content</h4>
-                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+                        <div id="step-4" ng-show='is_finalsubmit()'>
+                            <p style="font-size:14px">Αποστολή αναφοράς προβλήματος</p>
                         </div>
                         <div id="testaki"></div>
                                 </div>
@@ -324,11 +343,14 @@
 <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
 <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
 
-<script type="text/javascript" src="js/plugins/smartwizard/jquery.smartWizard-2.0.min.js"></script>        
+<script type="text/javascript" src="jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
 <script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.js"></script>
 <!-- END PAGE PLUGINS -->
 <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
 <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-file-input.js"></script>
+<script type="text/javascript" src="js/plugins.js"></script>
+<script type="text/javascript" src="js/actions.js"></script>
+<script src="scwebsubmitctrl.js"></script>
     </body>
 </html>
 <!--

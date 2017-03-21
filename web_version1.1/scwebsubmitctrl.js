@@ -2,8 +2,8 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 
 
-appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', 'Issue', '$translate', '$http',
-    function ($scope, $window, $q, $rootScope, $log, $location, leafletData, Issue, $translate, $http) {
+appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
+    function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
 
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
@@ -17,9 +17,28 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         }
 
         var d = $q.defer();
+        
+        $("#nametxt").blur(function(){
+            if($scope.NameTxt != "" && $scope.EmailTxt != ""){
+                $("#next_button").attr("class","btn btn-default pull-right");
+            }else{
+                $("#next_button").attr("class","btn btn-default pull-right disabled");
+            }
+        });
+        
+        $("#emailtxt").blur(function(){
+           if($scope.NameTxt != "" && $scope.EmailTxt != ""){
+                $("#next_button").attr("class","btn btn-default pull-right");
+            }else{
+                $("#next_button").attr("class","btn btn-default pull-right disabled");
+            }
+        });
 
-
-
+        $scope.chkSelected = false;
+        $scope.chkSelected_1 = true;
+        $scope.chkSelected_2 = false;
+        $scope.valid = null;
+        
         $rootScope.mainInfo = $http.get(url).success(function (response) {
 
             $rootScope.Variables = {
@@ -164,9 +183,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         $scope.disable_next = function () {
             $(".btn.btn-default.pull-right").attr("class", "btn btn-default pull-right disabled");
         };
-
+        
         function onmapclick(event) {
             //newMarker = new L.marker(event.latlng, {icon: redMarker}, {draggable: true});
+            
             var mainMarker = {
                 lat: event.latlng.lat,
                 lng: event.latlng.lng,
@@ -195,10 +215,32 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         ;
 
         $q.all([$rootScope.mainInfo]).then(function (data) {
+            
+            var mainMarker = {
+                lat: $rootScope.Variables.lat_center,
+                lng: $rootScope.Variables.long_center,
+                icon: {
+                    type: 'awesomeMarker',
+                    prefix: 'fa',
+                    icon: 'info-circle',
+                    markerColor: 'red'
+                }
+            };
+            
+            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + $rootScope.Variables.lat_center + "," + $rootScope.Variables.long_center + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM").success(function (result) {
+                $scope.address = result.results[0].formatted_address;
+            });
 
-            $.getScript("js/plugins.js");
-            $.getScript("js/actions.js");
+            if ($scope.markers.length == 2 || mylocation_en == 0) {
+                $scope.markers.pop();
+            }
+            $scope.markers.push(mainMarker);
 
+
+
+            $scope.latlabeltxt = $rootScope.Variables.lat_center;
+            $scope.lnglabeltxt = $rootScope.Variables.long_center;
+            
             leafletData.getMap().then(function (map) {
                 map.on('click', onmapclick);
             });
@@ -216,25 +258,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
             $scope.otherDescriptionTxt = '-';
             $scope.uploadedPhotoFile = 'no-image';
-
-
-            $scope.stateChanged = function () {
-
-                if ($scope.chkSelected) {
-                    $scope.showSuccessAlertName = false;
-                    $scope.showSuccessAlertEmail = false;
-
-                } else {
-                    $scope.showSuccessAlertName = false;
-                    $scope.showSuccessAlertEmail = false;
-                    $scope.NameTxt = "";
-                    $scope.EmailTxt = "";
-                    $scope.MobileTxt = "";
-
-                }
-
-            };
-
 
             $scope.step1 = function () {
                 return false;
@@ -324,6 +347,43 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             });
 
             $(document).ready(function () {
+
+                $('#epon').on('ifToggled', function (event) {
+                    if ($scope.chkSelected) {
+                    $scope.showSuccessAlertName = false;
+                    $scope.showSuccessAlertEmail = false;
+                    $scope.chkSelected = false;
+                    $("#next_button").attr("class","btn btn-default pull-right");
+                } else {
+                    $scope.showSuccessAlertName = false;
+                    $scope.showSuccessAlertEmail = false;
+                    $scope.NameTxt = "";
+                    $scope.EmailTxt = "";
+                    $scope.MobileTxt = "";
+                    $scope.chkSelected = true;
+                    $("#next_button").attr("class","btn btn-default pull-right disabled");
+                }
+                $scope.$apply();
+                });
+                
+                $('#chkSelected_1').on('ifToggled', function (event) {
+                    if ($scope.chkSelected_1) {
+                    chkSelected_1 = true;
+                }else{
+                    chkSelected_1 = false;
+                }
+                $scope.$apply();
+                });
+                
+                $('#chkSelected_2').on('ifToggled', function (event) {
+                    if ($scope.chkSelected_2) {
+                    chkSelected_2 = true;
+                }else{
+                    chkSelected_2 = false;
+                }
+                $scope.$apply();
+                });
+
                 $('#available_issues').on('change', function () {
                     var selected = $(this).find("option:selected").val();
                     var index;
@@ -453,10 +513,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             var my_id;
             var user_id;
 
-
             $scope.setStep = function (step) {
+                
                 if (step == 1) {
-
                     console.log("Step 1");
 
                     $scope.step1 = function () {
@@ -475,19 +534,23 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         return true;
                     };
 
-                    $scope.issue = new Issue();
+//                    $scope.issue = new $resource($rootScope.Variables.APIADMIN + "issue/:id",
+//		{id : "@id"	}, {
+//		"update" : {
+//			method : "PUT"
+//		}});
 
                     var desc = $scope.otherDescriptionTxt;
 
-                    $scope.issue.issue = $scope.issueTypeSelect.id;
+                    var issue = $scope.issueTypeSelect.id;
 
-                    $scope.issue.device_id = 'webapp';
+                    var device_id = 'webapp';
 
-                    $scope.issue.value_desc = desc;
-                    $scope.issue.image_name = $scope.uploadedPhotoFile; //no-image
+                    var value_desc = desc;
+                    var image_name = $scope.uploadedPhotoFile; //no-image
 
-                    var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + $scope.issue.device_id + '", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name + '","comments" : "' + $scope.commentstxt + '" }';
-
+                    var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '" }';
+                    
                     return $http(
                             {
                                 method: 'POST',
@@ -572,7 +635,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 } else if (step == 2) {
                     console.log("Step 2");
                     if (!$scope.chkSelected) { //if you sent an issue as anonymous
-
+                        
                         $scope.submit_button = false;
                         $scope.register_button = false;
                         $scope.verify_button = false;
@@ -612,7 +675,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             return false;
                         };
                     } else {
-
                         $scope.step1 = function () {
                             return false;
                         };
@@ -631,9 +693,8 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.write_user_data = function () {
                             return true;
                         };
-
+                        
                         if ($scope.NameTxt == "" || $scope.EmailTxt == "" || $scope.NameTxt == undefined || $scope.EmailTxt == undefined || $scope.NameTxt == null || $scope.EmailTxt == null) {
-
 
                             $scope.showSuccessAlertName = true;
 
@@ -659,7 +720,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         } else {
                             chk_1 = "false";
                         }
-
+                        
                         if ($scope.chkSelected_2) {
                             chk_2 = "true";
                         } else {
@@ -681,7 +742,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                             $scope.myText = resp.policy_description;
                             if (resp.user_exist == "1") {
-
+                                alert("einai");
                                 $scope.submit_button = false;
                                 $scope.register_button = false;
                                 $scope.verify_button = false;
@@ -701,6 +762,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 };
 
                             } else {
+                                alert("den einai");
                                 //Verify button
                                 user_id = resp._id;
                                 $scope.submit_button = false;
@@ -724,14 +786,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                             }
 
-
-
-
-
                         });
                     }
                 } else if (step == 3) {
                     console.log("Step 3");
+                    if($scope.isnotverify()){
                     $scope.step1 = function () {
                         return false;
                     };
@@ -747,11 +806,13 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     $scope.step4 = function () {
                         return false;
                     };
-
+                    
                     var jsonact_Data = '{ "id1" : "' + user_id + '", "id2": "web-site", "id3": "' + $scope.codeTxt + '"}';
 
                     console.log(jsonact_Data);
-                    return $http({
+                    var d = $q.defer();
+                    
+                   $http({
                         method: 'POST',
                         url: $rootScope.Variables.activate_user_URL,
                         headers: {
@@ -759,7 +820,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         },
                         data: jsonact_Data
                     }).success(function (resp) {
+
                         console.log(JSON.stringify(resp));
+                        
                         $scope.submit_button = false;
                         $scope.register_button = false;
                         $scope.verify_button = false;
@@ -771,19 +834,25 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.iseponymous = function () {
                             return false;
                         };
-                        $scope.isnotverify = function () {
-                            return false;
-                        };
-                        $scope.is_finalsubmit = function () {
+                        
+                        
+                        if(resp._id == undefined){
+                            $scope.valid = false;
+                            $scope.isnotverify = function () {
                             return true;
                         };
+                        }else{
+                            $scope.valid = true;
+                            $("#next_button").attr("class","btn btn-default pull-right");
+                        }
                     });
-
+                    }
+                    
+                            
                 } else if (step == 4) {
-
                     console.log("Step 4");
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
-
+                    
                     return $http({
                         method: 'POST',
                         url: $rootScope.Variables.APIURL + my_id,
@@ -804,7 +873,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.is_finalsubmit = function () {
                             return false;
                         };
-
+                        
                         $scope.issueTypeSelect = $scope.availableIssues[0];
                         $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
                         $scope.otherDescriptionTxt = '-';
@@ -843,14 +912,33 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.step4 = function () {
                             return true;
                         };
+                        
+                        $scope.$apply();
                     });
                 }
             };
+            
+            $("#cert").click(function(){
+                    $scope.setStep(3);
+            });
+            
+            setTimeout(function(){
+            if ($(".select").length > 0) {
+                $(".select").selectpicker();
+
+                $(".select").on("change", function () {
+                    if ($(this).val() == "" || null === $(this).val()) {
+                        if (!$(this).attr("multiple"))
+                            $(this).val("").find("option").removeAttr("selected").prop("selected", false);
+                    } else {
+                        $(this).find("option[value=" + $(this).val() + "]").attr("selected", true);
+                    }
+                });
+            }},200);
+        if ($("input.fileinput").length > 0)
+                $("input.fileinput").bootstrapFileInput();
         });
     }]);
-
-
-
 
 appControllers.directive('afterRender', ['$timeout', function ($timeout) {
         var def = {

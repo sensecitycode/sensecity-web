@@ -704,7 +704,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                     if ($(".owl-carousel").length > 0 && oft == 0) {
                                         oft = 1;
                                         $(".owl-carousel").owlCarousel({mouseDrag: false, touchDrag: true, slideSpeed: 300, paginationSpeed: 400, singleItem: true, navigation: false, autoPlay: true});
-                                        $(window).resize()
+                                        $(window).resize();
                                     }
                                 }, 1000);
 

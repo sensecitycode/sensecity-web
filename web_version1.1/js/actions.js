@@ -1,7 +1,7 @@
 $(document).ready(function(){        
     
     /* PROGGRESS START */
-    $.mpb("show",{value: [0,50],speed: 5});        
+   // $.mpb("show",{value: [0,50],speed: 5});        
     /* END PROGGRESS START */
     
     var html_click_avail = true;
@@ -253,11 +253,11 @@ $(function(){
     onload();
 
     /* PROGGRESS COMPLETE */
-    $.mpb("update",{value: 100, speed: 5, complete: function(){            
-        $(".mpb").fadeOut(200,function(){
-            $(this).remove();
-        });
-    }});
+//    $.mpb("update",{value: 100, speed: 5, complete: function(){            
+//        $(".mpb").fadeOut(200,function(){
+//            $(this).remove();
+//        });
+//    }});
     /* END PROGGRESS COMPLETE */
 });
 
@@ -509,7 +509,7 @@ function x_navigation(){
         
         var li = $(this);
                 
-            if(li.children("ul").length > 0 || li.children(".panel").length > 0 || $(this).hasClass("xn-profile") > 0){
+                if(li.children("ul").length > 0 || li.children(".panel").length > 0 || $(this).hasClass("xn-profile") > 0){
                 if(li.hasClass("active")){
                     li.removeClass("active");
                     //li.find("li.active").removeClass("active");

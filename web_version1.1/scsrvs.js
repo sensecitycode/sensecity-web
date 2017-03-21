@@ -12,19 +12,15 @@ appServices.factory('APIEndPointService', function() {
 
 
 //Issue Resource
-appServices.factory('Issue', function($resource , $rootScope,$window) {
-    if($rootScope.Variables.APIURL != ""){
-	return $resource($rootScope.Variables.APIADMIN + "issue/:id",
-		{id : "@id"	}, {
-		"update" : {
-			method : "PUT"
-		}
-
-	});
-    }else{
-        return "";
-    }
-});
+//appServices.factory('Issue', function($resource , $rootScope,$window) {
+//	return $resource($rootScope.Variables.APIADMIN + "issue/:id",
+//		{id : "@id"	}, {
+//		"update" : {
+//			method : "PUT"
+//		}
+//
+//	});
+//});
 
 appServices.factory('DisplayIssuesService', function ( $resource , $rootScope) {
 //    console.log("rootScope.Variables.APIURL ==================>>>>>>>>>>>>>>>>>>>>>> "+$rootScope.Variables.APIURL);
