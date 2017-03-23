@@ -167,8 +167,7 @@ appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$win
                             $scope.allissues = tmpIssues;
                             });
 	};
-	
-	
+
 	$scope.doCalcAllIssues();
 
 });
