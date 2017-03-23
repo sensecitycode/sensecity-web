@@ -61,6 +61,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 zoomControlOptions: {
                     style: google.maps.ZoomControlStyle.SMALL
                 },
+                fullscreenControl: false,
                 enableCloseButton: false
             };
             panorama = new google.maps.StreetViewPanorama(
@@ -75,7 +76,6 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     google.maps.event.trigger(panorama, "resize");
                 }
             });
-
         };
         
         $scope.change_icon = function(icon_type){
@@ -91,6 +91,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 google_street_layer = true;
                 $("#streetview").css('z-index', '1');
                 $(".leaflet-control-zoom").css("visibility", "hidden");
+                $(window).trigger("resize");
             }else{
                $(".fa.fa-eercast").attr("id","map-icons-active"); 
                $window.open("https://www.google.gr/maps/@" + glat + "," + glng + ",198a,20y,41.27t/data=!3m1!1e3?hl=en");
@@ -251,7 +252,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 google.maps.event.addListener(issueMarker, 'click', function () {
                     issueMarker.info.open(panorama, issueMarker);
                 });
-               // panorama.setPosition(panoData.location.latLng);
+                panorama.setPosition(panoData.location.latLng);
             }
             ;
         }

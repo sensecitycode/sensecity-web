@@ -43,6 +43,10 @@ input::-webkit-calendar-picker-indicator {
   display: none;
 }
 
+#map-icons-active{
+    color: #90d4fc; 
+}
+
 /* PREDEFINED CLASSES */
 .clearfix {
   zoom: 1;
