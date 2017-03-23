@@ -594,14 +594,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 if (issue == "protectionpolicy") {
                                     issue = "protection-policy";
                                 }
-                                if (issue == "Προβλήματα") {
-                                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue, image_field: 0, includeAnonymous: includeAnonymous});
-                                } else {
-                                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue, image_field: 0, status: states, includeAnonymous: includeAnonymous});
-                                }
+                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue, image_field: 0, status: states, includeAnonymous: includeAnonymous});
                             });
                             if ($scope.searchIssue == "" || $scope.searchIssue == undefined) {
-                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, includeAnonymous: includeAnonymous});
+                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
                             }
                             i = 0;
                             angular.forEach($scope.searchFeeling, function (feeling) {
