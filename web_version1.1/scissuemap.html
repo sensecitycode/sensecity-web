@@ -1,124 +1,243 @@
-<div class="page-content-wrap">
-    <div class="col-md-12" style="margin-top:8px">
-        <div class="page-title">                    
-            <h2>Εξέλιξη Προβλήματος</h2>
-        </div>                
-    </div>
-    <div class="row" style="top:13px;position:relative">
-        <div class="col-md-12">
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>sense.city</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            <div class="timeline timeline-right">
+        <meta name="description" content="sense.city" />
 
-                <!-- START TIMELINE ITEM -->
-                <div class="timeline-item timeline-main">
-                    <div class="timeline-date">2014</div>
-                </div>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300'
+              rel='stylesheet' type='text/css'>
 
-                <div class="timeline-item timeline-item-right">
-                    <div class="timeline-item-info">29 Sep 2014</div>
-                    <div class="timeline-item-icon"><span class="fa fa-image"></span></div>
-                    <div class="timeline-item-content">
-                        <div class="timeline-body" style="left:0%" id="links">                                            
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <!-- START SALES BLOCK -->
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <div class="panel-title-box">
-                                                <h3>Αναζήτηση</h3>
-                                                <span>Αναζητήστε προβλήματα στην πόλη</span>
+        <link rel="stylesheet" href="_css/bootstrap.min.css" />
+        <link rel="stylesheet" href="_css/animate.min.css" />
+        <link rel="stylesheet" href="css/scapp.css" />
+        <link rel="stylesheet" href="css/sidebar.css">
+
+
+        <!-- angular dep -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-resource.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-route.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-animate.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-touch.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-cookies.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
+        <script src="_js/angular-translate.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
+
+
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
+
+
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+        <script src="js/dirdisqus.js"></script>
+
+
+        <script src="js/leaflet.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet.extra-markers.min.js"></script>
+        <script src="js/angular-count-to.min.js"></script>
+
+        <!-- Map dependancies -->
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+        <!--<link rel="stylesheet" href="css/style.css" />-->
+        <link rel="stylesheet" type="text/css" href="admin/css/gdropdown.css" />
+
+
+        <!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
+        <script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
+        <script src="js/Google.js"></script>
+        <!-- Angular scapp dependancies -->
+        <script src="scctrl.js"></script>
+        <script src="sense.js"></script>
+        <script src="scwebsubmitctrl.js"></script>
+        <script src="scsearchctrl.js"></script>
+        <script src="overviewctrl.js"></script>
+        <script src="scapp.js"></script>
+        <script src="scsrvs.js"></script>
+        <script src="scissuemapctrl.js"></script>
+        <script src="scissuemapsrvs.js"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.13.1/angular-translate-loader-static-files.min.js"></script>
+        <script type="text/javascript" src="admin/js/gdropdown.js"></script>
+        <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
+        <script src="admin/dist/angular-tooltips.min.js"></script>
+
+        <!-- new section -->          
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+
+    </head>
+    <body ng-app="scApp" ng-controller="scissuemapctrl" ng-cloak>
+        <div class="page-container"> 
+            <div class="page-content">
+                <ul class="x-navigation  x-navigation-horizontal">
+                    <div>
+                        <li class="xn-logo" style="background-color: #1caf9a;
+                            border-bottom: 1px solid #1caf9a;">
+                            <a id="senselogo" href="#" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a  href="#" style="color:white" id="nav_control" class="x-navigation-control"></a>
+                        </li> 
+                        <li ng-class="navClass('web_report')" ><a id="active_list" href="#!/web_report">{{ 'MENUREPORT' | translate }}</a></li>
+                        <li ng-class="navClass('search')"><a id="disabled_list" href="/search">{{'MENUSEARCH'| translate }}</a></li>
+                        <li ng-class="navClass('more')"><a href="/more">{{'MENUMORE'| translate }}</a></li>
+                    </div>
+                </ul> 
+                <div class="page-content-wrap">
+                    <div class="col-md-12" style="margin-top:8px">
+                        <div class="page-title">                    
+                            <h2>Εξέλιξη Προβλήματος</h2>
+                        </div>                
+                    </div>
+                    <div class="row" style="top:13px;position:relative">
+                        <div class="col-md-12">
+
+                            <div class="timeline timeline-right">
+
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-main">
+                                    <div class="timeline-date">{{fcyear}}</div>
+                                </div>
+
+                                <div ng-repeat="comment in comments" class="timeline-item timeline-item-right">
+                                    <div class="timeline-item-info"><div style="font-size:11px"><span>{{comment.day}}/{{comment.month}}/{{comment.year}}</span></div><div><span class="fa fa-clock-o"></span> {{comment.time}}</div></div>
+                                    <div class="timeline-item-icon">
+                                        <div ng-if="comment.type == 'Ανοιχτο'">   
+                                            <span style="top: 3px;left: 0.3px;" class="glyphicon glyphicon-exclamation-sign"></span>
+                                        </div>
+                                        <div ng-if="comment.type == 'Σε εκτελεση'">   
+                                            <span style="top: 3px;left: 0.3px;" class="glyphicon glyphicon-question-sign"></span>
+                                        </div>
+                                        <div ng-if="comment.type == 'Ολοκληρωθηκε'">   
+                                            <span style="top: 3px;left: 0.3px;" class="glyphicon glyphicon-ok icon-ok check-mark"></span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item-content">
+                                        <div class="timeline-body" style="left:0%" id="links">                                            
+                                            <div class="row">
+                                                <div class="col-md-7" ng-show="$index == 0">
+                                                    <!-- START SALES BLOCK -->
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-title-box">
+                                                                <h3>Χάρτης</h3>
+                                                                <span>Διεύθυνση προβλήματος</span>
+                                                            </div>
+                                                            <ul class="panel-controls" style="margin-top: 2px;">
+                                                                <li><span tooltip-side="top" tooltip-size="small" tooltips tooltip-template="Χάρτης" style="cursor:pointer" ng-click="change_icon('Χάρτης')"><a href="#" class="panel-fullscreen"><span class="fa fa-map"></span></a></span></li>
+                                                                <li><span style="cursor:pointer" tooltip-size="small" tooltip-side="top" tooltips tooltip-template="Δρόμος" ng-click="change_icon('Δρόμος')"><a href="#" class="panel-refresh"><span class="fa fa-street-view"></span></a></span></li>
+                                                                <li><span style="cursor:pointer" tooltip-size="small" tooltip-side="top" tooltips tooltip-template="3D Κτίρια" ng-click="change_icon('3D Κτίρια')"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-eercast"></span></a></span></li>                                                                                                                  
+                                                            </ul>
+                                                        </div>
+
+                                                        <div>
+                                                            <leaflet lf-center="center" layers="layers" markers="markers"
+                                                                     width="100%" height="300px" style="color:black;"></leaflet>
+                                                        </div>
+                                                        <div  after-render="invalidateTheMap"></div>
+                                                    </div>
+                                                </div>
+                                                <div ng-show="$index == 0" class="col-md-5">
+                                                    <div class="panel panel-default" style="box-shadow:none;margin-bottom:0px">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-title-box">
+                                                                <h3>Εικόνα προβλήματος</h3>
+                                                                <span> Πρόβλημα {{issue_name_new}} ({{issue_value_desc}})</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <img ng-if="!(issue_image === '' || issue_image === 'no-image' || issue_image === null || issue_image === undefined)" class="img-responsive img-text" src={{issue_image}} alt="">
+                                                    <i ng-if="issue_image === '' || issue_image === 'no-image' || issue_image === null || issue_image === undefined" class={{lastissue_class}} style="font-size:24.7em;color:black;width:100%;text-align:center"></i>
+                                                </div>
                                             </div>
-                                            <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>                                        
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
-                                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
-                                            </ul>                                        
-                                        </li>                                        
-                                    </ul>
                                         </div>
+                                        <div class="timeline-heading">
+                                            Ανάθεση σε: <a style="text-decoration:none">{{comment.component}}</a>
+                                        </div>
+                                        <div class="timeline-body comments" style="left:0%">
+                                            <div ng-show="comment.show" class="comment-item">
+                                                <p> {{comment.content}}</p>
+                                            </div>                                            
 
-                                        <div>
-                                            <leaflet lf-center="center" layers="layers" markers="markers"
-                                                     width="100%" height="300px" style="color:black;"></leaflet>
-                                        </div>
-                                        <div  after-render="invalidateTheMap"></div>
+                                        </div>     
+
+                                        <ul class="list-tags" style="position:relative;left:1%;margin-top:10px">
+                                            <div ng-if="comment.type == 'Ανοιχτο'">   
+                                                <li><a href="#"><span class="glyphicon glyphicon-exclamation-sign"></span> {{comment.type}}</a></li>
+                                            </div>
+                                            <div ng-if="comment.type == 'Σε εκτελεση'">   
+                                                <li><a href="#"><span class="glyphicon glyphicon-question-sign"></span> {{comment.type}}</a></li>
+                                            </div>
+                                            <div ng-if="comment.type == 'Ολοκληρωθηκε'">   
+                                                <li><a href="#"><span class="glyphicon glyphicon-ok icon-ok check-mark"></span>{{comment.type}}</a></li>
+                                            </div>                                            
+                                            <li><a href="#"><span class="fa fa-building-o"></span> {{comment.component}}</a></li>
+                                            <li><a href="#"><span ng-class="iclass"></span> {{issue_name_new}}</a></li>
+                                            <li><a href="#"><span class="fa fa-commenting-o"></span> {{issue_value_desc}}</a></li>                            
+                                        </ul> 
+                                        <br/>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
-                                    <div class="panel panel-default" style="box-shadow:none;margin-bottom:0px">
-                                        <div class="panel-heading">
-                                            <div class="panel-title-box">
-                                                <h3>Αναζήτηση</h3>
-                                                <span>Αναζητήστε προβλήματα στην πόλη</span>
-                                            </div>
-                                            <ul class="panel-controls" style="margin-top: 2px;">
-                                        <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                                        <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>                                        
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
-                                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
-                                            </ul>                                        
-                                        </li>                                        
-                                    </ul>
-                                        </div>
-                                    </div>
-                                    <img src="img/apps.png" class="img-responsive img-text" style="min-height:300px"/>
-                                </div>
+
+                                <div class="timeline-item timeline-main">
+                                    <div class="timeline-date"><span class="fa fa-ellipsis-h"></span></div>
+                                </div>     
                             </div>
                         </div>
-                        <div class="timeline-heading">
-                                            Ανάθεση σε: <a style="text-decoration:none">Τμήμα επίλυσης προβλημάτων</a>
-                                        </div>
-                        <div class="timeline-body comments" style="left:0%">
-                            <div class="comment-item">
-                                <p> test</p>
-                            </div>                                            
-
-                        </div>     
-
-                        <ul class="list-tags" style="position:relative;left:1%;margin-top:10px">                                            
-                            <li><a href="#"><span class="fa fa-tag"></span> tempor</a></li>
-                            <li><a href="#"><span class="fa fa-tag"></span> eros</a></li>
-                            <li><a href="#"><span class="fa fa-tag"></span> suspendisse</a></li>
-                            <li><a href="#"><span class="fa fa-tag"></span> dolor</a></li>
-                        </ul> 
-                        <br/>
                     </div>
-                </div>
 
-                <div class="timeline-item timeline-main">
-                    <div class="timeline-date"><span class="fa fa-ellipsis-h"></span></div>
-                </div>     
+                </div>
             </div>
         </div>
-    </div>
 
-</div>
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
-<!-- END PLUGINS -->
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
+        <!-- END PLUGINS -->
 
-<!-- START THIS PAGE PLUGINS-->        
-<script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
-<script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+        <!-- START THIS PAGE PLUGINS-->        
+        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>        
-<script type="text/javascript" src="js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
-<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>        
-<!-- END THIS PAGE PLUGINS-->        
+        <script type="text/javascript" src="js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>        
+        <!-- END THIS PAGE PLUGINS-->        
 
-<script type="text/javascript" src="js/plugins.js"></script>        
-<script type="text/javascript" src="js/actions.js"></script>
-<script type="text/javascript" src="js/demo_maps.js"></script>
+        <script type="text/javascript" src="js/plugins.js"></script>        
+        <script type="text/javascript" src="js/actions.js"></script>
+        <script type="text/javascript" src="js/demo_maps.js"></script>
 
+    </body>
+</html>
 <!--<!DOCTYPE html>
 <html>
     <head>
