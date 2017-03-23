@@ -1,7 +1,5 @@
 var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.translate', 'ngCookies']);
 
-
-
 appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
     function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
 

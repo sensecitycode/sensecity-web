@@ -1,25 +1,60 @@
-$(function(){        
+$(function(){
+    
+    function month_gr(month){
+        switch(month){
+            case "January":
+                return "Ιανουάριος";
+            case "February":
+                return "Φεβρουάριος";
+            case "March":
+                return "Μάρτιος";
+            case "April":
+                return "Απρίλιος";
+            case "May":
+                return "Μάιος";
+            case "June":
+                return "Ιούνιος";
+            case "July":
+                return "Ιούλιος";
+            case "August":
+                return "Αύγουστος";
+            case "September":
+                return "Σεπτέμβριος";
+            case "October":
+                return "Οκτώβριος";
+            case "November":
+                return "Νοέμβριος";
+            case "December":
+                return "Δεκέμβριος";
+        }
+    }
     /* reportrange */
     if($("#reportrange").length > 0){   
         $("#reportrange").daterangepicker({                    
             ranges: {
-               'Today': [moment(), moment()],
-               'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-               'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-               'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-               'This Month': [moment().startOf('month'), moment().endOf('month')],
-               'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+               'Σήμερα': [moment(), moment()],
+               'Χτές': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+               'Τελευταίες 7 Ημέρες': [moment().subtract(6, 'days'), moment()],
+               'Τελευταίες 30 Ημέρες': [moment().subtract(29, 'days'), moment()],
+               'Τελευταίος Μήνας': [moment().startOf('month'), moment().endOf('month')],
+               'Προηγούμενος Μήνας': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
             opens: 'left',
             buttonClasses: ['btn btn-default'],
             applyClass: 'btn-small btn-primary',
             cancelClass: 'btn-small',
             format: 'MM.DD.YYYY',
-            separator: ' to ',
+            separator: ' μέχρι ',
             startDate: moment().subtract('days', 29),
             endDate: moment()            
           },function(start, end) {
-              $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+              var sm = month_gr(start.format('MMMM D, YYYY').split(" ")[0]);
+              start = start.format('MMMM D, YYYY');
+              start = start.replace(start.split(" ")[0],sm);
+              var em = month_gr(end.format('MMMM D, YYYY').split(" ")[0]);
+              end = end.format('MMMM D, YYYY');
+              end = end.replace(end.split(" ")[0],em);
+              $('#reportrange span').html(start + ' - ' + end);
         });
         
        // $("#reportrange span").html(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
