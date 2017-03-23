@@ -1,4 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>sense.city</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <meta name="description" content="sense.city" />
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300'
+              rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="_css/bootstrap.min.css" />
+        <link rel="stylesheet" href="_css/animate.min.css" />
+        <link rel="stylesheet" href="css/scapp.css" />
+        <link rel="stylesheet" href="css/sidebar.css">
+
+
+        <!-- angular dep -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-resource.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-route.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-animate.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-touch.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-cookies.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
+        <script src="_js/angular-translate.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
+
+
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
+
+
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+        <script src="js/dirdisqus.js"></script>
+
+
+        <script src="js/leaflet.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet.extra-markers.min.js"></script>
+        <script src="js/angular-count-to.min.js"></script>
+        
+                <!-- Map dependancies -->
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+        <!--<link rel="stylesheet" href="css/style.css" />-->
+        <link rel="stylesheet" type="text/css" href="admin/css/gdropdown.css" />
+
+
+        <!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
+        <script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
+        <script src="js/Google.js"></script>
+        <!-- Angular scapp dependancies -->
+        <script src="scctrl.js"></script>
+        <script src="sense.js"></script>
+        <script src="scwebsubmitctrl.js"></script>
+        <script src="scsearchctrl.js"></script>
+        <script src="overviewctrl.js"></script>
+        <script src="scapp.js"></script>
+        <script src="scsrvs.js"></script>
+        <script src="scissuemapctrl.js"></script>
+        <script src="scissuemapsrvs.js"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.13.1/angular-translate-loader-static-files.min.js"></script>
+        <script type="text/javascript" src="admin/js/gdropdown.js"></script>
+        <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
+        <script src="admin/dist/angular-tooltips.min.js"></script>
+
+        <!-- new section -->          
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+        
+    </head>
+    <body ng-app="scApp" ng-controller="allissuesCtrl" ng-cloak>
+<div class="page-container"> 
+            <div class="page-content">
+                <ul class="x-navigation  x-navigation-horizontal">
+                    <div>
+                    <li class="xn-logo" style="background-color: #1caf9a;
+    border-bottom: 1px solid #1caf9a;">
+                            <a id="senselogo" href="#" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a  href="#" style="color:white" id="nav_control" class="x-navigation-control"></a>
+                        </li> 
+<li ng-class="navClass('web_report')" ><a id="active_list" href="#!/web_report">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-class="navClass('search')"><a id="disabled_list" href="/search">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-class="navClass('more')"><a href="/more">{{'MENUMORE' | translate }}</a></li>
+                    </div>
+                </ul>               
 <div class="page-content-wrap" style="margin-top:5px">
     <div class="col-md-12">
         <div class="page-title">                    
@@ -6,217 +118,38 @@
                 </div>                
     </div>
                     <div class="col-md-12" style="margin-top:50px">
-                        <div class="col-md-3">
+                        <div ng-repeat="lastissue in allissues" class="col-md-3">
                             <!-- CONTACT ITEM -->
                             <div class="panel panel-default">
-                                <div class="panel-body profile">
+                                <div class="panel-body profile" >
                                     <div class="profile-image">
-                                        <img src="img/apps.png" alt="Nadia Ali"/>
+                                        <img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" ng-src={{lastissue.image_name}} alt="" height="100">
+                                        <i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:8.41em;color:white"></i>
                                     </div>
                                     <div class="profile-data">
-                                        <div class="profile-data-name">Nadia Ali</div>
-                                        <div class="profile-data-title">Singer-Songwriter</div>
-                                    </div>
-                                    <div class="profile-controls">
-                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
+                                        <div class="profile-data-name">{{lastissue.issue | translate}}</div>
+                                        <div class="profile-data-title">{{lastissue.value_desc}}</div>
                                     </div>
                                 </div>                                
-                                <div class="panel-body">                                    
+                                <div class="panel-body" >                                    
                                     <div class="contact-info">
-                                        <p><small>Mobile</small><br/>(555) 555-55-55</p>
-                                        <p><small>Email</small><br/>nadiaali@domain.com</p>
-                                        <p><small>Address</small><br/>123 45 Street San Francisco, CA, USA</p>                                   
+                                        <p><small>Κατάσταση</small><br>{{lastissue.status
+						| translate}}</p>
+                                        <p><small>Αναφορά</small><br>{{ 'SINCE_TIME' |
+						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
+						translate }}</p>
+<!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
+                                        <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>
                                 </div>                                
                             </div>
                             <!-- END CONTACT ITEM -->
-                        </div>
-                        <div class="col-md-3">
-                            <!-- CONTACT ITEM -->
-                            <div class="panel panel-default">
-                                <div class="panel-body profile">
-                                    <div class="profile-image">
-                                        <img src="img/apps.png" alt="Dmitry Ivaniuk"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">Dmitry Ivaniuk</div>
-                                        <div class="profile-data-title">Web Developer / UI/UX Designer</div>
-                                    </div>
-                                    <div class="profile-controls">
-                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
-                                    </div>
-                                </div>                                
-                                <div class="panel-body">                                    
-                                    <div class="contact-info">
-                                        <p><small>Mobile</small><br/>(333) 333-33-22</p>
-                                        <p><small>Email</small><br/>dmitry@domain.com</p>                                        
-                                        <p><small>Address</small><br/>123 45 Street San Francisco, CA, USA</p>                                   
-                                    </div>
-                                </div>                                
-                            </div>
-                            <!-- END CONTACT ITEM -->
-                        </div>
-                        <div class="col-md-3">
-                            <!-- CONTACT ITEM -->
-                            <div class="panel panel-default">
-                                <div class="panel-body profile">
-                                    <div class="profile-image">
-                                        <img src="img/apps.png" alt="John Doe"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">John Doe</div>
-                                        <div class="profile-data-title">Web Developer/Designer</div>
-                                    </div>
-                                    <div class="profile-controls">
-                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
-                                    </div>
-                                </div>                                
-                                <div class="panel-body">                                    
-                                    <div class="contact-info">
-                                        <p><small>Mobile</small><br/>(234) 567-89-12</p>
-                                        <p><small>Email</small><br/>john@domain.com</p>
-                                        <p><small>Address</small><br/>123 45 Street San Francisco, CA, USA</p>                                   
-                                    </div>
-                                </div>                                
-                            </div>
-                            <!-- END CONTACT ITEM -->
-                        </div>
-                        <div class="col-md-3">
-                            <!-- CONTACT ITEM -->
-                            <div class="panel panel-default">
-                                <div class="panel-body profile">
-                                    <div class="profile-image">
-                                        <img src="img/apps.png" alt="Brad Pitt"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">Brad Pitt</div>
-                                        <div class="profile-data-title">Actor and Film Producer</div>
-                                    </div>
-                                    <div class="profile-controls">
-                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
-                                    </div>
-                                </div>                                
-                                <div class="panel-body">                                    
-                                    <div class="contact-info">
-                                        <p><small>Mobile</small><br/>(321) 777-55-11</p>
-                                        <p><small>Email</small><br/>brad@domain.com</p>
-                                        <p><small>Address</small><br/>123 45 Street San Francisco, CA, USA</p>                                   
-                                    </div>
-                                </div>                                
-                            </div>
-                            <!-- END CONTACT ITEM -->
-                        </div>
-                        <div class="col-md-3">
-                            <!-- CONTACT ITEM -->
-                            <div class="panel panel-default">
-                                <div class="panel-body profile">
-                                    <div class="profile-image">
-                                        <img src="img/apps.png" alt="John Travolta"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">John Travolta</div>
-                                        <div class="profile-data-title">Actor</div>
-                                    </div>
-                                    <div class="profile-controls">
-                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
-                                    </div>
-                                </div>                                
-                                <div class="panel-body">                                    
-                                    <div class="contact-info">
-                                        <p><small>Mobile</small><br/>(111) 222-33-78</p>
-                                        <p><small>Email</small><br/>travolta@domain.com</p>
-                                        <p><small>Address</small><br/>123 45 Street San Francisco, CA, USA</p>                                   
-                                    </div>
-                                </div>                                
-                            </div>
-                            <!-- END CONTACT ITEM -->
-                        </div>
-                        <div class="col-md-3">
-                            <!-- CONTACT ITEM -->
-                            <div class="panel panel-default">
-                                <div class="panel-body profile">
-                                    <div class="profile-image">
-                                        <img src="img/apps.png" alt="Darth Vader"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">Darth Vader</div>
-                                        <div class="profile-data-title">Cyborg</div>
-                                    </div>
-                                    <div class="profile-controls">
-                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
-                                    </div>
-                                </div>                                
-                                <div class="panel-body">                                    
-                                    <div class="contact-info">
-                                        <p><small>Mobile</small><br/>(000) 000-00-01</p>
-                                        <p><small>Email</small><br/>vader@domain.com</p>
-                                        <p><small>Address</small><br/>Somewhere deep in space</p>                                   
-                                    </div>
-                                </div>                                
-                            </div>
-                            <!-- END CONTACT ITEM -->
-                        </div>
-                        <div class="col-md-3">
-                            <!-- CONTACT ITEM -->
-                            <div class="panel panel-default">
-                                <div class="panel-body profile">
-                                    <div class="profile-image">
-                                        <img src="img/apps.png" alt="Samuel Leroy Jackson"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">Samuel Leroy Jackson</div>
-                                        <div class="profile-data-title">Actor and film producer</div>
-                                    </div>
-                                    <div class="profile-controls">
-                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
-                                    </div>
-                                </div>                                
-                                <div class="panel-body">                                    
-                                    <div class="contact-info">
-                                        <p><small>Mobile</small><br/>(552) 221-23-25</p>
-                                        <p><small>Email</small><br/>samuel@domain.com</p>
-                                        <p><small>Address</small><br/>123 45 Street San Francisco, CA, USA</p>                                   
-                                    </div>
-                                </div>                                
-                            </div>
-                            <!-- END CONTACT ITEM -->
-                        </div>
-                        <div class="col-md-3">
-                            <!-- CONTACT ITEM -->
-                            <div class="panel panel-default">
-                                <div class="panel-body profile">
-                                    <div class="profile-image">
-                                        <img src="img/apps.png" alt="Samuel Leroy Jackson"/>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">Alex Sonar</div>
-                                        <div class="profile-data-title">Designer</div>
-                                    </div>
-                                    <div class="profile-controls">
-                                        <a href="pages-profile.html" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
-                                    </div>
-                                </div>                                
-                                <div class="panel-body">                                    
-                                    <div class="contact-info">
-                                        <p><small>Mobile</small><br/>(213) 428-74-13</p>
-                                        <p><small>Email</small><br/>alex@domain.com</p>
-                                        <p><small>Address</small><br/>123 45 Street San Francisco, CA, USA</p>                                   
-                                    </div>
-                                </div>                                
-                            </div>
-                            <!-- END CONTACT ITEM -->
-                        </div>                        
+                        </div>                   
                     </div>
 
                 </div>
+            </div>
+</div>
         <!-- START PRELOADS -->
         <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
@@ -235,7 +168,9 @@
         <!-- END THIS PAGE PLUGINS-->        
         
         <script type="text/javascript" src="js/plugins.js"></script>        
-        <script type="text/javascript" src="js/actions.js"></script>        
+        <script type="text/javascript" src="js/actions.js"></script>
+</body>
+</html>
         <!-- END TEMPLATE -->
 <!--
 <div class="row" style="padding: 20px; width: 100%;">

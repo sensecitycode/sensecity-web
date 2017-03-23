@@ -533,7 +533,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                         if ($scope.issue_id != "") {
                             var obj = {city: $rootScope.Variables.city_name, bug_id: $scope.issue_id};
-                            alert(JSON.stringify(obj));
                             $resource($rootScope.Variables.APIURL,
                                     {}, {
                                 update: {
