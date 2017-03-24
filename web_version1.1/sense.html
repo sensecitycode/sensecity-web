@@ -119,51 +119,55 @@
                         
                         <div class="col-md-9" style="top:10px;z-index:20">
                             <!--<div class="col-md-12" style="top:10px;z-index:20">-->
-                             <div class="col-md-3">
+                             <div class="col-lg-3 col-md-6">
                                  <div class="widget widget-default widget-item-icon">
                                  <div class="widget-item-left">
-                                    <span class="fa fa-map-marker"></span>
+                                     <img width="50" height="60" src="./img/issues.png" />
                                 </div> 
-                            <div class="widget-data" style="word-break:break-all">
-                                    <div class="widget-title">Προβληματα</div>                                                                        
-                                        <div class="widget-subtitle">Τελ. 7 ημέρες</div>
-                                        <div class="widget-int calcValue" count-to="{{calcValue7daysIssues}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysIssues}}</div>
+                            <div class="widget-data">
+                                    <div class="widget-title">Προβληματα</div>
+                                    <div class="widget-subtitle">Τελ. 7 ημέρες</div>
+                                    <div class="widget-int calcValue" count-to="{{calcValue7daysIssues}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysIssues}}</div>
+                                    <span class="widget-subtitle">Ανοιχτά/Σε εκτέλεση</span>
                                 </div> 
                                  </div>
                         </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-3 col-md-6">
                             <div class="widget widget-default widget-item-icon">
                                  <div class="widget-item-left">
-                                    <span class="fa fa-exclamation"></span>
+                                    <img width="50" height="60" src="./img/events.png" />
                                 </div> 
-                            <div class="widget-data" style="word-break:break-all">
-                                    <div class="widget-title">Συμβαντα</div>                                                                        
-                                        <div class="widget-subtitle">Τελ. 7 ημέρες</div>
-                                        <div class="widget-int calcValue" count-to="{{calcValue7daysEvents}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysEvents}}</div>
-                                </div> 
-                                 </div>       
-                        </div>
-                            <div class="col-md-3">
-                                <div class="widget widget-default widget-item-icon">
-                                 <div class="widget-item-left">
-                                    <span class="fa fa-calendar"></span>
-                                </div> 
-                            <div class="widget-data" style="word-break:break-all">
-                                    <div class="widget-title" >Προβληματα</div>                                                                        
-                                        <div class="widget-subtitle">Από 1/1/2017</div>
-                                        <div class="widget-int calcValue" count-to="{{calcValueProblemsFrom2017}}" duration="2" count-from="0" style="text-shadow:none">{{calcValueProblemsFrom2017}}</div>
+                            <div class="widget-data">
+                                <div class="widget-title">Συμβαντα</div>
+                                <div class="widget-subtitle">Τελ. 7 ημέρες</div>
+                                    <div class="widget-int calcValue" count-to="{{calcValue7daysEvents}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysEvents}}</div>
+                                    <span class="widget-subtitle">Ανοιχτά/Σε εκτέλεση και διάθεση πολιτών</span>
                                 </div> 
                                  </div>       
                         </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-3 col-md-6">
                                 <div class="widget widget-default widget-item-icon">
                                  <div class="widget-item-left">
-                                    <span class="fa fa-check-circle"></span>
+                                    <img width="50" height="60" src="./img/issuecal.png" />
                                 </div> 
-                            <div class="widget-data" style="word-break:break-all">
+                            <div class="widget-data">
+                                <div class="widget-title" >Προβληματα</div>
+                                <div class="widget-subtitle">Από 1/1/2017</div>
+                                <div class="widget-int calcValue" count-to="{{calcValueProblemsFrom2017}}" duration="2" count-from="0" style="text-shadow:none">{{calcValueProblemsFrom2017}}</div>
+                                <span class="widget-subtitle">Έχουν αναφερθεί από πολίτες</span>
+                                </div> 
+                                 </div>       
+                        </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="widget widget-default widget-item-icon">
+                                 <div class="widget-item-left">
+                                    <img width="50" height="60" src="./img/solutions.png" />
+                                </div> 
+                            <div class="widget-data">
                                     <div class="widget-title">Λυσεις</div>                                                                        
                                         <div class="widget-subtitle">Από 1/1/2017</div>
                                         <div class="widget-int calcValue" count-to="{{calcValueSolutionFrom2017}}" duration="2" count-from="0" style="text-shadow:none">{{calcValueSolutionFrom2017}}</div>
+                                        <span class="widget-subtitle">Προβλήματα που έχουν αποκατασταθεί</span>
                                 </div> 
                                  </div>       
                         </div>
@@ -171,8 +175,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                         <div  class="panel-title-box" style="font-weight:600;font-size:14px;">
-                                            <h3> Χάρτης Προβλημάτων</h3>
-                                            <span>Ανοιχτά και σε εκτέλεση( Τελευταίες 7 ημέρες )</span>
+                                            <h3> Χάρτης Συμβάντων</h3>
+                                            <span>Ανοιχτά/Σε εκτέλεση και διάθεση πολιτών( Τελευταίες 7 ημέρες )</span>
                                         </div>
                                     <ul class="panel-controls">
                                         <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed($event)" href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
