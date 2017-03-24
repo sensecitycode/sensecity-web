@@ -41,6 +41,14 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 $("#next_button").attr("class","btn btn-default pull-right disabled");
             }
         });
+        
+        $("#txtaddress").change(function(){
+            if($scope.address != ""){
+                $("#next_button").attr("class","btn btn-default pull-right");
+            }else{
+                $("#next_button").attr("class","btn btn-default pull-right disabled");
+            }
+        });
 
         $scope.chkSelected = false;
         $scope.chkSelected_1 = true;
@@ -113,7 +121,14 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
             $scope.markers.unshift(mylocation_marker);
             mylocation_en = 1;
-
+            
+            $scope.map_center = {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+            zoom: 18
+        };
+        
+        $scope.$apply();
         });
 
         $scope.latlabeltxt = null;
@@ -205,9 +220,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     markerColor: 'red'
                 }
             };
-
+            
+            
             $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latlng.lat + "," + event.latlng.lng + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM").success(function (result) {
                 $scope.address = result.results[0].formatted_address;
+                setTimeout(function(){$("#txtaddress").trigger("change");},100);
             });
 
             if ($scope.markers.length == 2 || mylocation_en == 0) {
@@ -222,29 +239,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         }
         ;
 
-        $q.all([$rootScope.mainInfo]).then(function (data) {
-            
-            var mainMarker = {
-                lat: $rootScope.Variables.lat_center,
-                lng: $rootScope.Variables.long_center,
-                icon: {
-                    type: 'awesomeMarker',
-                    prefix: 'fa',
-                    icon: 'info-circle',
-                    markerColor: 'red'
-                }
-            };
-            
-            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + $rootScope.Variables.lat_center + "," + $rootScope.Variables.long_center + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM").success(function (result) {
-                $scope.address = result.results[0].formatted_address;
-            });
-
+        $q.all([$rootScope.mainInfo]).then(function (data) {           
+            $("#next_button").attr("class","btn btn-default pull-right disabled");
             if ($scope.markers.length == 2 || mylocation_en == 0) {
                 $scope.markers.pop();
             }
-            $scope.markers.push(mainMarker);
-
-
 
             $scope.latlabeltxt = $rootScope.Variables.lat_center;
             $scope.lnglabeltxt = $rootScope.Variables.long_center;
@@ -750,7 +749,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                             $scope.myText = resp.policy_description;
                             if (resp.user_exist == "1") {
-                                alert("einai");
                                 $scope.submit_button = false;
                                 $scope.register_button = false;
                                 $scope.verify_button = false;
@@ -770,7 +768,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 };
 
                             } else {
-                                alert("den einai");
                                 //Verify button
                                 user_id = resp._id;
                                 $scope.submit_button = false;
