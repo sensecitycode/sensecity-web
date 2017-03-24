@@ -103,12 +103,15 @@
                     <div>
                     <li class="xn-logo" style="background-color: #1caf9a;
     border-bottom: 1px solid #1caf9a;">
-                            <a id="senselogo" href="#" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
-                            <a  href="#" style="color:white" id="nav_control" class="x-navigation-control"></a>
+                           <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
                         </li> 
-<li ng-class="navClass('web_report')" ><a id="active_list" href="#!/web_report">{{ 'MENUREPORT' | translate }}</a></li>
-<li ng-class="navClass('search')"><a id="disabled_list" href="/search">{{'MENUSEARCH' | translate }}</a></li>
-<li ng-class="navClass('more')"><a href="/more">{{'MENUMORE' | translate }}</a></li>
+<li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
+<li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
                     </div>
                 </ul>               
 <div class="page-content-wrap">
@@ -123,8 +126,8 @@
                                 </div> 
                             <div class="widget-data" style="word-break:break-all">
                                     <div class="widget-title">Προβληματα</div>                                                                        
-                                        <div class="widget-subtitle">Τελ. 30 ημέρες</div>
-                                        <div class="widget-int calcValue" count-to="{{calcValue30daysIssues}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue30daysIssues}}</div>
+                                        <div class="widget-subtitle">Τελ. 7 ημέρες</div>
+                                        <div class="widget-int calcValue" count-to="{{calcValue7daysIssues}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysIssues}}</div>
                                 </div> 
                                  </div>
                         </div>
@@ -135,8 +138,8 @@
                                 </div> 
                             <div class="widget-data" style="word-break:break-all">
                                     <div class="widget-title">Συμβαντα</div>                                                                        
-                                        <div class="widget-subtitle">Τελ. 30 ημέρες</div>
-                                        <div class="widget-int calcValue" count-to="{{calcValue30daysEvents}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue30daysEvents}}</div>
+                                        <div class="widget-subtitle">Τελ. 7 ημέρες</div>
+                                        <div class="widget-int calcValue" count-to="{{calcValue7daysEvents}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysEvents}}</div>
                                 </div> 
                                  </div>       
                         </div>
@@ -169,7 +172,7 @@
                                 <div class="panel-heading">
                                         <div  class="panel-title-box" style="font-weight:600;font-size:14px;">
                                             <h3> Χάρτης Προβλημάτων</h3>
-                                            <span>Προβλήματα σε εκτέλεση</span>
+                                            <span>Ανοιχτά και σε εκτέλεση( Τελευταίες 7 ημέρες )</span>
                                         </div>
                                     <ul class="panel-controls">
                                         <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed($event)" href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
@@ -194,7 +197,7 @@
                                             <span>Τελευταία 6 προβλήματα</span>
                                         </div> 
                                     <ul class="panel-controls">
-                                        <li><span tooltip-side="bottom" tooltips tooltip-template="Περισσότερα Προβήματα"><a href="/more"><span class="fa fa-eye"></span></a></span></li>                    
+                                        <li><span tooltip-side="bottom" tooltips tooltip-template="Περισσότερα Προβήματα"><a href="all_issues.html"><span class="fa fa-eye"></span></a></span></li>                    
                                     </ul>
                                 </div>                                
                                 <div class="panel-body padding-0">
@@ -221,6 +224,7 @@
                                         <p><small><span class="fa fa-clock-o"></span> Αναφορά</small><br>{{ 'SINCE_TIME' |
 						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
 						translate }}</p>
+                                                                            <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">Λεπτομέριες...</a></small><br></p>
 <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
                                         <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>

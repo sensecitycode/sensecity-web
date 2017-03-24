@@ -2,7 +2,17 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
     function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
-
+        
+        $scope.navClass = function (page) {
+            var path = window.location.href.toString().split("/");
+            var currentRoute = path[path.length - 1];
+            if( currentRoute.split(".")[0] != page){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         var url;

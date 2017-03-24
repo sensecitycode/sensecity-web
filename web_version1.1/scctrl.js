@@ -12,7 +12,17 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 
 appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window,$http,$q,$location, $resource, BugService) {
 	$log.debug('inside allissuesCtrl controller');
-	
+        
+        $scope.navClass = function (page) {
+            var path = window.location.href.toString().split("/");
+            var currentRoute = path[path.length - 1];
+            if( currentRoute.split(".")[0] != page){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        
 	$scope.allissues = [];
 	$rootScope.overview_url = $location.path();
         

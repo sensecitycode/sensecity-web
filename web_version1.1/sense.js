@@ -35,6 +35,22 @@ appControllers.controller(
                     for (var i = idt; i > 0; i--)
                         clearInterval(i);
                 }, 10);
+                
+                $scope.navClass = function (page) {
+            var path = window.location.href.toString().split("/");
+            var currentRoute = path[path.length - 1];
+            if( currentRoute.split(".")[0] != page){
+                return false;
+            }else{
+                return true;
+            }
+            
+//            if(){
+//                    return false;
+//                }else{
+//            return true;
+//        }
+        };
 
 //              $(document).ready(function(){
 //                $.getScript("js/plugins/jquery/jquery.min.js");
@@ -197,8 +213,6 @@ appControllers.controller(
 
                 var d = $q.defer();
                 
-
-
                 $rootScope.mainInfo = $http.get(url).success(function (response) {
 
                     $rootScope.Variables = {
@@ -382,7 +396,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                 $scope.addlayer(i);
                             }
 
-                            $scope.lastdatesToCheck = 1000 * 60 * 60 * 24 * 30;
+                            $scope.lastdatesToCheck = 1000 * 60 * 60 * 24 * 3;
                             $scope.daysToCheck = 30;
                             $scope.lastissues = [];
                             $scope.markers = [];
@@ -421,10 +435,10 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                             $scope.startISOdate = startdate;
                             $scope.endISOdate = new Date();
 
-                            $scope.submitSearchLast30days = function () {
+                            $scope.submitSearchLast7days = function () {
 
-                                $scope.calcValue30daysIssues = 0;
-                                $scope.calcValue30daysEvents = 0;
+                                $scope.calcValue7daysIssues = 0;
+                                $scope.calcValue7daysEvents = 0;
                                 $scope.calcValueProblemsFrom2017 = 0;
                                 $scope.calcValueSolutionFrom2017 = 0;
 
@@ -471,7 +485,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                                     for (i = 0; i < data.length; i++) {
                                                         for (j = 0; j < data[i].length; j++) {
                                                             if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1 && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
-                                                                $scope.calcValue30daysIssues++;
+                                                                $scope.calcValue7daysIssues++;
                                                                 if (data[i][j].status != "RESOLVED") {
                                                                     searchissues.push(data[i][j]);
                                                                 }
@@ -483,7 +497,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                                                 $scope.calcValueProblemsFrom2017++;
                                                             }
                                                             if (Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
-                                                                $scope.calcValue30daysEvents++;
+                                                                $scope.calcValue7daysEvents++;
                                                             }
                                                         }
                                                     }
@@ -817,12 +831,12 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                             };
 
                             $scope.doCalcLast6Issues();
-                            $scope.submitSearchLast30days();
+                            $scope.submitSearchLast7days();
                             $scope.displayFixedPoints();
 
                             // set intervals to update
                             var updtime = 5 * 60 * 1000; // every 5 minutes
                             $interval($scope.doCalcLast6Issues, updtime);
-                            $interval($scope.submitSearchLast30days, updtime);
+                            $interval($scope.submitSearchLast7days, updtime);
                         });
             }]);

@@ -18,7 +18,17 @@ appControllers.directive('sidebarDirective', function () {
 
 appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http) {
         $rootScope.overview_url = $location.path();
-
+        
+        $scope.navClass = function (page) {
+            var path = window.location.href.toString().split("/");
+            var currentRoute = path[path.length - 1];
+            if( currentRoute.split(".")[0] != page){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         var url;
@@ -718,5 +728,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         });
                         return d.promise;
                     }
+                    $(window).trigger("resize");
                 });
     }]);

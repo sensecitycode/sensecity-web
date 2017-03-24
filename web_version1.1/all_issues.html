@@ -101,14 +101,17 @@
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
                     <div>
-                    <li class="xn-logo" style="background-color: #1caf9a;
+                                                            <li class="xn-logo" style="background-color: #1caf9a;
     border-bottom: 1px solid #1caf9a;">
-                            <a id="senselogo" href="#" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
-                            <a  href="#" style="color:white" id="nav_control" class="x-navigation-control"></a>
+                            <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
                         </li> 
-<li ng-class="navClass('web_report')" ><a id="active_list" href="#!/web_report">{{ 'MENUREPORT' | translate }}</a></li>
-<li ng-class="navClass('search')"><a id="disabled_list" href="/search">{{'MENUSEARCH' | translate }}</a></li>
-<li ng-class="navClass('more')"><a href="/more">{{'MENUMORE' | translate }}</a></li>
+<li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
+<li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
                     </div>
                 </ul>               
 <div class="page-content-wrap" style="margin-top:5px">
@@ -133,11 +136,12 @@
                                 </div>                                
                                 <div class="panel-body" >                                    
                                     <div class="contact-info">
-                                        <p><small>Κατάσταση</small><br>{{lastissue.status
+                                        <p><small><span style="margin-right:3px" class="fa fa-cog"></span>Κατάσταση</small><br>{{lastissue.status
 						| translate}}</p>
-                                        <p><small>Αναφορά</small><br>{{ 'SINCE_TIME' |
+                                        <p><small><span style="margin-right:3px" class="fa fa-clock-o"></span>Αναφορά</small><br>{{ 'SINCE_TIME' |
 						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
 						translate }}</p>
+                                        <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">Λεπτομέριες...</a></small><br></p>
 <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
                                         <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>
