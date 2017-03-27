@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>sense.city</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="sense.city" />
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300'
+              rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="_css/bootstrap.min.css" />
+        <link rel="stylesheet" href="_css/animate.min.css" />
+        <link rel="stylesheet" href="css/scapp.css" />
+        <link rel="stylesheet" href="css/sidebar.css">
+
+
+        <!-- angular dep -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-resource.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-route.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-animate.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-touch.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-cookies.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
+        <script src="_js/angular-translate.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
+
+
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
+
+
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+        <script src="js/dirdisqus.js"></script>
+
+
+        <script src="js/leaflet.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet.extra-markers.min.js"></script>
+        <script src="js/angular-count-to.min.js"></script>
+        
+                <!-- Map dependancies -->
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+        <!--<link rel="stylesheet" href="css/style.css" />-->
+        <link rel="stylesheet" type="text/css" href="admin/css/gdropdown.css" />
+        <link rel="stylesheet" type="text/css" href="./admin/css/loading_overlay.css" >
+
+
+        <!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
+        <script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
+        <script src="js/Google.js"></script>
+        <!-- Angular scapp dependancies -->
+        <script src="scctrl.js"></script>
+        <script src="sense.js"></script>
+        <script src="scwebsubmitctrl.js"></script>
+        <script src="scsearchctrl.js"></script>
+        <script src="overviewctrl.js"></script>
+        <script src="scapp.js"></script>
+        <script src="scsrvs.js"></script>
+        <script src="scissuemapctrl.js"></script>
+        <script src="scissuemapsrvs.js"></script>
+        
+        <style>
+            @media(min-width:768px) {
+    .icon-lg {
+        font-size: 36px;
+    }
+    
+    header {
+        min-height: 100%;
+    }
+
+    header .header-content {
+        position: absolute;
+        top: 50%;
+        padding: 0 50px;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    header .header-content .inner {
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 1000px;
+    }
+
+    header .header-content .inner h1 {
+        font-size: 53px;
+    }
+
+    header .header-content .inner p {
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 80%;
+        font-size: 18px;
+    }
+    
+    section {
+        min-height: 600px;
+        padding: 30px 0;
+    }
+
+}
+        </style>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.13.1/angular-translate-loader-static-files.min.js"></script>
+        <script type="text/javascript" src="admin/js/gdropdown.js"></script>
+        <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
+        <script src="admin/dist/angular-tooltips.min.js"></script>
+
+        <!-- new section -->          
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+        
+    </head>
+    
+    <body ng-app="scApp" ng-controller="allissuesCtrl" ng-cloak>
+        
+                <div ng-show="nloaded" class="loading">
+    Loading&#8230;
+</div>
+        
+        <div class="page-container" style="height:100%"> 
+            <div class="page-content">
+                <ul class="x-navigation  x-navigation-horizontal">
+                    <div>
+                                                            <li class="xn-logo" style="background-color: #1caf9a;
+    border-bottom: 1px solid #1caf9a;">
+                            <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
+                        </li> 
+<li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
+<li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
+                    </div>
+                </ul>               
+<div class="page-content-wrap" style="margin-top:5px">
+    <center style="min-height:100%">
+    <div class="header-content">
+        <div class="col-md-12" style="top:20px">
+            <div class="inner" >
+                <h1 class="cursive" style="color:rgb(176, 22, 169)"><i class="ion-ios-analytics-outline"></i> sense.city</h1>
+                <h4 id="msg_header" style="color:rgb(176, 22, 169)">Συμμετέχω ενεργά στη πόλη μου</h4>
+            </div>
+        </div>
+    </div>
+    </center>
+</div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
+        <!-- END PLUGINS -->
+
+        <!-- START THIS PAGE PLUGINS-->        
+        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+        <!-- END THIS PAGE PLUGINS-->        
+        
+        <script type="text/javascript" src="js/plugins.js"></script>        
+        <script type="text/javascript" src="js/actions.js"></script>
+    </body>
+</html>

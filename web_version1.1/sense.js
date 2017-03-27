@@ -206,7 +206,7 @@ appControllers.controller(
 
                 if (sub_domain[0].split(":").length > 1) {
                     url = "./config/testcity1.json";
-                    sub_domain[0] = "testcity1";
+                    sub_domain[0] = "patras";
                 } else {
                     url = '../config/' + sub_domain[0] + '.json';
                 }
@@ -396,7 +396,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                 $scope.addlayer(i);
                             }
 
-                            $scope.lastdatesToCheck = 1000 * 60 * 60 * 24 * 3;
+                            $scope.lastdatesToCheck = 1000 * 60 * 60 * 24 * 7;
                             $scope.daysToCheck = 30;
                             $scope.lastissues = [];
                             $scope.markers = [];
@@ -497,7 +497,10 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                                                 $scope.calcValueProblemsFrom2017++;
                                                             }
                                                             if (Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
+                                                                searchissues.push(data[i][j]);
+                                                                if (data[i][j].status != "RESOLVED") {
                                                                 $scope.calcValue7daysEvents++;
+                                                            }
                                                             }
                                                         }
                                                     }
@@ -583,7 +586,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
 
                             function dofQuery(obj) {
                                 var d = $q.defer();
-                                $resource($rootScope.Variables.APIURL,
+                                $resource($rootScope.Variables.feelingsURL,
                                         {}, {
                                     update: {
                                         method: 'GET'
@@ -598,7 +601,6 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
 
                             var lsissues = 0;
                             $scope.doCalcLast6Issues = function () {
-
                                 var theLastIssues = $resource($rootScope.Variables.APIURL,
                                         {city: $rootScope.Variables.city_name, startdate: "2017-01-01", sort: "-1", limit: "6", list_issue: "1", image_field: "1"}, {
                                     query: {
@@ -708,19 +710,19 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                                             lastissue.create_at_unit = datediffunit;
                                                         });
                                         $scope.lastissues = theLastIssues;
-                                    }
-                                });
-
-                                // query() returns all the last 6
-                                // issues
-                                setTimeout(function () {
+                                                                        setTimeout(function () {
 //                                    alert(oft);
                                     if ($(".owl-carousel").length > 0 && oft == 0) {
                                         oft = 1;
                                         $(".owl-carousel").owlCarousel({mouseDrag: false, touchDrag: true, slideSpeed: 300, paginationSpeed: 400, singleItem: true, navigation: false, autoPlay: true});
                                         $(window).resize();
                                     }
-                                }, 1000);
+                                }, 100);
+                                    }
+                                });
+
+                                // query() returns all the last 6
+                                // issues
 
 
                             };

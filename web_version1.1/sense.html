@@ -213,7 +213,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-body profile">
                                     <div class="profile-image">
-                                        <img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" ng-src={{lastissue.image_name}} alt="" height="100">
+                                        <img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" ng-src={{lastissue.image_name}} alt="" width="144px" height="144px">
                                         <i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:12em;color:white"></i>
                                     </div>
                                     <div class="profile-data">
@@ -228,7 +228,7 @@
                                         <p><small><span class="fa fa-clock-o"></span> Αναφορά</small><br>{{ 'SINCE_TIME' |
 						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
 						translate }}</p>
-                                                                            <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">Λεπτομέριες...</a></small><br></p>
+                                                                            <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">Λεπτομέρειες...</a></small><br></p>
 <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
                                         <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>

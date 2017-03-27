@@ -1161,7 +1161,6 @@ body.page-container-boxed .page-container {
     text-align: center;
 }
 .profile .profile-image img {
-    width: 100px;
     border: 3px solid #FFF;
     -moz-border-radius: 20%;
     -webkit-border-radius: 20%;
@@ -6225,10 +6224,22 @@ input.ui-editRangeSlider-inputValue {
 .wizard .anchor li a .stepDesc {
     font-weight: 400;
 }
-.wizard .anchor li a .stepDesc small {
+
+@media(max-width:651px){
+    .wizard .anchor li a .stepDesc div {
     color: #999;
     font-weight: 300;
+    height: 36px;
+    font-size: 12px;
 }
+}
+
+.wizard .anchor li a .stepDesc div {
+    color: #999;
+    font-weight: 300;
+    font-size: 12px;
+}
+
 .wizard .anchor li a:before {
     content: " ";
     position: absolute;

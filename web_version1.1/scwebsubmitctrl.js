@@ -19,7 +19,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
         if (sub_domain[0].split(":").length > 1) {
             url = "./config/testcity1.json";
-            sub_domain[0] = "testcity1";
+            sub_domain[0] = "patras";
         } else {
             url = '../config/' + sub_domain[0] + '.json';
         }
@@ -244,9 +244,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             if ($scope.markers.length == 2 || mylocation_en == 0) {
                 $scope.markers.pop();
             }
-
-            $scope.latlabeltxt = $rootScope.Variables.lat_center;
-            $scope.lnglabeltxt = $rootScope.Variables.long_center;
             
             leafletData.getMap().then(function (map) {
                 map.on('click', onmapclick);
@@ -512,7 +509,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
              
              
              }*/
-
+            
+//            $scope.NameTxt1 = function(){
+//                return $scope.NameTxt
+//            }
+            
             $scope.write_user_data = function () {
                 return false;
             };
@@ -524,7 +525,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 
                 if (step == 1) {
                     console.log("Step 1");
-
+                    
+                    setTimeout(function(){
+                    if ($scope.chkSelected && ($scope.NameTxt == "" || $scope.EmailTxt == "")){
+                            $("#next_button").attr("class","btn btn-default pull-right disabled");
+                        }
+                    },500);
                     $scope.step1 = function () {
                         return false;
                     };
@@ -556,7 +562,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     var value_desc = desc;
                     var image_name = $scope.uploadedPhotoFile; //no-image
 
-                    var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '" }';
+                    var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '" }';                   
                     
                     return $http(
                             {

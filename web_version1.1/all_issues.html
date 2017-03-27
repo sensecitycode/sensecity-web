@@ -63,6 +63,7 @@
         <link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
         <!--<link rel="stylesheet" href="css/style.css" />-->
         <link rel="stylesheet" type="text/css" href="admin/css/gdropdown.css" />
+        <link rel="stylesheet" type="text/css" href="./admin/css/loading_overlay.css" >
 
 
         <!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
@@ -97,6 +98,9 @@
         
     </head>
     <body ng-app="scApp" ng-controller="allissuesCtrl" ng-cloak>
+        <div ng-show="nloaded" class="loading">
+    Loading&#8230;
+</div>
 <div class="page-container"> 
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
@@ -126,12 +130,12 @@
                             <div class="panel panel-default">
                                 <div class="panel-body profile" >
                                     <div class="profile-image">
-                                        <img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" ng-src={{lastissue.image_name}} alt="" height="100">
-                                        <i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:8.41em;color:white"></i>
+                                        <img style="width:145px;height:145px" ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" ng-src={{lastissue.image_name}} alt="" height="100">
+                                        <i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:12.09em;color:white"></i>
                                     </div>
                                     <div class="profile-data">
                                         <div class="profile-data-name">{{lastissue.issue | translate}}</div>
-                                        <div class="profile-data-title">{{lastissue.value_desc}}</div>
+                                        <div style="text-overflow: ellipsis !important;white-space: nowrap;overflow: hidden;" class="profile-data-title">{{lastissue.value_desc}}</div>
                                     </div>
                                 </div>                                
                                 <div class="panel-body" >                                    
@@ -141,7 +145,7 @@
                                         <p><small><span style="margin-right:3px" class="fa fa-clock-o"></span>Αναφορά</small><br>{{ 'SINCE_TIME' |
 						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
 						translate }}</p>
-                                        <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">Λεπτομέριες...</a></small><br></p>
+                                        <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">Λεπτομέρειες...</a></small><br></p>
 <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
                                         <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>

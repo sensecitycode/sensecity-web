@@ -12,7 +12,7 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 
 appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window,$http,$q,$location, $resource, BugService) {
 	$log.debug('inside allissuesCtrl controller');
-        
+        $scope.nloaded = true;
         $scope.navClass = function (page) {
             var path = window.location.href.toString().split("/");
             var currentRoute = path[path.length - 1];
@@ -34,7 +34,7 @@ appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$win
 
         if (sub_domain[0].split(":").length > 1) {
             url = "./config/testcity1.json";
-            sub_domain[0] = "testcity1";
+            sub_domain[0] = "patras";
         } else {
             url = '../config/' + sub_domain[0] + '.json';
         }
@@ -173,6 +173,7 @@ appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$win
 										
 									});
                                                                        $(window).trigger("resize");
+                                                                       $scope.nloaded = false;
 				});
                             $scope.allissues = tmpIssues;
                             });
