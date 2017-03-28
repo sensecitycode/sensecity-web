@@ -80,7 +80,7 @@
         "OCCUPATION_PAVEMENT": "Κατάληψη Πεζοδρομίου",
         "BOTCHERY": "Κακοτεχνία",
         "BROKEN_BENCH": "Σπασμένο Παγκάκι",
-        "MESSAGE_USER": "Θέλω να ενημερωθώ με email ή sms.",
+        "MESSAGE_USER": "Θέλω να ενημερωθώ με email ή/και sms.",
         "EMAIL_USER": "email",
         "SMS_USER": "sms",
         "VERIFY_CODE": "Κωδικός πιστοποίησης",

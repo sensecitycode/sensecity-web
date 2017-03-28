@@ -253,7 +253,7 @@
                                             <p style="font-size:14px;cursor:default" class="check"><input ng-model="chkSelected" type="checkbox" id="epon" class="icheckbox"/> Επώνυμη καταγγελία</p>
                                         </div>
                                         <div ng-show="chkSelected" class="col-md-6" style="text-align:center;margin-top:5px">
-                                            <p style="font-size:14px">  Θέλω να ενημερωθώ με email ή sms.</p>
+                                            <p style="font-size:14px"> {{'MESSAGE_USER' | translate}}</p>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top:20px">
@@ -274,37 +274,65 @@
                                                 <div class="form-group">
                                                     <label class="col-md-5 control-label text-left">{{'EPONYMOUS_MOBILE' | translate }}</label>
                                                     <div class="col-md-7">
-                                                        <input ng-model="MobileTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_MOBILE' | translate }}"/>
+                                                        <input id="mobiletxt" ng-model="MobileTxt" name="MobileTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_MOBILE' | translate }}"/>
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="col-md-6" ng-show="chkSelected">
                                             <div class="col-md-12">
-                                                <label class="check"><input type="checkbox" ng-model="chkSelected_2" disabled="true" readonly="true" checked="checked" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" class="icheckbox"/>{{ 'SMS_USER' | translate}}</label>
+                                                <label class="check"><input type="checkbox" ng-model="chkSelected_2" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" class="icheckbox"/>{{ 'SMS_USER' | translate}}</label>
                                             </div>
                                             <div class="col-md-12">                                    
-                                                <label class="check"><input type="checkbox" ng-model="chkSelected_1" disabled="true" readonly="true" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" class="icheckbox"/>{{ 'EMAIL_USER' | translate}}</label>
+                                                <label class="check"><input type="checkbox" ng-model="chkSelected_1" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" class="icheckbox"/>{{ 'EMAIL_USER' | translate}}</label>
                                             </div>
                                         </div>
                                     </div>
                         </div>
                         <div id="step-3">
-                            <div class="col-md-6" ng-show='isnotverify()'>
+                            <div class="col-md-6" ng-show='eisnotverify()'>
                                 <form action="" role="form" class="form-horizontal">
                                 <div class="form-group">
                                                     <label class="col-md-5 control-label text-left">{{ 'VERIFY_CODE' | translate}}</label>
-                                                    <div class="col-md-5">
+                                                    <label control-label text-left>Πιστοποίηση email</label>
+                                                    <div class="col-md-4">
                                                         <input ng-model="codeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
                                                     </div>
-                                                    <div ng-show="valid != null && valid == true" class="col-md-1">
+                                                    <div ng-show="evalid != null && evalid == true" class="col-md-1">
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
                                                     </div>
-                                                    <div ng-show="valid != null && valid == false" class="col-md-1">
+                                                    <div ng-show="evalid != null && evalid == false" class="col-md-1">
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
                                                     </div>
                                                     <div class="col-md-1">
-                                                        <div id="cert" class="btn btn-primary"><span></span>Πιστοποίηση</div>
+                                                        <div id="ecert" class="btn btn-primary"><span></span>Αποστολή κωδικού</div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div id="ecert" class="btn btn-primary"><span></span>Πιστοποίηση</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                </form>
+                            </div>
+                            <div class="col-md-6" ng-show='misnotverify()'>
+                                <form action="" role="form" class="form-horizontal">
+                                <div class="form-group">
+                                                    <label class="col-md-5 control-label text-left">{{ 'VERIFY_CODE' | translate}}</label>
+                                                    <label control-label text-left>Πιστοποίηση κινητού</label>
+                                                    <div class="col-md-4">
+                                                        <input ng-model="codeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
+                                                    </div>
+                                                    <div ng-show="mvalid != null && mvalid == true" class="col-md-1">
+                                                    <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
+                                                    </div>
+                                                    <div ng-show="mvalid != null && mvalid == false" class="col-md-1">
+                                                    <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div id="mcert" class="btn btn-primary"><span></span>Αποστολή κωδικού</div>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <div id="mcert" class="btn btn-primary"><span></span>Πιστοποίηση</div>
                                                     </div>
                                                     
                                                 </div>
