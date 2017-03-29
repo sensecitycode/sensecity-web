@@ -2,7 +2,10 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
     function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
-
+        
+        $scope.smsg1 = false;
+        $scope.smsg2 = false;
+        
         $scope.navClass = function (page) {
             var path = window.location.href.toString().split("/");
             var currentRoute = path[path.length - 1];
@@ -838,51 +841,73 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             },
                             data: txtpost1
                         }).success(function (resp) {
-                            alert(JSON.stringify(resp));
-                            $scope.myText = resp.policy_description;
-                            if (resp.user_exist == "1") {
-                                $scope.submit_button = false;
-                                $scope.register_button = false;
-                                $scope.verify_button = false;
-                                $scope.submit_eponymous_button = true;
-
-                                $scope.issubmit_isseu_form = function () {
-                                    return false;
-                                };
-                                $scope.iseponymous = function () {
-                                    return false;
-                                };
-                                if(resp.mobileverified == 1){
-                                $scope.misnotverify = function () {
-                                    return true;
-                                };
-                            }else{
-                                $scope.misnotverify = function () {
-                                    return false;
-                                };
-                            }
-                            
-                            if(resp.emailverified == 1){
-                                $scope.eisnotverify = function () {
-                                    return true;
-                                };
-                            }else{
-                                $scope.eisnotverify = function () {
-                                    return false;
-                                };
-                            }
-                                $scope.is_finalsubmit = function () {
-                                    return true;
-                                };
-
-                            } else {
+                            //alert(JSON.stringify(resp));
+//                            $scope.myText = resp.policy_description;
+//                            if (resp.user_exist == "1") {
+//                                $scope.submit_button = false;
+//                                $scope.register_button = false;
+//                                $scope.verify_button = false;
+//                                $scope.submit_eponymous_button = true;
+//
+//                                $scope.issubmit_isseu_form = function () {
+//                                    return false;
+//                                };
+//                                $scope.iseponymous = function () {
+//                                    return false;
+//                                };
+//                                if(resp.mobileverified == 1){
+//                                $scope.misnotverify = function () {
+//                                    return true;
+//                                };
+//                            }else{
+//                                $scope.misnotverify = function () {
+//                                    return false;
+//                                };
+//                            }
+//                            
+//                            if(resp.emailverified == 1){
+//                                $scope.eisnotverify = function () {
+//                                    return true;
+//                                };
+//                            }else{
+//                                $scope.eisnotverify = function () {
+//                                    return false;
+//                                };
+//                            }
+//                                $scope.is_finalsubmit = function () {
+//                                    return true;
+//                                };
+//
+//                            } else {
                                 //Verify button
-                                user_id = resp._id;
-                                $scope.submit_button = false;
-                                $scope.register_button = false;
-                                $scope.verify_button = true;
-                                $scope.submit_eponymous_button = false;
-
+//                                user_id = resp._id;
+//                                $scope.submit_button = false;
+//                                $scope.register_button = false;
+//                                $scope.verify_button = true;
+//                                $scope.submit_eponymous_button = false;
+                                
+                               // activate_email":"2569","activate_sms
+                               var anon = JSON.stringify(resp[0]);
+                               var resp_anon = JSON.parse(anon);
+                                if(resp_anon.activate_email != 1){
+                                  $scope.eisnotverify = function () {
+                                    return true;
+                                };
+                                }else{
+                                  $scope.eisnotverify = function () {
+                                    return false;
+                                };  
+                                }
+                                if(resp_anon.activate_sms != 1){
+                                    $scope.misnotverify = function () {
+                                    return true;
+                                };
+                                }else{
+                                   $scope.eisnotverify = function () {
+                                    return false;
+                                };  
+                                }
+                               
                                 $scope.issubmit_isseu_form = function () {
                                     return false;
                                 };
@@ -897,7 +922,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 };
 
 
-                            }
+                            //}
 
                         });
                     }

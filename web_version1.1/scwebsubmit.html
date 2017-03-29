@@ -290,13 +290,13 @@
                                     </div>
                         </div>
                         <div id="step-3">
-                            <div class="col-md-6" ng-show='eisnotverify()'>
+                            <div ng-show='eisnotverify()'>
                                 <form action="" role="form" class="form-horizontal">
                                 <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">{{ 'VERIFY_CODE' | translate}}</label>
-                                                    <label control-label text-left>Πιστοποίηση email</label>
-                                                    <div class="col-md-4">
-                                                        <input ng-model="codeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
+                                                    <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_EMAIL' | translate}}</label>
+<!--                                                    <label control-label text-left>Πιστοποίηση email</label>-->
+                                                    <div class="col-md-3">
+                                                        <input ng-model="ecodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
                                                     </div>
                                                     <div ng-show="evalid != null && evalid == true" class="col-md-1">
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
@@ -304,7 +304,7 @@
                                                     <div ng-show="evalid != null && evalid == false" class="col-md-1">
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
                                                     </div>
-                                                    <div class="col-md-1">
+                                                    <div class="col-md-3">
                                                         <div id="ecert" class="btn btn-primary"><span></span>Αποστολή κωδικού</div>
                                                     </div>
                                                     <div class="col-md-1">
@@ -314,13 +314,12 @@
                                                 </div>
                                 </form>
                             </div>
-                            <div class="col-md-6" ng-show='misnotverify()'>
+                            <div ng-show='misnotverify()'>
                                 <form action="" role="form" class="form-horizontal">
                                 <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">{{ 'VERIFY_CODE' | translate}}</label>
-                                                    <label control-label text-left>Πιστοποίηση κινητού</label>
-                                                    <div class="col-md-4">
-                                                        <input ng-model="codeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
+                                                    <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_MOBILE' | translate}}</label>
+                                                    <div class="col-md-3">
+                                                        <input ng-model="scodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
                                                     </div>
                                                     <div ng-show="mvalid != null && mvalid == true" class="col-md-1">
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
@@ -328,7 +327,7 @@
                                                     <div ng-show="mvalid != null && mvalid == false" class="col-md-1">
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
                                                     </div>
-                                                    <div class="col-md-1">
+                                                    <div class="col-md-3">
                                                         <div id="mcert" class="btn btn-primary"><span></span>Αποστολή κωδικού</div>
                                                     </div>
                                                     <div class="col-md-1">
@@ -338,7 +337,17 @@
                                                 </div>
                                 </form>
                             </div>
-                            <p style="font-size:14px" ng-hide='isnotverify() || chkSelected==false'>Το e-mail σας έχει πιστοποιηθεί. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
+                            <div style="top:10px;position:relative">
+                            <div>
+                                <label ng-show="smsg1">Ο κωδικός πιστοποίησης email που δώσατε είναι λάθος.</label>
+                            </div>
+                            <div>
+                                <label ng-show="smsg2">Ο κωδικός πιστοποίησης κινητού που δώσατε είναι λάθος.</label>
+                            </div>
+                                </div>
+                            <p style="font-size:14px" ng-show='!eisnotverify() && chkSelected_1 == true && chkSelected_2 == false && chkSelected==true'>Το e-mail σας έχει πιστοποιηθεί. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
+                            <p style="font-size:14px" ng-show='!misnotverify() && chkSelected_1 == false && chkSelected_2 == true && chkSelected==true'>Το κινητό σας έχει πιστοποιηθεί. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
+                            <p style="font-size:14px" ng-show='!misnotverify() && !eisnotverify() && chkSelected_1 == true && chkSelected_2 == true && chkSelected==true'>Το e-mail και το κινητό σας έχουν πιστοποιηθεί. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
                             <p style="font-size:14px" ng-show='chkSelected==false'>Η ανώνυμη αναφορά δεν απαιτεί πιστοποίηση e-mail. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
                         </div>
                         <div id="step-4" ng-show='is_finalsubmit()'>
