@@ -5,34 +5,34 @@ var app = angular.module('scApp', ['mgcrea.ngStrap', 'scapp.controllers', 'sciss
 
 app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
 
-    $anchorScrollProvider.disableAutoScrolling();
+//    $anchorScrollProvider.disableAutoScrolling();
     
-    $locationProvider.hashPrefix('!');
-
-    $routeProvider.when('/overview', {
-        templateUrl: 'scmapcontent.html',
-        controller: 'mainOverviewController'
-    }).when('/web_report', {
-        templateUrl: 'scwebsubmit.html',
-        controller: 'scWebSubmit'
-    }).when('/search', {
-        templateUrl: 'scsearchissues.html',
-        controller: 'searchIssueController'
-    }).when('/more', {
+//    $locationProvider.hashPrefix('!');
+//
+//    $routeProvider.when('/overview', {
+//        templateUrl: 'scmapcontent.html',
+//        controller: 'mainOverviewController'
+//    }).when('/web_report', {
+//        templateUrl: 'scwebsubmit.html',
+//        controller: 'scWebSubmit'
+//    }).when('/search', {
+//        templateUrl: 'scsearchissues.html',
+//        controller: 'searchIssueController'
+//    }).when('/more', {
+////        templateUrl: 'all_issues.html',
+////        controller: 'allissuesCtrl'
+//templateUrl: 'scissuemap.html',
+//        controller: 'allissuesCtrl'
+//    }).when('/all', {
 //        templateUrl: 'all_issues.html',
 //        controller: 'allissuesCtrl'
-templateUrl: 'scissuemap.html',
-        controller: 'allissuesCtrl'
-    }).when('/all', {
-        templateUrl: 'all_issues.html',
-        controller: 'allissuesCtrl'
-    }).when('/', {
-        templateUrl: 'sense.html',
-        controller: 'senseController',
-        reloadOnSearch: false
-    }).otherwise({
-        redirectTo: '/'
-    });
+//    }).when('/', {
+//        templateUrl: 'sense.html',
+//        controller: 'senseController',
+//        reloadOnSearch: false
+//    }).otherwise({
+//        redirectTo: '/'
+//    });
 
 });
 
