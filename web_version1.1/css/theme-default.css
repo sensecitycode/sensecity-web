@@ -35,6 +35,31 @@
     }
 }*/
 
+@media(min-width: 992px){
+    #lcert{
+        padding-left: 0px;
+        margin-left: 39px;
+    }
+    
+    #ccert{
+        width: 8px;
+        padding-left: 0px;
+        margin-left: -5px;
+    }
+}
+
+@media(max-width: 991px){
+    
+    #lmcert{
+     margin-top:10px;
+      margin-bottom: 10px;  
+    }
+    
+    #ccert{
+        margin-bottom: 10px;
+    }
+}
+
 #logout_but{
     z-index:99
 }

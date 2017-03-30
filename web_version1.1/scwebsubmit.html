@@ -283,14 +283,14 @@
                                             <div class="col-md-12">
                                                 <label class="check"><input type="checkbox" ng-model="chkSelected_2" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" class="icheckbox"/>{{ 'SMS_USER' | translate}}</label>
                                             </div>
-                                            <div class="col-md-12">                                    
+                                            <div class="col-md-12">
                                                 <label class="check"><input type="checkbox" ng-model="chkSelected_1" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" class="icheckbox"/>{{ 'EMAIL_USER' | translate}}</label>
                                             </div>
                                         </div>
                                     </div>
                         </div>
                         <div id="step-3">
-                            <div ng-show='eisnotverify()'>
+                            <div ng-show="evalidation == true">
                                 <form action="" role="form" class="form-horizontal">
                                 <div class="form-group">
                                                     <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_EMAIL' | translate}}</label>
@@ -298,40 +298,40 @@
                                                     <div class="col-md-3">
                                                         <input ng-model="ecodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
                                                     </div>
-                                                    <div ng-show="evalid != null && evalid == true" class="col-md-1">
+                                                    <div id="ccert" ng-show="evalid != null && evalid == true" class="col-md-1">
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
                                                     </div>
-                                                    <div ng-show="evalid != null && evalid == false" class="col-md-1">
+                                                    <div id="ccert" ng-show="evalid != null && evalid == false" class="col-md-1">
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <div id="ecert" class="btn btn-primary"><span></span>Αποστολή κωδικού</div>
+                                                    <div class="col-md-3" id="lmcert">
+                                                        <div ng-click="activate_email()" class="btn btn-primary"><span></span>Αποστολή κωδικού</div>
                                                     </div>
-                                                    <div class="col-md-1">
-                                                        <div id="ecert" class="btn btn-primary"><span></span>Πιστοποίηση</div>
+                                                    <div class="col-md-2" id="lcert">
+                                                        <div ng-click="validate_email()" ng-hide="ecert" class="btn btn-primary"><span></span>Πιστοποίηση</div>
                                                     </div>
                                                     
                                                 </div>
                                 </form>
                             </div>
-                            <div ng-show='misnotverify()'>
+                            <div ng-show="mvalidation == true">
                                 <form action="" role="form" class="form-horizontal">
                                 <div class="form-group">
                                                     <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_MOBILE' | translate}}</label>
                                                     <div class="col-md-3">
                                                         <input ng-model="scodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
                                                     </div>
-                                                    <div ng-show="mvalid != null && mvalid == true" class="col-md-1">
+                                                    <div id="ccert" ng-show="mvalid != null && mvalid == true" class="col-md-1">
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
                                                     </div>
-                                                    <div ng-show="mvalid != null && mvalid == false" class="col-md-1">
+                                                    <div id="ccert" ng-show="mvalid != null && mvalid == false" class="col-md-1">
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <div id="mcert" class="btn btn-primary"><span></span>Αποστολή κωδικού</div>
+                                                    <div class="col-md-3" id="lmcert">
+                                                        <div ng-click="activate_mobile()" class="btn btn-primary"><span></span>Αποστολή κωδικού</div>
                                                     </div>
-                                                    <div class="col-md-1">
-                                                        <div id="mcert" class="btn btn-primary"><span></span>Πιστοποίηση</div>
+                                                    <div class="col-md-2" id="lcert">
+                                                        <div ng-click="validate_mobile()" ng-hide="mcert" class="btn btn-primary"><span></span>Πιστοποίηση</div>
                                                     </div>
                                                     
                                                 </div>
@@ -339,10 +339,10 @@
                             </div>
                             <div style="top:10px;position:relative">
                             <div>
-                                <label ng-show="smsg1">Ο κωδικός πιστοποίησης email που δώσατε είναι λάθος.</label>
+                                <label ng-show="smsg1" ng-bind="msg1"></label>
                             </div>
                             <div>
-                                <label ng-show="smsg2">Ο κωδικός πιστοποίησης κινητού που δώσατε είναι λάθος.</label>
+                                <label ng-show="smsg2" ng-bind="msg2"></label>
                             </div>
                                 </div>
                             <p style="font-size:14px" ng-show='!eisnotverify() && chkSelected_1 == true && chkSelected_2 == false && chkSelected==true'>Το e-mail σας έχει πιστοποιηθεί. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>

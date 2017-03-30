@@ -8,7 +8,7 @@
     "APIURL": "http://api.sense.city:4000/api/1.0/issue/",
     "feelingsURL": "http://api.sense.city:4000/api/1.0/feelings",    
     "ALLISSUESAPIURL": "http://api.sense.city:4000/api/1.0/issues",
-    "active_user_URL": "http://api.sense.city:4000/api/1.0/active_users",
+    "active_user_URL": "http://api.sense.city:4000/api/1.0/activate_user",
     "activate_user_URL": "http://api.sense.city:4000/api/1.0/is_activate_user",
     "APIADMIN": "http://api.sense.city:4000/api/1.0",
     "center": {

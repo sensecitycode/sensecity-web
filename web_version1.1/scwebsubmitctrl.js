@@ -2,10 +2,17 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
     function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
-        
+
         $scope.smsg1 = false;
         $scope.smsg2 = false;
-        
+        $scope.chkSelected_1 = false;
+        $scope.chkSelected_2 = false;
+        $scope.chkSelected = false;
+        $scope.ecert = false;
+        $scope.mcert = false;
+        var ecft = 1;
+        var mcft = 1;
+
         $scope.navClass = function (page) {
             var path = window.location.href.toString().split("/");
             var currentRoute = path[path.length - 1];
@@ -400,43 +407,51 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 });
 
                 $('#chkSelected_1').on('ifToggled', function (event) {
-                    if ($scope.chkSelected_1) {
-                        $scope.chkSelected_1 = false;
-                    } else {
-                        $scope.chkSelected_1 = true;
-                    }
-                    $scope.$apply();
-                    if ($scope.NameTxt == "") {
+                    if ($scope.mand_email == 'false') {
+                        if ($scope.chkSelected_1) {
+                            $scope.chkSelected_1 = false;
+                        } else {
+                            $scope.chkSelected_1 = true;
+                            $scope.evalidation = false;
+                        }
+                        $scope.$apply();
+                        if ($scope.NameTxt == "") {
+                            $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                        } else {
+                            if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
                                 $("#next_button").attr("class", "btn btn-default pull-right disabled");
                             } else {
-                                if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
-                                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
-                                } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
-                                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
-                                } else {
-                                    $("#next_button").attr("class", "btn btn-default pull-right");
-                                }
+                                $("#next_button").attr("class", "btn btn-default pull-right");
                             }
+                        }
+                    }
                 });
 
                 $('#chkSelected_2').on('ifToggled', function (event) {
-                    if ($scope.chkSelected_2) {
-                        $scope.chkSelected_2 = false;
-                    } else {
-                        $scope.chkSelected_2 = true;
-                    }
-                    $scope.$apply();
-                    if ($scope.NameTxt == "") {
+                    if (!$scope.mand_sms) {
+                        if ($scope.chkSelected_2) {
+                            $scope.chkSelected_2 = false;
+                        } else {
+                            $scope.chkSelected_2 = true;
+                            $scope.mvalidation = function () {
+
+                            }
+                        }
+                        $scope.$apply();
+                        if ($scope.NameTxt == "") {
+                            $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                        } else {
+                            if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
                                 $("#next_button").attr("class", "btn btn-default pull-right disabled");
                             } else {
-                                if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
-                                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
-                                } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
-                                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
-                                } else {
-                                    $("#next_button").attr("class", "btn btn-default pull-right");
-                                }
+                                $("#next_button").attr("class", "btn btn-default pull-right");
                             }
+                        }
+                    }
                 });
 
                 $('#available_issues').on('change', function () {
@@ -641,18 +656,25 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             var msg_str = JSON.stringify(msg[0]);
                             msg = JSON.parse(msg_str);
                             $scope.mand_sms = msg.mandatory_sms;
-                            if ($scope.chkSelected_2 == undefined) {
-                                if ($scope.mand_sms) {
-                                    $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
-                                    $scope.chkSelected_2 = true;
-                                } else {
-                                    $scope.chkSelected_2 = false;
+                            if ($scope.mand_sms) {
+                                $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
+                                $("#chkSelected_2").prop("disabled", true);
+                                if (mcft == 1) {
+                                    mcft = 0;
+                                    if ($scope.mand_sms) {
+                                        $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
+                                        $scope.chkSelected_2 = true;
+                                    } else {
+                                        $scope.chkSelected_2 = false;
+                                    }
                                 }
                             }
                             $scope.mand_email = msg.mandatory_email;
                             if ($scope.madn_email) {
                                 $("#chkSelected_1").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
-                                if ($scope.chkSelected_1 == undefined) {
+                                $("#chkSelected_1").prop("disabled", true);
+                                if (ecft == 1) {
+                                    ecft = 0;
                                     if ($scope.chkSelected_1)
                                         $scope.chkSelected_1 = true;
                                 } else {
@@ -683,7 +705,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                     return true;
                                 };
 
-                                $scope.isnotverify = function () {
+                                $scope.misnotverify = function () {
+                                    return false;
+                                };
+
+                                $scope.eisnotverify = function () {
                                     return false;
                                 };
 
@@ -706,7 +732,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                     return false;
                                 };
                                 $scope.is_finalsubmit = function () {
-                                    return true;
+                                    return false;
                                 };
                                 $scope.step1 = function () {
                                     return false;
@@ -753,11 +779,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             return false;
                         };
                         $scope.misnotverify = function () {
-                                    return false;
-                                };
-                                $scope.eisnotverify = function () {
-                                    return false;
-                                };
+                            return false;
+                        };
+                        $scope.eisnotverify = function () {
+                            return false;
+                        };
                         $scope.is_finalsubmit = function () {
                             return true;
                         };
@@ -777,6 +803,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             return false;
                         };
                     } else {
+                        $scope.is_finalsubmit = function () {
+                                    return false;
+                                };
+                        
                         $scope.step1 = function () {
                             return false;
                         };
@@ -831,7 +861,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
 
 
-                        var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt+'"}';
+                        var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + '"}';
 
                         return $http({
                             method: 'POST',
@@ -879,47 +909,58 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 //                                };
 //
 //                            } else {
-                                //Verify button
+                            //Verify button
 //                                user_id = resp._id;
 //                                $scope.submit_button = false;
 //                                $scope.register_button = false;
 //                                $scope.verify_button = true;
 //                                $scope.submit_eponymous_button = false;
-                                
-                               // activate_email":"2569","activate_sms
-                               var anon = JSON.stringify(resp[0]);
-                               var resp_anon = JSON.parse(anon);
-                                if(resp_anon.activate_email != 1){
-                                  $scope.eisnotverify = function () {
+
+                            // activate_email":"2569","activate_sms
+                            var anon = JSON.stringify(resp[0]);
+                            var resp_anon = JSON.parse(anon);
+                            if (resp_anon.activate_email != 1) {
+                                $scope.eisnotverify = function () {
                                     return true;
                                 };
-                                }else{
-                                  $scope.eisnotverify = function () {
-                                    return false;
-                                };  
+                                if ($scope.chkSelected_1) {
+                                    $scope.evalidation = true;
+                                } else {
+                                    $scope.evalidation = false;
                                 }
-                                if(resp_anon.activate_sms != 1){
-                                    $scope.misnotverify = function () {
+                            } else {
+                                $scope.eisnotverify = function () {
+                                    return false;
+                                };
+                                $scope.evalidation = false;
+                            }
+                            if (resp_anon.activate_sms != 1) {
+                                $scope.misnotverify = function () {
                                     return true;
                                 };
-                                }else{
-                                   $scope.eisnotverify = function () {
-                                    return false;
-                                };  
+                                if ($scope.chkSelected_2) {
+                                    $scope.mvalidation = true;
+                                } else {
+                                    $scope.mvalidation = false;
                                 }
-                               
-                                $scope.issubmit_isseu_form = function () {
+                            } else {
+                                $scope.misnotverify = function () {
                                     return false;
                                 };
-                                $scope.iseponymous = function () {
-                                    return false;
-                                };
-                                $scope.isnotverify = function () {
-                                    return true;
-                                };
-                                $scope.is_finalsubmit = function () {
-                                    return false;
-                                };
+                                $scope.mvalidation = false;
+                            }
+                            $scope.issubmit_isseu_form = function () {
+                                return false;
+                            };
+                            $scope.iseponymous = function () {
+                                return false;
+                            };
+                            $scope.isnotverify = function () {
+                                return true;
+                            };
+                            $scope.is_finalsubmit = function () {
+                                return false;
+                            };
 
 
                             //}
@@ -928,69 +969,74 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
                 } else if (step == 3) {
                     console.log("Step 3");
-                    if ($scope.isnotverify()) {
-                        $scope.step1 = function () {
-                            return false;
-                        };
-
-                        $scope.step2 = function () {
-                            return false;
-                        };
-
-                        $scope.step3 = function () {
-                            return false;
-                        };
-
-                        $scope.step4 = function () {
-                            return false;
-                        };
-
-                        var jsonact_Data = '{ "id1" : "' + user_id + '", "id2": "web-site", "id3": "' + $scope.codeTxt + '"}';
-
-                        console.log(jsonact_Data);
-                        var d = $q.defer();
-
-                        $http({
-                            method: 'POST',
-                            url: $rootScope.Variables.activate_user_URL,
-                            headers: {
-                                'Content-Type': 'application/json; charset=utf-8'
-                            },
-                            data: jsonact_Data
-                        }).success(function (resp) {
-
-                            console.log(JSON.stringify(resp));
-
-                            $scope.submit_button = false;
-                            $scope.register_button = false;
-                            $scope.verify_button = false;
-                            $scope.submit_eponymous_button = true;
-
-                            $scope.issubmit_isseu_form = function () {
-                                return false;
-                            };
-                            $scope.iseponymous = function () {
-                                return false;
-                            };
-
-
-                            if (resp._id == undefined) {
-                                $scope.valid = false;
-                                $scope.isnotverify = function () {
-                                    return true;
-                                };
-                            } else {
-                                $scope.valid = true;
-                                $("#next_button").attr("class", "btn btn-default pull-right");
-                            }
-                        });
-                    }
+                    alert("ok");
+//                    if ($scope.isnotverify()) {
+//                        $scope.step1 = function () {
+//                            return false;
+//                        };
+//
+//                        $scope.step2 = function () {
+//                            return false;
+//                        };
+//
+//                        $scope.step3 = function () {
+//                            return false;
+//                        };
+//
+//                        $scope.step4 = function () {
+//                            return false;
+//                        };
+//
+//                        var jsonact_Data = '{ "id1" : "' + user_id + '", "id2": "web-site", "id3": "' + $scope.codeTxt + '"}';
+//
+//                        console.log(jsonact_Data);
+//                        var d = $q.defer();
+//
+//                        $http({
+//                            method: 'POST',
+//                            url: $rootScope.Variables.activate_user_URL,
+//                            headers: {
+//                                'Content-Type': 'application/json; charset=utf-8'
+//                            },
+//                            data: jsonact_Data
+//                        }).success(function (resp) {
+//
+//                            console.log(JSON.stringify(resp));
+//
+//                            $scope.submit_button = false;
+//                            $scope.register_button = false;
+//                            $scope.verify_button = false;
+//                            $scope.submit_eponymous_button = true;
+//
+//                            $scope.issubmit_isseu_form = function () {
+//                                return false;
+//                            };
+//                            $scope.iseponymous = function () {
+//                                return false;
+//                            };
+//
+//
+//                            if (resp._id == undefined) {
+//                                $scope.valid = false;
+//                                $scope.isnotverify = function () {
+//                                    return true;
+//                                };
+//                            } else {
+//                                $scope.valid = true;
+//                                $("#next_button").attr("class", "btn btn-default pull-right");
+//                            }
+//                        });
+//                    }
 
 
                 } else if (step == 4) {
                     console.log("Step 4");
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
-
+                    
+                    $scope.smsg1 = false;
+                    $scope.smsg2 = false;
+                    
+                    if($scope.chkSelected){
                     return $http({
                         method: 'POST',
                         url: $rootScope.Variables.APIURL + my_id,
@@ -999,66 +1045,120 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         },
                         data: jsonData
                     }).success(function (resp) {
-                        $scope.issubmit_isseu_form = function () {
-                            return true;
-                        };
-                        $scope.iseponymous = function () {
-                            return false;
-                        };
-                        $scope.isnotverify = function () {
-                            return false;
-                        };
                         $scope.is_finalsubmit = function () {
-                            return false;
-                        };
-
-                        $scope.issueTypeSelect = $scope.availableIssues[0];
-                        $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
-                        $scope.otherDescriptionTxt = '-';
-                        $scope.uploadedPhotoFile = 'no-image';
-
-                        $scope.latlabeltxt = "";
-                        $scope.lnglabeltxt = "";
-                        $scope.otherDescriptionTxt = "";
-                        $scope.commentstxt = "";
-                        $scope.issueTypeSelect.id = "garbage";
-                        $scope.NameTxt = "";
-                        $scope.EmailTxt = "";
-                        $scope.MobileTxt = "";
-                        $scope.chkSelected_1 = true;
-                        $scope.chkSelected_2 = false;
-
-                        $scope.chkSelected = false;
-
-                        $scope.submit_button = true;
-                        $scope.register_button = false;
-                        $scope.verify_button = false;
-                        $scope.submit_eponymous_button = false;
-
-                        $scope.step1 = function () {
-                            return false;
-                        };
-
-                        $scope.step2 = function () {
                             return true;
                         };
 
-                        $scope.step3 = function () {
-                            return true;
-                        };
 
-                        $scope.step4 = function () {
-                            return true;
-                        };
-
-                        $scope.$apply();
+                        $window.location.reload();
                     });
+                }else{
+                   $window.location.reload(); 
+                }
                 }
             };
+            
+            $scope.last_step = function(val){
+                if(val){
+                  $scope.is_finalsubmit = function () {
+                                    return true;
+                                };  
+                }else{
+                  $scope.is_finalsubmit = function () {
+                                    return false;
+                                };  
+                }
+                $scope.$apply();
+            };
+    
+            $scope.activate_email = function () {
+                $http(
+                        {
+                            method: 'POST',
+                            url: $rootScope.Variables.APIADMIN + "/activate_user?uuid=web-site&name=" + $scope.NameTxt + "&email=" + $scope.EmailTxt,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            }
+                        }).success(function (resp) {
+                            alert(JSON.stringify(resp));
+                            $scope.msg1 = "Στο email "+ $scope.EmailTxt + " που δηλώσατε σας έχει έρθει ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το email σας κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
+                            $scope.smsg1 = true;
+                });
+            };
 
-            $("#cert").click(function () {
-                $scope.setStep(3);
-            });
+            $scope.activate_mobile = function () {
+                $http(
+                        {
+                            method: 'POST',
+                            url: $rootScope.Variables.APIADMIN + "/activate_user?uuid=web-site&name=" + $scope.NameTxt + "&mobile=" + $scope.MobileTxt + "&lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt + "&city=" + $rootScope.Variables.city_name,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            }
+                        }).success(function (resp) {
+                            $scope.msg2 = "Στο κινητό νούμερο "+ $scope.MobileTxt + " που δηλώσατε σας έχει έρθει με sms ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το κινητό νούμερο κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
+                            $scope.smsg2 = true;
+                });
+            };
+
+            $scope.validate_email = function () {
+                $http(
+                        {
+                            method: 'POST',
+                            url: $rootScope.Variables.APIADMIN + "/activate_email?uuid=web-site&name=" + $scope.NameTxt + "&email=" + $scope.EmailTxt + "&code=" + $scope.ecodeTxt,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            }
+                        }).success(function (resp) {
+                    if (resp != "") {
+                        $scope.ecert = true;
+                        $scope.msg1 = "Ο κωδικός πιστοποίησης email που δώσατε είναι σωστός.";
+                        $scope.evalid = true;
+                        if ($scope.chkSelected_2) {
+                            if ($scope.mvalid) {
+                                $("#next_button").attr("class", "btn btn-default pull-right");
+                            } else {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            }
+                        } else {
+                            $("#next_button").attr("class", "btn btn-default pull-right");
+                        }
+                    } else {
+                        $scope.msg1 = "Ο κωδικός πιστοποίησης email που δώσατε είναι λάθος.";
+                        $scope.evalid = false;
+                    }
+                    $scope.smsg1 = true;
+                });
+            };
+
+            $scope.validate_mobile = function () {
+                $http(
+                        {
+                            method: 'POST',
+                            url: $rootScope.Variables.APIADMIN + "/activate_mobile?uuid=web-site&mobile=" + $scope.MobileTxt + "&code=" + $scope.scodeTxt,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            }
+                        }).success(function (resp) {
+                    if (resp.nModified == 1) {
+                        $scope.mcert = true;
+                        $scope.msg2 = "Ο κωδικός πιστοποίησης κινητού που δώσατε είναι σωστός.";
+                        $scope.mvalid = true;
+                        if ($scope.chkSelected_1) {
+                            if ($scope.evalid) {
+                                $("#next_button").attr("class", "btn btn-default pull-right");
+                            } else {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            }
+                        } else {
+                            $("#next_button").attr("class", "btn btn-default pull-right");
+                        }
+                    } else {
+                        $scope.msg2 = "Ο κωδικός πιστοποίησης κινητού που δώσατε είναι λάθος.";
+                        $scope.mvalid = false;
+                    }
+                    $scope.smsg2 = true;
+                });
+            };
 
             setTimeout(function () {
                 if ($(".select").length > 0) {
