@@ -299,6 +299,8 @@ $(function () {
 //                        setTimeout(function(){
 //                        $("#testl").attr("class","btn btn-default pull-right disabled");
 //                    },1000);
+                    $(window).trigger("resize");
+                    
                         if(context.toStep != '4'){
                         angular.element($('#wscontrl')).scope().setStep(context.toStep - 1);
                     }
@@ -331,7 +333,7 @@ $(function () {
 
                     //This is important part of wizard init
                     onShowStep: function (obj,context) {
-                        
+                        $(window).trigger("resize");
                         if(context.toStep == '3' && ((angular.element($('#wscontrl')).scope().eisnotverify() && angular.element($('#wscontrl')).scope().chkSelected_1) || (angular.element($('#wscontrl')).scope().misnotverify() && angular.element($('#wscontrl')).scope().chkSelected_2))){
                             $("#next_button").attr("class","btn btn-default pull-right disabled");
                         }else if(context.toStep == '4'){
