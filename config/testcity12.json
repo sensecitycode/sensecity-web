@@ -1,0 +1,308 @@
+{
+    "city_name": "testcity1",
+    "city_address": "patras",
+    "lat_center": 38.246639,
+    "long_center": 21.734573,
+    "img_logo": "images/city_logos/testcity1.jpg",
+    "bugzilla_products": "testcity1",
+    "APIURL": "http://api.sense.city:4000/api/1.0/issue/",
+    "feelingsURL": "http://api.sense.city:4000/api/1.0/feelings",    
+    "ALLISSUESAPIURL": "http://api.sense.city:4000/api/1.0/issues",
+    "active_user_URL": "http://api.sense.city:4000/api/1.0/activate_user",
+    "activate_user_URL": "http://api.sense.city:4000/api/1.0/is_activate_user",
+    "APIADMIN": "http://api.sense.city:4000/api/1.0",
+    "center": {
+        "lat": 38.248028,
+        "lng": 21.7583104,
+        "zoom": 12
+    },
+    "icons": {
+        "garbage": {
+            "type": "awesomeMarker",
+            "prefix": "fa",
+            "icon": "trash-o",
+            "markerColor": "red"
+        },
+        "road-constructor": {
+            "type": "awesomeMarker",
+            "prefix": "fa",
+            "icon": "road",
+            "markerColor": "red"
+        },
+        "plumbing": {
+            "type": "awesomeMarker",
+            "prefix": "fa",
+            "icon": "umbrella",
+            "markerColor": "red"
+        },
+        "lighting": {
+            "type": "awesomeMarker",
+            "prefix": "fa",
+            "icon": "lightbulb-o",
+            "markerColor": "red"
+        },
+        "protection-policy": {
+            "type": "awesomeMarker",
+            "prefix": "fa",
+            "icon": "shield",
+            "markerColor": "red"
+        },
+        "green": {
+            "type": "awesomeMarker",
+            "prefix": "fa",
+            "icon": "tree",
+            "markerColor": "red"
+        },
+        "environment": {
+            "type": "awesomeMarker",
+            "prefix": "fa",
+            "icon": "leaf",
+            "markerColor": "red"
+        },
+        "staticGarbage": {
+            "type": "extraMarker",
+            "icon": "fa-trash-o",
+            "prefix": "fa",
+            "markerColor": "green",
+            "shape": "square"
+        },
+        "staticGarbageRecycle": {
+            "type": "extraMarker",
+            "prefix": "fa",
+            "icon": "fa-trash-o",
+            "markerColor": "cyan",
+            "shape": "square"
+        },
+        "staticLighting": {
+            "type": "extraMarker",
+            "prefix": "fa",
+            "icon": "fa-lightbulb-o",
+            "markerColor": "yellow",
+            "shape": "square"
+        },
+        "greenGarbageBin": {
+            "type": "extraMarker",
+            "prefix": "fa",
+            "icon": "fa-trash-o",
+            "markerColor": "green",
+            "shape": "square"
+        },
+        "cyanGarbageBin": {
+            "type": "extraMarker",
+            "prefix": "fa",
+            "icon": "fa-trash-o",
+            "markerColor": "cyan",
+            "shape": "square"
+        },
+        "fixedLightning": {
+            "type": "extraMarker",
+            "prefix": "fa",
+            "icon": "fa-lightbulb-o",
+            "markerColor": "yellow",
+            "shape": "square"
+        },
+        "angry": {
+            "type": "awesomeMarker",
+            "prefix": "fa",
+            "icon": "frown-o",
+            "markerColor": "lightgreen",
+            "iconColor": "darkgreen"
+        },
+        "neutral": {
+            "type": "awesomeMarker",
+            "prefix": "fa",
+            "icon": "meh-o",
+            "markerColor": "lightgreen",
+            "iconColor": "darkgreen"
+        },
+        "happy": {
+            "type": "awesomeMarker",
+            "prefix": "fa",
+            "icon": "smile-o",
+            "markerColor": "lightgreen",
+            "iconColor": "darkgreen"
+        }
+    },
+    "overlays": {
+        "garbage": {
+            "type": "group",
+            "name": "Καθαριότητας",
+            "visible": true
+        },
+        "lighting": {
+            "type": "group",
+            "name": " Ηλεκτροφωτισμού",
+            "visible": true
+        },
+        "plumbing": {
+            "type": "group",
+            "name": "Υδρευσης",
+            "visible": true
+        },
+        "road-constructor": {
+            "type": "group",
+            "name": "Πεζοδρομίου/Δρόμου/Πλατείας",
+            "visible": true
+        },
+        "protection-policy": {
+            "type": "group",
+            "name": "Πολιτικής Προστασίας",
+            "visible": true
+        },
+        "green": {
+            "type": "group",
+            "name": "Πρασίνου",
+            "visible": true
+        },
+        "environment": {
+            "type": "group",
+            "name": "Περιβάλλοντος",
+            "visible": true
+        },
+        "reaction": {
+            "type": "group",
+            "name": "Πολιτών",
+            "visible": true
+        }
+    },
+    "overlay_functions": {
+        "layer1": "this.layers.overlays.layer1 = {name: 'Καθαριότητας',type: 'group',visible:true};",
+        "layer2": "this.layers.overlays.layer2 = {name: 'Ηλεκτροφωτισμού',type: 'group',visible:true};",
+        "layer3": "this.layers.overlays.layer3 = {name: 'Υδρευσης',type: 'group',visible:true};",
+        "layer4": "this.layers.overlays.layer4 = {name: 'Πολιτικής Προστασίας',type: 'group',visible:true};",
+        "layer5": "this.layers.overlays.layer5 = {name: 'Πεζοδρομίου/Δρόμου/Πλατείας',type: 'group',visible:true};",
+        "layer6": "this.layers.overlays.layer6 = {name: 'Περιβάλλοντος',type: 'group',visible:true};",
+        "layer7": "this.layers.overlays.layer7 = {name: 'Πρασίνου',type: 'group',visible:true};",
+        "layer8": "this.layers.overlays.layer8 = {name: 'Πολιτών',type: 'group',visible:true};"
+    },
+    "overlay_categories": ["garbage", "lighting", "plumbing", "protection-policy", "road-constructor", "environment", "green", "reaction"],
+    "components": ["Τμήμα επίλυσης προβλημάτων", "Αυτοτελές τμήμα Πολιτικής Προστασίας", "Τμήμα Συγκοινωνιακού \u0026 Κυκλοφοριακού Σχεδιασμού", "Τμήμα Αποκομιδής Απορριμμάτων \u0026 Ανακυκλώσιμων Υλικών", "Τμήμα Αυτεπιστασίας Έργων Υποδομής", "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων, Κτιρίων \u0026 Ηλεκτροφωτισμο", "Τμήμα Ελέγχου Κοινοχρήστων Χώρων", "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων \u0026 Ειδικών Συνεργείων", "Τμήμα Μελετών Έργων \u0026 Πρασίνο", "Τμήμα Οδοποιίας", "Τμήμα Πρασίνου"],
+    "categories": ["garbage", "lighting", "plumbing", "road-constructor", "protection-policy", "green", "environment", "angry", "neutral", "happy"],
+    "issue_type_en": ["Cleaning Problem", "Lighting Problem", "Plumbing Problem", "Street/Sidewalk Problem", "Protection Policy", "Green", "Environment"],
+    "issue_type_gr": ["Καθαριότητας", "Ηλεκτροφωτισμού", "Ύδρευσης", "Πρόβλημα Δρόμου/Πεζοδρομίου", "Πολιτική Προστασία", "Πράσινο", "Περιβάλλον"],
+    "categories_issue": ["GARBAGE_ISSUE", "LIGHTNING_ISSUE", "PLUMBING_ISSUE", "ROAD_ISSUE", "PROTECTION_POLICY_ISSUE", "GREEN_ISSUE", "ENVIRONMENT_ISSUE", "MOOD", "MOOD", "MOOD"],     
+    "components_en": ["all", "protection", "transport", "garbage", "infrastructure", "lighting", "shared", "clean", "studies", "road-constructor", "green"],
+    "departments": ["all", "garbage", "lighting", "road-constructor", "protection-policy", "green", "environment", "plumbing"],
+    "font_awesome_markers": ["","fontawesome.markers.TRASH_O","fontawesome.markers.LIGHTBULB_O","fontawesome.markers.ROAD","fontawesome.markers.SHIELD","fontawesome.markers.TREE","fontawesome.markers.LEAF","fontawesome.markers.UMBRELLA"],
+    "departments_en": ["Τμημα επίλυσης προβλημάτων", "Πρόβλημα Καθαριότητας", "Πρόβλημα Ηλεκτροφωτισμού", "Πρόβλημα Πεζοδρομίου/Δρόμου/Πλατείας", "Πρόβλημα Πολιτικής Προστασίας", "Πρόβλημα Πρασίνου", "Πρόβλημα Περιβάλλοντος", "Πρόβλημα Ύδρευσης"],
+    "activeTitles": ["Όλα τα προβλήματα", "Καθαριότητας", "Ηλεκτροφωτισμού", "Πεζοδρομίου/Δρόμου/Πλατείας", "Πολιτικής Προστασίας", "Πρασίνου", "Περιβάλλοντος"],
+    "activeIcons": ["fa ion-ios-analytics-outline", "fa fa-trash-o", "fa fa-lightbulb-o", "fa fa-road", "fa fa-shield", "fa fa-tree", "fa fa-leaf"],
+    "depUserTitles": ["Τμήμα Αποκομιδής Απορριμμάτων \u0026 Ανακυκλώσιμων Υλικών", "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων, Κτιρίων \u0026 Ηλεκτροφωτισμού", "Τμήμα Οδοποιίας", "Αυτοτελές τμήμα Πολιτικής Προστασίας", "Τμήμα Πρασίνου", "Τμήμα Συγκοινωνιακού \u0026 Κυκλοφοριακού Σχεδιασμού", "Τμήμα Αυτεπιστασίας Έργων Υποδομής", "Τμήμα Ελέγχου Κοινοχρήστων Χώρων", "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων \u0026 Ειδικών Συνεργείων", "Τμήμα Μελετών Έργων \u0026 Πρασίνο"],
+    "depUserContent": ["Παρουσίαση προβλημάτων αποκομιδής απορριμμάτων & ανακυκλώσιμων υλικών", "Παρουσίαση προβλημάτων κοινόχρηστων χώρων κτιρίων & ηλεκτροφωτισμού", "Παρουσίαση προβλημάτων Οδοποιίας", "Παρουσίαση προβλημάτων πολιτικής προστασίας", "Παρουσίαση προβλημάτων πρασίνου", "Παρουσίαση προβλημάτων συγκοινωνιακού & κυκλοφοριακού σχεδιασμού", "Παρουσίαση προβλημάτων αυτεπιστασίας έργων υποδομής", "Παρουσίαση προβλημάτων κοινοχρήστων χώρων", "Παρουσίαση προβλημάτων καθαρισμού κοινοχρήστων χώρων & ειδικών συνεργείων", "Παρουσίαση προβλημάτων μελετών έργων & πρασίνο"],
+    "depUserIcons": ["fa fa-trash-o", "fa fa-lightbulb-o", "fa fa-road", "fa fa-shield", "fa fa-tree", "fa fa-car", "fa fa-university", "fa fa-id-card", "fa fa-wrench", "fa fa-leaf"],
+    "cityAdminTabs": [
+        {
+            "title": "Όλα τα προβλήματα",
+            "content": "Παρουσίαση όλων των δηλωμένων προβλημάτων",
+            "icon": "fa ion-ios-analytics-outline"
+        },
+        {
+            "title": "Καθαριότητας",
+            "content": "Παρουσίαση προβλημάτων καθαριότητας",
+            "icon": "fa fa-trash-o"
+        },
+        {
+            "title": "Ηλεκτροφωτισμού",
+            "content": "Παρουσίαση προβλημάτων ηλεκτροφωτισμού",
+            "icon": "fa fa-lightbulb-o"
+        },
+        {
+            "title": "Πεζοδρομίου/Δρόμου/Πλατείας",
+            "content": "Παρουσίαση προβλημάτων Πεζοδρομίου/Δρόμου/Πλατείας",
+            "icon": "fa fa-road"
+        },
+        {
+            "title": "Πολιτικής Προστασίας",
+            "content": "Παρουσίαση προβλημάτων Πολιτικής Προστασίας",
+            "icon": "fa fa-shield"
+        },
+        {
+            "title": "Πρασίνου",
+            "content": "Παρουσίαση προβλημάτων Πρασίνου",
+            "icon": "fa fa-tree"
+        },
+        {
+            "title": "Περιβάλλοντος",
+            "content": "Παρουσίαση προβλημάτων Περιβάλλοντος",
+            "icon": "fa fa-leaf"
+        }],
+    "availableIssues": [{
+            "id": "garbage",
+            "name": "GARBAGE_ISSUE",
+            "types": [
+                {
+                    "id": "1",
+                    "name": "BROKENGARBAGE_BIN"
+                },
+                {
+                    "id": "2",
+                    "name": "BULKY_ITEMS"
+                },
+                {
+                    "id": "3",
+                    "name": "CUT_BRANCHES"
+                },
+                {
+                    "id": "4",
+                    "name": "DEBRIS"
+                },
+                {
+                    "id": "5",
+                    "name": "SQUARE_CLEANING"
+                },
+                {
+                    "id": "6",
+                    "name": "MOTORIZED_SCANNING"
+                },
+                {
+                    "id": "other",
+                    "name": "OTHER"
+                }
+            ]
+        },{
+            "id": "lighting",
+            "name": "LIGHTNING_ISSUE",
+            "types": [
+                {
+                    "id": "1",
+                    "name": "BROKENGARBAE_BIN"
+                },
+                {
+                    "id": "2",
+                    "name": "BULY_ITEMS"
+                },
+                {
+                    "id": "3",
+                    "name": "CT_BRANCHES"
+                },
+                {
+                    "id": "4",
+                    "name": "DBRIS"
+                },
+                {
+                    "id": "5",
+                    "name": "SQURE_CLEANING"
+                },
+                {
+                    "id": "6",
+                    "name": "MOTORIED_SCANNING"
+                },
+                {
+                    "id": "other",
+                    "name": "OTHR"
+                }
+            ]
+        }],
+    "searchIssues": [{"class":"fa fa-trash-o","value": "garbage", "translate": "'GARBAGE_ISSUE' | translate","checked": false},
+        {"class":"fa fa-lightbulb-o","value": "lighting", "translate": "'LIGHTNING_ISSUE' | translate","checked": false},
+        {"class":"fa fa-umbrella","value": "plumbing", "translate": "'PLUMBING_ISSUE' | translate","checked": false},
+        {"class":"fa fa-road","value": "roadconstructor", "translate": "'ROAD_ISSUE' | translate","checked": false},
+        {"class":"fa fa-shield","value": "protectionpolicy", "translate": "'PROTECTION_POLICY_ISSUE' | translate","checked": false},
+        {"class":"fa fa-tree","value": "green", "translate": "'GREEN_ISSUE' | translate","checked": false},
+        {"class":"fa fa-leaf","value": "environment", "translate": "'ENVIRONMENT_ISSUE' | translate","checked": false}],
+    "zoom": 12,
+    "google_init_coords": {"lat": 38.24645352266985, "lng": 21.735068952148438},
+    "google_buildings": "https://www.google.gr/maps/@38.2447101,21.7348973,198a,20y,41.27t/data=!3m1!1e3?hl=en",
+    "host": "http://api.sense.city:4000"
+}
+

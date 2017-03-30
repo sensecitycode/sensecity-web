@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>sense.city</title>
+		<meta name="description" content="sense.city" />
+		<!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Codeply">
+		<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" /> -->
+		<link rel="stylesheet" href="_css/bootstrap.min.css" />
+		<link href="css/animate.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/ionicons.min.css" />
+		<link href="css/font-awesome.css" rel="stylesheet"> 
+		<link rel="stylesheet" href="css/leaflet.css" />
+		<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+		<script src="js/leaflet.js"></script> 
+		<link rel="stylesheet" href="css/styles.css" />
+	</head>
+	<body>
+    <div id="container">
+		<div id="header" style="padding-top: 17px; background-color:#000000;height: 61px;">
+			<div>
+				<div id="logo" style="float:left;">
+					<a href="./" style="font-size:1.5em"> <i class="ion-ios-analytics-outline"></i>
+						sense.city <sup style="font-size: 55%">beta</sup></a>
+					<img src="images/patraslogo.jpg" style="width: 51px; margin-top: -21px; margin-bottom: -17px; margin-left: 4px;"> 
+					<img src="images/upatras_logo.png" style="width: 174px; margin-top: -24px; margin-bottom: -17px; margin-left: 4px;"> 	
+				</div>
+				<div style="font-size:26px; float:left; width:50%;"><center id="msg_subdomain_title">Τι συμβαίνει στην πόλη<center></div>
+				<div style="float:left;">
+					<a href="#!" style="float:right;padding-left:0px;padding-right:0px;" id="land_el" ><img src="images/flags/el.png" /> </a>&nbsp;&nbsp;
+					<a href="#!" style="float:right;padding-left:0px;padding-right:5px;" id="land_en" ><img src="images/flags/en.png" /> </a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container" style="padding-top:150px; padding-bottom:50px;">
+		<div class="col-md-8"> 
+			<div id="map" style="color: black; height:550px;"></div>		
+			<br><br><br>
+		</div>
+		<div class="col-md-4"> 
+			<div class="form-group">
+				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_label_long">Γεωγραφικό Μήκος</label>
+				<input type="text" class="form-control" id="lng" placeholder="Γεωγραφικό Μήκος" readonly style="background-color: black;">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_label_lat">Γεωγραφικό Πλάτος</label>
+				<input type="text" class="form-control" id="lat" placeholder="Γεωγραφικό Πλάτος" readonly style="background-color: black;">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_label_type">Τύπος προβλήματος</label>
+				<select id="type-issue" name="type-issue" class="form-control">
+				  <option value="" id="msg_type_select">Επιλέξτε τύπο προβλήματος</option>
+				  <option value="garbage" id="msg_type_garbage">Σκουπίδια</option>
+				  <option value="lighting" id="msg_type_lighting">Φωτισμός</option>
+				  <option value="plumbing" id="msg_type_plumbing">Ύδρευση</option>
+				  <option value="road-contructor" id="msg_type_road">Οδόστρωμα</option>				  
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_problem_detail">Προβλήμα</label>
+				<select id="issue" name="issue" class="form-control">
+					<option value="" id="msg_subtype_select">Επιλέξτε προβλήματος</option>
+				</select>
+			</div>
+			<div class="form-group" id="other-txt" style="display:none;">
+				<label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_perigrafi_problem" >Περιγραφή</label>
+				<input type="text" class="form-control" id="other_description" placeholder="Γράψτε το πρόβλημα" style="background-color: black;color: #ffffff;">
+			</div>
+			
+			<div class="form-group">
+				<label for="input_file" style="color: #000000; font-weight: 300;" id="msg_photograph">Φωτογραφία</label>
+				<input type="file" id="input_file" style="color: #000000;">
+			</div>			
+			<a href="#!" id="btnsubmit" class="btn btn-primary" style="background-color: #76a0ff !important;" >Αποστολή1</a>
+			<div id="try_another_issue"></div>
+		</div>
+    </div>
+	<footer id="footer" style="background-color:#D0D0D0;">
+        <div class="container">
+            <div class="row"  style="margin-left:0px;margin-right:0px; ">
+                <div class="col-xs-12 col-sm-9 column">
+                    <h4 id="msg_section_info">Πληροφορίες</h4>
+                    <ul class="list-inline">
+                        <li><a href="">Products</a></li>
+                        <li><a href="">Services</a></li>
+                        <li><a href="">Benefits</a></li>
+                        <li><a href="">Developers</a></li>
+						<li><a href="#!">Privacy Policy</a></li>
+                        <li><a href="#!">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-3 text-right">
+                    <h4 id="msg_section_followus">Ακολουθήστε μας</h4>
+                    <ul class="list-inline">
+                      <li><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
+                      <li><a rel="nofollow" href="https://www.facebook.com/sensecitybook" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
+                      <li><a rel="nofollow" href="" title="Ιnstagram"><i class="icon-lg ion-social-instagram-outline"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <br/>
+            <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Theme by: Landing Zero by BootstrapZero</a> ©2015 Πανεπιστήμιο Πατρών</span>
+        </div>
+    </footer>
+    
+    <!--scripts loaded here from cdn for performance -->
+	<script src="_js/jquery.min.js"></script>
+     <script src="_js/bootstrap.min.js"></script> 
+    <script src="_js/jquery.easing.min.js"></script>
+    <script src="_js/wow.js"></script>
+	<script src="js/leaflet.awesome-markers.js"></script>
+    <script src="js/scripts.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="_css/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css" href="_css/MarkerCluster.Default.css" />
+	<link rel="stylesheet" type="text/css" href="css/leaflet.extra-markers.min.css" />
+	
+	<script type='text/javascript' src='js/leaflet.markercluster.js'></script>
+	<script type='text/javascript' src='js/leaflet.extra-markers.min.js'></script>
+	
+	 <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+    <!-- <script>window.jQuery || document.write('<script src="_js/vendor/jquery.min.js"><\/script>')</script> -->
+    <!-- <script src="_js/bootstrap.min.js"></script> -->
+    <!-- <script src="_js/docs.min.js"></script> -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+	<script>
+		
+		var img_base64 = 'no-image';
+		
+		jQuery(document).ready(function(){				
+			// when any option from country list is selected
+			
+			
+		});
+		
+		
+		
+		$('#input_file').on("change", function(){ 
+
+			var filesSelected = document.getElementById("input_file").files;//$("#input_file").val();
+						if (filesSelected.length > 0)
+						{
+							var fileToLoad = filesSelected[0];
+					 
+							var fileReader = new FileReader();
+					 
+							fileReader.onload = function(fileLoadedEvent) 
+							{
+								img_base64 = fileLoadedEvent.target.result;
+								//console.log(img_base64);
+								//textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
+								
+							};
+					 
+							fileReader.readAsDataURL(fileToLoad);
+							//console.log(fileToLoad);
+						}
+
+
+			});
+	
+	
+		
+				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 12);
+				
+				var newMarker;
+				
+				L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+						maxZoom: 18, }).addTo(map);
+						
+				var garbageMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+				var lightingMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+				var plumpingMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+				var roadConstMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+				var smiliesMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+				var kadoiMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+				var fotistikoMarkers = L.markerClusterGroup({disableClusteringAtZoom: 18, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						
+				
+				map.on('click', onClick);
+				
+				function onClick(e) {
+					
+					console.log(e.latlng["lat"]);
+					console.log(e.latlng["lng"]);
+					
+					var redMarker = L.AwesomeMarkers.icon({
+									icon: 'info-circle',
+									prefix: 'fa',
+									markerColor: 'red'
+								  });
+
+				  if(typeof(newMarker)==='undefined')
+					{
+						newMarker = new L.marker(e.latlng, {icon: redMarker},{ draggable: true});
+						newMarker.addTo(map);        
+					}
+					else 
+					{
+						newMarker.setLatLng(e.latlng);
+					}
+					
+					$("#lat").val(e.latlng["lat"]);
+					$("#lng").val(e.latlng["lng"]);
+				}
+				
+				L.control.layers(null).addTo(map);
+
+				$("#btnsubmit").click(function() {
+					$("#btnsubmit").html('<i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>');
+					$('#btnsubmit').addClass('disabled');
+					var other_='';
+					
+					if($("#other_description").val() !=''){
+						other_ = $("#other_description").val();
+					}else{
+						other_ = $("#issue").val();
+					}
+					
+					console.log(img_base64);
+					
+					console.log('{"loc" : { "type" : "Point",  "coordinates" : ['+$("#lng").val()+','+$("#lat").val()+'] }, "issue" : "'+$("#type-issue").val()+'","device_id" : "webapp", "value_desc" : "' + other_ + '","image_name" : "'+img_base64+'" }');
+					
+					$.ajax({
+						crossDomain: true,
+						type:"POST",
+						url: "http://api.sense.city:3000/api/issue",
+						data: '{"loc" : { "type" : "Point",  "coordinates" : ['+$("#lng").val()+','+$("#lat").val()+'] }, "issue" : "'+$("#type-issue").val()+'","device_id" : "webapp", "value_desc" : "' + other_ + '","image_name" : "'+img_base64+'" }',
+						contentType: "application/json; charset=utf-8",
+						dataType: "json",                
+						success: function(msg){
+							//$('#btnsubmit').removeClass('disabled');
+							
+							//second screen for eponymous issue
+							
+							$("#btnsubmit").html('Αποστολή');
+							$("#try_another_issue").html('<a href="submit_issue.html" class="btn btn-primary" style="background-color: #76a0ff !important;">Νέα καταχώριση</a>');
+						}
+					});					
+					
+					/*var image = document.getElementById('input_file').src;
+                    image.src = "data:image/jpeg;base64," + image;
+					console.log(image.src);*/
+				});
+				
+			
+
+			
+			
+			
+			
+			
+			
+			
+			
+			console.log(localStorage.getItem("language"));
+				
+				
+			if(localStorage.getItem("language") === 'en'){
+				$('head').append('<script src="js/lang.en.js" />');
+				localStorage.removeItem("language");
+				localStorage.setItem("language", "en");
+			}else{
+				$('head').append('<script src="js/lang.js" />');
+				localStorage.removeItem("language");
+				localStorage.setItem("language", "el");
+			}
+				
+			change_lang();
+			
+			console.log(localStorage.getItem("language"));
+			
+			$('#land_el').click(function() {
+				localStorage.setItem("language", "el");
+				console.log(localStorage.getItem("language"));
+					
+				$('head').append('<script src="js/lang.js" />');
+				change_lang();
+					
+				return false;
+			});
+				
+			$('#land_en').click(function() {
+				localStorage.setItem("language", "en");
+				console.log(localStorage.getItem("language"));
+				$('head').append('<script src="js/lang.en.js" />');
+				change_lang();
+				return false;
+			});
+				
+				
+					
+					
+			function change_lang(){
+				
+				
+				var optionValue = $("select[name='type-issue']").val();		
+				if(optionValue!=null)
+				{
+					switch(optionValue){
+						case "garbage":
+							var select = document.getElementById("issue");
+							$('#issue').empty();
+							if(localStorage.getItem("language") === 'en'){
+								var options = ["Select a Problem", "Garbage Bin", "Full Garbage Bin", "Failing Garbage Bin", "Other"];
+							}else{
+								var options = ["Επιλέξτε προβλήματος", "Χαλασμένος Κάδος", "Γεμάτος Κάδος", "Έλλειψη κάδου", "Άλλο"];
+							}
+							for(var i = 0; i < options.length; i++) {
+								var opt = options[i];
+								var el = document.createElement("option");
+								el.textContent = opt;
+								if(i+1 == options.length)
+								{
+									el.value = "other";
+								}else if(i==0){
+									el.value = "";
+								}
+								else{
+									el.value = opt;
+								}	
+								select.appendChild(el);
+							}
+							break;
+						case "lighting":
+							var select = document.getElementById("issue");
+							$('#issue').empty();
+							if(localStorage.getItem("language") === 'en'){
+								var options = ["Select a Problem", "Glowing Lamps", "Broken Arm", "Insufficient Lighting", "Other"];
+							}else{
+								var options = ["Επιλέξτε προβλήματος", "Καμμένος Λαμπτήρας", "Σπασμένος Βραχίωνας", "Ανεπαρκής Φωτισμός", "Άλλο"];
+							}
+							for(var i = 0; i < options.length; i++) {
+								var opt = options[i];
+								var el = document.createElement("option");
+								el.textContent = opt;
+								if(i+1 == options.length)
+								{
+									el.value = "other";
+								}else if(i==0){
+									el.value = "";
+								}
+								else{
+									el.value = opt;
+								}
+								select.appendChild(el);
+							}
+							break;
+						case "plumbing":
+							var select = document.getElementById("issue");
+							$('#issue').empty();
+							if(localStorage.getItem("language") === 'en'){
+								var options = ["Select a Problem", "Clogged Well", "Broken Well", "Other"];
+							}else{
+								var options = ["Επιλέξτε προβλήματος", "Βουλωμένο Φρεάτιο", "Σπασμένο Φρεάτιο", "Άλλο"];
+							}
+							
+							for(var i = 0; i < options.length; i++) {
+								var opt = options[i];
+								var el = document.createElement("option");
+								el.textContent = opt;
+								if(i+1 == options.length)
+								{
+									el.value = "other";
+								}else if(i==0){
+									el.value = "";
+								}
+								else{
+									el.value = opt;
+								}
+								select.appendChild(el);
+							}
+							break;
+						case "road-contructor":
+							var select = document.getElementById("issue");
+							$('#issue').empty();
+							if(localStorage.getItem("language") === 'en'){
+								var options = ["Select a Problem", "Broken Plates", "Object interfering", "Abandoned Car", "Other"];
+							}else{
+								var options = ["Επιλέξτε προβλήματος", "Σπασμένες Πλάκες", "Αντικείμενο που εμποδίζει", "Εγκαταλ. Αυτοκίνητο", "Άλλο"];
+							}
+							for(var i = 0; i < options.length; i++) {
+								var opt = options[i];
+								var el = document.createElement("option");
+								el.textContent = opt;
+								if(i+1 == options.length)
+								{
+									el.value = "other";
+								}else if(i==0){
+									el.value = "";
+								}
+								else{
+									el.value = opt;
+								}
+								select.appendChild(el);
+							}
+							break;
+					}
+				}
+
+				
+				$("select[name='type-issue']").change(function(){			
+			
+				// get the selected option value of country
+				var optionValue = $("select[name='type-issue']").val();		
+				
+				switch(optionValue){
+					case "garbage":
+						var select = document.getElementById("issue");
+						$('#issue').empty();
+						if(localStorage.getItem("language") === 'en'){
+							var options = ["Select a Problem", "Garbage Bin", "Full Garbage Bin", "Failing Garbage Bin", "Other"];
+						}else{
+							var options = ["Επιλέξτε προβλήματος", "Χαλασμένος Κάδος", "Γεμάτος Κάδος", "Έλλειψη κάδου", "Άλλο"];
+						}
+						for(var i = 0; i < options.length; i++) {
+							var opt = options[i];
+							var el = document.createElement("option");
+							el.textContent = opt;
+							if(i+1 == options.length)
+							{
+								el.value = "other";
+							}else if(i==0){
+								el.value = "";
+							}
+							else{
+								el.value = opt;
+							}	
+							select.appendChild(el);
+						}
+						break;
+					case "lighting":
+						var select = document.getElementById("issue");
+						$('#issue').empty();
+						if(localStorage.getItem("language") === 'en'){
+							var options = ["Select a Problem", "Glowing Lamps", "Broken Arm", "Insufficient Lighting", "Other"];
+						}else{
+							var options = ["Επιλέξτε προβλήματος", "Καμμένος Λαμπτήρας", "Σπασμένος Βραχίωνας", "Ανεπαρκής Φωτισμός", "Άλλο"];
+						}
+						for(var i = 0; i < options.length; i++) {
+							var opt = options[i];
+							var el = document.createElement("option");
+							el.textContent = opt;
+							if(i+1 == options.length)
+							{
+								el.value = "other";
+							}else if(i==0){
+								el.value = "";
+							}
+							else{
+								el.value = opt;
+							}
+							select.appendChild(el);
+						}
+						break;
+					case "plumbing":
+						var select = document.getElementById("issue");
+						$('#issue').empty();
+						if(localStorage.getItem("language") === 'en'){
+							var options = ["Select a Problem", "Clogged Well", "Broken Well", "Other"];
+						}else{
+							var options = ["Επιλέξτε προβλήματος", "Βουλωμένο Φρεάτιο", "Σπασμένο Φρεάτιο", "Άλλο"];
+						}
+						
+						for(var i = 0; i < options.length; i++) {
+							var opt = options[i];
+							var el = document.createElement("option");
+							el.textContent = opt;
+							if(i+1 == options.length)
+							{
+								el.value = "other";
+							}else if(i==0){
+								el.value = "";
+							}
+							else{
+								el.value = opt;
+							}
+							select.appendChild(el);
+						}
+						break;
+					case "road-contructor":
+						var select = document.getElementById("issue");
+						$('#issue').empty();
+						if(localStorage.getItem("language") === 'en'){
+							var options = ["Select a Problem", "Broken Plates", "Object interfering", "Abandoned Car", "Other"];
+						}else{
+							var options = ["Επιλέξτε προβλήματος", "Σπασμένες Πλάκες", "Αντικείμενο που εμποδίζει", "Εγκαταλ. Αυτοκίνητο", "Άλλο"];
+						}
+						for(var i = 0; i < options.length; i++) {
+							var opt = options[i];
+							var el = document.createElement("option");
+							el.textContent = opt;
+							if(i+1 == options.length)
+							{
+								el.value = "other";
+							}else if(i==0){
+								el.value = "";
+							}
+							else{
+								el.value = opt;
+							}
+							select.appendChild(el);
+						}
+						break;
+				}				
+						
+			});
+			
+			
+			$("select[name='issue']").change(function(){		
+				var optionValue1 = $("select[name='issue']").val();		
+					
+				if(optionValue1 =="other" )
+				{
+					$("#other-txt").css("display", "block");
+				}
+				else{
+					$("#other-txt").css("display", "none");
+				}
+			
+			});
+			
+			
+			
+			
+			
+			
+			
+			
+			$('#msg_subdomain_title').html(lang.msg_subdomain_title);
+				$('#msg_sub_text1').html(lang.msg_sub_text1);
+				$('#msg_sub_text2').html(lang.msg_sub_text2);
+				$('#msg_section_info').html(lang.msg_section_info);
+				$('#msg_section_followus').html(lang.msg_section_followus);
+				$('#msg_dilosi').html(lang.msg_dilosi);
+				$('#msg_anathesi').html(lang.msg_anathesi);
+				$('#msg_complete').html(lang.msg_complete);
+				
+				$('#msg_label_long').html(lang.msg_label_long);
+				$('#msg_label_lat').html(lang.msg_label_lat);
+				$('#msg_label_type').html(lang.msg_label_type);
+				$('#msg_type_select').html(lang.msg_type_select);
+				$('#msg_type_garbage').html(lang.msg_type_garbage);
+				$('#msg_type_lighting').html(lang.msg_type_lighting);
+				$('#msg_type_plumbing').html(lang.msg_type_plumbing);
+				$('#msg_type_road').html(lang.msg_type_road);
+				$('#msg_problem_detail').html(lang.msg_problem_detail);
+				$('#msg_perigrafi_problem').html(lang.msg_perigrafi_problem);
+				$('#msg_photograph').html(lang.msg_photograph);
+				$('#btnsubmit').html(lang.msg_submit_btn);
+				$('#msg_subtype_select').html(lang.msg_subtype_select);
+				
+				$('#lng').attr("placeholder", lang.msg_long_text);
+				$('#lat').attr("placeholder", lang.msg_lat_text);
+				
+			
+			
+				$('#image_div').html('');
+				$('#title_h1').html('');
+
+				$('#submit').html('');
+					
+			}
+		
+			</script>
+			
+			<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			  ga('create', 'UA-73253016-1', 'auto');
+			  ga('send', 'pageview');
+
+			</script>
+  </body>
+</html>

@@ -1,29 +1,96 @@
 var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.translate', 'ngCookies']);
 
+appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
+    function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
 
+        $scope.smsg1 = false;
+        $scope.smsg2 = false;
+        $scope.chkSelected_1 = false;
+        $scope.chkSelected_2 = false;
+        $scope.chkSelected = false;
+        $scope.ecert = false;
+        $scope.mcert = false;
+        var ecft = 1;
+        var mcft = 1;
 
-appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData','$resource', '$translate', '$http',
-    function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $resource,  $translate, $http) {
+        $scope.navClass = function (page) {
+            var path = window.location.href.toString().split("/");
+            var currentRoute = path[path.length - 1];
+            if (currentRoute.split(".")[0] != page) {
+                return false;
+            } else {
+                return true;
+            }
+        }
 
-        $log.debug('inside scWebSubmit controller');
-        $rootScope.overview_url = $location.path();
-        $scope.markers = [];
-        var mylocation_en = 0;
-        
-             var url_path = $location.absUrl().split("//");
+        var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         var url;
 
-        if( sub_domain[0].split(":").length > 1){
+        if (sub_domain[0].split(":").length > 1) {
             url = "./config/testcity1.json";
             sub_domain[0] = "testcity1";
-        }else{
-            url = '../config/'+sub_domain[0]+'.json';
+        } else {
+            url = '../config/' + sub_domain[0] + '.json';
         }
-        
+
         var d = $q.defer();
-                $scope.mainInfo = $http.get(url).success(function (response) {
-            
+
+        $("#nametxt").blur(function () {
+            if ($scope.NameTxt == "") {
+                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+            } else {
+                if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                } else {
+                    $("#next_button").attr("class", "btn btn-default pull-right");
+                }
+            }
+        });
+
+        $("#emailtxt").blur(function () {
+            if ($scope.NameTxt == "") {
+                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+            } else {
+                if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                } else {
+                    $("#next_button").attr("class", "btn btn-default pull-right");
+                }
+            }
+        });
+
+        $("#mobiletxt").blur(function () {
+            if ($scope.NameTxt == "") {
+                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+            } else {
+                if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                } else {
+                    $("#next_button").attr("class", "btn btn-default pull-right");
+                }
+            }
+        });
+
+        $("#txtaddress").change(function () {
+            if ($scope.address != "") {
+                $("#next_button").attr("class", "btn btn-default pull-right");
+            } else {
+                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+            }
+        });
+
+        $scope.chkSelected = false;
+        $scope.valid = null;
+
+        $rootScope.mainInfo = $http.get(url).success(function (response) {
+
             $rootScope.Variables = {
                 city_name: sub_domain[0],
                 city_address: response.city_address,
@@ -50,38 +117,52 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 availableIssues: response.availableIssues,
                 searchIssues: response.searchIssues,
                 map_zoom: response.zoom,
-                overlay_functions : response.overlay_functions,
-                overlay_categories : response.overlay_categories,
+                overlay_functions: response.overlay_functions,
+                overlay_categories: response.overlay_categories,
                 google_init_coords: response.google_init_coords,
                 google_buildings: response.google_buildings,
                 host: response.host
             };
-            
+
             d.resolve(response);
-            
-            
-            return $rootScope;
+            return d.promise;
         });
+
+        $log.debug('inside scWebSubmit controller');
+        $rootScope.overview_url = $location.path();
+        $scope.markers = [];
+        var mylocation_en = 0;
 
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
         }, 10);
 
-        navigator.geolocation.getCurrentPosition(function(pos){
+        leafletData.getMap("issuesmap").then(function (map) {
+            map.scrollWheelZoom.disable();
+        });
+
+        navigator.geolocation.getCurrentPosition(function (pos) {
             var mylocation_marker = {
-                                lat: pos.coords.latitude,
-                                lng: pos.coords.longitude,
-                                icon: {
-                                    type: 'awesomeMarker',
-                                    prefix: 'fa',
-                                    icon: 'smile-o',
-                                    markerColor: 'blue'
-                                }
-                            };
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude,
+                icon: {
+                    type: 'awesomeMarker',
+                    prefix: 'fa',
+                    icon: 'smile-o',
+                    markerColor: 'blue'
+                }
+            };
             $scope.markers.unshift(mylocation_marker);
             mylocation_en = 1;
-            
+
+            $scope.map_center = {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude,
+                zoom: 18
+            };
+
+            $scope.$apply();
         });
 
         $scope.latlabeltxt = null;
@@ -155,13 +236,14 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
             );
         };
-        
-        $scope.disable_next = function(){
-            $scope.coords_search = 1;
+
+        $scope.disable_next = function () {
+            $(".btn.btn-default.pull-right").attr("class", "btn btn-default pull-right disabled");
         };
 
         function onmapclick(event) {
             //newMarker = new L.marker(event.latlng, {icon: redMarker}, {draggable: true});
+
             var mainMarker = {
                 lat: event.latlng.lat,
                 lng: event.latlng.lng,
@@ -172,23 +254,42 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     markerColor: 'red'
                 }
             };
-            
-            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+event.latlng.lat+","+event.latlng.lng+"&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM").success(function(result){
+
+
+            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latlng.lat + "," + event.latlng.lng + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM").success(function (result) {
                 $scope.address = result.results[0].formatted_address;
+                $http({
+                    method: "GET",
+                    url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + event.latlng.lng + "," + event.latlng.lat + "]&issue=garbage"
+                }).success(function (msg) {
+                    if(msg[0].city == $rootScope.Variables.city_name){
+                      setTimeout(function () {
+                        $("#txtaddress").trigger("change");
+                    }, 100);  
+                    }else{
+                        $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                        alert("Η διεύθυνση που καταχωρίσατε βρίσκεται εκτός των ορίων της πόλης! Παρακαλώ καταχωρείστε έγκυρη διεύθυνση!");
+                    }                 
+                });
             });
-            
-            if($scope.markers.length == 2 || mylocation_en == 0){
-            $scope.markers.pop();
-        }
+
+            if ($scope.markers.length == 2 || mylocation_en == 0) {
+                $scope.markers.pop();
+            }
             $scope.markers.push(mainMarker);
-            
+
 
 
             $scope.latlabeltxt = event.latlng.lat;
             $scope.lnglabeltxt = event.latlng.lng;
-        };
+        }
+        ;
 
-        $q.all([$scope.mainInfo]).then(function (data) {
+        $q.all([$rootScope.mainInfo]).then(function (data) {
+            $("#next_button").attr("class", "btn btn-default pull-right disabled");
+            if ($scope.markers.length == 2 || mylocation_en == 0) {
+                $scope.markers.pop();
+            }
 
             leafletData.getMap().then(function (map) {
                 map.on('click', onmapclick);
@@ -203,30 +304,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
             $scope.availableIssues = $rootScope.Variables.availableIssues;
 
-
             $scope.issueTypeSelect = $scope.availableIssues[0];
             $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
             $scope.otherDescriptionTxt = '-';
             $scope.uploadedPhotoFile = 'no-image';
-
-
-            $scope.stateChanged = function () {
-
-                if ($scope.chkSelected) {
-                    $scope.showSuccessAlertName = false;
-                    $scope.showSuccessAlertEmail = false;
-
-                } else {
-                    $scope.showSuccessAlertName = false;
-                    $scope.showSuccessAlertEmail = false;
-                    $scope.NameTxt = "";
-                    $scope.EmailTxt = "";
-                    $scope.MobileTxt = "";
-
-                }
-
-            };
-
 
             $scope.step1 = function () {
                 return false;
@@ -246,78 +327,177 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
             $scope.geocode = function (address) {
                 var geocoder = new google.maps.Geocoder();
-                if( address == 1){
+                if (address == 1) {
                     var address = $scope.address + "," + $rootScope.Variables.city_address;
-                }else{
+                } else {
                     var address = $('#address').val() + "," + $rootScope.Variables.city_address;
                 }
-                if(address != ""){
-                geocoder.geocode({'address': address}, function (results, status) {
-                    if (status === 'OK') {
-                        if (results.length == 1) {
-                            var latlng = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
-                            var mainMarker = {
-                                lat: latlng.lat,
-                                lng: latlng.lng,
-                                icon: {
-                                    type: 'awesomeMarker',
-                                    prefix: 'fa',
-                                    icon: 'info-circle',
-                                    markerColor: 'red'
-                                }
-                            };
-                            $scope.map_center = {
-                                lat: results[0].geometry.location.lat(),
-                                lng: results[0].geometry.location.lng(),
-                                zoom: 18
-                            };
-                            $scope.address = results[0].formatted_address;
-                            if($scope.markers.length == 2 || mylocation_en == 0){
-                            $scope.markers.pop();
-                        }
-                            $scope.markers.push(mainMarker);
-                            $scope.latlabeltxt = results[0].geometry.location.lat();
-                            $scope.lnglabeltxt = results[0].geometry.location.lng();
-                                           leafletData.getMap().then(
-                    function (map) {
-                        map.invalidateSize(true);
-                    }
-            );
-                            
-                        } else {
-                            var addresses_options = "";
-                            for (var l = 0; l < results.length; l++) {
-                                addresses_options += "<option>" + results[l].formatted_address + "</option>";
-                            }
-                            $("#taddress").html(addresses_options);
-                            $('#address').flexdatalist('reset');
-                            $('#address').flexdatalist({
-                                minLength: 0
-                            });
-
-                            $("#address-flexdatalist").focus();
-                               
-                        }
-                        $scope.coords_search = 0;
-                    } else {
-                        $scope.coords_search = 0;
-                        $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισαγάγατε. Παρακαλώ δοκιμάστε ξανά.");
-                    }
-                });
-            }else{
-                                        $scope.coords_search = 0;
+                if (address != "") {
+                    geocoder.geocode({'address': address}, function (results, status) {
+                        if (status === 'OK') {
+                            if (results.length == 1) {
+                                var latlng = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
+                                var mainMarker = {
+                                    lat: latlng.lat,
+                                    lng: latlng.lng,
+                                    icon: {
+                                        type: 'awesomeMarker',
+                                        prefix: 'fa',
+                                        icon: 'info-circle',
+                                        markerColor: 'red'
                                     }
+                                };
+                                $scope.map_center = {
+                                    lat: results[0].geometry.location.lat(),
+                                    lng: results[0].geometry.location.lng(),
+                                    zoom: 18
+                                };
+                                $scope.address = results[0].formatted_address;
+                                if ($scope.markers.length == 2 || mylocation_en == 0) {
+                                    $scope.markers.pop();
+                                }
+                                $scope.markers.push(mainMarker);
+                                $scope.latlabeltxt = results[0].geometry.location.lat();
+                                $scope.lnglabeltxt = results[0].geometry.location.lng();
+                                leafletData.getMap().then(
+                                        function (map) {
+                                            map.invalidateSize(true);
+                                        }
+                                );
+
+                            } else {
+                                var addresses_options = "";
+                                for (var l = 0; l < results.length; l++) {
+                                    addresses_options += "<option>" + results[l].formatted_address + "</option>";
+                                }
+                                $("#taddress").html(addresses_options);
+                                $('#address').flexdatalist('reset');
+                                $('#address').flexdatalist({
+                                    minLength: 0
+                                });
+
+                                $("#address-flexdatalist").focus();
+
+                            }
+                            $(".btn.btn-default.pull-right.disabled").attr("class", "btn btn-default pull-right");
+                        } else {
+                            $(".btn.btn-default.pull-right.disabled").attr("class", "btn btn-default pull-right");
+                            $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισαγάγατε. Παρακαλώ δοκιμάστε ξανά.");
+                        }
+                    });
+                } else {
+                    $(".btn.btn-default.pull-right.disabled").attr("class", "btn btn-default pull-right");
+                }
             };
 
-            $("#submit").click(function () {
-              $scope.geocode();
+            $("#subt").click(function () {
+                $scope.geocode();
 //                $scope.map_center = {lat: 38.246639,lng: ‎21.734573, zoom: 18};
 
             });
 
-            $scope.updateCompoType = function () {
-                $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
-            };
+            $(document).ready(function () {
+
+                $('#epon').on('ifToggled', function (event) {
+                    if ($scope.chkSelected) {
+                        $scope.showSuccessAlertName = false;
+                        $scope.showSuccessAlertEmail = false;
+                        $scope.chkSelected = false;
+                        $("#next_button").attr("class", "btn btn-default pull-right");
+                    } else {
+                        $scope.showSuccessAlertName = false;
+                        $scope.showSuccessAlertEmail = false;
+                        $scope.NameTxt = "";
+                        $scope.EmailTxt = "";
+                        $scope.MobileTxt = "";
+                        $scope.chkSelected = true;
+                        $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                    }
+                    $scope.$apply();
+                });
+
+                $('#chkSelected_1').on('ifToggled', function (event) {
+                    if ($scope.mand_email == 'false') {
+                        if ($scope.chkSelected_1) {
+                            $scope.chkSelected_1 = false;
+                        } else {
+                            $scope.chkSelected_1 = true;
+                            $scope.evalidation = false;
+                        }
+                        $scope.$apply();
+                        if ($scope.NameTxt == "") {
+                            $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                        } else {
+                            if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            } else {
+                                $("#next_button").attr("class", "btn btn-default pull-right");
+                            }
+                        }
+                    }
+                });
+
+                $('#chkSelected_2').on('ifToggled', function (event) {
+                    if (!$scope.mand_sms) {
+                        if ($scope.chkSelected_2) {
+                            $scope.chkSelected_2 = false;
+                        } else {
+                            $scope.chkSelected_2 = true;
+                            $scope.mvalidation = function () {
+
+                            }
+                        }
+                        $scope.$apply();
+                        if ($scope.NameTxt == "") {
+                            $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                        } else {
+                            if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            } else {
+                                $("#next_button").attr("class", "btn btn-default pull-right");
+                            }
+                        }
+                    }
+                });
+
+                $('#available_issues').on('change', function () {
+                    var selected = $(this).find("option:selected").val();
+                    var index;
+                    for (var i = 0; i < $scope.availableIssues.length; i++) {
+                        if ($scope.availableIssues[i].id == selected) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    $scope.issueTypeSelect = $scope.availableIssues[index];
+                    $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
+                    $scope.$apply();
+                    $('#issuetype_select').selectpicker('refresh');
+                });
+
+                $("#issuetype_select").on('change', function () {
+                    var selected = $(this).find("option:selected").val();
+                    var index;
+                    for (var i = 0; i < $scope.issueTypeSelect.types.length; i++) {
+                        if ($scope.issueTypeSelect.types[i].id == selected) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[index];
+                    $translate($scope.issueSubTypeSelect.name).then(function (h) {
+                        $scope.otherDescriptionTxt = h;
+                        console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
+                    }, function (translationId) {
+                        //$scope.otherDescriptionTxt = translationId;
+                    });
+                });
+            });
+
 
 
             $scope.$on('leafletDirectiveMap.overlayadd', function (event, o) {
@@ -350,17 +530,13 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
 
             //translate immediately when change
-            $scope.issueSubTypeSelectChanged = function () {
-
-                $translate($scope.issueSubTypeSelect.name).then(function (h) {
-                    $scope.otherDescriptionTxt = h;
-                }, function (translationId) {
-                    //$scope.otherDescriptionTxt = translationId;
-                });
-
-            };
             //this executes the first time just once in the init of page
-            $scope.issueSubTypeSelectChanged();
+            $translate($scope.issueSubTypeSelect.name).then(function (h) {
+                $scope.otherDescriptionTxt = h;
+                console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
+            }, function (translationId) {
+                //$scope.otherDescriptionTxt = translationId;
+            });
 
             /*$scope.submit_Eponymous = function submit(){
              
@@ -410,6 +586,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
              
              }*/
 
+//            $scope.NameTxt1 = function(){
+//                return $scope.NameTxt
+//            }
+
             $scope.write_user_data = function () {
                 return false;
             };
@@ -417,12 +597,26 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             var my_id;
             var user_id;
 
-
             $scope.setStep = function (step) {
-                if (step == 1) {
 
+                if (step == 1) {
                     console.log("Step 1");
 
+                    setTimeout(function () {
+                        if ($scope.chkSelected) {
+                            if ($scope.NameTxt == "") {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            } else {
+                                if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                                } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                                    $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                                } else {
+                                    $("#next_button").attr("class", "btn btn-default pull-right");
+                                }
+                            }
+                        }
+                    }, 500);
                     $scope.step1 = function () {
                         return false;
                     };
@@ -439,24 +633,24 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         return true;
                     };
 
-                    $scope.issue = $resource($rootScope.Variables.APIADMIN + "issue/:id",
-		{id : "@id"	}, {
-		"update" : {
-			method : "PUT"
-		}});
+//                    $scope.issue = new $resource($rootScope.Variables.APIADMIN + "issue/:id",
+//		{id : "@id"	}, {
+//		"update" : {
+//			method : "PUT"
+//		}});
 
                     var desc = $scope.otherDescriptionTxt;
 
-                    $scope.issue.issue = $scope.issueTypeSelect.id;
+                    var issue = $scope.issueTypeSelect.id;
 
-                    $scope.issue.device_id = 'webapp';
+                    var device_id = 'webapp';
 
-                    $scope.issue.value_desc = desc;
-                    $scope.issue.image_name = $scope.uploadedPhotoFile; //no-image
+                    var value_desc = desc;
+                    var image_name = $scope.uploadedPhotoFile; //no-image
 
-                    var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + $scope.issue.device_id + '", "value_desc" : "' + $scope.issue.value_desc + '","image_name" : "' + $scope.issue.image_name + '","comments" : "' + $scope.commentstxt + '" }';
+                    var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '" }';
 
-                    return $http(
+                    $http(
                             {
                                 method: 'POST',
                                 url: $rootScope.Variables.APIURL,
@@ -465,80 +659,115 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 },
                                 data: txtpost
                             }).success(function (resp) {
-                                $http({
-                method:"GET",
-                url: $rootScope.Variables.APIADMIN+"/city_policy?coordinates=["+$scope.lnglabeltxt+","+$scope.latlabeltxt+"]&issue="+$scope.issueTypeSelect.id             
-                                }).success(function(msg){                
-                                    
-                        my_id = resp._id;
-                        resp.anonymous = msg[0].anonymous;
-                        $scope.myText = msg[0].policy_desc;
+                        $http({
+                            method: "POST",
+                            url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt
+                        }).success(function (msg) {
+                            var msg_str = JSON.stringify(msg[0]);
+                            msg = JSON.parse(msg_str);
+                            $scope.mand_sms = msg.mandatory_sms;
+                            if ($scope.mand_sms) {
+                                $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
+                                $("#chkSelected_2").prop("disabled", true);
+                                if (mcft == 1) {
+                                    mcft = 0;
+                                    if ($scope.mand_sms) {
+                                        $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
+                                        $scope.chkSelected_2 = true;
+                                    } else {
+                                        $scope.chkSelected_2 = false;
+                                    }
+                                }
+                            }
+                            $scope.mand_email = msg.mandatory_email;
+                            if ($scope.madn_email) {
+                                $("#chkSelected_1").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
+                                $("#chkSelected_1").prop("disabled", true);
+                                if (ecft == 1) {
+                                    ecft = 0;
+                                    if ($scope.chkSelected_1)
+                                        $scope.chkSelected_1 = true;
+                                } else {
+                                    $scope.chkSelected_1 = false;
+                                }
+                            }
+                            $http({
+                                method: "GET",
+                                url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + $scope.lnglabeltxt + "," + $scope.latlabeltxt + "]&issue=" + issue
+                            }).success(function (msg) {
+                                my_id = resp._id;
+                                resp.anonymous = msg[0].anonymous;
+                                $scope.myText = msg[0].policy_desc;
+                            });
 
 
-                        if (resp.anonymous == "false") {
-                            $scope.issubmit_isseu_form = function () {
-                                return false;
-                            };
+                            if (resp.anonymous == "false") {
+                                $scope.issubmit_isseu_form = function () {
+                                    return false;
+                                };
 
 
-                            $scope.iseponymous = function () {
-                                return true;
-                            };
+                                $scope.iseponymous = function () {
+                                    return true;
+                                };
 
-                            $scope.write_user_data = function () {
-                                return true;
-                            };
+                                $scope.write_user_data = function () {
+                                    return true;
+                                };
 
-                            $scope.isnotverify = function () {
-                                return false;
-                            };
+                                $scope.misnotverify = function () {
+                                    return false;
+                                };
 
-                            $scope.submit_button = false;
-                            $scope.register_button = true;
-                            $scope.verify_button = false;
-                            $scope.submit_eponymous_button = false;
-                        } else {
-                            $scope.issubmit_isseu_form = function () {
-                                return false;
-                            };
+                                $scope.eisnotverify = function () {
+                                    return false;
+                                };
 
-                            $scope.iseponymous = function () {
-                                return false;
-                            };
-                            $scope.write_user_data = function () {
-                                return false;
-                            };
-                            $scope.isnotverify = function () {
-                                return false;
-                            };
-                            $scope.is_finalsubmit = function () {
-                                return true;
-                            };
-                            $scope.step1 = function () {
-                                return false;
-                            };
+//                                $scope.submit_button = false;
+//                                $scope.register_button = true;
+//                                $scope.verify_button = false;
+//                                $scope.submit_eponymous_button = false;
+                            } else {
+                                $scope.issubmit_isseu_form = function () {
+                                    return false;
+                                };
 
-                            $scope.step2 = function () {
-                                return false;
-                            };
+                                $scope.iseponymous = function () {
+                                    return false;
+                                };
+                                $scope.write_user_data = function () {
+                                    return false;
+                                };
+                                $scope.isnotverify = function () {
+                                    return false;
+                                };
+                                $scope.is_finalsubmit = function () {
+                                    return false;
+                                };
+                                $scope.step1 = function () {
+                                    return false;
+                                };
 
-                            $scope.step3 = function () {
-                                return false;
-                            };
+                                $scope.step2 = function () {
+                                    return false;
+                                };
 
-                            $scope.step4 = function () {
-                                return false;
-                            };
+                                $scope.step3 = function () {
+                                    return false;
+                                };
 
-                            $scope.submit_button = false;
-                            $scope.register_button = false;
-                            $scope.verify_button = false;
-                            $scope.submit_eponymous_button = true;
-                        }
+                                $scope.step4 = function () {
+                                    return false;
+                                };
+
+//                                $scope.submit_button = false;
+//                                $scope.register_button = false;
+//                                $scope.verify_button = false;
+//                                $scope.submit_eponymous_button = true;
+                            }
                         });
                     });
-                }
-                else if (step == 2) {
+                } else if (step == 2) {
                     console.log("Step 2");
                     if (!$scope.chkSelected) { //if you sent an issue as anonymous
 
@@ -559,7 +788,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.write_user_data = function () {
                             return false;
                         };
-                        $scope.isnotverify = function () {
+                        $scope.misnotverify = function () {
+                            return false;
+                        };
+                        $scope.eisnotverify = function () {
                             return false;
                         };
                         $scope.is_finalsubmit = function () {
@@ -581,6 +813,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             return false;
                         };
                     } else {
+                        $scope.is_finalsubmit = function () {
+                            return false;
+                        };
 
                         $scope.step1 = function () {
                             return false;
@@ -601,23 +836,22 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             return true;
                         };
 
-                        if ($scope.NameTxt == "" || $scope.EmailTxt == "" || $scope.NameTxt == undefined || $scope.EmailTxt == undefined || $scope.NameTxt == null || $scope.EmailTxt == null) {
-
-
-                            $scope.showSuccessAlertName = true;
-
-
-                            $scope.switchBoolName = function (value) {
-                                $scope[value] = !$scope[value];
-                            };
-
-                            $scope.showSuccessAlertEmail = true;
-                            $scope.switchBoolEmail = function (value) {
-                                $scope[value] = !$scope[value];
-                            };
-
-                            return false;
-                        }
+//                        if ($scope.NameTxt == "" || $scope.EmailTxt == "" || $scope.NameTxt == undefined || $scope.EmailTxt == undefined || $scope.NameTxt == null || $scope.EmailTxt == null) {
+//
+//                            $scope.showSuccessAlertName = true;
+//
+//
+//                            $scope.switchBoolName = function (value) {
+//                                $scope[value] = !$scope[value];
+//                            };
+//
+//                            $scope.showSuccessAlertEmail = true;
+//                            $scope.switchBoolEmail = function (value) {
+//                                $scope[value] = !$scope[value];
+//                            };
+//
+//                            return false;
+//                        }
 
 
                         var chk_1;
@@ -637,187 +871,321 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
 
 
-                        var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '", "permission" :  { "send_issues": "true" , "communicate_with": {"email" : "' + chk_1 + '", "sms" : "' + chk_2 + '"}}}';
+                        var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + '"}';
 
                         return $http({
                             method: 'POST',
-                            url: $rootScope.Variables.active_user_URL,
+                            url: $rootScope.Variables.activate_user_URL,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             },
                             data: txtpost1
                         }).success(function (resp) {
+                            //alert(JSON.stringify(resp));
+//                            $scope.myText = resp.policy_description;
+//                            if (resp.user_exist == "1") {
+//                                $scope.submit_button = false;
+//                                $scope.register_button = false;
+//                                $scope.verify_button = false;
+//                                $scope.submit_eponymous_button = true;
+//
+//                                $scope.issubmit_isseu_form = function () {
+//                                    return false;
+//                                };
+//                                $scope.iseponymous = function () {
+//                                    return false;
+//                                };
+//                                if(resp.mobileverified == 1){
+//                                $scope.misnotverify = function () {
+//                                    return true;
+//                                };
+//                            }else{
+//                                $scope.misnotverify = function () {
+//                                    return false;
+//                                };
+//                            }
+//                            
+//                            if(resp.emailverified == 1){
+//                                $scope.eisnotverify = function () {
+//                                    return true;
+//                                };
+//                            }else{
+//                                $scope.eisnotverify = function () {
+//                                    return false;
+//                                };
+//                            }
+//                                $scope.is_finalsubmit = function () {
+//                                    return true;
+//                                };
+//
+//                            } else {
+                            //Verify button
+//                                user_id = resp._id;
+//                                $scope.submit_button = false;
+//                                $scope.register_button = false;
+//                                $scope.verify_button = true;
+//                                $scope.submit_eponymous_button = false;
 
-                            $scope.myText = resp.policy_description;
-                            if (resp.user_exist == "1") {
-
-                                $scope.submit_button = false;
-                                $scope.register_button = false;
-                                $scope.verify_button = false;
-                                $scope.submit_eponymous_button = true;
-
-                                $scope.issubmit_isseu_form = function () {
-                                    return false;
-                                };
-                                $scope.iseponymous = function () {
-                                    return false;
-                                };
-                                $scope.isnotverify = function () {
-                                    return false;
-                                };
-                                $scope.is_finalsubmit = function () {
+                            // activate_email":"2569","activate_sms
+                            var anon = JSON.stringify(resp[0]);
+                            var resp_anon = JSON.parse(anon);
+                            if (resp_anon.activate_email != 1) {
+                                $scope.eisnotverify = function () {
                                     return true;
                                 };
-
+                                if ($scope.chkSelected_1) {
+                                    $scope.evalidation = true;
+                                } else {
+                                    $scope.evalidation = false;
+                                }
                             } else {
-                                //Verify button
-                                user_id = resp._id;
-                                $scope.submit_button = false;
-                                $scope.register_button = false;
-                                $scope.verify_button = true;
-                                $scope.submit_eponymous_button = false;
-
-                                $scope.issubmit_isseu_form = function () {
+                                $scope.eisnotverify = function () {
                                     return false;
                                 };
-                                $scope.iseponymous = function () {
-                                    return false;
-                                };
-                                $scope.isnotverify = function () {
+                                $scope.evalidation = false;
+                            }
+                            if (resp_anon.activate_sms != 1) {
+                                $scope.misnotverify = function () {
                                     return true;
                                 };
-                                $scope.is_finalsubmit = function () {
+                                if ($scope.chkSelected_2) {
+                                    $scope.mvalidation = true;
+                                } else {
+                                    $scope.mvalidation = false;
+                                }
+                            } else {
+                                $scope.misnotverify = function () {
                                     return false;
                                 };
-
-
+                                $scope.mvalidation = false;
                             }
+                            $scope.issubmit_isseu_form = function () {
+                                return false;
+                            };
+                            $scope.iseponymous = function () {
+                                return false;
+                            };
+                            $scope.isnotverify = function () {
+                                return true;
+                            };
+                            $scope.is_finalsubmit = function () {
+                                return false;
+                            };
 
 
-
-
+                            //}
 
                         });
                     }
                 } else if (step == 3) {
                     console.log("Step 3");
-                    $scope.step1 = function () {
-                        return false;
-                    };
+//                    if ($scope.isnotverify()) {
+//                        $scope.step1 = function () {
+//                            return false;
+//                        };
+//
+//                        $scope.step2 = function () {
+//                            return false;
+//                        };
+//
+//                        $scope.step3 = function () {
+//                            return false;
+//                        };
+//
+//                        $scope.step4 = function () {
+//                            return false;
+//                        };
+//
+//                        var jsonact_Data = '{ "id1" : "' + user_id + '", "id2": "web-site", "id3": "' + $scope.codeTxt + '"}';
+//
+//                        console.log(jsonact_Data);
+//                        var d = $q.defer();
+//
+//                        $http({
+//                            method: 'POST',
+//                            url: $rootScope.Variables.activate_user_URL,
+//                            headers: {
+//                                'Content-Type': 'application/json; charset=utf-8'
+//                            },
+//                            data: jsonact_Data
+//                        }).success(function (resp) {
+//
+//                            console.log(JSON.stringify(resp));
+//
+//                            $scope.submit_button = false;
+//                            $scope.register_button = false;
+//                            $scope.verify_button = false;
+//                            $scope.submit_eponymous_button = true;
+//
+//                            $scope.issubmit_isseu_form = function () {
+//                                return false;
+//                            };
+//                            $scope.iseponymous = function () {
+//                                return false;
+//                            };
+//
+//
+//                            if (resp._id == undefined) {
+//                                $scope.valid = false;
+//                                $scope.isnotverify = function () {
+//                                    return true;
+//                                };
+//                            } else {
+//                                $scope.valid = true;
+//                                $("#next_button").attr("class", "btn btn-default pull-right");
+//                            }
+//                        });
+//                    }
 
-                    $scope.step2 = function () {
-                        return false;
-                    };
-
-                    $scope.step3 = function () {
-                        return false;
-                    };
-
-                    $scope.step4 = function () {
-                        return false;
-                    };
-
-                    var jsonact_Data = '{ "id1" : "' + user_id + '", "id2": "web-site", "id3": "' + $scope.codeTxt + '"}';
-                    
-                    return $http({
-                        method: 'POST',
-                        url: $rootScope.Variables.activate_user_URL,
-                        headers: {
-                            'Content-Type': 'application/json; charset=utf-8'
-                        },
-                        data: jsonact_Data
-                    }).success(function (resp) {
-                        $scope.submit_button = false;
-                        $scope.register_button = false;
-                        $scope.verify_button = false;
-                        $scope.submit_eponymous_button = true;
-
-                        $scope.issubmit_isseu_form = function () {
-                            return false;
-                        };
-                        $scope.iseponymous = function () {
-                            return false;
-                        };
-                        $scope.isnotverify = function () {
-                            return false;
-                        };
-                        $scope.is_finalsubmit = function () {
-                            return true;
-                        };
-                    });
 
                 } else if (step == 4) {
-
                     console.log("Step 4");
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
-                    
-                    return $http({
-                        method: 'POST',
-                        url: $rootScope.Variables.APIURL + my_id,
-                        headers: {
-                            'Content-Type': 'application/json; charset=utf-8'
-                        },
-                        data: jsonData
-                    }).success(function (resp) {
-                        $scope.issubmit_isseu_form = function () {
-                            return true;
-                        };
-                        $scope.iseponymous = function () {
-                            return false;
-                        };
-                        $scope.isnotverify = function () {
-                            return false;
-                        };
-                        $scope.is_finalsubmit = function () {
-                            return false;
-                        };
 
-                        $scope.issueTypeSelect = $scope.availableIssues[0];
-                        $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
-                        $scope.otherDescriptionTxt = '-';
-                        $scope.uploadedPhotoFile = 'no-image';
+                    $scope.smsg1 = false;
+                    $scope.smsg2 = false;
 
-                        $scope.latlabeltxt = "";
-                        $scope.lnglabeltxt = "";
-                        $scope.otherDescriptionTxt = "";
-                        $scope.commentstxt = "";
-                        $scope.issueTypeSelect.id = "garbage";
-                        $scope.NameTxt = "";
-                        $scope.EmailTxt = "";
-                        $scope.MobileTxt = "";
-                        $scope.chkSelected_1 = true;
-                        $scope.chkSelected_2 = false;
+                    if ($scope.chkSelected) {
+                        return $http({
+                            method: 'POST',
+                            url: $rootScope.Variables.APIURL + my_id,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            },
+                            data: jsonData
+                        }).success(function (resp) {
+                            $scope.is_finalsubmit = function () {
+                                return true;
+                            };
 
-                        $scope.chkSelected = false;
 
-                        $scope.submit_button = true;
-                        $scope.register_button = false;
-                        $scope.verify_button = false;
-                        $scope.submit_eponymous_button = false;
-
-                        $scope.step1 = function () {
-                            return false;
-                        };
-
-                        $scope.step2 = function () {
-                            return true;
-                        };
-
-                        $scope.step3 = function () {
-                            return true;
-                        };
-
-                        $scope.step4 = function () {
-                            return true;
-                        };
-                    });
+                            $window.location.reload();
+                        });
+                    } else {
+                        $window.location.reload();
+                    }
                 }
             };
+
+            $scope.last_step = function (val) {
+                if (val) {
+                    $scope.is_finalsubmit = function () {
+                        return true;
+                    };
+                } else {
+                    $scope.is_finalsubmit = function () {
+                        return false;
+                    };
+                }
+                $scope.$apply();
+            };
+
+            $scope.activate_email = function () {
+                $http(
+                        {
+                            method: 'POST',
+                            url: $rootScope.Variables.APIADMIN + "/activate_user?uuid=web-site&name=" + $scope.NameTxt + "&email=" + $scope.EmailTxt,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            }
+                        }).success(function (resp) {
+                    $scope.msg1 = "Στο email " + $scope.EmailTxt + " που δηλώσατε σας έχει έρθει ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το email σας κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
+                    $scope.smsg1 = true;
+                });
+            };
+
+            $scope.activate_mobile = function () {
+                $http(
+                        {
+                            method: 'POST',
+                            url: $rootScope.Variables.APIADMIN + "/activate_user?uuid=web-site&name=" + $scope.NameTxt + "&mobile=" + $scope.MobileTxt + "&lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt + "&city=" + $rootScope.Variables.city_name,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            }
+                        }).success(function (resp) {
+                    $scope.msg2 = "Στο κινητό νούμερο " + $scope.MobileTxt + " που δηλώσατε σας έχει έρθει με sms ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το κινητό νούμερο κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
+                    $scope.smsg2 = true;
+                });
+            };
+
+            $scope.validate_email = function () {
+                $http(
+                        {
+                            method: 'POST',
+                            url: $rootScope.Variables.APIADMIN + "/activate_email?uuid=web-site&name=" + $scope.NameTxt + "&email=" + $scope.EmailTxt + "&code=" + $scope.ecodeTxt,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            }
+                        }).success(function (resp) {
+                    if (resp != "") {
+                        $scope.ecert = true;
+                        $scope.msg1 = "Ο κωδικός πιστοποίησης email που δώσατε είναι σωστός.";
+                        $scope.evalid = true;
+                        if ($scope.chkSelected_2) {
+                            if ($scope.mvalid) {
+                                $("#next_button").attr("class", "btn btn-default pull-right");
+                            } else {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            }
+                        } else {
+                            $("#next_button").attr("class", "btn btn-default pull-right");
+                        }
+                    } else {
+                        $scope.msg1 = "Ο κωδικός πιστοποίησης email που δώσατε είναι λάθος.";
+                        $scope.evalid = false;
+                    }
+                    $scope.smsg1 = true;
+                });
+            };
+
+            $scope.validate_mobile = function () {
+                $http(
+                        {
+                            method: 'POST',
+                            url: $rootScope.Variables.APIADMIN + "/activate_mobile?uuid=web-site&mobile=" + $scope.MobileTxt + "&code=" + $scope.scodeTxt,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            }
+                        }).success(function (resp) {
+                    if (resp.nModified == 1) {
+                        $scope.mcert = true;
+                        $scope.msg2 = "Ο κωδικός πιστοποίησης κινητού που δώσατε είναι σωστός.";
+                        $scope.mvalid = true;
+                        if ($scope.chkSelected_1) {
+                            if ($scope.evalid) {
+                                $("#next_button").attr("class", "btn btn-default pull-right");
+                            } else {
+                                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                            }
+                        } else {
+                            $("#next_button").attr("class", "btn btn-default pull-right");
+                        }
+                    } else {
+                        $scope.msg2 = "Ο κωδικός πιστοποίησης κινητού που δώσατε είναι λάθος.";
+                        $scope.mvalid = false;
+                    }
+                    $scope.smsg2 = true;
+                });
+            };
+
+            setTimeout(function () {
+                if ($(".select").length > 0) {
+                    $(".select").selectpicker();
+
+                    $(".select").on("change", function () {
+                        if ($(this).val() == "" || null === $(this).val()) {
+                            if (!$(this).attr("multiple"))
+                                $(this).val("").find("option").removeAttr("selected").prop("selected", false);
+                        } else {
+                            $(this).find("option[value=" + $(this).val() + "]").attr("selected", true);
+                        }
+                    });
+                }
+            }, 200);
+            if ($("input.fileinput").length > 0)
+                $("input.fileinput").bootstrapFileInput();
         });
     }]);
-
-
-
 
 appControllers.directive('afterRender', ['$timeout', function ($timeout) {
         var def = {
@@ -848,6 +1216,7 @@ appControllers.directive('fileModel', ['$parse', function ($parse) {
                         //modelSetter(scope, element[0].files[0]);
                         if (filesSelected.size > 0)
                         {
+                            console.log('size>0');
                             var base64image_name = '';
                             var fileToLoad = filesSelected;
                             r = new FileReader();
@@ -855,7 +1224,7 @@ appControllers.directive('fileModel', ['$parse', function ($parse) {
                             r.onloadend = function (e) { //callback after files finish loading
                                 base64image_name = e.target.result;
 
-                                base64image_name.replace(/^data:image\/(png|jpg);base64,/, ""); //replace regex if you want to rip off the base 64 "header"
+                                console.log(base64image_name.replace(/^data:image\/(png|jpg);base64,/, "")); //replace regex if you want to rip off the base 64 "header"
                                 //here you can send data over your server as desired
                                 modelSetter(scope, base64image_name);
 

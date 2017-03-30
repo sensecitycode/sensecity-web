@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>sense.city</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- THIS IS FOR Proper scaling on iPad :-) -->
+<meta name="description" content="sense.city" />
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300'
+	rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="_css/bootstrap.min.css" />
+<link rel="stylesheet" href="_css/animate.min.css" />
+
+<link rel="stylesheet" href="css/loading-bar.css" />
+<link rel="stylesheet" href="css/overview.css" />
+
+<!-- angular dep -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
+<script src="https://code.angularjs.org/1.5.3/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-cookies.js"></script>
+<script src="_js/angular-translate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
+
+<!-- angular strap -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
+
+<link rel="stylesheet"
+	href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+
+<!-- Map dependancies -->
+<link rel="stylesheet" href="css/leaflet.css" />
+<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+<link rel="stylesheet" href="css/ionicons.min.css" />
+	<link rel="stylesheet" href="_css/MarkerCluster.css" />
+    <link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
+	<link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+	
+<!--<script src="js/leaflet.js"></script>-->
+<!--<script src="js/ui-leaflet.min.js"></script>
+<script src="js/leaflet.awesome-markers.js"></script>
+<script src="js/angular-simple-logger.js"></script>
+	<script src="js/leaflet.markercluster.js"></script>
+	<script src="js/leaflet.extra-markers.min.js"></script>-->
+	
+	
+	 
+<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>
+<script src="js/Google.js"></script>
+
+
+<!-- Marker icons -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+	
+	
+<!-- Angular SearchApp dependancies -->
+<script src="overviewctrl.js"></script>
+<script src="overviewapp.js"></script>
+<script src="overviewsrvs.js"></script>
+
+<script src="js/loading-bar.js"></script>
+
+	
+
+</head>
+<body ng-app="overviewApp" ng-controller="mainController">
+
+	<div id="container">
+		<div id="header">
+			<div>
+				<div id="logo">
+					<a href="./" style="font-size:1.5em"> <i class="ion-ios-analytics-outline"></i>
+						sense.city <sup style="font-size: 55%">beta</sup></a>
+					<img src="images/patraslogo.jpg" style="width: 51px; margin-top: -21px; margin-bottom: -17px; margin-left: 4px;"> 
+					<img src="images/upatras_logo.png" style="width: 174px; margin-top: -24px; margin-bottom: -17px; margin-left: 4px;"> 
+						
+				</div>
+				<div id="headertitle">{{ 'TITLE' | translate }}</div>
+				
+					<div style="float: right; margin-top: -36px; margin-right: 20px;">
+						<a href="#!" style="float:right;padding-left:0px;padding-right:0px;" ng-click="changeLanguage('el')" ><img  src="images/flags/el.png" /> </a>&nbsp;&nbsp;
+						<a href="#!" style="float:right;padding-left:0px;padding-right:5px;" ng-click="changeLanguage('en')" ><img src="images/flags/en.png" /> </a>
+					</div>
+			</div>
+		</div>
+
+		<div id="content">
+			<div>
+				<div id="aside">
+					<div>
+						<div class="calcItem">
+							<div class="calcValue" >{{calcValue30daysIssues}}</div>
+							<div class="calcValueDescription">{{ 'ISSUES_LAST_X_DAYS' | translate }} <br/> {{lastdatesToCheck}} {{ 'DAYS' | translate }} </div>
+						</div>
+						<div class="calcItem">
+							<div class="calcValue" >{{calcValue30daysEvents}}</div>
+							<div class="calcValueDescription">{{ 'EVENTS_LAST_X_DAYS' | translate }}  <br/> {{lastdatesToCheck}} {{ 'DAYS' | translate }}</div>
+						</div>
+						<div class="calcItem">
+							<div class="calcValue"
+								ng-class="{calcValuenull: calcValue.value === 'N/A'}"
+								>{{calcValueProblemsFrom2016}}</div>
+							<div class="calcValueDescription">{{ 'ISSUES_SINCE' | translate }} 1/1/2016</div>
+						</div>
+						<div class="calcItem">
+							<div class="calcValue"
+								ng-class="{calcValuenull: calcValue.value === 'N/A'} "
+								>{{calcValueSolutionFrom2016}}</div>
+							<div class="calcValueDescription">{{ 'SOLUTIONS_SINCE' | translate }} <br/> 1/1/2016</div>
+						</div>
+					</div>
+					<div style="font-size: 9px;">
+						* Η απεικόνιση των κάδων απορριμάτων δεν συνάδει με οποιαδήποτε οριστική χωροθέτηση αυτών.
+					</div>
+                                    
+                            
+				</div>
+                                             
+				<div id="mapcontent">
+                                     
+					<leaflet lf-center="map_center" id="issuemap" layers="layers" markers="markers"
+						height="100%" ></leaflet>
+                                             
+				</div>
+                            <button type="button" class="btn btn-default" ng-click="removeHillshadeLayer()" ng-disabled="!existsHillshadeLayer()">Remove Hillshade Overlay</button>
+                                                <button type="button" class="btn btn-default" ng-click="addHillshadeLayer()" ng-disabled="existsHillshadeLayer()">Add Hillshade Overlay</button>
+
+			</div>
+		</div>
+		<div id="footer">
+
+			<div>
+				<div class="row" style="padding: 5px; width: 100%;">
+					<div ng-repeat="lastissue in lastissues"
+						class="col-lg-2 col-md-2 col-sm-2 col-xs-2"
+						style="padding-bottom: 5px;">
+						<div
+							style="background-color: #FFFFFF; border-width: 1px; border-color: #967f7f; border-style: dotted; border-radius: 10px;">
+							<a	href="http://{{Variables.city_name}}.sense.city/scissuemap.html#!?issue_id={{lastissue._id}}" style="text-decoration: none;">
+								<center>
+									<div class="thumbnail crop" style="padding: 0px;">
+										<img ng-src={{lastissue.image_name}} alt="">
+									</div>
+								</center>
+								<div class="caption"
+									style="color: #000000; padding-left: 13px; padding-right: 5px; margin-top: -10px;">
+									<p style="font-size: 13px;">
+										<b>{{lastissue.issue | translate}}</b>
+									</p>
+									
+									<p style="font-size: 14px; height: 40px; margin-top: -10px;">{{lastissue.value_desc}}</p>
+									<p style="margin-top: -12px; font-size: 10px;">
+										<i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{ 'SINCE_TIME' | translate }} {{lastissue.create_at}} {{lastissue.create_at_unit | translate }}
+									<p style="margin-top: -12px;font-size: 10px;">&nbsp;{{lastissue.status | translate}}&nbsp;</p>
+									</p>
+
+								</div></a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script',
+				'//www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-73253016-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+</body>
+</html>

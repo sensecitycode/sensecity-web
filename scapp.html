@@ -1,132 +1,123 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>sense.city</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- THIS IS FOR Proper scaling on iPad :-) -->
-<meta name="description" content="sense.city" />
+    <head>
+        <meta charset="utf-8">
+        <title>sense.city</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:300'
-	rel='stylesheet' type='text/css'>
+        <meta name="description" content="sense.city" />
 
-<link rel="stylesheet" href="_css/bootstrap.min.css" />
-<link rel="stylesheet" href="_css/animate.min.css" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300'
+              rel='stylesheet' type='text/css'>
 
-<link rel="stylesheet" href="css/loading-bar.css" />
-<link rel="stylesheet" href="css/scapp.css" />
- <link rel="stylesheet" href="css/sidebar.css">
-  <link rel="stylesheet" href="./datalist/jquery.flexdatalist.css">
- 
+        <link rel="stylesheet" href="_css/bootstrap.min.css" />
+        <link rel="stylesheet" href="_css/animate.min.css" />
+        <link rel="stylesheet" href="css/scapp.css" />
+        <link rel="stylesheet" href="css/sidebar.css">
 
-<!-- angular dep -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.min.js"></script>
-<script src="https://code.angularjs.org/1.5.9/angular-resource.min.js"></script>
-<script src="https://code.angularjs.org/1.5.9/angular-route.min.js"></script>
-<script src="https://code.angularjs.org/1.5.9/angular-animate.min.js"></script>
-<script src="https://code.angularjs.org/1.5.9/angular-touch.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-cookies.js"></script>
+
+        <!-- angular dep -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-resource.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-route.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-animate.min.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-touch.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-cookies.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
-<script src="_js/angular-translate.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
+        <script src="_js/angular-translate.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
 
-<!-- angular strap -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
 
-<!-- Marker icons -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
-<script src="./datalist/jquery.flexdatalist.js"></script>
-<script src="js/dirdisqus.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
 
-<!-- Map dependancies -->
-<link rel="stylesheet" href="css/leaflet.css" />
-<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
-<link rel="stylesheet" href="css/ionicons.min.css" />
-<link rel="stylesheet" href="_css/MarkerCluster.css" />
-<link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
-<link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
-<link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" type="text/css" href="admin/css/gdropdown.css" />
 
-<script src="js/leaflet.js"></script>
-<script src="js/ui-leaflet.min.js"></script>
-<script src="js/leaflet.awesome-markers.js"></script>
-<script src="js/angular-simple-logger.js"></script>
-<script src="js/leaflet.markercluster.js"></script>
-<script src="js/leaflet.extra-markers.min.js"></script>
-<script src="js/angular-count-to.min.js"></script>
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+        <script src="js/dirdisqus.js"></script>
 
-<!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
-<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
-<script src="js/Google.js"></script>
+        <!-- Map dependancies -->
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.css" />
+        <link rel="stylesheet" href="_css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+        <!--<link rel="stylesheet" href="css/style.css" />-->
+        <link rel="stylesheet" type="text/css" href="admin/css/gdropdown.css" />
 
-<!-- Angular scapp dependancies -->
-<script src="scctrl.js"></script>
-<script src="sense.js"></script>
-<script src="scwebsubmitctrl.js"></script>
-<script src="scsearchctrl.js"></script>
-<script src="overviewctrl.js"></script>
-<script src="scapp.js"></script>
-<script src="scsrvs.js"></script>
-<script src="scissuemapctrl.js"></script>
-<script src="scissuemapsrvs.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet.extra-markers.min.js"></script>
+        <script src="js/angular-count-to.min.js"></script>
 
-<script src="js/loading-bar.js"></script>
+        <!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
+        <script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
+        <script src="js/Google.js"></script>
+        <!-- Angular scapp dependancies -->
+        <script src="scctrl.js"></script>
+        <script src="sense.js"></script>
+        <script src="scwebsubmitctrl.js"></script>
+        <script src="scsearchctrl.js"></script>
+        <script src="overviewctrl.js"></script>
+        <script src="scapp.js"></script>
+        <script src="scsrvs.js"></script>
+        <script src="scissuemapctrl.js"></script>
+        <script src="scissuemapsrvs.js"></script>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.13.1/angular-translate-loader-static-files.min.js"></script>
-<script type="text/javascript" src="admin/js/gdropdown.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.13.1/angular-translate-loader-static-files.min.js"></script>
+        <script type="text/javascript" src="admin/js/gdropdown.js"></script>
         <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
         <script src="admin/dist/angular-tooltips.min.js"></script>
 
+        <!-- new section -->          
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-</head>
-<body ng-app="scApp" ng-controller="sensecityMainCtrl">
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
 
-	<div id="container">
-		
-		<div id="header">
-			<div class="slide-animate" ng-include="'scnavbar.html'"></div>
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+    </head>
+    <body ng-app="scApp" ng-controller="sensecityMainCtrl">
+        <div class="page-container"> 
+            <div class="page-content">
+                <ul class="x-navigation  x-navigation-horizontal">
+                    <div ng-include="'scnavbar.html'"></div>
+                </ul>
+                <div ng-view autoscroll="true"> </div>
+                </div>
+                
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script',
+                    '//www.google-analytics.com/analytics.js', 'ga');
 
-		</div>
-		<div id="content">
-			<div class="slide-animate" ng-view autoscroll="true"></div>
-
-		</div>
-		<div ng-show="overview_url != '/overview'" id="footer" style="background-color:#D0D0D0;margin-top:10px;">
-			<div class="slide-animate" ng-include="'scfooter.html'" style="height:120px;"></div>
-
-		</div>
-		
-		
-	</div>
-
-	<script>
-		(function(i, s, o, g, r, a, m) {
-			i['GoogleAnalyticsObject'] = r;
-			i[r] = i[r] || function() {
-				(i[r].q = i[r].q || []).push(arguments)
-			}, i[r].l = 1 * new Date();
-			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-			a.async = 1;
-			a.src = g;
-			m.parentNode.insertBefore(a, m)
-		})(window, document, 'script',
-				'//www.google-analytics.com/analytics.js', 'ga');
-
-		ga('create', 'UA-73253016-1', 'auto');
-		ga('send', 'pageview');
-	</script>
-
-</body>
+            ga('create', 'UA-73253016-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+            </div>
+    </body>
 </html>

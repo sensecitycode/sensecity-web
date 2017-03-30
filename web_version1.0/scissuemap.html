@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>sense.city</title>
+        <meta name="description" content="sense.city" />
+        <!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="generator" content="Codeply">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+        
+        
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <script src="js/leaflet.js"></script>
+
+        <link rel="stylesheet" href="css/styles.css" />
+<!--        <style>
+      #map, #pano {
+        float: left;
+        height: 100%;
+        width: 45%;
+      }
+    </style>-->
+<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
+        <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+        
+
+
+        <!-- angular dep -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js"></script>
+        <script src="https://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
+
+        <!-- Map dependancies -->
+        <script src="js/leaflet.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/leaflet.extra-markers.min.js"></script>
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="css/leaflet.extra-markers.min.css">
+        <link rel="stylesheet" href="css/timeline.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="_css/animate.min.css" />
+        
+        <script src="_js/angular-translate.min.js"></script>
+        <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
+        <script src="admin/dist/angular-tooltips.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-cookie/2.8.1/angular-translate-storage-cookie.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-storage-local/2.8.1/angular-translate-storage-local.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.13.1/angular-translate-loader-static-files.min.js"></script>
+        <script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular-cookies.js"></script>
+        <script src="https://code.angularjs.org/1.5.9/angular-animate.min.js"></script>        
+        <script src="js/dirdisqus.js"></script>
+
+        <!-- Angular scissuemapapp dependancies -->
+        <script src="scissuemapctrl.js"></script>
+        <script src="scissuemapapp.js"></script>
+        <script src="scissuemapsrvs.js"></script>
+
+
+    </head>
+    <body ng-app="scissuemapapp" ng-cloak ng-controller="scissuemapctrl">
+        <div id="header">
+            <div class="slide-animate">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavCtrl">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/#!/">
+				<i
+		class="ion-ios-analytics-outline"></i> sense.city <sup
+		style="font-size: 55%">beta</sup>
+				</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav" >
+						<li ng-class="navClass('web_report')" ><a href="/#!/web_report">{{ 'MENUREPORT' | translate }}</a></li>
+						<li ng-class="navClass('search')"><a href="/#!/search">{{'MENUSEARCH' | translate }} </a></li>
+						<li ng-class="navClass('overview')"><a href="/#!/overview">{{'MENUOVERVIEW' | translate }}</a></li>
+						
+			
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li ><a href=""
+					style="float: right; padding-left: 0px; padding-right: 0px;"
+					ng-click="changeLanguage('el')"><img src="images/flags/el.png" /></li>
+					<li></a>&nbsp;&nbsp; <a href=""style="float: right; padding-left: 0px; padding-right: 5px;"
+		ng-click="changeLanguage('en')"><img src="images/flags/en.png" />
+	</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</nav>
+	
+
+<div id="headertitle">{{ 'TITLE' | translate }}</div>
+            </div>
+    </div>
+        
+        <div data-ng-init="initialize()"></div>
+        <div class="col-md-12" id="title_h1" style="background-color: #FFFFFF;padding: 20px;margin-top:2.5%">
+            <span style="color:#000000; font-size:28px;"><b>{{issue_name_new}}</b>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;</span><span style="color:#000000; font-size:22px;">{{issue_value_desc}}</span>
+        </div>
+
+        <div class="col-md-12 " style="background-color: #FFFFFF;">
+            <br>
+            <div class="col-lg-8">
+                <div id="map-bar"><div style="display:table-cell;text-align:right;vertical-align: middle;font-size:20px"><span tooltip-side="top" tooltip-size="small" tooltips tooltip-template="Χάρτης" style="cursor:pointer" ng-click="change_icon('Χάρτης')"><span class="fa fa-map" id="map-icons-active"></span></span><span style="cursor:pointer" tooltip-size="small" tooltip-side="top" tooltips tooltip-template="Δρόμος" ng-click="change_icon('Δρόμος')"><span class="fa fa-street-view" id="map-icons"></span></span><span style="cursor:pointer" tooltip-size="small" tooltip-side="top" tooltips tooltip-template="3D Κτίρια" ng-click="change_icon('3D Κτίρια')"><span id="map-icons" style="margin-right:12px;" class="fa fa-eercast"></span></span></div></div>
+                <div id="map" style="color: black; height:50vh">
+                    <div id="streetview"></div>
+                    <leaflet lf-center="center" layers="layers" markers="markers" height="50vh"></leaflet>
+                    </div>
+
+            </div>
+            <div class="col-lg-4" id="image_div" style="color:#000;height: 50%;overflow-x: hidden;">
+                <center>
+                    <img ng-if="!(issue_image === ''|| issue_image === 'no-image'|| issue_image === null || issue_image === undefined)" class="img-responsive" width={{lastissue.width}} ng-src={{issue_image}} alt="" height="50vh">
+                                        <i ng-if="issue_image === ''|| issue_image === 'no-image'|| issue_image === null || issue_image === undefined" class={{lastissue_class}} style="font-size:12em;color:black;height:50vh"></i>
+                </center>
+            </div>
+            <br>
+        </div>
+
+        <div class="col-md-12 " style="background-color: #FFFFFF;">
+            <div id="timeline" style="padding-top:20px; color:#000;" class="text-center">
+                <h2>Εξέλιξη προβλήματος(#{{resp_id}})</h2>
+                <section style="font-family:Helvetica, sans-serif;width:100%;background-color:#25303B" id="timeline">
+                    <article ng-repeat="comment in comments">  
+                        <div class="inner">
+                            <span class="date">
+                                <span class="day">{{comment.day}}<sup style="text-transform:none">η</sup></span>
+                                <span class="month">{{comment.month}}</span>
+                                <span class="year">{{comment.year}}</span>
+                            </span>
+                            <div ng-style="comment.color">
+                                <h2 style="top:10px">{{comment.type}}</h2>
+                                <div><span class="fa fa-clock-o"></span> {{comment.time}}</div>
+                            </div>
+                            <p style="text-align:left">
+                                Ανάθεση σε:  {{comment.component}}
+                                <br>
+                                <br>
+                                <span ng-show="comment.show"> {{comment.content}}</span>
+                            </p>
+                        </div>
+                    </article>
+                </section>
+            </div>
+            <dir-disqus config="disqusConfig"></dir-disqus>
+<!--            <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+//this.page.url = window.location.href;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = window.location.href.split('=')[1]; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//sense-city.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+           -->
+            <div id="map"></div>
+            <div id="pano"></div>
+        </div>
+        <div class="""slide-animate">
+        <div id="footer" style="background-color:#D0D0D0;margin-top:10px">
+            <div class="row" style="margin-left: 0px; margin-right: 0px;" >
+	<div class="col-xs-12 col-sm-3 column">
+		<img ng-src={{Variables.img_logo}}
+			style="width: 69px;">
+		<img src="images/upatras_logo.png"
+			style="width: 174px;">
+	</div>
+	
+	<div class="col-xs-12 col-sm-6 column">
+	<!-- 	<h4 id="msg_section_info">Info</h4>
+		<ul class="list-inline">
+			<li><a href="">Products</a></li>
+			<li><a href="">Services</a></li>
+			<li><a href="">Benefits</a></li>
+			<li><a href="">Developers</a></li>
+			<li><a href="#">Privacy Policy</a></li>
+			<li><a href="#">Terms &amp; Conditions</a></li>
+		</ul> -->
+		
+		
+		
+	</div>
+	<div class="col-xs-12 col-sm-3 text-right">
+		<h4 id="msg_section_followus">{{ 'FOLLOWUS' | translate }}</h4>
+		<ul class="list-inline">
+			<li><a rel="nofollow" href="" title="Twitter"><i
+					class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
+			<li><a rel="nofollow"
+				href="https://www.facebook.com/sensecitybook" title="Facebook"><i
+					class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
+			<li><a rel="nofollow" href="" title="Ιnstagram"><i
+					class="icon-lg ion-social-instagram-outline"></i></a></li>
+		</ul>
+                <br />
+</div>
+                <span class="pull-right text-muted small"><a
+	href="http://www.bootstrapzero.com">Theme by: Landing Zero by
+		BootstrapZero</a> ©2016 Πανεπιστήμιο Πατρών</span>
+	</div>
+</div>
+        </div>
+        <!--scripts loaded here from cdn for performance -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/scripts.js"></script>
+<!--        <script>
+
+                                        function initialize() {
+
+                                            var fenway = {lat: 25.345573, lng: 20.098326};
+                                            var map = new google.maps.Map(document.getElementById('map'), {
+                                                center: fenway,
+                                                zoom: 14
+                                            });
+                                            var panorama = new google.maps.StreetViewPanorama(
+                                                    document.getElementById('pano'), {
+                                                position: fenway,
+                                                pov: {
+                                                    heading: 34,
+                                                    pitch: 10
+                                                }
+                                            });
+                                            map.setStreetView(panorama);
+                                        }
+        </script>
+-->        
+
+
+    </body>
+</html>

@@ -6,7 +6,7 @@
 <!--<a href="http://localhost:8383/sensecity-web/scissuemap.html?issue={{lastissue._id}}" style="text-decoration: none;">-->
                             <center>
 					<div class="thumbnail crop" style="padding: 0px;">
-					<img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" class="img-responsive" width={{lastissue.width}} ng-src={{lastissue.image_name}} alt="" height="239">
+					<img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" class="img-responsive" width={{lastissue.width}} src={{lastissue.image_name}} alt="" height="239">
                                         <i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:12em;color:black"></i>
 					</div>
                                                                    

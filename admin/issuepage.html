@@ -1,5 +1,5 @@
-<!--<link href="../lightbox/dist/css/lightbox.css" rel="stylesheet">
-        <script src="../lightbox/dist/js/lightbox.js"></script>-->
+<link href="../lightbox/dist/css/lightbox.css" rel="stylesheet">
+        <script src="../lightbox/dist/js/lightbox.js"></script>
 <div ng-show="valid">
     <!-- START PAGE CONTAINER -->
     <div class="page-container" data-ng-init="initialize()">
@@ -16,6 +16,7 @@
                         </li>
                         <li class="xn-profile">
                             <a ng-href={{link}} class="profile-mini">
+                                <img src="assets/images/users/avatar.jpg" alt="John Doe"/>
                             </a>
                             <div class="profile">
                                 <div class="profile-data">
@@ -199,7 +200,7 @@
                         <div ng-hide="padmin">
                             <center>
                                 <!--<a data-lightbox="image-1" href="http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Nice/nice-overview-coastline-xlarge.jpg">-->
-                                    <img class="img-responsive" ng-if="pimage != '' && pimage != 'no-image'&& pimage != null && pimage != undefined" id="issue_image" ng-src="{{pimage}}" width="90%;" />
+                                    <img class="img-responsive" ng-if="pimage != '' && pimage != 'no-image'&& pimage != null && pimage != undefined" id="issue_image" src="{{pimage}}" width="90%;" />
                             <!--</a>-->
                                 <i ng-if="pimage == ''|| pimage == 'no-image'|| pimage == null || pimage == undefined" class={{pclass}} style="font-size:12em;color:black"></i>
                             </center>
@@ -241,17 +242,29 @@
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
         <!-- END PLUGINS -->
 
-        <!-- START THIS PAGE PLUGINS-->              
+        <!-- START THIS PAGE PLUGINS-->        
+        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>        
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
         <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
-               
+
+        <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
+        <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>       
+        <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
+        <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
+        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
+        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>                
+        <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>                 
 <!--        <script>$(".xn-openable").first().attr("class", "xn-openable active");</script>-->
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
+        <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
         <!-- END THIS PAGE PLUGINS-->        
         <!-- START TEMPLATE -->
         <!--        <script type="text/javascript" src="js/settings.js"></script>-->
         <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>
+        
+        <script type="text/javascript" src="js/demo_dashboard.js"></script>
         <!-- END TEMPLATE -->
         <!-- END SCRIPTS -->
     </div>

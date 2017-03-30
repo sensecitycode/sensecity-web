@@ -1,42 +1,11 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavCtrl">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#!/">
-				<i
-		class="ion-ios-analytics-outline"></i> sense.city <sup
-		style="font-size: 55%">beta</sup>
-				</a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav" >
-						<li ng-class="navClass('web_report')" ><a href="#!/web_report">{{ 'MENUREPORT' | translate }}</a></li>
-						<li ng-class="navClass('search')"><a href="#!/search">{{'MENUSEARCH' | translate }} </a></li>
-						<li ng-class="navClass('overview')"><a href="#!/overview">{{'MENUOVERVIEW' | translate }}</a></li>
-						
-			
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li ><a href=""
-					style="float: right; padding-left: 0px; padding-right: 0px;"
-					ng-click="changeLanguage('el')"><img src="images/flags/el.png" /></li>
-					<li></a>&nbsp;&nbsp; <a href=""style="float: right; padding-left: 0px; padding-right: 5px;"
-		ng-click="changeLanguage('en')"><img src="images/flags/en.png" />
-	</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-
-		</div>
-	</nav>
-	
-
-<div id="headertitle">{{ 'TITLE' | translate }}</div>
+<li class="xn-logo" style="background-color: #1caf9a;
+    border-bottom: 1px solid #1caf9a;">
+                            <a id="senselogo" href="#" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                            <a  href="#" style="color:white" id="nav_control" class="x-navigation-control"></a>
+                        </li> 
+<li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+<li ng-show="navClass('scsearchissues')"><a id="active_list" href="/scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="/scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
+<li ng-show="navClass('all_issues')"><a id="active_list" href="/all_issues.html">{{'MENUMORE' | translate }}</a></li>
+<li ng-hide="navClass('all_issues')"><a id="disabled_list" href="/all_issues.html">{{'MENUMORE' | translate }}</a></li>

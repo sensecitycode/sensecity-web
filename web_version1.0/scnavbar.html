@@ -1,0 +1,42 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavCtrl">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#!/">
+				<i
+		class="ion-ios-analytics-outline"></i> sense.city <sup
+		style="font-size: 55%">beta</sup>
+				</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav" >
+						<li ng-class="navClass('web_report')" ><a href="#!/web_report">{{ 'MENUREPORT' | translate }}</a></li>
+						<li ng-class="navClass('search')"><a href="#!/search">{{'MENUSEARCH' | translate }} </a></li>
+						<li ng-class="navClass('overview')"><a href="#!/overview">{{'MENUOVERVIEW' | translate }}</a></li>
+						
+			
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li ><a href=""
+					style="float: right; padding-left: 0px; padding-right: 0px;"
+					ng-click="changeLanguage('el')"><img src="images/flags/el.png" /></li>
+					<li></a>&nbsp;&nbsp; <a href=""style="float: right; padding-left: 0px; padding-right: 5px;"
+		ng-click="changeLanguage('en')"><img src="images/flags/en.png" />
+	</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</nav>
+	
+
+<div id="headertitle">{{ 'TITLE' | translate }}</div>

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>patras.sense.city</title>
+    <meta name="description" content="sense.city" />
+	<!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Codeply">
+    <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" /> -->
+	
+   <!--  <link href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" /> 
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet"> -->
+	
+	<link rel="stylesheet" href="_css/bootstrap.min.css" />
+    <link href="css/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ionicons.min.css" />
+	<link href="css/font-awesome.css" rel="stylesheet"> 
+	<link rel="stylesheet" href="css/leaflet.css" />
+	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+	<script src="js/leaflet.js"></script> 
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+	<div id="container">
+			<div id="header" style="padding-top: 17px; background-color:#000000;height: 61px;">
+				<div>
+					<div id="logo" style="float:left;">
+						<a href="./" style="font-size:1.5em"> <i class="ion-ios-analytics-outline"></i>
+							sense.city <sup style="font-size: 55%">beta</sup></a>
+						<img src="images/patraslogo.jpg" style="width: 51px; margin-top: -21px; margin-bottom: -17px; margin-left: 4px;"> 
+						<img src="images/upatras_logo.png" style="width: 174px; margin-top: -24px; margin-bottom: -17px; margin-left: 4px;"> 
+							
+					</div>
+					<div style="font-size:26px; float:left; width:50%;"><center id="msg_subdomain_title">Τι συμβαίνει στην πόλη<center></div>
+					<div style="float:left;">
+						<a href="#" style="float:right;padding-left:0px;padding-right:0px;" id="land_el" ><img src="images/flags/el.png" /> </a>&nbsp;&nbsp;
+						<a href="#" style="float:right;padding-left:0px;padding-right:5px;" id="land_en" ><img src="images/flags/en.png" /> </a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+    <section class="bg-primary"  style="padding-top: 20px; background-color: rgba(255,255,255,0.9); /* background-image:url('img/map_back.png'); background-repeat-x:no-repeat; background-repeat-y:no-repeat;*/">
+        
+			<div style="margin-bottom: -19px;">
+				<!-- <h2 class="margin-top-0 text-primary text-center" style="color:#000000;">Τι συμβαίνει στη πόλη</h2>
+				<br> -->
+				<p class="text-faded text-center" style="color:#000000;background-color: #FFF;" id="msg_sub_text1">
+					Δείτε με μια ματιά εδώ τι έχουν αναφέρει οι υπόλοιποι πολίτες και ποια είναι τα τελευταία συμβάντα στη πόλη!
+				</p>
+			</div>
+			<div class="row col-lg-12 " style="padding-right: 0px; padding-left: 0px; margin-right: 0px; margin-left: 0px;" id="one">
+					<div id="map" style="color: black; height:450px;"></div>
+					<div style="font-size:10px; color:#000000;" id="msg_sub_text2"> * Η απεικόνιση των κάδων απορριμάτων δεν συνάδει με οποιαδήποτε οριστική χωροθέτηση αυτών.</div>
+					
+                </div>
+				
+				
+				<div class="row" style="margin-left:0px; margin-right:0px; ">
+					<div class="col-lg-12" id="recent_five" style="padding-top:15px;">
+
+					</div><!-- /.col-lg-12 -->          
+				</div><!-- /.row -->
+				
+				<div class="row" id="btn_more" style="    padding-top: 20px; margin-left: 0px; margin-right: 0px;"></div>
+			
+    </section>
+    <footer id="footer" style="background-color:#D0D0D0;">
+        <div class="container">
+            <div class="row"  style="margin-left:0px;margin-right:0px; ">
+                <div class="col-xs-12 col-sm-9 column">
+                    <h4 id="msg_section_info">Πληροφορίες</h4>
+                    <ul class="list-inline">
+                        <li><a href="">Products</a></li>
+                        <li><a href="">Services</a></li>
+                        <li><a href="">Benefits</a></li>
+                        <li><a href="">Developers</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-3 text-right">
+                    <h4 id="msg_section_followus">Ακολουθήστε μας</h4>
+                    <ul class="list-inline">
+                      <li><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
+                      <li><a rel="nofollow" href="https://www.facebook.com/sensecitybook" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
+                      <li><a rel="nofollow" href="" title="Ιnstagram"><i class="icon-lg ion-social-instagram-outline"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <br/>
+            <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Theme by: Landing Zero by BootstrapZero</a> ©2015 Πανεπιστήμιο Πατρών</span>
+        </div>
+    </footer>
+    <!--scripts loaded here from cdn for performance -->
+    <script src="_js/jquery.min.js"></script>
+     <script src="_js/bootstrap.min.js"></script> 
+    <script src="_js/jquery.easing.min.js"></script>
+    <script src="_js/wow.js"></script>
+	<script src="js/leaflet.awesome-markers.js"></script>
+    <script src="js/scripts.js"></script>
+	
+	
+	<link rel="stylesheet" type="text/css" href="_css/MarkerCluster.css" />
+    <link rel="stylesheet" type="text/css" href="_css/MarkerCluster.Default.css" />
+	<link rel="stylesheet" type="text/css" href="css/leaflet.extra-markers.min.css" />
+	
+	<script type='text/javascript' src='js/leaflet.markercluster.js'></script>
+	<script type='text/javascript' src='js/leaflet.extra-markers.min.js'></script>
+	
+	
+	
+	 <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+    <!-- <script>window.jQuery || document.write('<script src="_js/vendor/jquery.min.js"><\/script>')</script> -->
+    <!-- <script src="_js/bootstrap.min.js"></script> -->
+    <!-- <script src="_js/docs.min.js"></script> -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	
+			<script>
+				
+				
+				$(document).ready(function() {
+					$('.carousel').carousel({
+						interval: 15000
+					})
+				});
+
+  
+  
+  
+  
+				var newdate = new Date();
+				var sart_date = new Date();
+				sart_date.setDate(sart_date.getDate() -3); 
+				
+				var map = L.map('map').setView( new L.LatLng( 38.2466395, 21.734574 ), 19);
+			
+						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+						maxZoom: 19, }).addTo(map);
+						
+						var garbageMarkers = L.markerClusterGroup({disableClusteringAtZoom: 19, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var lightingMarkers = L.markerClusterGroup({disableClusteringAtZoom: 19, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var plumpingMarkers = L.markerClusterGroup({disableClusteringAtZoom: 19, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var roadConstMarkers = L.markerClusterGroup({disableClusteringAtZoom: 19, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var smiliesMarkers = L.markerClusterGroup({disableClusteringAtZoom: 19, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var kadoiMarkers = L.markerClusterGroup({disableClusteringAtZoom: 19, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						var fotistikoMarkers = L.markerClusterGroup({disableClusteringAtZoom: 19, animateAddingMarkers: true, spiderfyDistanceMultiplier: true}).addTo(map);
+						
+						
+				
+				
+				$.ajax({
+					crossDomain: true,
+					type:"GET",
+					url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&enddate="+newdate+"&coordinates=[21.734574,38.2466395]&distance=15000&sort=-1&image_field=0",
+					dataType: "json",                
+					success: function(msg){
+						
+						
+						//var zoom = 13;
+						//var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+						//var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+						var count_pos =0;
+						var position = new Array();
+						
+						var positionlat = msg[0].loc.coordinates[1];
+						var positionlon = msg[0].loc.coordinates[0];
+						
+						console.log(positionlat);
+						console.log(positionlon);
+
+						$.each(msg, function(idx, obj) {
+							var positionlat = obj.loc.coordinates[1];
+							var positionlon = obj.loc.coordinates[0];
+							
+							if (obj.issue === 'lighting') 
+							{
+								var redMarker = L.AwesomeMarkers.icon({
+									icon: 'lightbulb-o',
+									prefix: 'fa',
+									markerColor: 'red'
+								  });
+								  
+								var marker1 = L.marker([positionlat, positionlon], {icon: redMarker});					
+								if(obj.image_name === "undefined" || obj.image_name == null){
+									marker1.bindPopup("Loading...");
+									marker1.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
+								}
+								else{
+									marker1.bindPopup("Loading...");
+									marker1.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
+								}
+								lightingMarkers.addLayer(marker1);			
+							}else if (obj.issue === 'garbage') 
+							{
+								var redMarker = L.AwesomeMarkers.icon({
+									icon: 'trash-o',
+									prefix: 'fa',
+									markerColor: 'red'
+								  });
+								  
+								var marker2 = L.marker([positionlat, positionlon], {icon: redMarker});
+										
+								if(obj.image_name === "undefined" || obj.image_name == null){
+									//marker.bindPopup(obj.value_desc);
+									marker2.bindPopup("Loading...");
+									marker2.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
+								}
+								else{
+									//marker.bindPopup(obj.value_desc+"<br><br> <img src=\""+obj.image_name+"\" width=\"100\" />");
+									marker2.bindPopup("Loading...");
+									marker2.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
+								
+								}
+								garbageMarkers.addLayer(marker2);
+								
+							}else if (obj.issue === 'road-constructor') 
+							{
+								var redMarker = L.AwesomeMarkers.icon({
+									icon: 'road',
+									prefix: 'fa',
+									markerColor: 'red'
+								  });
+								  
+								var marker3 = L.marker([positionlat, positionlon], {icon: redMarker});
+									
+								if(obj.image_name === "undefined" || obj.image_name == null){
+									marker3.bindPopup("Loading...");
+									marker3.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
+								}
+								else{
+									marker3.bindPopup("Loading...");
+									marker3.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
+								}
+								roadConstMarkers.addLayer(marker3);
+								
+							}else if (obj.issue === 'plumping') 
+							{
+								var redMarker = L.AwesomeMarkers.icon({
+									icon: 'umbrella',
+									prefix: 'fa',
+									markerColor: 'red'
+								  });
+								  
+								var marker4 = L.marker([positionlat, positionlon], {icon: redMarker});
+								
+								
+								if(obj.image_name === "undefined" || obj.image_name == null){
+									marker4.bindPopup("Loading...");
+									marker4.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
+								}
+								else{
+									marker4.bindPopup("Loading...");
+									marker4.on('click', function(e) {
+										var popup = e.target.getPopup();
+										var url="http://api.sense.city:3000/api/issue/"+obj._id;
+										$.get(url).done(function(data) {
+											popup.setContent("<h4>"+obj.value_desc+"</h4><img src=\""+data+"\" width=\"100\" />");
+											popup.update();
+										});
+									});
+								}
+								
+								plumpingMarkers.addLayer(marker4);
+							}else
+							{	
+								var ic = 'smile-o';
+								var color_='green';
+								
+								if (obj.issue === 'neutral')
+								{
+										ic = 'meh-o';
+										var color_='orange';
+								} else if (obj.issue === 'angry')
+								{
+										ic = 'frown-o';
+										var color_='orange-dark';
+								}
+										
+								var darkgreenMarker = L.AwesomeMarkers.icon({
+									icon: ic,
+									prefix: 'fa',
+									markerColor: color_,
+									iconColor: 'darkgreen'
+								  });
+								  
+								var marker5 = L.marker([positionlat, positionlon], {icon: darkgreenMarker});
+								smiliesMarkers.addLayer(marker5);
+							}
+						});	
+					}
+				});
+				
+				
+				$.getJSON("json/all_fix_data_points.json", function(json) {
+					console.log("start");
+						$.each(json, function(idx, obj) {
+							var positionlat = obj.loc.coordinates[1];
+							var positionlon = obj.loc.coordinates[0];
+							
+							if (obj.type === 'fotistiko') 
+							{
+								var yelMarker = L.ExtraMarkers.icon({
+									icon: 'fa-lightbulb-o',
+									markerColor: 'yellow',
+									shape: 'square',
+									prefix: 'fa'
+								  });
+								  
+								var marker6 = L.marker([positionlat, positionlon], {icon: yelMarker});					
+								
+								fotistikoMarkers.addLayer(marker6);	
+								
+							}
+
+							if (obj.type === 'garbage') 
+							{
+								
+								var garbage_color;
+								
+								if(obj.notes[0].ANAKIKLOSI=='0'){
+									garbage_color = 'green';
+								}else{
+									garbage_color='cyan';
+								}
+								var garbMarker = L.ExtraMarkers.icon({
+									icon: 'fa-trash-o',									
+									markerColor: garbage_color,
+									shape: 'square',
+									prefix: 'fa'
+								  });
+								  
+								var marker7 = L.marker([positionlat, positionlon], {icon: garbMarker});
+								
+								kadoiMarkers.addLayer(marker7);
+							}
+						});
+						
+						console.log("end");
+					
+				});
+
+
+				
+				
+				/*
+				$.ajax({
+					crossDomain: true,
+					type:"GET",
+					url: "http://api.sense.city:3000/fix_point/21.735153/38.246414/3000/data",
+					async:false,
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",                
+					success: function(msg){
+						console.log("start");
+						$.each(msg, function(idx, obj) {
+							var positionlat = obj.loc.coordinates[1];
+							var positionlon = obj.loc.coordinates[0];
+							
+							if (obj.type === 'fotistiko') 
+							{
+								var yelMarker = L.ExtraMarkers.icon({
+									icon: 'fa-lightbulb-o',
+									markerColor: 'yellow',
+									shape: 'square',
+									prefix: 'fa'
+								  });
+								  
+								var marker6 = L.marker([positionlat, positionlon], {icon: yelMarker});					
+								
+								fotistikoMarkers.addLayer(marker6);	
+								
+							}
+
+							if (obj.type === 'garbage') 
+							{
+								
+								var garbage_color;
+								
+								if(obj.notes[0].ANAKIKLOSI=='0'){
+									garbage_color = 'green';
+								}else{
+									garbage_color='cyan';
+								}
+								var garbMarker = L.ExtraMarkers.icon({
+									icon: 'fa-trash-o',									
+									markerColor: garbage_color,
+									shape: 'square',
+									prefix: 'fa'
+								  });
+								  
+								var marker7 = L.marker([positionlat, positionlon], {icon: garbMarker});
+								
+								kadoiMarkers.addLayer(marker7);
+							}
+						});
+						
+						console.log("end");
+					}
+				});
+				*/
+				map.scrollWheelZoom.disable();
+				
+				var overlayMaps = {
+					"Προβλήματα σκουπιδιών": garbageMarkers,
+					"Προβλήματα φωτισμού": lightingMarkers,
+					"Προβλήματα ύδρευσης": plumpingMarkers,
+					"Προβλήματα οδοστρώματος": roadConstMarkers,
+					"Ανάδραση πολιτών": smiliesMarkers,
+					"Κάδοι": kadoiMarkers,
+					"Φωτισμός": fotistikoMarkers
+				};	
+							
+				L.control.layers(null, overlayMaps).addTo(map);
+				
+				
+				$('a.page-scroll').bind('click', function(event) {
+					var $anchor = $(this);
+					$('html, body').stop().animate({
+						scrollTop: ($($anchor.attr('href')).offset().top - 50)
+					}, 1250, 'easeInOutExpo');
+					event.preventDefault();
+				});
+				
+				
+				/*
+				$.ajax({
+							crossDomain: true,
+							type:"GET",
+							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1",
+							dataType: "json",                
+							success: function(msg){								
+								
+								$('#recent_five').append();
+								var count_slide =0;
+								var position = new Array();
+								var flag_active=0;
+								var html_code='';
+								
+								
+								
+								$.each(msg, function(idx, obj) {
+								
+									
+									var positionlat = obj.loc.coordinates[1];
+									var positionlon = obj.loc.coordinates[0];
+									var image_name;
+									if(obj.image_name==='' || obj.image_name===null || obj.image_name===undefined || obj.image_name==='no-image'){
+										image_name = "images/EmptyBox-Phone.png";
+									}
+									else
+									{
+										image_name = obj.image_name;
+									}
+									var issue = '';
+									switch(obj.issue){
+										case 'garbage':
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Cleaning Problem';
+											}else{
+												issue = 'Πρόβλημα Καθαριότητας';
+											}
+											break;
+										case 'lighting':
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Lighting Problem';
+											}else{
+												issue = 'Πρόβλημα Φωτισμού';
+											}
+											break;
+										case 'plumbing':
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Plumbing Problem';
+											}else{
+												issue = 'Πρόβλημα Υδραυλικών';
+											}
+											break;
+										case 'road-contructor':
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Street/Sidewalk Problem';
+											}else{
+												issue = 'Πρόβλημα Δρόμου/Πεζοδρομίου';
+											}
+											break;
+										case 'angry':
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Disposal';
+											}else{
+												issue = 'Διάθεση';
+											}
+											break;
+										case 'neutral':
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Disposal';
+											}else{
+												issue = 'Διάθεση';
+											}
+											break;
+										case 'happy':
+											if(localStorage.getItem("language") === 'en'){
+												issue = 'Disposal';
+											}else{
+												issue = 'Διάθεση';
+											}
+											break;
+										default:											
+											issue = '';
+											break;
+									}									
+									
+									var today = new Date();
+									var create_day = new Date(obj.create_at);
+									
+																	
+									var seconds = (today.getTime() - create_day.getTime())/1000;									
+									var datediff ='';
+									
+									console.log(seconds);
+									
+									if(seconds<60){
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+seconds+" seconds";
+										}else{
+											datediff = "πριν από "+seconds+" δευτερόλεπτα";
+										}
+										
+									}
+									else if(seconds<3600){
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+Math.floor(seconds/60)+" minutes";
+										}else{
+											datediff = "πριν από "+Math.floor(seconds/60)+" λεπτά";
+										}
+										
+									}else if(seconds<86400){
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+Math.floor(seconds/3600)+" hours";
+										}else{
+											datediff = "πριν από "+Math.floor(seconds/3600)+" ώρες";
+										}
+										
+									}
+									else{
+										if(localStorage.getItem("language") === 'en'){
+											datediff = "before "+Math.floor(seconds/86400)+" days";
+										}else{
+											datediff = "πριν από "+Math.floor(seconds/86400)+" μέρες";
+										}
+										
+									}
+									
+									//$('#recent_five').append('<a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="color: #FFFFFF !important;"><div class="row"><div style="border-radius: 5px 5px 5px 5px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; border: 1px dotted rgb(2, 71, 197);  height: 100px;  margin-top: 20px; background-color: #FFFFFF;color:#696969;"><div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding-top:4px;"><img src="'+image_name+'" height="90px" style="max-width: 110px;" /></div><div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><h4>'+issue+'</h4><div  style="text-align: left; font-size: 12px; margin-top:-8px; padding-left: 0px; color: #696969;">'+datediff+'</div><div>'+obj.value_desc+'</div></div></div></div></a>');
+									//$('#recent_five').append('<li class="col-lg-3"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+'"><div class="thumbnail"><img src="'+image_name+'" alt=""></div><div class="caption"><h4>'+issue+'</h4><p>'+datediff+'</p><p>'+obj.value_desc+'</p></div></a></li>');
+									html_code +='<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" style="padding-bottom: 5px;"><div style="background-color:#FFFFFF; border-width: 1px;border-color: #967f7f;border-style: dotted;border-radius: 10px;"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="text-decoration:none;"><center><div class="thumbnail crop" style=" padding:0px; "><img src="'+image_name+'" alt=""></div></center><div class="caption" style="color:#000000;padding-left: 13px;padding-right: 5px; margin-top:-10px;"><p style="font-size:13px;"><b id="msg_subdomain_issue">'+issue+'</b></p> <p style="font-size:12px;height:40px;margin-top:-10px;">'+obj.value_desc+'</p><p style="margin-top:-10px;font-size:14px;"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+datediff+'</p></div></div></div>';
+									count_slide++;
+									
+								});
+								
+								//$('#recent_five').append('</ul></div>');
+								//html_code += '</ul></div>';
+								$('#recent_five').append(html_code);
+								$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Αναζήτηση </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Αναφορά προβλήματος </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Επισκόπηση </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">Περισσότερα >></a>');
+							}
+							
+						});
+				*/
+				
+				
+				console.log(localStorage.getItem("language"));
+				
+				
+				if(localStorage.getItem("language") === 'en'){
+					$('head').append('<script src="js/lang.en.js" />');
+					localStorage.removeItem("language");
+					localStorage.setItem("language", "en");
+				}else{
+					$('head').append('<script src="js/lang.js" />');
+					localStorage.removeItem("language");
+					localStorage.setItem("language", "el");
+				}
+				
+				change_lang();
+			
+	
+				console.log(localStorage.getItem("language"));
+				
+				
+				$('#land_el').click(function() {
+					localStorage.setItem("language", "el");
+					console.log(localStorage.getItem("language"));
+					
+					
+					$('head').append('<script src="js/lang.js" />');
+					change_lang();
+					
+					return false;
+				});
+				
+				$('#land_en').click(function() {
+					localStorage.setItem("language", "en");
+					console.log(localStorage.getItem("language"));
+					$('head').append('<script src="js/lang.en.js" />');
+					change_lang();
+					return false;
+				});
+				
+				
+				
+				function change_lang(){
+					$('#msg_subdomain_title').html(lang.msg_subdomain_title);
+					$('#msg_sub_text1').html(lang.msg_sub_text1);
+					$('#msg_sub_text2').html(lang.msg_sub_text2);
+					$('#msg_section_info').html(lang.msg_section_info);
+					$('#msg_section_followus').html(lang.msg_section_followus);
+					
+					
+					$('#recent_five').html('');
+					$('#btn_more').html('');
+					
+					var html_code='';
+					
+					$.ajax({
+							crossDomain: true,
+							type:"GET",
+							url: "http://api.sense.city:3000/api/issue?startdate=2016-03-15&sort=-1&limit=6&list_issue=1&image_field=1",
+							dataType: "json",                
+							success: function(msg){								
+								
+								$('#recent_five').append();
+								var count_slide =0;
+								var position = new Array();
+								var flag_active=0;
+								
+								
+								
+								
+								$.each(msg, function(idx, obj) {
+									
+									
+									
+									
+									
+									var bugParams =	{
+									    "method": "Bug.get",
+									    "params": [{"ids":obj._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+									    "id": 1
+									};
+									
+									
+									var new_status_issue='';
+									
+									$.ajax({
+										crossDomain: true,
+										type:"POST",
+										url: "http://api.sense.city:3001/bugs/search",
+										data: bugParams,
+										dataType: "json",                
+										success: function(msg1){
+											
+											console.log(msg1[0].resolution);
+											switch (msg1[0].status) {
+												case 'CONFIRMED':
+													if(localStorage.getItem("language") === 'en'){
+														new_status_issue = 'Confirmed';
+													}
+													else{
+														new_status_issue = 'Ανοιχτό / Μη επιβεβαιωμένο';
+													}
+													break;
+												case 'IN_PROGRESS':
+													if(localStorage.getItem("language") === 'en'){
+														new_status_issue = 'In Progress';
+													}
+													else{
+														new_status_issue = 'Ανάθεση / Σε εκτέλεση';
+													}
+													break;
+												case 'RESOLVED':
+													if(localStorage.getItem("language") === 'en'){
+														//if(msg1[0].resolution==='FIXED'){
+														
+														//}
+														new_status_issue = 'Resolved';
+													}
+													else{
+														new_status_issue = 'Ολοκληρωμένο';
+													}
+													break;
+												default:
+													break;
+											}
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											var positionlat = obj.loc.coordinates[1];
+											var positionlon = obj.loc.coordinates[0];
+											var image_name;
+											if(obj.image_name==='' || obj.image_name===null || obj.image_name===undefined || obj.image_name==='no-image'){
+												image_name = "images/EmptyBox-Phone.png";
+											}
+											else
+											{
+												image_name = obj.image_name;
+											}
+											var issue = '';
+											switch(obj.issue){
+												case 'garbage':
+													if(localStorage.getItem("language") === 'en'){
+														issue = 'Cleaning Problem';
+													}else{
+														issue = 'Πρόβλημα Καθαριότητας';
+													}
+													break;
+												case 'lighting':
+													if(localStorage.getItem("language") === 'en'){
+														issue = 'Lighting Problem';
+													}else{
+														issue = 'Πρόβλημα Φωτισμού';
+													}
+													break;
+												case 'plumbing':
+													if(localStorage.getItem("language") === 'en'){
+														issue = 'Plumbing Problem';
+													}else{
+														issue = 'Πρόβλημα Υδραυλικών';
+													}
+													break;
+												case 'road-contructor':
+													if(localStorage.getItem("language") === 'en'){
+														issue = 'Street/Sidewalk Problem';
+													}else{
+														issue = 'Πρόβλημα Δρόμου/Πεζοδρομίου';
+													}
+													break;
+												case 'angry':
+													if(localStorage.getItem("language") === 'en'){
+														issue = 'Disposal';
+													}else{
+														issue = 'Διάθεση';
+													}
+													break;
+												case 'neutral':
+													if(localStorage.getItem("language") === 'en'){
+														issue = 'Disposal';
+													}else{
+														issue = 'Διάθεση';
+													}
+													break;
+												case 'happy':
+													if(localStorage.getItem("language") === 'en'){
+														issue = 'Disposal';
+													}else{
+														issue = 'Διάθεση';
+													}
+													break;
+												default:											
+													issue = '';
+													break;
+											}									
+											
+											var today = new Date();
+											var create_day = new Date(obj.create_at);
+																			
+											var seconds = (today.getTime() - create_day.getTime())/1000;									
+											var datediff ='';
+											
+											
+											if(seconds<60){
+												if(localStorage.getItem("language") === 'en'){
+													datediff = "before "+seconds+" seconds";
+												}else{
+													datediff = "πριν από "+seconds+" δευτερόλεπτα";
+												}
+												
+											}
+											else if(seconds<3600){
+												if(localStorage.getItem("language") === 'en'){
+													datediff = "before "+Math.floor(seconds/60)+" minutes";
+												}else{
+													datediff = "πριν από "+Math.floor(seconds/60)+" λεπτά";
+												}
+												
+											}else if(seconds<86400){
+												if(localStorage.getItem("language") === 'en'){
+													datediff = "before "+Math.floor(seconds/3600)+" hours";
+												}else{
+													datediff = "πριν από "+Math.floor(seconds/3600)+" ώρες";
+												}
+												
+											}
+											else{
+												if(localStorage.getItem("language") === 'en'){
+													datediff = "before "+Math.floor(seconds/86400)+" days";
+												}else{
+													datediff = "πριν από "+Math.floor(seconds/86400)+" μέρες";
+												}
+												
+											}
+									
+									
+									
+									
+									
+											console.log(obj.create_at);
+								
+											
+								
+								
+											//html_code +='<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" style="padding-bottom: 5px;"><div style="background-color:#FFFFFF; border-width: 1px;border-color: #967f7f;border-style: dotted;border-radius: 10px;"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="text-decoration:none;"><center><div class="thumbnail crop" style=" padding:0px; "><img src="'+image_name+'" alt=""></div></center><div class="caption" style="color:#000000;padding-left: 13px;padding-right: 5px; margin-top:-10px;"><p style="font-size:13px;"><b id="msg_subdomain_issue">'+issue+'</b></p> <p style="font-size:12px;height:40px;margin-top:-10px;">'+obj.value_desc+'</p><p style="font-size:12px;height:40px;margin-top:-10px;">'+new_status_issue+'</p><p style="margin-top:-10px;font-size:14px;"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+datediff+'</p></div></div></div>';
+											
+											
+											
+											
+											
+											
+											
+											$('#recent_five').append('<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6" style="padding-bottom: 5px;"><div style="background-color:#FFFFFF; border-width: 1px;border-color: #967f7f;border-style: dotted;border-radius: 10px;"><a href="http://sense.city/issuemap.php?issue_id='+obj._id+'" style="text-decoration:none;"><center><div class="thumbnail crop" style=" padding:0px; "><img src="'+image_name+'" alt=""></div></center><div class="caption" style="color:#000000;padding-left: 13px;padding-right: 5px; margin-top:-10px;"><p style="font-size:13px;"><b id="msg_subdomain_issue">'+issue+'</b></p> <p style="font-size:12px;height:40px;margin-top:-10px;">'+obj.value_desc+'</p><p style="font-size:12px;height:40px;margin-top:-10px;">'+new_status_issue+'</p><p style="margin-top:-10px;font-size:14px;"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+datediff+'</p></div></div></div>');
+											
+									
+									
+											
+											
+									
+									
+										}										
+									});
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+											
+											count_slide++;
+									
+											
+											
+									
+									
+									
+									
+									
+									
+									
+									
+								});
+								
+								
+								
+								if(localStorage.getItem("language") === 'en'){
+									$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Search </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Report a Problem </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Overview </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">More >></a>');
+								}else{
+									$('#btn_more').append('<div class=" text-center" style="margin-top: -20px;"><a href="SearchAppIndex.html" class="btn btn-default btn-xl page-scroll " style="background-color:#49f59d; font-size:16px;"> Αναζήτηση </a><a href="submit_issue.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Αναφορά προβλήματος </a><a href="overview.html" class="btn btn-default btn-xl page-scroll" style="background-color:#49f59d; font-size:16px;"> Επισκόπηση </a></div><a href="all_issues.php" style="color:rgb(56, 56, 125) !important;float: right;">Περισσότερα >></a>');
+								}
+							}
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+									
+									
+									
+									
+						});
+						
+						
+				}
+								
+				
+			</script>
+			
+			<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			  ga('create', 'UA-73253016-1', 'auto');
+			  ga('send', 'pageview');
+
+			</script>
+			
+			<style>
+			
+			
+			.crop {
+				height: 200px;
+					overflow: hidden;
+					
+					border-radius: 10px;
+					border-bottom-left-radius: 0px;
+					border-bottom-right-radius: 0px;
+			}
+
+			.crop img {
+				margin: 0px 0px 0px 0px;
+			}
+			
+			
+			</style>
+  </body>
+</html>

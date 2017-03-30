@@ -31,8 +31,7 @@ appControllers.controller('NavCtrl', ['$scope', '$location', '$rootScope', '$tra
 appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'ToGrService', 'config', 'leafletData',
     function ($scope, $rootScope, $location, $window, $resource, $http, ToGrService, config, leafletData) {
         $rootScope.overview_url = $location.path();
-        var issue_id = window.location.toString().split('=')[1];;
-
+        var issue_id = window.location.toString().split('=')[1];
         var panorama;
         var svissue;
         var svtitle;
@@ -62,6 +61,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 zoomControlOptions: {
                     style: google.maps.ZoomControlStyle.SMALL
                 },
+                fullscreenControl: false,
                 enableCloseButton: false
             };
             panorama = new google.maps.StreetViewPanorama(
@@ -76,7 +76,6 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     google.maps.event.trigger(panorama, "resize");
                 }
             });
-
         };
         
         $scope.change_icon = function(icon_type){
@@ -92,6 +91,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 google_street_layer = true;
                 $("#streetview").css('z-index', '1');
                 $(".leaflet-control-zoom").css("visibility", "hidden");
+                $(window).trigger("resize");
             }else{
                $(".fa.fa-eercast").attr("id","map-icons-active"); 
                $window.open("https://www.google.gr/maps/@" + glat + "," + glng + ",198a,20y,41.27t/data=!3m1!1e3?hl=en");
@@ -214,7 +214,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $scope.submit = "";
         $scope.assignment = "---";
         $scope.completion = "---";
-
+        
+        leafletData.getMap().then(function (map) {
+            map.scrollWheelZoom.disable();
+        });
+        
         leafletData.getMap().then(function (map) {
 //            map.on('baselayerchange', function (e) {
 //                if (e.name == "Google Street View") {
@@ -377,6 +381,9 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 };
 
                 if (response[1].bugs[$scope.resp_id].comments[i].text.substr(2, 3) != "***") {
+                    if($scope.comments.length == 0){
+                        $scope.fcyear = com.year;
+                    }
                     $scope.comments.push(com);
                 }
             }
@@ -392,9 +399,9 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                 $scope.issue_image = issue[0].image_name;
             } else {
-                $scope.lastissue_class;
-                $scope.lastissue_class = "fa fa-" + $rootScope.Variables.icons[issue[0].issue].icon;
+                $scope.lastissue_class = "fa fa-" + $rootScope.Variables.icons[issue[0].issue].icon + " img-text";
             }
+            $scope.iclass= "fa fa-" + $rootScope.Variables.icons[issue[0].issue].icon;
             $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 18};
             $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[issue[0].issue]}];
 
@@ -469,7 +476,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             });
 
             timeline(issue);
-
+            $(window).trigger("resize");
         });
         });
     }]);

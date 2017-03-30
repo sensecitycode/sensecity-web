@@ -5,19 +5,89 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 	$log.debug('inside sensecityMainCtrl controller');
 	$scope.scvesrion = '20160712_trunk';
 	$rootScope.overview_url = $location.path();
+
 });
 
 
 
-appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window,$location, DisplayLast100IssuesService, BugService) {
+appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window,$http,$q,$location, $resource, BugService) {
 	$log.debug('inside allissuesCtrl controller');
-	
+        $scope.nloaded = true;
+        $scope.navClass = function (page) {
+            var path = window.location.href.toString().split("/");
+            var currentRoute = path[path.length - 1];
+            if( currentRoute.split(".")[0] != page){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        
 	$scope.allissues = [];
 	$rootScope.overview_url = $location.path();
         
 	$scope.doCalcAllIssues = function() {
-		var tmpIssues = DisplayLast100IssuesService
-				.query(function() {
+                
+                var url_path = $location.absUrl().split("//");
+        var sub_domain = url_path[1].split(".");
+        var url;
+
+        if (sub_domain[0].split(":").length > 1) {
+            url = "./config/testcity1.json";
+            sub_domain[0] = "patras";
+        } else {
+            url = '../config/' + sub_domain[0] + '.json';
+        }
+
+        var d = $q.defer();
+
+        $rootScope.mainInfo = $http.get(url).success(function (response) {
+
+            $rootScope.Variables = {
+                city_name: sub_domain[0],
+                city_address: response.city_address,
+                lat_center: response.lat_center,
+                long_center: response.long_center,
+                img_logo: "images/city_logos/" + response.city_name + ".jpg",
+                icons: response.icons,
+                APIURL: response.APIURL,
+                components: response.components,
+                components_en: response.components_en,
+                overlays: response.overlays,
+                categories: response.categories,
+                categories_issue: response.categories_issue,
+                departments: response.departments,
+                departments_en: response.departments_en,
+                feelingsURL: response.feelingsURL,
+                bugzilla: response.bugzilla,
+                ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+                active_user_URL: response.active_user_URL,
+                activate_user_URL: response.activate_user_URL,
+                APIADMIN: response.APIADMIN,
+                issue_type_en: response.issue_type_en,
+                issue_type_gr: response.issue_type_gr,
+                availableIssues: response.availableIssues,
+                searchIssues: response.searchIssues,
+                map_zoom: response.zoom,
+                overlay_functions: response.overlay_functions,
+                overlay_categories: response.overlay_categories,
+                google_init_coords: response.google_init_coords,
+                google_buildings: response.google_buildings,
+                host: response.host
+            };
+
+            d.resolve(response);
+            return d.promise;
+        });
+        
+         $q.all([$rootScope.mainInfo]).then(function(data){       
+		var tmpIssues = $resource( $rootScope.Variables.APIURL+'?city='+ $rootScope.Variables.city_name+'&startdate=2017-01-01&sort=-1&limit=100&list_issue=1&image_field=1',
+        {}, {
+        update: {
+          method: 'GET'
+          // isArray: true
+        }
+    }).query(function() {
 
 					angular
 							.forEach(
@@ -102,14 +172,13 @@ appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$win
 										
 										
 									});
+                                                                       $(window).trigger("resize");
+                                                                       $scope.nloaded = false;
 				});
-				// query() returns all the last 6
-				// issues
-
-			$scope.allissues = tmpIssues;
+                            $scope.allissues = tmpIssues;
+                            });
 	};
-	
-	
+
 	$scope.doCalcAllIssues();
 
 });

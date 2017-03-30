@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>        
+        <!-- META SECTION -->
+        <title>Sense city Admin - Responsive Bootstrap Admin Template</title>            
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" href="css/sidebar.css">
+        <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/gdropdown.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                
+                
+        <!-- EOF CSS INCLUDE -->               
+        <script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+        
+        <script
+                src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM">
+        </script>
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+        <script src="https://code.angularjs.org/1.5.3/angular-resource.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-sanitize.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-csv/0.3.6/ng-csv.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-motion/0.4.4/angular-motion.css" />
+          <link rel="stylesheet" href="../datalist/jquery.flexdatalist.css">
+        
+        <!-- angular strap -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" >
+        <link rel="stylesheet" type="text/css" href="css/loading_overlay.css" >
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.8/angular-strap.tpl.min.js"></script>
+        <script src="../datalist/jquery.flexdatalist.js"></script>
+        
+        <link href="./dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="css/search.css"/>
+        <script src="dist/angular-tooltips.min.js"></script>
+        <script type="text/javascript" src="js/gdropdown.js"></script>
+        
+        <!-- Angular administrationapp dependancies -->
+        <script src="login_controller.js"></script>
+        <script src="adminapp.js"></script>
+        <script src="adminsrvs.js"></script>
+        <script src="adminctrl.js"></script>
+        <script src="issuepage.js"></script>
+        <script src="issuecoords.js"></script>
+        <script src="index.js"></script>
+        
+        <!-- Moment Js Greek Locale Support -->
+        <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+
+        <script>
+            $(document).keypress(function (event) {
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    $("#login_btn").click();
+                }
+            });
+        </script>
+
+        <!-- Map dependancies -->
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="css/leaflet.extra-markers.min.css" />
+        
+        <script src="js/leaflet.js"></script>
+        <script src="js/ui-leaflet.min.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/angular-simple-logger.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet.extra-markers.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.js"></script>
+        <script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
+
+    </head>
+    <body ng-view ng-app="MainAdmin" ng-cloak ng-controller="MainController">
+
+    </body>
+</html>

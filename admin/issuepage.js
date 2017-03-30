@@ -14,7 +14,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         $scope.loaded = 0;
         $scope.ALLcenter = $rootScope.Variables.center;
         $scope.ALLmarkers = [];
-        $scope.pimage = "";
+        
         $scope.layers = {
                 baselayers: {
                     openStreetMap: {
@@ -29,6 +29,11 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 }
 
             };
+        
+        leafletData.getMap("issuesmap").then(
+                        function (map) {
+                          console.log(map);
+                        });
         
         var issue_id = $location.$$url.replace('/issuepage=', '');
         $scope.link = $location.absUrl();
