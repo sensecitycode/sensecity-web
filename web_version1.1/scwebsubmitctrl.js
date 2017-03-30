@@ -659,12 +659,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 },
                                 data: txtpost
                             }).success(function (resp) {
-                        alert(JSON.stringify(resp));
                         $http({
                             method: "POST",
                             url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt
                         }).success(function (msg) {
-                            alert(JSON.stringify(msg));
                             var msg_str = JSON.stringify(msg[0]);
                             msg = JSON.parse(msg_str);
                             $scope.mand_sms = msg.mandatory_sms;
@@ -981,7 +979,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
                 } else if (step == 3) {
                     console.log("Step 3");
-                    alert("ok");
 //                    if ($scope.isnotverify()) {
 //                        $scope.step1 = function () {
 //                            return false;
@@ -1092,7 +1089,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
-                    alert(JSON.stringify(resp));
                     $scope.msg1 = "Στο email " + $scope.EmailTxt + " που δηλώσατε σας έχει έρθει ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το email σας κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
                     $scope.smsg1 = true;
                 });
