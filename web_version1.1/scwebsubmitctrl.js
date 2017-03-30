@@ -29,7 +29,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
         if (sub_domain[0].split(":").length > 1) {
             url = "./config/testcity1.json";
-            sub_domain[0] = "testcity";
+            sub_domain[0] = "testcity1";
         } else {
             url = '../config/' + sub_domain[0] + '.json';
         }
@@ -258,9 +258,19 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
             $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latlng.lat + "," + event.latlng.lng + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM").success(function (result) {
                 $scope.address = result.results[0].formatted_address;
-                setTimeout(function () {
-                    $("#txtaddress").trigger("change");
-                }, 100);
+                $http({
+                    method: "GET",
+                    url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + event.latlng.lng + "," + event.latlng.lat + "]&issue=garbage"
+                }).success(function (msg) {
+                    if(msg[0].city == $rootScope.Variables.city_name){
+                      setTimeout(function () {
+                        $("#txtaddress").trigger("change");
+                    }, 100);  
+                    }else{
+                        $("#next_button").attr("class", "btn btn-default pull-right disabled");
+                        alert("Η διεύθυνση που καταχωρίσατε βρίσκεται εκτός των ορίων της πόλης! Παρακαλώ καταχωρείστε έγκυρη διεύθυνση!");
+                    }                 
+                });
             });
 
             if ($scope.markers.length == 2 || mylocation_en == 0) {
@@ -649,10 +659,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 },
                                 data: txtpost
                             }).success(function (resp) {
+                        alert(JSON.stringify(resp));
                         $http({
                             method: "POST",
                             url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt
                         }).success(function (msg) {
+                            alert(JSON.stringify(msg));
                             var msg_str = JSON.stringify(msg[0]);
                             msg = JSON.parse(msg_str);
                             $scope.mand_sms = msg.mandatory_sms;
@@ -804,9 +816,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         };
                     } else {
                         $scope.is_finalsubmit = function () {
-                                    return false;
-                                };
-                        
+                            return false;
+                        };
+
                         $scope.step1 = function () {
                             return false;
                         };
@@ -1032,45 +1044,45 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 } else if (step == 4) {
                     console.log("Step 4");
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
-                    
+
                     $scope.smsg1 = false;
                     $scope.smsg2 = false;
-                    
-                    if($scope.chkSelected){
-                    return $http({
-                        method: 'POST',
-                        url: $rootScope.Variables.APIURL + my_id,
-                        headers: {
-                            'Content-Type': 'application/json; charset=utf-8'
-                        },
-                        data: jsonData
-                    }).success(function (resp) {
-                        $scope.is_finalsubmit = function () {
-                            return true;
-                        };
+
+                    if ($scope.chkSelected) {
+                        return $http({
+                            method: 'POST',
+                            url: $rootScope.Variables.APIURL + my_id,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            },
+                            data: jsonData
+                        }).success(function (resp) {
+                            $scope.is_finalsubmit = function () {
+                                return true;
+                            };
 
 
+                            $window.location.reload();
+                        });
+                    } else {
                         $window.location.reload();
-                    });
-                }else{
-                   $window.location.reload(); 
-                }
+                    }
                 }
             };
-            
-            $scope.last_step = function(val){
-                if(val){
-                  $scope.is_finalsubmit = function () {
-                                    return true;
-                                };  
-                }else{
-                  $scope.is_finalsubmit = function () {
-                                    return false;
-                                };  
+
+            $scope.last_step = function (val) {
+                if (val) {
+                    $scope.is_finalsubmit = function () {
+                        return true;
+                    };
+                } else {
+                    $scope.is_finalsubmit = function () {
+                        return false;
+                    };
                 }
                 $scope.$apply();
             };
-    
+
             $scope.activate_email = function () {
                 $http(
                         {
@@ -1080,9 +1092,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
-                            alert(JSON.stringify(resp));
-                            $scope.msg1 = "Στο email "+ $scope.EmailTxt + " που δηλώσατε σας έχει έρθει ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το email σας κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
-                            $scope.smsg1 = true;
+                    alert(JSON.stringify(resp));
+                    $scope.msg1 = "Στο email " + $scope.EmailTxt + " που δηλώσατε σας έχει έρθει ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το email σας κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
+                    $scope.smsg1 = true;
                 });
             };
 
@@ -1095,8 +1107,8 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
-                            $scope.msg2 = "Στο κινητό νούμερο "+ $scope.MobileTxt + " που δηλώσατε σας έχει έρθει με sms ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το κινητό νούμερο κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
-                            $scope.smsg2 = true;
+                    $scope.msg2 = "Στο κινητό νούμερο " + $scope.MobileTxt + " που δηλώσατε σας έχει έρθει με sms ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το κινητό νούμερο κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
+                    $scope.smsg2 = true;
                 });
             };
 
