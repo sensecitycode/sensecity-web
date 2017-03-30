@@ -103,7 +103,7 @@
                     <div>
                     <li class="xn-logo" style="background-color: #1caf9a;
     border-bottom: 1px solid #1caf9a;">
-                           <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>Sense.city</div></a>
+                           <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>sense.city</div></a>
                             <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
                         </li> 
 <li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
@@ -184,7 +184,7 @@
                                     </ul>
                                 </div>
                                 <div class="panel-body panel-body-map">                              
-                                            <leaflet style="z-index:3"  lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="400px" width="100%"">
+                                            <leaflet style="z-index:3"  lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="597px" width="100%"">
                                             </leaflet>
                                 </div>
                             </div>
@@ -213,8 +213,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-body profile">
                                     <div class="profile-image">
-                                        <img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" ng-src={{lastissue.image_name}} alt="" width="144px" height="144px">
-                                        <i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:12em;color:white"></i>
+                                        <a ng-href="scissuemap.html?issue={{lastissue._id}}"><img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" ng-src={{lastissue.image_name}} alt="" width="144px" height="144px"></a>
+                                        <a ng-href="scissuemap.html?issue={{lastissue._id}}"><i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:12em;color:white"></i></a>
                                     </div>
                                     <div class="profile-data">
                                         <div class="profile-data-name">{{lastissue.issue | translate}}</div>
@@ -240,8 +240,7 @@
                             </div> 
                                 </div>                                    
                             </div>
-                                            <a data-width="100%" data-height="320" class="twitter-timeline"  href="https://twitter.com/hashtag/patra" data-widget-id="841271929285820416">#patra Tweets</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";js.setAttribute('onload', "twttr.events.bind('rendered',function(e) {$(window).trigger('resize')});");fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                                            <a data-width="100%" data-height="320" class="twitter-timeline"  ng-href="twitter_link" data-widget-id={{widget_id}}>#{{widget_tag}} Tweets</a>
 
                         </div>
                         </div>

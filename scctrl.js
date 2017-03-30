@@ -81,7 +81,7 @@ appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$win
         });
         
          $q.all([$rootScope.mainInfo]).then(function(data){       
-		var tmpIssues = $resource( $rootScope.Variables.APIURL+'?city='+ $rootScope.Variables.city_name+'&startdate=2017-01-01&sort=-1&limit=100&list_issue=1&image_field=1',
+		var tmpIssues = $resource( $rootScope.Variables.APIURL+'?city='+ $rootScope.Variables.city_name+'&startdate=2017-01-01&sort=-1&limit=20&list_issue=1&image_field=1',
         {}, {
         update: {
           method: 'GET'

@@ -175,7 +175,7 @@ appControllers.controller(
 //            $(this).parents(".x-navigation").toggleClass("x-navigation-open");
 //        });
 //    }
-                $scope.full = 0;
+                $scope.full = 0;              
                 
                  $scope.removeFixed = function (event) {
                 if ($scope.full == 0) {
@@ -214,7 +214,7 @@ appControllers.controller(
                 var d = $q.defer();
                 
                 $rootScope.mainInfo = $http.get(url).success(function (response) {
-
+                    
                     $rootScope.Variables = {
                         city_name: sub_domain[0],
                         city_address: response.city_address,
@@ -247,6 +247,12 @@ appControllers.controller(
                         google_buildings: response.google_buildings,
                         host: response.host
                     };
+                    
+                    $scope.twitter_link = response.twitter_link;
+                    $scope.widget_id = response.widget_id;
+                    $scope.widget_tag = response.city_name;
+                    
+                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";js.setAttribute('onload', "twttr.events.bind('rendered',function(e) {$(window).trigger('resize')});");fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
                     d.resolve(response);
                     return d.promise;
@@ -485,9 +491,9 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                                     for (i = 0; i < data.length; i++) {
                                                         for (j = 0; j < data[i].length; j++) {
                                                             if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1 && Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
-                                                                $scope.calcValue7daysIssues++;
                                                                 if (data[i][j].status != "RESOLVED") {
                                                                     searchissues.push(data[i][j]);
+                                                                    $scope.calcValue7daysIssues++;
                                                                 }
                                                             }
                                                             if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1 && data[i][j].status == "RESOLVED") {
@@ -497,9 +503,9 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                                                 $scope.calcValueProblemsFrom2017++;
                                                             }
                                                             if (Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
-                                                                searchissues.push(data[i][j]);
                                                                 if (data[i][j].status != "RESOLVED") {
-                                                                $scope.calcValue7daysEvents++;
+                                                                    searchissues.push(data[i][j]);
+                                                                    $scope.calcValue7daysEvents++;
                                                             }
                                                             }
                                                         }

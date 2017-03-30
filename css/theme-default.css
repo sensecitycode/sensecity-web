@@ -58,6 +58,18 @@
     #ccert{
         margin-bottom: 10px;
     }
+    
+    #scrit{
+       margin-top:10px; 
+    }
+    
+    #scrit1{
+       margin-top:40px; 
+    }
+    
+    #issueid{
+       margin-top:40px; 
+    }
 }
 
 #logout_but{
