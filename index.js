@@ -459,7 +459,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                     city: $rootScope.Variables.city_name,
                                     startdate: $scope.startdate,
                                     enddate: $scope.enddate,
-                                    includeAnonymous: 0,
+                                    includeAnonymous: 1,
                                     status: "CONFIRMED|IN_PROGRESS|RESOLVED",
                                     image_field: 0
                                 });

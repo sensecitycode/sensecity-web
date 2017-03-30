@@ -765,6 +765,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 //                                $scope.verify_button = false;
 //                                $scope.submit_eponymous_button = true;
                             }
+                            setTimeout(function(){$(window).resize();},1);
                         });
                     });
                 } else if (step == 2) {
@@ -974,7 +975,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
 
                             //}
-
+                            setTimeout(function(){$(window).resize();},1);
                         });
                     }
                 } else if (step == 3) {
@@ -1058,7 +1059,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 return true;
                             };
 
-
+                            setTimeout(function(){$(window).resize();},1);
                             $window.location.reload();
                         });
                     } else {
