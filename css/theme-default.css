@@ -46,6 +46,17 @@
         padding-left: 0px;
         margin-left: -5px;
     }
+    
+    .sfooter{
+        width:100%;
+        height:120px;
+        margin-top:10px;
+        background:rgba(0, 0, 0, 0.05);
+    }
+    
+    #scfooter{
+        height: 720px;
+    }
 }
 
 @media(max-width: 991px){
@@ -69,6 +80,28 @@
     
     #issueid{
        margin-top:40px; 
+    }
+    
+    .sfooter{
+        width:100%;
+        height:177px;
+        margin-top:10px;
+        background:rgba(0, 0, 0, 0.05);
+    }
+    
+    #scfooter{
+        height: 1470px;
+    }
+    
+}
+
+@media(max-width:767px){
+    .text-right{
+        text-align: left;
+    }
+    
+    #scfooter{
+        height: 1630px;
     }
 }
 

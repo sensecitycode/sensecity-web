@@ -68,7 +68,7 @@ appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$win
 
         if (sub_domain[0].split(":").length > 1) {
             url = "./config/testcity1.json";
-            sub_domain[0] = "patras";
+            sub_domain[0] = "testcity1";
         } else {
             url = '../config/' + sub_domain[0] + '.json';
         }
