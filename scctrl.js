@@ -8,11 +8,46 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 
 });
 
+appControllers.controller('mobilelinkCtl',function($scope,$window,$http,$q,$location){
+    
+    $scope.nloaded = true;
+    
+    var url_path = $location.absUrl().split("//");
+        var sub_domain = url_path[1].split(".");
+        var url;
+    
+    if (sub_domain[0].split(":").length > 1) {
+            url = "./config/testcity1.json";
+            sub_domain[0] = "patras";
+        } else {
+            url = '../config/' + sub_domain[0] + '.json';
+        }
 
+        var d = $q.defer();
+
+        var mainInfo = $http.get(url).success(function (response) {
+
+            $scope.Variables = {
+                APIADMIN: response.APIADMIN
+            };
+
+            d.resolve(response);
+            return d.promise;
+        });
+        
+        var b_id = $location.absUrl().split("=")[1];
+
+         $q.all([mainInfo]).then(function(data){
+             $http.get($scope.Variables.APIADMIN+"/bugidtoalias/"+b_id).success(function (response) {
+                 $scope.nloaded = false;
+                 window.location = "http://"+sub_domain[0]+".sense.city/scissuemap.html?issue="+response.bugs[0].alias[0];
+             });
+         });
+});
 
 appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window,$http,$q,$location, $resource, BugService) {
 	$log.debug('inside allissuesCtrl controller');
-        $scope.nloaded = true;
+      
         $scope.navClass = function (page) {
             var path = window.location.href.toString().split("/");
             var currentRoute = path[path.length - 1];
