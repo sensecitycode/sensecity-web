@@ -11,7 +11,6 @@ appControllers.controller('sensecityMainCtrl', function($scope, $log, $location,
 appControllers.controller('mobilelinkCtl',function($scope,$window,$http,$q,$location){
     
     $scope.nloaded = true;
-    
     var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         var url;
@@ -47,7 +46,7 @@ appControllers.controller('mobilelinkCtl',function($scope,$window,$http,$q,$loca
 
 appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window,$http,$q,$location, $resource, BugService) {
 	$log.debug('inside allissuesCtrl controller');
-      
+        $scope.nloaded = true;
         $scope.navClass = function (page) {
             var path = window.location.href.toString().split("/");
             var currentRoute = path[path.length - 1];
