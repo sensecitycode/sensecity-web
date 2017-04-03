@@ -20,16 +20,12 @@ appControllers.controller('NavCtrl', ['$scope', '$location', '$rootScope', '$tra
             var currentRoute = $location.path().substring(1) || 'home';
             return page === currentRoute ? 'active' : '';
         };
-
-
-        $scope.changeLanguage = function (langKey) {
-            $translate.use(langKey);
-        };
+        
 
     }]);
 
-appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http', 'ToGrService', 'config', 'leafletData',
-    function ($scope, $rootScope, $location, $window, $resource, $http, ToGrService, config, leafletData) {
+appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http','$translate' ,'ToGrService', 'config', 'leafletData',
+    function ($scope, $rootScope, $location, $window, $resource, $http, $translate,ToGrService, config, leafletData) {
         $rootScope.overview_url = $location.path();
         var issue_id = window.location.toString().split('=')[1];
         var panorama;
@@ -41,7 +37,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         var url;
-
+        
+        $scope.changeLanguage = function (langKey) {
+            $translate.use(langKey);
+        };
+        
         if( sub_domain[0].split(":").length > 1){
             url = "./config/testcity1.json";
             sub_domain[0] = "testcity1";

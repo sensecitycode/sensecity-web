@@ -1,4 +1,4 @@
-var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.translate', 'ngCookies']);
+var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.translate', 'ngCookies','pascalprecht.translate']);
 
 appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
     function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
@@ -22,6 +22,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 return true;
             }
         }
+        
+        $scope.changeLanguage = function (langKey) {
+            $translate.use(langKey);
+        };
 
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");

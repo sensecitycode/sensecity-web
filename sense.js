@@ -1,4 +1,4 @@
-var appControllers = angular.module('sense.controllers', []);
+var appControllers = angular.module('sense.controllers', ['pascalprecht.translate']);
 
 appControllers.directive('sidebarDirective', function () {
     return {
@@ -13,6 +13,30 @@ appControllers.directive('sidebarDirective', function () {
         }
     };
 });
+
+appControllers.directive('sidebarDirective', function () {
+    return {
+        link: function (scope, element, attr) {
+            scope.$watch(attr.sidebarDirective, function (newVal) {
+                if (newVal) {
+                    element.addClass('show');
+                    return;
+                }
+                element.removeClass('show');
+            });
+        }
+    };
+});
+
+appControllers.config(['$translateProvider', function ($translateProvider) {
+        $translateProvider.useStaticFilesLoader({
+            prefix: 'config/lang_',
+            suffix: '.json'
+        });
+
+        $translateProvider.preferredLanguage('el');
+        $translateProvider.useLocalStorage();
+    }]);
 
 var oft = 0;
 
@@ -35,22 +59,26 @@ appControllers.controller(
                     for (var i = idt; i > 0; i--)
                         clearInterval(i);
                 }, 10);
-                
+
+                $scope.changeLanguage = function (langKey) {
+                    $translate.use(langKey);
+                };
+
                 $scope.navClass = function (page) {
-            var path = window.location.href.toString().split("/");
-            var currentRoute = path[path.length - 1];
-            if( currentRoute.split(".")[0] != page){
-                return false;
-            }else{
-                return true;
-            }
-            
+                    var path = window.location.href.toString().split("/");
+                    var currentRoute = path[path.length - 1];
+                    if (currentRoute.split(".")[0] != page) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+
 //            if(){
 //                    return false;
 //                }else{
 //            return true;
 //        }
-        };
+                };
 
 //              $(document).ready(function(){
 //                $.getScript("js/plugins/jquery/jquery.min.js");
@@ -175,31 +203,31 @@ appControllers.controller(
 //            $(this).parents(".x-navigation").toggleClass("x-navigation-open");
 //        });
 //    }
-                $scope.full = 0;              
-                
-                 $scope.removeFixed = function (event) {
-                if ($scope.full == 0) {
+                $scope.full = 0;
+
+                $scope.removeFixed = function (event) {
+                    if ($scope.full == 0) {
                         $("#right-column").removeAttr('style');
                         $scope.full = 1;
                         panel_fullscreen($(event.currentTarget).closest(".panel"));
                         var map = leafletData.getMap().then(
-                        function (map) {
-                        map.invalidateSize(true);
-                        }
+                                function (map) {
+                                    map.invalidateSize(true);
+                                }
 
-                );
-                } else {
-                $scope.full = 0;
+                        );
+                    } else {
+                        $scope.full = 0;
                         panel_fullscreen($(event.currentTarget).closest(".panel"));
                         var map = leafletData.getMap().then(
-                        function (map) {
-                        map.invalidateSize(true);
-                        }
+                                function (map) {
+                                    map.invalidateSize(true);
+                                }
 
-                );
-                }
+                        );
+                    }
                 };
-                
+
                 var url_path = $location.absUrl().split("//");
                 var sub_domain = url_path[1].split(".");
                 var url;
@@ -212,9 +240,9 @@ appControllers.controller(
                 }
 
                 var d = $q.defer();
-                
+
                 $rootScope.mainInfo = $http.get(url).success(function (response) {
-                    
+
                     $rootScope.Variables = {
                         city_name: sub_domain[0],
                         city_address: response.city_address,
@@ -247,12 +275,21 @@ appControllers.controller(
                         google_buildings: response.google_buildings,
                         host: response.host
                     };
-                    
+
                     $scope.twitter_link = response.twitter_link;
                     $scope.widget_id = response.widget_id;
                     $scope.widget_tag = response.city_name;
-                    
-                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";js.setAttribute('onload', "twttr.events.bind('rendered',function(e) {$(window).trigger('resize')});");fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+                    !function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = p + "://platform.twitter.com/widgets.js";
+                            js.setAttribute('onload', "twttr.events.bind('rendered',function(e) {$(window).trigger('resize')});");
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, "script", "twitter-wjs");
 
                     d.resolve(response);
                     return d.promise;
@@ -346,8 +383,8 @@ appControllers.controller(
                         }
                     }
                 });
-                
-                        
+
+
 
                 $scope.map_center = {
                     lat: 37.787435,
@@ -359,8 +396,8 @@ appControllers.controller(
                         function (data) {
                             $.getScript("js/plugins.js");
                             $.getScript("js/actions.js");
-$scope.$on("leafletDirectiveMarker.click",function (event, args) {
-    
+                            $scope.$on("leafletDirectiveMarker.click", function (event, args) {
+
                                 var marker3 = args.leafletObject;
                                 var popup = marker3.getPopup();
 
@@ -430,7 +467,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                 console.log(o.leafletEvent.layer);
                             });
 
-                    
+
 
                             var startdate = new Date(2017, 0, 1);
                             var today = new Date();
@@ -506,7 +543,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                                                 if (data[i][j].status != "RESOLVED") {
                                                                     searchissues.push(data[i][j]);
                                                                     $scope.calcValue7daysEvents++;
-                                                            }
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -716,14 +753,14 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
                                                             lastissue.create_at_unit = datediffunit;
                                                         });
                                         $scope.lastissues = theLastIssues;
-                                                                        setTimeout(function () {
+                                        setTimeout(function () {
 //                                    alert(oft);
-                                    if ($(".owl-carousel").length > 0 && oft == 0) {
-                                        oft = 1;
-                                        $(".owl-carousel").owlCarousel({mouseDrag: false, touchDrag: true, slideSpeed: 300, paginationSpeed: 400, singleItem: true, navigation: false, autoPlay: true});
-                                        $(window).resize();
-                                    }
-                                }, 100);
+                                            if ($(".owl-carousel").length > 0 && oft == 0) {
+                                                oft = 1;
+                                                $(".owl-carousel").owlCarousel({mouseDrag: false, touchDrag: true, slideSpeed: 300, paginationSpeed: 400, singleItem: true, navigation: false, autoPlay: true});
+                                                $(window).resize();
+                                            }
+                                        }, 100);
                                     }
                                 });
 

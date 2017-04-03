@@ -1,4 +1,4 @@
-var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanitize', 'ngCsv', '720kb.tooltips', 'adminapp'])
+var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanitize', 'ngCsv', '720kb.tooltips', 'adminapp','monospaced.qrcode'])
         .constant("config", {"host": "api.sense.city", "bugzilla_host": "nam.ece.upatras.gr", "port": "4000", "bugzilla_path": "/bugzilla"});
 //appControllers.config([
 //  '$httpProvider',

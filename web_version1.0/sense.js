@@ -1,21 +1,5 @@
 var appControllers = angular.module('sense.controllers', ['pascalprecht.translate']);
 
-appControllers.directive('sidebarDirective', function () {
-    return {
-        link: function (scope, element, attr) {
-            scope.$watch(attr.sidebarDirective, function (newVal) {
-                if (newVal) {
-                    element.addClass('show');
-                    return;
-                }
-                element.removeClass('show');
-            });
-        }
-    };
-});
-
-
-
 
 appControllers.controller(
         'senseController',
@@ -49,6 +33,11 @@ appControllers.controller(
         }else{
             url = '../config/'+sub_domain[0]+'.json';
         }
+        
+        $scope.changeLanguage = function (langKey) {
+            alert(langKey);
+            $translate.use(langKey);
+        };
         
         var d = $q.defer();
                 

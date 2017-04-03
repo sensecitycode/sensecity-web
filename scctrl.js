@@ -44,7 +44,7 @@ appControllers.controller('mobilelinkCtl',function($scope,$window,$http,$q,$loca
          });
 });
 
-appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window,$http,$q,$location, $resource, BugService) {
+appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window,$http,$q,$location, $resource, $translate,BugService) {
 	$log.debug('inside allissuesCtrl controller');
         $scope.nloaded = true;
         $scope.navClass = function (page) {
@@ -56,6 +56,10 @@ appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$win
                 return true;
             }
         }
+        
+        $scope.changeLanguage = function (langKey) {
+            $translate.use(langKey);
+        };
         
 	$scope.allissues = [];
 	$rootScope.overview_url = $location.path();

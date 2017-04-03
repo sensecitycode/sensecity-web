@@ -1,4 +1,4 @@
-var appControllers = angular.module('searchapp.controllers', ['ngSanitize']);
+var appControllers = angular.module('searchapp.controllers', ['ngSanitize','pascalprecht.translate']);
 
 
 appControllers.directive('sidebarDirective', function () {
@@ -16,8 +16,12 @@ appControllers.directive('sidebarDirective', function () {
     };
 });
 
-appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http) {
+appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http','$translate', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http,$translate) {
         $rootScope.overview_url = $location.path();
+        
+        $scope.changeLanguage = function (langKey) {
+            $translate.use(langKey);
+        };
         
         $scope.navClass = function (page) {
             var path = window.location.href.toString().split("/");
