@@ -13,6 +13,9 @@ app.config(function ($routeProvider, $locationProvider, $anchorScrollProvider) {
     }).when('/issuecoords=:issue_coords',{
         templateUrl: 'issuecoords.html',
         controller: 'issuecoords_controller'
+    }).when('/printsearch',{
+        templateUrl: 'printsearch.html',
+        controller: 'printsearch'
     }).when('/', {
         templateUrl: 'login.html',
         controller: 'login_controller'

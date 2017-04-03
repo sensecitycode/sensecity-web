@@ -1,0 +1,26 @@
+<table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Πρόβλημα</th>
+        <th>Ημερομηνία</th>
+        <th>Τμήμα</th>
+        <th>Τηλέφωνο</th>
+        <th>E-mail</th>
+        <th>Διεύθυνση</th>
+        <th>Φωτογραφία</th>
+        <th>QR</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="printres">
+            <td>{{printres.bug_id}}</td>
+            <td>{{printres.create_at}}</td>
+            <td>{{printres.bug_component}}</td> 
+            <td>{{printres.email}}</td> 
+            <td>{{printres.phone}}</td> 
+            <td>{{printres.address}}</td> 
+            <td>{{printres.image_name}}</td> 
+            <td></td> 
+        </tr>
+    </tbody>
+</table>
