@@ -1,4 +1,4 @@
-var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanitize', 'ngCsv', '720kb.tooltips', 'adminapp','monospaced.qrcode'])
+var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanitize', 'ngCsv', '720kb.tooltips', 'adminapp', 'monospaced.qrcode'])
         .constant("config", {"host": "api.sense.city", "bugzilla_host": "nam.ece.upatras.gr", "port": "4000", "bugzilla_path": "/bugzilla"});
 //appControllers.config([
 //  '$httpProvider',
@@ -84,56 +84,82 @@ function timegr(local_time) {
 
 appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', function ($scope, $rootScope, $window, $http, $cookieStore) {
         var sparams = {};
-        if($rootScope.assignissues != undefined){
-        if (search_button == 0) {
-            if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("department") == "sensecityAdmin") {
-                sparams.status = "CONFIRMED|IN_PROGRESS";
-            } else if ($cookieStore.get("department") == "departmentAdmin" || $cookieStore.get("department") == "departmentUser") {
-                sparams.status = "IN_PROGRESS";
-            }
-            if (($rootScope.assignissues == false || $rootScope.closedissues == true) && $rootScope.allclosedissues == false) {
-                sparams = {"departments": $rootScope.component, "image_field": "1", "sort": "-1", "startdate": "2016-08-01"};
-            } else {
-                sparams = {"departments": $rootScope.Variables.components.join("|"), "image_field": "1", "sort": "-1", "startdate": "2016-08-01"};
-            }
-
-            if (($rootScope.closedissues == false && $rootScope.allclosedissues == false) || $rootScope.assignissues == true)
-            {
-                if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("role") == "sensecityAdmin") {
+        if ($rootScope.assignissues != undefined) {
+            if (search_button == 0) {
+                if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("department") == "sensecityAdmin") {
                     sparams.status = "CONFIRMED|IN_PROGRESS";
                 } else if ($cookieStore.get("department") == "departmentAdmin" || $cookieStore.get("department") == "departmentUser") {
                     sparams.status = "IN_PROGRESS";
                 }
-            } else {
-                if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
-                    sparams.status = "IN_PROGRESS|RESOLVED";
-                } else if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("role") == "sensecityAdmin") {
-                    sparams.status = "CONFIRMED|IN_PROGRESS|RESOLVED";
+                if (($rootScope.assignissues == false || $rootScope.closedissues == true) && $rootScope.allclosedissues == false) {
+                    sparams = {"departments": $rootScope.component, "image_field": "1", "sort": "-1", "startdate": "2016-08-01"};
+                } else {
+                    sparams = {"departments": $rootScope.Variables.components.join("|"), "image_field": "1", "sort": "-1", "startdate": "2016-08-01"};
                 }
+
+                if (($rootScope.closedissues == false && $rootScope.allclosedissues == false) || $rootScope.assignissues == true)
+                {
+                    if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("role") == "sensecityAdmin") {
+                        sparams.status = "CONFIRMED|IN_PROGRESS";
+                    } else if ($cookieStore.get("department") == "departmentAdmin" || $cookieStore.get("department") == "departmentUser") {
+                        sparams.status = "IN_PROGRESS";
+                    }
+                } else {
+                    if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
+                        sparams.status = "IN_PROGRESS|RESOLVED";
+                    } else if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("role") == "sensecityAdmin") {
+                        sparams.status = "CONFIRMED|IN_PROGRESS|RESOLVED";
+                    }
+                }
+                sparams.city = $cookieStore.get("city");
+                sparams.send_user = "1";
+//            [{"_id":"58dcc612a1332e17622dd2aa","municipality":"testcity1","image_name":"no-image","issue":"garbage","device_id":"webapp","value_desc":"Χαλασμένος Κάδος","comments":"undefined","create_at":"Thu Mar 30 2017 11:47:14 GMT+0300 (EEST)","loc":{"type":"Point","coordinates":[21.743316650390625,38.2625803457421]},"status":"CONFIRMED","bug_id":"4225","cf_authenticate":"1","bug_component":"Τμήμα επίλυσης προβλημάτων","bug_priority":"Normal","bug_severity":"normal","name":"apostolos palladinos","phone":"6976725776","email":"tolistimon@gmail.com","resolution":""}
+                $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                    $scope.printres = [];
+                    for (var i = 0; i < result.length; i++) {
+                        var creation_time = result[i].create_at;
+                        var local_time = moment(creation_time).format('LLLL');
+                        local_time = timegr(local_time);
+                        var cprint = {
+                          "create_at" : local_time,
+                          "bug_id": result[i].bug_id,
+                          "bug_component": result[i].bug_component,
+                          "email": result[i].email,
+                          "phone": result[i].phone,
+                          "image_name": result[i].image_name,
+                          "qr_link": result[i].municipality+".sense.city/scissuemap.html?issue="+result[i]._id
+                        };
+                        $scope.printres.push(cprint);
+                    }
+                });
+            } else {
+                var searchparams = {};
+                searchparams.bug_id = $rootScope.sbugid;
+                searchparams.email = $rootScope.semail;
+                searchparams.mobile = $rootScope.smobile;
+                searchparams.city = $rootScope.Variables.city_name;
+                searchparams.image_field = "1";
+                searchparams.send_user = "1";
+                $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: searchparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                    $scope.printres = [];
+                    for (var i = 0; i < result.length; i++) {
+                        var creation_time = result[i].create_at;
+                        var local_time = moment(creation_time).format('LLLL');
+                        local_time = timegr(local_time);
+                        var cprint = {
+                          "create_at" : local_time,
+                          "bug_id": result[i].bug_id,
+                          "bug_component": result[i].bug_component,
+                          "email": result[i].email,
+                          "phone": result[i].phone,
+                          "image_name": result[i].image_name,
+                          "qr_link": result[i].municipality+".sense.city/scissuemap.html?issue="+result[i]._id
+                        };
+                        $scope.printres.push(cprint);
+                    }
+                });
             }
-            sparams.city = $cookieStore.get("city");
-            sparams.send_user = "1";
-            alert(JSON.stringify(sparams));
-            $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-                alert(JSON.stringify(result));               
-//                var creation_time = result[i].create_at;
-//                var local_time = moment(creation_time).format('LLLL');
-//                local_time = timegr(local_time);
-            });
-        }else{
-            var searchparams = {};
-            searchparams.bug_id = $rootScope.sbugid;
-            searchparams.email = $rootScope.semail;
-            searchparams.mobile = $rootScope.smobile;
-            searchparams.city = $rootScope.Variables.city_name;
-            searchparams.image_field = "1";
-            sparams.send_user = "1";
-            alert(JSON.stringify(searchparams));
-            $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: searchparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-               alert(JSON.stringify(result)); 
-            });
         }
-    }
     }]);
 
 appControllers.controller('adminController', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', '$location', '$q', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $rootScope, $window, $http, $cookieStore, $templateCache, $compile, $location, $q, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {

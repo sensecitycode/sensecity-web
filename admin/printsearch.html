@@ -1,27 +1,27 @@
-<!--<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped table-condensed" style="text-align: center">
     <thead>
       <tr>
-        <th>Πρόβλημα</th>
-        <th>Ημερομηνία</th>
-        <th>Τμήμα</th>
-        <th>Τηλέφωνο</th>
-        <th>E-mail</th>
-        <th>Διεύθυνση</th>
-        <th>Φωτογραφία</th>
-        <th>QR</th>
+        <th style="text-align: center">Πρόβλημα</th>
+        <th style="text-align: center">Ημερομηνία</th>
+        <th style="text-align: center">Τμήμα</th>
+        <th style="text-align: center">E-mail</th>
+        <th style="text-align: center">Τηλέφωνο</th>
+<!--        <th>Διεύθυνση</th>-->
+        <th style="text-align: center">Φωτογραφία</th>
+        <th style="text-align: center">QR</th>
       </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="printres">
-            <td>{{printres.bug_id}}</td>
-            <td>{{printres.create_at}}</td>
-            <td>{{printres.bug_component}}</td> 
-            <td>{{printres.email}}</td> 
-            <td>{{printres.phone}}</td> 
-            <td>{{printres.address}}</td> 
-            <td>{{printres.image_name}}</td> 
-            <td></td> 
+        <tr ng-repeat="printc in printres">
+            <td>{{printc.bug_id}}</td>
+            <td>{{printc.create_at}}</td>
+            <td>{{printc.bug_component}}</td> 
+            <td>{{printc.email}}</td> 
+            <td>{{printc.phone}}</td> 
+            <!--<td>{{printc.address}}</td>--> 
+            <td ng-show="printc.image_name != 'no-image' && printc.image_name != ''"><img src={{printc.image_name}} width="100" height="100"/></td> 
+            <td ng-show="printc.image_name == 'no-image' || printc.image_name == ''">Μη διαθέσιμη</td>
+            <td><qrcode data="{{printc.qr_link}}" size="100"></qrcode></td>
         </tr>
     </tbody>
-</table>-->
-<qrcode data="test1" size="200"></qrcode>
+</table>

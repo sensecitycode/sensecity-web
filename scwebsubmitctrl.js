@@ -25,6 +25,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
+            setTimeout(function(){$('#available_issues').selectpicker('refresh');},100);
         };
 
         var url_path = $location.absUrl().split("//");

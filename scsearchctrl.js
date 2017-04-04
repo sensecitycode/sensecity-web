@@ -21,6 +21,38 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
+//            $("#reportrange").daterangepicker({
+//            ranges: {
+//                'Σήμεραaaaa': [moment(), moment()],
+//                'Χτές': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+//                'Τελευταίες 7 Ημέρες': [moment().subtract(6, 'days'), moment()],
+//                'Τελευταίες 30 Ημέρες': [moment().subtract(29, 'days'), moment()],
+//                'Τελευταίες 3 Ημέρες': [moment().subtract(3, 'days'), moment()],
+//                'Τελευταίος Μήνας': [moment().startOf('month'), moment().endOf('month')],
+//                'Προηγούμενος Μήνας': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+//            },
+//            opens: 'left',
+//            buttonClasses: ['btn btn-default'],
+//            applyClass: 'btn-small btn-primary',
+//            cancelClass: 'btn-small',
+//            format: 'MM.DD.YYYY',
+//            separator: ' μέχρι ',
+//            startDate: moment().subtract('days', 3),
+//            endDate: moment()
+//        }, function (start, end) {
+//            var sm = month_gr(start.format('MMMM D, YYYY').split(" ")[0]);
+//            start = start.format('MMMM D, YYYY');
+//            start = start.replace(start.split(" ")[0], sm);
+//            var em = month_gr(end.format('MMMM D, YYYY').split(" ")[0]);
+//            end = end.format('MMMM D, YYYY');
+//            end = end.replace(end.split(" ")[0], em);
+//            $('#reportrange span').html(start + ' - ' + end);
+//            $(window).trigger("resize");
+//        });
+            setTimeout(function(){alert($translate.instant('GARBAGE_ISSUE'));for (var i = 0; i < $scope.issues.length; i++) {
+                    //alert(JSON.stringify($scope.issues[i].translatev));
+                        $('#issue'+i).data('content', "'<i class=\"" + $scope.issues[i].class + "\"></i>+(" + $scope.issues[i].translate + ");");
+                    }$('#issues').selectpicker('refresh');},100);
         };
         
         $scope.navClass = function (page) {
@@ -274,6 +306,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     }
                     for (i = 0; i < $scope.issues.length; i++) {
                         $scope.issues[i].translate = "'<i class=\"" + $scope.issues[i].class + "\"></i>'+(" + $scope.issues[i].translate + ");";
+                        $scope.issues[i].translatev = $rootScope.Variables.searchIssues[i].translatev;
                     }
                     setTimeout(function () {
                         if ($(".select").length > 0) {

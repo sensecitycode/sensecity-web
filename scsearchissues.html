@@ -136,7 +136,7 @@
                                         <div class="col-md-2" id="scrit1">  
                                     <div class="form-group" style="margin-right:0px">
                                             <select id="issues" ng-model="issue" title="{{ 'ISSUES' | translate }}" multiple class="form-control select"> 
-                                                <option ng-repeat="issue in issues" data-value={{issue.value}} data-content={{$eval(issue.translate)}}></option>
+                                                <option id="issue{{$index}}" ng-repeat="issue in issues" data-value={{issue.value}} data-content={{$eval(issue.translate)}}></option>
                                             </select>
                                     </div>
                                         </div>

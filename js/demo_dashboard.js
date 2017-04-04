@@ -58,6 +58,7 @@ $(function () {
             $('#reportrange span').html(start + ' - ' + end);
             $(window).trigger("resize");
         });
+        
 
         var start = moment().subtract('days', 3);
         var end = moment();
