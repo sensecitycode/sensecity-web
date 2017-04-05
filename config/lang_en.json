@@ -18,14 +18,8 @@
         "STEP": "Step",
         "DESCRIPTION": "Description",
         "OPEN": "Open",
-        "IN_PROGRESS": [
-            "In Progress",
-            "Assigned/In progress"
-        ],
-        "RESOLVED": [
-            "Resolved",
-            "Resolved"
-        ],
+        "IN_PROGRESS": "In Progress",
+        "RESOLVED": "Resolved",
         "STATES": "States",
         "ISSUES_SINCE": "Reported issues since",
         "ISSUE_DATE": "Issue date",
@@ -103,7 +97,8 @@
         "SUBMIT_AND_CONTINUE": "Submit & Continue",
         "NATURAL_DISASTERS": "Natural disasters",
         "GROSS_PLOT": "Gross plot",
-        "ISSUES": "ISSUES",
+        "ISSUES": "Issues",
+        "SISSUES": "Issues",
         "EVENTS": "EVENTS",
         "LAST7D": "Last 7 days",
         "SINCE": "Since 1/1/2017",
@@ -138,5 +133,8 @@
         "EMAIL_CERTIFICATION" : "Your e-mail has been certified. Please proceed to the next step.",
         "MOBILE_CERTIFICATION": "Your mobile has been certified. Please proceed to the next step.",
         "EM_CERTIFICATION": "Your e-mail and mobile has been certified. Please proceed to the next step.",
-        "CERTIFICATION_ERROR": "Anonymous report does not require e-mail certification. Please proceed to the next step."
+        "CERTIFICATION_ERROR": "Anonymous report does not require e-mail certification. Please proceed to the next step.",
+        "SEARCH": "Search",
+        "SEARCH_CITY": "Search issues in the city",
+        "ISSUE_NUMBER" : "Issue number"
     }

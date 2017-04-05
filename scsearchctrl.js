@@ -1,5 +1,33 @@
-var appControllers = angular.module('searchapp.controllers', ['ngSanitize','pascalprecht.translate']);
+var appControllers = angular.module('searchapp.controllers', ['ngSanitize', 'pascalprecht.translate']);
 
+function month_gr(month) {
+        switch (month) {
+            case "January":
+                return "Ιανουάριος";
+            case "February":
+                return "Φεβρουάριος";
+            case "March":
+                return "Μάρτιος";
+            case "April":
+                return "Απρίλιος";
+            case "May":
+                return "Μάιος";
+            case "June":
+                return "Ιούνιος";
+            case "July":
+                return "Ιούλιος";
+            case "August":
+                return "Αύγουστος";
+            case "September":
+                return "Σεπτέμβριος";
+            case "October":
+                return "Οκτώβριος";
+            case "November":
+                return "Νοέμβριος";
+            case "December":
+                return "Δεκέμβριος";
+        }
+    }
 
 appControllers.directive('sidebarDirective', function () {
     return {
@@ -16,59 +44,125 @@ appControllers.directive('sidebarDirective', function () {
     };
 });
 
-appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http','$translate', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http,$translate) {
+
+appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http', '$translate', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http, $translate) {
         $rootScope.overview_url = $location.path();
-        
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
-//            $("#reportrange").daterangepicker({
-//            ranges: {
-//                'Σήμεραaaaa': [moment(), moment()],
-//                'Χτές': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-//                'Τελευταίες 7 Ημέρες': [moment().subtract(6, 'days'), moment()],
-//                'Τελευταίες 30 Ημέρες': [moment().subtract(29, 'days'), moment()],
-//                'Τελευταίες 3 Ημέρες': [moment().subtract(3, 'days'), moment()],
-//                'Τελευταίος Μήνας': [moment().startOf('month'), moment().endOf('month')],
-//                'Προηγούμενος Μήνας': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-//            },
-//            opens: 'left',
-//            buttonClasses: ['btn btn-default'],
-//            applyClass: 'btn-small btn-primary',
-//            cancelClass: 'btn-small',
-//            format: 'MM.DD.YYYY',
-//            separator: ' μέχρι ',
-//            startDate: moment().subtract('days', 3),
-//            endDate: moment()
-//        }, function (start, end) {
-//            var sm = month_gr(start.format('MMMM D, YYYY').split(" ")[0]);
-//            start = start.format('MMMM D, YYYY');
-//            start = start.replace(start.split(" ")[0], sm);
-//            var em = month_gr(end.format('MMMM D, YYYY').split(" ")[0]);
-//            end = end.format('MMMM D, YYYY');
-//            end = end.replace(end.split(" ")[0], em);
-//            $('#reportrange span').html(start + ' - ' + end);
-//            $(window).trigger("resize");
-//        });
-            setTimeout(function(){alert($translate.instant('GARBAGE_ISSUE'));for (var i = 0; i < $scope.issues.length; i++) {
-                    //alert(JSON.stringify($scope.issues[i].translatev));
-                        $('#issue'+i).data('content', "'<i class=\"" + $scope.issues[i].class + "\"></i>+(" + $scope.issues[i].translate + ");");
-                    }$('#issues').selectpicker('refresh');},100);
+            setTimeout(function () {
+                for (var i = 0; i < $scope.issues.length; i++) {
+                    $('#issue' + i).data('content', '<i class=\"' + $scope.issues[i].class + '"\"></i>' + $translate.instant($scope.issues[i].translatev));
+                }
+                $('#confirmed').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-exclamation-sign'></span>" + $translate.instant('OPEN'));
+                $('#inprogress').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-question-sign'></span>" + $translate.instant('IN_PROGRESS'));
+                $('#resolved').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-ok-sign'></span>" + $translate.instant('RESOLVED'));
+                $('#anonymous').data('content', "<span style='margin-right:3px' class='fa fa-user-circle-o'></span>" + $translate.instant('ANONYMOUS'));
+                $('#smile').data('content', "<span class='fa fa-smile-o'></span>" + $translate.instant('MOODPOSITIVE'));
+                $('#neutral').data('content', "<span class='fa fa-meh-o'></span>" + $translate.instant('MOODNEUTRAL'));
+                $('#angry').data('content', "<span class='fa fa-frown-o'></span>" + $translate.instant('MOODNEGATIVE'));
+                $('#issues').selectpicker('refresh');
+                $('#states').selectpicker('refresh');
+                $('#disposal').selectpicker('refresh');
+                if ($translate.use() == "el") {
+                    $("#reportrange").daterangepicker({
+                        ranges: {
+                            'Σήμερα': [moment(), moment()],
+                            'Χτές': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            'Τελευταίες 7 Ημέρες': [moment().subtract(6, 'days'), moment()],
+                            'Τελευταίες 30 Ημέρες': [moment().subtract(29, 'days'), moment()],
+                            'Τελευταίες 3 Ημέρες': [moment().subtract(3, 'days'), moment()],
+                            'Τελευταίος Μήνας': [moment().startOf('month'), moment().endOf('month')],
+                            'Προηγούμενος Μήνας': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        },
+                        opens: 'left',
+                        buttonClasses: ['btn btn-default'],
+                        applyClass: 'btn-small btn-primary',
+                        cancelClass: 'btn-small',
+                        format: 'MM.DD.YYYY',
+                        separator: ' μέχρι ',
+                        startDate: moment().subtract('days', 3),
+                        endDate: moment(),
+                        locale: {
+                            applyLabel: 'OK',
+                            cancelLabel: 'Ακύρωση',
+                            fromLabel: 'ΑΠΟ',
+                            toLabel: 'ΕΩΣ',
+                            weekLabel: 'Ε',
+                            customRangeLabel: 'Ημερολόγιο',
+                            daysOfWeek: ['ΔΕ', 'ΤΡ', 'ΤΕ', 'ΠΕ', 'ΠΑΡ', 'ΣΑΒ', 'ΚΥΡ'],
+                            monthNames: ['ΙΑΝ', 'ΦΕΒ', 'ΜΑΡ', 'ΑΠΡ', 'ΜΑΗΣ', 'ΙΟΥΝ', 'ΙΟΥΛ', 'ΑΥΓ', 'ΣΕΠ', 'ΟΚΤ', 'ΝΟΕ', 'ΔΕΚ'],
+                            firstDay: moment.localeData()._week.dow
+                        }
+                    }, function (start, end) {
+                        var sm = month_gr(start.format('MMMM D, YYYY').split(" ")[0]);
+                        start = start.format('MMMM D, YYYY');
+                        start = start.replace(start.split(" ")[0], sm);
+                        var em = month_gr(end.format('MMMM D, YYYY').split(" ")[0]);
+                        end = end.format('MMMM D, YYYY');
+                        end = end.replace(end.split(" ")[0], em);
+                        $('#reportrange span').html(start + ' - ' + end);
+                        $(window).trigger("resize");
+                    });
+
+
+                    var start = moment().subtract('days', 3);
+                    var end = moment();
+                    var sm = month_gr(start.format('MMMM D, YYYY').split(" ")[0]);
+                    start = start.format('MMMM D, YYYY');
+                    start = start.replace(start.split(" ")[0], sm);
+                    var em = month_gr(end.format('MMMM D, YYYY').split(" ")[0]);
+                    end = end.format('MMMM D, YYYY');
+                    end = end.replace(end.split(" ")[0], em);
+                    $('#reportrange span').html(start + ' - ' + end);
+                } else {
+                    $("#reportrange").daterangepicker({
+                        ranges: {
+                            'Today': [moment(), moment()],
+                            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                            'This Month': [moment().startOf('month'), moment().endOf('month')],
+                            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        },
+                        opens: 'left',
+                        buttonClasses: ['btn btn-default'],
+                        applyClass: 'btn-small btn-primary',
+                        cancelClass: 'btn-small',
+                        format: 'MM.DD.YYYY',
+                        separator: ' to ',
+                        startDate: moment().subtract('days', 3),
+                        endDate: moment(),
+                        locale: {
+                            applyLabel: 'Apply',
+                            cancelLabel: 'Cancel',
+                            fromLabel: 'From',
+                            toLabel: 'To',
+                            weekLabel: 'W',
+                            customRangeLabel: 'Custom Range',
+                            daysOfWeek: moment.weekdaysMin(),
+                            monthNames: moment.monthsShort(),
+                            firstDay: moment.localeData()._week.dow
+                        }
+                    }, function (start, end) {
+                        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                    });
+                    $("#reportrange span").html(moment().subtract('days', 3).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+                }
+            }, 100);
         };
-        
         $scope.navClass = function (page) {
             var path = window.location.href.toString().split("/");
             var currentRoute = path[path.length - 1];
-            if( currentRoute.split(".")[0] != page){
+            if (currentRoute.split(".")[0] != page) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
         }
-        
+
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         var url;
-
         if (sub_domain[0].split(":").length > 1) {
             url = "./config/testcity1.json";
             sub_domain[0] = "patras";
@@ -77,7 +171,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         }
 
         var d = $q.defer();
-
         $rootScope.mainInfo = $http.get(url).success(function (response) {
 
             $rootScope.Variables = {
@@ -112,33 +205,25 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 google_buildings: response.google_buildings,
                 host: response.host
             };
-
             d.resolve(response);
             return d.promise;
         });
-
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
         }, 10);
-
         leafletData.getMap().then(function (map) {
             map.scrollWheelZoom.disable();
         });
-
         $scope.checkAll = {
             value1: false
         };
-
         $scope.issue_id = "";
-
         $scope.criteria_selected = true;
-
         $scope.state = true;
         $scope.toggleState = function () {
             $scope.state = !$scope.state;
         };
-
         $scope.invalidateTheMap = function () {
 
             leafletData.getMap().then(
@@ -147,7 +232,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     }
             );
         };
-
         angular.extend($scope, {
             layercontrol: {
                 icons: {
@@ -236,13 +320,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             }
         });
-
         $scope.center = {
             lat: 37.787435,
             lng: 20.897801,
             zoom: 12
         };
-
         $('#issues').on('change', function () {
             setTimeout(function () {
                 var wissues = $("button[data-id='issues']").attr("title").replace(/ /g, '').split(",");
@@ -257,7 +339,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             }, 100);
         });
-
         $('#states').on('change', function () {
             setTimeout(function () {
                 var wstate = $("button[data-id='states']").attr("title").replace(/ /g, '').split(",");
@@ -277,7 +358,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             }, 100);
         });
-
         $('#disposal').on('change', function () {
             setTimeout(function () {
                 var wdisposal = $("button[data-id='disposal']").attr("title").replace(/ /g, '').split(",");
@@ -295,7 +375,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             }, 100);
         });
-
         $q.all([$rootScope.mainInfo]).then(
                 function (data) {
                     $scope.issues = [];
@@ -311,7 +390,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     setTimeout(function () {
                         if ($(".select").length > 0) {
                             $(".select").selectpicker();
-
                             $(".select").on("change", function () {
                                 if ($(this).val() == "" || null === $(this).val()) {
                                     if (!$(this).attr("multiple"))
@@ -336,10 +414,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         lng: $rootScope.Variables.long_center,
                         zoom: 12
                     };
-
                     var counter = 0;
                     var counter1 = 0;
-
 //                    $scope.check_criteria = function($event){
 //                        $scope.searchIssue = "";
 //                        $scope.searchState = "";
@@ -404,7 +480,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             $scope.criteria_selected = true;
                         }
                     };
-
                     $scope.activate_searchb = function () {
                         counter1++;
                         if (counter1 == 2) {
@@ -448,7 +523,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
                         }
                     };
-
                     $scope.checked_issue = function (index) {
                         counter++;
                         if (counter == 2) {
@@ -493,7 +567,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
                         }
                     };
-
                     var startdate = new Date();
                     startdate.setDate(startdate.getDate() - 30);
                     $scope.startISOdate = startdate;
@@ -530,7 +603,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             popup.update();
                         });
                     });
-
                     function maptonum(month) {
                         switch (month) {
                             case "Ιανουάριος":
@@ -577,7 +649,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         var feelings = "";
                         var includeAnonymous = 0;
                         var i = 0;
-
                         if ($scope.issue_id != "") {
                             var obj = {city: $rootScope.Variables.city_name, bug_id: $scope.issue_id};
                             $resource($rootScope.Variables.APIURL,
@@ -663,7 +734,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
 
                             var promisesArray = [];
-
                             if (feelings != "") {
                                 feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name, feeling: feelings};
                                 promisesArray.push(feelingsQuery(feelingsObj));
