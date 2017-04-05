@@ -123,7 +123,7 @@
 <div class="page-content-wrap" style="margin-top:5px">
     <div class="col-md-12">
         <div class="page-title">                    
-                    <h2>Περισσότερα Προβλήματα</h2>
+                    <h2>{{'MORE_ISSUES' | translate}}</h2>
                 </div>                
     </div>
                     <div class="col-md-12" style="margin-top:50px">
@@ -142,12 +142,12 @@
                                 </div>                                
                                 <div class="panel-body" >                                    
                                     <div class="contact-info">
-                                        <p><small><span style="margin-right:3px" class="fa fa-cog"></span>Κατάσταση</small><br>{{lastissue.status
+                                        <p><small><span style="margin-right:3px" class="fa fa-cog"></span>{{'STATE' | translate}}</small><br>{{lastissue.status
 						| translate}}</p>
-                                        <p><small><span style="margin-right:3px" class="fa fa-clock-o"></span>Αναφορά</small><br>{{ 'SINCE_TIME' |
+                                        <p><small><span style="margin-right:3px" class="fa fa-clock-o"></span>{{'REPORT' | translate}}</small><br>{{ 'SINCE_TIME' |
 						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
 						translate }}</p>
-                                        <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">Λεπτομέρειες...</a></small><br></p>
+                                        <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">{{'DETAILS' | translate}}...</a></small><br></p>
 <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
                                         <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>

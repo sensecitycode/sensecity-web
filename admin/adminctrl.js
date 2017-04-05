@@ -84,6 +84,7 @@ function timegr(local_time) {
 
 appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', function ($scope, $rootScope, $window, $http, $cookieStore) {
         var sparams = {};
+        $scope.nload = true;
         if ($rootScope.assignissues != undefined) {
             if (search_button == 0) {
                 if ($cookieStore.get("role") == "cityAdmin" || $cookieStore.get("department") == "sensecityAdmin") {
@@ -113,7 +114,6 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                 }
                 sparams.city = $cookieStore.get("city");
                 sparams.send_user = "1";
-//            [{"_id":"58dcc612a1332e17622dd2aa","municipality":"testcity1","image_name":"no-image","issue":"garbage","device_id":"webapp","value_desc":"Χαλασμένος Κάδος","comments":"undefined","create_at":"Thu Mar 30 2017 11:47:14 GMT+0300 (EEST)","loc":{"type":"Point","coordinates":[21.743316650390625,38.2625803457421]},"status":"CONFIRMED","bug_id":"4225","cf_authenticate":"1","bug_component":"Τμήμα επίλυσης προβλημάτων","bug_priority":"Normal","bug_severity":"normal","name":"apostolos palladinos","phone":"6976725776","email":"tolistimon@gmail.com","resolution":""}
                 $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                     $scope.printres = [];
                     for (var i = 0; i < result.length; i++) {
@@ -126,11 +126,13 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                           "bug_component": result[i].bug_component,
                           "email": result[i].email,
                           "phone": result[i].phone,
+                          "address": result[i].bug_address,
                           "image_name": result[i].image_name,
                           "qr_link": result[i].municipality+".sense.city/scissuemap.html?issue="+result[i]._id
                         };
                         $scope.printres.push(cprint);
                     }
+                    $scope.nload = false;
                 });
             } else {
                 var searchparams = {};
@@ -152,11 +154,13 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                           "bug_component": result[i].bug_component,
                           "email": result[i].email,
                           "phone": result[i].phone,
+                          "address": result[i].bug_address,
                           "image_name": result[i].image_name,
                           "qr_link": result[i].municipality+".sense.city/scissuemap.html?issue="+result[i]._id
                         };
                         $scope.printres.push(cprint);
                     }
+                    $scope.nload = false;
                 });
             }
         }
@@ -185,7 +189,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         // var strvcounter = 0;
         var sreset = 0;
         var total_counter;
-        var issues_Array = [{id: "Κωδικός Προβλήματος", department: "Τμήμα Ανάθεσης Προβλήματος", description: "Περιγραφή Προβλήματος", state: "Κατάσταση Προβλήματος", date: "Καταγραφή Προβλήματος", priority: "Προτεραιότητα Προβλήματος", severity: "Σπουδαιότητα Προβλήματος", name: "Ονοματεπώνυμο Πολίτη", telephone: "Τηλέφωνο Πολίτη", email: "E-mail Πολίτη"}];
+        var issues_Array = [{id: "Κωδικός Προβλήματος", department: "Τμήμα Ανάθεσης Προβλήματος", description: "Περιγραφή Προβλήματος", address: "Διεύθυνση",state: "Κατάσταση Προβλήματος", date: "Καταγραφή Προβλήματος", priority: "Προτεραιότητα Προβλήματος", severity: "Σπουδαιότητα Προβλήματος", name: "Ονοματεπώνυμο Πολίτη", telephone: "Τηλέφωνο Πολίτη", email: "E-mail Πολίτη"}];
         $scope.isloading = true;
         $scope.full = 0;
         //$scope.street = 0;
@@ -237,7 +241,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                         } else {
                             state = 'ΟΛΟΚΛΗΡΩΘΗΚΕ';
                         }
-                        issues_Array[j + 1] = {id: $scope.panels[j].id, department: result[0].bug_component, description: $scope.panels[j].value_desc, state: state, date: $scope.panels[j].time, priority: priority, severity: severity, name: result[0].name, telephone: result[0].phone, email: result[0].email};
+                        issues_Array[j + 1] = {id: $scope.panels[j].id, department: result[0].bug_component, description: $scope.panels[j].value_desc, address:  result[0].bug_address,state: state, date: $scope.panels[j].time, priority: priority, severity: severity, name: result[0].name, telephone: result[0].phone, email: result[0].email};
                         break;
                     }
                 }

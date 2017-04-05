@@ -495,7 +495,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
                     $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[index];
                     $translate($scope.issueSubTypeSelect.name).then(function (h) {
-                       // $scope.otherDescriptionTxt = h;
+                        $scope.otherDescriptionTxt = h;
                         console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
                     }, function (translationId) {
                         //$scope.otherDescriptionTxt = translationId;
@@ -531,13 +531,16 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
 
             $scope.isOtherSelected = function () {
+                if($scope.issueSubTypeSelect.id === 'other'){
+                $scope.otherDescriptionTxt = "";
+            }
                 return $scope.issueSubTypeSelect.id === 'other';
             };
 
             //translate immediately when change
             //this executes the first time just once in the init of page
             $translate($scope.issueSubTypeSelect.name).then(function (h) {
-                //$scope.otherDescriptionTxt = h;
+                $scope.otherDescriptionTxt = h;
                 console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
             }, function (translationId) {
                 //$scope.otherDescriptionTxt = translationId;
@@ -653,7 +656,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     var value_desc = desc;
                     var image_name = $scope.uploadedPhotoFile; //no-image
 
-                    var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '" }';
+                    var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '","city_adress": "'+$scope.address+'"}';
 
                     $http(
                             {

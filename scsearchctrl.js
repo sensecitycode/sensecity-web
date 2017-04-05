@@ -165,7 +165,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         var url;
         if (sub_domain[0].split(":").length > 1) {
             url = "./config/testcity1.json";
-            sub_domain[0] = "patras";
+            sub_domain[0] = "testcity1";
         } else {
             url = '../config/' + sub_domain[0] + '.json';
         }
@@ -738,8 +738,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name, feeling: feelings};
                                 promisesArray.push(feelingsQuery(feelingsObj));
                             }
-
-                            for (index = 0; index < paramsObj.length; index++) {
+                            
+                            for (var index = 0; index < paramsObj.length; index++) {
+                                if((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined))
                                 promisesArray.push(doQuery(paramsObj[index]));
                             }
 

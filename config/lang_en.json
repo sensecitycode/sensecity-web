@@ -136,5 +136,11 @@
         "CERTIFICATION_ERROR": "Anonymous report does not require e-mail certification. Please proceed to the next step.",
         "SEARCH": "Search",
         "SEARCH_CITY": "Search issues in the city",
-        "ISSUE_NUMBER" : "Issue number"
+        "ISSUE_NUMBER" : "Issue number",
+        "MORE_ISSUES": "More issues",
+        "ISSUE_PROGRESS": "Issue progress",
+        "MAP": "Map",
+        "MAP_SUB": "Map address",
+        "ISSUE_IMAGE": "Issue Image",
+        "ASSIGN_TO": "Assigned to"
     }
