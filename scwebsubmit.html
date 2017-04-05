@@ -118,32 +118,32 @@
                 </ul>                         
 <div class="page-content-wrap">
     <div class="row">
-    <h2 style="left:8px;margin-top:10px;position:relative">Αναφορά Προβλήματος</h2>
+    <h2 style="left:8px;margin-top:10px;position:relative">{{'ISSUE_REPORT' | translate}}</h2>
         <div class="col-md-12">
             <div class="wizard show-submit">
                 <ul>
                     <li>
                         <a href="#step-1">
                             <span class="stepNumber">1</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 1<br /><div>Αναφορά Προβλήματος</div></span>
+                            <span class="stepDesc">{{'STEP'| translate}} 1<br /><div>{{'ISSUE_REPORT' | translate}}</div></span>
                         </a>
                     </li>
                     <li>
                         <a href="#step-2">
                             <span class="stepNumber">2</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 2<br /><div>Επώνυμη αναφορά</div></span>
+                            <span class="stepDesc">{{'STEP'| translate}} 2<br /><div>{{'EPONYMOUS_REPORT' | translate}}</div></span>
                         </a>
                     </li>
                     <li>
                         <a href="#step-3">
                             <span class="stepNumber">3</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 3<br /><div>Πιστοποίηση email</div></span>                   
+                            <span class="stepDesc">{{'STEP'| translate}} 3<br /><div>{{'CERTIFICATION' | translate}}</div></span>                   
                         </a>
                     </li>
                     <li>
                         <a href="#step-4">
                             <span class="stepNumber">4</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 4<br /><div>Καταχώριση αναναφοράς</div></span>                   
+                            <span class="stepDesc">{{'STEP'| translate}} 4<br /><div>{{'SUBMIT_REPORT' | translate}}</div></span>                   
                         </a>
                     </li>
                 </ul>
@@ -152,13 +152,13 @@
                         <div class="panel-heading">
                             <div class="panel-title-box" style="font-weight:600;font-size:14px;">
                                 <div class="col-md-7">
-                                <h3> Χάρτης Προβλημάτων</h3>
-                                <span style="display:block;margin-top:7.5px">Επιλέξτε το σημείο του προβλήματος</span>
+                                <h3> {{'ISSUE_MAP' | translate}}</h3>
+                                <span style="display:block;margin-top:7.5px">{{'ISSUE_MAP_SUB' | translate}}</span>
                                 <br>
                                 </div>
                                 <div class="col-md-5" style="margin-top:10px">
                                                                             <div class="input-group push-down-10">
-                                                <input id="address" list="taddress" type="text" class="form-control" placeholder="Αναζήτηση Διεύθυνσης..." />
+                                                <input id="address" list="taddress" type="text" class="form-control" placeholder="{{'ADDRESS_SEARCH' | translate}}..." />
                                                 <span style="cursor:pointer" id="subt" class="input-group-addon"><span style="font-size: 13px; color: #FFF;line-height: 28px" class="fa fa-search"></span></span>
                                             </div> 
                                 </div>
@@ -174,7 +174,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="panel-title-box" style="font-weight:600;font-size:14px;">
-                                <h3>Στοιχεία προβλήματος</h3>
+                                <h3>{{'ISSUE_DETAILS' | translate}}</h3>
                                 <span ng-bind="myText"></span>
                             </div>
                         </div>
@@ -252,7 +252,7 @@
                         <div id="step-2">
                                     <div class="form-group">
                                         <div class="col-md-6">
-                                            <p style="font-size:14px;cursor:default" class="check"><input ng-model="chkSelected" type="checkbox" id="epon" class="icheckbox"/> Επώνυμη καταγγελία</p>
+                                            <p style="font-size:14px;cursor:default" class="check"><input ng-model="chkSelected" type="checkbox" id="epon" class="icheckbox"/> {{'EPONYMOUS_REPORT' | translate}}</p>
                                         </div>
                                         <div ng-show="chkSelected" class="col-md-6" style="text-align:center;margin-top:5px">
                                             <p style="font-size:14px"> {{'MESSAGE_USER' | translate}}</p>
@@ -307,10 +307,10 @@
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
                                                     </div>
                                                     <div class="col-md-3" id="lmcert">
-                                                        <div ng-click="activate_email()" class="btn btn-primary"><span></span>Αποστολή κωδικού</div>
+                                                        <div ng-click="activate_email()" class="btn btn-primary"><span></span>{{ 'SEND_CODE' | translate}}</div>
                                                     </div>
                                                     <div class="col-md-2" id="lcert">
-                                                        <div ng-click="validate_email()" ng-hide="ecert" class="btn btn-primary"><span></span>Πιστοποίηση</div>
+                                                        <div ng-click="validate_email()" ng-hide="ecert" class="btn btn-primary"><span></span>{{ 'CERTIFICATION' | translate}}</div>
                                                     </div>
                                                     
                                                 </div>
@@ -330,10 +330,10 @@
                                                     <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
                                                     </div>
                                                     <div class="col-md-3" id="lmcert">
-                                                        <div ng-click="activate_mobile()" class="btn btn-primary"><span></span>Αποστολή κωδικού</div>
+                                                        <div ng-click="activate_mobile()" class="btn btn-primary"><span></span>{{ 'SEND_CODE' | translate}}</div>
                                                     </div>
                                                     <div class="col-md-2" id="lcert">
-                                                        <div ng-click="validate_mobile()" ng-hide="mcert" class="btn btn-primary"><span></span>Πιστοποίηση</div>
+                                                        <div ng-click="validate_mobile()" ng-hide="mcert" class="btn btn-primary"><span></span>{{ 'CERTIFICATION' | translate}}</div>
                                                     </div>
                                                     
                                                 </div>
@@ -347,13 +347,13 @@
                                 <label ng-show="smsg2" ng-bind="msg2"></label>
                             </div>
                                 </div>
-                            <p style="font-size:14px" ng-show='!eisnotverify() && chkSelected_1 == true && chkSelected_2 == false && chkSelected==true'>Το e-mail σας έχει πιστοποιηθεί. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
-                            <p style="font-size:14px" ng-show='!misnotverify() && chkSelected_1 == false && chkSelected_2 == true && chkSelected==true'>Το κινητό σας έχει πιστοποιηθεί. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
-                            <p style="font-size:14px" ng-show='!misnotverify() && !eisnotverify() && chkSelected_1 == true && chkSelected_2 == true && chkSelected==true'>Το e-mail και το κινητό σας έχουν πιστοποιηθεί. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
-                            <p style="font-size:14px" ng-show='chkSelected==false'>Η ανώνυμη αναφορά δεν απαιτεί πιστοποίηση e-mail. Παρακαλώ προχωρήστε στο επόμενο βήμα.</p>
+                            <p style="font-size:14px" ng-show='!eisnotverify() && chkSelected_1 == true && chkSelected_2 == false && chkSelected==true'>{{'EMAIL_CERTIFICATION' | translate}}</p>
+                            <p style="font-size:14px" ng-show='!misnotverify() && chkSelected_1 == false && chkSelected_2 == true && chkSelected==true'>{{'MOBILE_CERTIFICATION' | translate}}</p>
+                            <p style="font-size:14px" ng-show='!misnotverify() && !eisnotverify() && chkSelected_1 == true && chkSelected_2 == true && chkSelected==true'>{{'EM_CERTIFICATION'| translate}}</p>
+                            <p style="font-size:14px" ng-show='chkSelected==false'>{{'CERTIFICATION_ERROR' | translate}}</p>
                         </div>
                         <div id="step-4" ng-show='is_finalsubmit()'>
-                            <p style="font-size:14px">Αποστολή αναφοράς προβλήματος</p>
+                            <p style="font-size:14px">{{'SUBMIT' | translate}}</p>
                         </div>
                         <div id="testaki"></div>
                                 </div>

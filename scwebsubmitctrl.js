@@ -2,7 +2,6 @@ var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.tr
 
 appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
     function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
-
         $scope.smsg1 = false;
         $scope.smsg2 = false;
         $scope.chkSelected_1 = false;
@@ -22,10 +21,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 return true;
             }
         }
+
         
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
-            setTimeout(function(){$('#available_issues').selectpicker('refresh');},100);
+            setTimeout(function(){$("#next_button").text($translate.instant('NEXT'));$("#previous_button").text($translate.instant('PREVIOUS'));$("#btntxt").text($translate.instant('CHOOSE_PHOTO'));$("#finish_button").text($translate.instant('SUBMIT'));$('#available_issues').selectpicker('refresh');$('#issuetype_select').selectpicker('refresh')},100);
         };
 
         var url_path = $location.absUrl().split("//");
@@ -311,7 +311,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
             $scope.issueTypeSelect = $scope.availableIssues[0];
             $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
-            $scope.otherDescriptionTxt = '-';
+            //$scope.otherDescriptionTxt = '-';
             $scope.uploadedPhotoFile = 'no-image';
 
             $scope.step1 = function () {
@@ -495,7 +495,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
                     $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[index];
                     $translate($scope.issueSubTypeSelect.name).then(function (h) {
-                        $scope.otherDescriptionTxt = h;
+                       // $scope.otherDescriptionTxt = h;
                         console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
                     }, function (translationId) {
                         //$scope.otherDescriptionTxt = translationId;
@@ -537,7 +537,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             //translate immediately when change
             //this executes the first time just once in the init of page
             $translate($scope.issueSubTypeSelect.name).then(function (h) {
-                $scope.otherDescriptionTxt = h;
+                //$scope.otherDescriptionTxt = h;
                 console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
             }, function (translationId) {
                 //$scope.otherDescriptionTxt = translationId;
