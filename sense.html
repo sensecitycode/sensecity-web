@@ -127,10 +127,10 @@
                                      <img width="50" height="60" src="./img/issues.png" />
                                 </div> 
                             <div class="widget-data">
-                                    <div class="widget-title">Προβληματα</div>
-                                    <div class="widget-subtitle">Τελ. 7 ημέρες</div>
+                                    <div class="widget-title">{{'ISSUES' | translate}}</div>
+                                    <div class="widget-subtitle">{{'LAST7D' | translate}}</div>
                                     <div class="widget-int calcValue" count-to="{{calcValue7daysIssues}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysIssues}}</div>
-                                    <span class="widget-subtitle">Ανοιχτά/Σε εκτέλεση</span>
+                                    <span class="widget-subtitle">{{'ILAST_7' | translate}}</span>
                                 </div> 
                                  </div>
                         </div>
@@ -140,10 +140,10 @@
                                     <img width="50" height="60" src="./img/events.png" />
                                 </div> 
                             <div class="widget-data">
-                                <div class="widget-title">Συμβαντα</div>
-                                <div class="widget-subtitle">Τελ. 7 ημέρες</div>
+                                <div class="widget-title">{{'EVENTS' | translate}}</div>
+                                <div class="widget-subtitle">{{'LAST7D' | translate}}</div>
                                     <div class="widget-int calcValue" count-to="{{calcValue7daysEvents}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysEvents}}</div>
-                                    <span class="widget-subtitle">Ανοιχτά/Σε εκτέλεση και διάθεση πολιτών</span>
+                                    <span class="widget-subtitle">{{'ELAST_7' | translate}}</span>
                                 </div> 
                                  </div>       
                         </div>
@@ -153,10 +153,10 @@
                                     <img width="50" height="60" src="./img/issuecal.png" />
                                 </div> 
                             <div class="widget-data">
-                                <div class="widget-title" >Προβληματα</div>
-                                <div class="widget-subtitle">Από 1/1/2017</div>
+                                <div class="widget-title" >{{'ISSUES' | translate}}</div>
+                                <div class="widget-subtitle">{{'SINCE' | translate}}</div>
                                 <div class="widget-int calcValue" count-to="{{calcValueProblemsFrom2017}}" duration="2" count-from="0" style="text-shadow:none">{{calcValueProblemsFrom2017}}</div>
-                                <span class="widget-subtitle">Έχουν αναφερθεί από πολίτες</span>
+                                <span class="widget-subtitle">{{'ISF' | translate}}</span>
                                 </div> 
                                  </div>       
                         </div>
@@ -166,10 +166,10 @@
                                     <img width="50" height="60" src="./img/solutions.png" />
                                 </div> 
                             <div class="widget-data">
-                                    <div class="widget-title">Λυσεις</div>                                                                        
-                                        <div class="widget-subtitle">Από 1/1/2017</div>
+                                    <div class="widget-title">{{'SOLUTIONS' | translate}}</div>                                                                        
+                                        <div class="widget-subtitle">{{'SINCE' | translate}}</div>
                                         <div class="widget-int calcValue" count-to="{{calcValueSolutionFrom2017}}" duration="2" count-from="0" style="text-shadow:none">{{calcValueSolutionFrom2017}}</div>
-                                        <span class="widget-subtitle">Προβλήματα που έχουν αποκατασταθεί</span>
+                                        <span class="widget-subtitle">{{'SSF' | translate}}</span>
                                 </div> 
                                  </div>       
                         </div>
@@ -177,8 +177,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                         <div  class="panel-title-box" style="font-weight:600;font-size:14px;">
-                                            <h3> Χάρτης Συμβάντων</h3>
-                                            <span>Ανοιχτά/Σε εκτέλεση και διάθεση πολιτών( Τελευταίες 7 ημέρες )</span>
+                                            <h3> {{'EVENTS_MAP' | translate}}</h3>
+                                            <span>{{'EVENTS_MAP_SUB' | translate}}</span>
                                         </div>
                                     <ul class="panel-controls">
                                         <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="Μεγέθυνση"><a ng-click="removeFixed($event)" href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
@@ -199,8 +199,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div  class="panel-title-box" style="font-weight:600;font-size:14px;">
-                                            <h3> Τελευταία Προβλήματα</h3>
-                                            <span>Τελευταία 6 προβλήματα</span>
+                                            <h3> {{'LAST_ISSUES' | translate}}</h3>
+                                            <span>{{'LAST6_ISSUES' | translate}}</span>
                                         </div> 
                                     <ul class="panel-controls">
                                         <li><span tooltip-side="bottom" tooltips tooltip-template="Περισσότερα Προβήματα"><a href="all_issues.html"><span class="fa fa-eye"></span></a></span></li>                    
@@ -225,12 +225,12 @@
                                 </div>                                
                                 <div class="panel-body">                                    
                                     <div class="contact-info">
-                                        <p><small><span class="fa fa-cog"></span> Κατάσταση</small><br>{{lastissue.status
+                                        <p><small><span class="fa fa-cog"></span> {{'STATE' | translate}}</small><br>{{lastissue.status
 						| translate}}</p>
-                                        <p><small><span class="fa fa-clock-o"></span> Αναφορά</small><br>{{ 'SINCE_TIME' |
+                                        <p><small><span class="fa fa-clock-o"></span> {{'REPORT' | translate}}</small><br>{{ 'SINCE_TIME' |
 						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
 						translate }}</p>
-                                                                            <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">Λεπτομέρειες...</a></small><br></p>
+                                                                            <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">{{'DETAILS' | translate}}...</a></small><br></p>
 <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
                                         <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>

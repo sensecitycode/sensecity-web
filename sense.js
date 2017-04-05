@@ -62,6 +62,7 @@ appControllers.controller(
 
                 $scope.changeLanguage = function (langKey) {
                     $translate.use(langKey);
+                   // $scope.layers.overlays.layer1 = {name: $translate.instant("ELAST_7"),type: 'group',visible:true};
                 };
 
                 $scope.navClass = function (page) {
