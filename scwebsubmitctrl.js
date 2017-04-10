@@ -769,6 +769,8 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         });
                 } else if (step == 2) {
                     console.log("Step 2");
+                    $scope.smsg1 = false;
+                    $scope.smsg2 = false;
                     if (!$scope.chkSelected) { //if you sent an issue as anonymous
 
                         $scope.submit_button = false;
