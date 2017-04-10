@@ -479,7 +479,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         }
                     }
                     $scope.issueTypeSelect = $scope.availableIssues[index];
-                    $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[0];
                     $scope.$apply();
                     $('#issuetype_select').selectpicker('refresh');
                 });
@@ -494,8 +493,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         }
                     }
                     $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[index];
+                    
                     $translate($scope.issueSubTypeSelect.name).then(function (h) {
-                        $scope.otherDescriptionTxt = h;
+                        $scope.otherDescriptionTxt = "";
                         console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
                     }, function (translationId) {
                         //$scope.otherDescriptionTxt = translationId;
@@ -531,16 +531,13 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
 
             $scope.isOtherSelected = function () {
-                if($scope.issueSubTypeSelect.id === 'other'){
-                $scope.otherDescriptionTxt = "";
-            }
                 return $scope.issueSubTypeSelect.id === 'other';
             };
 
             //translate immediately when change
             //this executes the first time just once in the init of page
             $translate($scope.issueSubTypeSelect.name).then(function (h) {
-                $scope.otherDescriptionTxt = h;
+                $scope.otherDescriptionTxt = "";
                 console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
             }, function (translationId) {
                 //$scope.otherDescriptionTxt = translationId;
@@ -646,9 +643,14 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 //		"update" : {
 //			method : "PUT"
 //		}});
-
-                    var desc = $scope.otherDescriptionTxt;
-
+                    
+                    var desc;
+                    if( !$scope.isOtherSelected() ){
+                       desc = $translate.instant($scope.issueSubTypeSelect.name);
+                    }else{
+                       desc = $scope.otherDescriptionTxt; 
+                    }
+                    
                     var issue = $scope.issueTypeSelect.id;
 
                     var device_id = 'webapp';
@@ -1038,6 +1040,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                 } else if (step == 4) {
                     console.log("Step 4");
+
                     $http(
                             {
                                 method: 'POST',
