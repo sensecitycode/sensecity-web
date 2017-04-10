@@ -37,9 +37,56 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         var url;
+        var issue_index;
         
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
+            setTimeout(function(){
+               $scope.issue_name_new = $translate.instant("ISSUE")+" "+$translate.instant($rootScope.Variables.categories_issue[issue_index]); 
+               $scope.$apply();
+               for(var i = 0 ; i < $scope.comments.length;i++){
+                   $scope.comments[i].component = $translate.instant($rootScope.Variables.components_translation[$scope.comments[i].dindex]);
+                   switch ($scope.comments[i].month_num) {
+                    case "01":
+                        $scope.comments[i].month = $translate.instant("JAN");
+                        break;
+                    case "02":
+                        $scope.comments[i].month = $translate.instant("FEB");
+                        break;
+                    case "03":
+                        $scope.comments[i].month = $translate.instant("MAR");
+                        break;
+                    case "04":
+                        $scope.comments[i].month = $translate.instant("APR");
+                        break;
+                    case "05":
+                        $scope.comments[i].month = $translate.instant("MAY");
+                        break;
+                    case "06":
+                        $scope.comments[i].month = $translate.instant("JUNE");
+                        break;
+                    case "07":
+                        $scope.comments[i].month = $translate.instant("JUL");
+                        break;
+                    case "08":
+                        $scope.comments[i].month = $translate.instant("AUG");
+                        break;
+                    case "09":
+                        $scope.comments[i].month = $translate.instant("SEPT");
+                        break;
+                    case "10":
+                        $scope.comments[i].month = $translate.instant("OCT");
+                        break;
+                    case "11":
+                        $scope.comments[i].month = $translate.instant("NOV");
+                        break;
+                    case "12":
+                        $scope.comments[i].month = $translate.instant("DEC");
+                        break;
+                }
+               }
+               $scope.$apply();
+            },100);
         };
         
         if( sub_domain[0].split(":").length > 1){
@@ -165,6 +212,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 availableIssues: response.availableIssues,
                 searchIssues: response.searchIssues,
                 map_zoom: response.zoom,
+                components_translation: response.components_translation,
                 overlay_functions : response.overlay_functions,
                 overlay_categories : response.overlay_categories,
                 google_init_coords: response.google_init_coords,
@@ -304,43 +352,45 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     color = {"background-color": "#2ecc71"};
                     type = "Ολοκληρωμενο";
                 }
-
+                
+                var month_num = month;
+                
                 switch (month) {
                     case "01":
-                        month = "Ιαν";
+                        month = $translate.instant("JAN");
                         break;
                     case "02":
-                        month = "Φεβ";
+                        month = $translate.instant("FEB");
                         break;
                     case "03":
-                        month = "Μαρ";
+                        month = $translate.instant("MAR");
                         break;
                     case "04":
-                        month = "Απρ";
+                        month = $translate.instant("APR");
                         break;
                     case "05":
-                        month = "Μαη";
+                        month = $translate.instant("MAY");
                         break;
                     case "06":
-                        month = "Ιουν";
+                        month = $translate.instant("JUNE");
                         break;
                     case "07":
-                        month = "Ιουλ";
+                        month = $translate.instant("JUL");
                         break;
                     case "08":
-                        month = "Αυγ";
+                        month = $translate.instant("AUG");
                         break;
                     case "09":
-                        month = "Σεπτ";
+                        month = $translate.instant("SEPT");
                         break;
                     case "10":
-                        month = "Οκτ";
+                        month = $translate.instant("OCT");
                         break;
                     case "11":
-                        month = "Νοε";
+                        month = $translate.instant("NOV");
                         break;
                     case "12":
-                        month = "Δεκ";
+                        month = $translate.instant("DEC");
                         break;
                 }
 
@@ -367,19 +417,23 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 }
                 var dep_index = $rootScope.Variables.components_en.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[dep_pos]);
                 response[1].bugs[$scope.resp_id].comments[i].tags[dep_pos] = $rootScope.Variables.components[dep_index];
+                
+                var dindex = $rootScope.Variables.components.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[dep_pos]);
 
                 var com = {
                     "content": response[1].bugs[$scope.resp_id].comments[i].text,
                     "type": type,
                     "day": day,
                     "month": month,
+                    "month_num": month_num,
                     "year": year,
                     "time": time,
                     "color": color,
-                    "component": response[1].bugs[$scope.resp_id].comments[i].tags[dep_pos],
+                    "component": $translate.instant($rootScope.Variables.components_translation[dindex]),
+                    "dindex": dindex,
                     "show": show
                 };
-
+                
                 if (response[1].bugs[$scope.resp_id].comments[i].text.substr(2, 3) != "***") {
                     if($scope.comments.length == 0){
                         $scope.fcyear = com.year;
@@ -396,6 +450,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
             {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
     ).query({issueID: issue_id}, function (issue) {
+        $scope.bug_id = issue[0].bug_id;
             if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                 $scope.issue_image = issue[0].image_name;
             } else {
@@ -408,7 +463,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             glat = issue[0].loc.coordinates[1];
             glng = issue[0].loc.coordinates[0];
 
-            var issue_index = $rootScope.Variables.categories.indexOf(issue[0].issue);
+            issue_index = $rootScope.Variables.categories.indexOf(issue[0].issue);
             svissue = issue[0].issue;
             svtitle = $rootScope.Variables.departments_en[issue_index];
 
@@ -459,11 +514,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             var issue_name_new;
 
             if (issue_index != -1) {
-                if (localStorage.getItem("language") === 'en') {
-                    issue_name_new = $rootScope.Variables.issue_type_en[issue_index];
-                } else {
-                    issue_name_new = $rootScope.Variables.issue_type_gr[issue_index];
-                }
+                    issue_name_new = $translate.instant("ISSUE")+" "+$translate.instant($rootScope.Variables.categories_issue[issue_index]);
             }
 
             $scope.issue_name_new = issue_name_new;

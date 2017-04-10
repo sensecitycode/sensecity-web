@@ -656,17 +656,8 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     var value_desc = desc;
                     var image_name = $scope.uploadedPhotoFile; //no-image
 
-                    var txtpost = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '","city_adress": "'+$scope.address+'"}';
+                    $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '","city_adress": "'+$scope.address+'"}';
 
-                    $http(
-                            {
-                                method: 'POST',
-                                url: $rootScope.Variables.APIURL,
-                                headers: {
-                                    'Content-Type': 'application/json; charset=utf-8'
-                                },
-                                data: txtpost
-                            }).success(function (resp) {
                         $http({
                             method: "POST",
                             url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt
@@ -699,17 +690,17 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                     $scope.chkSelected_1 = false;
                                 }
                             }
+                            var is_anon;
                             $http({
                                 method: "GET",
                                 url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + $scope.lnglabeltxt + "," + $scope.latlabeltxt + "]&issue=" + issue
                             }).success(function (msg) {
-                                my_id = resp._id;
-                                resp.anonymous = msg[0].anonymous;
+                                is_anon = msg[0].anonymous;
                                 $scope.myText = msg[0].policy_desc;
                             });
 
 
-                            if (resp.anonymous == "false") {
+                            if (is_anon == "false") {
                                 $scope.issubmit_isseu_form = function () {
                                     return false;
                                 };
@@ -774,7 +765,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 //                                $scope.submit_eponymous_button = true;
                             }
                         });
-                    });
                 } else if (step == 2) {
                     console.log("Step 2");
                     if (!$scope.chkSelected) { //if you sent an issue as anonymous
@@ -1048,6 +1038,15 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                 } else if (step == 4) {
                     console.log("Step 4");
+                    $http(
+                            {
+                                method: 'POST',
+                                url: $rootScope.Variables.APIURL,
+                                headers: {
+                                    'Content-Type': 'application/json; charset=utf-8'
+                                },
+                                data: $scope.anon_post
+                            }).success(function (resp_an) {
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
 
                     $scope.smsg1 = false;
@@ -1056,7 +1055,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     if ($scope.chkSelected) {
                         return $http({
                             method: 'POST',
-                            url: $rootScope.Variables.APIURL + my_id,
+                            url: $rootScope.Variables.APIURL + resp_an._id,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             },
@@ -1072,6 +1071,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     } else {
                         $window.location.reload();
                     }
+                });
                 }
             };
 
@@ -1192,6 +1192,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             }, 200);
             if ($("input.fileinput").length > 0)
                 $("input.fileinput").bootstrapFileInput();
+             setTimeout(function(){$("#btntxt").text($translate.instant('CHOOSE_PHOTO'));},100);
         });
     }]);
 

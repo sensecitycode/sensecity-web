@@ -1,33 +1,33 @@
 var appControllers = angular.module('searchapp.controllers', ['ngSanitize', 'pascalprecht.translate']);
 
 function month_gr(month) {
-        switch (month) {
-            case "January":
-                return "Ιανουάριος";
-            case "February":
-                return "Φεβρουάριος";
-            case "March":
-                return "Μάρτιος";
-            case "April":
-                return "Απρίλιος";
-            case "May":
-                return "Μάιος";
-            case "June":
-                return "Ιούνιος";
-            case "July":
-                return "Ιούλιος";
-            case "August":
-                return "Αύγουστος";
-            case "September":
-                return "Σεπτέμβριος";
-            case "October":
-                return "Οκτώβριος";
-            case "November":
-                return "Νοέμβριος";
-            case "December":
-                return "Δεκέμβριος";
-        }
+    switch (month) {
+        case "January":
+            return "Ιανουάριος";
+        case "February":
+            return "Φεβρουάριος";
+        case "March":
+            return "Μάρτιος";
+        case "April":
+            return "Απρίλιος";
+        case "May":
+            return "Μάιος";
+        case "June":
+            return "Ιούνιος";
+        case "July":
+            return "Ιούλιος";
+        case "August":
+            return "Αύγουστος";
+        case "September":
+            return "Σεπτέμβριος";
+        case "October":
+            return "Οκτώβριος";
+        case "November":
+            return "Νοέμβριος";
+        case "December":
+            return "Δεκέμβριος";
     }
+}
 
 appControllers.directive('sidebarDirective', function () {
     return {
@@ -50,6 +50,14 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
             setTimeout(function () {
+                $scope.layers.overlays.layer1 = {name: $translate.instant("GARBAGE_ISSUE"), type: 'group', visible: true};
+                $scope.layers.overlays.layer2 = {name: $translate.instant("LIGHTNING_ISSUE"), type: 'group', visible: true};
+                $scope.layers.overlays.layer3 = {name: $translate.instant("PLUMBING_ISSUE"), type: 'group', visible: true};
+                $scope.layers.overlays.layer4 = {name: $translate.instant("PROTECTION_POLICY_ISSUE"), type: 'group', visible: true};
+                $scope.layers.overlays.layer5 = {name: $translate.instant("ROAD_ISSUE"), type: 'group', visible: true};
+                $scope.layers.overlays.layer6 = {name: $translate.instant("ENVIRONMENT_ISSUE"), type: 'group', visible: true};
+                $scope.layers.overlays.layer7 = {name: $translate.instant("GREEN_ISSUE"), type: 'group', visible: true};
+                $scope.layers.overlays.layer8 = {name: $translate.instant("MOOD"), type: 'group', visible: true};
                 for (var i = 0; i < $scope.issues.length; i++) {
                     $('#issue' + i).data('content', '<i class=\"' + $scope.issues[i].class + '"\"></i>' + $translate.instant($scope.issues[i].translatev));
                 }
@@ -150,6 +158,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             }, 100);
         };
+
         $scope.navClass = function (page) {
             var path = window.location.href.toString().split("/");
             var currentRoute = path[path.length - 1];
@@ -582,9 +591,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
                         ).query({issueID: marker3.options.issue_id}, function (resp) {
 
-                            var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
+                            var resp_index = $rootScope.Variables.categories.indexOf(resp[0].issue);
                             if (resp_index != -1) {
-                                issue_name = $rootScope.Variables.departments_en[resp_index];
+                                issue_name = $translate.instant($rootScope.Variables.categories_issue[resp_index]);
                             }
 
                             if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
@@ -594,9 +603,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
 
                             if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
-                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">"+$translate.instant("PROBLEM_PROGRESS")+"</a></center>");
                             } else {
-                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">"+$translate.instant("PROBLEM_PROGRESS")+"</a></center>");
                             }
 
                             popup.options.maxWidth = "auto";
@@ -738,10 +747,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name, feeling: feelings};
                                 promisesArray.push(feelingsQuery(feelingsObj));
                             }
-                            
+
                             for (var index = 0; index < paramsObj.length; index++) {
-                                if((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined))
-                                promisesArray.push(doQuery(paramsObj[index]));
+                                if ((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined))
+                                    promisesArray.push(doQuery(paramsObj[index]));
                             }
 
                             $q.all(promisesArray).then(function (data) {
@@ -837,5 +846,92 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         return d.promise;
                     }
                     $(window).trigger("resize");
+                    setTimeout(function () {
+                        if ($translate.use() == "el") {
+                            $("#reportrange").daterangepicker({
+                                ranges: {
+                                    'Σήμερα': [moment(), moment()],
+                                    'Χτές': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                    'Τελευταίες 7 Ημέρες': [moment().subtract(6, 'days'), moment()],
+                                    'Τελευταίες 30 Ημέρες': [moment().subtract(29, 'days'), moment()],
+                                    'Τελευταίες 3 Ημέρες': [moment().subtract(3, 'days'), moment()],
+                                    'Τελευταίος Μήνας': [moment().startOf('month'), moment().endOf('month')],
+                                    'Προηγούμενος Μήνας': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                                },
+                                opens: 'left',
+                                buttonClasses: ['btn btn-default'],
+                                applyClass: 'btn-small btn-primary',
+                                cancelClass: 'btn-small',
+                                format: 'MM.DD.YYYY',
+                                separator: ' μέχρι ',
+                                startDate: moment().subtract('days', 3),
+                                endDate: moment(),
+                                locale: {
+                                    applyLabel: 'OK',
+                                    cancelLabel: 'Ακύρωση',
+                                    fromLabel: 'ΑΠΟ',
+                                    toLabel: 'ΕΩΣ',
+                                    weekLabel: 'Ε',
+                                    customRangeLabel: 'Ημερολόγιο',
+                                    daysOfWeek: ['ΔΕ', 'ΤΡ', 'ΤΕ', 'ΠΕ', 'ΠΑΡ', 'ΣΑΒ', 'ΚΥΡ'],
+                                    monthNames: ['ΙΑΝ', 'ΦΕΒ', 'ΜΑΡ', 'ΑΠΡ', 'ΜΑΗΣ', 'ΙΟΥΝ', 'ΙΟΥΛ', 'ΑΥΓ', 'ΣΕΠ', 'ΟΚΤ', 'ΝΟΕ', 'ΔΕΚ'],
+                                    firstDay: moment.localeData()._week.dow
+                                }
+                            }, function (start, end) {
+                                var sm = month_gr(start.format('MMMM D, YYYY').split(" ")[0]);
+                                start = start.format('MMMM D, YYYY');
+                                start = start.replace(start.split(" ")[0], sm);
+                                var em = month_gr(end.format('MMMM D, YYYY').split(" ")[0]);
+                                end = end.format('MMMM D, YYYY');
+                                end = end.replace(end.split(" ")[0], em);
+                                $('#reportrange span').html(start + ' - ' + end);
+                                $(window).trigger("resize");
+                            });
+
+
+                            var start = moment().subtract('days', 3);
+                            var end = moment();
+                            var sm = month_gr(start.format('MMMM D, YYYY').split(" ")[0]);
+                            start = start.format('MMMM D, YYYY');
+                            start = start.replace(start.split(" ")[0], sm);
+                            var em = month_gr(end.format('MMMM D, YYYY').split(" ")[0]);
+                            end = end.format('MMMM D, YYYY');
+                            end = end.replace(end.split(" ")[0], em);
+                            $('#reportrange span').html(start + ' - ' + end);
+                        } else {
+                            $("#reportrange").daterangepicker({
+                                ranges: {
+                                    'Today': [moment(), moment()],
+                                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                                },
+                                opens: 'left',
+                                buttonClasses: ['btn btn-default'],
+                                applyClass: 'btn-small btn-primary',
+                                cancelClass: 'btn-small',
+                                format: 'MM.DD.YYYY',
+                                separator: ' to ',
+                                startDate: moment().subtract('days', 3),
+                                endDate: moment(),
+                                locale: {
+                                    applyLabel: 'Apply',
+                                    cancelLabel: 'Cancel',
+                                    fromLabel: 'From',
+                                    toLabel: 'To',
+                                    weekLabel: 'W',
+                                    customRangeLabel: 'Custom Range',
+                                    daysOfWeek: moment.weekdaysMin(),
+                                    monthNames: moment.monthsShort(),
+                                    firstDay: moment.localeData()._week.dow
+                                }
+                            }, function (start, end) {
+                                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                            });
+                            $("#reportrange span").html(moment().subtract('days', 3).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+                        }
+                    }, 100);
                 });
     }]);

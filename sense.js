@@ -62,7 +62,16 @@ appControllers.controller(
 
                 $scope.changeLanguage = function (langKey) {
                     $translate.use(langKey);
-                   // $scope.layers.overlays.layer1 = {name: $translate.instant("ELAST_7"),type: 'group',visible:true};
+                    setTimeout(function(){
+                        $scope.layers.overlays.layer1 = {name: $translate.instant("GARBAGE_ISSUE"),type: 'group',visible:true};
+                        $scope.layers.overlays.layer2 = {name: $translate.instant("LIGHTNING_ISSUE"),type: 'group',visible:true};
+                        $scope.layers.overlays.layer3 = {name: $translate.instant("PLUMBING_ISSUE"),type: 'group',visible:true};
+                        $scope.layers.overlays.layer4 = {name: $translate.instant("PROTECTION_POLICY_ISSUE"),type: 'group',visible:true};
+                        $scope.layers.overlays.layer5 = {name: $translate.instant("ROAD_ISSUE"),type: 'group',visible:true};
+                        $scope.layers.overlays.layer6 = {name: $translate.instant("ENVIRONMENT_ISSUE"),type: 'group',visible:true};
+                        $scope.layers.overlays.layer7 = {name: $translate.instant("GREEN_ISSUE"),type: 'group',visible:true};
+                        $scope.layers.overlays.layer8 = {name: $translate.instant("MOOD"),type: 'group',visible:true};
+                    },100);
                 };
 
                 $scope.navClass = function (page) {
@@ -409,9 +418,9 @@ appControllers.controller(
                                         {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
                                 ).query({issueID: marker3.options.issue_id}, function (resp) {
 
-                                    var resp_index = $rootScope.Variables.departments.indexOf(resp[0].issue);
+                                    var resp_index = $rootScope.Variables.categories.indexOf(resp[0].issue);
                                     if (resp_index != -1) {
-                                        issue_name = $rootScope.Variables.departments_en[resp_index];
+                                        issue_name = $translate.instant($rootScope.Variables.categories_issue[resp_index]);
                                     }
 
                                     if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
@@ -420,9 +429,9 @@ appControllers.controller(
                                         issue_image = resp[0].image_name;
                                     }
                                     if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
-                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">"+$translate.instant("PROBLEM_PROGRESS")+"</a></center>");
                                     } else {
-                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">Εξέλιξη προβλήματος!</a></center>");
+                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">"+$translate.instant("PROBLEM_PROGRESS")+"</a></center>");
                                     }
                                     popup.options.maxWidth = "auto";
                                     popup.update();
