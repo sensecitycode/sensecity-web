@@ -379,6 +379,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 $scope.panel.email = result[0].email;
                 $scope.panel.tel = result[0].phone;
                 $scope.panel.creator = result[0].name;
+                $scope.panel.address = result[0].bug_address;               
 
                 $scope.panel.severity = {en: result[0].bug_severity, gr: severity};
                 $scope.panel.priority = {en: result[0].bug_priority, gr: priority};

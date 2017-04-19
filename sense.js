@@ -1,5 +1,9 @@
 var appControllers = angular.module('sense.controllers', ['pascalprecht.translate']);
 
+var mood_activated = false;
+var garbage_activated = false;
+var light_activated = false;
+
 appControllers.directive('sidebarDirective', function () {
     return {
         link: function (scope, element, attr) {
@@ -70,7 +74,7 @@ appControllers.controller(
                         $scope.layers.overlays.layer5 = {name: $translate.instant("ROAD_ISSUE"),type: 'group',visible:true};
                         $scope.layers.overlays.layer6 = {name: $translate.instant("ENVIRONMENT_ISSUE"),type: 'group',visible:true};
                         $scope.layers.overlays.layer7 = {name: $translate.instant("GREEN_ISSUE"),type: 'group',visible:true};
-                        $scope.layers.overlays.layer8 = {name: $translate.instant("MOOD"),type: 'group',visible:true};
+                        $scope.layers.overlays.layer8 = {name: $translate.instant("MOOD"),type: 'group',visible: mood_activated};
                     },100);
                 };
 
@@ -344,7 +348,7 @@ appControllers.controller(
                                 }
                             }
                         }, overlays: {
-                            layer1: {name: '', type: 'group', visible: true}, layer2: {name: '', type: 'group', visible: true}, layer3: {name: '', type: 'group', visible: true}, layer4: {name: '', type: 'group', visible: true}, layer5: {name: '', type: 'group', visible: true}, layer6: {name: '', type: 'group', visible: true}, layer7: {name: '', type: 'group', visible: true}, layer8: {name: '', type: 'group', visible: true}, layer9: {name: '', type: 'group', visible: true}, layer10: {name: '', type: 'group', visible: true}}
+                            layer1: {name: '', type: 'group', visible: true}, layer2: {name: '', type: 'group', visible: true}, layer3: {name: '', type: 'group', visible: true}, layer4: {name: '', type: 'group', visible: true}, layer5: {name: '', type: 'group', visible: true}, layer6: {name: '', type: 'group', visible: true}, layer7: {name: '', type: 'group', visible: true}, layer8: {name: '', type: 'group', visible: false}, layer9: {name: '', type: 'group', visible: true}, layer10: {name: '', type: 'group', visible: true}}
                     },
                     addlayer: function (layer) {
                         if (layer == 1) {
@@ -393,9 +397,7 @@ appControllers.controller(
                         }
                     }
                 });
-
-
-
+            
                 $scope.map_center = {
                     lat: 37.787435,
                     lng: 20.897801,
@@ -472,12 +474,16 @@ appControllers.controller(
                             //We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
 
                             $scope.$on('leafletDirectiveMap.overlayadd', function (event, o) {
-                                console.log("overlayadd event ");
-                                console.log(o.leafletEvent);
-                                console.log(o.leafletEvent.layer);
+                                if($translate.instant("MOOD") == o.leafletEvent.name){
+                                    mood_activated = true;
+                                }
                             });
 
-
+                            $scope.$on('leafletDirectiveMap.overlayremove', function (event, o) {
+                                if($translate.instant("MOOD") == o.leafletEvent.name){
+                                    mood_activated = false;
+                                }
+                            });
 
                             var startdate = new Date(2017, 0, 1);
                             var today = new Date();
@@ -833,7 +839,7 @@ appControllers.controller(
 
                                     var markersGarbage = L.markerClusterGroup({
                                         name: 'Κάδοι',
-                                        visible: true,
+                                        visible: false,
                                         disableClusteringAtZoom: 19,
                                         animateAddingMarkers: false,
                                         spiderfyDistanceMultiplier: true,
@@ -849,7 +855,7 @@ appControllers.controller(
 
                                     var markersLightning = L.markerClusterGroup({
                                         name: 'Φωτισμός',
-                                        visible: true,
+                                        visible: false,
                                         disableClusteringAtZoom: 19,
                                         animateAddingMarkers: false,
                                         spiderfyDistanceMultiplier: true,

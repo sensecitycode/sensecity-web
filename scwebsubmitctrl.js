@@ -1,4 +1,4 @@
-var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.translate', 'ngCookies','pascalprecht.translate']);
+var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.translate', 'ngCookies', 'pascalprecht.translate']);
 
 appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
     function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
@@ -22,10 +22,17 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             }
         }
 
-        
+
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
-            setTimeout(function(){$("#next_button").text($translate.instant('NEXT'));$("#previous_button").text($translate.instant('PREVIOUS'));$("#btntxt").text($translate.instant('CHOOSE_PHOTO'));$("#finish_button").text($translate.instant('SUBMIT'));$('#available_issues').selectpicker('refresh');$('#issuetype_select').selectpicker('refresh')},100);
+            setTimeout(function () {
+                $("#next_button").text($translate.instant('NEXT'));
+                $("#previous_button").text($translate.instant('PREVIOUS'));
+                $("#btntxt").text($translate.instant('CHOOSE_PHOTO'));
+                $("#finish_button").text($translate.instant('SUBMIT'));
+                $('#available_issues').selectpicker('refresh');
+                $('#issuetype_select').selectpicker('refresh')
+            }, 100);
         };
 
         var url_path = $location.absUrl().split("//");
@@ -267,14 +274,14 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     method: "GET",
                     url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + event.latlng.lng + "," + event.latlng.lat + "]&issue=garbage"
                 }).success(function (msg) {
-                    if(msg[0].city == $rootScope.Variables.city_name){
-                      setTimeout(function () {
-                        $("#txtaddress").trigger("change");
-                    }, 100);  
-                    }else{
+                    if (msg[0].city == $rootScope.Variables.city_name) {
+                        setTimeout(function () {
+                            $("#txtaddress").trigger("change");
+                        }, 100);
+                    } else {
                         $("#next_button").attr("class", "btn btn-default pull-right disabled");
                         alert("Η διεύθυνση που καταχωρίσατε βρίσκεται εκτός των ορίων της πόλης! Παρακαλώ καταχωρείστε έγκυρη διεύθυνση!");
-                    }                 
+                    }
                 });
             });
 
@@ -493,7 +500,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         }
                     }
                     $scope.issueSubTypeSelect = $scope.issueTypeSelect.types[index];
-                    
+
                     $translate($scope.issueSubTypeSelect.name).then(function (h) {
                         $scope.otherDescriptionTxt = "";
                         console.log("in issueSubTypeSelectChanged $scope.otherDescriptionTxt =" + $scope.otherDescriptionTxt);
@@ -602,6 +609,15 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             var my_id;
             var user_id;
 
+            $('.fileinput').on('change', function () {
+                
+                if(this.files[0].size > 5000000){
+                    $('.fileinput').val('');
+                   alert("Το μέγεθος της φωτογραφίας υπερβαίνει τα 5mb! Παρακαλώ επιλέξτε φωτογραφία μικρότερου μεγέθους!");
+                }
+
+            });
+
             $scope.setStep = function (step) {
 
                 if (step == 1) {
@@ -643,14 +659,14 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 //		"update" : {
 //			method : "PUT"
 //		}});
-                    
+
                     var desc;
-                    if( !$scope.isOtherSelected() ){
-                       desc = $translate.instant($scope.issueSubTypeSelect.name);
-                    }else{
-                       desc = $scope.otherDescriptionTxt; 
+                    if (!$scope.isOtherSelected()) {
+                        desc = $translate.instant($scope.issueSubTypeSelect.name);
+                    } else {
+                        desc = $scope.otherDescriptionTxt;
                     }
-                    
+
                     var issue = $scope.issueTypeSelect.id;
 
                     var device_id = 'webapp';
@@ -658,115 +674,115 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     var value_desc = desc;
                     var image_name = $scope.uploadedPhotoFile; //no-image
 
-                    $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '","city_adress": "'+$scope.address+'"}';
+                    $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '","city_adress": "' + $scope.address + '"}';
 
-                        $http({
-                            method: "POST",
-                            url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt
-                        }).success(function (msg) {
-                            var msg_str = JSON.stringify(msg[0]);
-                            msg = JSON.parse(msg_str);
-                            $scope.mand_sms = msg.mandatory_sms;
-                            if ($scope.mand_sms) {
-                                $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
-                                $("#chkSelected_2").prop("disabled", true);
-                                if (mcft == 1) {
-                                    mcft = 0;
-                                    if ($scope.mand_sms) {
-                                        $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
-                                        $scope.chkSelected_2 = true;
-                                    } else {
-                                        $scope.chkSelected_2 = false;
-                                    }
-                                }
-                            }
-                            $scope.mand_email = msg.mandatory_email;
-                            if ($scope.madn_email) {
-                                $("#chkSelected_1").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
-                                $("#chkSelected_1").prop("disabled", true);
-                                if (ecft == 1) {
-                                    ecft = 0;
-                                    if ($scope.chkSelected_1)
-                                        $scope.chkSelected_1 = true;
+                    $http({
+                        method: "POST",
+                        url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt
+                    }).success(function (msg) {
+                        var msg_str = JSON.stringify(msg[0]);
+                        msg = JSON.parse(msg_str);
+                        $scope.mand_sms = msg.mandatory_sms;
+                        if ($scope.mand_sms) {
+                            $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
+                            $("#chkSelected_2").prop("disabled", true);
+                            if (mcft == 1) {
+                                mcft = 0;
+                                if ($scope.mand_sms) {
+                                    $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
+                                    $scope.chkSelected_2 = true;
                                 } else {
-                                    $scope.chkSelected_1 = false;
+                                    $scope.chkSelected_2 = false;
                                 }
                             }
-                            var is_anon;
-                            $http({
-                                method: "GET",
-                                url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + $scope.lnglabeltxt + "," + $scope.latlabeltxt + "]&issue=" + issue
-                            }).success(function (msg) {
-                                is_anon = msg[0].anonymous;
-                                $scope.myText = msg[0].policy_desc;
-                            });
+                        }
+                        $scope.mand_email = msg.mandatory_email;
+                        if ($scope.madn_email) {
+                            $("#chkSelected_1").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
+                            $("#chkSelected_1").prop("disabled", true);
+                            if (ecft == 1) {
+                                ecft = 0;
+                                if ($scope.chkSelected_1)
+                                    $scope.chkSelected_1 = true;
+                            } else {
+                                $scope.chkSelected_1 = false;
+                            }
+                        }
+                        var is_anon;
+                        $http({
+                            method: "GET",
+                            url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + $scope.lnglabeltxt + "," + $scope.latlabeltxt + "]&issue=" + issue
+                        }).success(function (msg) {
+                            is_anon = msg[0].anonymous;
+                            $scope.myText = msg[0].policy_desc;
+                        });
 
 
-                            if (is_anon == "false") {
-                                $scope.issubmit_isseu_form = function () {
-                                    return false;
-                                };
+                        if (is_anon == "false") {
+                            $scope.issubmit_isseu_form = function () {
+                                return false;
+                            };
 
 
-                                $scope.iseponymous = function () {
-                                    return true;
-                                };
+                            $scope.iseponymous = function () {
+                                return true;
+                            };
 
-                                $scope.write_user_data = function () {
-                                    return true;
-                                };
+                            $scope.write_user_data = function () {
+                                return true;
+                            };
 
-                                $scope.misnotverify = function () {
-                                    return false;
-                                };
+                            $scope.misnotverify = function () {
+                                return false;
+                            };
 
-                                $scope.eisnotverify = function () {
-                                    return false;
-                                };
+                            $scope.eisnotverify = function () {
+                                return false;
+                            };
 
 //                                $scope.submit_button = false;
 //                                $scope.register_button = true;
 //                                $scope.verify_button = false;
 //                                $scope.submit_eponymous_button = false;
-                            } else {
-                                $scope.issubmit_isseu_form = function () {
-                                    return false;
-                                };
+                        } else {
+                            $scope.issubmit_isseu_form = function () {
+                                return false;
+                            };
 
-                                $scope.iseponymous = function () {
-                                    return false;
-                                };
-                                $scope.write_user_data = function () {
-                                    return false;
-                                };
-                                $scope.isnotverify = function () {
-                                    return false;
-                                };
-                                $scope.is_finalsubmit = function () {
-                                    return false;
-                                };
-                                $scope.step1 = function () {
-                                    return false;
-                                };
+                            $scope.iseponymous = function () {
+                                return false;
+                            };
+                            $scope.write_user_data = function () {
+                                return false;
+                            };
+                            $scope.isnotverify = function () {
+                                return false;
+                            };
+                            $scope.is_finalsubmit = function () {
+                                return false;
+                            };
+                            $scope.step1 = function () {
+                                return false;
+                            };
 
-                                $scope.step2 = function () {
-                                    return false;
-                                };
+                            $scope.step2 = function () {
+                                return false;
+                            };
 
-                                $scope.step3 = function () {
-                                    return false;
-                                };
+                            $scope.step3 = function () {
+                                return false;
+                            };
 
-                                $scope.step4 = function () {
-                                    return false;
-                                };
+                            $scope.step4 = function () {
+                                return false;
+                            };
 
 //                                $scope.submit_button = false;
 //                                $scope.register_button = false;
 //                                $scope.verify_button = false;
 //                                $scope.submit_eponymous_button = true;
-                            }
-                        });
+                        }
+                    });
                 } else if (step == 2) {
                     console.log("Step 2");
                     $scope.smsg1 = false;
@@ -1052,31 +1068,31 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 },
                                 data: $scope.anon_post
                             }).success(function (resp_an) {
-                    var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
+                        var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
 
-                    $scope.smsg1 = false;
-                    $scope.smsg2 = false;
+                        $scope.smsg1 = false;
+                        $scope.smsg2 = false;
 
-                    if ($scope.chkSelected) {
-                        return $http({
-                            method: 'POST',
-                            url: $rootScope.Variables.APIURL + resp_an._id,
-                            headers: {
-                                'Content-Type': 'application/json; charset=utf-8'
-                            },
-                            data: jsonData
-                        }).success(function (resp) {
-                            $scope.is_finalsubmit = function () {
-                                return true;
-                            };
+                        if ($scope.chkSelected) {
+                            return $http({
+                                method: 'POST',
+                                url: $rootScope.Variables.APIURL + resp_an._id,
+                                headers: {
+                                    'Content-Type': 'application/json; charset=utf-8'
+                                },
+                                data: jsonData
+                            }).success(function (resp) {
+                                $scope.is_finalsubmit = function () {
+                                    return true;
+                                };
 
 
+                                $window.location.reload();
+                            });
+                        } else {
                             $window.location.reload();
-                        });
-                    } else {
-                        $window.location.reload();
-                    }
-                });
+                        }
+                    });
                 }
             };
 
@@ -1197,7 +1213,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             }, 200);
             if ($("input.fileinput").length > 0)
                 $("input.fileinput").bootstrapFileInput();
-             setTimeout(function(){$("#btntxt").text($translate.instant('CHOOSE_PHOTO'));},100);
+            setTimeout(function () {
+                $("#btntxt").text($translate.instant('CHOOSE_PHOTO'));
+            }, 100);
         });
     }]);
 

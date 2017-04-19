@@ -116,6 +116,10 @@
                                                     <span class="title">e-mail: </span>
                                                     <span> {{panel.email}}</span>
                                                 </div>
+                                                <div style="margin-bottom:2%;margin-left:1%">
+                                                    <span class="title">Διεύθυνση: </span>
+                                                    <span> {{panel.address}}</span>
+                                                </div>
                                             </div>    
                                             <div ng-show="panel.comment != '' && panel.comment != 'undefined';" style="margin-bottom:2%;margin-left:1%;">
                                                 <div class="title">Σχόλια: </div>
@@ -146,6 +150,8 @@
                                                     <span class="title">Διπλότυπο πρόβλημα: </span>
                                                     <input type="text" ng-model="duplicof" ng-blur="dupli_change($event, duplicof)">
                                                 </div>
+                                                <div class="title" style="display: inline-block">Διεύθυνση: </div>
+                                                <input style="width: 50%;display: inline-block" type="text" class="form-control" ng-model="panel.address" placeholder="Διεύθυνση ..."/>
                                             </div>
                                             <div style="position:relative;margin-top:3%;font-size:12px">
                                                 <div class="title" >Σχόλια: </div>

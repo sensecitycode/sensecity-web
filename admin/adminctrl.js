@@ -118,12 +118,11 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                     $scope.printres = [];
                     for (var i = 0; i < result.length; i++) {
                         var creation_time = result[i].create_at;
-                        var local_time = moment(creation_time).format('LLLL');
-                        local_time = timegr(local_time);
+                        var local_time = moment(creation_time).format("DD/MM/YYYY");
+                       // local_time = timegr(local_time);
                         var cprint = {
                           "create_at" : local_time,
                           "bug_id": result[i].bug_id,
-                          "bug_component": result[i].bug_component,
                           "email": result[i].email,
                           "phone": result[i].phone,
                           "address": result[i].bug_address,
@@ -146,12 +145,12 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                     $scope.printres = [];
                     for (var i = 0; i < result.length; i++) {
                         var creation_time = result[i].create_at;
-                        var local_time = moment(creation_time).format('LLLL');
-                        local_time = timegr(local_time);
+                        var local_time = moment(creation_time).format("DD/MM/YYYY");
+                        //local_time = timegr(local_time);
                         var cprint = {
                           "create_at" : local_time,
                           "bug_id": result[i].bug_id,
-                          "bug_component": result[i].bug_component,
+//                          "bug_component": result[i].bug_component,
                           "email": result[i].email,
                           "phone": result[i].phone,
                           "address": result[i].bug_address,
