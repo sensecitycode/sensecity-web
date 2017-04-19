@@ -126,7 +126,7 @@
                     <h2>{{'MORE_ISSUES' | translate}}</h2>
                 </div>                
     </div>
-                    <div class="col-md-12" style="margin-top:50px">
+                    <div ng-hide="nloaded" class="col-md-12" style="margin-top:50px">
                         <div ng-repeat="lastissue in allissues" class="col-md-3">
                             <!-- CONTACT ITEM -->
                             <div class="panel panel-default">
@@ -154,12 +154,14 @@
                                 </div>                                
                             </div>
                             <!-- END CONTACT ITEM -->
-                        </div>                   
+                        </div>
+                        
                     </div>
 
                 </div>
             </div>
-    <div style="background-color: #f5f5f5">
+    <div ng-hide="nloaded" style="margin-bottom: 50px;margin-right:30px" class="paging"></div>
+    <div ng-hide="nloaded" style="background-color: #f5f5f5">
         <div class="sfooter col-md-12">
         <div class="col-md-6 col-sm-6">
 		<img src="{{Variables.img_logo}}"

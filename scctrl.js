@@ -1,72 +1,77 @@
-var appControllers = angular.module('scapp.controllers', ['pascalprecht.translate','ngCookies', 'ngAnimate']);
+var appControllers = angular.module('scapp.controllers', ['pascalprecht.translate', 'ngCookies', 'ngAnimate']);
 
 
-appControllers.controller('sensecityMainCtrl', function($scope, $log, $location, $rootScope,$http,$window) {
-	$log.debug('inside sensecityMainCtrl controller');
-	$scope.scvesrion = '20160712_trunk';
-	$rootScope.overview_url = $location.path();
+appControllers.controller('sensecityMainCtrl', function ($scope, $log, $location, $rootScope, $http, $window) {
+    $log.debug('inside sensecityMainCtrl controller');
+    $scope.scvesrion = '20160712_trunk';
+    $rootScope.overview_url = $location.path();
 
 });
 
-appControllers.controller('mobilelinkCtl',function($scope,$window,$http,$q,$location){
-    
+appControllers.controller('mobilelinkCtl', function ($scope, $window, $http, $q, $location) {
+
     $scope.nloaded = true;
     var url_path = $location.absUrl().split("//");
-        var sub_domain = url_path[1].split(".");
-        var url;
-    
+    var sub_domain = url_path[1].split(".");
+    var url;
+
     if (sub_domain[0].split(":").length > 1) {
-            url = "./config/testcity1.json";
-            sub_domain[0] = "patras";
-        } else {
-            url = '../config/' + sub_domain[0] + '.json';
-        }
+        url = "./config/testcity1.json";
+        sub_domain[0] = "patras";
+    } else {
+        url = '../config/' + sub_domain[0] + '.json';
+    }
 
-        var d = $q.defer();
+    var d = $q.defer();
 
-        var mainInfo = $http.get(url).success(function (response) {
+    var mainInfo = $http.get(url).success(function (response) {
 
-            $scope.Variables = {
-                APIADMIN: response.APIADMIN
-            };
+        $scope.Variables = {
+            APIADMIN: response.APIADMIN
+        };
 
-            d.resolve(response);
-            return d.promise;
+        d.resolve(response);
+        return d.promise;
+    });
+
+    var b_id = $location.absUrl().split("=")[1];
+
+    $q.all([mainInfo]).then(function (data) {
+        $http.get($scope.Variables.APIADMIN + "/bugidtoalias/" + b_id).success(function (response) {
+            $scope.nloaded = false;
+            window.location = "http://" + sub_domain[0] + ".sense.city/scissuemap.html?issue=" + response.bugs[0].alias[0];
         });
-        
-        var b_id = $location.absUrl().split("=")[1];
-
-         $q.all([mainInfo]).then(function(data){
-             $http.get($scope.Variables.APIADMIN+"/bugidtoalias/"+b_id).success(function (response) {
-                 $scope.nloaded = false;
-                 window.location = "http://"+sub_domain[0]+".sense.city/scissuemap.html?issue="+response.bugs[0].alias[0];
-             });
-         });
+    });
 });
 
-appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$window,$http,$q,$location, $resource, $translate,BugService) {
-	$log.debug('inside allissuesCtrl controller');
-        $scope.nloaded = true;
-        $scope.navClass = function (page) {
-            var path = window.location.href.toString().split("/");
-            var currentRoute = path[path.length - 1];
-            if( currentRoute.split(".")[0] != page){
-                return false;
-            }else{
-                return true;
-            }
+appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $window, $http, $q, $location, $resource, $translate, $compile, BugService) {
+    $log.debug('inside allissuesCtrl controller');
+    $scope.nloaded = true;
+    $scope.activePage = 1;
+    $scope.startPage = 1;
+    $scope.pageIndex = 1;
+    var init = 0 ;
+
+    $scope.navClass = function (page) {
+        var path = window.location.href.toString().split("/");
+        var currentRoute = path[path.length - 1];
+        if (currentRoute.split(".")[0] != page) {
+            return false;
+        } else {
+            return true;
         }
-        
-        $scope.changeLanguage = function (langKey) {
-            $translate.use(langKey);
-        };
-        
-	$scope.allissues = [];
-	$rootScope.overview_url = $location.path();
-        
-	$scope.doCalcAllIssues = function() {
-                
-                var url_path = $location.absUrl().split("//");
+    }
+
+    $scope.changeLanguage = function (langKey) {
+        $translate.use(langKey);
+    };
+
+    $scope.allissues = [];
+    $rootScope.overview_url = $location.path();
+
+    $scope.doCalcAllIssues = function () {
+
+        var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         var url;
 
@@ -117,106 +122,214 @@ appControllers.controller('allissuesCtrl', function($scope,$rootScope, $log,$win
             d.resolve(response);
             return d.promise;
         });
+
+        $q.all([$rootScope.mainInfo]).then(function (data) {
+
+            $scope.refreshPages = function (startPage, arrow_type) {
+                if (startPage <= 0) {
+                    $scope.startPage = 1;
+                } else if (startPage + 4 > $scope.total_pages) {
+                    if ($scope.total_pages < 5) {
+
+                        $scope.startPage = 1;
+                    } else {
+                        $scope.startPage = $scope.total_pages - 4;
+                    }
+                } else if ((startPage - 1) % 5 != 0 && arrow_type != 4) {
+                    $scope.startPage = startPage + 5 - ($scope.total_pages % 5);
+                } else {
+                    $scope.startPage = startPage;
+                }
+
+                if (arrow_type == 4) {
+                    if ($scope.total_pages < 5) {
+                        $scope.activePage = $scope.total_pages;
+                        $scope.pageIndex = $scope.total_pages;
+                    } else {
+                        $scope.activePage = $scope.total_pages;
+                        $scope.pageIndex = 5;
+                    }
+                } else {
+                    $scope.activePage = $scope.startPage;
+                    if (($scope.startPage - 1) % 5 == 0) {
+                        $scope.pageIndex = $scope.startPage % 5;
+                    } else {
+                        $scope.pageIndex = 5 - ($scope.total_pages - $scope.startPage) % 5;
+                    }
+                }
+
+                var local_pages;
+                if ($scope.total_pages < 5) {
+                    local_pages = $scope.total_pages;
+                } else if ($scope.total_pages < $scope.startPage + 4) {
+                    local_pages = $scope.total_pages;
+                } else {
+                    local_pages = $scope.startPage + 4;
+                }
+
+                $scope.page_set = [];
+                for (var i = $scope.startPage; i <= local_pages; i++) {
+                    $scope.page_set.push(i);
+                }
+            };
+            
+            $scope.loading = function(){
+                $scope.nloaded=true;
+            }
+            
+            function comp_pages(){
+                $scope.pages = '<ul class="pagination pagination-sm pull-right"><li ng-click="loading();totalpages(1,1);"><span tooltip-side="top" tooltips tooltip-template="Πρώτη σελίδα"><a href="#/admin">«</a></span></li>'
+                    + '<li ng-click="loading();totalpages(startPage - 5,2)"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#/admin"><</a></span></li>';
+            if(init == 0){
+                init = 1;
+                $scope.refreshPages(1);
+            }
+            $scope.pages += '<li ng-repeat="page in page_set"  ng-click="loading();updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#/admin">{{page}}</a></span></li>';
+            $scope.pages += '<li ng-click="loading();totalpages(startPage + 5,3)"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#/admin">></a></span></li>'
+                    + '<li ng-click="loading();totalpages(total_pages - 4,4)"><span tooltip-side="top" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
+            $(".paging").html($compile($scope.pages)($scope));
+            }
+
+            $scope.totalpages = function (newstart, arrow) {
+
+                $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&list_issue=1',
+                        {}, {
+                    update: {
+                        method: 'GET'
+                    }
+                }).query(function (response) {
+                    $scope.total_pages = Math.ceil(response.length / 20);
+                    if (init == 0) {
+                       $scope.refreshPages(1);
+                    } else {
+                       $scope.refreshPages(newstart, arrow);
+                       $scope.refresh();
+                    }
+                    comp_pages();
+                });
+            };
+            
+            $scope.updatePage = function (activePage) {
+                                        $scope.activePage = activePage;
+                                        if (($scope.startPage - 1) % 5 == 0) {
+                                            $scope.pageIndex = activePage % 5;
+                                        } else { //When totalpages are not divided by 5
+                                            $scope.pageIndex = 5 - ($scope.total_pages - activePage);
+                                        }
+                                        if ($scope.pageIndex == 0) {
+                                            $scope.pageIndex = 5;
+                                        }
+                                    };
+            
+            $scope.totalpages();
+            
+            $scope.page_set = [];
+            
+            $scope.refresh = function(){
+            
+            var offset = ($scope.activePage - 1) * 20;
+            
+            var tmpIssues = $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&limit=20&offset='+offset+'&list_issue=1&image_field=1',
+                    {}, {
+                update: {
+                    method: 'GET'
+                            // isArray: true
+                }
+            }).query(function () {
+
+                angular
+                        .forEach(
+                                tmpIssues,
+                                function (lastissue,
+                                        key) {
+                                    // console.log("key=
+                                    // " + key + ",
+                                    // lastissue.issue="
+                                    // +
+                                    // lastissue.issue);
+                                    if (lastissue.image_name === ''
+                                            || lastissue.image_name === 'no-image'
+                                            || lastissue.image_name === null
+                                            || lastissue.image_name === undefined) {
+                                        lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
+                                        lastissue.width = "80%";
+                                    } else {
+                                        lastissue.width = "100%";
+                                    }
+
+                                    var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
+                                    if (cat_index != -1) {
+                                        lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
+                                    } else {
+                                        lastissue.issue = '';
+                                    }
+
+                                    var today = new Date();
+                                    var create_day = new Date(
+                                            lastissue.create_at);
+
+                                    var seconds = (today
+                                            .getTime() - create_day
+                                            .getTime()) / 1000;
+                                    var datediff = '';
+                                    var datediffunit = '';
+
+                                    if (seconds < 60) {
+                                        datediff = seconds;
+                                        datediffunit = "SECS";
+                                    } else if (seconds < 3600) {
+                                        datediff = Math
+                                                .floor(seconds / 60);
+                                        datediffunit = "MINUTES";
+                                    } else if (seconds < 86400) {
+                                        datediff = Math
+                                                .floor(seconds / 3600);
+                                        datediffunit = "HOURS";
+                                    } else {
+                                        datediff = Math
+                                                .floor(seconds / 86400);
+                                        datediffunit = "DAYS";
+
+                                    }
+                                    lastissue.create_at = datediff;
+                                    lastissue.create_at_unit = datediffunit;
+
+                                    /*
+                                     var bugParams =
+                                     {
+                                     "method": "Bug.get",
+                                     "params": [{"ids":lastissue._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+                                     "id": 1
+                                     };
+                                     BugService.search(bugParams, function(result) {
+                                     switch (result[0].status) {
+                                     case 'CONFIRMED':
+                                     result.status = 'CONFIRMED';
+                                     break;
+                                     case 'IN_PROGRESS':
+                                     result.status = 'IN_PROGRESS';
+                                     break;
+                                     case 'RESOLVED':
+                                     result.status = 'RESOLVED';
+                                     break;
+                                     }
+                                     lastissue.status = result.status;
+                                     });
+                                     
+                                     */
+
+
+                                });
+                $(window).trigger("resize");
+                $scope.nloaded = false;
+            });
+            $scope.allissues = tmpIssues;
+        };
         
-         $q.all([$rootScope.mainInfo]).then(function(data){       
-		var tmpIssues = $resource( $rootScope.Variables.APIURL+'?city='+ $rootScope.Variables.city_name+'&startdate=2017-01-01&sort=-1&limit=20&list_issue=1&image_field=1',
-        {}, {
-        update: {
-          method: 'GET'
-          // isArray: true
-        }
-    }).query(function() {
+        $scope.refresh();
+        });
+    };
 
-					angular
-							.forEach(
-									tmpIssues,
-									function(lastissue,
-											key) {
-										// console.log("key=
-										// " + key + ",
-										// lastissue.issue="
-										// +
-										// lastissue.issue);
-										if (lastissue.image_name === ''
-												|| lastissue.image_name === 'no-image'
-												|| lastissue.image_name === null
-												|| lastissue.image_name === undefined) {
-											lastissue.class = "fa fa-"+$rootScope.Variables.icons[lastissue.issue].icon;
-                                                                                        lastissue.width = "80%";
-										}else{
-                                                                                    lastissue.width = "100%";
-                                                                                }
-
-                                                                                var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
-                                                                                if(cat_index != -1){
-                                                                                  lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
-                                                                                }else{
-                                                                                  lastissue.issue = '';  
-                                                                                }
-
-										var today = new Date();
-										var create_day = new Date(
-												lastissue.create_at);
-
-										var seconds = (today
-												.getTime() - create_day
-												.getTime()) / 1000;
-										var datediff = '';
-										var datediffunit = '';
-
-										if (seconds < 60) {
-											datediff =  seconds;
-											datediffunit = "SECS";
-										} else if (seconds < 3600) {
-											datediff =  Math
-															.floor(seconds / 60);
-											datediffunit = "MINUTES";
-										} else if (seconds < 86400) {
-											datediff =  Math
-															.floor(seconds / 3600);
-											datediffunit = "HOURS";
-										} else {
-											datediff =  Math
-															.floor(seconds / 86400);
-											datediffunit = "DAYS";
-											
-										}
-										lastissue.create_at = datediff;
-										lastissue.create_at_unit = datediffunit;
-										
-										/*
-										var bugParams =
-										{
-										    "method": "Bug.get",
-										    "params": [{"ids":lastissue._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
-										    "id": 1
-										};
-										BugService.search(bugParams, function(result) {
-												switch (result[0].status) {
-												 case 'CONFIRMED':
-													 result.status = 'CONFIRMED';
-													 break;
-												 case 'IN_PROGRESS':
-													 result.status = 'IN_PROGRESS';
-													 break;
-												 case 'RESOLVED':
-													 result.status = 'RESOLVED';
-													 break;
-											 }
-											 lastissue.status = result.status;
-										});
-
-										*/
-										
-										
-									});
-                                                                       $(window).trigger("resize");
-                                                                       $scope.nloaded = false;
-				});
-                            $scope.allissues = tmpIssues;
-                            });
-	};
-
-	$scope.doCalcAllIssues();
+    $scope.doCalcAllIssues();
 
 });
