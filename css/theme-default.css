@@ -1461,19 +1461,26 @@ body.page-container-boxed .page-container {
 .padding-0 .list-group .list-group-item:first-child {
     border-top: 0px;
 }
-.list-group-item.active,
+/*.list-group-item.active,
 .list-group-item.active:hover,
 .list-group-item.active:focus {
     background: #1b1e24;
     border-color: #1b1e24;
-}
+}*/
 .list-group-item {
     border-color: #E5E5E5;
 }
-a.list-group-item:hover,
+/*a.list-group-item:hover,
 a.list-group-item:focus {
     background: #F9F9F9;
+}*/
+
+a.list-group-item:hover, a.list-group-item:focus {
+    text-decoration: none;
+    background-color: white;
+    cursor:default;
 }
+
 /* LIST GROUP CONTACTS */
 .list-group-contacts .list-group-item {
     padding: 10px;

@@ -683,7 +683,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         var msg_str = JSON.stringify(msg[0]);
                         msg = JSON.parse(msg_str);
                         $scope.mand_sms = msg.mandatory_sms;
-                        if ($scope.mand_sms) {
+                        if ($scope.mand_sms == 'true') {
                             $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
                             $("#chkSelected_2").prop("disabled", true);
                             if (mcft == 1) {
@@ -697,7 +697,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             }
                         }
                         $scope.mand_email = msg.mandatory_email;
-                        if ($scope.madn_email) {
+                        if ($scope.madn_email == 'true') {
                             $("#chkSelected_1").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
                             $("#chkSelected_1").prop("disabled", true);
                             if (ecft == 1) {

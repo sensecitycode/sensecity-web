@@ -558,6 +558,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 $scope.severities = ["Κρίσιμο", "Μείζον", "Κανονικό", "Ελάσσον", "Μηδαμινό", "Βελτίωση"];
                 $scope.components = $rootScope.Variables.components;
                 $scope.selectedComponent = $scope.panel.component;
+                $scope.address = $scope.panel.address;
                 $scope.selectedPriority = {en: $scope.panel.priority.en, gr: $scope.panel.priority.gr};
                 $scope.selectedSeverity = {en: $scope.panel.severity.en, gr: $scope.panel.severity.gr};
                 $scope.selectedResolution = {en: $scope.panel.resolution.en, gr: $scope.panel.resolution.gr};
@@ -616,6 +617,8 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                             $scope.panel.comment = "undefined";
                         }
                         
+                        obj.cf_city_address = $scope.panel.address;
+                        $scope.address = $scope.panel.address;
                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             if($scope.panel.comment == undefined){
                                 $scope.panel.comment = "undefined";
@@ -639,7 +642,9 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                         });
                     }
                     if ($scope.selectedStatus.gr == 'Ανοιχτό') {
-                        if ($scope.selectedStatus.gr != $scope.panel.status.gr) {
+                        if ($scope.selectedStatus.gr != $scope.panel.status.gr || $scope.panel.address != $scope.address) {
+                            alert($scope.panel.address);
+                            alert($scope.address);
                             $scope.panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             $scope.panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                             $scope.panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
@@ -665,7 +670,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                         if (seldcomment == "") {
                             seldcomment = "undefined";
                         }
-                        if ($scope.selectedStatus.gr != $scope.panel.status.gr || $scope.selectedComponent != $scope.panel.component || $scope.panel.comment != seldcomment || $scope.selectedPriority.gr != $scope.panel.priority.gr || $scope.selectedSeverity.gr != $scope.panel.severity.gr) {
+                        if ($scope.selectedStatus.gr != $scope.panel.status.gr || $scope.selectedComponent != $scope.panel.component || $scope.panel.comment != seldcomment || $scope.selectedPriority.gr != $scope.panel.priority.gr || $scope.selectedSeverity.gr != $scope.panel.severity.gr || $scope.panel.address != $scope.address) {
                             $scope.panel.comment = seldcomment;
                             $scope.panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             $scope.panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
@@ -709,7 +714,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 //                        $window.alert($scope.panel.priority.gr);
 //                        $window.alert($scope.selectedSeverity.gr);
 //                        $window.alert($scope.panel.severity.gr);
-                        if ($scope.selectedStatus.gr != $scope.panel.status.gr || $scope.selectedComponent != $scope.panel.component || $scope.panel.comment != seldcomment || $scope.selectedResolution.en != $scope.panel.resolution.en || $scope.selectedResolution.gr != $scope.panel.resolution.gr || $scope.duplicof != $scope.panel.duplicof || $scope.selectedPriority.gr != $scope.panel.priority.gr || $scope.selectedSeverity.gr != $scope.panel.severity.gr) {
+                        if ($scope.selectedStatus.gr != $scope.panel.status.gr || $scope.selectedComponent != $scope.panel.component || $scope.panel.comment != seldcomment || $scope.selectedResolution.en != $scope.panel.resolution.en || $scope.selectedResolution.gr != $scope.panel.resolution.gr || $scope.duplicof != $scope.panel.duplicof || $scope.selectedPriority.gr != $scope.panel.priority.gr || $scope.selectedSeverity.gr != $scope.panel.severity.gr || $scope.panel.address != $scope.address) {
                             $scope.panel.comment = seldcomment;
                             $scope.panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                             $scope.panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};

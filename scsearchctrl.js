@@ -208,7 +208,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 availableIssues: response.availableIssues,
                 searchIssues: response.searchIssues,
                 map_zoom: response.zoom,
-                overlay_functions: response.overlay_functions,
+                overlay_functions1: response.overlay_functions1,
                 overlay_categories: response.overlay_categories,
                 google_init_coords: response.google_init_coords,
                 google_buildings: response.google_buildings,
@@ -284,25 +284,25 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             },
             addlayer: function (layer) {
                 if (layer == 1) {
-                    eval($rootScope.Variables.overlay_functions.layer1);
+                    eval($rootScope.Variables.overlay_functions1.layer1);
                 } else if (layer == 2) {
-                    eval($rootScope.Variables.overlay_functions.layer2);
+                    eval($rootScope.Variables.overlay_functions1.layer2);
                 } else if (layer == 3) {
-                    eval($rootScope.Variables.overlay_functions.layer3);
+                    eval($rootScope.Variables.overlay_functions1.layer3);
                 } else if (layer == 4) {
-                    eval($rootScope.Variables.overlay_functions.layer4);
+                    eval($rootScope.Variables.overlay_functions1.layer4);
                 } else if (layer == 5) {
-                    eval($rootScope.Variables.overlay_functions.layer5);
+                    eval($rootScope.Variables.overlay_functions1.layer5);
                 } else if (layer == 6) {
-                    eval($rootScope.Variables.overlay_functions.layer6);
+                    eval($rootScope.Variables.overlay_functions1.layer6);
                 } else if (layer == 7) {
-                    eval($rootScope.Variables.overlay_functions.layer7);
+                    eval($rootScope.Variables.overlay_functions1.layer7);
                 } else if (layer == 8) {
-                    eval($rootScope.Variables.overlay_functions.layer8);
+                    eval($rootScope.Variables.overlay_functions1.layer8);
                 } else if (layer == 9) {
-                    eval($rootScope.Variables.overlay_functions.layer9);
+                    eval($rootScope.Variables.overlay_functions1.layer9);
                 } else if (layer == 10) {
-                    eval($rootScope.Variables.overlay_functions.layer10);
+                    eval($rootScope.Variables.overlay_functions1.layer10);
                 }
             },
             removelayer: function (layer) {
@@ -388,6 +388,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 function (data) {
                     $scope.issues = [];
                     angular.copy($rootScope.Variables.searchIssues, $scope.issues);
+                    for (var k = 0; k < $scope.issues.length; k++) {
+                        $scope.issues[k].checked = true;
+                    }
                     $scope.allissues = [];
                     for (var i = 0; i < $rootScope.Variables.searchIssues.length; i++) {
                         $scope.allissues.push($scope.$eval($rootScope.Variables.searchIssues[i].translate).replace(/ /g, ''));
@@ -399,6 +402,14 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     setTimeout(function () {
                         if ($(".select").length > 0) {
                             $(".select").selectpicker();
+                            for (var i = 0; i <= $(".select").length; i++) {
+                                $("#issue" + i).attr("selected", "selected");
+                            }
+                            $('#issues').selectpicker('refresh');
+                            $("#confirmed").attr("selected", "selected");
+                            $("#inprogress").attr("selected", "selected");
+                            $('#states').selectpicker('refresh');
+                            $('#states').trigger('change');
                             $(".select").on("change", function () {
                                 if ($(this).val() == "" || null === $(this).val()) {
                                     if (!$(this).attr("multiple"))
@@ -409,11 +420,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             });
                         }
                     }, 1);
-                    for (var i = Object.keys($rootScope.Variables.overlay_functions).length + 1; i <= 10; i++) {
+                    for (var i = Object.keys($rootScope.Variables.overlay_functions1).length + 1; i <= 10; i++) {
                         $scope.removelayer(i);
                     }
 
-                    for (var i = 1; i <= Object.keys($rootScope.Variables.overlay_functions).length; i++) {
+                    for (var i = 1; i <= Object.keys($rootScope.Variables.overlay_functions1).length; i++) {
                         $scope.addlayer(i);
                     }
 
@@ -603,9 +614,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
 
                             if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
-                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">"+$translate.instant("PROBLEM_PROGRESS")+"</a></center>");
+                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a></center>");
                             } else {
-                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">"+$translate.instant("PROBLEM_PROGRESS")+"</a></center>");
+                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a></center>");
                             }
 
                             popup.options.maxWidth = "auto";
@@ -691,7 +702,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 } else {
                                     marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br><a href=" + issuelink + ">Δες με!</a>"};
                                 }
-                                if (layer != 'reaction') {
+                                if (layer != 'layer' + lindex) {
                                     marker.message = "Loading...";
                                 }
                                 $scope.markers.push(marker);
@@ -792,7 +803,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                     } else {
                                         marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br><a href=" + issuelink + ">Δες με!</a>"};
                                     }
-                                    if (layer != 'reaction') {
+                                    if (layer != 'layer' + lindex) {
                                         marker.message = "Loading...";
                                     }
                                     this.push(marker);
@@ -810,8 +821,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         $scope.searchFeeling = "";
                         $scope.issue_id = "";
                         $scope.markers = [];
-                        for (k = 0; k < $scope.issues.length; k++) {
-                            $scope.issues[k].checked = false;
+                        for (var k = 0; k < $scope.issues.length; k++) {
+                            $scope.issues[k].checked = true;
                         }
                         $scope.criteria_selected = true;
                         $scope.center = {
