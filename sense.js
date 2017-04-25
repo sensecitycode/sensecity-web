@@ -863,6 +863,8 @@ appControllers.controller(
                                         showCoverageOnHover: true,
                                         chunkedLoading: true
                                     });
+                                    
+                                    markersLightning.setVisibility(false);
 
 
                                     markersLightning.addLayers($scope.fixedmarkersLightning);
