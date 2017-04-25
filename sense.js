@@ -864,12 +864,11 @@ appControllers.controller(
                                         chunkedLoading: true
                                     });                                   
 
-                                    markersLightning.addLayers($scope.fixedmarkersLightning);
-                                    
-                                    map.removeLayer(markersLightning);
+                                    markersLightning.addLayers($scope.fixedmarkersLightning);                                    
 
                                     leafletData.getMap().then(function (map) {
                                         map.addLayer(markersLightning);
+                                        map.removeLayer(markersLightning);
                                     });
 
                                     var baseLayers = {
