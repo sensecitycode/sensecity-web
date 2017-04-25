@@ -862,12 +862,11 @@ appControllers.controller(
                                         singleMarkerMode: false,
                                         showCoverageOnHover: true,
                                         chunkedLoading: true
-                                    });
-                                    
-                                    markersLightning.setVisibility(false);
-
+                                    });                                   
 
                                     markersLightning.addLayers($scope.fixedmarkersLightning);
+                                    
+                                    map.removeLayer(markersLightning);
 
                                     leafletData.getMap().then(function (map) {
                                         map.addLayer(markersLightning);
