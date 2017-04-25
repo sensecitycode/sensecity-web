@@ -5,6 +5,8 @@ var garbage_activated = false;
 var light_activated = false;
 var fpnft = false;
 var layers_ref;
+var markersGarbage;
+var markersLightning;
 
 appControllers.directive('sidebarDirective', function () {
     return {
@@ -854,7 +856,7 @@ appControllers.controller(
                                     });
 
 
-                                    var markersGarbage = L.markerClusterGroup({
+                                    markersGarbage = L.markerClusterGroup({
                                         name: 'Κάδοι',
                                         visible: false,
                                         disableClusteringAtZoom: 19,
@@ -871,7 +873,7 @@ appControllers.controller(
                                         map.removeLayer(markersGarbage);
                                     });
 
-                                    var markersLightning = L.markerClusterGroup({
+                                    markersLightning = L.markerClusterGroup({
                                         name: 'Φωτισμός',
                                         visible: false,
                                         disableClusteringAtZoom: 19,
@@ -899,10 +901,13 @@ appControllers.controller(
                                     var fgarb = "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>"+$translate.instant("GARBAGE_FIXED")+"</span>";
                                     var flight = "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>"+$translate.instant("LIGHT_FIXED")+"</span>";
                                     
-                                    var overlays = {
-                                        fgarb : markersGarbage,
-                                        flight: markersLightning
-                                    };
+                                    var overlays;
+                                    overlays[fgarb] = markersGarbage;
+                                    overlays[flight] = markersLightning;
+//                                    var overlays = {
+//                                        fgarb : markersGarbage,
+//                                        flight: markersLightning
+//                                    };
                                     
                                     leafletData.getMap().then(function (map) {
                                         layers_ref = L.control.layers({}, overlays).addTo(map);
