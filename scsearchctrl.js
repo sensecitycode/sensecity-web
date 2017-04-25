@@ -748,10 +748,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 if (issue == "protectionpolicy") {
                                     issue = "protection-policy";
                                 }
-                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue, image_field: 0, status: states, includeAnonymous: includeAnonymous});
+                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue, image_field: 0, status: states,resolution:"FIXED", includeAnonymous: includeAnonymous});
                             });
                             if ($scope.searchIssue == "" || $scope.searchIssue == undefined) {
-                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
+                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states,resolution:"FIXED", includeAnonymous: includeAnonymous});
                             }
                             i = 0;
                             angular.forEach($scope.searchFeeling, function (feeling) {
@@ -766,7 +766,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             });
                             if (paramsObj.length == 0) {
                                 if (states != "") {
-                                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, includeAnonymous: includeAnonymous});
+                                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states,resolution:"FIXED", includeAnonymous: includeAnonymous});
                                 }
                             }
 
@@ -780,7 +780,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 if ((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined))
                                     promisesArray.push(doQuery(paramsObj[index]));
                             }
-
+                            
                             $q.all(promisesArray).then(function (data) {
                                 var searchissues = [];
                                 for (i = 0; i < data.length; i++) {

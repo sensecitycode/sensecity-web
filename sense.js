@@ -67,7 +67,6 @@ appControllers.controller(
                 $scope.changeLanguage = function (langKey) {
                     $translate.use(langKey);
                     setTimeout(function(){
-                        markersLightning.name = "yess!!!"
                         $scope.layers.overlays.layer1 = {name: $translate.instant("GARBAGE_ISSUE"),type: 'group',visible:true};
                         $scope.layers.overlays.layer2 = {name: $translate.instant("LIGHTNING_ISSUE"),type: 'group',visible:true};
                         $scope.layers.overlays.layer3 = {name: $translate.instant("PLUMBING_ISSUE"),type: 'group',visible:true};
@@ -246,7 +245,6 @@ appControllers.controller(
                 var url_path = $location.absUrl().split("//");
                 var sub_domain = url_path[1].split(".");
                 var url;
-                var markersLightning;
 
                 if (sub_domain[0].split(":").length > 1) {
                     url = "./config/testcity1.json";
@@ -793,7 +791,7 @@ appControllers.controller(
 
 
                             };
-                            
+
                             $scope.displayFixedPoints = function () {
 
 
@@ -862,7 +860,7 @@ appControllers.controller(
                                         map.removeLayer(markersGarbage);
                                     });
 
-                                    markersLightning = L.markerClusterGroup({
+                                    var markersLightning = L.markerClusterGroup({
                                         name: 'Φωτισμός',
                                         visible: false,
                                         disableClusteringAtZoom: 19,
