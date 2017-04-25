@@ -3,6 +3,7 @@ var appControllers = angular.module('sense.controllers', ['pascalprecht.translat
 var mood_activated = false;
 var garbage_activated = false;
 var light_activated = false;
+var fpnft = false;
 
 appControllers.directive('sidebarDirective', function () {
     return {
@@ -66,16 +67,17 @@ appControllers.controller(
 
                 $scope.changeLanguage = function (langKey) {
                     $translate.use(langKey);
-                    setTimeout(function(){
-                        $scope.layers.overlays.layer1 = {name: $translate.instant("GARBAGE_ISSUE"),type: 'group',visible:true};
-                        $scope.layers.overlays.layer2 = {name: $translate.instant("LIGHTNING_ISSUE"),type: 'group',visible:true};
-                        $scope.layers.overlays.layer3 = {name: $translate.instant("PLUMBING_ISSUE"),type: 'group',visible:true};
-                        $scope.layers.overlays.layer4 = {name: $translate.instant("PROTECTION_POLICY_ISSUE"),type: 'group',visible:true};
-                        $scope.layers.overlays.layer5 = {name: $translate.instant("ROAD_ISSUE"),type: 'group',visible:true};
-                        $scope.layers.overlays.layer6 = {name: $translate.instant("ENVIRONMENT_ISSUE"),type: 'group',visible:true};
-                        $scope.layers.overlays.layer7 = {name: $translate.instant("GREEN_ISSUE"),type: 'group',visible:true};
-                        $scope.layers.overlays.layer8 = {name: $translate.instant("MOOD"),type: 'group',visible: mood_activated};
-                    },100);
+                    setTimeout(function () {
+                        delete $scope.layers.overlays.overlays['Κάδοι'];
+                        $scope.layers.overlays.layer1 = {name: $translate.instant("GARBAGE_ISSUE"), type: 'group', visible: true};
+                        $scope.layers.overlays.layer2 = {name: $translate.instant("LIGHTNING_ISSUE"), type: 'group', visible: true};
+                        $scope.layers.overlays.layer3 = {name: $translate.instant("PLUMBING_ISSUE"), type: 'group', visible: true};
+                        $scope.layers.overlays.layer4 = {name: $translate.instant("PROTECTION_POLICY_ISSUE"), type: 'group', visible: true};
+                        $scope.layers.overlays.layer5 = {name: $translate.instant("ROAD_ISSUE"), type: 'group', visible: true};
+                        $scope.layers.overlays.layer6 = {name: $translate.instant("ENVIRONMENT_ISSUE"), type: 'group', visible: true};
+                        $scope.layers.overlays.layer7 = {name: $translate.instant("GREEN_ISSUE"), type: 'group', visible: true};
+                        $scope.layers.overlays.layer8 = {name: $translate.instant("MOOD"), type: 'group', visible: mood_activated};
+                    }, 100);
                 };
 
                 $scope.navClass = function (page) {
@@ -397,7 +399,7 @@ appControllers.controller(
                         }
                     }
                 });
-            
+
                 $scope.map_center = {
                     lat: 37.787435,
                     lng: 20.897801,
@@ -431,9 +433,9 @@ appControllers.controller(
                                         issue_image = resp[0].image_name;
                                     }
                                     if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
-                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">"+$translate.instant("PROBLEM_PROGRESS")+"</a></center>");
+                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a></center>");
                                     } else {
-                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">"+$translate.instant("PROBLEM_PROGRESS")+"</a></center>");
+                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a></center>");
                                     }
                                     popup.options.maxWidth = "auto";
                                     popup.update();
@@ -474,13 +476,13 @@ appControllers.controller(
                             //We use a custom Google.js that calls also the google trafic layer. Please see http://www.qtrandev.com/transit5/ for inspiration
 
                             $scope.$on('leafletDirectiveMap.overlayadd', function (event, o) {
-                                if($translate.instant("MOOD") == o.leafletEvent.name){
+                                if ($translate.instant("MOOD") == o.leafletEvent.name) {
                                     mood_activated = true;
                                 }
                             });
 
                             $scope.$on('leafletDirectiveMap.overlayremove', function (event, o) {
-                                if($translate.instant("MOOD") == o.leafletEvent.name){
+                                if ($translate.instant("MOOD") == o.leafletEvent.name) {
                                     mood_activated = false;
                                 }
                             });
@@ -553,13 +555,13 @@ appControllers.controller(
                                                                 $scope.calcValueSolutionFrom2017++;
                                                             }
                                                             if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1) {
-                                                               if( data[i][j].status != "RESOLVED"){ 
-                                                                $scope.calcValueProblemsFrom2017++;
-                                                            }else{
-                                                                if(data[i][j].resolution == "FIXED"){
-                                                                  $scope.calcValueProblemsFrom2017++;  
+                                                                if (data[i][j].status != "RESOLVED") {
+                                                                    $scope.calcValueProblemsFrom2017++;
+                                                                } else {
+                                                                    if (data[i][j].resolution == "FIXED") {
+                                                                        $scope.calcValueProblemsFrom2017++;
+                                                                    }
                                                                 }
-                                                            }
                                                             }
                                                             if (Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
                                                                 if (data[i][j].status != "RESOLVED") {
@@ -808,6 +810,14 @@ appControllers.controller(
                                             }
                                         }
                                 ).query(function () {
+//                                    if (fpnft) {
+//                                        leafletData.getMap().then(function (map) {
+//                                            layers_ref.removeFrom(map);
+//                                            map.removeLayer(markersGarbage);
+//                                            map.removeLayer(markersLightning);
+//                                        });
+//                                    }
+                                    fpnft = true;
                                     angular.forEach(theFixedPoints, function (fixedpoint, key) {
                                         var positionlat = fixedpoint.loc.coordinates[1];
                                         var positionlon = fixedpoint.loc.coordinates[0];
@@ -869,9 +879,9 @@ appControllers.controller(
                                         singleMarkerMode: false,
                                         showCoverageOnHover: true,
                                         chunkedLoading: true
-                                    });                                   
+                                    });
 
-                                    markersLightning.addLayers($scope.fixedmarkersLightning);                                    
+                                    markersLightning.addLayers($scope.fixedmarkersLightning);
 
                                     leafletData.getMap().then(function (map) {
                                         map.addLayer(markersLightning);
@@ -907,4 +917,4 @@ appControllers.controller(
                             $interval($scope.doCalcLast6Issues, updtime);
                             $interval($scope.submitSearchLast7days, updtime);
                         });
-            }]);
+                    }]);
