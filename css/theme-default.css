@@ -1407,6 +1407,11 @@ body.page-container-boxed .page-container {
 .list-group {
     margin: 0px;
 }
+
+.list-group:hover{
+    cursor:default !important;
+}
+
 .list-group .list-group-item {
     line-height: 20px;
 }
@@ -1478,7 +1483,7 @@ a.list-group-item:focus {
 a.list-group-item:hover, a.list-group-item:focus {
     text-decoration: none;
     background-color: white;
-    cursor:default;
+    cursor:default !important;
 }
 
 /* LIST GROUP CONTACTS */

@@ -47,6 +47,7 @@ appControllers.directive('sidebarDirective', function () {
 
 appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http', '$translate', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http, $translate) {
         $rootScope.overview_url = $location.path();
+        $scope.categories = [{name:"",color:"",total:""}];
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
             setTimeout(function () {
@@ -61,6 +62,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 for (var i = 0; i < $scope.issues.length; i++) {
                     $('#issue' + i).data('content', '<i class=\"' + $scope.issues[i].class + '"\"></i>' + $translate.instant($scope.issues[i].translatev));
                 }
+                $scope.categories[0].name = $translate.instant("TOTAL");
+                for(var i = 1 ; i < $scope.categories.length; i++){
+                   $scope.categories[i].name = $translate.instant($rootScope.Variables.categories_issue[i-1]);
+                }
+                $scope.$apply();
                 $('#confirmed').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-exclamation-sign'></span>" + $translate.instant('OPEN'));
                 $('#inprogress').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-question-sign'></span>" + $translate.instant('IN_PROGRESS'));
                 $('#resolved').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-ok-sign'></span>" + $translate.instant('RESOLVED'));
@@ -384,9 +390,20 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             }, 100);
         });
+        
         $q.all([$rootScope.mainInfo]).then(
                 function (data) {
                     $scope.issues = [];
+                    $scope.categories[0].name = $translate.instant("TOTAL");
+                    $scope.categories[0].color = "badge badge-primary";
+                    $scope.categories[0].total = 0;
+                    for( var i = 1 ; i < $rootScope.Variables.categories_issue.length - 1;i++){
+                        var cat_info = {name:"",color:"",total:""};
+                       cat_info.name = $translate.instant($rootScope.Variables.categories_issue[i-1]);
+                       cat_info.color = "badge badge-info";
+                       cat_info.total = 0;
+                       $scope.categories.push(cat_info);
+                    }
                     angular.copy($rootScope.Variables.searchIssues, $scope.issues);
                     for (var k = 0; k < $scope.issues.length; k++) {
                         $scope.issues[k].checked = true;
@@ -773,6 +790,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 }
 
                                 $scope.markers = [];
+                                var total_problems = [];
+                                for(var k =0 ; k <= $rootScope.Variables.overlay_categories.length;k++){
+                                    total_problems[k] = 0;
+                                }
                                 angular.forEach(searchissues, function (value, key) {
                                     var issueid = value._id;
                                     var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + issueid;
@@ -797,6 +818,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                     } else {
                                         var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
                                     }
+                                    total_problems[0]++;
+                                    total_problems[lindex]++;
                                     layer = "layer" + lindex;
                                     if (issue == "angry" || issue == "neutral" || issue == "happy") {
                                         marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br>"};
@@ -808,6 +831,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                     }
                                     this.push(marker);
                                 }, $scope.markers);
+                                for(var k = 0 ; k < $scope.categories.length; k++){
+                                   $scope.categories[k].total = total_problems[k]; 
+                                }
                             });
                         }
                     };

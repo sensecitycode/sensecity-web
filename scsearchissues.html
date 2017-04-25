@@ -117,23 +117,9 @@
                             <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>                    
                         </div>
                     </div>
-                </ul>               
-                <div class="page-content-wrap">
-                    <div class="row">
-                        <div class="col-md-9" style="margin-top:10px;">
-                            
-                            <!-- START SALES BLOCK -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="col-md-3">
-                                        <div class="panel-title-box">
-                                            <h3>{{'SEARCH'| translate}}</h3>
-                                            <span>{{'SEARCH_CITY'| translate }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <form role="form" class="form-horizontal"> 
-                                            <div class="col-md-2" id="scrit1">  
+                </ul>
+                <div class="breadcrumb">
+                    <div class="col-md-2" id="scrit1">  
                                                 <div class="form-group" style="margin-right:0px">
                                                     <select id="issues" ng-model="issue" title="{{ 'SISSUES' | translate }}" multiple class="form-control select"> 
                                                         <option id="issue{{$index}}" ng-repeat="issue in issues" data-value={{issue.value}} data-content={{$eval(issue.translate)}}></option>
@@ -159,7 +145,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2" id="scrit" style="margin-right:0px;padding-left:0px;z-index:100">
+                    <div class="col-md-3" id="scrit" style="margin-right:0px;padding-left:0px;z-index:100;max-width:250px;margin-left:15px">
                                                 <ul class="panel-controls panel-controls-title" style="margin-top:0px;float:none">                                        
                                                     <li>
                                                         <div id="reportrange" class="dtrange">                                            
@@ -168,15 +154,27 @@
                                                     </li>                                
                                                 </ul>  
                                             </div>
-                                            <div class="col-md-2" id="issueid" style="padding-left:0px">
+                                            <div class="col-md-2" id="issueid" style="padding-left:0px;margin-left:15px">
                                                 <input ng-model="issue_id" type="text" class="form-control" placeholder="{{'ISSUE_NUMBER'| translate}}">
                                             </div>
-                                            <div class="col-md-1" style="padding-left:0px">
+                                    <div class="col-md-1" style="padding-left:0px">
                                                 <center ng-click="submit()" class="input-group-btn">
                                                     <button id="scrit" class="btn btn-primary"><span class="fa fa-search"></span>{{'SEARCH'| translate}}</button>
                                                 </center>
                                             </div>
-                                        </form>
+                </div>
+                <div class="page-content-wrap">
+                    <div class="row">
+                        <div class="col-md-9" style="margin-top:10px;">
+                            
+                            <!-- START SALES BLOCK -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="col-md-3">
+                                        <div class="panel-title-box">
+                                            <h3>{{'SEARCH'| translate}}</h3>
+                                            <span>{{'SEARCH_CITY'| translate }}</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="panel-body">                                    
@@ -199,18 +197,14 @@
                                 <div class="panel-heading">
                                     <div class="col-md-12">
                                         <div class="panel-title-box">
-                                            <h3>{{'SEARCH'| translate}}</h3>
-                                            <span>{{'SEARCH_CITY'| translate }}</span>
+                                            <h3>{{'STATISTICS'| translate}}</h3>
+                                            <span>{{'STATISTICS_DESC'| translate }}</span>
                                         </div>
                                     </div>
                                 </div>
                             <div class="panel-body" style="padding:0px">
                         <div class="col-md-12 list-group" style="padding-right:0px;padding-left:0px;">
-                            <a href="#" style="border-radius: 0px;border-top:0px;border-left:0px;border-right:0px" class="list-group-item">All <span class="badge badge-primary">12</span></a>
-                            <a href="#" style="border-radius: 0px;border-left:0px;border-right:0px" class="list-group-item">Nature <span class="badge badge-success">7</span></a>
-                            <a href="#" style="border-radius: 0px;border-left:0px;border-right:0px" class="list-group-item">Music <span class="badge badge-danger">3</span></a>
-                            <a href="#" style="border-radius: 0px;border-left:0px;border-right:0px" class="list-group-item">Space <span class="badge badge-info">2</span></a>
-                            <a href="#" style="border-radius: 0px;border-left:0px;border-right:0px" class="list-group-item">Girls <span class="badge badge-warning">3</span></a>
+                            <span ng-repeat="category in categories" style="border-radius: 0px;border-top:0px;border-left:0px;border-right:0px" class="list-group-item">{{category.name}} <span ng-class="category.color">{{category.total}}</span></span>
                         </div>
                             </div>
                         </div>
