@@ -178,15 +178,15 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
             }
             
             function comp_pages(){
-                $scope.pages = '<ul class="pagination pagination-sm pull-right"><li ng-click="loading();totalpages(1,1);"><span tooltip-side="top" tooltips tooltip-template="Πρώτη σελίδα"><a href="#/admin">«</a></span></li>'
-                    + '<li ng-click="loading();totalpages(startPage - 5,2)"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#/admin"><</a></span></li>';
+                $scope.pages = '<ul class="pagination pagination-sm pull-right"><li ng-click="loading();totalpages(1,1);"><span tooltip-side="top" tooltips tooltip-template="Πρώτη σελίδα"><a href="#">«</a></span></li>'
+                    + '<li ng-click="loading();totalpages(startPage - 5,2)"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#"><</a></span></li>';
             if(init == 0){
                 init = 1;
                 $scope.refreshPages(1);
             }
-            $scope.pages += '<li ng-repeat="page in page_set"  ng-click="loading();updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#/admin">{{page}}</a></span></li>';
-            $scope.pages += '<li ng-click="loading();totalpages(startPage + 5,3)"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#/admin">></a></span></li>'
-                    + '<li ng-click="loading();totalpages(total_pages - 4,4)"><span tooltip-side="top" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
+            $scope.pages += '<li ng-repeat="page in page_set"  ng-click="loading();updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#">{{page}}</a></span></li>';
+            $scope.pages += '<li ng-click="loading();totalpages(startPage + 5,3)"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#">></a></span></li>'
+                    + '<li ng-click="loading();totalpages(total_pages - 4,4)"><span tooltip-side="top" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#">»</a></span></li></ul>';
             $(".paging").html($compile($scope.pages)($scope));
             }
 
