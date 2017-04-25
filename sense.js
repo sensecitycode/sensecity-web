@@ -4,6 +4,7 @@ var mood_activated = false;
 var garbage_activated = false;
 var light_activated = false;
 var fpnft = false;
+var layers_ref;
 
 appControllers.directive('sidebarDirective', function () {
     return {
@@ -68,7 +69,7 @@ appControllers.controller(
                 $scope.changeLanguage = function (langKey) {
                     $translate.use(langKey);
                     setTimeout(function () {
-                        delete $scope.layers.overlays.overlays['Κάδοι'];
+                        $scope.displayFixedPoints();
                         $scope.layers.overlays.layer1 = {name: $translate.instant("GARBAGE_ISSUE"), type: 'group', visible: true};
                         $scope.layers.overlays.layer2 = {name: $translate.instant("LIGHTNING_ISSUE"), type: 'group', visible: true};
                         $scope.layers.overlays.layer3 = {name: $translate.instant("PLUMBING_ISSUE"), type: 'group', visible: true};
@@ -810,13 +811,13 @@ appControllers.controller(
                                             }
                                         }
                                 ).query(function () {
-//                                    if (fpnft) {
-//                                        leafletData.getMap().then(function (map) {
-//                                            layers_ref.removeFrom(map);
-//                                            map.removeLayer(markersGarbage);
-//                                            map.removeLayer(markersLightning);
-//                                        });
-//                                    }
+                                    if (fpnft) {
+                                        leafletData.getMap().then(function (map) {
+                                            layers_ref.removeFrom(map);
+                                            map.removeLayer(markersGarbage);
+                                            map.removeLayer(markersLightning);
+                                        });
+                                    }
                                     fpnft = true;
                                     angular.forEach(theFixedPoints, function (fixedpoint, key) {
                                         var positionlat = fixedpoint.loc.coordinates[1];
@@ -894,14 +895,17 @@ appControllers.controller(
                                         //'Google Maps Satellite':googleHybrid,
                                         //'Google Maps Traffic':googleTraffic
                                     };
-
+                                    
+                                    var fgarb = "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>"+$translate.instant("GARBAGE_FIXED")+"</span>";
+                                    var flight = "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>"+$translate.instant("LIGHT_FIXED")+"</span>";
+                                    
                                     var overlays = {
-                                        "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>Κάδοι σκουπιδιών</span>": markersGarbage,
-                                        "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>Φωτισμός</span>": markersLightning
+                                        fgarb : markersGarbage,
+                                        flight: markersLightning
                                     };
-
+                                    
                                     leafletData.getMap().then(function (map) {
-                                        L.control.layers({}, overlays).addTo(map);
+                                        layers_ref = L.control.layers({}, overlays).addTo(map);
                                         map.invalidateSize(true);
                                     });
 

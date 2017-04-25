@@ -159,6 +159,8 @@
         "STATISTICS": "Statistics",
         "STATISTICS_DESC": "Total problems and number of problems per category",
         "TOTAL": "Total",
+        "GARBAGE_FIXED": "Trash cans",
+        "LIGHT_FIXED": "Lighting",
         "JAN": "Jan",
         "FEB": "Feb",
         "MAR": "Mar",
