@@ -67,6 +67,7 @@ appControllers.controller(
                 $scope.changeLanguage = function (langKey) {
                     $translate.use(langKey);
                     setTimeout(function(){
+                        markersLightning.name = "yess!!!"
                         $scope.layers.overlays.layer1 = {name: $translate.instant("GARBAGE_ISSUE"),type: 'group',visible:true};
                         $scope.layers.overlays.layer2 = {name: $translate.instant("LIGHTNING_ISSUE"),type: 'group',visible:true};
                         $scope.layers.overlays.layer3 = {name: $translate.instant("PLUMBING_ISSUE"),type: 'group',visible:true};
@@ -245,6 +246,7 @@ appControllers.controller(
                 var url_path = $location.absUrl().split("//");
                 var sub_domain = url_path[1].split(".");
                 var url;
+                var markersLightning;
 
                 if (sub_domain[0].split(":").length > 1) {
                     url = "./config/testcity1.json";
@@ -549,11 +551,17 @@ appControllers.controller(
                                                                     $scope.calcValue7daysIssues++;
                                                                 }
                                                             }
-                                                            if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1 && data[i][j].status == "RESOLVED") {
+                                                            if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1 && data[i][j].status == "RESOLVED" && data[i][j].resolution == "FIXED") {
                                                                 $scope.calcValueSolutionFrom2017++;
                                                             }
                                                             if (data[i][j].hasOwnProperty("cf_authenticate") && data[i][j].cf_authenticate == 1) {
+                                                               if( data[i][j].status != "RESOLVED"){ 
                                                                 $scope.calcValueProblemsFrom2017++;
+                                                            }else{
+                                                                if(data[i][j].resolution == "FIXED"){
+                                                                  $scope.calcValueProblemsFrom2017++;  
+                                                                }
+                                                            }
                                                             }
                                                             if (Date.parse(data[i][j].create_at) >= (today - $scope.lastdatesToCheck)) {
                                                                 if (data[i][j].status != "RESOLVED") {
@@ -785,7 +793,7 @@ appControllers.controller(
 
 
                             };
-
+                            
                             $scope.displayFixedPoints = function () {
 
 
@@ -851,9 +859,10 @@ appControllers.controller(
                                     markersGarbage.addLayers($scope.fixedmarkersGarbage);
                                     leafletData.getMap().then(function (map) {
                                         map.addLayer(markersGarbage);
+                                        map.removeLayer(markersGarbage);
                                     });
 
-                                    var markersLightning = L.markerClusterGroup({
+                                    markersLightning = L.markerClusterGroup({
                                         name: 'Φωτισμός',
                                         visible: false,
                                         disableClusteringAtZoom: 19,
