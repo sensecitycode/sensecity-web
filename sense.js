@@ -901,7 +901,7 @@ appControllers.controller(
                                     var fgarb = "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>"+$translate.instant("GARBAGE_FIXED")+"</span>";
                                     var flight = "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>"+$translate.instant("LIGHT_FIXED")+"</span>";
                                     
-                                    var overlays;
+                                    var overlays = {};
                                     overlays[fgarb] = markersGarbage;
                                     overlays[flight] = markersLightning;
 //                                    var overlays = {

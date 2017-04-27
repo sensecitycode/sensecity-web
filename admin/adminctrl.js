@@ -1091,7 +1091,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
                 $scope.itemClicked = function ($index, event) {
 //                if ($window.location.href.toString().indexOf(":") != - 1){
-                //$window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+               // $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
 //                } else{
                   $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
                     // }

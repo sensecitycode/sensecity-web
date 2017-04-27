@@ -14,7 +14,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         $scope.loaded = 0;
         $scope.ALLcenter = $rootScope.Variables.center;
         $scope.ALLmarkers = [];
-        
+        $scope.pimage = "";
         $scope.layers = {
                 baselayers: {
                     openStreetMap: {

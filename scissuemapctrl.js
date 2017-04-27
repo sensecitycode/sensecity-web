@@ -525,7 +525,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             leafletData.getMap().then(function (map) {
                 map.invalidateSize(true);
             });
-
+            
             timeline(issue);
             $(window).trigger("resize");
         });
