@@ -969,7 +969,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 };
                                 if ($scope.chkSelected_2) {
                                     $scope.mvalidation = true;
-                                    $scope.mvalid = false;
                                 } else {
                                     $scope.mvalidation = false;
                                 }
