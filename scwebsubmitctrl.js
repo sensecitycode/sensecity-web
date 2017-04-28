@@ -674,7 +674,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     var value_desc = desc;
                     var image_name = $scope.uploadedPhotoFile; //no-image
 
-                    $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt + '","city_adress": "' + $scope.address + '"}';
+                    $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt.replace(/\s+/g, ' ').trim() + '","city_adress": "' + $scope.address + '"}';
 
                     $http({
                         method: "POST",
