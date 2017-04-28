@@ -350,6 +350,7 @@
                             <p style="font-size:14px" ng-show='!eisnotverify() && chkSelected_1 == true && chkSelected_2 == false && chkSelected==true'>{{'EMAIL_CERTIFICATION' | translate}}</p>
                             <p style="font-size:14px" ng-show='!misnotverify() && chkSelected_1 == false && chkSelected_2 == true && chkSelected==true'>{{'MOBILE_CERTIFICATION' | translate}}</p>
                             <p style="font-size:14px" ng-show='!misnotverify() && !eisnotverify() && chkSelected_1 == true && chkSelected_2 == true && chkSelected==true'>{{'EM_CERTIFICATION'| translate}}</p>
+                            <p style="font-size:14px" ng-show='chkSelected_1 == false && chkSelected_2 == false && chkSelected==true'>{{'CERTIFICATION_ERROR1' | translate}}</p>
                             <p style="font-size:14px" ng-show='chkSelected==false'>{{'CERTIFICATION_ERROR' | translate}}</p>
                         </div>
                         <div id="step-4" ng-show='is_finalsubmit()'>

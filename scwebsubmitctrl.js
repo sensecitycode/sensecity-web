@@ -20,7 +20,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             } else {
                 return true;
             }
-        }
+        };
 
 
         $scope.changeLanguage = function (langKey) {
@@ -452,7 +452,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 });
 
                 $('#chkSelected_2').on('ifToggled', function (event) {
-                    if (!$scope.mand_sms) {
+                    if ($scope.mand_sms == 'false') {
                         if ($scope.chkSelected_2) {
                             $scope.chkSelected_2 = false;
                         } else {
@@ -961,6 +961,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                     return false;
                                 };
                                 $scope.evalidation = false;
+                                $scope.evalid = true;
                             }
                             if (resp_anon.activate_sms != 1) {
                                 $scope.misnotverify = function () {
@@ -968,6 +969,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 };
                                 if ($scope.chkSelected_2) {
                                     $scope.mvalidation = true;
+                                    $scope.mvalid = false;
                                 } else {
                                     $scope.mvalidation = false;
                                 }
@@ -976,6 +978,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                     return false;
                                 };
                                 $scope.mvalidation = false;
+                                $scope.mvalid = true;
                             }
                             $scope.issubmit_isseu_form = function () {
                                 return false;
