@@ -951,6 +951,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 $scope.eisnotverify = function () {
                                     return true;
                                 };
+                                $scope.ecert = false;
                                 if ($scope.chkSelected_1) {
                                     $scope.evalidation = true;
                                 } else {
@@ -967,6 +968,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 $scope.misnotverify = function () {
                                     return true;
                                 };
+                                $scope.mcert = false;
                                 if ($scope.chkSelected_2) {
                                     $scope.mvalidation = true;
                                 } else {
