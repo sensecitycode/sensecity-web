@@ -219,6 +219,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 google_buildings: response.google_buildings,
                 host: response.host
             };
+            
 
 //        var ft = 1;
 //        for(var key in $route.routes){
@@ -526,7 +527,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 map.invalidateSize(true);
             });
             
-            timeline(issue);
+            setTimeout(function(){timeline(issue)},1);
             $(window).trigger("resize");
         });
         });
