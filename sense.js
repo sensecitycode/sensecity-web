@@ -257,7 +257,7 @@ appControllers.controller(
                 } else {
                     url = '../config/' + sub_domain[0] + '.json';
                 }
-
+                
                 var d = $q.defer();
 
                 $rootScope.mainInfo = $http.get(url).success(function (response) {

@@ -293,7 +293,7 @@ $(function () {
 
                 }// End of example
 
-                $(".wizard").smartWizard({
+                $("#psw").smartWizard({
                     // This part of code can be removed FROM
                     onLeaveStep: function (obj, context) {
 //                        setTimeout(function(){
@@ -360,6 +360,80 @@ $(function () {
                     },
                     onFinish: function (obj,context) {
                         angular.element($('#wscontrl')).scope().setStep(4);
+                        //window.location = "http://www.youtube.com";
+                    },//End
+                    labelNext: 'Επόμενο', // label for Next button
+                    labelPrevious: 'Προηγούμενο', // label for Previous button
+                    labelFinish: 'Αποστολή αναφοράς προβλήματος'
+                });
+                
+                $("#ipw").smartWizard({
+                    // This part of code can be removed FROM
+                    onLeaveStep: function (obj, context) {
+//                        setTimeout(function(){
+//                        $("#testl").attr("class","btn btn-default pull-right disabled");
+//                    },1000);
+                    $(window).trigger("resize");
+                    
+                        if(context.toStep != '3'){
+                        angular.element($('#wscontrl')).scope().setStep(context.toStep - 1);
+                    }
+                    
+                    if( context.toStep == '2'){
+                        angular.element($('#wscontrl')).scope().last_step(false);
+                    }else if( context.toStep == '3'){
+                        angular.element($('#wscontrl')).scope().last_step(true);
+                    }
+                        var wizard = obj.parents(".wizard");
+
+                        if (wizard.hasClass("wizard-validation")) {
+
+                            var valid = true;
+
+                            $('input,textarea', $(obj.attr("href"))).each(function (i, v) {
+                                valid = validator.element(v) && valid;
+                            });
+
+                            if (!valid) {
+                                wizard.find(".stepContainer").removeAttr("style");
+                                validator.focusInvalid();
+                                return false;
+                            }
+
+                        }
+                        
+                        return true;
+                    }, // <-- TO
+
+                    //This is important part of wizard init
+                    onShowStep: function (obj,context) {
+                        $(window).trigger("resize");
+                        if(context.toStep == '2' && ((angular.element($('#wscontrl')).scope().eisnotverify() && angular.element($('#wscontrl')).scope().chkSelected_1) || (angular.element($('#wscontrl')).scope().misnotverify() && angular.element($('#wscontrl')).scope().chkSelected_2))){
+                            $("#next_button").attr("class","btn btn-default pull-right disabled");
+                        }else if(context.toStep == '3'){
+                            angular.element($('#wscontrl')).scope().is_finalsubmit = function () {
+                            return true;
+                        };
+                        
+                        angular.element($('#wscontrl')).scope().isnotverify = function () {
+                            return true;
+                        };
+                        }
+                        var wizard = obj.parents(".wizard");
+
+                        if (wizard.hasClass("show-submit")) {
+
+                            var step_num = obj.attr('rel');
+                            var step_max = obj.parents(".anchor").find("li").length;
+
+                            if (step_num == step_max) {
+                                obj.parents(".wizard").find(".actionBar .btn-primary").css("display", "block");
+                            }
+                        }
+                        return true;
+                    },
+                    onFinish: function (obj,context) {
+                        angular.element($('#wscontrl')).scope().setStep(3);
                         //window.location = "http://www.youtube.com";
                     },//End
                     labelNext: 'Επόμενο', // label for Next button

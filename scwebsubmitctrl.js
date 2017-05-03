@@ -49,12 +49,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         var d = $q.defer();
 
         $("#nametxt").blur(function () {
-            if ($scope.NameTxt == "") {
+            if ($scope.NameTxt == "" || $scope.NameTxt == undefined) {
                 $("#next_button").attr("class", "btn btn-default pull-right disabled");
             } else {
-                if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                if ($scope.chkSelected_2 && ($scope.MobileTxt == "" || $scope.MobileTxt == undefined)) {
                     $("#next_button").attr("class", "btn btn-default pull-right disabled");
-                } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                } else if ($scope.chkSelected_1 && ($scope.EmailTxt == "" || $scope.EmailTxt == undefined)) {
                     $("#next_button").attr("class", "btn btn-default pull-right disabled");
                 } else {
                     $("#next_button").attr("class", "btn btn-default pull-right");
@@ -63,12 +63,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         });
 
         $("#emailtxt").blur(function () {
-            if ($scope.NameTxt == "") {
+            if ($scope.NameTxt == "" || $scope.NameTxt == undefined) {
                 $("#next_button").attr("class", "btn btn-default pull-right disabled");
             } else {
-                if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                if ($scope.chkSelected_2 && ($scope.MobileTxt == "" || $scope.MobileTxt == undefined)) {
                     $("#next_button").attr("class", "btn btn-default pull-right disabled");
-                } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                } else if ($scope.chkSelected_1 && ($scope.EmailTxt == "" || $scope.EmailTxt == undefined)) {
                     $("#next_button").attr("class", "btn btn-default pull-right disabled");
                 } else {
                     $("#next_button").attr("class", "btn btn-default pull-right");
@@ -77,12 +77,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         });
 
         $("#mobiletxt").blur(function () {
-            if ($scope.NameTxt == "") {
+            if ($scope.NameTxt == "" || $scope.NameTxt == undefined) {
                 $("#next_button").attr("class", "btn btn-default pull-right disabled");
             } else {
-                if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                if ($scope.chkSelected_2 && ($scope.MobileTxt == "" || $scope.MobileTxt == undefined)) {
                     $("#next_button").attr("class", "btn btn-default pull-right disabled");
-                } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                } else if ($scope.chkSelected_1 && ($scope.EmailTxt == "" || $scope.EmailTxt == undefined)) {
                     $("#next_button").attr("class", "btn btn-default pull-right disabled");
                 } else {
                     $("#next_button").attr("class", "btn btn-default pull-right");
@@ -437,12 +437,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             $scope.evalidation = false;
                         }
                         $scope.$apply();
-                        if ($scope.NameTxt == "") {
+                        if ($scope.NameTxt == "" || $scope.NameTxt == undefined) {
                             $("#next_button").attr("class", "btn btn-default pull-right disabled");
                         } else {
-                            if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                            if ($scope.chkSelected_2 && ($scope.MobileTxt == "" || $scope.MobileTxt == undefined)) {
                                 $("#next_button").attr("class", "btn btn-default pull-right disabled");
-                            } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                            } else if ($scope.chkSelected_1 && ($scope.EmailTxt == "" || $scope.EmailTxt == undefined)) {
                                 $("#next_button").attr("class", "btn btn-default pull-right disabled");
                             } else {
                                 $("#next_button").attr("class", "btn btn-default pull-right");
@@ -462,12 +462,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             }
                         }
                         $scope.$apply();
-                        if ($scope.NameTxt == "") {
+                        if ($scope.NameTxt == "" || $scope.NameTxt == undefined) {
                             $("#next_button").attr("class", "btn btn-default pull-right disabled");
                         } else {
-                            if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                            if ($scope.chkSelected_2 && ($scope.MobileTxt == "" || $scope.MobileTxt == undefined)) {
                                 $("#next_button").attr("class", "btn btn-default pull-right disabled");
-                            } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                            } else if ($scope.chkSelected_1 && ($scope.EmailTxt == "" || $scope.EmailTxt == undefined)) {
                                 $("#next_button").attr("class", "btn btn-default pull-right disabled");
                             } else {
                                 $("#next_button").attr("class", "btn btn-default pull-right");
@@ -625,12 +625,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                     setTimeout(function () {
                         if ($scope.chkSelected) {
-                            if ($scope.NameTxt == "") {
+                            if ($scope.NameTxt == "" || $scope.NameTxt == undefined) {
                                 $("#next_button").attr("class", "btn btn-default pull-right disabled");
                             } else {
-                                if ($scope.chkSelected_2 && $scope.MobileTxt == "") {
+                                if ($scope.chkSelected_2 && ($scope.MobileTxt == "" || $scope.MobileTxt == undefined)) {
                                     $("#next_button").attr("class", "btn btn-default pull-right disabled");
-                                } else if ($scope.chkSelected_1 && $scope.EmailTxt == "") {
+                                } else if ($scope.chkSelected_1 && ($scope.EmailTxt == "" || $scope.EmailTxt == undefined)) {
                                     $("#next_button").attr("class", "btn btn-default pull-right disabled");
                                 } else {
                                     $("#next_button").attr("class", "btn btn-default pull-right");
@@ -691,24 +691,16 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             $("#chkSelected_2").prop("disabled", true);
                             if (mcft == 1) {
                                 mcft = 0;
-                                if ($scope.mand_sms) {
-                                    $("#chkSelected_2").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
                                     $scope.chkSelected_2 = true;
-                                } else {
-                                    $scope.chkSelected_2 = false;
-                                }
                             }
                         }
                         $scope.mand_email = msg.mandatory_email;
-                        if ($scope.madn_email == 'true') {
+                        if ($scope.mand_email == 'true') {
                             $("#chkSelected_1").parent().attr("class", "icheckbox_minimal-grey checked disabled readonly");
                             $("#chkSelected_1").prop("disabled", true);
                             if (ecft == 1) {
                                 ecft = 0;
-                                if ($scope.chkSelected_1)
                                     $scope.chkSelected_1 = true;
-                            } else {
-                                $scope.chkSelected_1 = false;
                             }
                         }
                         var is_anon;
@@ -788,6 +780,18 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     });
                 } else if (step == 2) {
                     console.log("Step 2");
+                    
+                    $scope.eisnotverify = function () {
+                                    return true;
+                                };
+                                
+                        $scope.misnotverify = function () {
+                                    return true;
+                                };                       
+                        
+                        $scope.evalid = null;
+                        $scope.mvalid = null;
+                    
                     $scope.smsg1 = false;
                     $scope.smsg2 = false;
                     if (!$scope.chkSelected) { //if you sent an issue as anonymous

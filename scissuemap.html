@@ -17,7 +17,7 @@
 
 
         <!-- angular dep -->
-             <script src="js/cdns/jquery.min.js"></script>
+        <script src="js/cdns/jquery.min.js"></script>
         <script
         src="js/cdns/angular.min.js"></script>
         <script src="js/cdns/angular-resource.min.js"></script>
@@ -66,7 +66,7 @@
 
 
         <!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
-<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
+        <script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
         <script src="js/Google.js"></script>
         <!-- Angular scapp dependancies -->
         <script src="scctrl.js"></script>
@@ -96,30 +96,30 @@
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
 
     </head>
-    <body ng-app="scApp" ng-controller="scissuemapctrl" ng-cloak>
+    <body ng-app="scApp" ng-controller="scissuemapctrl" ng-cloak id="wscontrl">
         <div class="page-container" style="background-color:#f5f5f5"> 
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
                     <div>
-                                                            <li class="xn-logo" style="background-color: #1caf9a;
-    border-bottom: 1px solid #1caf9a;">
+                        <li class="xn-logo" style="background-color: #1caf9a;
+                            border-bottom: 1px solid #1caf9a;">
                             <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>sense.city</div></a>
                             <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
                         </li> 
-<li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
-<li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
-<li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
-<li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
-<li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
-<li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
-<li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
-<li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>                   
+                        <li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+                        <li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+                        <li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
+                        <li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
+                        <li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
+                        <li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>                   
                     </div>
                 </ul> 
                 <div class="page-content-wrap">
                     <div class="col-md-12" style="margin-top:8px">
                         <div class="page-title">                    
-                            <h2>{{'ISSUE_PROGRESS' | translate}} (#{{bug_id}})</h2>
+                            <h2>{{'ISSUE_PROGRESS'| translate}} (#{{bug_id}})</h2>
                         </div>                
                     </div>
                     <div class="row" style="top:13px;position:relative">
@@ -153,8 +153,8 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <div class="panel-title-box">
-                                                                <h3>{{'MAP' | translate}}</h3>
-                                                                <span>{{'MAP_SUB' | translate}}</span>
+                                                                <h3>{{'MAP'| translate}}</h3>
+                                                                <span>{{'MAP_SUB'| translate}}</span>
                                                             </div>
                                                             <ul class="panel-controls" style="margin-top: 2px;z-index:100">
                                                                 <li><span tooltip-side="top" tooltip-size="small" tooltips tooltip-template="Χάρτης" style="cursor:pointer" ng-click="change_icon('Χάρτης')"><a href="#" class="panel-fullscreen"><span id="map-icons-active" class="fa fa-map"></span></a></span></li>
@@ -175,7 +175,7 @@
                                                     <div class="panel panel-default" style="box-shadow:none;margin-bottom:0px">
                                                         <div class="panel-heading">
                                                             <div class="panel-title-box">
-                                                                <h3>{{'ISSUE_IMAGE' | translate}}</h3>
+                                                                <h3>{{'ISSUE_IMAGE'| translate}}</h3>
                                                                 <span> {{issue_name_new}} ({{issue_value_desc}})</span>
                                                             </div>
                                                         </div>
@@ -186,7 +186,7 @@
                                             </div>
                                         </div>
                                         <div class="timeline-heading">
-                                            {{'ASSIGN_TO' | translate}}: <a style="text-decoration:none">{{comment.component}}</a>
+                                            {{'ASSIGN_TO'| translate}}: <a style="text-decoration:none">{{comment.component}}</a>
                                         </div>
                                         <div class="timeline-body comments" style="left:0%">
                                             <div ng-show="comment.show" class="comment-item">
@@ -194,16 +194,16 @@
                                             </div>                                            
 
                                         </div>     
-                                                <div data-ng-init="initialize()"></div>
+                                        <div data-ng-init="initialize()"></div>
                                         <ul class="list-tags" style="position:relative;left:1%;margin-top:10px">
                                             <div ng-if="comment.type == 'Ανοιχτο'">   
-                                                <li><a href="#"><span class="glyphicon glyphicon-exclamation-sign"></span> {{'OPEN' | translate}}</a></li>
+                                                <li><a href="#"><span class="glyphicon glyphicon-exclamation-sign"></span> {{'OPEN'| translate}}</a></li>
                                             </div>
                                             <div ng-if="comment.type == 'Σε εκτελεση'">   
-                                                <li><a href="#"><span class="glyphicon glyphicon-question-sign"></span> {{'IN_PROGRESS' | translate}}</a></li>
+                                                <li><a href="#"><span class="glyphicon glyphicon-question-sign"></span> {{'IN_PROGRESS'| translate}}</a></li>
                                             </div>
                                             <div ng-if="comment.type == 'Ολοκληρωθηκε'">   
-                                                <li><a href="#"><span class="glyphicon glyphicon-ok icon-ok check-mark"></span>{{'RESOLVED' | translate}}</a></li>
+                                                <li><a href="#"><span class="glyphicon glyphicon-ok icon-ok check-mark"></span>{{'RESOLVED'| translate}}</a></li>
                                             </div>                                            
                                             <li><a href="#"><span class="fa fa-building-o"></span> {{comment.component}}</a></li>
                                             <li><a href="#"><span ng-class="iclass"></span> {{issue_name_new}}</a></li>
@@ -213,50 +213,200 @@
                                     </div>
                                 </div>
 
+                                <div  class="timeline-item timeline-item-right">
+                                    <div class="timeline-item-content" style="padding:15px">
+                                        <div id="ipw" class="wizard show-submit">
+                                            <ul>
+                                                <li>
+                                                    <a href="#step-1">
+                                                        <span class="stepNumber">1</span>
+                                                        <span class="stepDesc">{{'STEP'| translate}} 1<br /><div>{{'EPONYMOUS_REPORT'| translate}}</div></span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#step-2">
+                                                        <span class="stepNumber">2</span>
+                                                        <span class="stepDesc">{{'STEP'| translate}} 2<br /><div>{{'CERTIFICATION'| translate}}</div></span>                   
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#step-3">
+                                                        <span class="stepNumber">3</span>
+                                                        <span class="stepDesc">{{'STEP'| translate}} 3<br /><div>{{'SUBMIT_REPORT'| translate}}</div></span>                   
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div class="col-md-12" style="top:10px;position:relative">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="panel-title-box" style="font-weight:600;font-size:14px;">
+                                                            <h3>{{'ISSUE_DETAILS'| translate}}</h3>
+                                                            <span ng-bind="myText"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div id="step-1">
+                                                            <div class="row">
+                                                                <div class="col-md-7">
+                                                                    <form action="" role="form" class="form-horizontal">
+                                                                        <div class="form-group">
+                                                                            <p style="font-size:14px;cursor:default;margin-left: 3px;margin-top: 0;" class="check"> {{'EPONYMOUS_REPORT'| translate}}</p>
+                                                                            <label  class="col-md-5 control-label text-left" style="max-width: 150px;">{{'EPONYMOUS_NAME'| translate}}</label>
+                                                                            <div class="col-md-7">
+                                                                                <input id="nametxt" ng-model="NameTxt" name="NameTxt" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_NAME'| translate}}"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="col-md-5 control-label text-left" style="max-width: 150px;">{{'EPONYMOUS_EMAIL'| translate }}</label>
+                                                                            <div class="col-md-7">
+                                                                                <input id="emailtxt" ng-model="EmailTxt" name="EmailTxt" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_EMAIL'| translate }}"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="col-md-5 control-label text-left" style="max-width: 150px;">{{'EPONYMOUS_MOBILE'| translate }}</label>
+                                                                            <div class="col-md-7">
+                                                                                <input id="mobiletxt" ng-model="MobileTxt" name="MobileTxt" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_MOBILE'| translate }}"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <p style="font-size:14px"> {{'MESSAGE_USER'| translate}}</p>
+                                                                    <div class="col-md-12">
+                                                                        <label class="check"><input type="checkbox" ng-model="chkSelected_2" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" class="icheckbox"/>{{ 'SMS_USER' | translate}}</label>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label class="check"><input type="checkbox" ng-model="chkSelected_1" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" class="icheckbox"/>{{ 'EMAIL_USER' | translate}}</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="step-2">
+                                                            <div ng-show="evalidation == true" style="margin-bottom:20px">
+                                                                <form action="" role="form" class="form-horizontal">
+                                                                    <div class="form-group">
+                                                                        <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_EMAIL' | translate}}</label>
+                                                                        <!--                                                    <label control-label text-left>Πιστοποίηση email</label>-->
+                                                                        <div class="col-md-3">
+                                                                            <input ng-model="ecodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
+                                                                        </div>
+                                                                        <div id="ccert" ng-show="evalid != null && evalid == true" class="col-md-1">
+                                                                            <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
+                                                                        </div>
+                                                                        <div id="ccert" ng-show="evalid != null && evalid == false" class="col-md-1">
+                                                                            <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
+                                                                        </div>
+                                                                        <div class="col-md-3" id="lmcert" style="max-width: 130px">
+                                                                            <div ng-click="activate_email()" class="btn btn-primary"><span></span>{{ 'SEND_CODE' | translate}}</div>
+                                                                        </div>
+                                                                        <div class="col-md-2" id="lcert">
+                                                                            <div ng-click="validate_email()" ng-hide="ecert" class="btn btn-primary"><span></span>{{ 'CERTIFICATION' | translate}}</div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div ng-show="mvalidation == true">
+                                                                <form action="" role="form" class="form-horizontal">
+                                                                    <div class="form-group">
+                                                                        <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_MOBILE' | translate}}</label>
+                                                                        <div class="col-md-3">
+                                                                            <input ng-model="scodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
+                                                                        </div>
+                                                                        <div id="ccert" ng-show="mvalid != null && mvalid == true" class="col-md-1">
+                                                                            <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
+                                                                        </div>
+                                                                        <div id="ccert" ng-show="mvalid != null && mvalid == false" class="col-md-1">
+                                                                            <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
+                                                                        </div>
+                                                                        <div class="col-md-3" id="lmcert" style="max-width: 130px">
+                                                                            <div ng-click="activate_mobile()" class="btn btn-primary"><span></span>{{ 'SEND_CODE' | translate}}</div>
+                                                                        </div>
+                                                                        <div class="col-md-2" id="lcert">
+                                                                            <div ng-click="validate_mobile()" ng-hide="mcert" class="btn btn-primary"><span></span>{{ 'CERTIFICATION' | translate}}</div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div style="top:10px;position:relative">
+                                                                <div>
+                                                                    <label ng-show="smsg1" ng-bind="msg1"></label>
+                                                                </div>
+                                                                <div>
+                                                                    <label ng-show="smsg2" ng-bind="msg2"></label>
+                                                                </div>
+                                                            </div>
+                                                            <p style="font-size:14px" ng-show='!eisnotverify() && chkSelected_1 == true && chkSelected_2 == false'>{{'EMAIL_CERTIFICATION'| translate}}</p>
+                                                            <p style="font-size:14px" ng-show='!misnotverify() && chkSelected_1 == false && chkSelected_2 == true'>{{'MOBILE_CERTIFICATION'| translate}}</p>
+                                                            <p style="font-size:14px" ng-show='!misnotverify() && !eisnotverify() && chkSelected_1 == true && chkSelected_2 == true'>{{'EM_CERTIFICATION'| translate}}</p>
+                                                            <p style="font-size:14px" ng-show='chkSelected_1 == false && chkSelected_2 == false'>{{'CERTIFICATION_ERROR1'| translate}}</p>
+                                                        </div>
+                                                        <div id="step-3" ng-show='is_finalsubmit()'>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <form action="" role="form" class="form-horizontal">
+                                                                        <div class="form-group">
+                                                                            <label class="col-md-1 control-label" style="max-width: 60px;text-aling:left">{{'MESSAGE_ISSUE'| translate}}</label>
+                                                                            <div class="col-md-11">
+                                                                                <textarea ng-model="commentstxt" class="form-control" rows="5" placeholder="{{'MESSAGE_ISSUE'| translate}}"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="testaki"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="timeline-item timeline-main">
                                     <div class="timeline-date"><span class="fa fa-ellipsis-h"></span></div>
                                 </div>     
                             </div>
                             <div id="disqus_thread"></div>
                             <script>
-                            var disqus_config = function () {
+                                var disqus_config = function () {
 //this.page.url = window.location.href;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = window.location.href.split('=')[1]; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = '//sense-city.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                                this.page.identifier = window.location.href.split('=')[1]; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                };
+                                (function() { // DON'T EDIT BELOW THIS LINE
+                                var d = document, s = d.createElement('script');
+                                s.src = '//sense-city.disqus.com/embed.js';
+                                s.setAttribute('data-timestamp', + new Date());
+                                (d.head || d.body).appendChild(s);
+                                })();
+                            </script>
+                            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
                         </div>
                     </div>
 
                 </div>
             </div>
             <div class="sfooter col-md-12">
-        <div class="col-md-6 col-sm-6">
-		<img src="{{Variables.img_logo}}"
-			style="width: 69px;">
-		<img src="images/upatras_logo.png"
-			style="width: 174px;">
-        </div>
-        <div class="col-md-6 col-sm-6 text-right" style="top:10px">
-            <h4 id="msg_section_followus" style="font-family: 'Open Sans', sans-serif;font-size:20px">{{ 'FOLLOWUS' | translate }}</h4>
-		<ul class="list-inline" style="font-family: 'Open Sans', sans-serif;font-size:25px">
-			<li><a rel="nofollow" href="" title="Twitter"><i
-					class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
-			<li><a rel="nofollow"
-				href="https://www.facebook.com/sensecitybook" title="Facebook"><i
-					class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
-			<li><a rel="nofollow" href="" title="Ιnstagram"><i
-					class="icon-lg ion-social-instagram-outline"></i></a></li>
-		</ul>
-        </div>
-    </div>
+                <div class="col-md-6 col-sm-6">
+                    <img src="{{Variables.img_logo}}"
+                         style="width: 69px;">
+                    <img src="images/upatras_logo.png"
+                         style="width: 174px;">
+                </div>
+                <div class="col-md-6 col-sm-6 text-right" style="top:10px">
+                    <h4 id="msg_section_followus" style="font-family: 'Open Sans', sans-serif;font-size:20px">{{ 'FOLLOWUS' | translate }}</h4>
+                    <ul class="list-inline" style="font-family: 'Open Sans', sans-serif;font-size:25px">
+                        <li><a rel="nofollow" href="" title="Twitter"><i
+                                    class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
+                        <li><a rel="nofollow"
+                               href="https://www.facebook.com/sensecitybook" title="Facebook"><i
+                                    class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
+                        <li><a rel="nofollow" href="" title="Ιnstagram"><i
+                                    class="icon-lg ion-social-instagram-outline"></i></a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
@@ -268,6 +418,7 @@ s.setAttribute('data-timestamp', +new Date());
         <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
 
+        <script type="text/javascript" src="jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
         <script type="text/javascript" src="js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>        

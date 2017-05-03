@@ -47,7 +47,7 @@ appControllers.directive('sidebarDirective', function () {
 
 appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http', '$translate', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http, $translate) {
         $rootScope.overview_url = $location.path();
-        $scope.categories = [{name:"",color:"",total:""}];
+        $scope.categories = [{name: "", color: "", total: ""}];
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
             setTimeout(function () {
@@ -63,8 +63,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     $('#issue' + i).data('content', '<i class=\"' + $scope.issues[i].class + '"\"></i>' + $translate.instant($scope.issues[i].translatev));
                 }
                 $scope.categories[0].name = $translate.instant("TOTAL");
-                for(var i = 1 ; i < $scope.categories.length; i++){
-                   $scope.categories[i].name = $translate.instant($rootScope.Variables.categories_issue[i-1]);
+                for (var i = 1; i < $scope.categories.length; i++) {
+                    $scope.categories[i].name = $translate.instant($rootScope.Variables.categories_issue[i - 1]);
                 }
                 $scope.$apply();
                 $('#confirmed').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-exclamation-sign'></span>" + $translate.instant('OPEN'));
@@ -390,19 +390,19 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 }
             }, 100);
         });
-        
+
         $q.all([$rootScope.mainInfo]).then(
                 function (data) {
                     $scope.issues = [];
                     $scope.categories[0].name = $translate.instant("TOTAL");
                     $scope.categories[0].color = "badge badge-primary";
                     $scope.categories[0].total = 0;
-                    for( var i = 1 ; i < $rootScope.Variables.categories_issue.length - 1;i++){
-                        var cat_info = {name:"",color:"",total:""};
-                       cat_info.name = $translate.instant($rootScope.Variables.categories_issue[i-1]);
-                       cat_info.color = "badge badge-info";
-                       cat_info.total = 0;
-                       $scope.categories.push(cat_info);
+                    for (var i = 1; i < $rootScope.Variables.categories_issue.length - 1; i++) {
+                        var cat_info = {name: "", color: "", total: ""};
+                        cat_info.name = $translate.instant($rootScope.Variables.categories_issue[i - 1]);
+                        cat_info.color = "badge badge-info";
+                        cat_info.total = 0;
+                        $scope.categories.push(cat_info);
                     }
                     angular.copy($rootScope.Variables.searchIssues, $scope.issues);
                     for (var k = 0; k < $scope.issues.length; k++) {
@@ -419,14 +419,26 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     setTimeout(function () {
                         if ($(".select").length > 0) {
                             $(".select").selectpicker();
+                            var query = window.location.toString().split('=')[1];
                             for (var i = 0; i <= $(".select").length; i++) {
                                 $("#issue" + i).attr("selected", "selected");
                             }
                             $('#issues').selectpicker('refresh');
-                            $("#confirmed").attr("selected", "selected");
-                            $("#inprogress").attr("selected", "selected");
+                            if (query == 4) {
+                                $("#resolved").attr("selected", "selected");
+                            } else {
+                                $("#confirmed").attr("selected", "selected");
+                                $("#inprogress").attr("selected", "selected");
+                            }
                             $('#states').selectpicker('refresh');
                             $('#states').trigger('change');
+                            if (query == 2) {
+                                $("#smile").attr("selected", "selected");
+                                $("#neutral").attr("selected", "selected");
+                                $("#angry").attr("selected", "selected");
+                                $('#disposal').selectpicker('refresh');
+                                $('#disposal').trigger('change');               
+                            }
                             $(".select").on("change", function () {
                                 if ($(this).val() == "" || null === $(this).val()) {
                                     if (!$(this).attr("multiple"))
@@ -435,6 +447,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                     $(this).find("option[value=" + $(this).val() + "]").attr("selected", true);
                                 }
                             });
+                           
+                            if(query == 1 || query == 2 || query == 3 || query == 4){
+                                setTimeout(function(){$scope.submit();},100);
+                            }
                         }
                     }, 1);
                     for (var i = Object.keys($rootScope.Variables.overlay_functions1).length + 1; i <= 10; i++) {
@@ -650,7 +666,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 return "03";
                             case "Απρίλιος":
                                 return "04";
-                            case "Μάϊος":
+                            case "Μάιος":
                                 return "05";
                             case "Ιούνιος":
                                 return "06";
@@ -748,10 +764,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 if (issue == "protectionpolicy") {
                                     issue = "protection-policy";
                                 }
-                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue, image_field: 0, status: states,resolution:"FIXED", includeAnonymous: includeAnonymous});
+                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
                             });
                             if ($scope.searchIssue == "" || $scope.searchIssue == undefined) {
-                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states,resolution:"FIXED", includeAnonymous: includeAnonymous});
+                                paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
                             }
                             i = 0;
                             angular.forEach($scope.searchFeeling, function (feeling) {
@@ -766,7 +782,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             });
                             if (paramsObj.length == 0) {
                                 if (states != "") {
-                                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states,resolution:"FIXED", includeAnonymous: includeAnonymous});
+                                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
                                 }
                             }
 
@@ -780,7 +796,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 if ((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined))
                                     promisesArray.push(doQuery(paramsObj[index]));
                             }
-                            
+
                             $q.all(promisesArray).then(function (data) {
                                 var searchissues = [];
                                 for (i = 0; i < data.length; i++) {
@@ -791,7 +807,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                                 $scope.markers = [];
                                 var total_problems = [];
-                                for(var k =0 ; k <= $rootScope.Variables.overlay_categories.length;k++){
+                                for (var k = 0; k <= $rootScope.Variables.overlay_categories.length; k++) {
                                     total_problems[k] = 0;
                                 }
                                 angular.forEach(searchissues, function (value, key) {
@@ -831,8 +847,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                     }
                                     this.push(marker);
                                 }, $scope.markers);
-                                for(var k = 0 ; k < $scope.categories.length; k++){
-                                   $scope.categories[k].total = total_problems[k]; 
+                                for (var k = 0; k < $scope.categories.length; k++) {
+                                    $scope.categories[k].total = total_problems[k];
                                 }
                             });
                         }
@@ -885,6 +901,13 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     $(window).trigger("resize");
                     setTimeout(function () {
                         if ($translate.use() == "el") {
+                            var query = window.location.toString().split('=')[1];
+                            var strdate;
+                            if( query == 1 || query == 2){
+                                strdate = moment().subtract('days', 7);
+                            }else if(query == 3 || query == 4){
+                                strdate = moment().startOf('year');
+                            }
                             $("#reportrange").daterangepicker({
                                 ranges: {
                                     'Σήμερα': [moment(), moment()],
@@ -901,7 +924,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 cancelClass: 'btn-small',
                                 format: 'MM.DD.YYYY',
                                 separator: ' μέχρι ',
-                                startDate: moment().subtract('days', 3),
+                                startDate: strdate,
                                 endDate: moment(),
                                 locale: {
                                     applyLabel: 'OK',
@@ -926,7 +949,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             });
 
 
-                            var start = moment().subtract('days', 3);
+                            var start = strdate;
                             var end = moment();
                             var sm = month_gr(start.format('MMMM D, YYYY').split(" ")[0]);
                             start = start.format('MMMM D, YYYY');
