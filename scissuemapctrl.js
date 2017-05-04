@@ -881,6 +881,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
     ).query({issueID: issue_id}, function (issue) {
         $scope.bug_id = issue[0].bug_id;
+        $scope.bug_address = issue[0].bug_address;
             if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
                 $scope.issue_image = issue[0].image_name;
             } else {

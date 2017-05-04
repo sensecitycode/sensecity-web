@@ -133,7 +133,7 @@
                                 </div>
 
                                 <div ng-repeat="comment in comments" class="timeline-item timeline-item-right">
-                                    <div class="timeline-item-info"><div style="font-size:11px"><span>{{comment.day}}/{{comment.month}}/{{comment.year}}</span></div><div><span class="fa fa-clock-o"></span> {{comment.time}}</div></div>
+                                    <div class="timeline-item-info"><div style="font-size:11px"><span>{{comment.day}}-{{comment.month}}-{{comment.year}}</span></div><div><span class="fa fa-clock-o"></span> {{comment.time}}</div></div>
                                     <div class="timeline-item-icon">
                                         <div ng-if="comment.type == 'Ανοιχτο'">   
                                             <span style="top: 3px;left: 0.3px;color:#db494f" class="glyphicon glyphicon-exclamation-sign"></span>
@@ -185,6 +185,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div ng-show="$index == 0" class="timeline-heading">
+                                            {{'ADDRESS'| translate}}: <a style="text-decoration:none">{{bug_address}}</a>
+                                        </div>
                                         <div class="timeline-heading">
                                             {{'ASSIGN_TO'| translate}}: <a style="text-decoration:none">{{comment.component}}</a>
                                         </div>
@@ -207,7 +210,8 @@
                                             </div>                                            
                                             <li><a href="#"><span class="fa fa-building-o"></span> {{comment.component}}</a></li>
                                             <li><a href="#"><span ng-class="iclass"></span> {{issue_name_new}}</a></li>
-                                            <li><a href="#"><span class="fa fa-commenting-o"></span> {{issue_value_desc}}</a></li>                            
+                                            <li><a href="#"><span class="fa fa-commenting-o"></span> {{issue_value_desc}}</a></li>
+                                            <li><a href="#"><span class="fa fa-home"></span> {{bug_address}}</a></li> 
                                         </ul> 
                                         <br/>
                                     </div>

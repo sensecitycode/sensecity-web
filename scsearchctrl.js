@@ -62,10 +62,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 for (var i = 0; i < $scope.issues.length; i++) {
                     $('#issue' + i).data('content', '<i class=\"' + $scope.issues[i].class + '"\"></i>' + $translate.instant($scope.issues[i].translatev));
                 }
-                $scope.categories[0].name = $translate.instant("TOTAL");
-                for (var i = 1; i < $scope.categories.length; i++) {
-                    $scope.categories[i].name = $translate.instant($rootScope.Variables.categories_issue[i - 1]);
+                for (var i = 0; i < $scope.categories.length-1; i++) {
+                    $scope.categories[i].name = $translate.instant($rootScope.Variables.categories_issue[i]);
                 }
+                $scope.categories[$scope.categories.length-1].name = $translate.instant("TOTAL");
                 $scope.$apply();
                 $('#confirmed').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-exclamation-sign'></span>" + $translate.instant('OPEN'));
                 $('#inprogress').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-question-sign'></span>" + $translate.instant('IN_PROGRESS'));
@@ -394,16 +394,17 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         $q.all([$rootScope.mainInfo]).then(
                 function (data) {
                     $scope.issues = [];
-                    $scope.categories[0].name = $translate.instant("TOTAL");
-                    $scope.categories[0].color = "badge badge-primary";
-                    $scope.categories[0].total = 0;
-                    for (var i = 1; i < $rootScope.Variables.categories_issue.length - 1; i++) {
+                    for (var i = 0; i < $rootScope.Variables.categories_issue.length - 1; i++) {
                         var cat_info = {name: "", color: "", total: ""};
-                        cat_info.name = $translate.instant($rootScope.Variables.categories_issue[i - 1]);
+                        cat_info.name = $translate.instant($rootScope.Variables.categories_issue[i]);
                         cat_info.color = "badge badge-info";
                         cat_info.total = 0;
                         $scope.categories.push(cat_info);
                     }
+                    $scope.categories[$rootScope.Variables.categories_issue.length - 1].name = $translate.instant("TOTAL");
+                    $scope.categories[$rootScope.Variables.categories_issue.length - 1].color = "badge badge-primary";
+                    $scope.categories[$rootScope.Variables.categories_issue.length - 1].total = 0;
+                    $scope.categories.shift();
                     angular.copy($rootScope.Variables.searchIssues, $scope.issues);
                     for (var k = 0; k < $scope.issues.length; k++) {
                         $scope.issues[k].checked = true;
@@ -658,29 +659,29 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     });
                     function maptonum(month) {
                         switch (month) {
-                            case "Ιανουάριος":
+                            case $translate.instant("JANUARY"):
                                 return "01";
-                            case "Φεβρουάριος":
+                            case $translate.instant("FEBRUARY"):
                                 return "02";
-                            case "Μάρτιος":
+                            case $translate.instant("MARCH"):
                                 return "03";
-                            case "Απρίλιος":
+                            case $translate.instant("APRIL"):
                                 return "04";
-                            case "Μάιος":
+                            case $translate.instant("MAY"):
                                 return "05";
-                            case "Ιούνιος":
+                            case $translate.instant("JUNE"):
                                 return "06";
-                            case "Ιούλιος":
+                            case $translate.instant("JULY"):
                                 return "07";
-                            case "Αύγουστος":
+                            case $translate.instant("AUGUST"):
                                 return "08";
-                            case "Σεπτέμβριος":
+                            case $translate.instant("SEPTEMBER"):
                                 return "09";
-                            case "Οκτώβριος":
+                            case $translate.instant("OCTOBER"):
                                 return "10";
-                            case "Νοέμβριος":
+                            case $translate.instant("NOVEMBER"):
                                 return "11";
-                            case "Δεκέμβριος":
+                            case $translate.instant("DECEMBER"):
                                 return "12";
                         }
                     }
@@ -834,8 +835,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                     } else {
                                         var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
                                     }
-                                    total_problems[0]++;
-                                    total_problems[lindex]++;
+                                    total_problems[$rootScope.Variables.overlay_categories.length]++;
+                                    total_problems[lindex-1]++;
                                     layer = "layer" + lindex;
                                     if (issue == "angry" || issue == "neutral" || issue == "happy") {
                                         marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br>"};
