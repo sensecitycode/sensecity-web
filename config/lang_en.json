@@ -143,6 +143,8 @@
         "ISSUE_PROGRESS": "Issue progress",
         "MAP": "Map",
         "MAP_SUB": "Map address",
+        "SUBSCRIBE_COMMENT": "Subscribe and comment the problem",
+        "SUBSCRIBE_COMMENT_DESC": "Subscribe and be notified by commenting the issue",
         "ISSUE_IMAGE": "Issue Image",
         "ASSIGN_TO": "Assigned to",
         "PROBLEM_PROGRESS": "Problem's progress!",
