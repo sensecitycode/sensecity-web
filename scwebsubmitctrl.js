@@ -302,6 +302,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 setTimeout(function () {
                     if (cang1.promise.$$state.status == 0) {
                         cancg.resolve('cancelled');
+                        $scope.$apply();
                         alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                     }
                 }, 30000);

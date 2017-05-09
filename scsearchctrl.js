@@ -229,7 +229,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 d.resolve('cancelled');
                 alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
             }
-        }, 1);
+        }, 30000);
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
@@ -670,6 +670,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         setTimeout(function () {
                             if (canfi.promise.$$state.status == 0) {
                                 rcanfi.$cancelRequest();
+                                $scope.$apply();
                                 alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                             }
                         }, 30000);
@@ -764,6 +765,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             setTimeout(function () {
                             if (canissue.promise.$$state.status == 0) {
                                 rcanissue.$cancelRequest();
+                                $scope.$apply();
                                 alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                             }
                         }, 30000);
@@ -915,6 +917,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         setTimeout(function () {
                             if (d.promise.$$state.status == 0) {
                                 rd.$cancelRequest();
+                                $scope.$apply();
                                 alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                             }
                         }, 30000);
@@ -937,6 +940,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             alert(d.promise.$$state.status);
                             if (d.promise.$$state.status == 0) {
                                 rd.$cancelRequest();
+                                $scope.$apply();
                                 alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                             }
                         }, 30000);

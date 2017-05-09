@@ -454,6 +454,7 @@ appControllers.controller(
                                 setTimeout(function () {
                                     if (canceller[1].promise.$$state.status == 0){
                                        rcanceller[1].$cancelRequest();
+                                       $scope.$apply();
                                        alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                                     }
                                 });
@@ -964,6 +965,7 @@ appControllers.controller(
                                 alert(k);
                                 try {
                                     rcanceller[k].$cancelRequest();
+                                    $scope.$apply();
                                 } catch (e) {
 
                                 }

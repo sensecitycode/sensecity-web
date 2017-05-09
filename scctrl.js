@@ -24,7 +24,7 @@ appControllers.controller('mobilelinkCtl', function ($scope, $window, $http, $q,
 
     var d = $q.defer();
 
-    var mainInfo = $http.get(url).success(function (response) {
+    var mainInfo = $http.get(url,{timeout: d.promise}).success(function (response) {
 
         $scope.Variables = {
             APIADMIN: response.APIADMIN
@@ -33,14 +33,29 @@ appControllers.controller('mobilelinkCtl', function ($scope, $window, $http, $q,
         d.resolve(response);
         return d.promise;
     });
+    
+    setTimeout(function () {
+            if (d.promise.$$state.status == 0) {
+                d.resolve('cancelled');
+                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+            }
+        }, 30000);
 
     var b_id = $location.absUrl().split("=")[1];
 
     $q.all([mainInfo]).then(function (data) {
+        var canbugtoalias = $q.defer();
         $http.get($scope.Variables.APIADMIN + "/bugidtoalias/" + b_id).success(function (response) {
+            canbugtoalias.resolve();
             $scope.nloaded = false;
             window.location = "http://" + sub_domain[0] + ".sense.city/scissuemap.html?issue=" + response.bugs[0].alias[0];
         });
+        setTimeout(function () {
+            if (canbugtoalias.promise.$$state.status == 0) {
+                canbugtoalias.resolve('cancelled');
+                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+            }
+        }, 30000);
     });
 });
 
@@ -122,6 +137,13 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
             d.resolve(response);
             return d.promise;
         });
+        
+        setTimeout(function () {
+            if (d.promise.$$state.status == 0) {
+                d.resolve('cancelled');
+                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+            }
+        }, 30000);
 
         $q.all([$rootScope.mainInfo]).then(function (data) {
 
@@ -191,13 +213,16 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
             }
 
             $scope.totalpages = function (newstart, arrow) {
-
-                $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&list_issue=1',
+                var canissue = $q.defer();
+                var rcanissue = $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&list_issue=1',
                         {}, {
                     update: {
-                        method: 'GET'
+                        method: 'GET',
+                        isArray: true,
+                        cancellable: true
                     }
-                }).query(function (response) {
+                }).update(function (response) {
+                    canissue.resolve();
                     $scope.total_pages = Math.ceil(response.length / 20);
                     if (init == 0) {
                        $scope.refreshPages(1);
@@ -207,6 +232,13 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
                     }
                     comp_pages();
                 });
+                
+                setTimeout(function () {
+            if (canissue.promise.$$state.status == 0) {
+                rcanissue.$cancelRequest();
+                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+            }
+        }, 30000);
             };
             
             $scope.updatePage = function (activePage) {
@@ -229,14 +261,17 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
             
             var offset = ($scope.activePage - 1) * 20;
             
-            var tmpIssues = $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&limit=20&offset='+offset+'&list_issue=1&image_field=1',
+            var canissue1 = $q.defer();
+            var rcanissue1;
+            var tmpIssues = rcanissue1 = $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&limit=20&offset='+offset+'&list_issue=1&image_field=1',
                     {}, {
                 update: {
-                    method: 'GET'
-                            // isArray: true
+                    method: 'GET',
+                    isArray: true,
+                    cancellable: true
                 }
-            }).query(function () {
-
+            }).update(function (response) {
+                canissue1.resolve();
                 angular
                         .forEach(
                                 tmpIssues,
@@ -323,13 +358,22 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
                 $(window).trigger("resize");
                 $scope.nloaded = false;
             });
+            
+            setTimeout(function () {
+            if (canissue1.promise.$$state.status == 0) {
+                rcanissue1.$cancelRequest();
+                $scope.$apply();
+                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+            }
+        }, 30000);
+            
             $scope.allissues = tmpIssues;
         };
         
         $scope.refresh();
         });
     };
-
+    
     $scope.doCalcAllIssues();
 
 });
