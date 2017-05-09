@@ -62,10 +62,10 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 for (var i = 0; i < $scope.issues.length; i++) {
                     $('#issue' + i).data('content', '<i class=\"' + $scope.issues[i].class + '"\"></i>' + $translate.instant($scope.issues[i].translatev));
                 }
-                for (var i = 0; i < $scope.categories.length-1; i++) {
+                for (var i = 0; i < $scope.categories.length - 1; i++) {
                     $scope.categories[i].name = $translate.instant($rootScope.Variables.categories_issue[i]);
                 }
-                $scope.categories[$scope.categories.length-1].name = $translate.instant("TOTAL");
+                $scope.categories[$scope.categories.length - 1].name = $translate.instant("TOTAL");
                 $scope.$apply();
                 $('#confirmed').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-exclamation-sign'></span>" + $translate.instant('OPEN'));
                 $('#inprogress').data('content', "<span style='margin-right:3px' class='glyphicon glyphicon-question-sign'></span>" + $translate.instant('IN_PROGRESS'));
@@ -186,7 +186,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
         }
 
         var d = $q.defer();
-        $rootScope.mainInfo = $http.get(url).success(function (response) {
+
+        $rootScope.mainInfo = $http.get(url, {timeout: d.promise}).success(function (response) {
 
             $rootScope.Variables = {
                 city_name: sub_domain[0],
@@ -223,6 +224,12 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
             d.resolve(response);
             return d.promise;
         });
+        setTimeout(function () {
+            if (d.promise.$$state.status == 0) {
+                d.resolve('cancelled');
+                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+            }
+        }, 1);
         var idt = setTimeout(function () {
             for (var i = idt; i > 0; i--)
                 clearInterval(i);
@@ -438,7 +445,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 $("#neutral").attr("selected", "selected");
                                 $("#angry").attr("selected", "selected");
                                 $('#disposal').selectpicker('refresh');
-                                $('#disposal').trigger('change');               
+                                $('#disposal').trigger('change');
                             }
                             $(".select").on("change", function () {
                                 if ($(this).val() == "" || null === $(this).val()) {
@@ -448,9 +455,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                     $(this).find("option[value=" + $(this).val() + "]").attr("selected", true);
                                 }
                             });
-                           
-                            if(query == 1 || query == 2 || query == 3 || query == 4){
-                                setTimeout(function(){$scope.submit();},100);
+
+                            if (query == 1 || query == 2 || query == 3 || query == 4) {
+                                setTimeout(function () {
+                                    $scope.submit();
+                                }, 100);
                             }
                         }
                     }, 1);
@@ -632,10 +641,12 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         var popup = marker3.getPopup();
                         var issue_name;
                         var issue_image;
-                        $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
-                                {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
-                        ).query({issueID: marker3.options.issue_id}, function (resp) {
 
+                        var canfi = $q.defer();
+                        var rcanfi = $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+                                {issueID: '@id'}, {'query': {method: 'GET', isArray: true, cancellable: true}}
+                        ).query({issueID: marker3.options.issue_id}, function (resp) {
+                            canfi.resolve();
                             var resp_index = $rootScope.Variables.categories.indexOf(resp[0].issue);
                             if (resp_index != -1) {
                                 issue_name = $translate.instant($rootScope.Variables.categories_issue[resp_index]);
@@ -656,6 +667,12 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             popup.options.maxWidth = "auto";
                             popup.update();
                         });
+                        setTimeout(function () {
+                            if (canfi.promise.$$state.status == 0) {
+                                rcanfi.$cancelRequest();
+                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
                     });
                     function maptonum(month) {
                         switch (month) {
@@ -705,12 +722,15 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         var i = 0;
                         if ($scope.issue_id != "") {
                             var obj = {city: $rootScope.Variables.city_name, bug_id: $scope.issue_id};
-                            $resource($rootScope.Variables.APIURL,
+                            var canissue = $q.deffer();
+                            var rcanissue = $resource($rootScope.Variables.APIURL,
                                     {}, {
                                 update: {
-                                    method: 'GET'
+                                    method: 'GET',
+                                    cancellable: true
                                 }
                             }).query(obj, function (result) {
+                                canissue.resolve();
                                 $scope.markers = [];
                                 var issueid = result[0]._id;
                                 var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + issueid;
@@ -741,6 +761,12 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 }
                                 $scope.markers.push(marker);
                             });
+                            setTimeout(function () {
+                            if (canissue.promise.$$state.status == 0) {
+                                rcanissue.$cancelRequest();
+                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
                         } else {
                             i = 0;
                             angular.forEach($scope.searchState, function (state) {
@@ -836,7 +862,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                         var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
                                     }
                                     total_problems[$rootScope.Variables.overlay_categories.length]++;
-                                    total_problems[lindex-1]++;
+                                    total_problems[lindex - 1]++;
                                     layer = "layer" + lindex;
                                     if (issue == "angry" || issue == "neutral" || issue == "happy") {
                                         marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br>"};
@@ -876,27 +902,44 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     };
                     function doQuery(obj) {
                         var d = $q.defer();
-                        $resource($rootScope.Variables.APIURL,
+                        var rd = $resource($rootScope.Variables.APIURL,
                                 {}, {
                             update: {
-                                method: 'GET'
+                                method: 'GET',
+                                isArray:true,
+                                cancellable: true
                             }
-                        }).query(obj, function (result) {
+                        }).update(obj, function (result) {
                             d.resolve(result);
                         });
+                        setTimeout(function () {
+                            if (d.promise.$$state.status == 0) {
+                                rd.$cancelRequest();
+                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
                         return d.promise;
                     }
 
                     function feelingsQuery(obj) {
                         var d = $q.defer();
-                        $resource($rootScope.Variables.feelingsURL,
+                        var rd = $resource($rootScope.Variables.feelingsURL,
                                 {}, {
                             update: {
-                                method: 'GET'
+                                method: 'GET',
+                                isArray:true,
+                                cancellable: true
                             }
-                        }).query(obj, function (result) {
+                        }).update(obj, function (result) {
                             d.resolve(result);
                         });
+                        setTimeout(function () {
+                            alert(d.promise.$$state.status);
+                            if (d.promise.$$state.status == 0) {
+                                rd.$cancelRequest();
+                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
                         return d.promise;
                     }
                     $(window).trigger("resize");
@@ -904,9 +947,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         if ($translate.use() == "el") {
                             var query = window.location.toString().split('=')[1];
                             var strdate;
-                            if( query == 1 || query == 2){
+                            if (query == 1 || query == 2) {
                                 strdate = moment().subtract('days', 7);
-                            }else if(query == 3 || query == 4){
+                            } else if (query == 3 || query == 4) {
                                 strdate = moment().startOf('year');
                             }
                             $("#reportrange").daterangepicker({

@@ -75,49 +75,49 @@
                                     </div>                                     
                                 </div>
                                     <div style="margin-top:12%" class="panel-body">
-                                        <form name="editableForm" ng-hide="panel.admin" style="font-size: 12px">
-                                            <div style="display:inline-block">
-                                                <div style="margin-bottom:2%;margin-left:1%">
-                                                    <span class="title">Τμήμα Ανάθεσης: </span>
-                                                    <span >{{ panel.component}}</span>
+                                        <form name="editableForm" ng-hide="panel.admin" style="font-size: 12px;background-color:rgba(232, 232, 232, 0.39);width:95%;font-family:'Open Sans', sans-serif;padding:5px">
+                                            <div style="display:inline-block;width:100%">
+                                                <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
+                                                    <div class="title col-md-5">Τμήμα Ανάθεσης: </div>
+                                                    <div class="text-left col-md-7">{{ panel.component}}</div>
                                                 </div>  
-                                                <div style="margin-bottom:2%;margin-left:1%">
-                                                    <span class="title">Κατάσταση: </span>
-                                                    <span>{{panel.status.gr}}</span>
-                                                    <span ng-show="panel.status.en == 'RESOLVED'"> ({{panel.resolution.gr}})</span>
+                                                <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
+                                                    <span class="title col-md-5">Κατάσταση: </span>
+                                                    <span class="text-left col-md-7">{{panel.status.gr}}</span>
+                                                    <span class="text-left col-md-7" ng-show="panel.status.en == 'RESOLVED'"> ({{panel.resolution.gr}})</span>
                                                 </div>                          
-                                                <div style="margin-bottom:2%;margin-left:1%">
-                                                    <span class="title">Καταγραφη: </span>
-                                                    <span >{{ panel.time}}</span>
+                                                <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
+                                                    <span class="title col-md-5">Καταγραφη: </span>
+                                                    <span class="text-left col-md-7" >{{ panel.time}}</span>
                                                 </div>
-                                                <div style="margin-bottom:2%;margin-left:1%">
-                                                    <span class="title">Προτεραιότητα: </span>
-                                                    <span >{{ panel.priority.gr}}</span>
+                                                <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
+                                                    <span class="title col-md-5">Προτεραιότητα: </span>
+                                                    <span class="text-left col-md-7" >{{ panel.priority.gr}}</span>
                                                 </div> 
-                                                <div style="margin-bottom:2%;margin-left:1%">
-                                                    <span class="title">Σπουδαιότητα: </span>
-                                                    <span >{{ panel.severity.gr}}</span>
+                                                <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
+                                                    <span class="title col-md-5">Σπουδαιότητα: </span>
+                                                    <span class="text-left col-md-7" >{{ panel.severity.gr}}</span>
                                                 </div>
                                             </div>
                                             <div style="display:inline-block;vertical-align: top">
-                                                <div style="visibility: hidden">
-                                                    <span>{{panel.duplicof}}</span>
+                                                <div class="col-md-12" style="visibility: hidden">
+                                                    <span class="text-left">{{panel.duplicof}}</span>
                                                 </div>    
-                                                <div style="margin-bottom:2%;margin-left:1%">
-                                                    <span class="title">Ονοματεπώνυμο: </span>
-                                                    <span> {{panel.creator}}</span>
+                                                <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
+                                                    <span class="title col-md-5">Ονοματεπώνυμο: </span>
+                                                    <span class="text-left col-md-7"> {{panel.creator}}</span>
                                                 </div>
-                                                <div style="margin-bottom:2%;margin-left:1%">
-                                                    <span class="title">Τηλέφωνο: </span>
-                                                    <span> {{panel.tel}}</span>
+                                                <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
+                                                    <span class="title col-md-5">Τηλέφωνο: </span>
+                                                    <span class="text-left col-md-7"> {{panel.tel}}</span>
                                                 </div>
-                                                <div style="margin-bottom:2%;margin-left:1%">
-                                                    <span class="title">e-mail: </span>
-                                                    <span> {{panel.email}}</span>
+                                                <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
+                                                    <span class="title col-md-5">e-mail: </span>
+                                                    <span class="text-left col-md-7"> {{panel.email}}</span>
                                                 </div>
-                                                <div style="margin-bottom:2%;margin-left:1%">
-                                                    <span class="title">Διεύθυνση: </span>
-                                                    <span> {{panel.address}}</span>
+                                                <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
+                                                    <span class="title col-md-5">Διεύθυνση: </span>
+                                                    <span class="text-left col-md-7"> {{panel.address}}</span>
                                                 </div>
                                             </div>    
                                             <div ng-show="panel.comment != '' && panel.comment != 'undefined';" style="margin-bottom:2%;margin-left:1%;">
@@ -126,7 +126,7 @@
                                             </div>
                                             <div class="bton_prim_orange" ng-hide="panel.admin" ng-click="admin()" ><center><span class="glyphicon glyphicon-edit"></span> Διαχείριση</center></div>
                                         </form>
-                                        <form name="editingForm"  ng-show="panel.admin">
+                                        <form name="editingForm"  ng-show="panel.admin" style="background-color:rgba(232, 232, 232, 0.39);width:95%;font-family:'Open Sans', sans-serif;padding:10px">
                                             <div style="font-size:12px">
                                                 <span class="title">Κατάσταση: </span>
 

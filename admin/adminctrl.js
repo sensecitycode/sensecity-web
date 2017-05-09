@@ -114,7 +114,7 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                 }
                 sparams.city = $cookieStore.get("city");
                 sparams.send_user = "1";
-                $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams,headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                     $scope.printres = [];
                     for (var i = 0; i < result.length; i++) {
                         var creation_time = result[i].create_at;

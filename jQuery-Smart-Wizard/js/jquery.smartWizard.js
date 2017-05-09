@@ -23,7 +23,7 @@ function SmartWizard(target, options) {
     this.buttons = {
         next : $('<a id="next_button">'+options.labelNext+'</a>').attr("href","#").addClass("btn btn-default pull-right"),
         previous : $('<a id="previous_button">'+options.labelPrevious+'</a>').attr("href","#").addClass("btn btn-default pull-left disabled"),
-        finish  : $('<a id="finish_button">'+options.labelFinish+'</a>').attr("href","#").addClass("btn btn-primary pull-right")
+        finish  : $('<button id="finish_button">'+options.labelFinish+'</button>').attr("href","#").addClass("btn btn-primary pull-right")
     };
 
     /*

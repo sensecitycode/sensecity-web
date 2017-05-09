@@ -5201,7 +5201,7 @@ td.dataTables_empty {
 /* end Gallery */
 /* Dropzone */
 .dropzone.dropzone-mini {
-    min-height: 150px;
+    //min-height: 150px;
 }
 .dropzone.dropzone-mini .dz-message {
     background: none;

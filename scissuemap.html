@@ -141,8 +141,8 @@
                                         <div ng-if="comment.type == 'Σε εκτελεση'">   
                                             <span style="top: 3px;left: 0.3px;color:#e46a28" class="glyphicon glyphicon-question-sign"></span>
                                         </div>
-                                        <div ng-if="comment.type == 'Ολοκληρωθηκε'">   
-                                            <span style="top: 3px;left: 0.3px;color:#4fba57" class="glyphicon glyphicon-ok icon-ok check-mark"></span>
+                                        <div ng-if="comment.type == 'Ολοκληρωμενο'">   
+                                            <span style="top: 3px;left: 0.3px;color:#4fba57" class="glyphicon glyphicon-ok-sign"></span>
                                         </div>
                                     </div>
                                     <div class="timeline-item-content">
@@ -254,7 +254,6 @@
                                                                 <div class="col-md-7">
                                                                     <form action="" role="form" class="form-horizontal">
                                                                         <div class="form-group">
-                                                                            <p style="font-size:14px;cursor:default;margin-left: 3px;margin-top: 0;" class="check"> {{'EPONYMOUS_REPORT'| translate}}</p>
                                                                             <label  class="col-md-5 control-label text-left" style="max-width: 150px;">{{'EPONYMOUS_NAME'| translate}}</label>
                                                                             <div class="col-md-7">
                                                                                 <input id="nametxt" ng-model="NameTxt" name="NameTxt" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_NAME'| translate}}"/>

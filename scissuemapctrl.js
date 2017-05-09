@@ -613,6 +613,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                         method: "POST",
                         url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $rootScope.Variables.lat_center + "&long=" + $rootScope.Variables.long_center
                     }).success(function (msg) {
+                        alert("mpoo");
                         var msg_str = JSON.stringify(msg[0]);
                         msg = JSON.parse(msg_str);
                         $scope.mand_sms = msg.mandatory_sms;

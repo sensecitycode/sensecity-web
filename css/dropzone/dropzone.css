@@ -154,8 +154,8 @@
   display: block;
 }
 .dropzone {
-  border: 2px dashed #D5D5D5;
-  min-height: 360px;
+  border: 3px solid #475252;
+  //min-height: 360px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background: rgba(0,0,0,0.03);

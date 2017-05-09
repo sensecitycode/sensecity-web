@@ -62,6 +62,11 @@ appControllers.controller(
                     $interval,
                     $translate, $resource) {
 
+                var canceller = [];
+                var rcanceller = [null];
+                for (var k = 0; k < 6; k++) {
+                    canceller[k] = $q.defer();
+                }
                 $rootScope.overview_url = $location.path();
                 var idt = setTimeout(function () {
                     for (var i = idt; i > 0; i--)
@@ -257,10 +262,12 @@ appControllers.controller(
                 } else {
                     url = '../config/' + sub_domain[0] + '.json';
                 }
-                
+
                 var d = $q.defer();
 
-                $rootScope.mainInfo = $http.get(url).success(function (response) {
+                $rootScope.mainInfo = $http.get(url, {timeout: canceller.promise}).success(function (response) {
+
+                    canceller[0].resolve();
 
                     $rootScope.Variables = {
                         city_name: sub_domain[0],
@@ -421,10 +428,10 @@ appControllers.controller(
                                 var issue_name;
                                 var issue_image;
 
-                                $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
-                                        {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
+                                rcanceller[1] = $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+                                        {issueID: '@id'}, {'query': {method: 'GET', isArray: true, cancellable: true}}
                                 ).query({issueID: marker3.options.issue_id}, function (resp) {
-
+                                    canceller[1].resolve();
                                     var resp_index = $rootScope.Variables.categories.indexOf(resp[0].issue);
                                     if (resp_index != -1) {
                                         issue_name = $translate.instant($rootScope.Variables.categories_issue[resp_index]);
@@ -443,6 +450,12 @@ appControllers.controller(
                                     popup.options.maxWidth = "auto";
                                     popup.update();
 
+                                });
+                                setTimeout(function () {
+                                    if (canceller[1].promise.$$state.status == 0){
+                                       rcanceller[1].$cancelRequest();
+                                       alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                    }
                                 });
                             });
                             leafletData.getMap().then(function (map) {
@@ -641,13 +654,15 @@ appControllers.controller(
 
                             function doQuery(obj) {
                                 var d = $q.defer();
-                                $resource($rootScope.Variables.APIURL,
+                                rcanceller[2] = $resource($rootScope.Variables.APIURL,
                                         {}, {
                                     update: {
-                                        method: 'GET'
+                                        method: 'GET',
+                                        cancellable: true
                                     }
                                 }).query(obj,
                                         function (result) {
+                                            canceller[2].resolve();
                                             d.resolve(result);
                                         });
 
@@ -656,13 +671,15 @@ appControllers.controller(
 
                             function dofQuery(obj) {
                                 var d = $q.defer();
-                                $resource($rootScope.Variables.feelingsURL,
+                                rcanceller[3] = $resource($rootScope.Variables.feelingsURL,
                                         {}, {
                                     update: {
-                                        method: 'GET'
+                                        method: 'GET',
+                                        cancellable: true
                                     }
                                 }).query(obj,
                                         function (result) {
+                                            canceller[3].resolve();
                                             d.resolve(result);
                                         });
 
@@ -671,13 +688,15 @@ appControllers.controller(
 
                             var lsissues = 0;
                             $scope.doCalcLast6Issues = function () {
-                                var theLastIssues = $resource($rootScope.Variables.APIURL,
+                                var theLastIssues = rcanceller[4] = $resource($rootScope.Variables.APIURL,
                                         {city: $rootScope.Variables.city_name, startdate: "2017-01-01", sort: "-1", limit: "6", list_issue: "1", image_field: "1"}, {
                                     query: {
                                         method: 'GET',
-                                        isArray: true
+                                        isArray: true,
+                                        cancellable: true
                                     }
                                 }).query(function () {
+                                    canceller[4].resolve();
                                     if (lsissues == 1) {
                                         for (var i = 0; i < theLastIssues.length; i++) {
                                             $scope.lastissues[i].value_desc = theLastIssues[i].value_desc;
@@ -802,17 +821,19 @@ appControllers.controller(
 
                                 var i = 0;
 
-                                var theFixedPoints = $resource(
+                                var theFixedPoints = rcanceller[5] = $resource(
                                         'json/' + $rootScope.Variables.city_name + '.json',
                                         null,
                                         {
                                             search: {
                                                 method: 'GET',
                                                 headers: {'Content-Type': 'application/json'},
-                                                isArray: true
+                                                isArray: true,
+                                                cancellable: true
                                             }
                                         }
                                 ).query(function () {
+                                    canceller[5].resolve();
                                     if (fpnft) {
                                         leafletData.getMap().then(function (map) {
                                             layers_ref.removeFrom(map);
@@ -897,10 +918,10 @@ appControllers.controller(
                                         //'Google Maps Satellite':googleHybrid,
                                         //'Google Maps Traffic':googleTraffic
                                     };
-                                    
-                                    var fgarb = "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>"+$translate.instant("GARBAGE_FIXED")+"</span>";
-                                    var flight = "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>"+$translate.instant("LIGHT_FIXED")+"</span>";
-                                    
+
+                                    var fgarb = "<i class='fa fa-trash-o  fa-2x'></i>&nbsp;<span style='align:left'>" + $translate.instant("GARBAGE_FIXED") + "</span>";
+                                    var flight = "<i class='fa fa-lightbulb-o fa-2x'></i>&nbsp;<span style='align:left'>" + $translate.instant("LIGHT_FIXED") + "</span>";
+
                                     var overlays = {};
                                     overlays[fgarb] = markersGarbage;
                                     overlays[flight] = markersLightning;
@@ -908,7 +929,7 @@ appControllers.controller(
 //                                        fgarb : markersGarbage,
 //                                        flight: markersLightning
 //                                    };
-                                    
+
                                     leafletData.getMap().then(function (map) {
                                         layers_ref = L.control.layers({}, overlays).addTo(map);
                                         map.invalidateSize(true);
@@ -926,4 +947,33 @@ appControllers.controller(
                             $interval($scope.doCalcLast6Issues, updtime);
                             $interval($scope.submitSearchLast7days, updtime);
                         });
-                    }]);
+//                        setTimeout(function(){
+//                            alert(JSON.stringify(canceller));
+//                            if (canceller) {
+//        // You could also use a $timeout timer to cancel it
+//        canceller.resolve('cancelled');
+//    }
+//                        },5000);
+
+                setTimeout(function () {
+                    var isin = false;
+                    for (var k = 0; k < 6; k++) {
+                        if (canceller[k].promise.$$state.status == 0 && k != 1) {
+                            isin = true;
+                            if (k > 0) {
+                                alert(k);
+                                try {
+                                    rcanceller[k].$cancelRequest();
+                                } catch (e) {
+
+                                }
+                            } else {
+                                canceller[k].resolve('cancelled');
+                            }
+                        }
+                    }
+                    if (isin == true) {
+                        alert("Κάποιες υπηρεσίες δεν ανταποκρίνονται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
+            }]);

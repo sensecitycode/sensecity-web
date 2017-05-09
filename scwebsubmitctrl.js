@@ -12,6 +12,8 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         var ecft = 1;
         var mcft = 1;
 
+        $scope.img_show = false;
+
         $scope.navClass = function (page) {
             var path = window.location.href.toString().split("/");
             var currentRoute = path[path.length - 1];
@@ -101,8 +103,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         $scope.chkSelected = false;
         $scope.valid = null;
 
-        $rootScope.mainInfo = $http.get(url).success(function (response) {
-
+        $rootScope.mainInfo = $http.get(url, {timeout: d.promise}).success(function (response) {
             $rootScope.Variables = {
                 city_name: sub_domain[0],
                 city_address: response.city_address,
@@ -139,6 +140,13 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             d.resolve(response);
             return d.promise;
         });
+
+        setTimeout(function () {
+            if (d.promise.$$state.status == 0) {
+                d.resolve('cancelled');
+                alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+            }
+        }, 30000);
 
         $log.debug('inside scWebSubmit controller');
         $rootScope.overview_url = $location.path();
@@ -267,13 +275,19 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 }
             };
 
+            var cancg = $q.defer();
 
-            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latlng.lat + "," + event.latlng.lng + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM").success(function (result) {
+            $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latlng.lat + "," + event.latlng.lng + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM", {timeout: cancg.promise}).success(function (result) {
+
+                cancg.resolve();
                 $scope.address = result.results[0].formatted_address;
+                var cang1 = $q.defer();
                 $http({
                     method: "GET",
-                    url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + event.latlng.lng + "," + event.latlng.lat + "]&issue=garbage"
+                    url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + event.latlng.lng + "," + event.latlng.lat + "]&issue=garbage",
+                    timeout: cang1.promise
                 }).success(function (msg) {
+                    cang1.resolve();
                     if (msg[0].city == $rootScope.Variables.city_name) {
                         setTimeout(function () {
                             $("#txtaddress").trigger("change");
@@ -282,8 +296,23 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $("#next_button").attr("class", "btn btn-default pull-right disabled");
                         alert("Η διεύθυνση που καταχωρίσατε βρίσκεται εκτός των ορίων της πόλης! Παρακαλώ καταχωρείστε έγκυρη διεύθυνση!");
                     }
+                }).error(function () {
+
                 });
+                setTimeout(function () {
+                    if (cang1.promise.$$state.status == 0) {
+                        cancg.resolve('cancelled');
+                        alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
             });
+
+            setTimeout(function () {
+                if (cancg.promise.$$state.status == 0) {
+                    cancg.resolve('cancelled');
+                    alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                }
+            }, 30000);
 
             if ($scope.markers.length == 2 || mylocation_en == 0) {
                 $scope.markers.pop();
@@ -610,10 +639,19 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             var user_id;
 
             $('.fileinput').on('change', function () {
-                
-                if(this.files[0].size > 5000000){
+
+                if (this.files[0].size > 5000000) {
                     $('.fileinput').val('');
-                   alert("Το μέγεθος της φωτογραφίας υπερβαίνει τα 5mb! Παρακαλώ επιλέξτε φωτογραφία μικρότερου μεγέθους!");
+                    alert("Το μέγεθος της φωτογραφίας υπερβαίνει τα 5mb! Παρακαλώ επιλέξτε φωτογραφία μικρότερου μεγέθους!");
+                } else {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $scope.img_url = e.target.result;
+                        $scope.img_show = true;
+                        $scope.$apply();
+                    };
+                    reader.readAsDataURL(this.files[0]);
                 }
 
             });
@@ -673,16 +711,19 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                     var value_desc = desc;
                     var image_name = $scope.uploadedPhotoFile; //no-image
-                    if($scope.commentstxt != undefined){
-                    $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt.replace(/\s+/g, ' ').trim() + '","city_adress": "' + $scope.address + '"}';
-                }else{
-                    $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","city_adress": "' + $scope.address + '"}';
-                }
+                    if ($scope.commentstxt != undefined) {
+                        $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt.replace(/\s+/g, ' ').trim() + '","city_adress": "' + $scope.address + '"}';
+                    } else {
+                        $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","city_adress": "' + $scope.address + '"}';
+                    }
 
+                    var canactp = $q.deffer();
                     $http({
                         method: "POST",
-                        url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt
+                        url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt,
+                        timeout: canactp.promise
                     }).success(function (msg) {
+                        canactp.resolve();
                         var msg_str = JSON.stringify(msg[0]);
                         msg = JSON.parse(msg_str);
                         $scope.mand_sms = msg.mandatory_sms;
@@ -691,7 +732,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             $("#chkSelected_2").prop("disabled", true);
                             if (mcft == 1) {
                                 mcft = 0;
-                                    $scope.chkSelected_2 = true;
+                                $scope.chkSelected_2 = true;
                             }
                         }
                         $scope.mand_email = msg.mandatory_email;
@@ -700,19 +741,27 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             $("#chkSelected_1").prop("disabled", true);
                             if (ecft == 1) {
                                 ecft = 0;
-                                    $scope.chkSelected_1 = true;
+                                $scope.chkSelected_1 = true;
                             }
                         }
                         var is_anon;
+                        var canactp1 = $q.deffer();
                         $http({
                             method: "GET",
-                            url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + $scope.lnglabeltxt + "," + $scope.latlabeltxt + "]&issue=" + issue
+                            url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + $scope.lnglabeltxt + "," + $scope.latlabeltxt + "]&issue=" + issue,
+                            timeout: canactp1.promise
                         }).success(function (msg) {
+                            canactp1.resolve();
                             is_anon = msg[0].anonymous;
                             $scope.myText = msg[0].policy_desc;
                         });
 
-
+                        setTimeout(function () {
+                            if (canactp1.promise.$$state.status == 0) {
+                                canactp1.resolve('cancelled');
+                                alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
                         if (is_anon == "false") {
                             $scope.issubmit_isseu_form = function () {
                                 return false;
@@ -778,20 +827,26 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 //                                $scope.submit_eponymous_button = true;
                         }
                     });
+                    setTimeout(function () {
+                        if (canactp.promise.$$state.status == 0) {
+                            canactp.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
                 } else if (step == 2) {
                     console.log("Step 2");
-                    
+
                     $scope.eisnotverify = function () {
-                                    return true;
-                                };
-                                
-                        $scope.misnotverify = function () {
-                                    return true;
-                                };                       
-                        
-                        $scope.evalid = null;
-                        $scope.mvalid = null;
-                    
+                        return true;
+                    };
+
+                    $scope.misnotverify = function () {
+                        return true;
+                    };
+
+                    $scope.evalid = null;
+                    $scope.mvalid = null;
+
                     $scope.smsg1 = false;
                     $scope.smsg2 = false;
                     if (!$scope.chkSelected) { //if you sent an issue as anonymous
@@ -898,14 +953,18 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                         var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + '"}';
 
+                        var canactu = $q.deffer();
+
                         return $http({
                             method: 'POST',
                             url: $rootScope.Variables.activate_user_URL,
+                            timeout: canactu.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             },
                             data: txtpost1
                         }).success(function (resp) {
+                            canactu.resolve();
                             //alert(JSON.stringify(resp));
 //                            $scope.myText = resp.policy_description;
 //                            if (resp.user_exist == "1") {
@@ -1005,6 +1064,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             //}
 
                         });
+                        setTimeout(function () {
+                            if (canactu.promise.$$state.status == 0) {
+                                canactu.resolve('cancelled');
+                                alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
                     }
                 } else if (step == 3) {
                     console.log("Step 3");
@@ -1066,33 +1131,39 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 //                        });
 //                    }
 
-
                 } else if (step == 4) {
                     console.log("Step 4");
 
+                    $("#finish_button").attr("disabled", "disabled");
+                    var canissue = $q.deffer();
                     $http(
                             {
                                 method: 'POST',
                                 url: $rootScope.Variables.APIURL,
+                                timeout: canissue.promise,
                                 headers: {
                                     'Content-Type': 'application/json; charset=utf-8'
                                 },
                                 data: $scope.anon_post
                             }).success(function (resp_an) {
+                        canissue.resolve();
                         var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
 
                         $scope.smsg1 = false;
                         $scope.smsg2 = false;
 
                         if ($scope.chkSelected) {
+                            var canissueid = $q.deffer();
                             return $http({
                                 method: 'POST',
                                 url: $rootScope.Variables.APIURL + resp_an._id,
+                                timeout: canissueid.promise,
                                 headers: {
                                     'Content-Type': 'application/json; charset=utf-8'
                                 },
                                 data: jsonData
                             }).success(function (resp) {
+                                canissueid.resolve();
                                 $scope.is_finalsubmit = function () {
                                     return true;
                                 };
@@ -1100,10 +1171,22 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                                 $window.location.reload();
                             });
+                            setTimeout(function () {
+                                if (canissueid.promise.$$state.status == 0) {
+                                    canissueid.resolve('cancelled');
+                                    alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                }
+                            }, 30000);
                         } else {
                             $window.location.reload();
                         }
                     });
+                    setTimeout(function () {
+                        if (canissue.promise.$$state.status == 0) {
+                            canissue.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
                 }
             };
 
@@ -1121,24 +1204,36 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
 
             $scope.activate_email = function () {
+                var canemail = $q.deffer();
                 $http(
                         {
                             method: 'POST',
                             url: $rootScope.Variables.APIADMIN + "/activate_user?uuid=web-site&name=" + $scope.NameTxt + "&email=" + $scope.EmailTxt,
+                            timeout: canemail.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
+                            canemail.resolve();
                     $scope.msg1 = "Στο email " + $scope.EmailTxt + " που δηλώσατε σας έχει έρθει ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το email σας κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
                     $scope.smsg1 = true;
                 });
+                
+                setTimeout(function () {
+                        if (canemail.promise.$$state.status == 0) {
+                            canemail.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
             };
 
             $scope.activate_mobile = function () {
+                var canmobile = $q.deffer();
                 $http(
                         {
                             method: 'POST',
                             url: $rootScope.Variables.APIADMIN + "/activate_user?uuid=web-site&name=" + $scope.NameTxt + "&mobile=" + $scope.MobileTxt + "&lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt + "&city=" + $rootScope.Variables.city_name,
+                            timeout: canmobile.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
@@ -1146,17 +1241,26 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     $scope.msg2 = "Στο κινητό νούμερο " + $scope.MobileTxt + " που δηλώσατε σας έχει έρθει με sms ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το κινητό νούμερο κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
                     $scope.smsg2 = true;
                 });
+                setTimeout(function () {
+                        if (canmobile.promise.$$state.status == 0) {
+                            canmobile.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
             };
 
             $scope.validate_email = function () {
+                var canvalemail = $q.deffer();
                 $http(
                         {
                             method: 'POST',
                             url: $rootScope.Variables.APIADMIN + "/activate_email?uuid=web-site&name=" + $scope.NameTxt + "&email=" + $scope.EmailTxt + "&code=" + $scope.ecodeTxt,
+                            timeout: canvalemail.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
+                            canvalemail.resolve();
                     if (resp != "") {
                         $scope.ecert = true;
                         $scope.msg1 = "Ο κωδικός πιστοποίησης email που δώσατε είναι σωστός.";
@@ -1176,17 +1280,26 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
                     $scope.smsg1 = true;
                 });
+                setTimeout(function () {
+                        if (canvalemail.promise.$$state.status == 0) {
+                            canvalemail.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
             };
 
             $scope.validate_mobile = function () {
+                var canvalmobile = $q.deffer();
                 $http(
                         {
                             method: 'POST',
                             url: $rootScope.Variables.APIADMIN + "/activate_mobile?uuid=web-site&mobile=" + $scope.MobileTxt + "&code=" + $scope.scodeTxt,
+                            timeout :canvalmobile.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
+                        canvalmobile.resolve();    
                     if (resp.nModified == 1) {
                         $scope.mcert = true;
                         $scope.msg2 = "Ο κωδικός πιστοποίησης κινητού που δώσατε είναι σωστός.";
@@ -1206,6 +1319,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
                     $scope.smsg2 = true;
                 });
+                setTimeout(function () {
+                        if (canvalmobile.promise.$$state.status == 0) {
+                            canvalmobile.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
             };
 
             setTimeout(function () {
