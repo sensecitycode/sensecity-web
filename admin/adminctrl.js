@@ -82,7 +82,7 @@ function timegr(local_time) {
     return local_time;
 }
 
-appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', function ($scope, $rootScope, $window, $http, $cookieStore) {
+appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$http', '$q', '$cookieStore', function ($scope, $rootScope, $window, $http, $q, $cookieStore) {
         var sparams = {};
         $scope.nload = true;
         if ($rootScope.assignissues != undefined) {
@@ -114,25 +114,33 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                 }
                 sparams.city = $cookieStore.get("city");
                 sparams.send_user = "1";
-                $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams,headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                var canissue = $q.defer();
+                $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, timeout: canissue.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                    canissue.resolve();
                     $scope.printres = [];
                     for (var i = 0; i < result.length; i++) {
                         var creation_time = result[i].create_at;
                         var local_time = moment(creation_time).format("DD/MM/YYYY");
-                       // local_time = timegr(local_time);
+                        // local_time = timegr(local_time);
                         var cprint = {
-                          "create_at" : local_time,
-                          "bug_id": result[i].bug_id,
-                          "email": result[i].email,
-                          "phone": result[i].phone,
-                          "address": result[i].bug_address,
-                          "image_name": result[i].image_name,
-                          "qr_link": result[i].municipality+".sense.city/scissuemap.html?issue="+result[i]._id
+                            "create_at": local_time,
+                            "bug_id": result[i].bug_id,
+                            "email": result[i].email,
+                            "phone": result[i].phone,
+                            "address": result[i].bug_address,
+                            "image_name": result[i].image_name,
+                            "qr_link": result[i].municipality + ".sense.city/scissuemap.html?issue=" + result[i]._id
                         };
                         $scope.printres.push(cprint);
                     }
                     $scope.nload = false;
                 });
+                setTimeout(function () {
+                    if (canissue.promise.$$state.status == 0) {
+                        canissue.resolve('cancelled');
+                        alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 5000);
             } else {
                 var searchparams = {};
                 searchparams.bug_id = $rootScope.sbugid;
@@ -141,26 +149,34 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                 searchparams.city = $rootScope.Variables.city_name;
                 searchparams.image_field = "1";
                 searchparams.send_user = "1";
-                $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: searchparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                var canissue1 = $q.defer();
+                $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: searchparams, timeout: canissue1.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                    canissue1.resolve();
                     $scope.printres = [];
                     for (var i = 0; i < result.length; i++) {
                         var creation_time = result[i].create_at;
                         var local_time = moment(creation_time).format("DD/MM/YYYY");
                         //local_time = timegr(local_time);
                         var cprint = {
-                          "create_at" : local_time,
-                          "bug_id": result[i].bug_id,
+                            "create_at": local_time,
+                            "bug_id": result[i].bug_id,
 //                          "bug_component": result[i].bug_component,
-                          "email": result[i].email,
-                          "phone": result[i].phone,
-                          "address": result[i].bug_address,
-                          "image_name": result[i].image_name,
-                          "qr_link": result[i].municipality+".sense.city/scissuemap.html?issue="+result[i]._id
+                            "email": result[i].email,
+                            "phone": result[i].phone,
+                            "address": result[i].bug_address,
+                            "image_name": result[i].image_name,
+                            "qr_link": result[i].municipality + ".sense.city/scissuemap.html?issue=" + result[i]._id
                         };
                         $scope.printres.push(cprint);
                     }
                     $scope.nload = false;
                 });
+                setTimeout(function () {
+                    if (canissue1.promise.$$state.status == 0) {
+                        canissue1.resolve('cancelled');
+                        alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
             }
         }
     }]);
@@ -188,7 +204,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         // var strvcounter = 0;
         var sreset = 0;
         var total_counter;
-        var issues_Array = [{id: "Κωδικός Προβλήματος", department: "Τμήμα Ανάθεσης Προβλήματος", description: "Περιγραφή Προβλήματος", address: "Διεύθυνση",state: "Κατάσταση Προβλήματος", date: "Καταγραφή Προβλήματος", priority: "Προτεραιότητα Προβλήματος", severity: "Σπουδαιότητα Προβλήματος", name: "Ονοματεπώνυμο Πολίτη", telephone: "Τηλέφωνο Πολίτη", email: "E-mail Πολίτη"}];
+        var issues_Array = [{id: "Κωδικός Προβλήματος", department: "Τμήμα Ανάθεσης Προβλήματος", description: "Περιγραφή Προβλήματος", address: "Διεύθυνση", state: "Κατάσταση Προβλήματος", date: "Καταγραφή Προβλήματος", priority: "Προτεραιότητα Προβλήματος", severity: "Σπουδαιότητα Προβλήματος", name: "Ονοματεπώνυμο Πολίτη", telephone: "Τηλέφωνο Πολίτη", email: "E-mail Πολίτη"}];
         $scope.isloading = true;
         $scope.full = 0;
         //$scope.street = 0;
@@ -202,7 +218,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         $scope.logout = function ($event) {
-            $http.get($rootScope.Variables.host + '/api/1.0/logout', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
+            var canlog = $q.defer();
+            $http.get($rootScope.Variables.host + '/api/1.0/logout', {timeout: canlog.promise, headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
+                canlog.resolve();
                 $cookieStore.remove("uuid");
                 $cookieStore.remove("city");
                 $cookieStore.remove("role");
@@ -212,6 +230,12 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 $cookieStore.remove("bug_token");
                 window.location = "index.html";
             });
+            setTimeout(function () {
+                if (canlog.promise.$$state.status == 0) {
+                    canlog.resolve('cancelled');
+                    alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                }
+            }, 30000);
         };
 //        var parameter = {params: {"login": "tolistimon@gmail.com", "password": "12345678"}};
 //        $http.get('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/login', parameter).success(
@@ -227,7 +251,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //                var checked_categories = [];
         function doQuery(sparams) {
             var d = $q.defer();
-            $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+            $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, timeout: d.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                 for (var j = 0; j < $scope.panels.length; j++) {
                     if ($scope.panels[j].id == sparams.bug_id) {
                         var priority = PriorityTag.priority_type(result[0].bug_priority);
@@ -240,12 +264,18 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                         } else {
                             state = 'ΟΛΟΚΛΗΡΩΘΗΚΕ';
                         }
-                        issues_Array[j + 1] = {id: $scope.panels[j].id, department: result[0].bug_component, description: $scope.panels[j].value_desc, address:  result[0].bug_address,state: state, date: $scope.panels[j].time, priority: priority, severity: severity, name: result[0].name, telephone: result[0].phone, email: result[0].email};
+                        issues_Array[j + 1] = {id: $scope.panels[j].id, department: result[0].bug_component, description: $scope.panels[j].value_desc, address: result[0].bug_address, state: state, date: $scope.panels[j].time, priority: priority, severity: severity, name: result[0].name, telephone: result[0].phone, email: result[0].email};
                         break;
                     }
                 }
                 d.resolve("");
             });
+            setTimeout(function () {
+                if (d.promise.$$state.status == 0) {
+                    d.resolve('cancelled');
+                    alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                }
+            }, 30000);
             return d.promise;
         }
 
@@ -446,11 +476,19 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             $rootScope.semail = $scope.semail;
             $rootScope.smobile = $scope.smobile;
             searchparams.city = $rootScope.Variables.city_name;
-            $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: searchparams, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+            var canissue2 = $q.defer();
+            $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: searchparams, timeout: canissue2.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                canissue2.resolve();
                 $scope.total_pages = Math.ceil(result.length / 20);
                 $scope.refreshPages(1);
                 $scope.refresh();
             });
+            setTimeout(function () {
+                if (canissue2.promise.$$state.status == 0) {
+                    canissue2.resolve('cancelled');
+                    alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                }
+            }, 30000);
         }
 
 //        function checkNearestStreetView(panoData){
@@ -648,8 +686,10 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 }
             }
 
-            $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: parameter, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+            var canissue3 = $q.defer();
+            $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: parameter, timeout: canissue3.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                     function (response, status, headers, conf) {
+                        canissue3.resolve();
                         $scope.total_pages = Math.ceil(response.length / 20);
                         if (init == 0) {
                             if (tabchanged == 1 || sreset == 1) {
@@ -671,10 +711,13 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             $scope.refreshPages(1);
                             $scope.bugsearchinit();
                         }
-                    }).error(
-                    function (data, status) {
-
                     });
+            setTimeout(function () {
+                if (canissue3.promise.$$state.status == 0) {
+                    canissue3.resolve('cancelled');
+                    alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                }
+            }, 30000);
         };
         $scope.page_set = [];
         $scope.city = $cookieStore.get("city");
@@ -760,7 +803,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
             $scope.issue_data = function ($index, panel, event) {
                 var sparams = {"id": panel.id, "include_fields": ["component", "status", "resolution", "cf_mobile", "cf_email", "cf_creator", "severity", "priority", "severity"]};
-                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/search', sparams, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                var cansearch = $q.defer();
+                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/search', sparams, {timeout: cansearch.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                    cansearch.resolve();
                     var priority = PriorityTag.priority_type(result[0].priority);
                     var severity = SeverityTag.severity_type(result[0].severity);
                     var panelTitle = ToGrService.statusTitle(result[0].status, result[0].resolution);
@@ -776,6 +821,12 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     $scope.linkmap(panel);
                     $scope.nloaded = false;
                 });
+                setTimeout(function () {
+                    if (cansearch.promise.$$state.status == 0) {
+                        cansearch.resolve('cancelled');
+                        alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
 //                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: panel.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
 //                function (response, status, headers, config) {
 //                var history = [];
@@ -1091,9 +1142,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
                 $scope.itemClicked = function ($index, event) {
 //                if ($window.location.href.toString().indexOf(":") != - 1){
-               // $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+                    // $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
 //                } else{
-                  $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+                    $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
                     // }
                     //          if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
@@ -1150,7 +1201,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     $scope.pages += '<li ng-click="totalpages(startPage + 5,3)"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#/admin">></a></span></li>'
                             + '<li ng-click="totalpages(total_pages - 4,4)"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
                     params.city = $rootScope.Variables.city_name;
-                    $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                    var canissue4 = $q.defer();
+                    $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, timeout: canissue4.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                        canissue4.resolve();
                         total_counter = result.length;
                         var counter = 0;
                         var map_counter = 0;
@@ -1218,6 +1271,12 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                         //$(window).resize();
                         $(window).trigger('resize');
                     });
+                    setTimeout(function () {
+                        if (canissue4.promise.$$state.status == 0) {
+                            canissue4.resolve('cancelled');
+                            alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
                 };
             };
             pageload(function (callback) {
@@ -1330,20 +1389,43 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             panel.comment = "undefined";
                         }
 
-                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
-
-                            $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                        var canupdate = $q.defer();
+                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {timeout: canupdate.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                            canupdate.resolve();
+                            var canadd = $q.defer();
+                            $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {timeout: canadd.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                     function (response, status, headers, conf) {
+                                        canadd.resolve();
                                         var panel_index = $rootScope.Variables.components.indexOf(panel.component);
                                         var comp = $rootScope.Variables.components_en[panel_index];
+                                        var cantags = $q.defer();
                                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                 function (response, status, headers, config) {
+                                                    cantags.resolve();
                                                 });
+                                        setTimeout(function () {
+                                            if (cantags.promise.$$state.status == 0) {
+                                                cantags.resolve('cancelled');
+                                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                            }
+                                        }, 30000);
                                     });
+                            setTimeout(function () {
+                                if (canadd.promise.$$state.status == 0) {
+                                    canadd.resolve('cancelled');
+                                    alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                }
+                            }, 30000);
                             var panelTitle = ToGrService.statusTitle(seldstatus.en, seldResolution.en);
                             panel.style = panelTitle.status_style;
                             panel.icon = panelTitle.status_icon;
                         });
+                        setTimeout(function () {
+                            if (canupdate.promise.$$state.status == 0) {
+                                canupdate.resolve('cancelled');
+                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
                     }
                     if ($scope.selectedStatus.gr == 'Ανοιχτό') {
                         if ($scope.selectedStatus.gr != panel.status.gr) {
@@ -1495,8 +1577,10 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 //   $scope.pimage = "";
                 $scope.padmin = true
                 mapnloaded = true;
-                $http.get($rootScope.Variables.host + '/api/1.0/get', {headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
+                var canget = $q.defer();
+                $http.get($rootScope.Variables.host + '/api/1.0/get', {timeout:canget.promise,headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
                         function (response) {
+                            canget.resolve();
                             if (response == "failure") {
                                 $scope.valid = false;
                                 $cookieStore.remove("uuid");
@@ -1507,6 +1591,12 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                 $cookieStore.remove("username");
                             }
                         });
+                setTimeout(function () {
+                            if (canget.promise.$$state.status == 0) {
+                                canget.resolve('cancelled');
+                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);        
 //                        $scope.activePanel = - 1;
 //                        $scope.currentactive = - 1;
                 var query_component = [];
@@ -1576,7 +1666,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                 params.status = params.status.join("|");
                             }
                         }
-                        $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                        var canissue5 = $q.defer();
+                        $http.get($rootScope.Variables.host + '/api/1.0/issue', {params: params, timeout: canissue5.promise,headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                            canissue5.resolve();
                             if (result[0] != undefined && Object.keys(result[0]).length != 0) {
                                 total_counter = result.length;
                                 var counter = 0;
@@ -1647,6 +1739,12 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                 $scope.nloaded = false;
                             }
                         });
+                        setTimeout(function () {
+                            if (canissue5.promise.$$state.status == 0) {
+                                canissue5.resolve('cancelled');
+                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
                     };
                     if (sreset == 1) {
                         $scope.totalpages();

@@ -8,7 +8,7 @@ var app = angular.module('login_fo', ['ngCookies','ngRoute'])
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 	
-app.controller('login_controller', ['$scope', '$rootScope','$window', '$http', '$cookieStore', '$location', 'config', function ($scope, $rootScope,$window, $http, $cookieStore, $location, config) {
+app.controller('login_controller', ['$scope', '$rootScope','$window', '$http', '$cookieStore', '$location','$q', 'config', function ($scope, $rootScope,$window, $http, $cookieStore, $location,$q,config) {
         $("html").addClass("body-full-height");
         $scope.admin_user = "";
         $scope.lock = "";
@@ -38,9 +38,11 @@ app.controller('login_controller', ['$scope', '$rootScope','$window', '$http', '
             }else{
               domain = $location.host().split(".");  
             }
-            var parameter = {username: $scope.username_l, password: $scope.password_l, city: domain[0]};                       
-            $http.post($rootScope.Variables.APIADMIN+'/dashboard', parameter).success(
+            var parameter = {username: $scope.username_l, password: $scope.password_l, city: domain[0]};
+            var canfi = $q.defer();
+            $http.post($rootScope.Variables.APIADMIN+'/dashboard', parameter,{timeout:canfi.promise}).success(
                                 function (response, status, headers, cnfg) {
+                                    canfi.resolve();
                                     response = response.split(';');
                                     if (response != "failure") {
                                         $cookieStore.put('city', response[0]);
@@ -55,9 +57,13 @@ app.controller('login_controller', ['$scope', '$rootScope','$window', '$http', '
                                     } else {
                                         $window.alert("Wrong credentials!");
                                     }
-                                }).error(
-                                function (response) {
-                                    $window.alert("failure");
                                 });
+                                
+                                setTimeout(function () {
+                            if (canfi.promise.$$state.status == 0) {
+                                canfi.resolve('cancelled');
+                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
         };
     }]);
