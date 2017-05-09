@@ -24,8 +24,8 @@ appControllers.controller('NavCtrl', ['$scope', '$location', '$rootScope', '$tra
 
     }]);
 
-appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http','$translate' ,'ToGrService', 'config', 'leafletData',
-    function ($scope, $rootScope, $location, $window, $resource, $http, $translate,ToGrService, config, leafletData) {
+appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location', '$window', '$resource', '$http','$q','$translate' ,'ToGrService', 'config', 'leafletData',
+    function ($scope, $rootScope, $location, $window, $resource, $http, $q,$translate,ToGrService, config, leafletData) {
         $rootScope.overview_url = $location.path();
         var issue_id = window.location.toString().split('=')[1];
         var panorama;
@@ -134,15 +134,18 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
 
                         var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + '"}';
-
+                                                
+                        var canactu = $q.deffer();
                         return $http({
                             method: 'POST',
                             url: $rootScope.Variables.activate_user_URL,
+                            timeout: canactu.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             },
                             data: txtpost1
                         }).success(function (resp) {
+                            canactu.resolve();
                             //alert(JSON.stringify(resp));
 //                            $scope.myText = resp.policy_description;
 //                            if (resp.user_exist == "1") {
@@ -242,31 +245,42 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             //}
 
                         });
+                        setTimeout(function () {
+                            if (canactu.promise.$$state.status == 0) {
+                                canactu.resolve('cancelled');
+                                alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
                 } else if (step == 3) {
-
+                    var canissue = $q.deffer();
                     $http(
                             {
                                 method: 'POST',
                                 url: $rootScope.Variables.APIURL,
+                                timeout: canissue.promise,
                                 headers: {
                                     'Content-Type': 'application/json; charset=utf-8'
                                 },
                                 data: $scope.anon_post
                             }).success(function (resp_an) {
+                                canissue.resolve();
                         var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
 
                         $scope.smsg1 = false;
                         $scope.smsg2 = false;
 
                         if ($scope.chkSelected) {
+                            var canissueid = $q.deffer();
                             return $http({
                                 method: 'POST',
                                 url: $rootScope.Variables.APIURL + resp_an._id,
+                                timeout: canissueid.promise,
                                 headers: {
                                     'Content-Type': 'application/json; charset=utf-8'
                                 },
                                 data: jsonData
                             }).success(function (resp) {
+                                canissueid.resolve();
                                 $scope.is_finalsubmit = function () {
                                     return true;
                                 };
@@ -274,10 +288,22 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
                                 $window.location.reload();
                             });
+                            setTimeout(function () {
+                                if (canissueid.promise.$$state.status == 0) {
+                                    canissueid.resolve('cancelled');
+                                    alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                }
+                            }, 30000);
                         } else {
                             $window.location.reload();
                         }
                     });
+                    setTimeout(function () {
+                        if (canissue.promise.$$state.status == 0) {
+                            canissue.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
                 }
             };
         
@@ -295,24 +321,36 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             };
 
             $scope.activate_email = function () {
+                var canemail = $q.deffer();
                 $http(
                         {
                             method: 'POST',
                             url: $rootScope.Variables.APIADMIN + "/activate_user?uuid=web-site&name=" + $scope.NameTxt + "&email=" + $scope.EmailTxt,
+                            timeout: canemail.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
+                            canemail.resolve();
                     $scope.msg1 = "Στο email " + $scope.EmailTxt + " που δηλώσατε σας έχει έρθει ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το email σας κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
                     $scope.smsg1 = true;
                 });
+                
+                setTimeout(function () {
+                        if (canemail.promise.$$state.status == 0) {
+                            canemail.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
             };
 
             $scope.activate_mobile = function () {
+                var canmobile = $q.deffer();
                 $http(
                         {
                             method: 'POST',
                             url: $rootScope.Variables.APIADMIN + "/activate_user?uuid=web-site&name=" + $scope.NameTxt + "&mobile=" + $scope.MobileTxt + "&lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt + "&city=" + $rootScope.Variables.city_name,
+                            timeout: canmobile.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
@@ -320,17 +358,26 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     $scope.msg2 = "Στο κινητό νούμερο " + $scope.MobileTxt + " που δηλώσατε σας έχει έρθει με sms ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το κινητό νούμερο κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
                     $scope.smsg2 = true;
                 });
+                setTimeout(function () {
+                        if (canmobile.promise.$$state.status == 0) {
+                            canmobile.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
             };
 
             $scope.validate_email = function () {
+                var canvalemail = $q.deffer();
                 $http(
                         {
                             method: 'POST',
                             url: $rootScope.Variables.APIADMIN + "/activate_email?uuid=web-site&name=" + $scope.NameTxt + "&email=" + $scope.EmailTxt + "&code=" + $scope.ecodeTxt,
+                            timeout: canvalemail.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
+                            canvalemail.resolve();
                     if (resp != "") {
                         $scope.ecert = true;
                         $scope.msg1 = "Ο κωδικός πιστοποίησης email που δώσατε είναι σωστός.";
@@ -350,17 +397,26 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     }
                     $scope.smsg1 = true;
                 });
+                setTimeout(function () {
+                        if (canvalemail.promise.$$state.status == 0) {
+                            canvalemail.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
             };
 
             $scope.validate_mobile = function () {
+                var canvalmobile = $q.deffer();
                 $http(
                         {
                             method: 'POST',
                             url: $rootScope.Variables.APIADMIN + "/activate_mobile?uuid=web-site&mobile=" + $scope.MobileTxt + "&code=" + $scope.scodeTxt,
+                            timeout :canvalmobile.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
+                        canvalmobile.resolve();    
                     if (resp.nModified == 1) {
                         $scope.mcert = true;
                         $scope.msg2 = "Ο κωδικός πιστοποίησης κινητού που δώσατε είναι σωστός.";
@@ -380,6 +436,12 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     }
                     $scope.smsg2 = true;
                 });
+                setTimeout(function () {
+                        if (canvalmobile.promise.$$state.status == 0) {
+                            canvalmobile.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
             };
         
         if( sub_domain[0].split(":").length > 1){
@@ -566,8 +628,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                         }
                     }
                 });
-
-        $rootScope.mainInfo = $http.get(url).success(function (response) {
+        
+        var p = $q.defer();
+        $rootScope.mainInfo = $http.get(url,{timeout: p.promise}).success(function (response) {
+            
+            p.resolve();
             
             $rootScope.Variables = {
                 city_name: sub_domain[0],
@@ -609,11 +674,13 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             return false;
                         };
                         
+                        var canactp = $q.defer();
                         $http({
                         method: "POST",
-                        url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $rootScope.Variables.lat_center + "&long=" + $rootScope.Variables.long_center
+                        url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $rootScope.Variables.lat_center + "&long=" + $rootScope.Variables.long_center,
+                        timeout: canactp.promise
                     }).success(function (msg) {
-                        alert("mpoo");
+                        canactp.resolve();
                         var msg_str = JSON.stringify(msg[0]);
                         msg = JSON.parse(msg_str);
                         $scope.mand_sms = msg.mandatory_sms;
@@ -648,6 +715,13 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     }, 500);
                     }
                     });
+                    
+                    setTimeout(function () {
+            if (canactp.promise.$$state.status == 0) {
+                canactp.resolve('cancelled');
+                alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+            }
+        }, 30000);
 
             
 
@@ -878,9 +952,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
         //parse ?issue_id from URL
         $scope.disqus_id = issue_id;
-        $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
-            {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
+        var canfi = $q.defer();
+        var rcanfi = $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+            {issueID: '@id'}, {'query': {method: 'GET', isArray: true,cancellable:true}}
     ).query({issueID: issue_id}, function (issue) {
+        canfi.resolve();
         $scope.bug_id = issue[0].bug_id;
         $scope.bug_address = issue[0].bug_address;
             if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
@@ -907,15 +983,17 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 } else {
                     type = issue[0].issue;
                 }
-
-                $resource($rootScope.Variables.host+'/fix_point/:long/:lat/50/data',
-        {
+                
+                var canfi1 = $q.defer();
+                var rcanfi1 = $resource($rootScope.Variables.host+'/fix_point/:long/:lat/50/data',
+                {
 					long:'@long',
 					lat:'@lat',
 					type:"@type"
-				}
+				},{'query': {method: 'GET', isArray: true,cancellable:true}}
 			).query({long: issue[0].loc.coordinates[0], lat: issue[0].loc.coordinates[1], type: type}, function (fix_points) {
                     angular.forEach(fix_points, function (value, key) {
+                        canfi1.resolve();
                         var icon = {
         icon: function (fixPoint) {
             var icon;
@@ -941,6 +1019,13 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                         $scope.markers.push({"lat": value.loc.coordinates[1], "lng": value.loc.coordinates[0], "icon": icons[icon]});
                     });
                 });
+                setTimeout(function () {
+                            if (canfi1.promise.$$state.status == 0) {
+                                rcanfi1.$cancelRequest();
+                                $scope.$apply();
+                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
             }
 
             var issue_name_new;
@@ -961,5 +1046,18 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             setTimeout(function(){timeline(issue)},1);
             $(window).trigger("resize");
         });
+        setTimeout(function () {
+                            if (canfi.promise.$$state.status == 0) {
+                                rcanfi.$cancelRequest();
+                                $scope.$apply();
+                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
         });
+        setTimeout(function () {
+            if (p.promise.$$state.status == 0) {
+                p.resolve('cancelled');
+                alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+            }
+        }, 30000);
     }]);
