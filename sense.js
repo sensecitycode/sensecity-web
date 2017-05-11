@@ -8,6 +8,28 @@ var layers_ref;
 var markersGarbage;
 var markersLightning;
 
+function default_icon(this_img) {
+    var scope = angular.element("#mainctl").scope();
+    for(var i = 0;i < scope.lastissues.length; i++){
+      if(scope.lastissues[i].bug_id == this_img.dataset.bugid){
+           scope.lastissues[i].class = "fa fa-" + scope.Variables.icons[scope.lastissues1[i]].icon;
+           scope.lastissues[i].width = "80%";
+           scope.lastissues[i].image_name = '';
+           break;
+      }  
+    }
+}
+
+function default_image(this_img){
+    var scope = angular.element("#mainctl").scope();
+    for(var i = 0;i < scope.lastissues.length; i++){
+      if(scope.lastissues[i].bug_id == this_img.dataset.bugid){
+           scope.lastissues[i].class = '';
+           break;
+      }  
+    }
+}
+
 appControllers.directive('sidebarDirective', function () {
     return {
         link: function (scope, element, attr) {
@@ -452,10 +474,10 @@ appControllers.controller(
 
                                 });
                                 setTimeout(function () {
-                                    if (canceller[1].promise.$$state.status == 0){
-                                       rcanceller[1].$cancelRequest();
-                                       $scope.$apply();
-                                       alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                    if (canceller[1].promise.$$state.status == 0) {
+                                        rcanceller[1].$cancelRequest();
+                                        $scope.$apply();
+                                        alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                                     }
                                 });
                             });
@@ -699,6 +721,8 @@ appControllers.controller(
                                 }).query(function () {
                                     canceller[4].resolve();
                                     if (lsissues == 1) {
+                                        $scope.lastissues1 = [];
+                                        counter = 0;
                                         for (var i = 0; i < theLastIssues.length; i++) {
                                             $scope.lastissues[i].value_desc = theLastIssues[i].value_desc;
                                             if (theLastIssues[i].image_name === ''
@@ -708,15 +732,23 @@ appControllers.controller(
                                                 $scope.lastissues[i].class = "fa fa-" + $rootScope.Variables.icons[theLastIssues[i].issue].icon;
                                                 $scope.lastissues[i].width = "80%";
                                             } else {
+                                                $scope.lastissues[i].class = '';
                                                 $scope.lastissues[i].width = "100%";
                                             }
-
+                                            
+                                            $scope.lastissues1[counter] = theLastIssues[i].issue;
+                                            
+                                            $scope.lastissues[i].issue1 = theLastIssues[i].issue;
                                             var cat_index = $rootScope.Variables.categories.indexOf(theLastIssues[i].issue);
                                             if (cat_index != -1) {
                                                 $scope.lastissues[i].issue = $rootScope.Variables.categories_issue[cat_index];
                                             } else {
                                                 $scope.lastissues[i].issue = '';
                                             }
+                                            
+                                            $("#image"+$scope.lastissues[i].counter).removeAttr("src");
+                                            $("#image"+$scope.lastissues[i].counter).attr("src",$rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + theLastIssues[i].bug_id + "&resolution=small");
+                                            //$scope.lastissues[i].image_name = $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + $scope.lastissues[i].bug_id + "&resolution=small";
 
                                             var today = new Date();
                                             var create_day = new Date(
@@ -745,10 +777,14 @@ appControllers.controller(
 
                                             $scope.lastissues[i].create_at = datediff;
                                             $scope.lastissues[i].create_at_unit = datediffunit;
+                                            counter++;
                                         }
+                                        setTimeout(function(){$scope.$apply();},1);
                                     }
                                     if (lsissues == 0) {
                                         lsissues = 1;
+                                        var counter = 0;
+                                        $scope.lastissues1 = [];
                                         angular
                                                 .forEach(
                                                         theLastIssues,
@@ -761,15 +797,20 @@ appControllers.controller(
                                                                 lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
                                                                 lastissue.width = "80%";
                                                             } else {
+                                                                $scope.lastissues[i].class = '';
                                                                 lastissue.width = "100%";
                                                             }
-
+                                                            
+                                                            $scope.lastissues1[counter] = lastissue.issue;
                                                             var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
                                                             if (cat_index != -1) {
                                                                 lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
                                                             } else {
                                                                 lastissue.issue = '';
                                                             }
+                                                            
+                                                            lastissue.counter = counter;
+                                                            lastissue.image_name = $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + lastissue.bug_id + "&resolution=small";
 
                                                             var today = new Date();
                                                             var create_day = new Date(
@@ -798,10 +839,11 @@ appControllers.controller(
 
                                                             lastissue.create_at = datediff;
                                                             lastissue.create_at_unit = datediffunit;
+                                                            counter++;
                                                         });
                                         $scope.lastissues = theLastIssues;
+                                        setTimeout(function(){$scope.$apply();},1);
                                         setTimeout(function () {
-//                                    alert(oft);
                                             if ($(".owl-carousel").length > 0 && oft == 0) {
                                                 oft = 1;
                                                 $(".owl-carousel").owlCarousel({mouseDrag: false, touchDrag: true, slideSpeed: 300, paginationSpeed: 400, singleItem: true, navigation: false, autoPlay: true});
@@ -944,7 +986,7 @@ appControllers.controller(
                             $scope.displayFixedPoints();
 
                             // set intervals to update
-                            var updtime = 5 * 60 * 1000; // every 5 minutes
+                            var updtime =  5* 60 * 1000; // every 5 minutes
                             $interval($scope.doCalcLast6Issues, updtime);
                             $interval($scope.submitSearchLast7days, updtime);
                         });
@@ -962,7 +1004,6 @@ appControllers.controller(
                         if (canceller[k].promise.$$state.status == 0 && k != 1) {
                             isin = true;
                             if (k > 0) {
-                                alert(k);
                                 try {
                                     rcanceller[k].$cancelRequest();
                                     $scope.$apply();

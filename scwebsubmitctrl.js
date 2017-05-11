@@ -718,7 +718,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","city_adress": "' + $scope.address + '"}';
                     }
 
-                    var canactp = $q.deffer();
+                    var canactp = $q.defer();
                     $http({
                         method: "POST",
                         url: $rootScope.Variables.APIADMIN + "/activate_city_policy?lat=" + $scope.latlabeltxt + "&long=" + $scope.lnglabeltxt,
@@ -746,7 +746,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             }
                         }
                         var is_anon;
-                        var canactp1 = $q.deffer();
+                        var canactp1 = $q.defer();
                         $http({
                             method: "GET",
                             url: $rootScope.Variables.APIADMIN + "/city_policy?coordinates=[" + $scope.lnglabeltxt + "," + $scope.latlabeltxt + "]&issue=" + issue,
@@ -954,7 +954,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                         var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + '"}';
 
-                        var canactu = $q.deffer();
+                        var canactu = $q.defer();
 
                         return $http({
                             method: 'POST',
@@ -1136,7 +1136,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     console.log("Step 4");
 
                     $("#finish_button").attr("disabled", "disabled");
-                    var canissue = $q.deffer();
+                    var canissue = $q.defer();
                     $http(
                             {
                                 method: 'POST',
@@ -1154,7 +1154,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.smsg2 = false;
 
                         if ($scope.chkSelected) {
-                            var canissueid = $q.deffer();
+                            var canissueid = $q.defer();
                             return $http({
                                 method: 'POST',
                                 url: $rootScope.Variables.APIURL + resp_an._id,
@@ -1205,7 +1205,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
 
             $scope.activate_email = function () {
-                var canemail = $q.deffer();
+                var canemail = $q.defer();
                 $http(
                         {
                             method: 'POST',
@@ -1229,7 +1229,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
 
             $scope.activate_mobile = function () {
-                var canmobile = $q.deffer();
+                var canmobile = $q.defer();
                 $http(
                         {
                             method: 'POST',
@@ -1251,7 +1251,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
 
             $scope.validate_email = function () {
-                var canvalemail = $q.deffer();
+                var canvalemail = $q.defer();
                 $http(
                         {
                             method: 'POST',
@@ -1290,7 +1290,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             };
 
             $scope.validate_mobile = function () {
-                var canvalmobile = $q.deffer();
+                var canvalmobile = $q.defer();
                 $http(
                         {
                             method: 'POST',
