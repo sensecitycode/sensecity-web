@@ -97,7 +97,7 @@
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
         
     </head>
-    <body ng-app="scApp" ng-controller="allissuesCtrl" ng-cloak>
+    <body id="mctl" ng-app="scApp" ng-controller="allissuesCtrl" ng-cloak>
         <div ng-show="nloaded" class="loading_bar">
     Loading&#8230;
 </div>
@@ -132,8 +132,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-body profile" >
                                     <div class="profile-image">
-                                        <a ng-href="scissuemap.html?issue={{lastissue._id}}"><img style="width:145px;height:145px" ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" ng-src={{lastissue.image_name}} alt="" height="100"></a>
-                                        <a ng-href="scissuemap.html?issue={{lastissue._id}}"><i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:12.09em;color:white"></i></a>
+                                        <a ng-href="scissuemap.html?issue={{lastissue._id}}"><img onload="default_im(this)" onerror="default_ic(this)" id="image{{lastissue.counter}}" data-bugid="{{lastissue.bug_id}}" ng-show="lastissue.class == ''" ng-src={{lastissue.image_name}} alt="" width="144px" height="144px"></a>
+                                        <a ng-href="scissuemap.html?issue={{lastissue._id}}"><i ng-if="lastissue.class != ''" class={{lastissue.class}} style="font-size:12em;color:white"></i></a>
                                     </div>
                                     <div class="profile-data">
                                         <div class="profile-data-name">{{lastissue.issue | translate}}</div>

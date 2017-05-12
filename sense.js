@@ -30,6 +30,12 @@ function default_image(this_img){
     }
 }
 
+function marker_image(){
+    var scope = angular.element("#mainctl").scope();
+    scope.icon_show = 0;
+    scope.$apply();
+}
+
 appControllers.directive('sidebarDirective', function () {
     return {
         link: function (scope, element, attr) {
@@ -80,9 +86,10 @@ appControllers.controller(
             '$interval',
             '$translate',
             '$resource',
+            '$compile',
             function ($scope, $window, $rootScope, $http, $q, $location, leafletData,
                     $interval,
-                    $translate, $resource) {
+                    $translate, $resource,$compile) {
 
                 var canceller = [];
                 var rcanceller = [null];
@@ -213,7 +220,7 @@ appControllers.controller(
 
 //if($rootScope.test == 1){
 //    $rootScope.test = 0;
-//                        $(".x-navigation li").click(function(event){  //edw
+//                        $(".x-navigation li").click(function(event){ 
 //        event.stopPropagation();
 //        
 //        var li = $(this);
@@ -464,14 +471,14 @@ appControllers.controller(
                                     } else {
                                         issue_image = resp[0].image_name;
                                     }
-                                    if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
-                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a></center>");
-                                    } else {
-                                        popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a></center>");
-                                    }
+                                    
+                                    $scope.icon_show = 1;
+                                   
+                                    popup.setContent("<center style='width:210px' id='"+resp[0].bug_id+"_icon'></center>");
                                     popup.options.maxWidth = "auto";
                                     popup.update();
-
+                                    $scope.icon_content = "<b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img ng-show=\"icon_show==0\" onload='marker_image()' src=\"" + $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp[0].bug_id + "&resolution=small \" style=\"height:200px\"><i ng-show=\"icon_show == 1\" class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a>";
+                                    $("#"+resp[0].bug_id+"_icon").html($compile($scope.icon_content)($scope));
                                 });
                                 setTimeout(function () {
                                     if (canceller[1].promise.$$state.status == 0) {
@@ -479,7 +486,7 @@ appControllers.controller(
                                         $scope.$apply();
                                         alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                                     }
-                                });
+                                },30000);
                             });
                             leafletData.getMap().then(function (map) {
                                 map.scrollWheelZoom.disable();
@@ -748,7 +755,6 @@ appControllers.controller(
                                             
                                             $("#image"+$scope.lastissues[i].counter).removeAttr("src");
                                             $("#image"+$scope.lastissues[i].counter).attr("src",$rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + theLastIssues[i].bug_id + "&resolution=small");
-                                            //$scope.lastissues[i].image_name = $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + $scope.lastissues[i].bug_id + "&resolution=small";
 
                                             var today = new Date();
                                             var create_day = new Date(

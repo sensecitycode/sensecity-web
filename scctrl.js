@@ -1,5 +1,27 @@
 var appControllers = angular.module('scapp.controllers', ['pascalprecht.translate', 'ngCookies', 'ngAnimate']);
 
+function default_ic(this_img) {
+    var scope = angular.element("#mctl").scope();
+    for(var i = 0;i < scope.allissues.length; i++){
+      if(scope.allissues[i].bug_id == this_img.dataset.bugid){
+           scope.allissues[i].class = "fa fa-" + scope.Variables.icons[scope.allissues1[i]].icon;
+           scope.allissues[i].width = "80%";
+           scope.allissues[i].image_name = '';
+           break;
+      }  
+    }
+}
+
+function default_im(this_img){
+    var scope = angular.element("#mctl").scope();
+    for(var i = 0;i < scope.allissues.length; i++){
+      if(scope.allissues[i].bug_id == this_img.dataset.bugid){
+           scope.allissues[i].class = '';
+           scope.$apply();
+           break;
+      }  
+    }
+}
 
 appControllers.controller('sensecityMainCtrl', function ($scope, $log, $location, $rootScope, $http, $window) {
     $log.debug('inside sensecityMainCtrl controller');
@@ -65,6 +87,7 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
     $scope.activePage = 1;
     $scope.startPage = 1;
     $scope.pageIndex = 1;
+    $scope.lastissues = [];
     var init = 0 ;
 
     $scope.navClass = function (page) {
@@ -272,6 +295,8 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
                 }
             }).update(function (response) {
                 canissue1.resolve();
+                var counter = 0;
+                $scope.allissues1 = [];
                 angular
                         .forEach(
                                 tmpIssues,
@@ -282,6 +307,7 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
                                     // lastissue.issue="
                                     // +
                                     // lastissue.issue);
+                                    
                                     if (lastissue.image_name === ''
                                             || lastissue.image_name === 'no-image'
                                             || lastissue.image_name === null
@@ -291,14 +317,18 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
                                     } else {
                                         lastissue.width = "100%";
                                     }
-
+                                    
+                                    $scope.allissues1[counter] = lastissue.issue;
+                                    
                                     var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
                                     if (cat_index != -1) {
                                         lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
                                     } else {
                                         lastissue.issue = '';
                                     }
-
+                                                                      
+                                    lastissue.image_name = $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + lastissue.bug_id + "&resolution=small";
+                                    
                                     var today = new Date();
                                     var create_day = new Date(
                                             lastissue.create_at);
@@ -353,8 +383,9 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
                                      
                                      */
 
-
+                                     counter++;
                                 });
+                                $scope.allissues = tmpIssues;
                 $(window).trigger("resize");
                 $scope.nloaded = false;
             });
@@ -367,7 +398,7 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
             }
         }, 30000);
             
-            $scope.allissues = tmpIssues;
+            //$scope.allissues = tmpIssues;
         };
         
         $scope.refresh();

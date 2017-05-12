@@ -29,6 +29,12 @@ function month_gr(month) {
     }
 }
 
+function marker_image() {
+    var scope = angular.element("#mainctl").scope();
+    scope.icon_show = 0;
+    scope.$apply();
+}
+
 appControllers.directive('sidebarDirective', function () {
     return {
         link: function (scope, element, attr) {
@@ -45,7 +51,7 @@ appControllers.directive('sidebarDirective', function () {
 });
 
 
-appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http', '$translate', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http, $translate) {
+appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http', '$translate','$compile', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http, $translate,$compile) {
         $rootScope.overview_url = $location.path();
         $scope.categories = [{name: "", color: "", total: ""}];
         $scope.changeLanguage = function (langKey) {
@@ -658,14 +664,13 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 issue_image = resp[0].image_name;
                             }
 
-                            if (!(resp[0].image_name === '' || resp[0].image_name === 'no-image' || resp[0].image_name === null || resp[0].image_name === undefined)) {
-                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img src=\"" + issue_image + "\" style=\"height:200px\"><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a></center>");
-                            } else {
-                                popup.setContent("<center><b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><i class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a></center>");
-                            }
+                            $scope.icon_show = 1;
 
+                            popup.setContent("<center style='width:210px' id='" + resp[0].bug_id + "_icon'></center>");
                             popup.options.maxWidth = "auto";
                             popup.update();
+                            $scope.icon_content = "<b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img ng-show=\"icon_show==0\" onload='marker_image()' src=\"" + $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp[0].bug_id + "&resolution=small \" style=\"height:200px\"><i ng-show=\"icon_show == 1\" class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a>";
+                            $("#" + resp[0].bug_id + "_icon").html($compile($scope.icon_content)($scope));
                         });
                         setTimeout(function () {
                             if (canfi.promise.$$state.status == 0) {
@@ -763,12 +768,12 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 $scope.markers.push(marker);
                             });
                             setTimeout(function () {
-                            if (canissue.promise.$$state.status == 0) {
-                                rcanissue.$cancelRequest();
-                                $scope.$apply();
-                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                            }
-                        }, 30000);
+                                if (canissue.promise.$$state.status == 0) {
+                                    rcanissue.$cancelRequest();
+                                    $scope.$apply();
+                                    alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                }
+                            }, 30000);
                         } else {
                             i = 0;
                             angular.forEach($scope.searchState, function (state) {
@@ -908,7 +913,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 {}, {
                             update: {
                                 method: 'GET',
-                                isArray:true,
+                                isArray: true,
                                 cancellable: true
                             }
                         }).update(obj, function (result) {
@@ -930,7 +935,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 {}, {
                             update: {
                                 method: 'GET',
-                                isArray:true,
+                                isArray: true,
                                 cancellable: true
                             }
                         }).update(obj, function (result) {

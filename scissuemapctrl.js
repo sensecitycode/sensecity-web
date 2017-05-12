@@ -2,6 +2,18 @@ var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource
         .constant("config", {"host": "api.sense.city", "port": "3000"});
 
 
+function default_iimg(){
+    var scope = angular.element("#wscontrl").scope();
+    scope.lastissueclass = '';
+    scope.$apply();
+}
+
+function default_iicon(){
+    var scope = angular.element("#wscontrl").scope();
+    scope.lastissue_class = scope.lastissue_class1;
+    scope.$apply();
+}
+
 appControllers.config(['$translateProvider', function ($translateProvider) {
         $translateProvider.useStaticFilesLoader({
             prefix: 'config/lang_',
@@ -135,7 +147,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
                         var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + '"}';
                                                 
-                        var canactu = $q.deffer();
+                        var canactu = $q.defer();
                         return $http({
                             method: 'POST',
                             url: $rootScope.Variables.activate_user_URL,
@@ -252,7 +264,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             }
                         }, 30000);
                 } else if (step == 3) {
-                    var canissue = $q.deffer();
+                    var canissue = $q.defer();
                     $http(
                             {
                                 method: 'POST',
@@ -270,7 +282,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                         $scope.smsg2 = false;
 
                         if ($scope.chkSelected) {
-                            var canissueid = $q.deffer();
+                            var canissueid = $q.defer();
                             return $http({
                                 method: 'POST',
                                 url: $rootScope.Variables.APIURL + resp_an._id,
@@ -321,7 +333,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             };
 
             $scope.activate_email = function () {
-                var canemail = $q.deffer();
+                var canemail = $q.defer();
                 $http(
                         {
                             method: 'POST',
@@ -345,7 +357,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             };
 
             $scope.activate_mobile = function () {
-                var canmobile = $q.deffer();
+                var canmobile = $q.defer();
                 $http(
                         {
                             method: 'POST',
@@ -367,7 +379,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             };
 
             $scope.validate_email = function () {
-                var canvalemail = $q.deffer();
+                var canvalemail = $q.defer();
                 $http(
                         {
                             method: 'POST',
@@ -406,7 +418,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             };
 
             $scope.validate_mobile = function () {
-                var canvalmobile = $q.deffer();
+                var canvalmobile = $q.defer();
                 $http(
                         {
                             method: 'POST',
@@ -958,12 +970,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
     ).query({issueID: issue_id}, function (issue) {
         canfi.resolve();
         $scope.bug_id = issue[0].bug_id;
-        $scope.bug_address = issue[0].bug_address;
-            if (issue[0].image_name != "" && issue[0].image_name != "no-image") {
-                $scope.issue_image = issue[0].image_name;
-            } else {
-                $scope.lastissue_class = "fa fa-" + $rootScope.Variables.icons[issue[0].issue].icon + " img-text";
-            }
+        $scope.bug_address = issue[0].city_address;
+            $scope.lastissue_class1 = "fa fa-" + $rootScope.Variables.icons[issue[0].issue].icon + " img-text";
+            $scope.issue_image = $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + issue[0].bug_id + "&resolution=medium";
+            $scope.issue_image1 = $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + issue[0].bug_id + "&resolution=full";
             $scope.iclass= "fa fa-" + $rootScope.Variables.icons[issue[0].issue].icon;
             $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 18};
             $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[issue[0].issue]}];
