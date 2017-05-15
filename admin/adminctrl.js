@@ -128,7 +128,7 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                             "email": result[i].email,
                             "phone": result[i].phone,
                             "address": result[i].bug_address,
-                            "image_name": result[i].image_name,
+                            "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + result[i].bug_id + "&resolution=medium",
                             "qr_link": result[i].municipality + ".sense.city/scissuemap.html?issue=" + result[i]._id
                         };
                         $scope.printres.push(cprint);
@@ -140,7 +140,7 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                         canissue.resolve('cancelled');
                         alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                     }
-                }, 5000);
+                }, 30000);
             } else {
                 var searchparams = {};
                 searchparams.bug_id = $rootScope.sbugid;
@@ -164,7 +164,7 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                             "email": result[i].email,
                             "phone": result[i].phone,
                             "address": result[i].bug_address,
-                            "image_name": result[i].image_name,
+                            "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + result[i].bug_id + "&resolution=medium",
                             "qr_link": result[i].municipality + ".sense.city/scissuemap.html?issue=" + result[i]._id
                         };
                         $scope.printres.push(cprint);

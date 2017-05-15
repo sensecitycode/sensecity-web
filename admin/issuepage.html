@@ -205,9 +205,9 @@
                         <div ng-hide="padmin">
                             <center>
                                 <!--<a data-lightbox="image-1" href="http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Nice/nice-overview-coastline-xlarge.jpg">-->
-                                    <img class="img-responsive" ng-if="pimage != '' && pimage != 'no-image'&& pimage != null && pimage != undefined" id="issue_image" ng-src="{{pimage}}" width="90%;" />
+                                    <img onload="default_aimg" onerror="default_aicon" class="img-responsive" ng-show="pclass==''" id="issue_image" ng-src="{{pimage}}" width="90%;" />
                             <!--</a>-->
-                                <i ng-if="pimage == ''|| pimage == 'no-image'|| pimage == null || pimage == undefined" class={{pclass}} style="font-size:12em;color:black"></i>
+                                <i ng-if="pclass!=''" class={{pclass}} style="font-size:12em;color:black"></i>
                             </center>
                         </div>
                     </div>        

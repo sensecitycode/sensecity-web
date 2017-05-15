@@ -64,7 +64,7 @@
         <!--<link rel="stylesheet" href="css/style.css" />-->
         <link rel="stylesheet" type="text/css" href="admin/css/gdropdown.css" />
 
-        <link href="./lightbox2/src/css/lightbox.css" rel="stylesheet">
+        <link href="swipebox-master/src/css/swipebox.css" rel="stylesheet">
         
         <!--<script src="http://maps.google.com/maps/api/js?v=3&sensor=false&key=AIzaSyCVuEquyZXiARZGa06kioj7cMpH7Xb0RiM"></script>-->
         <script src="http://maps.google.com/maps/api/js?v=3&sensor=false&&libraries=geometry&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM"></script>
@@ -181,7 +181,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <a ng-show="lastissueclass == ''" data-lightbox="image" href="{{issue_image1}}"><img onload="default_iimg()" onerror="default_iicon()" class="img-responsive img-text" src={{issue_image}} alt="" style="min-width:100%"></a>
+                                                    <a ng-show="lastissueclass == ''" class="swipebox" href="{{issue_image1}}"><img onload="default_iimg()" onerror="default_iicon()" class="img-responsive img-text" src={{issue_image}} alt="" style="min-width:100%"></a>
                                                     <i ng-if="lastissueclass != ''" class={{lastissue_class}} style="font-size:24.7em;color:black;width:100%;text-align:center;min-width:100%"></i>
                                                 </div>
                                             </div>
@@ -431,7 +431,14 @@
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>
         <script type="text/javascript" src="js/demo_maps.js"></script>
-        <script src="./lightbox2/src/js/lightbox.js"></script>
+        <script src="swipebox-master/src/js/jquery.swipebox.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                ;( function( $ ) {
+	$( '.swipebox' ).swipebox();
+} )( jQuery );
+            });
+</script>
     </body>
 </html>
 <!--<!DOCTYPE html>

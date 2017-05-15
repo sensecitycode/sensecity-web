@@ -1,5 +1,25 @@
 var app = angular.module('issuepage', ['adminapp']);
 
+function default_aimg(){
+    $(document).ready(function(){ 
+    var scope = angular.element("#mainctl").scope();
+    scope.pclass = '';
+    scope.$apply();
+});
+}
+
+function default_aicon(){
+   $(document).ready(function(){ 
+    var scope = angular.element("#mainctl").scope();
+    try{
+    scope.pclass = scope.pclass1;
+    }catch(e){
+    
+    }
+    scope.$apply();
+});
+}
+
 app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$q', '$location', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService', 'leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $q, $location, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, CommentService, leafletData) {
 
         var panorama;
@@ -369,7 +389,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     "id": result[0].bug_id,
                     "issue": result[0].issue,
                     "value_desc": result[0].value_desc,
-                    "image_name": result[0].image_name,
+                    "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + result[0].bug_id + "&resolution=medium",
                     "lat": result[0].loc.coordinates[1],
                     "lng": result[0].loc.coordinates[0],
                     "activeIcon": activeIcon
@@ -447,14 +467,14 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                             if ($scope.panel.image_name != "" && $scope.panel.image_name != "no-image") {
                                 $scope.image_width = "100%";
                                 $scope.panel.image = "";
-                                $scope.pclass = "";
+                                $scope.pclass1 = "";
                                 $scope.panel.image = $scope.panel.image_name;
                             } else {
                                 $scope.image_width = "60%";
                                 $scope.panel.image = "";
-                                $scope.pclass = "";
+                                $scope.pclass1 = "";
                                 $scope.panel.image = $scope.panel.image_name;
-                                $scope.pclass = "fa fa-" + $rootScope.Variables.icons[$scope.panel.issue].icon;
+                                $scope.pclass1 = "fa fa-" + $rootScope.Variables.icons[$scope.panel.issue].icon;
                             }
                             $scope.pimage = $scope.panel.image;
                             $scope.loaded = 1;
