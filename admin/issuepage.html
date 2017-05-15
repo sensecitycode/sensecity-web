@@ -202,10 +202,12 @@
                             </div>
                         </div>
                         <div ng-hide="padmin">
-                            <center id="lightgallery" style="margin-bottom:20px">
+                            <center style="margin-bottom:20px">
                                 <!--<a data-lightbox="image-1" href="http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Nice/nice-overview-coastline-xlarge.jpg">-->
+                                <div id="lightgallery">
                                 <a ng-show="pclass == ''" href="{{pimage1}}"><img onload="default_aimg()" onerror="default_aicon()" class="img-responsive" ng-show="pclass==''" id="issue_image" ng-src="{{pimage}}" width="90%;" /></a>
-                            <!--</a>-->
+                                </div>
+                                <!--</a>-->
                                 <i ng-if="pclass!=''" class={{pclass}} style="font-size:12em;color:black"></i>
                             </center>
                         </div>
