@@ -1,5 +1,4 @@
-<link href="../lightbox/dist/css/lightbox.css" rel="stylesheet">
-        <script src="../lightbox/dist/js/lightbox.js"></script>
+ <link href="../lightGallery/src/css/lightgallery.css" rel="stylesheet">
 <div ng-show="valid">
     <!-- START PAGE CONTAINER -->
     <div class="page-container" data-ng-init="initialize()">
@@ -203,9 +202,9 @@
                             </div>
                         </div>
                         <div ng-hide="padmin">
-                            <center>
+                            <center id="lightgallery" style="margin-bottom:20px">
                                 <!--<a data-lightbox="image-1" href="http://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/France/Nice/nice-overview-coastline-xlarge.jpg">-->
-                                    <img onload="default_aimg" onerror="default_aicon" class="img-responsive" ng-show="pclass==''" id="issue_image" ng-src="{{pimage}}" width="90%;" />
+                                <a ng-show="pclass == ''" href="{{pimage1}}"><img onload="default_aimg()" onerror="default_aicon()" class="img-responsive" ng-show="pclass==''" id="issue_image" ng-src="{{pimage}}" width="90%;" /></a>
                             <!--</a>-->
                                 <i ng-if="pclass!=''" class={{pclass}} style="font-size:12em;color:black"></i>
                             </center>
@@ -259,7 +258,12 @@
         <!--        <script type="text/javascript" src="js/settings.js"></script>-->
         <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>
-        
+        <script src="../lightGallery/src/js/lightgallery.js"></script>
+        <script type="text/javascript">
+    $(document).ready(function() {
+        $("#lightgallery").lightGallery(); 
+    });
+</script>
         <!-- END TEMPLATE -->
         <!-- END SCRIPTS -->
     </div>

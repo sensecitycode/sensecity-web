@@ -1,11 +1,11 @@
 var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource', 'ngCookies', 'ngAnimate', '720kb.tooltips', 'pascalprecht.translate', 'scissuemapapp.scissuemapsrvs', 'angularUtils.directives.dirDisqus'])
         .constant("config", {"host": "api.sense.city", "port": "3000"});
 
-
 function default_iimg() {
         var scope = angular.element("#wscontrl").scope();
         scope.lastissueclass = '';
         scope.$apply();
+        $("#lightgallery").lightGallery();
 }
 
 function default_iicon() {
@@ -665,7 +665,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             }
             ;
         }
-
+         
         var p = $q.defer();
         $rootScope.maininfo = $http.get(url, {timeout: p.promise}).success(function (response) {
 
@@ -706,6 +706,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             };          
 
         });
+        
         setTimeout(function () {
             if (p.promise.$$state.status == 0) {
                 p.resolve('cancelled');
@@ -722,6 +723,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $q.all([$rootScope.maininfo]).then(
                 function (data) {
                     var canactp = $q.defer();
+                    
                     $http({
                         method: "POST",
                         url: $rootScope.variables.APIADMIN + "/activate_city_policy?lat=" + $rootScope.variables.lat_center + "&long=" + $rootScope.variables.long_center,
