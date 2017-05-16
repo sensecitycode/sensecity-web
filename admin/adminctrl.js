@@ -8,9 +8,9 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
 var search_button = 0;
 
-function no_disposed(i){
+function no_disposed(order){
     var scope = angular.element("#mainctl").scope();
-    scope.printres[i.dataset.order] = false;
+    scope.printres[order.dataset.order].class = false;
     scope.$apply();
 }
 
