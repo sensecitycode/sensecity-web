@@ -443,6 +443,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             } else {
                                 $("#confirmed").attr("selected", "selected");
                                 $("#inprogress").attr("selected", "selected");
+                                if(query == 3){
+                                 $("#resolved").attr("selected", "selected");   
+                                }
                             }
                             $('#states').selectpicker('refresh');
                             $('#states').trigger('change');
