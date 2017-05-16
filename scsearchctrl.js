@@ -372,13 +372,13 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 var wstate = $("button[data-id='states']").attr("title").replace(/ /g, '').split(",");
                 $scope.searchState = [];
                 for (var i = 0; i < wstate.length; i++) {
-                    if (wstate[i] == "Ανοιχτά") {
+                    if (wstate[i] == $translate.instant("OPEN")) {
                         $scope.searchState.push("CONFIRMED");
-                    } else if (wstate[i] == "Ανάθεση/ΣεΕκτέλεση") {
+                    } else if (wstate[i] == $translate.instant("IN_PROGRESS").replace(/ /g, '').split(",")) {
                         $scope.searchState.push("IN_PROGRESS");
-                    } else if (wstate[i] == "Ολοκληρωμένα") {
+                    } else if (wstate[i] == $translate.instant("RESOLVED")) {
                         $scope.searchState.push("RESOLVED");
-                    } else if (wstate[i] == "Ανώνυμα") {
+                    } else if (wstate[i] == $translate.instant("ANONYMOUS")) {
                         $scope.searchState.push("Anonymous");
                     } else {
                         $scope.searchState.push("Καταστάσεις");
@@ -391,11 +391,11 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 var wdisposal = $("button[data-id='disposal']").attr("title").replace(/ /g, '').split(",");
                 $scope.searchFeeling = [];
                 for (var i = 0; i < wdisposal.length; i++) {
-                    if (wdisposal[i] == "Θετική") {
+                    if (wdisposal[i] == $translate.instant("MOODPOSITIVE")) {
                         $scope.searchFeeling.push("happy");
-                    } else if (wdisposal[i] == "Ουδέτερη") {
+                    } else if (wdisposal[i] == $translate.instant("MOODNEUTRAL")) {
                         $scope.searchFeeling.push("neutral");
-                    } else if (wdisposal[i] == "Αρνητική") {
+                    } else if (wdisposal[i] == $translate.instant("MOODNEGATIVE")) {
                         $scope.searchFeeling.push("angry");
                     } else {
                         $scope.searchFeeling.push("Διάθεση πολιτών");
@@ -808,7 +808,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
                             i = 0;
                             angular.forEach($scope.searchFeeling, function (feeling) {
-                                if (feeling != "Διάθεση πολιτών") {
+                                if (feeling != "Διάθεση πολιτών" ) {
                                     if (i == 0) {
                                         feelings += feeling;
                                         i++;
@@ -828,7 +828,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name, feeling: feelings};
                                 promisesArray.push(feelingsQuery(feelingsObj));
                             }
-
+                                                       
                             for (var index = 0; index < paramsObj.length; index++) {
                                 if ((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined))
                                     promisesArray.push(doQuery(paramsObj[index]));
