@@ -942,7 +942,6 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             d.resolve(result);
                         });
                         setTimeout(function () {
-                            alert(d.promise.$$state.status);
                             if (d.promise.$$state.status == 0) {
                                 rd.$cancelRequest();
                                 $scope.$apply();

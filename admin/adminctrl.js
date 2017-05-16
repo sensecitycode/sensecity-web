@@ -10,6 +10,7 @@ var search_button = 0;
 
 function no_disposed(order){
     var scope = angular.element("#mainctl").scope();
+    //order.attributes.yes.value (access ng-attr-yes defined attribute value)
     scope.printres[order.dataset.order].class = false;
     scope.$apply();
 }
