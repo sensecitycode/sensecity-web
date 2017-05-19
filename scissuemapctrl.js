@@ -269,15 +269,21 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 }, 30000);
             } else if (step == 3) {
                 var canissue = $q.defer();
+                if($scope.chkSelected_1 == false){
+                   $scope.EmailTxt = ""; 
+                }else if($scope.chkSelected_2 == false){
+                   $scope.MobileTxt = ""; 
+                }
+
                 $http(
                         {
                             method: 'POST',
-                            url: $rootScope.variables.APIURL,
+                            url: $rootScope.variables.APIADMIN+"/issue_subscribe",
                             timeout: canissue.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             },
-                            data: $scope.anon_post
+                            data: {"email":$scope.EmailTxt,"mobile":$scope.MobileTxt,"comment":$scope.commentstxt,"bug_id":$scope.bug_id}
                         }).success(function (resp_an) {
                     canissue.resolve();
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
