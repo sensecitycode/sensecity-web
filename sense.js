@@ -870,7 +870,7 @@ appControllers.controller(
 
                                 var i = 0;
 
-                                var theFixedPoints = rcanceller[5] = $resource(
+                                var theFixedPoints = $resource(
                                         'json/' + $rootScope.Variables.city_name + '.json',
                                         null,
                                         {
@@ -882,7 +882,6 @@ appControllers.controller(
                                             }
                                         }
                                 ).query(function () {
-                                    canceller[5].resolve();
                                     if (fpnft) {
                                         leafletData.getMap().then(function (map) {
                                             layers_ref.removeFrom(map);
@@ -1006,7 +1005,7 @@ appControllers.controller(
 
                 setTimeout(function () {
                     var isin = false;
-                    for (var k = 0; k < 6; k++) {
+                    for (var k = 0; k < 5; k++) {
                         if (canceller[k].promise.$$state.status == 0 && k != 1) {
                             isin = true;
                             if (k > 0) {
