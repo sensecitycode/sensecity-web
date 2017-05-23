@@ -8,7 +8,7 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 
 var search_button = 0;
 
-function no_disposed(order){
+function no_disposed(order) {
     var scope = angular.element("#mainctl").scope();
     //order.attributes.yes.value (access ng-attr-yes defined attribute value)
     scope.printres[order.dataset.order].class = false;
@@ -782,13 +782,31 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 } else {
                     $scope.role = "departmentUser";
                 }
-                var department = $cookieStore.get("department");
-                var dep_index = $rootScope.Variables.depUserTitles.indexOf(department);
-                $scope.tabs = [{
-                        "title": $rootScope.Variables.depUserTitles[dep_index],
-                        "content": $rootScope.Variables.depUserContent[dep_index],
-                        "icon": $rootScope.Variables.depUserIcons[dep_index]
-                    }];
+                var department;
+                if ($scope.role == "departmentUser") {
+                    department = $cookieStore.get("department");
+                    var dep_index = $rootScope.Variables.depUserTitles.indexOf(department);
+                    $scope.tabs = [{
+                            "title": $rootScope.Variables.depUserTitles[dep_index],
+                            "content": $rootScope.Variables.depUserContent[dep_index],
+                            "icon": $rootScope.Variables.depUserIcons[dep_index]
+                        }];
+                }else{
+                    department = $cookieStore.get("departments");
+                    $scope.tabs = [{
+                            "title": "Όλα τα τμήματα",
+                            "content": "Όλα τα τμήματα",
+                            "icon": "fa ion-ios-analytics-outline"
+                        }];
+                    for( var i = 0 ; i < department.length; i++){
+                        var dep_index = $rootScope.Variables.depUserTitles.indexOf(department[i].department);
+                        $scope.tabs.push({
+                            "title": $rootScope.Variables.depUserTitles[dep_index],
+                            "content": $rootScope.Variables.depUserContent[dep_index],
+                            "icon": $rootScope.Variables.depUserIcons[dep_index]
+                        });
+                    }
+                }
                 $scope.tabs.activeTab = 0;
 //                else if (department == "plumbing") {
 //                    $scope.tabs = [{
@@ -1587,7 +1605,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 $scope.padmin = true
                 mapnloaded = true;
                 var canget = $q.defer();
-                $http.get($rootScope.Variables.host + '/api/1.0/get', {timeout:canget.promise,headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
+                $http.get($rootScope.Variables.host + '/api/1.0/get', {timeout: canget.promise, headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
                         function (response) {
                             canget.resolve();
                             if (response == "failure") {
@@ -1601,11 +1619,11 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             }
                         });
                 setTimeout(function () {
-                            if (canget.promise.$$state.status == 0) {
-                                canget.resolve('cancelled');
-                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                            }
-                        }, 30000);        
+                    if (canget.promise.$$state.status == 0) {
+                        canget.resolve('cancelled');
+                        alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
 //                        $scope.activePanel = - 1;
 //                        $scope.currentactive = - 1;
                 var query_component = [];
@@ -1676,7 +1694,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             }
                         }
                         var canissue5 = $q.defer();
-                        $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: params, timeout: canissue5.promise,headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                        $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: params, timeout: canissue5.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             canissue5.resolve();
                             if (result[0] != undefined && Object.keys(result[0]).length != 0) {
                                 total_counter = result.length;

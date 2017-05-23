@@ -43,15 +43,14 @@ app.controller('login_controller', ['$scope', '$rootScope','$window', '$http', '
             $http.post($rootScope.Variables.APIADMIN+'/dashboard', parameter,{timeout:canfi.promise}).success(
                                 function (response, status, headers, cnfg) {
                                     canfi.resolve();
-                                    response = response.split(';');
                                     if (response != "failure") {
-                                        $cookieStore.put('city', response[0]);
-                                        $cookieStore.put('role', response[1]);
-                                        $cookieStore.put('department', response[2]);
-                                        $cookieStore.put('email', response[3]);
-                                        $cookieStore.put('uuid', response[4]);
-                                        $cookieStore.put('username', response[5]);
-                                        
+                                        $cookieStore.put('city', response[0].city);
+                                        $cookieStore.put('role', response[0].role);
+                                        $cookieStore.put('department', response[0].department);
+                                        $cookieStore.put('email', response[0].email);
+                                        $cookieStore.put('uuid', response[0].uuid);
+                                        $cookieStore.put('username', response[0].username);
+                                        $cookieStore.put('departments', response[0].departments);
                                         $location.path("/admin");
 
                                     } else {
