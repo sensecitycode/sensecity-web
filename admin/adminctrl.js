@@ -119,6 +119,7 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                         sparams.status = "CONFIRMED|IN_PROGRESS|RESOLVED";
                     }
                 }
+                
                 sparams.city = $cookieStore.get("city");
                 sparams.send_user = "1";
                 var canissue = $q.defer();
@@ -671,7 +672,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 delete parameter['image_field'];
             } else {
                 if (($rootScope.allclosedissues == false && $rootScope.assignissues == false) || $rootScope.closedissues == true) {
-                    if ($cookieStore.get("role") == "departmentAdmin") {
+                    if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
                         if ($rootScope.closedissues == true) {
                             params.status = "IN_PROGRESS|RESOLVED";
                         } else {
@@ -690,7 +691,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                         parameter = {"city": $cookieStore.get("city"), "departments": $rootScope.component, "status": params.status, "issue": summary, "startdate": "2016-08-01"};
                     }
                 } else {
-                    if ($cookieStore.get("role") == "departmentAdmin") {
+                    if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
                         if ($rootScope.allclosedissues == true) {
                         params.status = "IN_PROGRESS|RESOLVED";
                     } else {
@@ -1257,7 +1258,6 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     params.city = $rootScope.Variables.city_name;
                     var canissue4 = $q.defer();
 
-                     alert(JSON.stringify(params));
                     $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: params, timeout: canissue4.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                         canissue4.resolve();
                         total_counter = result.length;
@@ -1283,6 +1283,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                 }
                             };
                         }
+                        
 
                         angular.forEach(result, function (value, key) {
                             var issue_name = ToGrService.issueName(value.issue);
@@ -1736,7 +1737,6 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             }
                         }
                         var canissue5 = $q.defer();
-                        alert(JSON.stringify(params));
                         $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: params, timeout: canissue5.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             canissue5.resolve();
                             if (result[0] != undefined && Object.keys(result[0]).length != 0) {
