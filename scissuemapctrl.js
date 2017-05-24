@@ -269,11 +269,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 }, 30000);
             } else if (step == 3) {
                 var canissue = $q.defer();
-                if($scope.chkSelected_1 == false){
-                   $scope.EmailTxt = ""; 
-                }else if($scope.chkSelected_2 == false){
-                   $scope.MobileTxt = ""; 
-                }
+//                if($scope.chkSelected_1 == false){
+//                   $scope.EmailTxt = ""; 
+//                }else if($scope.chkSelected_2 == false){
+//                   $scope.MobileTxt = ""; 
+//                }
 
                 $http(
                         {

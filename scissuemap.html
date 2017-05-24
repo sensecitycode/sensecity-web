@@ -278,7 +278,7 @@
                                                                 </div>
                                                                 <div class="col-md-5">
                                                                     <p style="font-size:14px"> {{'MESSAGE_USER'| translate}}</p>
-                                                                    <div class="col-md-12">
+                                                                    <div ng-show="mand_sms=='true'" class="col-md-12">
                                                                         <label class="check"><input type="checkbox" ng-model="chkSelected_2" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" class="icheckbox"/>{{ 'SMS_USER' | translate}}</label>
                                                                     </div>
                                                                     <div class="col-md-12">

@@ -671,10 +671,18 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 delete parameter['image_field'];
             } else {
                 if (($rootScope.allclosedissues == false && $rootScope.assignissues == false) || $rootScope.closedissues == true) {
-                    if ($rootScope.closedissues == true) {
-                        params.status = "CONFIRMED|IN_PROGRESS|RESOLVED";
+                    if ($cookieStore.get("role") == "departmentAdmin") {
+                        if ($rootScope.closedissues == true) {
+                            params.status = "IN_PROGRESS|RESOLVED";
+                        } else {
+                            params.status = "IN_PROGRESS";
+                        }
                     } else {
-                        params.status = "CONFIRMED|IN_PROGRESS";
+                        if ($rootScope.closedissues == true) {
+                            params.status = "CONFIRMED|IN_PROGRESS|RESOLVED";
+                        } else {
+                            params.status = "CONFIRMED|IN_PROGRESS";
+                        }
                     }
                     if (summary == "all") {
                         parameter = {"city": $cookieStore.get("city"), "departments": $rootScope.component, "status": params.status, "startdate": "2016-08-01"};
@@ -682,11 +690,19 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                         parameter = {"city": $cookieStore.get("city"), "departments": $rootScope.component, "status": params.status, "issue": summary, "startdate": "2016-08-01"};
                     }
                 } else {
+                    if ($cookieStore.get("role") == "departmentAdmin") {
+                        if ($rootScope.allclosedissues == true) {
+                        params.status = "IN_PROGRESS|RESOLVED";
+                    } else {
+                        params.status = "IN_PROGRESS";
+                    }
+                    }else{
                     if ($rootScope.allclosedissues == true) {
                         params.status = "CONFIRMED|IN_PROGRESS|RESOLVED";
                     } else {
                         params.status = "CONFIRMED|IN_PROGRESS";
                     }
+                }
                     if (summary == "all") {
                         parameter = {"city": $cookieStore.get("city"), "departments": $rootScope.Variables.components.join("|"), "status": params.status, "startdate": "2016-08-01"};
                     } else {
@@ -791,14 +807,14 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             "content": $rootScope.Variables.depUserContent[dep_index],
                             "icon": $rootScope.Variables.depUserIcons[dep_index]
                         }];
-                }else{
+                } else {
                     department = $cookieStore.get("departments");
                     $scope.tabs = [{
                             "title": "Όλα τα τμήματα",
                             "content": "Όλα τα τμήματα",
                             "icon": "fa ion-ios-analytics-outline"
                         }];
-                    for( var i = 0 ; i < department.length; i++){
+                    for (var i = 0; i < department.length; i++) {
                         var dep_index = $rootScope.Variables.depUserTitles.indexOf(department[i].department);
                         $scope.tabs.push({
                             "title": $rootScope.Variables.depUserTitles[dep_index],
@@ -1206,9 +1222,20 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 if (issue_type != "all" && ($scope.role == "sensecityAdmin" || $scope.role == "cityAdmin"))
                 {
                     params.issue = issue_type;
-                } else if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
+                } else if ($scope.role == "departmentUser") {
                     var tab_index = $rootScope.Variables.components.indexOf($scope.tabs[0].title);
                     $rootScope.component = $rootScope.Variables.components[tab_index];
+                } else if ($scope.role == "departmentAdmin") {
+                    if ($scope.tabs.activeTab != 0) {
+                        var tab_index = $rootScope.Variables.components.indexOf($scope.tabs[$scope.tabs.activeTab].title);
+                        $rootScope.component = $rootScope.Variables.components[tab_index];
+                    } else {
+                        var adep = [];
+                        for (var l = 0; l < $cookieStore.get("departments").length; l++) {
+                            adep.push($cookieStore.get("departments")[l].department);
+                        }
+                        $rootScope.component = adep.join("|");
+                    }
                 }
                 params = {"departments": $rootScope.component, "image_field": "0", "sort": "-1", "startdate": "2016-08-01", "limit": "20"};
                 if ($scope.role == "cityAdmin" || $scope.role == "sensecityAdmin") {
@@ -1229,6 +1256,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             + '<li ng-click="totalpages(total_pages - 4,4)"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
                     params.city = $rootScope.Variables.city_name;
                     var canissue4 = $q.defer();
+
+                     alert(JSON.stringify(params));
                     $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: params, timeout: canissue4.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                         canissue4.resolve();
                         total_counter = result.length;
@@ -1630,17 +1659,30 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 if ($cookieStore.get("uuid") != "undefined") {
                     $scope.panels = [];
                     $scope.ALLmarkers = [];
-                    var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
                     var offset = ($scope.activePage - 1) * 20;
                     $rootScope.component = $rootScope.Variables.components[0];
                     query_component = [$rootScope.component];
-                    summary = issue_type;
-                    if ($scope.role == "departmentAdmin" || $scope.role == "departmentUser") {
-                        var tab_index = $rootScope.Variables.components.indexOf($scope.tabs[0].title);
+                    if ($scope.role == "departmentUser") {
+                        var tab_index = $rootScope.Variables.components.indexOf($scope.tabs[$scope.tabs.activeTab].title);
                         $rootScope.component = $rootScope.Variables.components[tab_index];
                         query_component = [$rootScope.component];
+                        //summary = issue_type;
+                    } else if ($scope.role == "departmentAdmin") {
+                        if ($scope.tabs.activeTab != 0) {
+                            var tab_index = $rootScope.Variables.components.indexOf($scope.tabs[$scope.tabs.activeTab].title);
+                            $rootScope.component = $rootScope.Variables.components[tab_index];
+                        } else {
+                            var adep = [];
+                            for (var l = 0; l < $cookieStore.get("departments").length; l++) {
+                                adep.push($cookieStore.get("departments")[l].department);
+                            }
+                            $rootScope.component = adep.join("|");
+                        }
+                    } else {
+                        var issue_type = Tab2BugzillaService.issue_type($scope.tabs.activeTab);
                         summary = issue_type;
                     }
+
                     params = {"departments": query_component.join("|"), "image_field": "0", "sort": "-1", "startdate": "2016-08-01", "limit": "20"};
                     if ($scope.role == "cityAdmin" || $scope.role == "sensecityAdmin") {
                         params.status = ["CONFIRMED", "IN_PROGRESS"];
@@ -1694,6 +1736,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             }
                         }
                         var canissue5 = $q.defer();
+                        alert(JSON.stringify(params));
                         $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: params, timeout: canissue5.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             canissue5.resolve();
                             if (result[0] != undefined && Object.keys(result[0]).length != 0) {
