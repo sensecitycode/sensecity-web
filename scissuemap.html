@@ -150,7 +150,7 @@
                                         </div>
                                     </div>
                                     <div class="timeline-item-content">
-                                        <div class="timeline-body" style="left:0%" id="links">                                            
+                                        <div ng-show="$index == 0" class="timeline-body" style="left:0%" id="links">                                            
                                             <div class="row">
                                                 <div class="col-md-7" ng-show="$index == 0" style="z-index:10">
                                                     <!-- START SALES BLOCK -->
@@ -195,13 +195,13 @@
                                             {{'ADDRESS'| translate}}: <a style="text-decoration:none">{{bug_address}}</a>
                                         </div>
                                         <div ng-show="comment.user_comment == true" class="timeline-heading">
-                                            {{'CITIZEN_COMMENT'| translate}}
+                                            <a style="text-decoration:none">{{'CITIZEN_COMMENT'| translate}}</a>
                                         </div>
                                         <div ng-hide="comment.user_comment" class="timeline-heading">
                                             {{'ASSIGN_TO'| translate}}: <a style="text-decoration:none">{{comment.component}}</a>
                                         </div>
-                                        <div class="timeline-body comments" style="left:0%">
-                                            <div ng-show="comment.show" class="comment-item">
+                                        <div ng-show="comment.show" class="timeline-body comments" style="left:0%">
+                                            <div class="comment-item">
                                                 <p> {{comment.content}}</p>
                                             </div>                                            
 
