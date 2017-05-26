@@ -274,7 +274,6 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 //                }else if($scope.chkSelected_2 == false){
 //                   $scope.MobileTxt = ""; 
 //                }
-
                 $http(
                         {
                             method: 'POST',
@@ -283,7 +282,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             },
-                            data: {"email": $scope.EmailTxt, "mobile": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.bug_id}
+                            data: {"email": $scope.EmailTxt, "mobile_num": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.bug_id}
                         }).success(function (resp_an) {
                     canissue.resolve();
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
