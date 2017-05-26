@@ -871,8 +871,8 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             var user_comment;
                             if (response[1].bugs[$scope.resp_id].comments[i].tags[0] == "user_comment" || response[1].bugs[$scope.resp_id].comments[i].tags[1] == "user_comment") {
                                 user_comment = true;
-                                color = {"background-color": "#e67e22"};
-                                type = "Σε εκτελεση";
+                                color = {"background-color": "#226f81"};
+                                type = "Σχόλιο";
                             } else {
                                 switch (response[1].bugs[$scope.resp_id].comments[i].tags[0]) {
                                     case "CONFIRMED":

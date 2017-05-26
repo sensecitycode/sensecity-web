@@ -145,6 +145,9 @@
                                         <div ng-if="comment.type == 'Ολοκληρωμενο'">   
                                             <span style="top: 3px;left: 0.3px;color:#4fba57" class="glyphicon glyphicon-ok-sign"></span>
                                         </div>
+                                        <div ng-if="comment.type == 'Σχόλιο'">   
+                                            <span style="top: 3px;left: 0.3px;color:#086f87" class="fa fa-commenting-o"></span>
+                                        </div>
                                     </div>
                                     <div class="timeline-item-content">
                                         <div class="timeline-body" style="left:0%" id="links">                                            
@@ -213,7 +216,10 @@
                                             </div>
                                             <div ng-if="comment.type == 'Ολοκληρωθηκε'">   
                                                 <li><a href="#"><span class="glyphicon glyphicon-ok icon-ok check-mark"></span>{{'RESOLVED'| translate}}</a></li>
-                                            </div>                                            
+                                            </div>
+                                            <div ng-if="comment.type == 'Σχόλιο'">   
+                                                <li><a href="#"><span class="fa fa-commenting-o"></span> {{'COMMENT'| translate}}</a></li>
+                                            </div> 
                                             <li ng-hide="comment.user_comment == true"><a href="#"><span class="fa fa-building-o"></span> {{comment.component}}</a></li>
                                             <li><a href="#"><span ng-class="iclass"></span> {{issue_name_new}}</a></li>
                                             <li><a href="#"><span class="fa fa-commenting-o"></span> {{issue_value_desc}}</a></li>
