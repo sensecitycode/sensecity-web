@@ -2,20 +2,20 @@ var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource
         .constant("config", {"host": "api.sense.city", "port": "3000"});
 
 function default_iimg() {
-        var scope = angular.element("#wscontrl").scope();
-        scope.lastissueclass = '';
-        scope.$apply();
-        $("#lightgallery").lightGallery();
+    var scope = angular.element("#wscontrl").scope();
+    scope.lastissueclass = '';
+    scope.$apply();
+    $("#lightgallery").lightGallery();
 }
 
 function default_iicon() {
-        var scope = angular.element("#wscontrl").scope();
-        try {
-            scope.lastissue_class = scope.lastissue_class1;
-        } catch (e) {
+    var scope = angular.element("#wscontrl").scope();
+    try {
+        scope.lastissue_class = scope.lastissue_class1;
+    } catch (e) {
 
-        }
-        scope.$apply();
+    }
+    scope.$apply();
 }
 
 appControllers.config(['$translateProvider', function ($translateProvider) {
@@ -278,12 +278,12 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 $http(
                         {
                             method: 'POST',
-                            url: $rootScope.variables.APIADMIN+"/issue_subscribe",
+                            url: $rootScope.variables.APIADMIN + "/issue_subscribe",
                             timeout: canissue.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             },
-                            data: {"email":$scope.EmailTxt,"mobile":$scope.MobileTxt,"comment":$scope.commentstxt,"bug_id":$scope.bug_id}
+                            data: {"email": $scope.EmailTxt, "mobile": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.bug_id}
                         }).success(function (resp_an) {
                     canissue.resolve();
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
@@ -671,7 +671,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             }
             ;
         }
-         
+
         var p = $q.defer();
         $rootScope.maininfo = $http.get(url, {timeout: p.promise}).success(function (response) {
 
@@ -709,10 +709,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 google_init_coords: response.google_init_coords,
                 google_buildings: response.google_buildings,
                 host: response.host
-            };          
+            };
 
         });
-        
+
         setTimeout(function () {
             if (p.promise.$$state.status == 0) {
                 p.resolve('cancelled');
@@ -729,7 +729,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $q.all([$rootScope.maininfo]).then(
                 function (data) {
                     var canactp = $q.defer();
-                    
+
                     $http({
                         method: "POST",
                         url: $rootScope.variables.APIADMIN + "/activate_city_policy?lat=" + $rootScope.variables.lat_center + "&long=" + $rootScope.variables.long_center,
@@ -869,30 +869,38 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
 
                             var tag_pos;
-                            switch (response[1].bugs[$scope.resp_id].comments[i].tags[0]) {
-                                case "CONFIRMED":
-                                case "IN_PROGRESS":
-                                case "RESOLVED":
-                                    tag_pos = 0;
-                                    dep_pos = 1;
-                                    break;
-                                default:
-                                    tag_pos = 1;
-                                    dep_pos = 0;
-                                    break;
-                            }
-
-                            if (response[1].bugs[$scope.resp_id].comments[i].tags[tag_pos] == "CONFIRMED") {
-                                color = {"background-color": "#e74c3c"};
-                                type = "Ανοιχτο";
-                            } else if (response[1].bugs[$scope.resp_id].comments[i].tags[tag_pos] == "IN_PROGRESS") {
+                            var user_comment;
+                            if (response[1].bugs[$scope.resp_id].comments[i].tags[0] == "user_comment" || response[1].bugs[$scope.resp_id].comments[i].tags[1] == "user_comment") {
+                                user_comment = true;
                                 color = {"background-color": "#e67e22"};
                                 type = "Σε εκτελεση";
                             } else {
-                                color = {"background-color": "#2ecc71"};
-                                type = "Ολοκληρωμενο";
-                            }
+                                switch (response[1].bugs[$scope.resp_id].comments[i].tags[0]) {
+                                    case "CONFIRMED":
+                                    case "IN_PROGRESS":
+                                    case "RESOLVED":
+                                        tag_pos = 0;
+                                        dep_pos = 1;
+                                        user_comment = false;
+                                        break;
+                                    default:
+                                        tag_pos = 1;
+                                        dep_pos = 0;
+                                        user_comment = false;
+                                        break;
+                                }
 
+                                if (response[1].bugs[$scope.resp_id].comments[i].tags[tag_pos] == "CONFIRMED") {
+                                    color = {"background-color": "#e74c3c"};
+                                    type = "Ανοιχτο";
+                                } else if (response[1].bugs[$scope.resp_id].comments[i].tags[tag_pos] == "IN_PROGRESS") {
+                                    color = {"background-color": "#e67e22"};
+                                    type = "Σε εκτελεση";
+                                } else {
+                                    color = {"background-color": "#2ecc71"};
+                                    type = "Ολοκληρωμενο";
+                                }
+                            }
                             var month_num = month;
 
                             switch (month) {
@@ -955,11 +963,12 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             if (response[1].bugs[$scope.resp_id].comments[i].text == 'undefined') {
                                 show = false;
                             }
+                            
+                            if(user_comment == false){
                             var dep_index = $rootScope.variables.components_en.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[dep_pos]);
                             response[1].bugs[$scope.resp_id].comments[i].tags[dep_pos] = $rootScope.variables.components[dep_index];
 
                             var dindex = $rootScope.variables.components.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[dep_pos]);
-                            
                             var com = {
                                 "content": response[1].bugs[$scope.resp_id].comments[i].text,
                                 "type": type,
@@ -971,9 +980,24 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                 "color": color,
                                 "component": $translate.instant($rootScope.variables.components_translation[dindex]),
                                 "dindex": dindex,
-                                "show": show
+                                "show": show,
+                                "user_comment": user_comment
                             };
-                            
+                        }else{
+                            var com = {
+                                "content": response[1].bugs[$scope.resp_id].comments[i].text,
+                                "type": type,
+                                "day": day,
+                                "month": month,
+                                "month_num": month_num,
+                                "year": year,
+                                "time": time,
+                                "color": color,
+                                "show": show,
+                                "user_comment": user_comment
+                            };
+                        }
+
                             if (response[1].bugs[$scope.resp_id].comments[i].text.substr(2, 3) != "***") {
                                 if ($scope.comments.length == 0) {
                                     $scope.fcyear = com.year;
@@ -1076,10 +1100,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             map.invalidateSize(true);
                         });
 
-                  //      setTimeout(function () {
-                            timeline(issue);
-                   //         $scope.$apply();
-                   //     }, 5000);//edw
+                        //      setTimeout(function () {
+                        timeline(issue);
+                        //         $scope.$apply();
+                        //     }, 5000);//edw
                         $(window).trigger("resize");
                     });
                     setTimeout(function () {

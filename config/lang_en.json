@@ -160,6 +160,7 @@
         "ROAD_DEPARTMENT": "Road department",
         "GREEN_DEPARTMENT": "Green department",
         "STATISTICS": "Statistics",
+        "CITIZEN_COMMENT": "Citizen comment",
         "STATISTICS_DESC": "Total problems and number of problems per category",
         "TOTAL": "Total",
         "GARBAGE_FIXED": "Trash cans",

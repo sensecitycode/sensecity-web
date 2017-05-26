@@ -1257,7 +1257,6 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             + '<li ng-click="totalpages(total_pages - 4,4)"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
                     params.city = $rootScope.Variables.city_name;
                     var canissue4 = $q.defer();
-
                     $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: params, timeout: canissue4.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                         canissue4.resolve();
                         total_counter = result.length;
@@ -1284,7 +1283,6 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             };
                         }
                         
-                        alert(JSON.stringify(result));
                         angular.forEach(result, function (value, key) {
                             var issue_name = ToGrService.issueName(value.issue);
                             var panelTitle = ToGrService.statusTitle(value.status, value.resolution);

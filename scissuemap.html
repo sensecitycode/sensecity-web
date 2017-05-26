@@ -191,7 +191,10 @@
                                         <div ng-show="$index == 0" class="timeline-heading">
                                             {{'ADDRESS'| translate}}: <a style="text-decoration:none">{{bug_address}}</a>
                                         </div>
-                                        <div class="timeline-heading">
+                                        <div ng-show="comment.user_comment == true" class="timeline-heading">
+                                            {{'CITIZEN_COMMENT'| translate}}
+                                        </div>
+                                        <div ng-hide="comment.user_comment" class="timeline-heading">
                                             {{'ASSIGN_TO'| translate}}: <a style="text-decoration:none">{{comment.component}}</a>
                                         </div>
                                         <div class="timeline-body comments" style="left:0%">
@@ -211,7 +214,7 @@
                                             <div ng-if="comment.type == 'Ολοκληρωθηκε'">   
                                                 <li><a href="#"><span class="glyphicon glyphicon-ok icon-ok check-mark"></span>{{'RESOLVED'| translate}}</a></li>
                                             </div>                                            
-                                            <li><a href="#"><span class="fa fa-building-o"></span> {{comment.component}}</a></li>
+                                            <li ng-hide="comment.user_comment == true"><a href="#"><span class="fa fa-building-o"></span> {{comment.component}}</a></li>
                                             <li><a href="#"><span ng-class="iclass"></span> {{issue_name_new}}</a></li>
                                             <li><a href="#"><span class="fa fa-commenting-o"></span> {{issue_value_desc}}</a></li>
                                             <li><a href="#"><span class="fa fa-home"></span> {{bug_address}}</a></li> 
