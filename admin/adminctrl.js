@@ -799,17 +799,15 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 } else {
                     $scope.role = "departmentUser";
                 }
-                var department;
+                var department = $cookieStore.get("departments");
                 if ($scope.role == "departmentUser") {
-                    department = $cookieStore.get("department");
-                    var dep_index = $rootScope.Variables.depUserTitles.indexOf(department);
+                    var dep_index = $rootScope.Variables.depUserTitles.indexOf(department[0]);
                     $scope.tabs = [{
                             "title": $rootScope.Variables.depUserTitles[dep_index],
                             "content": $rootScope.Variables.depUserContent[dep_index],
                             "icon": $rootScope.Variables.depUserIcons[dep_index]
                         }];
                 } else {
-                    department = $cookieStore.get("departments");
                     $scope.tabs = [{
                             "title": "Όλα τα τμήματα",
                             "content": "Όλα τα τμήματα",
