@@ -807,7 +807,6 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             "content": $rootScope.Variables.depUserContent[dep_index],
                             "icon": $rootScope.Variables.depUserIcons[dep_index]
                         }];
-                    alert(JSON.stringify(department[0]));
                 } else {
                     $scope.tabs = [{
                             "title": "Όλα τα τμήματα",
