@@ -801,7 +801,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 }
                 var department = $cookieStore.get("departments");
                 if ($scope.role == "departmentUser") {
-                    var dep_index = $rootScope.Variables.depUserTitles.indexOf(department[0]);
+                    var dep_index = $rootScope.Variables.depUserTitles.indexOf(department[0].department);
                     $scope.tabs = [{
                             "title": $rootScope.Variables.depUserTitles[dep_index],
                             "content": $rootScope.Variables.depUserContent[dep_index],
