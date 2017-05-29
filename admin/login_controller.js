@@ -46,7 +46,6 @@ app.controller('login_controller', ['$scope', '$rootScope', '$window', '$http', 
                         if (response != "failure") {
                             $cookieStore.put('city', response[0].city);
                             $cookieStore.put('role', response[0].role);
-                            $cookieStore.put('department', response[0].department);
                             $cookieStore.put('email', response[0].email);
                             $cookieStore.put('uuid', response[0].uuid);
                             $cookieStore.put('username', response[0].username);
