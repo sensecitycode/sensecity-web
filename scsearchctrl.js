@@ -731,7 +731,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         var i = 0;
                         if ($scope.issue_id != "") {
                             var obj = {city: $rootScope.Variables.city_name, bug_id: $scope.issue_id};
-                            var canissue = $q.deffer();
+                            var canissue = $q.defer();
                             var rcanissue = $resource($rootScope.Variables.APIURL,
                                     {}, {
                                 update: {

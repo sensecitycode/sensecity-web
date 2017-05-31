@@ -75,7 +75,7 @@ today= yyyy+'-'+mm+'-'+dd;
 var start=new Date();
 start='2017-01-01';
 		//Απο εδω και κάτω ξεκινάν οι controllers της angular
-		var app = angular.module('myApp', []);
+		var app = angular.module('myApp', ['ngCookies']);
 		
 		app.config(['$locationProvider', function($locationProvider){
     $locationProvider.html5Mode(true);    
@@ -4384,7 +4384,27 @@ app.controller('tmhma213', ['$scope', '$http','$location', function ($scope, $ht
 		
 			}]);
 	
-	app.controller('kentrikh1', ['$scope', '$http', function ($scope, $http) {
+	app.controller('kentrikh1', ['$scope', '$http','$cookieStore', function ($scope, $http,$cookieStore) {
+                function authorizedu() {
+            if ($cookieStore.get("uuid") !== undefined) {
+                $scope.valid = true;
+            } else {
+                $scope.valid = false;
+            }
+        }
+
+        function username() {
+            $scope.usrname = $cookieStore.get("username");
+        }
+
+        function userole() {
+            $scope.usrrole = $cookieStore.get("role");
+        }
+
+        authorizedu();
+        username();
+        userole();
+        
 var morrisCharts = function() {
 		
 	$http.get("http://api.sense.city:3000/api/1.0/issue?city=patras&startdate=2017-01-01&enddate="+today+"&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=1000&includeAnonymous=1").then(function(response){
