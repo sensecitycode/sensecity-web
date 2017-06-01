@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="myApp">
+<html lang="en">
     <head>        
         <!-- META SECTION -->
         <title>Joli Admin - Responsive Bootstrap Admin Template</title>            
@@ -16,7 +16,7 @@
         <!-- EOF CSS INCLUDE -->     
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
     </head>
-    <body class="page-container">
+    <body class="page-container"  data-ng-app="lifecycle" data-ng-controller="lifecycle">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
             
@@ -90,7 +90,7 @@
                             <form class="form-horizontal" onsubmit="return false;">
                         <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Αναζήτηση επιλυμένων προβλημάτων ανα τακτά χρονικά διαστήματα</h3>
+                                    <h3 class="panel-title">Αναζήτηση επιλυμένων προβλημάτων ανά τακτά χρονικά διαστήματα</h3>
                                     
                                 </div>
                                 
@@ -99,14 +99,8 @@
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-12 control-label">Πρόβλημα</label>
                                         <div class="col-md-6 col-xs-12">                                                                                            
-                                            <select id=lambros  class="form-control select">
-                                                <option value="garbage">Καθαριότητας</option>
-                                                <option value="plumbing">Ύδρευσης</option>
-                                                <option value="lighting">Ηλεκτροφωτισμού</option>
-                                                <option value="green">Πρασίνου</option>
-                                                <option value="environment">Περιβαλλοντικά θέματα</option>
-												<option value="protection-policy">Πολιτικής Προστασίας</option>
-												<option value="road-constructor">Δρόμου/Πεζοδρομίου/Πλατείας</option>
+                                            <select id="issue_val" class="form-control select">
+                                                <option ng-repeat="issue in issues" value={{issue.value}}>{{issue.title}}</option>
                                             </select>
                                             <span class="help-block">Διάλεξε πρόβλημα απ'τη λίστα</span>
                                         </div>
@@ -127,7 +121,7 @@
 					
 					
 					</div>
-					    <div class="col-md-6" data-ng-controller="vdomada">                        
+					    <div class="col-md-6">                        
 
                             <!-- START DISCRETE CHART -->
                             <div class="panel panel-default">
@@ -135,7 +129,7 @@
                                     <h3 class="panel-title">Τελευταία βδομάδα</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <div id="chart-41" style="height: 300px;"><svg></svg></div>
+                                    <div id="chart-w" style="height: 300px;"><svg></svg></div>
                                 </div>
                             </div>
                             <!-- END DISCRETE CHART -->
@@ -144,7 +138,7 @@
                     </div>
 					<div class="row">
                             
-                        <div class="col-md-6" data-ng-controller="mhnas">                        
+                        <div class="col-md-6">                        
 
                             <!-- START DISCRETE CHART -->
                             <div class="panel panel-default">
@@ -152,13 +146,13 @@
                                     <h3 class="panel-title">Τελευταίο μήνα</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <div id="chart-42" style="height: 300px;"><svg></svg></div>
+                                    <div id="chart-m" style="height: 300px;"><svg></svg></div>
                                 </div>
                             </div>
                             <!-- END DISCRETE CHART -->
 
                         </div> 
-					    <div class="col-md-6" data-ng-controller="trimhno">                        
+					    <div class="col-md-6">                        
 
                             <!-- START DISCRETE CHART -->
                             <div class="panel panel-default">
@@ -166,7 +160,7 @@
                                     <h3 class="panel-title">Τελευταίο τρίμηνο</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <div id="chart-43" style="height: 300px;"><svg></svg></div>
+                                    <div id="chart-3m" style="height: 300px;"><svg></svg></div>
                                 </div>
                             </div>
                             <!-- END DISCRETE CHART -->
@@ -175,7 +169,7 @@
                     
                        </div>  
 						<div class="row">
-                        <div class="col-md-6" data-ng-controller="eksamhno">                        
+                        <div class="col-md-6">                        
 
                             <!-- START DISCRETE CHART -->
                             <div class="panel panel-default">
@@ -183,13 +177,13 @@
                                     <h3 class="panel-title">Τελευταίο εξάμηνο</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <div id="chart-44" style="height: 300px;"><svg></svg></div>
+                                    <div id="chart-6m" style="height: 300px;"><svg></svg></div>
                                 </div>
                             </div>
                             <!-- END DISCRETE CHART -->
 
                         </div> 
-					    <div class="col-md-6" data-ng-controller="xronos">                        
+					    <div class="col-md-6">                        
 
                             <!-- START DISCRETE CHART -->
                             <div class="panel panel-default">
@@ -197,7 +191,7 @@
                                     <h3 class="panel-title">Τελευταίος χρόνος</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <div id="chart-45" style="height: 300px;"><svg></svg></div>
+                                    <div id="chart-y" style="height: 300px;"><svg></svg></div>
                                 </div>
                             </div>
                             <!-- END DISCRETE CHART -->
@@ -250,7 +244,8 @@
 		
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>    
-		<script type="text/javascript" src="js/Controllers2.js"></script>	
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+        <script type="text/javascript" src="lifecyclectl.js"></script>	
 		<script type="text/javascript" src="js/demo_dashboard.js"></script>
 		
 

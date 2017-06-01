@@ -75,7 +75,7 @@ today= yyyy+'-'+mm+'-'+dd;
 var start=new Date();
 start='2017-01-01';
 		//Απο εδω και κάτω ξεκινάν οι controllers της angular
-		var app = angular.module('myApp', ['ngCookies']);
+		var app = angular.module('myApp', []);
 		
 		app.config(['$locationProvider', function($locationProvider){
     $locationProvider.html5Mode(true);    

@@ -827,10 +827,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             if (feelings != "") {
                                 feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name, feeling: feelings};
                                 promisesArray.push(feelingsQuery(feelingsObj));
-                            }
-                                                       
+                            }                          
                             for (var index = 0; index < paramsObj.length; index++) {
-                                if ((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined))
+                                if ((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined) || paramsObj[index].includeAnonymous == 1)
                                     promisesArray.push(doQuery(paramsObj[index]));
                             }
 
@@ -840,8 +839,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                     for (j = 0; j < data[i].length; j++) {
                                         searchissues.push(data[i][j]);
                                     }
-                                }
-
+                                }                              
+                                
                                 $scope.markers = [];
                                 var total_problems = [];
                                 for (var k = 0; k <= $rootScope.Variables.overlay_categories.length; k++) {
