@@ -121,7 +121,7 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                                             l2 = (((k2 - k1) % 86300000) % 3600000) / 60000;
                                             lepta2 = Math.floor(l2);
                                             array1D.push({
-                                                status: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[1],
+                                                status: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index],
                                                 startdate: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[2].creation_time,
                                                 enddate: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[ln - 1].creation_time,
                                                 diasthma: k2 - k1,
