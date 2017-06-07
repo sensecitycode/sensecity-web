@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="myApp">
+<html lang="en">
     <head>        
         <!-- META SECTION -->
         <title>Joli Admin - Responsive Bootstrap Admin Template</title>            
@@ -29,8 +29,10 @@
         crossorigin=""></script>
         <script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
         <script src="https://unpkg.com/leaflet.markercluster@1.0.5/dist/leaflet.markercluster.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>        
+        <script type="text/javascript" src="reactionsctl.js"></script>
     </head>
-    <body class="page-container">
+    <body class="page-container" data-ng-app="reactions" data-ng-controller="reactionsctl">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
 
@@ -54,15 +56,15 @@
                     <li class="xn-title">SenseCity</li>
 
                     <ul>
-                            <li><a href="statistics.html"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1/1</a></li>
-                            <li><a href="lifecycle.html"><span class="fa fa-check"></span> Διεκπεραιωμένα προβλήματα</a></li>
-                            <li><a href="performance.html"><span class="fa fa-bar-chart-o"></span> Απόδοση τμημάτων</a></li>
-							<li><a href="services.html"><span class="fa fa-pie-chart"></span> Απόδοση τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
-							<li><a href="average.html"><span class="fa fa-clock-o"></span> Μέσος χρόνος επίλυσης προβλημάτων</a></li>
-                            <li><a href="citizens.html"><span class="fa fa-users"></span> Στατιστικά πολιτών</a></li>  
-							<li><a href="comparison.html"><span class="fa fa-arrows-h"></span> Σύγκριση Δήμων</a></li>
-                            <li><a href="reactions.html"><span class="fa fa-map-o"></span> Χάρτης Αντιδράσεων</a></li>               
-                        </ul>
+                        <li><a href="statistics.html"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1/1</a></li>
+                        <li><a href="lifecycle.html"><span class="fa fa-check"></span> Διεκπεραιωμένα προβλήματα</a></li>
+                        <li><a href="performance.html"><span class="fa fa-bar-chart-o"></span> Απόδοση τμημάτων</a></li>
+                        <li><a href="services.html"><span class="fa fa-pie-chart"></span> Απόδοση τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
+                        <li><a href="average.html"><span class="fa fa-clock-o"></span> Μέσος χρόνος επίλυσης προβλημάτων</a></li>
+                        <li><a href="citizens.html"><span class="fa fa-users"></span> Στατιστικά πολιτών</a></li>  
+                        <li><a href="comparison.html"><span class="fa fa-arrows-h"></span> Σύγκριση Δήμων</a></li>
+                        <li><a href="reactions.html"><span class="fa fa-map-o"></span> Χάρτης Αντιδράσεων</a></li>               
+                    </ul>
 
                 </ul>
                 <!-- END X-NAVIGATION -->
@@ -113,7 +115,7 @@
                                             <div class="col-md-6 col-xs-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                                    <input type="text" id="txt_issue1" class="form-control datepicker" value="2017-01-01">                                            
+                                                    <input type="text" id="startdate" class="form-control datepicker" value="2017-01-01">                                            
                                                 </div>
                                                 <span class="help-block">Εισαγωγή ημερομηνίας έναρξης</span>
                                             </div>
@@ -124,7 +126,7 @@
                                             <div class="col-md-6 col-xs-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                                    <input type="text" id="txt_issue2" class="form-control datepicker" value="2017-03-30">                                            
+                                                    <input type="text" id="enddate" class="form-control datepicker" value="2017-03-30">                                            
                                                 </div>
                                                 <span class="help-block">Εισαγωγή ημερομηνίας λήξης</span>
                                             </div>
@@ -157,14 +159,14 @@
                                     <h3 class="panel-title"><strong>Χάρτης Αντιδράσεων</strong></h3>                                
                                 </div>
 
-                                <div class="col-md-12"  data-ng-controller="MarkersClustering10000MarkersController">
+                                <div class="col-md-12">
 
                                     <leaflet  lf-center="center" markers="markers" layers="layers" legend="legend" event-broadcast="events" width="100%" height="480px"></leaflet>
 
                                 </div>
                             </div>	
                         </div>
-                        <div class="col-md-6" data-ng-controller="reactions">                        
+                        <div class="col-md-6">                        
 
                             <!-- START DOUNT CHART -->
                             <div class="panel panel-default">
@@ -226,7 +228,6 @@
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>    
         <script type="text/javascript" src="js/demo_dashboard.js"></script>
-        <script type="text/javascript" src="js/Controllers - Map3.js"></script>
 
 
 
