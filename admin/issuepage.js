@@ -1,17 +1,17 @@
 var app = angular.module('issuepage', ['adminapp']);
 
-function default_aimg(){
+function default_aimg() {
     var scope = angular.element("#mainctl").scope();
     scope.pclass = '';
     scope.$apply();
 }
 
-function default_aicon(){
+function default_aicon() {
     var scope = angular.element("#mainctl").scope();
-    try{
-    scope.pclass = scope.pclass1;
-    }catch(e){
-    
+    try {
+        scope.pclass = scope.pclass1;
+    } catch (e) {
+
     }
     scope.$apply();
 }
@@ -432,25 +432,26 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                     com = "";
                                 }
 
-                                switch (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[0]) {
-                                    case "CONFIRMED":
-                                    case "IN_PROGRESS":
-                                    case "RESOLVED":
-                                        tag_pos = 0;
+                                var status_index = -1;
+                                for (var l = 0; l < response.bugs[Object.keys(response.bugs)[0]].comments[i].tags.length; l++) {
+                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[0] == "STATUS") {
+                                        status_index = l;
                                         break;
-                                    default:
-                                        tag_pos = 1;
-                                        break;
+                                    }
                                 }
 
                                 if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
                                     var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
-                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "CONFIRMED") {
-                                        history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
-                                    } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[tag_pos] == "IN_PROGRESS") {
-                                        history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+                                    if (status_index != -1) {
+                                        if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[status_index ].split(":")[1] == "CONFIRMED") {
+                                            history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
+                                        } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[status_index].split(":")[1] == "IN_PROGRESS") {
+                                            history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+                                        } else {
+                                            history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                                        }
                                     } else {
-                                        history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                                        history.push({"text": com, "timestamp": htime, "state": "Σχόλιο Πολίτη", "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o'});
                                     }
                                 }
                             }
@@ -696,11 +697,11 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                 $scope.panel.icon = panelTitle.status_icon;
                             });
                             setTimeout(function () {
-                            if (canupdate.promise.$$state.status == 0) {
-                                canupdate.resolve('cancelled');
-                                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                            }
-                        }, 30000);
+                                if (canupdate.promise.$$state.status == 0) {
+                                    canupdate.resolve('cancelled');
+                                    alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                }
+                            }, 30000);
                         }
                         if ($scope.selectedStatus.gr == 'Ανοιχτό') {
                             if ($scope.selectedStatus.gr != $scope.panel.status.gr || $scope.panel.address != $scope.address) {

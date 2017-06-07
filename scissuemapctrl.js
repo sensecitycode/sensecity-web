@@ -282,7 +282,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             },
-                            data: {"email": $scope.EmailTxt, "mobile_num": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.bug_id}
+                            data: {"name": $scope.NameTxt,"email": $scope.EmailTxt, "mobile_num": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.bug_id}
                         }).success(function (resp_an) {
                     canissue.resolve();
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
@@ -869,30 +869,43 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
                             var tag_pos;
                             var user_comment;
-                            if (response[1].bugs[$scope.resp_id].comments[i].tags[0] == "user_comment" || response[1].bugs[$scope.resp_id].comments[i].tags[1] == "user_comment") {
-                                user_comment = true;
+                            var status_index = -1;
+                            var department_index = -1;
+                            for( var l = 0 ; l < response[1].bugs[$scope.resp_id].comments[i].tags.length;l++){
+                                if(response[1].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0] == "STATUS"){
+                                    status_index = l;
+                                    break;
+                                }
+                            }
+                            for( var l = 0 ; l < response[1].bugs[$scope.resp_id].comments[i].tags.length;l++){
+                                if(response[1].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0] == "DEPARTMENT"){
+                                    department_index = l;
+                                    break;
+                                }
+                            }
+                            if (status_index == -1) {
                                 color = {"background-color": "#226f81"};
                                 type = "Σχόλιο";
                             } else {
-                                switch (response[1].bugs[$scope.resp_id].comments[i].tags[0]) {
-                                    case "CONFIRMED":
-                                    case "IN_PROGRESS":
-                                    case "RESOLVED":
-                                        tag_pos = 0;
-                                        dep_pos = 1;
-                                        user_comment = false;
-                                        break;
-                                    default:
-                                        tag_pos = 1;
-                                        dep_pos = 0;
-                                        user_comment = false;
-                                        break;
-                                }
+//                                switch (response[1].bugs[$scope.resp_id].comments[i].tags[tag_index]) {
+//                                    case "CONFIRMED":
+//                                    case "IN_PROGRESS":
+//                                    case "RESOLVED":
+//                                        tag_pos = 0;
+//                                        dep_pos = 1;
+//                                        user_comment = false;
+//                                        break;
+//                                    default:
+//                                        tag_pos = 1;
+//                                        dep_pos = 0;
+//                                        user_comment = false;
+//                                        break;
+//                                }
 
-                                if (response[1].bugs[$scope.resp_id].comments[i].tags[tag_pos] == "CONFIRMED") {
+                                if (response[1].bugs[$scope.resp_id].comments[i].tags[status_index] == "CONFIRMED") {
                                     color = {"background-color": "#e74c3c"};
                                     type = "Ανοιχτο";
-                                } else if (response[1].bugs[$scope.resp_id].comments[i].tags[tag_pos] == "IN_PROGRESS") {
+                                } else if (response[1].bugs[$scope.resp_id].comments[i].tags[status_index] == "IN_PROGRESS") {
                                     color = {"background-color": "#e67e22"};
                                     type = "Σε εκτελεση";
                                 } else {
@@ -963,11 +976,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                 show = false;
                             }
                             
-                            if(user_comment == false){
-                            var dep_index = $rootScope.variables.components_en.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[dep_pos]);
-                            response[1].bugs[$scope.resp_id].comments[i].tags[dep_pos] = $rootScope.variables.components[dep_index];
+                            if(status_index != -1){
+                            var dep_index = $rootScope.variables.components_en.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index]);
+                            response[1].bugs[$scope.resp_id].comments[i].tags[department_index] = $rootScope.variables.components[dep_index];
 
-                            var dindex = $rootScope.variables.components.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[dep_pos]);
+                            var dindex = $rootScope.variables.components.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index]);
                             var com = {
                                 "content": response[1].bugs[$scope.resp_id].comments[i].text,
                                 "type": type,
@@ -980,7 +993,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                 "component": $translate.instant($rootScope.variables.components_translation[dindex]),
                                 "dindex": dindex,
                                 "show": show,
-                                "user_comment": user_comment
+                                "user_comment": false
                             };
                         }else{
                             var com = {
@@ -993,7 +1006,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                 "time": time,
                                 "color": color,
                                 "show": show,
-                                "user_comment": user_comment
+                                "user_comment": true
                             };
                         }
 
@@ -1004,8 +1017,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                 $scope.comments.push(com);
                             }
                         }
-                    }
-                    ;
+                    };
 
 
                     //parse ?issue_id from URL
