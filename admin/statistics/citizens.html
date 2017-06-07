@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="myApp">
+<html lang="en">
     <head>        
         <!-- META SECTION -->
         <title>Joli Admin - Responsive Bootstrap Admin Template</title>            
@@ -15,9 +15,11 @@
         <link rel="stylesheet" type="text/css" id="theme" href="../css/font-awesome.css"/>
         <!-- EOF CSS INCLUDE -->     
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+                <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+        <script type="text/javascript" src="citizensctl.js"></script>
 
     </head>
-    <body class="page-container">
+    <body class="page-container"  data-ng-app="citizens" data-ng-controller="citizensctl">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
             
@@ -68,7 +70,7 @@
 
                 
                 <!-- PAGE CONTENT WRAPPER -->
-                <div class="page-content-wrap" data-ng-controller="myCtrl9">
+                <div class="page-content-wrap">
 				
 					<div class="row">
 					<div class="panel panel-default" >
@@ -113,7 +115,7 @@
                                                 <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                                                 <input type="text" id="txt_issue2" class="form-control datepicker" value="2017-03-30">                                            
                                             </div>
-                                            <span class="help-block">Εισαγωγή ημερομηνίας έναρξης</span>
+                                            <span class="help-block">Εισαγωγή ημερομηνίας λήξης</span>
                                         </div>
                                     </div>
 									
@@ -237,7 +239,6 @@
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>    
 		<script type="text/javascript" src="js/demo_dashboard.js"></script>
-		<script type="text/javascript" src="js/Controllers2.js"></script>
 		
 
 				
