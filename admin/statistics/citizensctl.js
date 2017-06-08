@@ -92,7 +92,7 @@ app.controller('citizensctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                 return count.toFixed(2);
                             }
                             $scope.auth = function () {
-                                count = 0;
+                                var count = 0;
                                 for (i = 0; i < response.data.length; i++) {
                                     if (response.data[i].cf_authenticate == '0') {
                                         count++;

@@ -1443,6 +1443,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                         }
 
                         var canupdate = $q.defer();
+
                         $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {timeout: canupdate.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             canupdate.resolve();
                             var canadd = $q.defer();

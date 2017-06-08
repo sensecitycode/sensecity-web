@@ -112,7 +112,7 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                                             }
                                         }
                                         if (issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index] != undefined && (issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index].split(":")[1] == "RESOLVED")) {
-                                            k1 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[2].creation_time);
+                                            k1 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[1].creation_time);
                                             k2 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[ln - 1].creation_time);
                                             m2 = ((k2 - k1) / 86300000);
                                             meres2 = Math.floor(m2);
@@ -122,7 +122,7 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                                             lepta2 = Math.floor(l2);
                                             array1D.push({
                                                 status: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index],
-                                                startdate: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[2].creation_time,
+                                                startdate: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[1].creation_time,
                                                 enddate: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[ln - 1].creation_time,
                                                 diasthma: k2 - k1,
                                                 problima: issues[0].value_desc,
@@ -148,7 +148,9 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                                         meres = Math.floor(sumd / (array1D.length * 86400000));
                                         wres = Math.floor(((sumd % (array1D.length * 86400000)) / (array1D.length * 3600000)));
                                         lepta = Math.floor(((sumd % (array1D.length * 86400000)) % (array1D.length * 3600000)) / (60000 * array1D.length));
-
+                                        if( department == "Τμήμα επίλυσης προβλημάτων"){
+                                        console.log(JSON.stringify(array1D));
+                                    }
                                         $scope.depinfo[dep_index] = {department:department,lresolved: array1D[array1D.length - 1], fresolved: array1D[0], number: number, meres: meres, wres: wres, lepta: lepta};
                                     }
                                 });

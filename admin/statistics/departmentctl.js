@@ -117,7 +117,7 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                         }
                                     }
                                     if (((issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index].split(":")[1] == "RESOLVED") && (is == false))) {
-                                        k1 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[2].creation_time);
+                                        k1 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[1].creation_time);
                                         k2 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[ln - 1].creation_time);
                                         m2 = ((k2 - k1) / 86300000);
                                         meres2 = Math.floor(m2);
@@ -128,7 +128,7 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                         is = true;
                                         $scope.array1D.push({
                                             status: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index],
-                                            startdate: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[2].creation_time,
+                                            startdate: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[1].creation_time,
                                             enddate: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[ln - 1].creation_time,
                                             diasthma: k2 - k1,
                                             problima: issues[0].value_desc,

@@ -705,8 +705,6 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                         }
                         if ($scope.selectedStatus.gr == 'Ανοιχτό') {
                             if ($scope.selectedStatus.gr != $scope.panel.status.gr || $scope.panel.address != $scope.address) {
-                                alert($scope.panel.address);
-                                alert($scope.address);
                                 $scope.panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
                                 $scope.panel.severity = {en: SeverityTagEn.severity_type(seldseverity.gr), gr: seldseverity.gr};
                                 $scope.panel.resolution = {en: ResolutionTagEn.resolution_type(seldResolution.gr), gr: seldResolution.gr};
