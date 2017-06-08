@@ -796,16 +796,9 @@ appControllers.controller(
                                                         theLastIssues,
                                                         function (lastissue,
                                                                 key) {
-                                                            if (lastissue.image_name === ''
-                                                                    || lastissue.image_name === 'no-image'
-                                                                    || lastissue.image_name === null
-                                                                    || lastissue.image_name === undefined) {
+
                                                                 lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
                                                                 lastissue.width = "80%";
-                                                            } else {
-                                                                $scope.lastissues[i].class = '';
-                                                                lastissue.width = "100%";
-                                                            }
                                                             
                                                             $scope.lastissues1[counter] = lastissue.issue;
                                                             var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
