@@ -109,14 +109,14 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                 var k1 = new Date();
                                 var k2 = new Date();
                                 for (var j = 1; j < ln; j++) {
-                                    var tags_index;
+                                    var tags_index = -1;
                                     for (var depl = 0; depl < issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags.length; depl++) {
                                         if (issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[depl].split(":")[0] == "STATUS") {
                                             tags_index = depl;
                                             break;
                                         }
                                     }
-                                    if (((issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index].split(":")[1] == "RESOLVED") && (is == false))) {
+                                    if (tags_index != -1 && ((issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index].split(":")[1] == "RESOLVED") && (is == false))) {
                                         k1 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[1].creation_time);
                                         k2 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[ln - 1].creation_time);
                                         m2 = ((k2 - k1) / 86300000);

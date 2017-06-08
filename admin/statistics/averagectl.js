@@ -104,14 +104,14 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                                     var k1 = new Date();
                                     var k2 = new Date();
                                     for (var j = 1; j < ln; j++) {
-                                        var tags_index;
+                                        var tags_index = -1;
                                         for (var depl = 0; depl < issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags.length; depl++) {
                                             if (issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[depl].split(":")[0] == "STATUS") {
                                                 tags_index = depl;
                                                 break;
                                             }
                                         }
-                                        if (issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index] != undefined && (issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index].split(":")[1] == "RESOLVED")) {
+                                        if (tags_index != -1 && issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index] != undefined && (issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index].split(":")[1] == "RESOLVED")) {
                                             k1 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[1].creation_time);
                                             k2 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[ln - 1].creation_time);
                                             m2 = ((k2 - k1) / 86300000);
@@ -148,9 +148,6 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                                         meres = Math.floor(sumd / (array1D.length * 86400000));
                                         wres = Math.floor(((sumd % (array1D.length * 86400000)) / (array1D.length * 3600000)));
                                         lepta = Math.floor(((sumd % (array1D.length * 86400000)) % (array1D.length * 3600000)) / (60000 * array1D.length));
-                                        if( department == "Τμήμα επίλυσης προβλημάτων"){
-                                        console.log(JSON.stringify(array1D));
-                                    }
                                         $scope.depinfo[dep_index] = {department:department,lresolved: array1D[array1D.length - 1], fresolved: array1D[0], number: number, meres: meres, wres: wres, lepta: lepta};
                                     }
                                 });
