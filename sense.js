@@ -465,12 +465,8 @@ appControllers.controller(
                                     if (resp_index != -1) {
                                         issue_name = $translate.instant($rootScope.Variables.categories_issue[resp_index]);
                                     }
-
-                                    if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
-                                        resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
-                                    } else {
-                                        issue_image = resp[0].image_name;
-                                    }
+                                    
+                                    resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
                                     
                                     $scope.icon_show = 1;
                                    
@@ -732,17 +728,9 @@ appControllers.controller(
                                         counter = 0;
                                         for (var i = 0; i < theLastIssues.length; i++) {
                                             $scope.lastissues[i].value_desc = theLastIssues[i].value_desc;
-                                            if (theLastIssues[i].image_name === ''
-                                                    || theLastIssues[i].image_name === 'no-image'
-                                                    || theLastIssues[i].image_name === null
-                                                    || theLastIssues[i].image_name === undefined) {
-                                                $scope.lastissues[i].class = "fa fa-" + $rootScope.Variables.icons[theLastIssues[i].issue].icon;
-                                                $scope.lastissues[i].width = "80%";
-                                            } else {
-                                                $scope.lastissues[i].class = '';
-                                                $scope.lastissues[i].width = "100%";
-                                            }
                                             
+                                            $scope.lastissues[i].class = "fa fa-" + $rootScope.Variables.icons[theLastIssues[i].issue].icon;
+                                                $scope.lastissues[i].width = "80%";
                                             $scope.lastissues1[counter] = theLastIssues[i].issue;
                                             
                                             $scope.lastissues[i].issue1 = theLastIssues[i].issue;

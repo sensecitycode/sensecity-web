@@ -308,15 +308,8 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
                                     // +
                                     // lastissue.issue);
                                     
-                                    if (lastissue.image_name === ''
-                                            || lastissue.image_name === 'no-image'
-                                            || lastissue.image_name === null
-                                            || lastissue.image_name === undefined) {
-                                        lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
-                                        lastissue.width = "80%";
-                                    } else {
-                                        lastissue.width = "100%";
-                                    }
+                                    lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
+                                    lastissue.width = "80%";
                                     
                                     $scope.allissues1[counter] = lastissue.issue;
                                     

@@ -902,10 +902,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 //                                        break;
 //                                }
 
-                                if (response[1].bugs[$scope.resp_id].comments[i].tags[status_index] == "CONFIRMED") {
+                                if (response[1].bugs[$scope.resp_id].comments[i].tags[status_index].split(":")[1] == "CONFIRMED") {
                                     color = {"background-color": "#e74c3c"};
                                     type = "Ανοιχτο";
-                                } else if (response[1].bugs[$scope.resp_id].comments[i].tags[status_index] == "IN_PROGRESS") {
+                                } else if (response[1].bugs[$scope.resp_id].comments[i].tags[status_index].split(":")[1] == "IN_PROGRESS") {
                                     color = {"background-color": "#e67e22"};
                                     type = "Σε εκτελεση";
                                 } else {
@@ -977,7 +977,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             }
                             
                             if(status_index != -1){
-                            var dep_index = $rootScope.variables.components_en.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index]);
+                            var dep_index = $rootScope.variables.components_en.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index].split(":")[1]);
                             response[1].bugs[$scope.resp_id].comments[i].tags[department_index] = $rootScope.variables.components[dep_index];
 
                             var dindex = $rootScope.variables.components.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index]);

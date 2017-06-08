@@ -661,11 +661,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 issue_name = $translate.instant($rootScope.Variables.categories_issue[resp_index]);
                             }
 
-                            if (resp[0].image_name == "" || resp[0].image_name == "no-image") {
-                                resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
-                            } else {
-                                issue_image = resp[0].image_name;
-                            }
+                            resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
 
                             $scope.icon_show = 1;
 
