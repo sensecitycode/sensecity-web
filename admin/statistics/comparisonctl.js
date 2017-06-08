@@ -186,9 +186,9 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                                 .color(d3.scale.myColors().range());
                                         ;
 
-                                        d3.select("#chart-" + municipality + mun_index + "3 svg").datum(exampleData()).transition().duration(350).call(chart);
-
-                                        return chart;
+//                                        d3.select("#chart-" + municipality + mun_index + "3 svg").datum(exampleData()).transition().duration(350).call(chart);
+//
+//                                        return chart;
                                     });
 
                                     //Pie chart example data. Note how there is only a single array of key-value pairs.
@@ -277,7 +277,6 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                             return d.value;
                                         }).showLabels(true).color(d3.scale.myColors().range());
                                         ;
-
                                         d3.select("#chart-" + municipality + mun_index + "3 svg").datum(exampleData()).transition().duration(350).call(chart);
 
                                         return chart;
@@ -297,7 +296,7 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                                 .color(d3.scale.myColors().range());
                                         ;
 
-                                        d3.select("#chart-" + municipality + mun_index + "4 svg").datum(exampleData()).transition().duration(350).call(chart);
+                                        d3.select("#chart-" + municipality + mun_index + "3 svg").datum(exampleData()).transition().duration(350).call(chart);
 
                                         return chart;
                                     });
@@ -376,17 +375,17 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                 }
                                 var max = count[0];
                                 var min = count[0];
-                                var value = $rootScope.Variables.issue_type_en_short[0];
-                                var value1 = $rootScope.Variables.issue_type_en_short[0];
+                                var value = $rootScope.Variables.issue_type_gr[0];
+                                var value1 = $rootScope.Variables.issue_type_gr[0];
                                 
-                                for (var i = 1; i < $rootScope.Variables.issue_type_en_short.length; i++) {
+                                for (var i = 1; i < $rootScope.Variables.issue_type_gr.length; i++) {
                                     if (max < count[i]) {
                                         max = count[i];
-                                        value = $rootScope.Variables.issue_type_en_short[i];
+                                        value = $rootScope.Variables.issue_type_gr[i];
                                     }
                                     if( min > count[i]){
                                         min = count[i];
-                                        value1 = $rootScope.Variables.issue_type_en_short[i];
+                                        value1 = $rootScope.Variables.issue_type_gr[i];
                                     }
                                 }
 
