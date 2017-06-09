@@ -1169,7 +1169,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 };
 
 
-                              //  $window.location.reload();
+                                $window.location.reload();
                             });
                             setTimeout(function () {
                                 if (canissueid.promise.$$state.status == 0) {
@@ -1178,7 +1178,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 }
                             }, 30000);
                         } else {
-                           // $window.location.reload();
+                            $window.location.reload();
                         }
                     });
                     setTimeout(function () {
