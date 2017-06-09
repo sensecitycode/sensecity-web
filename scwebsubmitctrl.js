@@ -712,9 +712,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     var value_desc = desc;
                     var image_name = $scope.uploadedPhotoFile; //no-image
                     if ($scope.commentstxt != undefined) {
-                        $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt.replace(/\s+/g, ' ').trim() + '","city_adress": "' + $scope.address + '"}';
+                        $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","comments" : "' + $scope.commentstxt.replace(/\s+/g, ' ').trim() + '","city_address": "' + $scope.address + '"}';
                     } else {
-                        $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","city_adress": "' + $scope.address + '"}';
+                        $scope.anon_post = '{"loc" : { "type" : "Point",  "coordinates" : [' + $scope.lnglabeltxt + ',' + $scope.latlabeltxt + '] }, "issue" : "' + $scope.issueTypeSelect.id + '","device_id" : "' + device_id + '", "value_desc" : "' + value_desc + '","image_name" : "' + image_name + '","city_address": "' + $scope.address + '"}';
                     }
 
                     var canactp = $q.defer();
@@ -1136,7 +1136,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                     $("#finish_button").attr("disabled", "disabled");
                     var canissue = $q.defer();
-                    $scope.anon_post.city_address = $scope.address;
                     $http(
                             {
                                 method: 'POST',
