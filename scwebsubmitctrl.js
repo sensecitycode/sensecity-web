@@ -1168,7 +1168,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                     return true;
                                 };
 
-
+                                alert("ok");
                                 $window.location.reload();
                             });
                             setTimeout(function () {
