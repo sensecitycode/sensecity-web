@@ -92,13 +92,13 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             }
         });
 
-        $("#txtaddress").change(function () {
-            if ($scope.address != "") {
-                $("#next_button").attr("class", "btn btn-default pull-right");
-            } else {
-                $("#next_button").attr("class", "btn btn-default pull-right disabled");
-            }
-        });
+//        $("#txtaddress").change(function () {
+//            if ($scope.address != "") {
+//                $("#next_button").attr("class", "btn btn-default pull-right");
+//            } else {
+//                $("#next_button").attr("class", "btn btn-default pull-right disabled");
+//            }
+//        });
 
         $scope.chkSelected = false;
         $scope.valid = null;
@@ -290,7 +290,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     cang1.resolve();
                     if (msg[0].city == $rootScope.Variables.city_name) {
                         setTimeout(function () {
-                            $("#txtaddress").trigger("change");
+                            $("#next_button").attr("class", "btn btn-default pull-right");
                         }, 100);
                     } else {
                         $("#next_button").attr("class", "btn btn-default pull-right disabled");
@@ -324,8 +324,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
             $scope.latlabeltxt = event.latlng.lat;
             $scope.lnglabeltxt = event.latlng.lng;
-        }
-        ;
+        };
 
         $q.all([$rootScope.mainInfo]).then(function (data) {
             $("#next_button").attr("class", "btn btn-default pull-right disabled");

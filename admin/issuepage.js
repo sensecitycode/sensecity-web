@@ -4,12 +4,14 @@ function default_aimg() {
     var scope = angular.element("#mainctl").scope();
     scope.pclass = '';
     scope.$apply();
+    $(window).trigger('resize');
 }
 
 function default_aicon() {
     var scope = angular.element("#mainctl").scope();
     try {
         scope.pclass = scope.pclass1;
+        $(window).trigger('resize');
     } catch (e) {
 
     }
@@ -23,6 +25,10 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         var small = 0;
         var nav_toggle = 0;
         var icons = $rootScope.Variables.icons;
+        var previous_address;
+        var previous_lat;
+        var previous_lng;
+        
         $scope.valid = true;
         $scope.panel;
         $scope.full = 0;
@@ -153,6 +159,56 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 return true;
             } else {
                 return false;
+            }
+        };
+
+        $scope.geocode = function () {
+            if ($scope.panel.admin == true) {
+                var geocoder = new google.maps.Geocoder();
+                var address = $('#address').val() + "," + $rootScope.Variables.city_address;
+                if (address != "") {
+                    geocoder.geocode({'address': address}, function (results, status) {
+                        if (status === 'OK') {
+                            if (results.length == 1) {
+                                var mainMarker = {
+                                    lat: results[0].geometry.location.lat(),
+                                    lng: results[0].geometry.location.lng(),
+                                    icon: {
+                                        type: 'awesomeMarker',
+                                        prefix: 'fa',
+                                        icon: $scope.ALLmarkers[0].icon.icon,
+                                        markerColor: 'red'
+                                    }
+                                };
+
+                                previous_address = angular.copy($scope.panel.address);
+                                $scope.panel.address = results[0].formatted_address;
+                                $scope.ALLcenter = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng(), zoom: 18};
+                                $scope.ALLmarkers.pop();
+                                $scope.ALLmarkers.push(mainMarker);
+                                leafletData.getMap().then(
+                                        function (map) {
+                                            map.invalidateSize(true);
+                                        }
+                                );
+                            } else {
+                                var addresses_options = "";
+                                for (var l = 0; l < results.length; l++) {
+                                    addresses_options += "<option>" + results[l].formatted_address + "</option>";
+                                }
+
+                                $("#taddress").html(addresses_options);
+                                $('#address').flexdatalist('reset');
+                                $('#address').flexdatalist({
+                                    minLength: 0
+                                });
+                                $("#address-flexdatalist").focus();
+                            }
+                        } else {
+                            $window.alert("Δεν βρέθηκαν αποτελέσματα για τη διεύθυνση που εισάγατε. Παρακαλώ δοκιμάστε ξανά.");
+                        }
+                    });
+                }
             }
         };
 
@@ -408,12 +464,14 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 $scope.panel.tel = result[0].phone;
                 $scope.panel.creator = result[0].name;
                 $scope.panel.address = result[0].bug_address;
-
+                previous_address = angular.copy($scope.panel.address);
+                previous_lat = angular.copy($scope.panel.lat);
+                previous_lng = angular.copy($scope.panel.lng);
                 $scope.panel.severity = {en: result[0].bug_severity, gr: severity};
                 $scope.panel.priority = {en: result[0].bug_priority, gr: priority};
 
                 setTimeout(function () {
-                    $(window).trigger('resize')
+                    $(window).trigger('resize');
                 }, 1000);
 
                 var cancomment = $q.defer();
@@ -618,6 +676,13 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 $scope.initResetPanel = function (panel) {
                     $scope.selectedStatus = null;
                     $scope.selectedResolution = null;
+                    $scope.panel.address = previous_address;
+                    $scope.panel.lat = previous_lat;
+                    $scope.panel.lat = previous_lng;
+                    $scope.ALLmarkers[0].lat = previous_lat;
+                    $scope.ALLmarkers[0].lng = previous_lng;
+                    $scope.ALLcenter.lat = previous_lat;
+                    $scope.ALLcenter.lng = previous_lng;
                 };
 
                 $scope.resetPanel = function () {
@@ -625,7 +690,54 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     $scope.selectedStatus = null;
                     $scope.selectedResolution = null;
                     $scope.comment = null;
+                    $scope.panel.address = previous_address;
+                    $scope.panel.lat = previous_lat;
+                    $scope.panel.lng = previous_lng;
+                    $scope.ALLmarkers[0].lat = previous_lat;
+                    $scope.ALLmarkers[0].lng = previous_lng;
+                    $scope.ALLcenter.lat = previous_lat;
+                    $scope.ALLcenter.lng = previous_lng;
                 };
+
+                function onmapclick(event) {
+                    //newMarker = new L.marker(event.latlng, {icon: redMarker}, {draggable: true});
+                    if($scope.panel.admin == true){
+                    var mainMarker = {
+                        lat: event.latlng.lat,
+                        lng: event.latlng.lng,
+                        icon: {
+                            type: 'awesomeMarker',
+                            prefix: 'fa',
+                            icon: $scope.ALLmarkers[0].icon.icon,
+                            markerColor: 'red'
+                        }
+                    };
+
+                    var cancg = $q.defer();
+
+                    $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latlng.lat + "," + event.latlng.lng + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM", {timeout: cancg.promise}).success(function (result) {
+
+                        cancg.resolve();
+                        $scope.panel.address = result.results[0].formatted_address;
+                    });
+
+                    setTimeout(function () {
+                        if (cancg.promise.$$state.status == 0) {
+                            cancg.resolve('cancelled');
+                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                        }
+                    }, 30000);
+
+                    $scope.ALLmarkers.pop();
+
+                    $scope.ALLmarkers.push(mainMarker);
+                }
+                }
+                ;
+
+                leafletData.getMap().then(function (map) {
+                    map.on('click', onmapclick);
+                });
 
                 $scope.submit = function (panel, seldstatus, seldResolution, seldcomment, seldcomponent, seldpriority, seldseverity, e) {
                     $scope.pimage = "";
@@ -656,12 +768,29 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                             }
 
                             obj.cf_city_address = $scope.panel.address;
+                            var new_address = false;
+                            var address_msg = undefined;
+                            if ($scope.address != $scope.panel.address) {
+                                new_address = true;
+                                address_msg = "Η διεύθυνση " + $scope.address + " άλλαξε σε " + $scope.panel.address + " από τον διαχειριστή";
+                            }
                             $scope.address = $scope.panel.address;
                             var canupdate = $q.defer();
+                            obj.lat = $scope.ALLmarkers[0].lat;
+                            obj.lng = $scope.ALLmarkers[0].lng;
+
                             $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {timeout: canupdate.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                                 canupdate.resolve();
-                                if ($scope.panel.comment == undefined) {
-                                    $scope.panel.comment = "undefined";
+                                if ($scope.panel.comment == undefined || $scope.panel.comment == "undefined") {
+                                    if (new_address == false) {
+                                        $scope.panel.comment = "undefined";
+                                    } else {
+                                        $scope.panel.comment = address_msg;
+                                    }
+                                } else {
+                                    if (address_msg != undefined) {
+                                        $scope.panel.comment += " " + address_msg;
+                                    }
                                 }
                                 var canadd = $q.defer();
                                 $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.panel.comment, "id": obj.ids[0]}, {timeout: canadd.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
@@ -727,9 +856,10 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                             if ($scope.panel.comment == undefined || $scope.panel.comment == "") {
                                 $scope.panel.comment = "undefined";
                             }
-                            if (seldcomment == "") {
+                            if (seldcomment == "" || seldcomment == undefined) {
                                 seldcomment = "undefined";
                             }
+
                             if ($scope.selectedStatus.gr != $scope.panel.status.gr || $scope.selectedComponent != $scope.panel.component || $scope.panel.comment != seldcomment || $scope.selectedPriority.gr != $scope.panel.priority.gr || $scope.selectedSeverity.gr != $scope.panel.severity.gr || $scope.panel.address != $scope.address) {
                                 $scope.panel.comment = seldcomment;
                                 $scope.panel.priority = {en: PriorityTagEn.priority_type(seldpriority.gr), gr: seldpriority.gr};
@@ -754,7 +884,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                             if ($scope.panel.comment == undefined || $scope.panel.comment == "") {
                                 $scope.panel.comment = "undefined";
                             }
-                            if (seldcomment == "") {
+                            if (seldcomment == "" || seldcomment == undefined) {
                                 seldcomment = "undefined";
                             }
                             if ($scope.panel.status == "Ανοιχτό") {
