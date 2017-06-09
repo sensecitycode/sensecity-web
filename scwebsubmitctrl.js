@@ -1136,6 +1136,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                     $("#finish_button").attr("disabled", "disabled");
                     var canissue = $q.defer();
+                    $scope.anon_post.city_address = $scope.address;
                     $http(
                             {
                                 method: 'POST',
