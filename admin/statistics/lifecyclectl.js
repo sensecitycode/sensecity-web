@@ -160,7 +160,7 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
                     }
 
                     function resolve_stats(startdate, enddate,tag) {
-                        $http.get($rootScope.Variables.APIADMIN + "/issue?issue=" + $("#issue_val").val() + "&city="+$rootScope.Variables.city_name+"&startdate=" + startdate + "&enddate=" + enddate + "&status=RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED&includeAnonymous=1").then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/admin/issue?issue=" + $("#issue_val").val() + "&city="+$rootScope.Variables.city_name+"&startdate=" + startdate + "&enddate=" + enddate + "&status=RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED&includeAnonymous=1",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var cnt_fixed = 0;
                             var cnt_invalid = 0;
                             var cnt_duplicated = 0;

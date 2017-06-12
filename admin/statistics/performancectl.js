@@ -86,7 +86,7 @@ app.controller('performance', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                     $(document).resize();
                     var morrisCharts = function () {
                         $("#search_btn").click("on", function () {
-                            $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1").then(function (response) {
+                            $http.get($rootScope.Variables.APIADMIN + "/admin/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                                 var issues_states = [];
                                 for (var i = 0; i < $rootScope.Variables.departments.length - 1; i++) {
                                     issues_states.push([0, 0]);

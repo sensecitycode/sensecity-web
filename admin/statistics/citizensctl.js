@@ -78,7 +78,7 @@ app.controller('citizensctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                 function (data) {
                     $(document).resize();
                     $("#search_btn").click("on", function () {
-                        $http.get($rootScope.Variables.APIADMIN+"/issue?city="+$rootScope.Variables.city_name+"&startdate=" + $("#txt_issue1").val() + "&enddate=" + $("#txt_issue2").val() + "&includeAnonymous=1").then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN+"/admin/issue?city="+$rootScope.Variables.city_name+"&startdate=" + $("#txt_issue1").val() + "&enddate=" + $("#txt_issue2").val() + "&includeAnonymous=1",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             $scope.issues = response.data;
                             $scope.desktop = function () {
                                 var count = 0;
