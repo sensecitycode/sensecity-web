@@ -1,5 +1,5 @@
 <div data-ng-init="initialize()" ng-show="nloaded" class="loading_bar">
-   Loading&#8230;
+    Loading&#8230;
 </div>
 <div ng-show="valid">
     <!-- START PAGE CONTAINER -->
@@ -96,9 +96,9 @@
                 <li><a href="#/admin">Αρχική</a></li>                    
                 <li class="active">Προβλήματα</li>
                 <ul class="panel-controls" style="margin-top: 2px;">
-                    <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_allclosedissues(); reset_search(); totalpages(1,1)"><span tooltip-side="bottom" tooltips tooltip-template="Όλα τα προβλήματα"><a href="#/admin" class="panel-completed"><span ng-style="(allclosedissues == false)? {'font-size':'13px'} : {'color':'#0c45c4','font-size':'13px'}" class="fa fa-building-o"></span></a></span></li> 
-                    <li ng-click="toggle_closedissues(); reset_search(); totalpages(1,1)"><span tooltip-side="bottom" tooltips tooltip-template="Ολοκληρωμένα τμήματος"><a href="#/admin" class="panel-completed"><span ng-style="(closedissues == false)? {} : {'color':'green'}" class="glyphicon glyphicon-ok-sign"></span></a></span></li> 
-                    <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_inprogressissues(); reset_search(); totalpages(1,1)"><span tooltip-side="bottom" tooltip-size="small" tooltips tooltip-template="Σε εκτέλεση άλλων τμημάτων"><a href="#/admin" class="panel-inprogress"><span ng-style="(assignissues == false) ? {} : {'color':'orange'}" class="glyphicon glyphicon-question-sign"></span></a></span></li>
+                    <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_allclosedissues(); reset_search(); totalpages(1, 1)"><span tooltip-side="bottom" tooltips tooltip-template="Όλα τα προβλήματα"><a href="#/admin" class="panel-completed"><span ng-style="(allclosedissues == false)? {'font-size':'13px'} : {'color':'#0c45c4','font-size':'13px'}" class="fa fa-building-o"></span></a></span></li> 
+                    <li ng-click="toggle_closedissues(); reset_search(); totalpages(1, 1)"><span tooltip-side="bottom" tooltips tooltip-template="Ολοκληρωμένα τμήματος"><a href="#/admin" class="panel-completed"><span ng-style="(closedissues == false)? {} : {'color':'green'}" class="glyphicon glyphicon-ok-sign"></span></a></span></li> 
+                    <li ng-show="role == 'sensecityAdmin' || role == 'cityAdmin'" ng-click="toggle_inprogressissues(); reset_search(); totalpages(1, 1)"><span tooltip-side="bottom" tooltip-size="small" tooltips tooltip-template="Σε εκτέλεση άλλων τμημάτων"><a href="#/admin" class="panel-inprogress"><span ng-style="(assignissues == false) ? {} : {'color':'orange'}" class="glyphicon glyphicon-question-sign"></span></a></span></li>
                     <li><span tooltip-side="bottom" tooltips tooltip-template="Εξαγωγή προβλημάτων σε CSV" ng-csv="csv()" charset="utf-8" add-bom="true" filename="issues.csv"><a href="#/admin"><span class="fa fa-arrow-down"></span></a></span></li>
                     <li><span tooltip-side="bottom" tooltips tooltip-template="Εκτύπωση προβλημάτων"><a href="#/printsearch"><span class="fa fa-print"></span></a></span></li>
                 </ul>
@@ -241,8 +241,8 @@
                                     </ul>
                                 </div>
                                 <div style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px" class="panel-body panel-body-map">                              
-                                            <leaflet style="z-index:3" id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="325px" width="100%"">
-                                            </leaflet>
+                                    <leaflet style="z-index:3" id="issuesmap" lf-center="ALLcenter" layers="layers" markers="ALLmarkers" defaults="defaults" height="325px" width="100%"">
+                                    </leaflet>
                                 </div>
                             </div>
                         </div>
@@ -273,6 +273,17 @@
             </div>
         </div>
 
+
+        <!-- Google Analytics -->
+        <script>
+            (function(i, s, o, g, r, a, m){i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function(){
+            (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-XXXXX-Y', 'auto');
+            ga('send', 'pageview');
+        </script>
+        <!-- End Google Analytics -->
         <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
         <!-- END PRELOADS -->                  
@@ -286,15 +297,15 @@
         <!-- START THIS PAGE PLUGINS-->               
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
         <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
-                                                   
+
         <!--        <script>$(".xn-openable").first().attr("class", "xn-openable active");</script>-->
         <script type="text/javascript" src="js/plugins/moment.min.js"></script>
         <!-- END THIS PAGE PLUGINS-->        
 
         <!-- START TEMPLATE -->
-                <script type="text/javascript" src="js/plugins.js"></script>
+        <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>
-       
+
 
         <!-- END TEMPLATE -->
         <!-- END SCRIPTS -->

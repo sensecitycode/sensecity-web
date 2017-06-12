@@ -1,481 +1,500 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>sense.city</title>
-    <meta name="description" content="sense.city" />
-	<!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="Codeply">
-    
-	<link rel="stylesheet" href="_css/bootstrap.min.css" />
-    <link href="css/animate.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/ionicons.min.css" />
-	<link href="css/font-awesome.css" rel="stylesheet"> 
-	<link rel="stylesheet" href="css/leaflet.css" />
-	<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
-	<script src="js/leaflet.js"></script> 
-    <link rel="stylesheet" href="css/styles.css" />
-	
-  </head>
-  <body>
-    <nav id="topNav" class="navbar navbar-default navbar-fixed-top">
-        <!-- <div class="container-fluid">-->
-		<div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand page-scroll" href="#first"><i class="ion-ios-analytics-outline"></i> sense.city
-				<sup style="font-size: 55%">beta</sup></a>
-            </div>
-            <div class="navbar-collapse collapse" id="bs-navbar">
-                <ul class="nav navbar-nav">  
-					<li>
-                        <a class="page-scroll" href="#three" id="menu_sensecityapp">sense.city app</a>
-                    </li>                   
-                    <li>
-                        <a class="page-scroll" href="#two" id="menu_participation">ΣΥΜΜΕΤΟΧΗ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#four" id="menu_data">ΔΕΔΟΜΕΝΑ</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#last" id="menu_contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-						<a href="#" style="float:right;padding-left:0px;padding-right:0px;" id="land_el" ><img src="images/flags/el.png" /> </a>&nbsp;&nbsp;
-						<a href="#" style="float:right;padding-left:0px;padding-right:5px;" id="land_en" ><img src="images/flags/en.png" /> </a>
-                        <a class="page-scroll" data-toggle="modal" title="sense.city @ Πάτρα" href="#aboutModal" style="float:right;" id="menu_about">Σχετικα</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <header id="first">
-        <div class="header-content">
-            <div class="inner">
-                <h1 class="cursive"><i class="ion-ios-analytics-outline"></i>sense.city</h1>
-                <h4 id="msg_header">Συμμετέχω ενεργά στη πόλη μου</h4>
-                <h1 class="cursive">&nbsp;</h1>
-				<a href="http://patras.sense.city" class="btn btn-success btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 200ms; animation-name: bounceInDown;" id="city_patra"></a>
-				<a href="http://zakynthos.sense.city" class="btn btn-success btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 1000ms; animation-name: bounceInDown;" id="city_zakynthos"></a>
-				<a href="." class="btn btn-primary btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 1500ms; animation-name: bounceInDown;" id="city_other_2">Η πόλη σου</a>
-				<a href="." class="btn btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 2000ms; animation-name: bounceInDown;" id="">...</a>
-            </div>
-        </div>
-        <video autoplay="autoplay" loop="" muted="muted" data-wow-delay="0.5s" poster="images/video_screen.png" id="video-background">
-			<source type="video/webm" src="http://sense.city/movie.webm" ></source>
-            <source type="video/mp4" src="http://sense.city/movie.mp4" ></source>
-        </video>
-    </header>
-	<aside class="bg-dark" style="background-color: rgba(255,255,255,0.9);" id="three">
-        <div class="container text-center">
-            <div class="call-to-action">
-                <h2 class="text-primary" style="color:#808080;" id="msg_start_now">Ξεκινήστε τώρα</h2>
-                
-            </div>
-           
-            <div class="row" style="margin-left:0px;margin-right:0px; ">
-                <div class="col-lg-10 col-lg-offset-1">
-                    <div class="row" style="margin-left:0px;margin-right:0px; ">
-                        <!-- <h6 class="wide-space text-center">Σύντομα θα μπορείτε να κατεβάστε την εφαρμογή sense.city</h6> -->
-						<p style="color:#030e0e;" id="msg_start_now_text">Μπορείτε να αναφέρετε προβλήματα από το κινητό σας με τις εφαρμογές που είναι διαθέσιμες αλλά και από τον προσωπικό σας υπολογιστή μέσω του sense.city website. </p>
-						<br /><br />
-						<div class="col-lg-12 col-md-12 text-center" style="padding-bottom:40px;">
-							 <div class="col-lg-2 col-md-2 text-center" style="padding-bottom:40px;">
-								<div class="feature  wow fadeInUp text-light " data-wow-delay=".5s" > 							
-									<img src="images/mobile_1.png"  alt="mobile-app"/>									
-								</div>
-							</div>
-							<div class="col-lg-2 col-md-2 text-center">
-								<div class="feature  wow fadeInUp text-light " data-wow-delay="1.2s"  style="margin-top:-25px;"> 									
-									<img src="images/mobile_2.png"  alt="mobile-app"/>
-								</div>
-							</div>
-							<div class="col-lg-8 col-md-8 text-center">
-								<div class="feature  wow fadeInUp text-light " data-wow-delay="2.3s"  style="padding-top:25px;"> 
-									<img src="images/info-1a.png"  style="width:100%;" alt="web-app"/>
-									<img src="images/web-app.png"  style="width:100%;" alt="web-app"/>
-									<img src="images/web-app-1.png"  style="margin-top: -235px;margin-left: 251px;" alt="web-app"/>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-lg-12 col-md-12 text-center">
-							<div class="col-sm-3 col-xs-6 text-center product_div active" >
-								<a href="submit_issue.html" target="_blank" style="color:#337ab7; text-decoration:none;">
-									<i class="icon-lg ion-social-html5-outline" title="Web browser"></i>
-									<h4 style="color:#337ab7;" id="msg_start_now_webbrowser">Web browser</h4>
-								</a>
-							</div>
-							<div class="col-sm-3 col-xs-6 text-center product_div active">
-								<a href="https://play.google.com/store/apps/details?id=gr.upatras.ece.nam.sensecity" target="_blank" style="color:#9ACD32; text-decoration:none;">
-									<i class="icon-lg ion-social-android-outline" title="Android"></i>
-									<h4 id="msg_start_now_android">Συσκευές Android</h4>
-								</a>
+    <head>
+        <meta charset="utf-8">
+        <title>sense.city</title>
+        <meta name="description" content="sense.city" />
+        <!-- based on a free Bootstrap landing page theme created for BootstrapZero. Feature video background and one page design. -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="generator" content="Codeply">
 
-							</div>
-							<div class="col-sm-3 col-xs-6 text-center product_div active" >
-                                                            <a href="https://itunes.apple.com/gr/app/sensecityapp/id1151797085?l=el&mt=8" target="_blank" style="color:#cd32cd; text-decoration:none;">
-								<i class="icon-lg ion-social-apple-outline" title="iOS"></i>
-								<h4 style="color:#cd32cd;" id="msg_start_now_ios">Συσκευές iOS</h4>
-                                                            </a>
-							</div>
-							<div class="col-sm-3 col-xs-6 text-center product_div" >
-								<i class="icon-lg ion-social-windows-outline" style="color:#B9B5B5;" title="Windows"></i>
-								<h4 style="color:#B9B5B5;" id="msg_start_now_windows">Συσκευές Windows</h4>
-							</div>
-						</div>
-                    </div>
+        <link rel="stylesheet" href="_css/bootstrap.min.css" />
+        <link href="css/animate.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/ionicons.min.css" />
+        <link href="css/font-awesome.css" rel="stylesheet"> 
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <script src="js/leaflet.js"></script> 
+        <link rel="stylesheet" href="css/styles.css" />
+
+    </head>
+    <body>
+        <nav id="topNav" class="navbar navbar-default navbar-fixed-top">
+            <!-- <div class="container-fluid">-->
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#first"><i class="ion-ios-analytics-outline"></i> sense.city
+                        <sup style="font-size: 55%">beta</sup></a>
                 </div>
-            </div>
-        </div>
-    </aside>
-    <section class="bg-primary-light"  id="two" style="    background-color: rgba(240, 240, 240 ,0.9);">
-        <div class="container">
-            <div class="row"  style="margin-left:0px;margin-right:0px; ">
-                <div class="col-lg-12 text-center">
-                    <h2 class="margin-top-0 text-primary" id="msg_how_partcipate">Πώς συμμετέχω</h2>
-                    <hr class="primary">
-					<center style=""><iframe width="640" height="360" src="https://www.youtube.com/embed/-pZ-omVXr68?rel=0" frameborder="0" allowfullscreen></iframe></center>	
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row" style="margin-left:0px;margin-right:0px; ">
-                <div class="col-lg-4 col-md-4 text-center">
-                    <div class="feature  wow fadeInUp text-light " data-wow-delay=".5s" > 
-                        <i class="icon-lg ion-ios-location-outline" ></i>
-                        <h3 id="msg_anafora_probl">Αναφορά προβλημάτων</h3>
-                        <p class="text-muted" id="msg_anafora_probl_text">Οι πολίτες είστε οι αισθητήρες της πόλης! Χρησιμοποιώντας τις δικές σας συσκευές επικοινωνίας, είτε μέσω της εφαρμογής sense.city είτε με άλλες συσκευές που αναφέρουν στο sense.city δεδομένα της πόλης, ενημερώνετε τους συμπολίτες και το δήμο για προβλήματα και συμβάντα που συμβαίνουν κάθε στιγμή</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 text-center">
-                    <div class="feature wow fadeInUp text-light " data-wow-delay="1.5s" >
-                        <i class="icon-lg ion-ios-people-outline " ></i>
-                        <h3 id="msg_astiki_summe">Αστική συμμετοχή</h3>
-                        <p class="text-muted" id="msg_astiki_summe_text">Συμμετέχετε ενεργά στις διαδικασίες και στην επίλυση προβλημάτων που αφορούν τη ζωή σας στη πόλη. Βοηθήστε στην αστική ανάπτυξη και στην καλύτερη σχέση μεταξύ πολιτών και φορέων της πόλης.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 text-center">
-                    <div class="feature wow fadeInUp text-light " data-wow-delay="2.5s">
-                        <i class="icon-lg ion-ios-lightbulb-outline" ></i>
-                        <h3 id="msg_syn_dimiourg">Συν-δημιουργία</h3>
-                        <p class="text-muted" id="msg_syn_dimiourg_text">Η πλατφόρμα sense.city προσπαθεί να βάλει τα εργαλεία για την ενεργοποίηση των πολιτών, τη δημιουργικότητα, το σχεδιασμό και την επικοινωνία στα χέρια του καθενός και καλεί για συλλογική σκέψη και δράσεις τόσο τους πολίτες όσο και τους φορείς της πόλης.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>		
-    <section style="background-color: rgba(240, 240, 240 ,0.9);" id="four">
-        <div class="row" style="margin-left:0px; margin-right:0px;">
-            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-                <h2 class="text-center text-primary" style="color: #808080;" id="msg_sec_dedomena">Δεδομένα</h2>
-                <hr>
-                <div class="media wow fadeInRight text-light">
-                    <h3 id="msg_eukoli_xrisi">Εύκολη χρήση</h3>
-                    <div class="media-body media-middle">
-                        <p id="msg_eukoli_xrisi_text">Απλά χρησιμοποιώντας την εφαρμογή sense.city στο κινητό σας, γίνεστε αισθητήρας της πόλης με ένα κλικ!</p>
-                    </div>
-                    <div class="media-right">
-                        <i class="icon-lg ion-android-checkmark-circle"></i>
-                    </div>
-                </div>
-                <hr>
-                <div class="media wow fadeIn text-light">
-                    <h3 id="msg_anonymia">Ανώνυμα</h3>
-                    <div class="media-left">
-                        <i class="icon-lg ion-eye-disabled"></i>
-                    </div>
-                    <div class="media-body media-middle">
-                        <p id="msg_anonymia_text">Η εφαρμογή στέλνει ανώνυμα το γεγονός που θέλετε να καταγραφεί.</p>
-                    </div>
-                </div>
-                <hr>
-                <div class="media wow fadeInRight text-light">
-                    <h3 id="msg_free_serv">Δωρεάν</h3>
-                    <div class="media-body media-middle">
-                        <p id="msg_free_serv_text">Δεν υπάρχει κάποια χρέωση για την υπηρεσία. (Προσoχή στην ογκοχρέωση των δεδομένων κινητής τηλεφωνίας)</p>
-                    </div>
-                    <div class="media-right">
-                        <i class="icon-lg ion-ios-snowy"></i>
-                    </div>
-                </div>
-                <hr>
-                <div class="media wow fadeIn text-light">
-                    <h3 id="msg_open_data">Ανοιχτά δεδομένα</h3>
-                    <div class="media-left">
-                        <i class="icon-lg ion-ios-unlocked-outline"></i>
-                    </div>
-                    <div class="media-body media-middle">
-                        <p id="msg_open_data_text">Προσφέρουμε ένα ανοιχτό API για προγραμματιστές και όποιον ενδιαφέρεται να χρησιμοποιήσει τη πλατφόρμα sense.city. Δείτε περισσότερα εδώ: <a href="https://github.com/sensecitycode/sensecity-api/blob/master/README.md">apidoc</a></p>
-                    </div>
-                </div>
-                <hr>
-                <div class="media wow fadeInRight text-light">
-                    <h3 id="msg_developers_sec">Developers</h3>
-                    <div class="media-body media-middle">
-                        <p id="msg_developers_sec_text">Αν θέλετε να βοηθήσετε στην αναπτυξη ή να δειτε το κώδικα: <a href="https://github.com/sensecitycode/sensecity-api">API</a>
-						</p>
-                    </div>
-                    <div class="media-right">
-                        <i class="icon-lg ion-ios-flask-outline"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-   
-    <section class="bg-dark" id="last" style="min-height:350px;background-color: rgba(255,255,255,0.9);">
-        <div class="container">
-            <div class="row" style="margin-left:0px; margin-right:0px; ">
-                <div class="col-lg-8 col-lg-offset-2 text-center" style="color: #808080;">
-                    <h2 class="margin-top-0 wow fadeIn" id="msg_section_contact">Επικοινωνία</h2>
-                    <hr class="primary">
-                    <p id="msg_section_contact_text1">Αγαπάμε την επικοινωνία μαζί σας! <br /><!-- Συμπληρώστε την παρακάτω φόρμα και εμείς θα επικοινωνήσουμε το συντομότερο δυνατόν.--></p>
-					<p id="msg_section_contact_text2">Αποστείλατε email στο <a href="mailto:info@sense.city" style="color: #000000;">info@sense.city</a> και το συντομότερο δυνατό θα επικοινωνήσουμε μαζί σας.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <footer id="footer" style="background-color:#D0D0D0;">
-        <div class="container">
-            <div class="row"  style="margin-left:0px;margin-right:0px; ">
-                <div class="col-xs-12 col-sm-9 column">
-                    <h4 id="msg_section_info">Πληροφορίες</h4>
-                    <ul class="list-inline">
-                        <li><a href="#">Products</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Benefits</a></li>
-                        <li><a href="#">Developers</a></li>
-						<li><a href="./policy.html">Privacy Policy</a></li>
-                        <li><a href="./terms.html">Terms &amp; Conditions</a></li>
+                <div class="navbar-collapse collapse" id="bs-navbar">
+                    <ul class="nav navbar-nav">  
+                        <li>
+                            <a class="page-scroll" href="#three" id="menu_sensecityapp">sense.city app</a>
+                        </li>                   
+                        <li>
+                            <a class="page-scroll" href="#two" id="menu_participation">ΣΥΜΜΕΤΟΧΗ</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#four" id="menu_data">ΔΕΔΟΜΕΝΑ</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#last" id="menu_contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>
+                        </li>
                     </ul>
-                </div>
-                <div class="col-xs-12 col-sm-3 text-right">
-                    <h4 id="msg_section_followus">Ακολουθήστε μας</h4>
-                    <ul class="list-inline">
-                      <li><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
-                      <li><a rel="nofollow" href="https://www.facebook.com/sensecitybook" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
-                      <li><a rel="nofollow" href="" title="Ιnstagram"><i class="icon-lg ion-social-instagram-outline"></i></a></li>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" style="float:right;padding-left:0px;padding-right:0px;" id="land_el" ><img src="images/flags/el.png" /> </a>&nbsp;&nbsp;
+                            <a href="#" style="float:right;padding-left:0px;padding-right:5px;" id="land_en" ><img src="images/flags/en.png" /> </a>
+                            <a class="page-scroll" data-toggle="modal" title="sense.city @ Πάτρα" href="#aboutModal" style="float:right;" id="menu_about">Σχετικα</a>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <br/>
-            <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Theme by: Landing Zero by BootstrapZero</a> ©2015 Πανεπιστήμιο Πατρών</span>
-        </div>
-    </footer>
-    <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-        	<div class="modal-body">
-        		<p>
-        		    <br/>
-        		    <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
-        		</p>
-        	</div>
-        </div>
-        </div>
-    </div>
-    <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-        	<div class="modal-body">
-        		<h2 class="text-center" id="msg_popup_title">sense.city @ Πάτρα</h2>
-        		<h5 class="text-center"  id="msg_popup_msg">
-        		    Συμμετέχω ενεργά στη πόλη μου
-        		</h5>
-        		<p class="text-justify" id="msg_popup_text">
-        		   Οι πολίτες είστε οι αισθητήρες της πόλης! Χρησιμοποιώντας τις δικές σας συσκευές επικοινωνίας, είτε μέσω της εφαρμογής sense.city είτε με άλλες συσκευές που αναφέρουν στο sense.city δεδομένα της πόλης, ενημερώνετε τους συμπολίτες και το δήμο για προβλήματα και συμβάντα που συμβαίνουν κάθε στιγμή.
-        		</p>
-        		
-        		<br/>
-        		<button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true"> OK </button>
-        	</div>
-        </div>
-        </div>
-    </div>
-    <!--scripts loaded here from cdn for performance -->
-    <script src="_js/jquery.min.js"></script>
-     <script src="_js/bootstrap.min.js"></script> 
-    <script src="_js/jquery.easing.min.js"></script>
-    <script src="_js/wow.js"></script>
-	<script src="js/leaflet.awesome-markers.js"></script>
-    <script src="js/scripts.js"></script>
-	
-	
-	<link rel="stylesheet" type="text/css" href="_css/MarkerCluster.css" />
-    <link rel="stylesheet" type="text/css" href="_css/MarkerCluster.Default.css" />
-	<link rel="stylesheet" type="text/css" href="css/leaflet.extra-markers.min.css" />
-	
-	<script type='text/javascript' src='js/leaflet.markercluster.js'></script>
-	<script type='text/javascript' src='js/leaflet.extra-markers.min.js'></script>
-	
-	
-	
-	 <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-    <!-- <script>window.jQuery || document.write('<script src="_js/vendor/jquery.min.js"><\/script>')</script> -->
-    <!-- <script src="_js/bootstrap.min.js"></script> -->
-    <!-- <script src="_js/docs.min.js"></script> -->
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	
-			<script>
-				
-				
-				$(document).ready(function() {
-					$('.carousel').carousel({
-						interval: 15000
-					});
-					
-					
-				
-				
-				});
+        </nav>
+        <header id="first">
+            <div class="header-content">
+                <div class="inner">
+                    <h1 class="cursive"><i class="ion-ios-analytics-outline"></i>sense.city</h1>
+                    <h4 id="msg_header">Συμμετέχω ενεργά στη πόλη μου</h4>
+                    <h1 class="cursive">&nbsp;</h1>
+                    <a href="http://patras.sense.city" class="btn btn-success btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 200ms; animation-name: bounceInDown;" id="city_patra"></a>
+                    <a href="http://zakynthos.sense.city" class="btn btn-success btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 1000ms; animation-name: bounceInDown;" id="city_zakynthos"></a>
+                    <a href="." class="btn btn-primary btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 1500ms; animation-name: bounceInDown;" id="city_other_2">Η πόλη σου</a>
+                    <a href="." class="btn btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 2000ms; animation-name: bounceInDown;" id="">...</a>
+                </div>
+            </div>
+            <video autoplay="autoplay" loop="" muted="muted" data-wow-delay="0.5s" poster="images/video_screen.png" id="video-background">
+                <source type="video/webm" src="http://sense.city/movie.webm" ></source>
+                <source type="video/mp4" src="http://sense.city/movie.mp4" ></source>
+            </video>
+        </header>
+        <aside class="bg-dark" style="background-color: rgba(255,255,255,0.9);" id="three">
+            <div class="container text-center">
+                <div class="call-to-action">
+                    <h2 class="text-primary" style="color:#808080;" id="msg_start_now">Ξεκινήστε τώρα</h2>
 
-				$('a.page-scroll').bind('click', function(event) {
-					var $anchor = $(this);
-					$('html, body').stop().animate({
-						scrollTop: ($($anchor.attr('href')).offset().top - 50)
-					}, 1250, 'easeInOutExpo');
-					event.preventDefault();
-				});
-				
-				if(localStorage.getItem("language") === 'en'){
-					$('head').append('<script src="js/lang.en.js" />');
-					localStorage.removeItem("language");
-					localStorage.setItem("language", "en");
-				}else{
-					$('head').append('<script src="js/lang.js" />');
-					localStorage.removeItem("language");
-					localStorage.setItem("language", "el");
-				}
-				
-				change_lang();
-			
-	
-				console.log(localStorage.getItem("language"));
-				/*
-				if(localStorage.getItem("language") === 'en'){
-					localStorage.removeItem("language");
-					localStorage.setItem("language", "en");
+                </div>
 
-				}else{
-					localStorage.removeItem("language");
-					localStorage.setItem("language", "el");
-					$('head').append('<script src="js/lang.js" />');
-				}*/
-				
-				$('#land_el').click(function() {
-					localStorage.setItem("language", "el");
-					console.log(localStorage.getItem("language"));
-					
-					
-					$('head').append('<script src="js/lang.js" />');
-					change_lang();
-					
-					return false;
-				});
-				
-				$('#land_en').click(function() {
-					localStorage.setItem("language", "en");
-					console.log(localStorage.getItem("language"));
-					$('head').append('<script src="js/lang.en.js" />');
-					change_lang();
-					return false;
-				});
-				
-				
-				
-				//console.log(localStorage.getItem("language"));
-				
-				
-				function change_lang(){
-					$('#menu_participation').html(lang.menu_participation);
-					$('#menu_contact').html(lang.menu_contact);
-					$('#menu_sensecityapp').html(lang.menu_sensecityapp);
-					$('#menu_data').html(lang.menu_data);
-					$('#menu_about').html(lang.menu_about);
-					$('#msg_header').html(lang.msg_header);
-					$('#msg_happen_in_city').html(lang.msg_happen_in_city);
-					$('#msg_partcipate').html(lang.msg_partcipate);
-					$('#msg_start_now').html(lang.msg_start_now);
-					$('#msg_start_now_text').html(lang.msg_start_now_text);
-					$('#msg_start_now_webbrowser').html(lang.msg_start_now_webbrowser);
-					$('#msg_start_now_android').html(lang.msg_start_now_android);
-					$('#msg_start_now_ios').html(lang.msg_start_now_ios);
-					$('#msg_start_now_windows').html(lang.msg_start_now_windows);
-					$('#msg_how_partcipate').html(lang.msg_how_partcipate);
-					$('#msg_anafora_probl').html(lang.msg_anafora_probl);
-					$('#msg_anafora_probl_text').html(lang.msg_anafora_probl_text);
-					$('#msg_astiki_summe').html(lang.msg_astiki_summe);
-					$('#msg_astiki_summe_text').html(lang.msg_astiki_summe_text);
-					$('#msg_syn_dimiourg').html(lang.msg_syn_dimiourg);
-					$('#msg_syn_dimiourg_text').html(lang.msg_syn_dimiourg_text);
-					$('#msg_sec_dedomena').html(lang.msg_sec_dedomena);
-					$('#msg_eukoli_xrisi').html(lang.msg_eukoli_xrisi);
-					$('#msg_eukoli_xrisi_text').html(lang.msg_eukoli_xrisi_text);
-					$('#msg_anonymia').html(lang.msg_anonymia);
-					$('#msg_anonymia_text').html(lang.msg_anonymia_text);
-					$('#msg_free_serv').html(lang.msg_free_serv);
-					$('#msg_free_serv_text').html(lang.msg_free_serv_text);
-					$('#msg_open_data').html(lang.msg_open_data);
-					$('#msg_open_data_text').html(lang.msg_open_data_text);
-					$('#msg_developers_sec').html(lang.msg_developers_sec);
-					$('#msg_developers_sec_text').html(lang.msg_developers_sec_text);
-					$('#msg_section_contact').html(lang.msg_section_contact);
-					$('#msg_section_contact_text1').html(lang.msg_section_contact_text1);
-					$('#msg_section_contact_text2').html(lang.msg_section_contact_text2);
-					$('#msg_section_info').html(lang.msg_section_info);
-					$('#msg_section_followus').html(lang.msg_section_followus);
-					$('#msg_popup_title').html(lang.msg_popup_title);
-					$('#msg_popup_msg').html(lang.msg_popup_msg);
-					$('#msg_popup_text').html(lang.msg_popup_text);
-					$('#city_patra').html(lang.city_patra);
-                                        $('#city_zakynthos').html(lang.city_zakynthos);
-					$('#city_other_1').html(lang.city_other_1);
-					$('#city_other_2').html(lang.city_other_2);
-				}
-				
-			</script>
-			
-			<script>
-			/*
-			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                <div class="row" style="margin-left:0px;margin-right:0px; ">
+                    <div class="col-lg-10 col-lg-offset-1">
+                        <div class="row" style="margin-left:0px;margin-right:0px; ">
+                            <!-- <h6 class="wide-space text-center">Σύντομα θα μπορείτε να κατεβάστε την εφαρμογή sense.city</h6> -->
+                            <p style="color:#030e0e;" id="msg_start_now_text">Μπορείτε να αναφέρετε προβλήματα από το κινητό σας με τις εφαρμογές που είναι διαθέσιμες αλλά και από τον προσωπικό σας υπολογιστή μέσω του sense.city website. </p>
+                            <br /><br />
+                            <div class="col-lg-12 col-md-12 text-center" style="padding-bottom:40px;">
+                                <div class="col-lg-2 col-md-2 text-center" style="padding-bottom:40px;">
+                                    <div class="feature  wow fadeInUp text-light " data-wow-delay=".5s" > 							
+                                        <img src="images/mobile_1.png"  alt="mobile-app"/>									
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 text-center">
+                                    <div class="feature  wow fadeInUp text-light " data-wow-delay="1.2s"  style="margin-top:-25px;"> 									
+                                        <img src="images/mobile_2.png"  alt="mobile-app"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 text-center">
+                                    <div class="feature  wow fadeInUp text-light " data-wow-delay="2.3s"  style="padding-top:25px;"> 
+                                        <img src="images/info-1a.png"  style="width:100%;" alt="web-app"/>
+                                        <img src="images/web-app.png"  style="width:100%;" alt="web-app"/>
+                                        <img src="images/web-app-1.png"  style="margin-top: -235px;margin-left: 251px;" alt="web-app"/>
+                                    </div>
+                                </div>
+                            </div>
 
-			  ga('create', 'UA-73253016-1', 'auto');
-			  ga('send', 'pageview');
-*/
-			</script>
-			
-			<style>
-			
-			
-			.crop {
-				height: 200px;
-					overflow: hidden;
-					
-					border-radius: 10px;
-					border-bottom-left-radius: 0px;
-					border-bottom-right-radius: 0px;
-			}
+                            <div class="col-lg-12 col-md-12 text-center">
+                                <div class="col-sm-3 col-xs-6 text-center product_div active" >
+                                    <a href="submit_issue.html" target="_blank" style="color:#337ab7; text-decoration:none;">
+                                        <i class="icon-lg ion-social-html5-outline" title="Web browser"></i>
+                                        <h4 style="color:#337ab7;" id="msg_start_now_webbrowser">Web browser</h4>
+                                    </a>
+                                </div>
+                                <div class="col-sm-3 col-xs-6 text-center product_div active">
+                                    <a href="https://play.google.com/store/apps/details?id=gr.upatras.ece.nam.sensecity" target="_blank" style="color:#9ACD32; text-decoration:none;">
+                                        <i class="icon-lg ion-social-android-outline" title="Android"></i>
+                                        <h4 id="msg_start_now_android">Συσκευές Android</h4>
+                                    </a>
 
-			.crop img {
-				margin: 0px 0px 0px 0px;
-			}
-			
-			
-			</style>
-  </body>
+                                </div>
+                                <div class="col-sm-3 col-xs-6 text-center product_div active" >
+                                    <a href="https://itunes.apple.com/gr/app/sensecityapp/id1151797085?l=el&mt=8" target="_blank" style="color:#cd32cd; text-decoration:none;">
+                                        <i class="icon-lg ion-social-apple-outline" title="iOS"></i>
+                                        <h4 style="color:#cd32cd;" id="msg_start_now_ios">Συσκευές iOS</h4>
+                                    </a>
+                                </div>
+                                <div class="col-sm-3 col-xs-6 text-center product_div" >
+                                    <i class="icon-lg ion-social-windows-outline" style="color:#B9B5B5;" title="Windows"></i>
+                                    <h4 style="color:#B9B5B5;" id="msg_start_now_windows">Συσκευές Windows</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <section class="bg-primary-light"  id="two" style="    background-color: rgba(240, 240, 240 ,0.9);">
+            <div class="container">
+                <div class="row"  style="margin-left:0px;margin-right:0px; ">
+                    <div class="col-lg-12 text-center">
+                        <h2 class="margin-top-0 text-primary" id="msg_how_partcipate">Πώς συμμετέχω</h2>
+                        <hr class="primary">
+                        <center style=""><iframe width="640" height="360" src="https://www.youtube.com/embed/-pZ-omVXr68?rel=0" frameborder="0" allowfullscreen></iframe></center>	
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row" style="margin-left:0px;margin-right:0px; ">
+                    <div class="col-lg-4 col-md-4 text-center">
+                        <div class="feature  wow fadeInUp text-light " data-wow-delay=".5s" > 
+                            <i class="icon-lg ion-ios-location-outline" ></i>
+                            <h3 id="msg_anafora_probl">Αναφορά προβλημάτων</h3>
+                            <p class="text-muted" id="msg_anafora_probl_text">Οι πολίτες είστε οι αισθητήρες της πόλης! Χρησιμοποιώντας τις δικές σας συσκευές επικοινωνίας, είτε μέσω της εφαρμογής sense.city είτε με άλλες συσκευές που αναφέρουν στο sense.city δεδομένα της πόλης, ενημερώνετε τους συμπολίτες και το δήμο για προβλήματα και συμβάντα που συμβαίνουν κάθε στιγμή</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 text-center">
+                        <div class="feature wow fadeInUp text-light " data-wow-delay="1.5s" >
+                            <i class="icon-lg ion-ios-people-outline " ></i>
+                            <h3 id="msg_astiki_summe">Αστική συμμετοχή</h3>
+                            <p class="text-muted" id="msg_astiki_summe_text">Συμμετέχετε ενεργά στις διαδικασίες και στην επίλυση προβλημάτων που αφορούν τη ζωή σας στη πόλη. Βοηθήστε στην αστική ανάπτυξη και στην καλύτερη σχέση μεταξύ πολιτών και φορέων της πόλης.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 text-center">
+                        <div class="feature wow fadeInUp text-light " data-wow-delay="2.5s">
+                            <i class="icon-lg ion-ios-lightbulb-outline" ></i>
+                            <h3 id="msg_syn_dimiourg">Συν-δημιουργία</h3>
+                            <p class="text-muted" id="msg_syn_dimiourg_text">Η πλατφόρμα sense.city προσπαθεί να βάλει τα εργαλεία για την ενεργοποίηση των πολιτών, τη δημιουργικότητα, το σχεδιασμό και την επικοινωνία στα χέρια του καθενός και καλεί για συλλογική σκέψη και δράσεις τόσο τους πολίτες όσο και τους φορείς της πόλης.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>		
+        <section style="background-color: rgba(240, 240, 240 ,0.9);" id="four">
+            <div class="row" style="margin-left:0px; margin-right:0px;">
+                <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                    <h2 class="text-center text-primary" style="color: #808080;" id="msg_sec_dedomena">Δεδομένα</h2>
+                    <hr>
+                    <div class="media wow fadeInRight text-light">
+                        <h3 id="msg_eukoli_xrisi">Εύκολη χρήση</h3>
+                        <div class="media-body media-middle">
+                            <p id="msg_eukoli_xrisi_text">Απλά χρησιμοποιώντας την εφαρμογή sense.city στο κινητό σας, γίνεστε αισθητήρας της πόλης με ένα κλικ!</p>
+                        </div>
+                        <div class="media-right">
+                            <i class="icon-lg ion-android-checkmark-circle"></i>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="media wow fadeIn text-light">
+                        <h3 id="msg_anonymia">Ανώνυμα</h3>
+                        <div class="media-left">
+                            <i class="icon-lg ion-eye-disabled"></i>
+                        </div>
+                        <div class="media-body media-middle">
+                            <p id="msg_anonymia_text">Η εφαρμογή στέλνει ανώνυμα το γεγονός που θέλετε να καταγραφεί.</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="media wow fadeInRight text-light">
+                        <h3 id="msg_free_serv">Δωρεάν</h3>
+                        <div class="media-body media-middle">
+                            <p id="msg_free_serv_text">Δεν υπάρχει κάποια χρέωση για την υπηρεσία. (Προσoχή στην ογκοχρέωση των δεδομένων κινητής τηλεφωνίας)</p>
+                        </div>
+                        <div class="media-right">
+                            <i class="icon-lg ion-ios-snowy"></i>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="media wow fadeIn text-light">
+                        <h3 id="msg_open_data">Ανοιχτά δεδομένα</h3>
+                        <div class="media-left">
+                            <i class="icon-lg ion-ios-unlocked-outline"></i>
+                        </div>
+                        <div class="media-body media-middle">
+                            <p id="msg_open_data_text">Προσφέρουμε ένα ανοιχτό API για προγραμματιστές και όποιον ενδιαφέρεται να χρησιμοποιήσει τη πλατφόρμα sense.city. Δείτε περισσότερα εδώ: <a href="https://github.com/sensecitycode/sensecity-api/blob/master/README.md">apidoc</a></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="media wow fadeInRight text-light">
+                        <h3 id="msg_developers_sec">Developers</h3>
+                        <div class="media-body media-middle">
+                            <p id="msg_developers_sec_text">Αν θέλετε να βοηθήσετε στην αναπτυξη ή να δειτε το κώδικα: <a href="https://github.com/sensecitycode/sensecity-api">API</a>
+                            </p>
+                        </div>
+                        <div class="media-right">
+                            <i class="icon-lg ion-ios-flask-outline"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-dark" id="last" style="min-height:350px;background-color: rgba(255,255,255,0.9);">
+            <div class="container">
+                <div class="row" style="margin-left:0px; margin-right:0px; ">
+                    <div class="col-lg-8 col-lg-offset-2 text-center" style="color: #808080;">
+                        <h2 class="margin-top-0 wow fadeIn" id="msg_section_contact">Επικοινωνία</h2>
+                        <hr class="primary">
+                        <p id="msg_section_contact_text1">Αγαπάμε την επικοινωνία μαζί σας! <br /><!-- Συμπληρώστε την παρακάτω φόρμα και εμείς θα επικοινωνήσουμε το συντομότερο δυνατόν.--></p>
+                        <p id="msg_section_contact_text2">Αποστείλατε email στο <a href="mailto:info@sense.city" style="color: #000000;">info@sense.city</a> και το συντομότερο δυνατό θα επικοινωνήσουμε μαζί σας.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer id="footer" style="background-color:#D0D0D0;">
+            <div class="container">
+                <div class="row"  style="margin-left:0px;margin-right:0px; ">
+                    <div class="col-xs-12 col-sm-9 column">
+                        <h4 id="msg_section_info">Πληροφορίες</h4>
+                        <ul class="list-inline">
+                            <li><a href="#">Products</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Benefits</a></li>
+                            <li><a href="#">Developers</a></li>
+                            <li><a href="./policy.html">Privacy Policy</a></li>
+                            <li><a href="./terms.html">Terms &amp; Conditions</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 text-right">
+                        <h4 id="msg_section_followus">Ακολουθήστε μας</h4>
+                        <ul class="list-inline">
+                            <li><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
+                            <li><a rel="nofollow" href="https://www.facebook.com/sensecitybook" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
+                            <li><a rel="nofollow" href="" title="Ιnstagram"><i class="icon-lg ion-social-instagram-outline"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <br/>
+                <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Theme by: Landing Zero by BootstrapZero</a> ©2015 Πανεπιστήμιο Πατρών</span>
+            </div>
+
+            <!-- Google Analytics -->
+            <script>
+                (function (i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+                ga('create', 'UA-XXXXX-Y', 'auto');
+                ga('send', 'pageview');
+            </script>
+            <!-- End Google Analytics -->
+        </footer>
+        <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p>
+                            <br/>
+                            <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i class="ion-android-close"></i></button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h2 class="text-center" id="msg_popup_title">sense.city @ Πάτρα</h2>
+                        <h5 class="text-center"  id="msg_popup_msg">
+                            Συμμετέχω ενεργά στη πόλη μου
+                        </h5>
+                        <p class="text-justify" id="msg_popup_text">
+                            Οι πολίτες είστε οι αισθητήρες της πόλης! Χρησιμοποιώντας τις δικές σας συσκευές επικοινωνίας, είτε μέσω της εφαρμογής sense.city είτε με άλλες συσκευές που αναφέρουν στο sense.city δεδομένα της πόλης, ενημερώνετε τους συμπολίτες και το δήμο για προβλήματα και συμβάντα που συμβαίνουν κάθε στιγμή.
+                        </p>
+
+                        <br/>
+                        <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true"> OK </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--scripts loaded here from cdn for performance -->
+        <script src="_js/jquery.min.js"></script>
+        <script src="_js/bootstrap.min.js"></script> 
+        <script src="_js/jquery.easing.min.js"></script>
+        <script src="_js/wow.js"></script>
+        <script src="js/leaflet.awesome-markers.js"></script>
+        <script src="js/scripts.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="_css/MarkerCluster.css" />
+        <link rel="stylesheet" type="text/css" href="_css/MarkerCluster.Default.css" />
+        <link rel="stylesheet" type="text/css" href="css/leaflet.extra-markers.min.css" />
+
+        <script type='text/javascript' src='js/leaflet.markercluster.js'></script>
+        <script type='text/javascript' src='js/leaflet.extra-markers.min.js'></script>
+
+
+
+        <!-- Bootstrap core JavaScript
+   ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+        <!-- <script>window.jQuery || document.write('<script src="_js/vendor/jquery.min.js"><\/script>')</script> -->
+        <!-- <script src="_js/bootstrap.min.js"></script> -->
+        <!-- <script src="_js/docs.min.js"></script> -->
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+        <script>
+
+
+                $(document).ready(function () {
+                    $('.carousel').carousel({
+                        interval: 15000
+                    });
+
+
+
+
+                });
+
+                $('a.page-scroll').bind('click', function (event) {
+                    var $anchor = $(this);
+                    $('html, body').stop().animate({
+                        scrollTop: ($($anchor.attr('href')).offset().top - 50)
+                    }, 1250, 'easeInOutExpo');
+                    event.preventDefault();
+                });
+
+                if (localStorage.getItem("language") === 'en') {
+                    $('head').append('<script src="js/lang.en.js" />');
+                    localStorage.removeItem("language");
+                    localStorage.setItem("language", "en");
+                } else {
+                    $('head').append('<script src="js/lang.js" />');
+                    localStorage.removeItem("language");
+                    localStorage.setItem("language", "el");
+                }
+
+                change_lang();
+
+
+                console.log(localStorage.getItem("language"));
+                /*
+                 if(localStorage.getItem("language") === 'en'){
+                 localStorage.removeItem("language");
+                 localStorage.setItem("language", "en");
+                 
+                 }else{
+                 localStorage.removeItem("language");
+                 localStorage.setItem("language", "el");
+                 $('head').append('<script src="js/lang.js" />');
+                 }*/
+
+                $('#land_el').click(function () {
+                    localStorage.setItem("language", "el");
+                    console.log(localStorage.getItem("language"));
+
+
+                    $('head').append('<script src="js/lang.js" />');
+                    change_lang();
+
+                    return false;
+                });
+
+                $('#land_en').click(function () {
+                    localStorage.setItem("language", "en");
+                    console.log(localStorage.getItem("language"));
+                    $('head').append('<script src="js/lang.en.js" />');
+                    change_lang();
+                    return false;
+                });
+
+
+
+                //console.log(localStorage.getItem("language"));
+
+
+                function change_lang() {
+                    $('#menu_participation').html(lang.menu_participation);
+                    $('#menu_contact').html(lang.menu_contact);
+                    $('#menu_sensecityapp').html(lang.menu_sensecityapp);
+                    $('#menu_data').html(lang.menu_data);
+                    $('#menu_about').html(lang.menu_about);
+                    $('#msg_header').html(lang.msg_header);
+                    $('#msg_happen_in_city').html(lang.msg_happen_in_city);
+                    $('#msg_partcipate').html(lang.msg_partcipate);
+                    $('#msg_start_now').html(lang.msg_start_now);
+                    $('#msg_start_now_text').html(lang.msg_start_now_text);
+                    $('#msg_start_now_webbrowser').html(lang.msg_start_now_webbrowser);
+                    $('#msg_start_now_android').html(lang.msg_start_now_android);
+                    $('#msg_start_now_ios').html(lang.msg_start_now_ios);
+                    $('#msg_start_now_windows').html(lang.msg_start_now_windows);
+                    $('#msg_how_partcipate').html(lang.msg_how_partcipate);
+                    $('#msg_anafora_probl').html(lang.msg_anafora_probl);
+                    $('#msg_anafora_probl_text').html(lang.msg_anafora_probl_text);
+                    $('#msg_astiki_summe').html(lang.msg_astiki_summe);
+                    $('#msg_astiki_summe_text').html(lang.msg_astiki_summe_text);
+                    $('#msg_syn_dimiourg').html(lang.msg_syn_dimiourg);
+                    $('#msg_syn_dimiourg_text').html(lang.msg_syn_dimiourg_text);
+                    $('#msg_sec_dedomena').html(lang.msg_sec_dedomena);
+                    $('#msg_eukoli_xrisi').html(lang.msg_eukoli_xrisi);
+                    $('#msg_eukoli_xrisi_text').html(lang.msg_eukoli_xrisi_text);
+                    $('#msg_anonymia').html(lang.msg_anonymia);
+                    $('#msg_anonymia_text').html(lang.msg_anonymia_text);
+                    $('#msg_free_serv').html(lang.msg_free_serv);
+                    $('#msg_free_serv_text').html(lang.msg_free_serv_text);
+                    $('#msg_open_data').html(lang.msg_open_data);
+                    $('#msg_open_data_text').html(lang.msg_open_data_text);
+                    $('#msg_developers_sec').html(lang.msg_developers_sec);
+                    $('#msg_developers_sec_text').html(lang.msg_developers_sec_text);
+                    $('#msg_section_contact').html(lang.msg_section_contact);
+                    $('#msg_section_contact_text1').html(lang.msg_section_contact_text1);
+                    $('#msg_section_contact_text2').html(lang.msg_section_contact_text2);
+                    $('#msg_section_info').html(lang.msg_section_info);
+                    $('#msg_section_followus').html(lang.msg_section_followus);
+                    $('#msg_popup_title').html(lang.msg_popup_title);
+                    $('#msg_popup_msg').html(lang.msg_popup_msg);
+                    $('#msg_popup_text').html(lang.msg_popup_text);
+                    $('#city_patra').html(lang.city_patra);
+                    $('#city_zakynthos').html(lang.city_zakynthos);
+                    $('#city_other_1').html(lang.city_other_1);
+                    $('#city_other_2').html(lang.city_other_2);
+                }
+
+        </script>
+
+        <script>
+            /*
+             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+             
+             ga('create', 'UA-73253016-1', 'auto');
+             ga('send', 'pageview');
+             */
+        </script>
+
+        <style>
+
+
+            .crop {
+                height: 200px;
+                overflow: hidden;
+
+                border-radius: 10px;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
+            }
+
+            .crop img {
+                margin: 0px 0px 0px 0px;
+            }
+
+
+        </style>
+    </body>
 </html>

@@ -18,7 +18,7 @@
 
 
         <!-- angular dep -->
-             <script src="js/cdns/jquery.min.js"></script>
+        <script src="js/cdns/jquery.min.js"></script>
         <script
         src="js/cdns/angular.min.js"></script>
         <script src="js/cdns/angular-resource.min.js"></script>
@@ -53,8 +53,8 @@
         <script src="js/leaflet.markercluster.js"></script>
         <script src="js/leaflet.extra-markers.min.js"></script>
         <script src="js/angular-count-to.min.js"></script>
-        
-                <!-- Map dependancies -->
+
+        <!-- Map dependancies -->
         <link rel="stylesheet" href="css/leaflet.css" />
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
         <link rel="stylesheet" href="css/ionicons.min.css" />
@@ -72,7 +72,7 @@
         <!-- Angular scapp dependancies -->
         <script src="scctrl.js"></script>
         <script src="sense.js"></script>
-<!--        <script src="scwebsubmitctrl.js"></script>-->
+        <!--        <script src="scwebsubmitctrl.js"></script>-->
         <script src="scsearchctrl.js"></script>
         <script src="overviewctrl.js"></script>
         <script src="scapp.js"></script>
@@ -95,327 +95,339 @@
 
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
-        
+
     </head>
     <body ng-app="scApp" ng-controller="scWebSubmit" ng-cloak id="wscontrl">
-<div id="scfooter" class="page-container" style="background-color:#f5f5f5;"> 
+        <div id="scfooter" class="page-container" style="background-color:#f5f5f5;"> 
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
                     <div>
-                                        <li class="xn-logo" style="background-color: #1caf9a;
-    border-bottom: 1px solid #1caf9a;">
+                        <li class="xn-logo" style="background-color: #1caf9a;
+                            border-bottom: 1px solid #1caf9a;">
                             <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>sense.city</div></a>
                             <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
                         </li> 
-<li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
-<li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
-<li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
-<li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
-<li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
-<li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
-<li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
-<li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>                    
+                        <li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+                        <li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+                        <li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
+                        <li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
+                        <li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
+                        <li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>                    
                     </div>
                 </ul>                         
-<div class="page-content-wrap">
-    <div class="row">
-    <h2 style="left:8px;margin-top:10px;position:relative">{{'ISSUE_REPORT' | translate}}</h2>
-        <div class="col-md-12">
-            <div id="psw" class="wizard show-submit">
-                <ul>
-                    <li>
-                        <a href="#step-1">
-                            <span class="stepNumber">1</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 1<br /><div>{{'ISSUE_REPORT' | translate}}</div></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-2">
-                            <span class="stepNumber">2</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 2<br /><div>{{'EPONYMOUS_REPORT' | translate}}</div></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-3">
-                            <span class="stepNumber">3</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 3<br /><div>{{'CERTIFICATION' | translate}}</div></span>                   
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-4">
-                            <span class="stepNumber">4</span>
-                            <span class="stepDesc">{{'STEP'| translate}} 4<br /><div>{{'SUBMIT_REPORT' | translate}}</div></span>                   
-                        </a>
-                    </li>
-                </ul>
-                <div class="col-md-6" style="top:10px;position:relative">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title-box" style="font-weight:600;font-size:14px;">
-                                <div class="col-md-7">
-                                <h3> {{'ISSUE_MAP' | translate}}</h3>
-                                <span style="display:block;margin-top:7.5px">{{'ISSUE_MAP_SUB' | translate}}</span>
-                                <br>
+                <div class="page-content-wrap">
+                    <div class="row">
+                        <h2 style="left:8px;margin-top:10px;position:relative">{{'ISSUE_REPORT'| translate}}</h2>
+                        <div class="col-md-12">
+                            <div id="psw" class="wizard show-submit">
+                                <ul>
+                                    <li>
+                                        <a href="#step-1">
+                                            <span class="stepNumber">1</span>
+                                            <span class="stepDesc">{{'STEP'| translate}} 1<br /><div>{{'ISSUE_REPORT'| translate}}</div></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#step-2">
+                                            <span class="stepNumber">2</span>
+                                            <span class="stepDesc">{{'STEP'| translate}} 2<br /><div>{{'EPONYMOUS_REPORT'| translate}}</div></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#step-3">
+                                            <span class="stepNumber">3</span>
+                                            <span class="stepDesc">{{'STEP'| translate}} 3<br /><div>{{'CERTIFICATION'| translate}}</div></span>                   
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#step-4">
+                                            <span class="stepNumber">4</span>
+                                            <span class="stepDesc">{{'STEP'| translate}} 4<br /><div>{{'SUBMIT_REPORT'| translate}}</div></span>                   
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="col-md-6" style="top:10px;position:relative">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="panel-title-box" style="font-weight:600;font-size:14px;">
+                                                <div class="col-md-7">
+                                                    <h3> {{'ISSUE_MAP'| translate}}</h3>
+                                                    <span style="display:block;margin-top:7.5px">{{'ISSUE_MAP_SUB'| translate}}</span>
+                                                    <br>
+                                                </div>
+                                                <div class="col-md-5" style="margin-top:10px">
+                                                    <div class="input-group push-down-10">
+                                                        <input id="address" list="taddress" type="text" class="form-control" placeholder="{{'ADDRESS_SEARCH'| translate}}..." />
+                                                        <span style="cursor:pointer" id="subt" class="input-group-addon"><span style="font-size: 13px; color: #FFF;line-height: 28px" class="fa fa-search"></span></span>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body panel-body-map">                              
+                                            <leaflet style="z-index:3" id="issuesmap" lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="400px" width="100%"">
+                                            </leaflet>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-5" style="margin-top:10px">
-                                                                            <div class="input-group push-down-10">
-                                                <input id="address" list="taddress" type="text" class="form-control" placeholder="{{'ADDRESS_SEARCH' | translate}}..." />
-                                                <span style="cursor:pointer" id="subt" class="input-group-addon"><span style="font-size: 13px; color: #FFF;line-height: 28px" class="fa fa-search"></span></span>
-                                            </div> 
+                                <div class="col-md-6" style="top:10px;position:relative">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="panel-title-box" style="font-weight:600;font-size:14px;">
+                                                <h3>{{'ISSUE_DETAILS'| translate}}</h3>
+                                                <span ng-bind="myText"></span>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div id="step-1">
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <form action="" role="form" class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label  class="col-md-5 control-label text-left">{{'LONGTITUDE'| translate}}</label>
+                                                                <div class="col-md-7">
+                                                                    <input ng-model="lnglabeltxt" disabled type="text" class="form-control" placeholder="{{'LONGTITUDE'| translate}}"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-5 control-label text-left">{{'LATTITUDE'| translate}}</label>
+                                                                <div class="col-md-7">
+                                                                    <input ng-model="latlabeltxt" disabled type="text" class="form-control" placeholder="{{'LATTITUDE'| translate}}"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-5 control-label text-left">{{'ADDRESS'| translate}}</label>
+                                                                <div class="col-md-7">
+                                                                    <input ng-model="address" id="txtaddress" type="text" class="form-control" placeholder="{{'ADDRESS'| translate}}"/>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <form action="" role="form" class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label class="col-md-5 control-label text-left">{{'PROBLEMTYPE'| translate}}</label>
+                                                                <div class="col-md-7">                                        
+                                                                    <select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" id='available_issues' class="form-control select">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-5 control-label text-left">{{ 'PROBLEM' | translate}}</label>
+                                                                <div class="col-md-7">                                        
+                                                                    <select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" id='issuetype_select' ng-model="issueSubTypeSelect" class="form-control select">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div  ng-show='isOtherSelected()' class="form-group">
+                                                                <label class="col-md-5 control-label text-left">{{'DESCRIPTION'| translate}}</label>
+                                                                <div class="col-md-7">
+                                                                    <input ng-model="otherDescriptionTxt"  type="text" class="form-control" placeholder="{{'DESCRIPTION'| translate}}"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-5 control-label text-left">{{'PHOTO'| translate}}</label>
+                                                                <div class="col-md-7">
+                                                                    <input type="file" file-model="uploadedPhotoFile" class="fileinput" name="filename1" id="input_file"/>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        <div ng-show='img_show' class="dropzone dropzone-mini" style="height:70px;margin-top:5px;background-repeat:no-repeat;width:70px;background-image:url({{img_url}});background-size: cover;"></div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <form action="" role="form" class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label class="col-md-1 control-label">{{'MESSAGE_ISSUE'| translate}}</label>
+                                                                <div class="col-md-11">
+                                                                    <textarea ng-model="commentstxt" class="form-control" rows="5" placeholder="{{'MESSAGE_ISSUE'| translate}}"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="step-2">
+                                                <div class="form-group">
+                                                    <div class="col-md-6">
+                                                        <p style="font-size:14px;cursor:default" class="check"><input ng-model="chkSelected" type="checkbox" id="epon" class="icheckbox"/> {{'EPONYMOUS_REPORT'| translate}}</p>
+                                                    </div>
+                                                    <div ng-show="chkSelected" class="col-md-6" style="text-align:center;margin-top:5px">
+                                                        <p style="font-size:14px"> {{'MESSAGE_USER'| translate}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row" style="margin-top:20px">
+                                                    <div class="col-md-6" ng-show="chkSelected">
+                                                        <form action="" role="form" class="form-horizontal">
+                                                            <div class="form-group">
+                                                                <label  class="col-md-5 control-label text-left">{{'EPONYMOUS_NAME'| translate}}</label>
+                                                                <div class="col-md-7">
+                                                                    <input id="nametxt" ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_NAME'| translate}}"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-5 control-label text-left">{{'EPONYMOUS_EMAIL'| translate }}</label>
+                                                                <div class="col-md-7">
+                                                                    <input id="emailtxt" ng-model="EmailTxt" name="EmailTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_EMAIL'| translate }}"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-5 control-label text-left">{{'EPONYMOUS_MOBILE'| translate }}</label>
+                                                                <div class="col-md-7">
+                                                                    <input id="mobiletxt" ng-model="MobileTxt" name="MobileTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_MOBILE'| translate }}"/>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-6" ng-show="chkSelected">
+                                                        <div ng-show="mand_sms == 'true'" class="col-md-12">
+                                                            <label class="check"><input type="checkbox" ng-model="chkSelected_2" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" class="icheckbox"/>{{ 'SMS_USER' | translate}}</label>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="check"><input type="checkbox" ng-model="chkSelected_1" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" class="icheckbox"/>{{ 'EMAIL_USER' | translate}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="step-3">
+                                                <div ng-show="evalidation == true">
+                                                    <form action="" role="form" class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_EMAIL' | translate}}</label>
+                                                            <!--                                                    <label control-label text-left>Πιστοποίηση email</label>-->
+                                                            <div class="col-md-3">
+                                                                <input ng-model="ecodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
+                                                            </div>
+                                                            <div id="ccert" ng-show="evalid != null && evalid == true" class="col-md-1">
+                                                                <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
+                                                            </div>
+                                                            <div id="ccert" ng-show="evalid != null && evalid == false" class="col-md-1">
+                                                                <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
+                                                            </div>
+                                                            <div class="col-md-3" id="lmcert">
+                                                                <div ng-click="activate_email()" class="btn btn-primary"><span></span>{{ 'SEND_CODE' | translate}}</div>
+                                                            </div>
+                                                            <div class="col-md-2" id="lcert">
+                                                                <div ng-click="validate_email()" ng-hide="ecert" class="btn btn-primary"><span></span>{{ 'CERTIFICATION' | translate}}</div>
+                                                            </div>
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div ng-show="mvalidation == true">
+                                                    <form action="" role="form" class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_MOBILE' | translate}}</label>
+                                                            <div class="col-md-3">
+                                                                <input ng-model="scodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
+                                                            </div>
+                                                            <div id="ccert" ng-show="mvalid != null && mvalid == true" class="col-md-1">
+                                                                <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
+                                                            </div>
+                                                            <div id="ccert" ng-show="mvalid != null && mvalid == false" class="col-md-1">
+                                                                <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
+                                                            </div>
+                                                            <div class="col-md-3" id="lmcert">
+                                                                <div ng-click="activate_mobile()" class="btn btn-primary"><span></span>{{ 'SEND_CODE' | translate}}</div>
+                                                            </div>
+                                                            <div class="col-md-2" id="lcert">
+                                                                <div ng-click="validate_mobile()" ng-hide="mcert" class="btn btn-primary"><span></span>{{ 'CERTIFICATION' | translate}}</div>
+                                                            </div>
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div style="top:10px;position:relative">
+                                                    <div>
+                                                        <label ng-show="smsg1" ng-bind="msg1"></label>
+                                                    </div>
+                                                    <div>
+                                                        <label ng-show="smsg2" ng-bind="msg2"></label>
+                                                    </div>
+                                                </div>
+                                                <p style="font-size:14px" ng-show='!eisnotverify() && chkSelected_1 == true && chkSelected_2 == false && chkSelected == true'>{{'EMAIL_CERTIFICATION'| translate}}</p>
+                                                <p style="font-size:14px" ng-show='!misnotverify() && chkSelected_1 == false && chkSelected_2 == true && chkSelected == true'>{{'MOBILE_CERTIFICATION'| translate}}</p>
+                                                <p style="font-size:14px" ng-show='!misnotverify() && !eisnotverify() && chkSelected_1 == true && chkSelected_2 == true && chkSelected == true'>{{'EM_CERTIFICATION'| translate}}</p>
+                                                <p style="font-size:14px" ng-show='chkSelected_1 == false && chkSelected_2 == false && chkSelected == true'>{{'CERTIFICATION_ERROR1'| translate}}</p>
+                                                <p style="font-size:14px" ng-show='chkSelected == false'>{{'CERTIFICATION_ERROR'| translate}}</p>
+                                            </div>
+                                            <div id="step-4" ng-show='is_finalsubmit()'>
+                                                <p style="font-size:14px">{{'SUBMIT'| translate}}</p>
+                                            </div>
+                                            <div id="testaki"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="panel-body panel-body-map">                              
-                            <leaflet style="z-index:3" id="issuesmap" lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="400px" width="100%"">
-                            </leaflet>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" style="top:10px;position:relative">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title-box" style="font-weight:600;font-size:14px;">
-                                <h3>{{'ISSUE_DETAILS' | translate}}</h3>
-                                <span ng-bind="myText"></span>
-                            </div>
-                        </div>
-                                <div class="panel-body">
-                        <div id="step-1">
+            </div>
+            <div class="sfooter col-md-12">
+                <div class="col-md-6 col-sm-6">
+                    <img src="{{Variables.img_logo}}"
+                         style="width: 69px;">
+                    <img src="images/upatras_logo.png"
+                         style="width: 174px;">
+                </div>
+                <div class="col-md-6 col-sm-6 text-right" style="top:10px">
+                    <h4 id="msg_section_followus" style="font-family: 'Open Sans', sans-serif;font-size:20px">{{ 'FOLLOWUS' | translate }}</h4>
+                    <ul class="list-inline" style="font-family: 'Open Sans', sans-serif;font-size:25px">
+                        <li><a rel="nofollow" href="" title="Twitter"><i
+                                    class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
+                        <li><a rel="nofollow"
+                               href="https://www.facebook.com/sensecitybook" title="Facebook"><i
+                                    class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
+                        <li><a rel="nofollow" href="" title="Ιnstagram"><i
+                                    class="icon-lg ion-social-instagram-outline"></i></a></li>          
+                    </ul>
+                    <a href="http://sense.city/terms.html">Terms and conditions</a>
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <form action="" role="form" class="form-horizontal">
-                                                <div class="form-group">
-                                                    <label  class="col-md-5 control-label text-left">{{'LONGTITUDE' | translate}}</label>
-                                                    <div class="col-md-7">
-                                                        <input ng-model="lnglabeltxt" disabled type="text" class="form-control" placeholder="{{'LONGTITUDE' | translate}}"/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">{{'LATTITUDE' | translate}}</label>
-                                                    <div class="col-md-7">
-                                                        <input ng-model="latlabeltxt" disabled type="text" class="form-control" placeholder="{{'LATTITUDE' | translate}}"/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">{{'ADDRESS' | translate}}</label>
-                                                    <div class="col-md-7">
-                                                        <input ng-model="address" id="txtaddress" type="text" class="form-control" placeholder="{{'ADDRESS' | translate}}"/>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <form action="" role="form" class="form-horizontal">
-                                                <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">{{'PROBLEMTYPE' | translate}}</label>
-                                                    <div class="col-md-7">                                        
-                                                        <select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" id='available_issues' class="form-control select">
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">{{ 'PROBLEM' | translate}}</label>
-                                                    <div class="col-md-7">                                        
-                                                        <select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" id='issuetype_select' ng-model="issueSubTypeSelect" class="form-control select">
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div  ng-show='isOtherSelected()' class="form-group">
-                                                    <label class="col-md-5 control-label text-left">{{'DESCRIPTION' | translate}}</label>
-                                                    <div class="col-md-7">
-                                                        <input ng-model="otherDescriptionTxt"  type="text" class="form-control" placeholder="{{'DESCRIPTION' | translate}}"/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">{{'PHOTO' | translate}}</label>
-                                                    <div class="col-md-7">
-                                                        <input type="file" file-model="uploadedPhotoFile" class="fileinput" name="filename1" id="input_file"/>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <div ng-show='img_show' class="dropzone dropzone-mini" style="height:70px;margin-top:5px;background-repeat:no-repeat;width:70px;background-image:url({{img_url}});background-size: cover;"></div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <form action="" role="form" class="form-horizontal">
-                                                <div class="form-group">
-                                                    <label class="col-md-1 control-label">{{'MESSAGE_ISSUE' | translate}}</label>
-                                                    <div class="col-md-11">
-                                                        <textarea ng-model="commentstxt" class="form-control" rows="5" placeholder="{{'MESSAGE_ISSUE' | translate}}"></textarea>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                        </div>
-                        <div id="step-2">
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <p style="font-size:14px;cursor:default" class="check"><input ng-model="chkSelected" type="checkbox" id="epon" class="icheckbox"/> {{'EPONYMOUS_REPORT' | translate}}</p>
-                                        </div>
-                                        <div ng-show="chkSelected" class="col-md-6" style="text-align:center;margin-top:5px">
-                                            <p style="font-size:14px"> {{'MESSAGE_USER' | translate}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top:20px">
-                                        <div class="col-md-6" ng-show="chkSelected">
-                                            <form action="" role="form" class="form-horizontal">
-                                                <div class="form-group">
-                                                    <label  class="col-md-5 control-label text-left">{{'EPONYMOUS_NAME' | translate}}</label>
-                                                    <div class="col-md-7">
-                                                        <input id="nametxt" ng-model="NameTxt" name="NameTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_NAME' | translate}}"/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">{{'EPONYMOUS_EMAIL' | translate }}</label>
-                                                    <div class="col-md-7">
-                                                        <input id="emailtxt" ng-model="EmailTxt" name="EmailTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_EMAIL' | translate }}"/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-5 control-label text-left">{{'EPONYMOUS_MOBILE' | translate }}</label>
-                                                    <div class="col-md-7">
-                                                        <input id="mobiletxt" ng-model="MobileTxt" name="MobileTxt" ng-readonly="!chkSelected" type="text" class="form-control" placeholder="{{'EPONYMOUS_TYPE_MOBILE' | translate }}"/>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-md-6" ng-show="chkSelected">
-                                            <div ng-show="mand_sms=='true'" class="col-md-12">
-                                                <label class="check"><input type="checkbox" ng-model="chkSelected_2" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" class="icheckbox"/>{{ 'SMS_USER' | translate}}</label>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label class="check"><input type="checkbox" ng-model="chkSelected_1" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" class="icheckbox"/>{{ 'EMAIL_USER' | translate}}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                        </div>
-                        <div id="step-3">
-                            <div ng-show="evalidation == true">
-                                <form action="" role="form" class="form-horizontal">
-                                <div class="form-group">
-                                                    <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_EMAIL' | translate}}</label>
-<!--                                                    <label control-label text-left>Πιστοποίηση email</label>-->
-                                                    <div class="col-md-3">
-                                                        <input ng-model="ecodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
-                                                    </div>
-                                                    <div id="ccert" ng-show="evalid != null && evalid == true" class="col-md-1">
-                                                    <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
-                                                    </div>
-                                                    <div id="ccert" ng-show="evalid != null && evalid == false" class="col-md-1">
-                                                    <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
-                                                    </div>
-                                                    <div class="col-md-3" id="lmcert">
-                                                        <div ng-click="activate_email()" class="btn btn-primary"><span></span>{{ 'SEND_CODE' | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-2" id="lcert">
-                                                        <div ng-click="validate_email()" ng-hide="ecert" class="btn btn-primary"><span></span>{{ 'CERTIFICATION' | translate}}</div>
-                                                    </div>
-                                                    
-                                                </div>
-                                </form>
-                            </div>
-                            <div ng-show="mvalidation == true">
-                                <form action="" role="form" class="form-horizontal">
-                                <div class="form-group">
-                                                    <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_MOBILE' | translate}}</label>
-                                                    <div class="col-md-3">
-                                                        <input ng-model="scodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
-                                                    </div>
-                                                    <div id="ccert" ng-show="mvalid != null && mvalid == true" class="col-md-1">
-                                                    <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
-                                                    </div>
-                                                    <div id="ccert" ng-show="mvalid != null && mvalid == false" class="col-md-1">
-                                                    <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-times"></span>
-                                                    </div>
-                                                    <div class="col-md-3" id="lmcert">
-                                                        <div ng-click="activate_mobile()" class="btn btn-primary"><span></span>{{ 'SEND_CODE' | translate}}</div>
-                                                    </div>
-                                                    <div class="col-md-2" id="lcert">
-                                                        <div ng-click="validate_mobile()" ng-hide="mcert" class="btn btn-primary"><span></span>{{ 'CERTIFICATION' | translate}}</div>
-                                                    </div>
-                                                    
-                                                </div>
-                                </form>
-                            </div>
-                            <div style="top:10px;position:relative">
-                            <div>
-                                <label ng-show="smsg1" ng-bind="msg1"></label>
-                            </div>
-                            <div>
-                                <label ng-show="smsg2" ng-bind="msg2"></label>
-                            </div>
-                                </div>
-                            <p style="font-size:14px" ng-show='!eisnotverify() && chkSelected_1 == true && chkSelected_2 == false && chkSelected==true'>{{'EMAIL_CERTIFICATION' | translate}}</p>
-                            <p style="font-size:14px" ng-show='!misnotverify() && chkSelected_1 == false && chkSelected_2 == true && chkSelected==true'>{{'MOBILE_CERTIFICATION' | translate}}</p>
-                            <p style="font-size:14px" ng-show='!misnotverify() && !eisnotverify() && chkSelected_1 == true && chkSelected_2 == true && chkSelected==true'>{{'EM_CERTIFICATION'| translate}}</p>
-                            <p style="font-size:14px" ng-show='chkSelected_1 == false && chkSelected_2 == false && chkSelected==true'>{{'CERTIFICATION_ERROR1' | translate}}</p>
-                            <p style="font-size:14px" ng-show='chkSelected==false'>{{'CERTIFICATION_ERROR' | translate}}</p>
-                        </div>
-                        <div id="step-4" ng-show='is_finalsubmit()'>
-                            <p style="font-size:14px">{{'SUBMIT' | translate}}</p>
-                        </div>
-                        <div id="testaki"></div>
-                                </div>
-                    </div>
+                    <!-- Google Analytics -->
+                    <script>
+                        (function(i, s, o, g, r, a, m){i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function(){
+                        (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date(); a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+                        ga('create', 'UA-XXXXX-Y', 'auto');
+                        ga('send', 'pageview');
+                    </script>
+                    <!-- End Google Analytics -->
                 </div>
             </div>
         </div>
-    </div>
-</div>
-            </div>
-    <div class="sfooter col-md-12">
-        <div class="col-md-6 col-sm-6">
-		<img src="{{Variables.img_logo}}"
-			style="width: 69px;">
-		<img src="images/upatras_logo.png"
-			style="width: 174px;">
-        </div>
-        <div class="col-md-6 col-sm-6 text-right" style="top:10px">
-            <h4 id="msg_section_followus" style="font-family: 'Open Sans', sans-serif;font-size:20px">{{ 'FOLLOWUS' | translate }}</h4>
-		<ul class="list-inline" style="font-family: 'Open Sans', sans-serif;font-size:25px">
-			<li><a rel="nofollow" href="" title="Twitter"><i
-					class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
-			<li><a rel="nofollow"
-				href="https://www.facebook.com/sensecitybook" title="Facebook"><i
-					class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
-			<li><a rel="nofollow" href="" title="Ιnstagram"><i
-					class="icon-lg ion-social-instagram-outline"></i></a></li>
-		</ul>
-        </div>
-    </div>
-</div>
-        
-<datalist id="taddress">
-  
-</datalist>        
 
-<audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
-<audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
-<!-- END PRELOADS -->                
+        <datalist id="taddress">
 
-<!-- START SCRIPTS -->
-<!-- START PLUGINS -->
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>                
-<!-- END PLUGINS -->
+        </datalist>        
 
-<!-- THIS PAGE PLUGINS -->    
-<script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
-<script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+        <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
+        <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
+        <!-- END PRELOADS -->                
 
-<script type="text/javascript" src="jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
-<script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.js"></script>
-<!-- END PAGE PLUGINS -->
-<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
-<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-file-input.js"></script>
-<script type="text/javascript" src="js/plugins.js"></script>
-<script type="text/javascript" src="js/actions.js"></script>
-<script src="scwebsubmitctrl.js"></script>
+        <!-- START SCRIPTS -->
+        <!-- START PLUGINS -->
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>                
+        <!-- END PLUGINS -->
+
+        <!-- THIS PAGE PLUGINS -->    
+        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+
+        <script type="text/javascript" src="jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.js"></script>
+        <!-- END PAGE PLUGINS -->
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-file-input.js"></script>
+        <script type="text/javascript" src="js/plugins.js"></script>
+        <script type="text/javascript" src="js/actions.js"></script>
+        <script src="scwebsubmitctrl.js"></script>
     </body>
 </html>
 <!--

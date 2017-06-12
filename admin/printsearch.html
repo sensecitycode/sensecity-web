@@ -3,15 +3,15 @@
 </div>
 <table class="table table-bordered table-striped table-condensed" style="text-align: center">
     <thead>
-      <tr>
-        <th style="text-align: center">Πρόβλημα</th>
-        <th style="text-align: center">Ημερομηνία</th>
-        <th style="text-align: center">E-mail</th>
-        <th style="text-align: center">Τηλέφωνο</th>
-        <th style="text-align: center">Διεύθυνση</th>
-        <th style="text-align: center">Φωτογραφία</th>
-        <th style="text-align: center">QR</th>
-      </tr>
+        <tr>
+            <th style="text-align: center">Πρόβλημα</th>
+            <th style="text-align: center">Ημερομηνία</th>
+            <th style="text-align: center">E-mail</th>
+            <th style="text-align: center">Τηλέφωνο</th>
+            <th style="text-align: center">Διεύθυνση</th>
+            <th style="text-align: center">Φωτογραφία</th>
+            <th style="text-align: center">QR</th>
+        </tr>
     </thead>
     <tbody>
         <tr ng-repeat="printc in printres">
@@ -21,8 +21,27 @@
             <td>{{printc.phone}}</td> 
             <td>{{printc.address}}</td> 
             <td ng-show="printc.class == true"><img onerror="no_disposed(this)" data-order="{{printc.order}}" src={{printc.image_name}} width="100" height="100"/></td>
-                <td ng-show="printc.class == false">Μη διαθέσιμη</td>
+            <td ng-show="printc.class == false">Μη διαθέσιμη</td>
             <td><qrcode data="{{printc.qr_link}}" size="100"></qrcode></td>
-        </tr>
-    </tbody>
+</tr>
+</tbody>
 </table>
+
+<!-- Google Analytics -->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-XXXXX-Y', 'auto');
+    ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->

@@ -17,7 +17,7 @@
 
 
         <!-- angular dep -->
-                     <script src="js/cdns/jquery.min.js"></script>
+        <script src="js/cdns/jquery.min.js"></script>
         <script
         src="js/cdns/angular.min.js"></script>
         <script src="js/cdns/angular-resource.min.js"></script>
@@ -53,8 +53,8 @@
         <script src="js/leaflet.markercluster.js"></script>
         <script src="js/leaflet.extra-markers.min.js"></script>
         <script src="js/angular-count-to.min.js"></script>
-        
-                <!-- Map dependancies -->
+
+        <!-- Map dependancies -->
         <link rel="stylesheet" href="css/leaflet.css" />
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
         <link rel="stylesheet" href="css/ionicons.min.css" />
@@ -95,37 +95,37 @@
 
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
-        
+
     </head>
     <body id="mctl" ng-app="scApp" ng-controller="allissuesCtrl" ng-cloak>
         <div ng-show="nloaded" class="loading_bar">
-    Loading&#8230;
-</div>
-<div class="page-container" style="background-color:#f5f5f5"> 
+            Loading&#8230;
+        </div>
+        <div class="page-container" style="background-color:#f5f5f5"> 
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
                     <div>
-                                                            <li class="xn-logo" style="background-color: #1caf9a;
-    border-bottom: 1px solid #1caf9a;">
+                        <li class="xn-logo" style="background-color: #1caf9a;
+                            border-bottom: 1px solid #1caf9a;">
                             <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>sense.city</div></a>
                             <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
                         </li> 
-<li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
-<li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
-<li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
-<li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
-<li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
-<li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
-<li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
-<li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>                    
+                        <li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+                        <li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+                        <li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
+                        <li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
+                        <li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
+                        <li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>                    
                     </div>
                 </ul>               
-<div class="page-content-wrap" style="margin-top:5px">
-    <div class="col-md-12">
-        <div class="page-title">                    
-                    <h2>{{'MORE_ISSUES' | translate}}</h2>
-                </div>                
-    </div>
+                <div class="page-content-wrap" style="margin-top:5px">
+                    <div class="col-md-12">
+                        <div class="page-title">                    
+                            <h2>{{'MORE_ISSUES'| translate}}</h2>
+                        </div>                
+                    </div>
                     <div ng-hide="nloaded" class="col-md-12" style="margin-top:50px">
                         <div ng-repeat="lastissue in allissues" class="col-md-3">
                             <!-- CONTACT ITEM -->
@@ -136,60 +136,71 @@
                                         <a ng-href="scissuemap.html?issue={{lastissue._id}}"><i ng-if="lastissue.class != ''" class={{lastissue.class}} style="font-size:12em;color:white"></i></a>
                                     </div>
                                     <div class="profile-data">
-                                        <div class="profile-data-name">{{lastissue.issue | translate}}</div>
+                                        <div class="profile-data-name">{{lastissue.issue| translate}}</div>
                                         <div style="text-overflow: ellipsis !important;white-space: nowrap;overflow: hidden;" class="profile-data-title">{{lastissue.value_desc}}</div>
                                     </div>
                                 </div>                                
                                 <div class="panel-body" >                                    
                                     <div class="contact-info">
-                                        <p><small><span style="margin-right:3px" class="fa fa-cog"></span>{{'STATE' | translate}}</small><br>{{lastissue.status
-						| translate}}</p>
-                                        <p><small><span style="margin-right:3px" class="fa fa-clock-o"></span>{{'REPORT' | translate}}</small><br>{{ 'SINCE_TIME' |
-						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
+                                        <p><small><span style="margin-right:3px" class="fa fa-cog"></span>{{'STATE'| translate}}</small><br>{{lastissue.status
+                                                    | translate}}</p>
+                                        <p><small><span style="margin-right:3px" class="fa fa-clock-o"></span>{{'REPORT'| translate}}</small><br>{{ 'SINCE_TIME' |
+						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit|
 						translate }}</p>
-                                        <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">{{'DETAILS' | translate}}...</a></small><br></p>
-<!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
-                                        <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
+                                        <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">{{'DETAILS'| translate}}...</a></small><br></p>
+                                        <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
+                                                                                <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>
                                 </div>                                
                             </div>
                             <!-- END CONTACT ITEM -->
                         </div>
-                        
+
                     </div>
 
                 </div>
             </div>
-    <div ng-hide="nloaded" style="margin-bottom: 50px;margin-right:30px" class="paging"></div>
-    <div ng-hide="nloaded" style="background-color: #f5f5f5">
-        <div class="sfooter col-md-12">
-        <div class="col-md-6 col-sm-6">
-		<img src="{{Variables.img_logo}}"
-			style="width: 69px;">
-		<img src="images/upatras_logo.png"
-			style="width: 174px;">
+            <div ng-hide="nloaded" style="margin-bottom: 50px;margin-right:30px" class="paging"></div>
+            <div ng-hide="nloaded" style="background-color: #f5f5f5">
+                <div class="sfooter col-md-12">
+                    <div class="col-md-6 col-sm-6">
+                        <img src="{{Variables.img_logo}}"
+                             style="width: 69px;">
+                        <img src="images/upatras_logo.png"
+                             style="width: 174px;">
+                    </div>
+                    <div class="col-md-6 col-sm-6 text-right" style="top:10px">
+                        <h4 id="msg_section_followus" style="font-family: 'Open Sans', sans-serif;font-size:20px">{{ 'FOLLOWUS' | translate }}</h4>
+                        <ul class="list-inline" style="font-family: 'Open Sans', sans-serif;font-size:25px">
+                            <li><a rel="nofollow" href="" title="Twitter"><i
+                                        class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
+                            <li><a rel="nofollow"
+                                   href="https://www.facebook.com/sensecitybook" title="Facebook"><i
+                                        class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
+                            <li><a rel="nofollow" href="" title="Ιnstagram"><i
+                                        class="icon-lg ion-social-instagram-outline"></i></a></li>
+                        </ul>
+                        <a href="http://sense.city/terms.html">Terms and conditions</a>
+                        <!-- Google Analytics -->
+                        <script>
+                            (function(i, s, o, g, r, a, m){i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function(){
+                            (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date(); a = s.createElement(o),
+                                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+                            ga('create', 'UA-XXXXX-Y', 'auto');
+                            ga('send', 'pageview');
+                        </script>
+                        <!-- End Google Analytics -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6 col-sm-6 text-right" style="top:10px">
-            <h4 id="msg_section_followus" style="font-family: 'Open Sans', sans-serif;font-size:20px">{{ 'FOLLOWUS' | translate }}</h4>
-		<ul class="list-inline" style="font-family: 'Open Sans', sans-serif;font-size:25px">
-			<li><a rel="nofollow" href="" title="Twitter"><i
-					class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
-			<li><a rel="nofollow"
-				href="https://www.facebook.com/sensecitybook" title="Facebook"><i
-					class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
-			<li><a rel="nofollow" href="" title="Ιnstagram"><i
-					class="icon-lg ion-social-instagram-outline"></i></a></li>
-		</ul>
-        </div>
-    </div>
-    </div>
-</div>
         <!-- START PRELOADS -->
         <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
         <!-- END PRELOADS -->          
-        
-    <!-- START SCRIPTS -->
+
+        <!-- START SCRIPTS -->
         <!-- START PLUGINS -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
@@ -200,41 +211,41 @@
         <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
         <!-- END THIS PAGE PLUGINS-->        
-        
+
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>
-</body>
+    </body>
 </html>
-        <!-- END TEMPLATE -->
+<!-- END TEMPLATE -->
 <!--
 <div class="row" style="padding: 20px; width: 100%;">
-	<div ng-repeat="lastissue in allissues"
-		class="issueitem col-lg-2 col-md-2 col-sm-2 col-xs-2"
-		style="padding-bottom: 5px;">
-		<div
-			style="background-color: #FFFFFF; border-width: 1px; border-color: #967f7f; border-style: dotted; border-radius: 10px;">
-			<a href="http://{{Variables.city_name}}.sense.city/scissuemap.html?issue={{lastissue._id}}" style="text-decoration: none;"><center>
-					<div class="thumbnail crop" style="padding: 0px;">
-						<img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" class="img-responsive" width={{lastissue.width}} src={{lastissue.image_name}} alt="" height="239">
+        <div ng-repeat="lastissue in allissues"
+                class="issueitem col-lg-2 col-md-2 col-sm-2 col-xs-2"
+                style="padding-bottom: 5px;">
+                <div
+                        style="background-color: #FFFFFF; border-width: 1px; border-color: #967f7f; border-style: dotted; border-radius: 10px;">
+                        <a href="http://{{Variables.city_name}}.sense.city/scissuemap.html?issue={{lastissue._id}}" style="text-decoration: none;"><center>
+                                        <div class="thumbnail crop" style="padding: 0px;">
+                                                <img ng-if="!(lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined)" class="img-responsive" width={{lastissue.width}} src={{lastissue.image_name}} alt="" height="239">
                                         <i ng-if="lastissue.image_name === ''|| lastissue.image_name === 'no-image'|| lastissue.image_name === null || lastissue.image_name === undefined" class={{lastissue.class}} style="font-size:12em;color:black"></i>
-					</div>
-				</center>
-				<div class="caption"
-					style="color: #000000; padding-left: 13px; padding-right: 5px; margin-top: -10px;">
-					<p style="font-size: 13px;">
-						<b>{{lastissue.issue | translate}}</b>
-					</p>
+                                        </div>
+                                </center>
+                                <div class="caption"
+                                        style="color: #000000; padding-left: 13px; padding-right: 5px; margin-top: -10px;">
+                                        <p style="font-size: 13px;">
+                                                <b>{{lastissue.issue | translate}}</b>
+                                        </p>
 
-					<p style="font-size: 14px; height: 40px; margin-top: -10px;">{{lastissue.value_desc}}</p>
-					<p style="margin-top: -12px; font-size: 10px;">
-						<i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{ 'SINCE_TIME' |
-						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
-						translate }}
-					<p style="margin-top: -12px; font-size: 10px;">&nbsp;{{lastissue.status
-						| translate}}&nbsp;</p>
+                                        <p style="font-size: 14px; height: 40px; margin-top: -10px;">{{lastissue.value_desc}}</p>
+                                        <p style="margin-top: -12px; font-size: 10px;">
+                                                <i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{ 'SINCE_TIME' |
+                                                translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
+                                                translate }}
+                                        <p style="margin-top: -12px; font-size: 10px;">&nbsp;{{lastissue.status
+                                                | translate}}&nbsp;</p>
 
-				</div></a>
-		</div>
-	</div>
+                                </div></a>
+                </div>
+        </div>
 
 </div>-->

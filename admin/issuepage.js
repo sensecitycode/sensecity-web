@@ -402,6 +402,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
         var sparams = {"bug_id": issue_id, "image_field": 1};
         var canissue1 = $q.defer();
+
         $http.get($rootScope.Variables.APIADMIN + "/admin/issue", {params: sparams, timeout: canissue1.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
             //authorizedu(result[0].bug_component);
             canissue1.resolve();
