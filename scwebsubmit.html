@@ -19,6 +19,7 @@
 
         <!-- angular dep -->
         <script src="js/cdns/jquery.min.js"></script>
+                
         <script
         src="js/cdns/angular.min.js"></script>
         <script src="js/cdns/angular-resource.min.js"></script>
@@ -45,17 +46,17 @@
               href="css/font-awesome.min.css">
         <script src="js/cdns/moment-with-locales.js"></script>
         <script src="js/dirdisqus.js"></script>
-
-        <script src="js/leaflet.js"></script>
-        <script src="js/ui-leaflet.min.js"></script>
+        
+        <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+        <script src="ui-leaflet-1.0.3/logger.js"></script>
+        <script src="ui-leaflet-1.0.3/dist/ui-leaflet.min.js"></script>
         <script src="js/leaflet.awesome-markers.js"></script>
-        <script src="js/angular-simple-logger.js"></script>
         <script src="js/leaflet.markercluster.js"></script>
         <script src="js/leaflet.extra-markers.min.js"></script>
         <script src="js/angular-count-to.min.js"></script>
 
         <!-- Map dependancies -->
-        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
         <link rel="stylesheet" href="css/ionicons.min.css" />
         <link rel="stylesheet" href="_css/MarkerCluster.css" />
@@ -166,7 +167,7 @@
                                             </div>
                                         </div>
                                         <div class="panel-body panel-body-map">                              
-                                            <leaflet style="z-index:3" id="issuesmap" lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="400px" width="100%"">
+                                            <leaflet geojson="geojson" id="issuesmap" lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="400px" width="100%">
                                             </leaflet>
                                         </div>
                                     </div>
@@ -385,6 +386,7 @@
                         <li><a rel="nofollow" href="" title="Ιnstagram"><i
                                     class="icon-lg ion-social-instagram-outline"></i></a></li>          
                     </ul>
+                    <a href="boundaries.html">Όρια Δήμου |</a>
                     <a href="http://sense.city/terms.html">Terms and conditions</a>
 
                     <!-- Google Analytics -->

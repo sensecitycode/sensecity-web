@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="demoapp">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/cdns/angular.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <script src="ui-leaflet-1.0.3/logger.js"></script>
+    <script src="ui-leaflet-1.0.3/dist/ui-leaflet.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script>
+      var app = angular.module("demoapp", ['ui-leaflet']);
+      app.controller("GeoJSONController", [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
+        angular.extend($scope, {
+            japan: {
+                lat: 38.246639,
+                lng: 21.734573,
+                zoom: 12
+            },
+            defaults: {
+                scrollWheelZoom: false
+            }
+        });
+
+            angular.extend($scope, {
+                geojson: {
+                    data: {"type": "FeatureCollection", "features": [
+                        {"type": "Feature", "id": "Multipolygon", "properties": {"name": "Mutipolygon"}, "geometry": {"type": "MultiPolygon", "coordinates": [[[
+                                            [21.750869750976562, 38.27876330262518],
+                                            [21.713104248046875, 38.216884315831074],
+                                            [21.769752502441406, 38.20555435498514], [21.765460968017578, 38.25302049432717],
+                                            [21.750869750976562, 38.27876330262518]]]
+                                ]}}
+                    ]}
+                }
+            });
+      } ]);
+      </script>
+  </head>
+  <body ng-controller="GeoJSONController">
+     <leaflet lf-center="japan" geojson="geojson" defaults="defaults" width="100%" height="600px"></leaflet>
+  </body>
+</html>

@@ -282,7 +282,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             },
-                            data: {"name": $scope.NameTxt,"email": $scope.EmailTxt, "mobile_num": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.bug_id}
+                            data: {"name": $scope.NameTxt, "email": $scope.EmailTxt, "mobile_num": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.bug_id}
                         }).success(function (resp_an) {
                     canissue.resolve();
                     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
@@ -871,14 +871,14 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             var user_comment;
                             var status_index = -1;
                             var department_index = -1;
-                            for( var l = 0 ; l < response[1].bugs[$scope.resp_id].comments[i].tags.length;l++){
-                                if(response[1].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0] == "STATUS"){
+                            for (var l = 0; l < response[1].bugs[$scope.resp_id].comments[i].tags.length; l++) {
+                                if (response[1].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0] == "STATUS") {
                                     status_index = l;
                                     break;
                                 }
                             }
-                            for( var l = 0 ; l < response[1].bugs[$scope.resp_id].comments[i].tags.length;l++){
-                                if(response[1].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0] == "DEPARTMENT"){
+                            for (var l = 0; l < response[1].bugs[$scope.resp_id].comments[i].tags.length; l++) {
+                                if (response[1].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0] == "DEPARTMENT") {
                                     department_index = l;
                                     break;
                                 }
@@ -975,40 +975,40 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             if (response[1].bugs[$scope.resp_id].comments[i].text == 'undefined') {
                                 show = false;
                             }
-                            
-                            if(status_index != -1){
-                            var dep_index = $rootScope.variables.components_en.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index].split(":")[1]);
-                            response[1].bugs[$scope.resp_id].comments[i].tags[department_index] = $rootScope.variables.components[dep_index];
 
-                            var dindex = $rootScope.variables.components.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index]);
-                            var com = {
-                                "content": response[1].bugs[$scope.resp_id].comments[i].text,
-                                "type": type,
-                                "day": day,
-                                "month": month,
-                                "month_num": month_num,
-                                "year": year,
-                                "time": time,
-                                "color": color,
-                                "component": $translate.instant($rootScope.variables.components_translation[dindex]),
-                                "dindex": dindex,
-                                "show": show,
-                                "user_comment": false
-                            };
-                        }else{
-                            var com = {
-                                "content": response[1].bugs[$scope.resp_id].comments[i].text,
-                                "type": type,
-                                "day": day,
-                                "month": month,
-                                "month_num": month_num,
-                                "year": year,
-                                "time": time,
-                                "color": color,
-                                "show": show,
-                                "user_comment": true
-                            };
-                        }
+                            if (status_index != -1) {
+                                var dep_index = $rootScope.variables.components_en.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index].split(":")[1]);
+                                response[1].bugs[$scope.resp_id].comments[i].tags[department_index] = $rootScope.variables.components[dep_index];
+
+                                var dindex = $rootScope.variables.components.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index]);
+                                var com = {
+                                    "content": response[1].bugs[$scope.resp_id].comments[i].text,
+                                    "type": type,
+                                    "day": day,
+                                    "month": month,
+                                    "month_num": month_num,
+                                    "year": year,
+                                    "time": time,
+                                    "color": color,
+                                    "component": $translate.instant($rootScope.variables.components_translation[dindex]),
+                                    "dindex": dindex,
+                                    "show": show,
+                                    "user_comment": false
+                                };
+                            } else {
+                                var com = {
+                                    "content": response[1].bugs[$scope.resp_id].comments[i].text,
+                                    "type": type,
+                                    "day": day,
+                                    "month": month,
+                                    "month_num": month_num,
+                                    "year": year,
+                                    "time": time,
+                                    "color": color,
+                                    "show": show,
+                                    "user_comment": true
+                                };
+                            }
 
                             if (response[1].bugs[$scope.resp_id].comments[i].text.substr(2, 3) != "***") {
                                 if ($scope.comments.length == 0) {
@@ -1017,7 +1017,8 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                 $scope.comments.push(com);
                             }
                         }
-                    };
+                    }
+                    ;
 
 
                     //parse ?issue_id from URL

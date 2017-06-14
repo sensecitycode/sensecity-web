@@ -1,4 +1,4 @@
-var appControllers = angular.module('scwebsubmit.controllers', ['pascalprecht.translate', 'ngCookies', 'pascalprecht.translate']);
+var appControllers = angular.module('scwebsubmit.controllers', []);
 
 appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
     function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
@@ -158,6 +158,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 clearInterval(i);
         }, 10);
 
+
         leafletData.getMap("issuesmap").then(function (map) {
             map.scrollWheelZoom.disable();
         });
@@ -250,7 +251,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         };
 
         $scope.invalidateTheMap = function () {
-            leafletData.getMap().then(
+            leafletData.getMap("issuesmap").then(
                     function (map) {
                         map.invalidateSize(true);
                     }
@@ -324,7 +325,8 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
             $scope.latlabeltxt = event.latlng.lat;
             $scope.lnglabeltxt = event.latlng.lng;
-        };
+        }
+        ;
 
         $q.all([$rootScope.mainInfo]).then(function (data) {
             $("#next_button").attr("class", "btn btn-default pull-right disabled");
@@ -332,7 +334,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 $scope.markers.pop();
             }
 
-            leafletData.getMap().then(function (map) {
+            leafletData.getMap("issuesmap").then(function (map) {
                 map.on('click', onmapclick);
             });
 
@@ -400,7 +402,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 $scope.markers.push(mainMarker);
                                 $scope.latlabeltxt = results[0].geometry.location.lat();
                                 $scope.lnglabeltxt = results[0].geometry.location.lng();
-                                leafletData.getMap().then(
+                                leafletData.getMap("issuesmap").then(
                                         function (map) {
                                             map.invalidateSize(true);
                                         }
@@ -1213,17 +1215,17 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
-                            canemail.resolve();
+                    canemail.resolve();
                     $scope.msg1 = "Στο email " + $scope.EmailTxt + " που δηλώσατε σας έχει έρθει ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το email σας κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
                     $scope.smsg1 = true;
                 });
-                
+
                 setTimeout(function () {
-                        if (canemail.promise.$$state.status == 0) {
-                            canemail.resolve('cancelled');
-                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                        }
-                    }, 30000);
+                    if (canemail.promise.$$state.status == 0) {
+                        canemail.resolve('cancelled');
+                        alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
             };
 
             $scope.activate_mobile = function () {
@@ -1241,11 +1243,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     $scope.smsg2 = true;
                 });
                 setTimeout(function () {
-                        if (canmobile.promise.$$state.status == 0) {
-                            canmobile.resolve('cancelled');
-                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                        }
-                    }, 30000);
+                    if (canmobile.promise.$$state.status == 0) {
+                        canmobile.resolve('cancelled');
+                        alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
             };
 
             $scope.validate_email = function () {
@@ -1259,7 +1261,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
-                            canvalemail.resolve();
+                    canvalemail.resolve();
                     if (resp != "") {
                         $scope.ecert = true;
                         $scope.msg1 = "Ο κωδικός πιστοποίησης email που δώσατε είναι σωστός.";
@@ -1280,11 +1282,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     $scope.smsg1 = true;
                 });
                 setTimeout(function () {
-                        if (canvalemail.promise.$$state.status == 0) {
-                            canvalemail.resolve('cancelled');
-                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                        }
-                    }, 30000);
+                    if (canvalemail.promise.$$state.status == 0) {
+                        canvalemail.resolve('cancelled');
+                        alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
             };
 
             $scope.validate_mobile = function () {
@@ -1293,12 +1295,12 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         {
                             method: 'POST',
                             url: $rootScope.Variables.APIADMIN + "/activate_mobile?uuid=web-site&mobile=" + $scope.MobileTxt + "&code=" + $scope.scodeTxt,
-                            timeout :canvalmobile.promise,
+                            timeout: canvalmobile.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
-                        canvalmobile.resolve();    
+                    canvalmobile.resolve();
                     if (resp.nModified == 1) {
                         $scope.mcert = true;
                         $scope.msg2 = "Ο κωδικός πιστοποίησης κινητού που δώσατε είναι σωστός.";
@@ -1319,11 +1321,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     $scope.smsg2 = true;
                 });
                 setTimeout(function () {
-                        if (canvalmobile.promise.$$state.status == 0) {
-                            canvalmobile.resolve('cancelled');
-                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                        }
-                    }, 30000);
+                    if (canvalmobile.promise.$$state.status == 0) {
+                        canvalmobile.resolve('cancelled');
+                        alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
             };
 
             setTimeout(function () {
