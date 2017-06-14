@@ -57,6 +57,27 @@ body {
 .body-full-height body {
   height: 100%;
 }
+
+ul.panel-controls > li span > a {
+    display: block;
+    float: left;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 28px;
+    color: #22262e;
+    border: 1px solid #BBB;
+    -moz-border-radius: 20%;
+    -webkit-border-radius: 20%;
+    border-radius: 20%;
+    margin-left: 3px;
+    -webkit-transition: all 200ms ease;
+    -moz-transition: all 200ms ease;
+    -ms-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    transition: all 200ms ease;
+}
+
 .row {
   margin-left: 0px;
   margin-right: 0px;

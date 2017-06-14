@@ -1,4 +1,4 @@
-var app = angular.module('average', ['ngCookies']);
+var app = angular.module('average', ['ngCookies','720kb.tooltips']);
 
 app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootScope', '$location', function ($scope, $http, $cookieStore, $q, $rootScope, $location) {
 
@@ -34,6 +34,8 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
         }
 
         var d = $q.defer();
+
+        $scope.scompl = false;
 
         $rootScope.mainInfo = $http.get(url).success(function (response) {
 
@@ -96,6 +98,7 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                             var lepta2 = 0;
                             var cnt = 0;
                             var array1D = [];
+                            var length = response.data.length;
                             for (var i = 0; i < response.data.length; i++) {
                                 $http.get($rootScope.Variables.APIADMIN + "/fullissue/" + response.data[i]._id).then(function (response) {
                                     var issues = response.data;
@@ -141,14 +144,15 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                                             return a.diasthma - b.diasthma;
                                         });
                                         var sumd = 0;
-                                        
+
                                         for (var k = 0; k < array1D.length; k++) {
                                             sumd += array1D[k].diasthma;
-                                        }                                      
+                                        }
                                         meres = Math.floor(sumd / (array1D.length * 86400000));
                                         wres = Math.floor(((sumd % (array1D.length * 86400000)) / (array1D.length * 3600000)));
                                         lepta = Math.floor(((sumd % (array1D.length * 86400000)) % (array1D.length * 3600000)) / (60000 * array1D.length));
-                                        $scope.depinfo[dep_index] = {department:department,lresolved: array1D[array1D.length - 1], fresolved: array1D[0], number: number, meres: meres, wres: wres, lepta: lepta};
+                                        $scope.depinfo[dep_index] = {department: department, lresolved: array1D[array1D.length - 1], fresolved: array1D[0], number: number, meres: meres, wres: wres, lepta: lepta};
+                                        setTimeout(function(){$scope.scompl = true;},1);
                                     }
                                 });
                             }

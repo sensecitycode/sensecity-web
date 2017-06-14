@@ -11,18 +11,20 @@
         <!-- END META SECTION -->
 
         <!-- CSS INCLUDE -->        
-        <link rel="stylesheet" type="text/css" id="theme" href="../css/theme-default.css"/>
+        <link rel="stylesheet" type="text/css" id="theme" href="./css/theme-default.css"/>
         <link rel="stylesheet" type="text/css" id="theme" href="../css/font-awesome.css"/>
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
         <!-- EOF CSS INCLUDE --> 
 
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular.min.js"></script>
         <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
         <script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>        
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular-cookies.js"></script>
         <script type="text/javascript" src="averagectl.js"></script>
+        <link href="../dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
+        <script src="../dist/angular-tooltips.min.js"></script> 
     </head>
-    <body class="page-container" data-ng-app="average" data-ng-controller="averagectl">
+    <body class="page-container" data-ng-app="average" data-ng-controller="averagectl"> 
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
 
@@ -73,85 +75,74 @@
 
 
                 <!-- PAGE CONTENT WRAPPER -->
-                <div class="page-content-wrap" align="center">
+                <div class="page-content-wrap">
 
 
-                    <div class="row">
-                        <div class="col-md-12">
+                    <div class="row" align="center">
 
-                            <form class="form-horizontal" onsubmit="return false;">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Αναζήτηση επιθυμητού χρονικου διαστήματος</h3>
-
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <label class="col-md-1 col-xs-12 control-label" style="top:6px;margin-bottom:10px">Από:</label>
+                                    <div class="col-md-3 col-xs-12" style="margin-bottom:10px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                            <input type="text" id="startdate" class="form-control datepicker" value="2017-01-01">                                            
+                                        </div>
                                     </div>
-
-                                    <div class="panel-body">                                                                        
-
-
-
-
-                                        <div class="form-group">                                        
-                                            <label class="col-md-3 col-xs-12 control-label">Από</label>
-                                            <div class="col-md-6 col-xs-12">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                                    <input type="text" id="startdate" class="form-control datepicker" value="2017-01-01">                                            
-                                                </div>
-                                                <span class="help-block">Εισαγωγή ημερομηνίας έναρξης</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">                                        
-                                            <label class="col-md-3 col-xs-12 control-label">Εώς</label>
-                                            <div class="col-md-6 col-xs-12">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                                    <input type="text" id="enddate" class="form-control datepicker" value="2017-03-30">                                            
-                                                </div>
-                                                <span class="help-block">Εισαγωγή ημερομηνίας λήξης</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="panel-footer">
-
-                                            <button id="search_btn" class="btn btn-primary pull-right">Αναζήτηση</button>
+                                    <label class="col-md-1 col-xs-12 control-label" style="top:6px;margin-bottom:10px">Εώς:</label>
+                                    <div class="col-md-3 col-xs-12" style="margin-right:10%">
+                                        <div class="input-group" style="margin-bottom:10px;">
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                            <input type="text" id="enddate" class="form-control datepicker" value="2017-03-30">                                            
                                         </div>
                                     </div>
 
-
-
-
+                                    <button id="search_btn" class="col-md-2 btn btn-primary">Αναζήτηση</button>
                                 </div>
+
+                            </div>
+
+
                         </div>
-
-
                     </div>
-                    <div class="panel panel-default" ng-repeat="component in Variables.components">
+                    <div class="col-md-6" ng-repeat="component in Variables.components" >
+                        <div class="panel panel-default">                       
+                            <div class="panel-heading" style="min-height:81px">
+                                <h3 class="panel-title">{{component}}</h3> 
+                                <ul class="panel-controls">
+                                    <li><span tooltip-side="bottom" tooltips tooltip-template="Περισσότερα"><a href="department.html?department={{depinfo[$index].department}}&start={{date1}}&end={{date2}}"><span class="fa fa-eye"></span></a></span></li>                    
+                                </ul>
+                            </div>
 
-                        <div class="panel-heading" >
-                            <h3 class="panel-title">{{component}}</h3>                                
-                        </div>
-                        <div class="row">
 
-                            <div class="col-md-12" >
-                                <div class="widget widget-default widget-item-icon" >
-                                    <div class="widget-item-left">
-                                        <span class="fa fa-user"></span>
-                                    </div>
-                                    <div class="widget-data">
-
-                                        <div class="widget-title">ΔΙΕΚΠΕΡΑΙΩΜΕΝΑ ΠΡΟΒΛΗΜΑΤΑ:{{depinfo[$index].number}}</div>
-                                        <div class="widget-title">ΜΕΣΟΣ ΧΡΟΝΟΣ ΕΠΙΛΥΣΗΣ: </div>
-                                        <div class="widget-title">{{depinfo[$index].meres}} ΜΕΡΕΣ {{depinfo[$index].wres}} ΩΡΕΣ {{depinfo[$index].lepta}} ΛΕΠΤΑ</div>
-                                        <div class="widget-title">Πιο γρηγορα επιλυμενο: {{depinfo[$index].fresolved.bug}} </div>
-                                        <div class="widget-title">Πιο αργα επιλυμενο: {{depinfo[$index].lresolved.bug}} </div>
-                                        <div class="widget-title"><a ng-href="department.html?department={{depinfo[$index].department}}&start={{date1}}&end={{date2}}">ΑΝΑΛΥΤΙΚΑ</a></div>
-                                    </div>
-
-                                </div>
+                            <div class="col-md-12 list-group" style="padding-right:0px;padding-left:0px;">
+                                <span style="border-radius: 0px;border-top:0px;border-left:0px;border-right:0px" class="list-group-item">Διεκπαιρεωμένα προβλήματα:<span class="pull-right">{{depinfo[$index].number}}</span></span>
+                                <span style="border-radius: 0px;border-top:0px;border-left:0px;border-right:0px" class="list-group-item">Πιο γρήγορα επιλυμένο:<span class="pull-right">{{depinfo[$index].fresolved.bug}}</span></span>
+                                <span style="border-radius: 0px;border-top:0px;border-left:0px;border-right:0px" class="list-group-item">Πιο αργά επιλυμένο:<span class="pull-right">{{depinfo[$index].lresolved.bug}}</span></span>
+                                <span style="border-radius: 0px;border-top:0px;border-left:0px;border-right:0px" class="list-group-item">Μέσος χρόνος επίλυσης:<span ng-show="scompl" class="pull-right">{{depinfo[$index].meres}} ημέρες {{depinfo[$index].wres}} ώρες {{depinfo[$index].lepta}} λεπτά</span></span>
                             </div>
                         </div>
+                        <!--                        <div class="row">
+                        
+                                                    <div class="col-md-12" >
+                                                        <div class="widget widget-default widget-item-icon" >
+                                                            <div class="widget-item-left">
+                                                                <span class="fa fa-user"></span>
+                                                            </div>
+                                                            <div class="widget-data">
+                        
+                                                                <div class="widget-title">ΔΙΕΚΠΕΡΑΙΩΜΕΝΑ ΠΡΟΒΛΗΜΑΤΑ:{{depinfo[$index].number}}</div>
+                                                                <div class="widget-title">ΜΕΣΟΣ ΧΡΟΝΟΣ ΕΠΙΛΥΣΗΣ: </div>
+                                                                <div class="widget-title">{{depinfo[$index].meres}} ΜΕΡΕΣ {{depinfo[$index].wres}} ΩΡΕΣ {{depinfo[$index].lepta}} ΛΕΠΤΑ</div>
+                                                                <div class="widget-title">Πιο γρηγορα επιλυμενο: {{depinfo[$index].fresolved.bug}} </div>
+                                                                <div class="widget-title">Πιο αργα επιλυμενο: {{depinfo[$index].lresolved.bug}} </div>
+                                                                <div class="widget-title"><a ng-href="department.html?department={{depinfo[$index].department}}&start={{date1}}&end={{date2}}">ΑΝΑΛΥΤΙΚΑ</a></div>
+                                                            </div>
+                        
+                                                        </div>
+                                                    </div>
+                                                </div>-->
 
                     </div>
 
@@ -180,20 +171,20 @@
 
         <!-- Google Analytics -->
         <script>
-                                                    (function (i, s, o, g, r, a, m) {
-                                                        i['GoogleAnalyticsObject'] = r;
-                                                        i[r] = i[r] || function () {
-                                                            (i[r].q = i[r].q || []).push(arguments)
-                                                        }, i[r].l = 1 * new Date();
-                                                        a = s.createElement(o),
-                                                                m = s.getElementsByTagName(o)[0];
-                                                        a.async = 1;
-                                                        a.src = g;
-                                                        m.parentNode.insertBefore(a, m)
-                                                    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+                                            (function (i, s, o, g, r, a, m) {
+                                                i['GoogleAnalyticsObject'] = r;
+                                                i[r] = i[r] || function () {
+                                                    (i[r].q = i[r].q || []).push(arguments)
+                                                }, i[r].l = 1 * new Date();
+                                                a = s.createElement(o),
+                                                        m = s.getElementsByTagName(o)[0];
+                                                a.async = 1;
+                                                a.src = g;
+                                                m.parentNode.insertBefore(a, m)
+                                            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-                                                    ga('create', 'UA-XXXXX-Y', 'auto');
-                                                    ga('send', 'pageview');
+                                            ga('create', 'UA-XXXXX-Y', 'auto');
+                                            ga('send', 'pageview');
         </script>
         <!-- End Google Analytics -->
         <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
