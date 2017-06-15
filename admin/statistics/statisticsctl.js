@@ -85,7 +85,7 @@ app.controller('statistics', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                 function (data) {
                     $(document).resize();
                     var morrisCharts = function () {
-                        $http.get($rootScope.Variables.APIADMIN + "/admin/issue?city=" + $rootScope.Variables.city_name + "&startdate=2017-01-01&enddate=" + today + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=1000&includeAnonymous=1",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/admin/issue?city=" + $rootScope.Variables.city_name + "&startdate=2017-01-01&enddate=" + today + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=1000",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var issues_states = [];
                             for (var i = 0; i < $rootScope.Variables.departments.length; i++) {
                                 issues_states.push([0, 0]);
