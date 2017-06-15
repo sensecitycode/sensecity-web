@@ -84,7 +84,7 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                     $(document).resize();
                     $("#search_btn").click("on", function () {
                         function dep_stats(department) {
-                            $http.get($rootScope.Variables.APIADMIN + "/admin/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1&resolution=FIXED|INVALID|DUPLICATED&departments=" + department,{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                            $http.get($rootScope.Variables.APIADMIN + "/admin/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED&departments=" + department,{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
 
                                 var count_resolved = 0;
                                 var count_progress = 0;
