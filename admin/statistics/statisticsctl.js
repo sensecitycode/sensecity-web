@@ -98,9 +98,10 @@ app.controller('statistics', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                                 if (response.data[i].status == "RESOLVED") {
                                     issues_states[issue_index][1]++;
                                     issues_states[0][1]++;
-                                } else
+                                } else{
                                     issues_states[issue_index][0]++;
                                     issues_states[0][0]++;
+                                }
                             }
                         }
                             for (var i = 0; i < $rootScope.Variables.departments.length; i++) {
