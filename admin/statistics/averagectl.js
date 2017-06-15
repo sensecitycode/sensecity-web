@@ -27,10 +27,10 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
         var url;
 
         if (sub_domain[0].split(":").length > 1) {
-            url = "../config/testcity1.json";
+            url = "../../config/testcity1.json";
             sub_domain[0] = "testcity1";
         } else {
-            url = '../config/' + sub_domain[0] + '.json';
+            url = '../../config/' + sub_domain[0] + '.json';
         }
 
         var d = $q.defer();
