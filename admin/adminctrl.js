@@ -1280,7 +1280,6 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                 }
                             };
                         }
-                        
                         angular.forEach(result, function (value, key) {
                             var issue_name = ToGrService.issueName(value.issue);
                             var panelTitle = ToGrService.statusTitle(value.status, value.resolution);

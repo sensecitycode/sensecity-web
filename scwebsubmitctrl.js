@@ -662,7 +662,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                 if (step == 1) {
                     console.log("Step 1");
-
+                    
                     setTimeout(function () {
                         if ($scope.chkSelected) {
                             if ($scope.NameTxt == "" || $scope.NameTxt == undefined) {

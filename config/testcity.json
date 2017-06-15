@@ -11,8 +11,8 @@
     "bugzilla": "http://api.sense.city:3001/bugs/search",
     "feelingsURL": "http://api.sense.city:3000/api/1.0/feelings",
     "ALLISSUESAPIURL": "http://api.sense.city:3000/api/1.0/issues",
-    "active_user_URL": "http://api.sense.city:3000/api/1.0/active_users",
-    "activate_user_URL": "http://api.sense.city:3000/api/1.0/activate_users",
+    "active_user_URL": "http://api.sense.city:3000/api/1.0/activate_user",
+    "activate_user_URL": "http://api.sense.city:3000/api/1.0/is_activate_user",
     "APIADMIN": "http://api.sense.city:3000/api/1.0",
     "center": {
         "lat": 38.248028,
@@ -108,15 +108,15 @@
             "type": "awesomeMarker",
             "prefix": "fa",
             "icon": "frown-o",
-            "markerColor": "lightgreen",
-            "iconColor": "darkgreen"
+            "markerColor": "lightred",
+            "iconColor": "darkred"
         },
         "neutral": {
             "type": "awesomeMarker",
             "prefix": "fa",
             "icon": "meh-o",
-            "markerColor": "lightgreen",
-            "iconColor": "darkgreen"
+            "markerColor": "orange",
+            "iconColor": "darkred"
         },
         "happy": {
             "type": "awesomeMarker",
@@ -168,29 +168,41 @@
             "visible": true
         }
     },
-    "components": ["Τμήμα επίλυσης προβλημάτων", "Αυτοτελές τμήμα Πολιτικής Προστασίας", "Τμήμα Συγκοινωνιακού \u0026 Κυκλοφοριακού Σχεδιασμού", "Τμήμα Αποκομιδής Απορριμμάτων \u0026 Ανακυκλώσιμων Υλικών", "Τμήμα Αυτεπιστασίας Έργων Υποδομής", "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων, Κτιρίων \u0026 Ηλεκτροφωτισμο", "Τμήμα Ελέγχου Κοινοχρήστων Χώρων", "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων \u0026 Ειδικών Συνεργείων", "Τμήμα Μελετών Έργων Πρασίνου", "Τμήμα Οδοποιίας", "Τμήμα Πρασίνου","Τμήμα Σχεδιασμού Μελετών και Ελέγχου"],
+    "components": ["Τμήμα επίλυσης προβλημάτων", "Αυτοτελές τμήμα Πολιτικής Προστασίας", "Τμήμα Συγκοινωνιακού \u0026 Κυκλοφοριακού Σχεδιασμού", "Τμήμα Αποκομιδής Απορριμμάτων \u0026 Ανακυκλώσιμων Υλικών", "Τμήμα Αυτεπιστασίας Έργων Υποδομής", "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων, Κτιρίων \u0026 Ηλεκτροφωτισμο", "Τμήμα Ελέγχου Κοινοχρήστων Χώρων", "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων", "Τμήμα Μελετών Έργων Πρασίνου", "Τμήμα Οδοποιίας", "Τμήμα Πρασίνου","Τμήμα Σχεδιασμού Μελετών και Ελέγχου","Τμήμα Κάδων"],
 	"overlay_functions": {
-        "layer1": "this.layers.overlays.layer1 = {name: 'Καθαριότητας',type: 'group',visible:true};",
-        "layer2": "this.layers.overlays.layer2 = {name: 'Ηλεκτροφωτισμού',type: 'group',visible:true};",
-        "layer3": "this.layers.overlays.layer3 = {name: 'Υδρευσης',type: 'group',visible:true};",
-        "layer4": "this.layers.overlays.layer4 = {name: 'Πολιτικής Προστασίας',type: 'group',visible:true};",
-        "layer5": "this.layers.overlays.layer5 = {name: 'Πεζοδρομίου/Δρόμου/Πλατείας',type: 'group',visible:true};",
-        "layer6": "this.layers.overlays.layer6 = {name: 'Περιβάλλοντος',type: 'group',visible:true};",
-        "layer7": "this.layers.overlays.layer7 = {name: 'Πρασίνου',type: 'group',visible:true};",
-        "layer8": "this.layers.overlays.layer8 = {name: 'Πολιτών',type: 'group',visible:true};"
+        "layer1": "this.layers.overlays.layer1 = {name: $translate.instant(\"GARBAGE_ISSUE\"),type: 'group',visible:true};",
+        "layer2": "this.layers.overlays.layer2 = {name: $translate.instant(\"LIGHTNING_ISSUE\"),type: 'group',visible:true};",
+        "layer3": "this.layers.overlays.layer3 = {name: $translate.instant(\"PLUMBING_ISSUE\"),type: 'group',visible:true};",
+        "layer4": "this.layers.overlays.layer4 = {name: $translate.instant(\"ROAD_ISSUE\"),type: 'group',visible:true};",
+        "layer5": "this.layers.overlays.layer5 = {name: $translate.instant(\"PROTECTION_POLICY_ISSUE\"),type: 'group',visible:true};",
+        "layer6": "this.layers.overlays.layer6 = {name: $translate.instant(\"GREEN_ISSUE\"),type: 'group',visible:true};",
+        "layer7": "this.layers.overlays.layer7 = {name: $translate.instant(\"ENVIRONMENT_ISSUE\"),type: 'group',visible:true};",
+        "layer8": "this.layers.overlays.layer8 = {name: $translate.instant(\"MOOD\"),type: 'group',visible:false};"
     },
-    "overlay_categories": ["garbage", "lighting", "plumbing", "protection-policy", "road-constructor", "environment", "green", "reaction"],
+    "overlay_functions1": {
+        "layer1": "this.layers.overlays.layer1 = {name: $translate.instant(\"GARBAGE_ISSUE\"),type: 'group',visible:true};",
+        "layer2": "this.layers.overlays.layer2 = {name: $translate.instant(\"LIGHTNING_ISSUE\"),type: 'group',visible:true};",
+        "layer3": "this.layers.overlays.layer3 = {name: $translate.instant(\"PLUMBING_ISSUE\"),type: 'group',visible:true};",
+        "layer4": "this.layers.overlays.layer4 = {name: $translate.instant(\"ROAD_ISSUE\"),type: 'group',visible:true};",
+        "layer5": "this.layers.overlays.layer5 = {name: $translate.instant(\"PROTECTION_POLICY_ISSUE\"),type: 'group',visible:true};",
+        "layer6": "this.layers.overlays.layer6 = {name: $translate.instant(\"GREEN_ISSUE\"),type: 'group',visible:true};",
+        "layer7": "this.layers.overlays.layer7 = {name: $translate.instant(\"ENVIRONMENT_ISSUE\"),type: 'group',visible:true};",
+        "layer8": "this.layers.overlays.layer8 = {name: $translate.instant(\"MOOD\"),type: 'group',visible:true};"
+    },
+    "overlay_categories": ["garbage", "lighting", "plumbing",  "road-constructor","protection-policy",  "green", "environment", "reaction"],
+    "components_translation": ["SOLVE_DEPARTMENT","POLICY_PROTECTION_DEPARTMENT","TRANSPORTATION_DEPARTMENT","GARBAGE_DEPARTMENT","INFRASTRUCTURE_DEPARTMENT","ELECTRICITY_DEPARTMENT","SHARED_SPACE_DEPARTMENT","SPECIAL_SERVICE_DEPARTMENT","STUDIES_AND_GREEN_DEPARTMENT","ROAD_DEPARTMENT","GREEN_DEPARTMENT","PLAN_DEPARTMENT","TRASH_DEPARTMENT"],
     "categories": ["garbage", "lighting", "plumbing", "road-constructor", "protection-policy", "green", "environment", "angry", "neutral", "happy"],
     "issue_type_en": ["Cleaning Problem", "Lighting Problem", "Plumbing Problem", "Street/Sidewalk Problem", "Protection Policy", "Green", "Environment"],
     "issue_type_gr": ["Καθαριότητας", "Ηλεκτροφωτισμού", "Ύδρευσης", "Πρόβλημα Δρόμου/Πεζοδρομίου", "Πολιτική Προστασία", "Πράσινο", "Περιβάλλον"],
+    "issue_type_en_short": ["garbage", "lighting","plumbing", "road-constructor", "protection-policy", "green", "environment"],
     "categories_issue": ["GARBAGE_ISSUE", "LIGHTNING_ISSUE", "PLUMBING_ISSUE", "ROAD_ISSUE", "PROTECTION_POLICY_ISSUE", "GREEN_ISSUE", "ENVIRONMENT_ISSUE", "MOOD", "MOOD", "MOOD"],
     "components_en": ["all", "protection", "transport", "garbage", "infrastructure", "lighting", "shared", "clean", "studies", "road-constructor", "green"],
     "departments": ["all", "garbage", "lighting", "road-constructor", "protection-policy", "green", "environment", "plumbing"],
     "departments_en": ["Τμημα επίλυσης προβλημάτων", "Πρόβλημα Καθαριότητας", "Πρόβλημα Ηλεκτροφωτισμού", "Πρόβλημα Πεζοδρομίου/Δρόμου/Πλατείας", "Πρόβλημα Πολιτικής Προστασίας", "Πρόβλημα Πρασίνου", "Πρόβλημα Περιβάλλοντος", "Πρόβλημα Ύδρευσης"], "activeTitles": ["Όλα τα προβλήματα", "Καθαριότητας", "Ηλεκτροφωτισμού", "Πεζοδρομίου/Δρόμου/Πλατείας", "Πολιτικής Προστασίας", "Πρασίνου", "Περιβάλλοντος"],
     "activeIcons": ["fa ion-ios-analytics-outline", "fa fa-trash-o", "fa fa-lightbulb-o", "fa fa-road", "fa fa-shield", "fa fa-tree", "fa fa-leaf"],
-	"depUserTitles": ["Τμήμα Αποκομιδής Απορριμμάτων \u0026 Ανακυκλώσιμων Υλικών", "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων, Κτιρίων \u0026 Ηλεκτροφωτισμο", "Τμήμα Οδοποιίας", "Αυτοτελές τμήμα Πολιτικής Προστασίας", "Τμήμα Πρασίνου", "Τμήμα Συγκοινωνιακού \u0026 Κυκλοφοριακού Σχεδιασμού", "Τμήμα Αυτεπιστασίας Έργων Υποδομής", "Τμήμα Ελέγχου Κοινοχρήστων Χώρων", "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων \u0026 Ειδικών Συνεργείων", "Τμήμα Μελετών Έργων Πρασίνου","Τμήμα Σχεδιασμού Μελετών και Ελέγχου"], 
-	"depUserContent": ["Παρουσίαση προβλημάτων αποκομιδής απορριμμάτων \u0026 ανακυκλώσιμων υλικών", "Παρουσίαση προβλημάτων κοινόχρηστων χώρων κτιρίων \u0026 ηλεκτροφωτισμού", "Παρουσίαση προβλημάτων Οδοποιίας", "Παρουσίαση προβλημάτων πολιτικής προστασίας", "Παρουσίαση προβλημάτων πρασίνου", "Παρουσίαση προβλημάτων συγκοινωνιακού \u0026 κυκλοφοριακού σχεδιασμού", "Παρουσίαση προβλημάτων αυτεπιστασίας έργων υποδομής", "Παρουσίαση προβλημάτων κοινοχρήστων χώρων", "Παρουσίαση προβλημάτων καθαρισμού κοινοχρήστων χώρων \u0026 ειδικών συνεργείων", "Παρουσίαση προβλημάτων μελετών έργων πρασίνου","Τμήμα Σχεδιασμού Μελετών και Ελέγχου"], 
-	"depUserIcons": ["fa fa-trash-o", "fa fa-lightbulb-o", "fa fa-road", "fa fa-shield", "fa fa-tree", "fa fa-car", "fa fa-university", "fa fa-id-card", "fa fa-wrench", "fa fa-leaf", "fa fa-map-o"],
+	"depUserTitles": ["Τμήμα Αποκομιδής Απορριμμάτων \u0026 Ανακυκλώσιμων Υλικών", "Τμήμα Αυτεπιστασίας Κοινόχρηστων Χώρων, Κτιρίων \u0026 Ηλεκτροφωτισμο", "Τμήμα Οδοποιίας", "Αυτοτελές τμήμα Πολιτικής Προστασίας", "Τμήμα Πρασίνου", "Τμήμα Συγκοινωνιακού \u0026 Κυκλοφοριακού Σχεδιασμού", "Τμήμα Αυτεπιστασίας Έργων Υποδομής", "Τμήμα Ελέγχου Κοινοχρήστων Χώρων", "Τμήμα Καθαρισμού Κοινοχρήστων Χώρων", "Τμήμα Μελετών Έργων Πρασίνου","Τμήμα Σχεδιασμού Μελετών και Ελέγχου","Τμήμα Κάδων"], 
+	"depUserContent": ["Παρουσίαση προβλημάτων αποκομιδής απορριμμάτων \u0026 ανακυκλώσιμων υλικών", "Παρουσίαση προβλημάτων κοινόχρηστων χώρων κτιρίων \u0026 ηλεκτροφωτισμού", "Παρουσίαση προβλημάτων Οδοποιίας", "Παρουσίαση προβλημάτων πολιτικής προστασίας", "Παρουσίαση προβλημάτων πρασίνου", "Παρουσίαση προβλημάτων συγκοινωνιακού \u0026 κυκλοφοριακού σχεδιασμού", "Παρουσίαση προβλημάτων αυτεπιστασίας έργων υποδομής", "Παρουσίαση προβλημάτων κοινοχρήστων χώρων", "Παρουσίαση προβλημάτων καθαρισμού κοινοχρήστων χώρων", "Παρουσίαση προβλημάτων μελετών έργων πρασίνου","Τμήμα Σχεδιασμού Μελετών και Ελέγχου","Τμήμα Κάδων"], 
+	"depUserIcons": ["fa fa-trash-o", "fa fa-lightbulb-o", "fa fa-road", "fa fa-shield", "fa fa-tree", "fa fa-car", "fa fa-university", "fa fa-id-card", "fa fa-wrench", "fa fa-leaf", "fa fa-map-o","fa fa-trash"],
     "cityAdminTabs": [
         {
             "title": "Όλα τα προβλήματα",
@@ -228,15 +240,17 @@
             "icon": "fa fa-leaf"
         }],
 "availableIssues": [{"id": "garbage", "name": "GARBAGE_ISSUE", "types": [{"id": "1", "name":"BROKENGARBAGE_BIN"},{"id": "2", "name":"BULKY_ITEMS"},{"id": "3", "name":"CUT_BRANCHES"},{"id": "4", "name":"DEBRIS"},{"id": "5", "name":"SQUARE_CLEANING"},{"id": "6", "name":"MOTORIZED_SCANNING"},{"id": "other", "name":"OTHER"}] },{"id": "lighting", "name": "LIGHTNING_ISSUE", "types": [ {"id": "1", "name":"GLOWING_LAMPS"},{"id": "2", "name":"LAMP_FLASHES"},{"id": "3", "name":"EXT_MUNICIPALITY_LIGHTING"},{"id": "4", "name":"MOUNTING_LUMINAIRES"},{"id": "other", "name":"OTHER"}] },{"id": "plumbing", "name": "PLUMBING_ISSUE", "types": [ {"id": "1", "name":"CLOGGED_WELL"},{"id": "2", "name":"BROKEN_WELL"},{"id": "other", "name":"OTHER"}] },{"id": "road-constructor", "name": "ROAD_ISSUE", "types": [ {"id": "1", "name":"POTHOLES"},{"id": "2", "name":"COMMON_AREA"},{"id": "3", "name":"BROKEN_PLATES"},{"id": "4", "name":"ABANDONED_CAR"},{"id": "5", "name":"OCCUPATION_PAVEMENT"},{"id": "6", "name":"BROKEN_BENCH"},{"id": "7", "name":"BOTCHERY"},{"id": "other", "name":"OTHER"}] },{"id": "protection-policy", "name": "PROTECTION_POLICY_ISSUE", "types": [ {"id": "other", "name":"OTHER"}] },{"id": "environment", "name": "ENVIRONMENT_ISSUE", "types": [ {"id": "1", "name":"STRAY_ANIMALS"},{"id": "2", "name":"RECYCLE_ISSUE"},{"id": "3", "name":"RODENT"},{"id":"4","name":"INSECTICIDE"},{"id": "other", "name":"OTHER"}] },{"id": "green", "name": "GREEN_ISSUE", "types": [ {"id": "1", "name":"CUTTING_GRASS"},{"id": "2", "name":"TREE_PRUNING"},{"id": "other", "name":"OTHER"}] }],
-    "searchIssues": [{"class":"fa fa-trash-o","value": "garbage", "translate": "'GARBAGE_ISSUE' | translate","checked": false},
-        {"class":"fa fa-lightbulb-o","value": "lighting", "translate": "'LIGHTNING_ISSUE' | translate","checked": false},
-        {"class":"fa fa-umbrella","value": "plumbing", "translate": "'PLUMBING_ISSUE' | translate","checked": false},
-        {"class":"fa fa-road","value": "road-constructor", "translate": "'ROAD_ISSUE' | translate","checked": false},
-        {"class":"fa fa-shield","value": "protectionpolicy", "translate": "'PROTECTION_POLICY_ISSUE' | translate","checked": false},
-        {"class":"fa fa-tree","value": "green", "translate": "'GREEN_ISSUE' | translate","checked": false},
-        {"class":"fa fa-leaf","value": "environment", "translate": "'ENVIRONMENT_ISSUE' | translate","checked": false}],
+    "searchIssues": [{"class":"fa fa-trash-o","value": "garbage", "translate": "'GARBAGE_ISSUE' | translate","translatev":"GARBAGE_ISSUE","checked": false},
+        {"class":"fa fa-lightbulb-o","value": "lighting", "translate": "'LIGHTNING_ISSUE' | translate","translatev":"LIGHTNING_ISSUE","checked": false},
+        {"class":"fa fa-umbrella","value": "plumbing", "translate": "'PLUMBING_ISSUE' | translate","translatev":"PLUMBING_ISSUE","checked": false},
+        {"class":"fa fa-road","value": "roadconstructor", "translate": "'ROAD_ISSUE' | translate","translatev":"ROAD_ISSUE","checked": false},
+        {"class":"fa fa-shield","value": "protectionpolicy", "translate": "'PROTECTION_POLICY_ISSUE' | translate","translatev":"PROTECTION_POLICY_ISSUE","checked": false},
+        {"class":"fa fa-tree","value": "green", "translate": "'GREEN_ISSUE' | translate","translatev":"GREEN_ISSUE","checked": false},
+        {"class":"fa fa-leaf","value": "environment", "translate": "'ENVIRONMENT_ISSUE' | translate","translatev":"ENVIRONMENT_ISSUE","checked": false}],
     "zoom": 12,
     "google_init_coords":{"lat": 38.24645352266985, "lng": 21.735068952148438},
 	"google_buildings": "https://www.google.gr/maps/@38.2447101,21.7348973,198a,20y,41.27t/data=!3m1!1e3?hl=en",
+	"municipality_list": ["Πάτρα","Ζάκυνθος","Πύργος","Αρκούδι"],
+    "municipality_domain": ["patras","zakynthos","pyrgos","arkoudi"],
     "host": "http://api.sense.city:3000"
 }
