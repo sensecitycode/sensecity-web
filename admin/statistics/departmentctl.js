@@ -35,6 +35,16 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
         } else {
             url = '../../config/' + sub_domain[0] + '.json';
         }
+        
+        $scope.user_type="none";
+        $scope.ut = -1;
+        if($location.absUrl().split("user=")[1] == 0){
+            $scope.user_type = "admin";
+            $scope.ut = 0;
+        }else if($location.absUrl().split("user=")[1] == 1){
+            $scope.user_type = "user";
+            $scope.ut = 1;
+        }
 
         var d = $q.defer();
 
@@ -73,7 +83,12 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                 google_buildings: response.google_buildings,
                 host: response.host
             };
-
+            
+            nadminurl = response.APIADMIN;
+            if($scope.user_type == "admin"){
+                $rootScope.Variables.APIADMIN += "/admin";
+            }
+            
             d.resolve(response);
             return d.promise;
         });
@@ -86,7 +101,7 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                     $scope.array1D = [];
                     var department = $location.search().department;
                     $scope.depart_title = department;
-                    $http.get($rootScope.Variables.APIADMIN + "/admin/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + start1 + "&enddate=" + end1 + "&status=RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1&departments=" + department,{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                    $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + start1 + "&enddate=" + end1 + "&status=RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1&departments=" + department,{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                         var number = response.data.length;
                         var meres = 0;
                         var wres = 0;
@@ -101,7 +116,7 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                         $scope.date1 = $("#startdate").val();
                         $scope.date2 = $("#enddate").val();
                         for (var i = 0; i < response.data.length; i++) {
-                            $http.get($rootScope.Variables.APIADMIN + "/fullissue/" + response.data[i]._id).then(function (response) {
+                            $http.get(nadminurl + "/fullissue/" + response.data[i]._id).then(function (response) {
                                 var is = false;
                                 var issues = response.data;
                                 cnt++;

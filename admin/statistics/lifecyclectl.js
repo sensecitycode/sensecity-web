@@ -31,7 +31,16 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
         } else {
             url = '../../config/' + sub_domain[0] + '.json';
         }
-
+        
+        $scope.user_type="none";
+        $scope.ut = -1;
+        if($location.absUrl().split("user=")[1] == 0){
+            $scope.user_type = "admin";
+            $scope.ut = 0;
+        }else if($location.absUrl().split("user=")[1] == 1){
+            $scope.user_type = "user";
+            $scope.ut = 1;
+        }
         var d = $q.defer();
 
         $rootScope.mainInfo = $http.get(url).success(function (response) {
@@ -70,7 +79,11 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
                 google_buildings: response.google_buildings,
                 host: response.host
             };
-
+            
+            if($scope.user_type == "admin"){
+                $rootScope.Variables.APIADMIN += "/admin";
+            }
+            
             d.resolve(response);
             return d.promise;
         });
@@ -160,10 +173,11 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
                     }
 
                     function resolve_stats(startdate, enddate,tag) {
-                        $http.get($rootScope.Variables.APIADMIN + "/admin/issue?issue=" + $("#issue_val").val() + "&city="+$rootScope.Variables.city_name+"&startdate=" + startdate + "&enddate=" + enddate + "&status=RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?issue=" + $("#issue_val").val() + "&city="+$rootScope.Variables.city_name+"&startdate=" + startdate + "&enddate=" + enddate + "&status=RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED|WONTFIX",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var cnt_fixed = 0;
                             var cnt_invalid = 0;
                             var cnt_duplicated = 0;
+                            var cnt_wontfix = 0;
                             var cnt = 0;
                             for (var i = 0; i < response.data.length; i++) {
                                 if (response.data[i].resolution == "FIXED") {
@@ -172,7 +186,9 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
                                     cnt_invalid++;
                                 } else if (response.data[i].resolution == "DUPLICATED") {
                                     cnt_duplicated++;
-                                } else
+                                } else if(response.data[i].resolution == "WONTFIX"){
+                                    cnt_wontfix++;
+                                }else
                                     cnt++;
                             }
                             var nvd3Charts = function () {
@@ -214,6 +230,8 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
                                                     }, {
                                                         "label": "Αναφορά σε άλλο αίτημα",
                                                         "value": cnt_duplicated
+                                                    },{"label": "Δεν αποκαταστάθηκαν",
+                                                        "value": cnt_wontfix
                                                     }]
                                             }];
                                     }

@@ -2025,6 +2025,22 @@ ul.panel-controls > li > .dropdown-menu:before {
 .user .btn {
   margin-top: 10px;
 }
+
+.btn {
+  font-size: 12px;
+  padding: 4px 15px;
+  line-height: 20px;
+  font-weight: 400;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+  border: none
+}
 /* END USER */
 /* BUTTONS */
 .bton {

@@ -98,7 +98,17 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
         } else {
             url = '../../config/' + sub_domain[0] + '.json';
         }
-
+        
+        $scope.user_type="none";
+        $scope.ut = -1;
+        if($location.absUrl().split("user=")[1] == 0){
+            $scope.user_type = "admin";
+            $scope.ut = 0;
+        }else if($location.absUrl().split("user=")[1] == 1){
+            $scope.user_type = "user";
+            $scope.ut = 1;
+        }
+        
         var d = $q.defer();
 
         $rootScope.mainInfo = $http.get(url).success(function (response) {
@@ -173,7 +183,7 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
 
                     $("#search_btn").click("on", function () {
                         $scope.markers = [];
-                        $http.get($rootScope.Variables.APIADMIN + "/feelings?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&includeAnonymous=1").then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/feelings?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val()).then(function (response) {
                             for (var i = 0; i < response.data.length; i++) {
                                 if (response.data[i].issue == 'happy') {
 

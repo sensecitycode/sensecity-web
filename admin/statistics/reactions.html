@@ -32,7 +32,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>        
         <script type="text/javascript" src="reactionsctl.js"></script>
     </head>
-    <body class="page-container" data-ng-app="reactions" data-ng-controller="reactionsctl">
+    <body ng-show="user_type != 'none'" class="page-container" data-ng-app="reactions" data-ng-controller="reactionsctl">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
 
@@ -56,14 +56,14 @@
                     <li class="xn-title">SenseCity</li>
 
                     <ul>
-                        <li><a href="statistics.html"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1/1</a></li>
-                        <li><a href="lifecycle.html"><span class="fa fa-check"></span> Διεκπεραιωμένα προβλήματα</a></li>
-                        <li><a href="performance.html"><span class="fa fa-bar-chart-o"></span> Απόδοση τμημάτων</a></li>
-                        <li><a href="services.html"><span class="fa fa-pie-chart"></span> Απόδοση τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
-                        <li><a href="average.html"><span class="fa fa-clock-o"></span> Μέσος χρόνος επίλυσης προβλημάτων</a></li>
-                        <li><a href="citizens.html"><span class="fa fa-users"></span> Στατιστικά πολιτών</a></li>  
-                        <li><a href="comparison.html"><span class="fa fa-arrows-h"></span> Σύγκριση Δήμων</a></li>
-                        <li><a href="reactions.html"><span class="fa fa-map-o"></span> Χάρτης Αντιδράσεων</a></li>               
+           <li style="background-color:#121418; pointer-events: none;"><a style="color:white" href="statistics.html?user={{ut}}"><span style="background-color:#121418;color:white" class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1η Ιανουαρίου</a></li>
+                        <li><a href="lifecycle.html?user={{ut}}"><span class="fa fa-check"></span> Ανάλυση διεκπεραιωμένων προβλημάτων</a></li>
+                        <li><a href="performance.html?user={{ut}}"><span class="fa fa-bar-chart-o"></span> Στατιστικά κατηγοριών</a></li>
+                        <li><a href="services.html?user={{ut}}"><span class="fa fa-pie-chart"></span> Στατιστικά τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
+                        <li><a href="average.html?user={{ut}}"><span class="fa fa-clock-o"></span> Μέσος χρόνος επίλυσης προβλημάτων ανά τμήμα</a></li>
+                        <li><a href="citizens.html?user={{ut}}"><span class="fa fa-users"></span> Στατιστικά χρήσης</a></li>  
+                        <li><a href="comparison.html?user={{ut}}"><span class="fa fa-arrows-h"></span> Σύγκριση Δήμων</a></li>
+                        <li><a href="reactions.html?user={{ut}}"><span class="fa fa-map-o"></span> Χάρτης Αντιδράσεων</a></li>             
                     </ul>
 
                 </ul>

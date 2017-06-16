@@ -13,6 +13,7 @@
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="./css/theme-default.css"/>
         <link rel="stylesheet" type="text/css" id="theme" href="../css/font-awesome.css"/>
+        <link rel="stylesheet" type="text/css" id="theme" href="../css/theme-default.css"/>
         <!-- EOF CSS INCLUDE --> 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular.min.js"></script>
@@ -21,7 +22,7 @@
         <link href="../dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
         <script src="../dist/angular-tooltips.min.js"></script> 
     </head>
-    <body class="page-container" data-ng-app="average" data-ng-controller="averagectl"> 
+    <body ng-show="user_type != 'none'" class="page-container" data-ng-app="average" data-ng-controller="averagectl"> 
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
 
@@ -45,14 +46,14 @@
                     <li class="xn-title">SenseCity</li>
 
                     <ul>
-                        <li><a href="statistics.html"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1/1</a></li>
-                        <li><a href="lifecycle.html"><span class="fa fa-check"></span> Διεκπεραιωμένα προβλήματα</a></li>
-                        <li><a href="performance.html"><span class="fa fa-bar-chart-o"></span> Απόδοση τμημάτων</a></li>
-                        <li><a href="services.html"><span class="fa fa-pie-chart"></span> Απόδοση τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
-                        <li><a href="average.html"><span class="fa fa-clock-o"></span> Μέσος χρόνος επίλυσης προβλημάτων</a></li>
-                        <li><a href="citizens.html"><span class="fa fa-users"></span> Στατιστικά πολιτών</a></li>  
-                        <li><a href="comparison.html"><span class="fa fa-arrows-h"></span> Σύγκριση Δήμων</a></li>
-                        <li><a href="reactions.html"><span class="fa fa-map-o"></span> Χάρτης Αντιδράσεων</a></li>               
+           <li><a href="statistics.html?user={{ut}}"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1η Ιανουαρίου</a></li>
+                        <li><a href="lifecycle.html?user={{ut}}"><span class="fa fa-check"></span> Ανάλυση διεκπεραιωμένων προβλημάτων</a></li>
+                        <li><a href="performance.html?user={{ut}}"><span class="fa fa-bar-chart-o"></span> Στατιστικά κατηγοριών</a></li>
+                        <li><a href="services.html?user={{ut}}"><span class="fa fa-pie-chart"></span> Στατιστικά τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
+                        <li style="background-color:#121418; pointer-events: none;"><a style="background-color:#121418;color:white" href="average.html?user={{ut}}"><span style="background-color:#121418;color:white" class="fa fa-clock-o"></span> Μέσος χρόνος επίλυσης προβλημάτων ανά τμήμα</a></li>
+                        <li><a href="citizens.html?user={{ut}}"><span class="fa fa-users"></span> Στατιστικά χρήσης</a></li>  
+                        <li><a href="comparison.html?user={{ut}}"><span class="fa fa-arrows-h"></span> Σύγκριση Δήμων</a></li>
+                        <li><a href="reactions.html?user={{ut}}"><span class="fa fa-map-o"></span> Χάρτης Αντιδράσεων</a></li>   
                     </ul>
 
 
@@ -66,8 +67,7 @@
 
                 <!-- START X-NAVIGATION VERTICAL -->
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
-                    <!-- TOGGLE NAVIGATION -->
-
+                    <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle" class="ng-binding"><i style="margin-right:10px" ng-class="tabs.activeIcon" class="fa ion-ios-analytics-outline"></i><span class="fa fa-clock-o" style="margin-right:10px"></span>Μέσος χρόνος επίλυσης προβλημάτων ανά τμήμα</span></center></li>
                 </ul>
 
 
@@ -91,7 +91,7 @@
                                     <div class="col-md-3 col-xs-12" style="margin-right:10%">
                                         <div class="input-group" style="margin-bottom:10px;">
                                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                            <input type="text" id="enddate" class="form-control datepicker" value="2017-03-30">                                            
+                                            <input type="text" id="enddate" class="form-control datepicker" value="{{today}}">                                            
                                         </div>
                                     </div>
 
@@ -108,7 +108,7 @@
                             <div class="panel-heading" style="min-height:81px">
                                 <h3 class="panel-title">{{component}}</h3> 
                                 <ul class="panel-controls">
-                                    <li><span tooltip-side="bottom" tooltips tooltip-template="Περισσότερα"><a href="department.html?department={{depinfo[$index].department}}&start={{date1}}&end={{date2}}"><span class="fa fa-eye"></span></a></span></li>                    
+                                    <li><span tooltip-side="bottom" tooltips tooltip-template="Περισσότερα"><a href="department.html?department={{depinfo[$index].department}}&start={{date1}}&end={{date2}}&user={{ut}}"><span class="fa fa-eye"></span></a></span></li>                    
                                 </ul>
                             </div>
 

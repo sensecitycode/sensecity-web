@@ -32,11 +32,29 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
         } else {
             url = '../../config/' + sub_domain[0] + '.json';
         }
+        
+        $scope.today = new Date();
+        var dd = $scope.today.getDate();
+        var mm = $scope.today.getMonth() + 1;
+        var yyyy = $scope.today.getFullYear();
+
+        $scope.today = yyyy + '-' + mm + '-' + dd;
+        
+        $scope.user_type="none";
+        $scope.ut = -1;
+        if($location.absUrl().split("user=")[1] == 0){
+            $scope.user_type = "admin";
+            $scope.ut = 0;
+        }else if($location.absUrl().split("user=")[1] == 1){
+            $scope.user_type = "user";
+            $scope.ut = 1;
+        }
 
         var d = $q.defer();
 
         $scope.scompl = false;
-
+        var nadminurl;
+        
         $rootScope.mainInfo = $http.get(url).success(function (response) {
 
             $rootScope.Variables = {
@@ -72,7 +90,12 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                 google_buildings: response.google_buildings,
                 host: response.host
             };
-
+            
+            nadminurl = response.APIADMIN;
+            if($scope.user_type == "admin"){
+                $rootScope.Variables.APIADMIN += "/admin";
+            }
+            
             d.resolve(response);
             return d.promise;
         });
@@ -85,7 +108,7 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                     });
                     $scope.depinfo = [];
                     function department_stats(department, dep_index) {
-                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1&departments=" + department).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=RESOLVED&image_field=0&sort=-1&limit=500&departments=" + encodeURIComponent(department),{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var number = response.data.length;
                             var meres = 0;
                             var wres = 0;
@@ -100,7 +123,7 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                             var array1D = [];
                             var length = response.data.length;
                             for (var i = 0; i < response.data.length; i++) {
-                                $http.get($rootScope.Variables.APIADMIN + "/fullissue/" + response.data[i]._id).then(function (response) {
+                                $http.get(nadminurl + "/fullissue/" + response.data[i]._id).then(function (response) {
                                     var issues = response.data;
                                     cnt++;
                                     var ln = issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments.length;

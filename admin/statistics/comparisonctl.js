@@ -32,7 +32,19 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
         } else {
             url = '../../config/' + sub_domain[0] + '.json';
         }
-
+        
+        
+        $scope.user_type="none";
+        $scope.ut = -1;
+        if($location.absUrl().split("user=")[1] == 0){
+            $scope.user_type = "admin";
+            $scope.ut = 0;
+        }else if($location.absUrl().split("user=")[1] == 1){
+            $scope.user_type = "user";
+            $scope.ut = 1;
+        }
+        
+        var nadminurl;
         var d = $q.defer();
 
         $rootScope.mainInfo = $http.get(url).success(function (response) {
@@ -73,7 +85,12 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                 issue_type_en_short: response.issue_type_en_short,
                 host: response.host
             };
-
+            
+            nadminurl = response.APIADMIN;
+            if($scope.user_type == "admin"){
+                $rootScope.Variables.APIADMIN += "/admin";
+            }
+            
             d.resolve(response);
             return d.promise;
         });
@@ -83,7 +100,7 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                     $(document).resize();
 
                     function comparison(municipality, mun_index) {
-                        $http.get($rootScope.Variables.APIADMIN + "/admin/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1&resolution=FIXED|INVALID|DUPLICATED",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1&resolution=FIXED|INVALID|DUPLICATED",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var count_resolved = 0;
                             var count_progress = 0;
                             var count_confirmed = 0;
@@ -244,7 +261,7 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
 
                         });
 
-                        $http.get($rootScope.Variables.APIADMIN + "/feelings?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&includeAnonymous=1",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get(nadminurl + "/feelings?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&includeAnonymous=1",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var count_happy = 0;
                             var count_angry = 0;
                             var count_neutral = 0;
@@ -362,7 +379,7 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                             nvd3Charts.init();
                         });
 
-                        $http.get($rootScope.Variables.APIADMIN + "/admin/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=RESOLVED&includeAnonymous=1",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=RESOLVED&includeAnonymous=1",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             $scope.issues = response.data;
 
                                 var count = [];

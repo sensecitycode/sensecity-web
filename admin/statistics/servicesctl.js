@@ -32,6 +32,23 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
         } else {
             url = '../../config/' + sub_domain[0] + '.json';
         }
+        
+        $scope.user_type="none";
+        $scope.ut = -1;
+        if($location.absUrl().split("user=")[1] == 0){
+            $scope.user_type = "admin";
+            $scope.ut = 0;
+        }else if($location.absUrl().split("user=")[1] == 1){
+            $scope.user_type = "user";
+            $scope.ut = 1;
+        }
+        
+        $scope.today = new Date();
+        var dd = $scope.today.getDate();
+        var mm = $scope.today.getMonth() + 1;
+        var yyyy = $scope.today.getFullYear();
+
+        $scope.today = yyyy + '-' + mm + '-' + dd;
 
         var d = $q.defer();
 
@@ -71,20 +88,24 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                 host: response.host
             };
 
+            if ($scope.user_type == "admin") {
+                $rootScope.Variables.APIADMIN += "/admin";
+            }
+
             d.resolve(response);
             return d.promise;
         });
 
         $q.all([$rootScope.mainInfo]).then(
-                function (data) {           
+                function (data) {
                     $scope.depinfo = [];
-                    for(var i = 0 ; i < $rootScope.Variables.components.length;i++){
-                        $scope.depinfo.push({title:$rootScope.Variables.components[i],title_en:$rootScope.Variables.components_en[i]});
+                    for (var i = 0; i < $rootScope.Variables.components.length; i++) {
+                        $scope.depinfo.push({title: $rootScope.Variables.components[i], title_en: $rootScope.Variables.components_en[i]});
                     }
                     $(document).resize();
                     $("#search_btn").click("on", function () {
                         function dep_stats(department) {
-                            $http.get($rootScope.Variables.APIADMIN + "/admin/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED&departments=" + department,{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                            $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED|WONTFIX&departments=" + encodeURIComponent(department), {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
 
                                 var count_resolved = 0;
                                 var count_progress = 0;
@@ -92,6 +113,7 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                 var cnt_fixed = 0;
                                 var cnt_invalid = 0;
                                 var cnt_duplicated = 0;
+                                var cnt_wontfix = 0;
                                 var cnt = 0;
 
                                 for (var i = 0; i < response.data.length; i++) {
@@ -105,6 +127,8 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                         cnt++;
                                     if (response.data[i].status == "IN_PROGRESS") {
                                         count_progress++;
+                                    } else if(response.data[i].status == "WONTFIX"){
+                                        cnt_wontfix++;
                                     } else
                                         count_resolved++;
                                 }
@@ -151,6 +175,9 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                                         }, {
                                                             "label": "Αναφορά σε άλλο αίτημα",
                                                             "value": cnt_duplicated
+                                                        },{
+                                                            "label": "Δεν αποκαταστάθηκαν",
+                                                            "value": cnt_wontfix
                                                         }]
                                                 }];
 
@@ -199,7 +226,8 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                                 }, {
                                                     "label": "Σε εξέλιξη",
                                                     "value": count_progress
-                                                }];
+                                                },
+                                                ];
                                         }
 
                                     };

@@ -20,7 +20,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
         <script type="text/javascript" src="departmentctl.js"></script>
     </head>
-    <body class="page-container"  data-ng-app="department" data-ng-controller="departmentctl">
+    <body ng-show="user_type != 'none'" class="page-container"  data-ng-app="department" data-ng-controller="departmentctl">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
 
@@ -45,14 +45,14 @@
 
 
                     <ul>
-                        <li><a href="statistics.html"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1/1</a></li>
-                        <li><a href="lifecycle.html"><span class="fa fa-check"></span> Διεκπεραιωμένα προβλήματα</a></li>
-                        <li><a href="performance.html"><span class="fa fa-bar-chart-o"></span> Απόδοση τμημάτων</a></li>
-                        <li><a href="services.html"><span class="fa fa-pie-chart"></span> Απόδοση τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
-                        <li><a href="average.html"><span class="fa fa-clock-o"></span> Μέσος χρόνος επίλυσης προβλημάτων</a></li>
-                        <li><a href="citizens.html"><span class="fa fa-users"></span> Στατιστικά πολιτών</a></li>  
-                        <li><a href="comparison.html"><span class="fa fa-arrows-h"></span> Σύγκριση Δήμων</a></li>
-                        <li><a href="reactions.html"><span class="fa fa-map-o"></span> Χάρτης Αντιδράσεων</a></li>               
+           <li><a href="statistics.html?user={{ut}}"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1η Ιανουαρίου</a></li>
+                        <li><a href="lifecycle.html?user={{ut}}"><span class="fa fa-check"></span> Ανάλυση διεκπεραιωμένων προβλημάτων</a></li>
+                        <li><a href="performance.html?user={{ut}}"><span class="fa fa-bar-chart-o"></span> Στατιστικά κατηγοριών</a></li>
+                        <li><a href="services.html?user={{ut}}"><span class="fa fa-pie-chart"></span> Στατιστικά τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
+                        <li><a href="average.html?user={{ut}}"><span class="fa fa-clock-o"></span> Μέσος χρόνος επίλυσης προβλημάτων ανά τμήμα</a></li>
+                        <li><a href="citizens.html?user={{ut}}"><span class="fa fa-users"></span> Στατιστικά χρήσης</a></li>  
+                        <li><a href="comparison.html?user={{ut}}"><span class="fa fa-arrows-h"></span> Σύγκριση Δήμων</a></li>
+                        <li><a href="reactions.html?user={{ut}}"><span class="fa fa-map-o"></span> Χάρτης Αντιδράσεων</a></li>                 
                     </ul>
 
 
@@ -66,7 +66,7 @@
 
                 <!-- START X-NAVIGATION VERTICAL -->
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
-                    <!-- TOGGLE NAVIGATION -->
+                     <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle" class="ng-binding"><i style="margin-right:10px" ng-class="tabs.activeIcon" class="fa ion-ios-analytics-outline"></i><span class="fa fa-building-o" style="margin-right:10px"></span> Επιλυμένα τμήματος και κατανομή χρόνου επίλυσης</a></span></center></li>                  
 
                 </ul>
 
@@ -93,7 +93,20 @@
 
                     </div>
 
-
+                                        <div class="row" >                          
+                        <div class="col-md-12">                        
+                            <!-- START DISCRETE CHART -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Κατανομή ανα διαστήματα </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="chart-4" style="height: 300px;"><svg></svg></div>
+                                </div>
+                            </div>
+                            <!-- END DISCRETE CHART -->
+                        </div>                    
+                    </div> 
 
                     <div class="row" >
                         <div class="col-md-12">
@@ -130,22 +143,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row" >                          
-                        <div class="col-md-12">                        
-                            <!-- START DISCRETE CHART -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Κατανομή ανα διαστήματα </h3>
-                                </div>
-                                <div class="panel-body">
-                                    <div id="chart-4" style="height: 300px;"><svg></svg></div>
-                                </div>
-                            </div>
-                            <!-- END DISCRETE CHART -->
-                        </div>                    
-                    </div>  
+                    </div> 
 
                 </div>
                 <!-- END PAGE CONTENT WRAPPER -->                

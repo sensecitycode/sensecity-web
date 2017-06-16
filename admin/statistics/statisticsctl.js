@@ -32,6 +32,16 @@ app.controller('statistics', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
             url = '../../config/' + sub_domain[0] + '.json';
         }
 
+        $scope.user_type="none";
+        $scope.ut = -1;
+        if($location.absUrl().split("user=")[1] == 0){
+            $scope.user_type = "admin";
+            $scope.ut = 0;
+        }else if($location.absUrl().split("user=")[1] == 1){
+            $scope.user_type = "user";
+            $scope.ut = 1;
+        }
+
         var d = $q.defer();
 
         $rootScope.mainInfo = $http.get(url).success(function (response) {
@@ -70,6 +80,10 @@ app.controller('statistics', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                 host: response.host
             };
 
+            if ($scope.user_type == "admin") {
+                $rootScope.Variables.APIADMIN += "/admin";
+            }
+
             d.resolve(response);
             return d.promise;
         });
@@ -85,32 +99,35 @@ app.controller('statistics', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                 function (data) {
                     $(document).resize();
                     var morrisCharts = function () {
-                        $http.get($rootScope.Variables.APIADMIN + "/admin/issue?city=" + $rootScope.Variables.city_name + "&startdate=2017-01-01&enddate=" + today + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=1000",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=2017-01-01&enddate=" + today + "&status=IN_PROGRESS|RESOLVED&resolution=FIXED&image_field=0&sort=-1&limit=1000", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var issues_states = [];
                             for (var i = 0; i < $rootScope.Variables.departments.length; i++) {
                                 issues_states.push([0, 0]);
                             }
-                            
+
                             var issue_index;
                             for (var i = 0; i < response.data.length; i++) {
                                 issue_index = $rootScope.Variables.departments.indexOf(response.data[i].issue);
-                                if(issue_index != -1){
-                                if (response.data[i].status == "RESOLVED") {
-                                    issues_states[issue_index][1]++;
-                                    issues_states[0][1]++;
-                                } else{
-                                    issues_states[issue_index][0]++;
-                                    issues_states[0][0]++;
+                                if (issue_index != -1) {
+                                    if (response.data[i].status == "RESOLVED") {
+                                        issues_states[issue_index][1]++;
+                                        issues_states[0][1]++;
+                                    } else {
+                                        issues_states[issue_index][0]++;
+                                        issues_states[0][0]++;
+                                    }
                                 }
                             }
-                        }
+                            var total_issues = [];
                             for (var i = 0; i < $rootScope.Variables.departments.length; i++) {
+                                total_issues[$rootScope.Variables.departments[i] + '_donut'] = issues_states[i][0] + issues_states[i][1];
                                 Morris.Donut({
                                     element: $rootScope.Variables.departments[i] + '_donut',
                                     data: [
                                         {label: "Ολοκληρωμένα", value: issues_states[i][1]},
                                         {label: "Σε εξέλιξη", value: issues_states[i][0]}
                                     ],
+                                    formatter: function (value, data) { return value + " / "+ total_issues[this.element] },
                                     colors: ['#90EE90', '#CD5C5C']
                                 });
                             }
