@@ -127,7 +127,7 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                         cnt++;
                                     if (response.data[i].status == "IN_PROGRESS") {
                                         count_progress++;
-                                    } else if(response.data[i].status == "WONTFIX"){
+                                    } else if(response.data[i].resolution == "WONTFIX"){
                                         cnt_wontfix++;
                                     } else
                                         count_resolved++;
