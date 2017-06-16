@@ -101,7 +101,7 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                     $scope.array1D = [];
                     var department = $location.search().department;
                     $scope.depart_title = department;
-                    $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + start1 + "&enddate=" + end1 + "&status=RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1&departments=" + department,{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                    $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + start1 + "&enddate=" + end1 + "&status=RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1&departments=" + encodeURIComponent(department),{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                         var number = response.data.length;
                         var meres = 0;
                         var wres = 0;
