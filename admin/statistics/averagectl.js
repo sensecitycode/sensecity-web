@@ -108,7 +108,7 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                     });
                     $scope.depinfo = [];
                     function department_stats(department, dep_index) {
-                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=RESOLVED&image_field=0&sort=-1&limit=500&departments=" + encodeURIComponent(department),{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=RESOLVED&image_field=0&sort=-1&limit=500&departments=" + department.replace("&","%26"),{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var number = response.data.length;
                             var meres = 0;
                             var wres = 0;
