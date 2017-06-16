@@ -837,7 +837,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }, 30000);
                 } else if (step == 2) {
                     console.log("Step 2");
-
+                    
+                    $scope.em_disabled = false;
+                    $scope.m_disabled = false;
+                    
                     $scope.eisnotverify = function () {
                         return true;
                     };
