@@ -174,7 +174,7 @@ app.controller('averagectl', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                                         meres = Math.floor(sumd / (array1D.length * 86400000));
                                         wres = Math.floor(((sumd % (array1D.length * 86400000)) / (array1D.length * 3600000)));
                                         lepta = Math.floor(((sumd % (array1D.length * 86400000)) % (array1D.length * 3600000)) / (60000 * array1D.length));
-                                        $scope.depinfo[dep_index] = {department: department, lresolved: array1D[array1D.length - 1], fresolved: array1D[0], number: number, meres: meres, wres: wres, lepta: lepta};
+                                        $scope.depinfo[dep_index] = {department: encodeURIComponent(department), lresolved: array1D[array1D.length - 1], fresolved: array1D[0], number: number, meres: meres, wres: wres, lepta: lepta};
                                         setTimeout(function(){$scope.scompl = true;},1);
                                     }
                                 });
