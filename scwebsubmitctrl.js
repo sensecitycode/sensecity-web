@@ -1073,7 +1073,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             }
                         }, 30000);
                     }
-                } else if (step == 3) {
+                }
+//                else if( step == 3){
+//                    
+//                }
+                else if (step == 3) {
                     console.log("Step 3");
 //                    if ($scope.isnotverify()) {
 //                        $scope.step1 = function () {
@@ -1135,7 +1139,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                 } else if (step == 4) {
                     console.log("Step 4");
-
                     $("#finish_button").attr("disabled", "disabled");
                     var canissue = $q.defer();
                     $http(
@@ -1203,9 +1206,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 }
                 $scope.$apply();
             };
-
+            
+            $scope.em_disabled = false;
             $scope.activate_email = function () {
                 var canemail = $q.defer();
+                $scope.em_disabled = true;
                 $http(
                         {
                             method: 'POST',
@@ -1216,7 +1221,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             }
                         }).success(function (resp) {
                     canemail.resolve();
-                    $scope.msg1 = "Στο email " + $scope.EmailTxt + " που δηλώσατε σας έχει έρθει ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το email σας κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
+                    $scope.msg1 = "Στο email " + $scope.EmailTxt + " που δηλώσατε σας έχει έρθει ο κωδικός πιστοποίησης! Παρακαλούμε ελέγξτε και τα ανεπιθύμητα μηνύματα σε περίπτωση που δεν λάβετε σύντομα το e-mail! Σε περίπτωση που θέλετε να αλλάξετε το email σας κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
                     $scope.smsg1 = true;
                 });
 
@@ -1227,9 +1232,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
                 }, 30000);
             };
-
+            
+            $scope.m_disabled = false;
             $scope.activate_mobile = function () {
                 var canmobile = $q.defer();
+                $scope.m_disabled = true;
                 $http(
                         {
                             method: 'POST',
@@ -1239,7 +1246,8 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
-                    $scope.msg2 = "Στο κινητό νούμερο " + $scope.MobileTxt + " που δηλώσατε σας έχει έρθει με sms ο κωδικός πιστοποίησης! Σε περίπτωση που θέλετε να αλλάξετε το κινητό νούμερο κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
+                    canmobile.resolve();        
+                    $scope.msg2 = "Στο κινητό νούμερο " + $scope.MobileTxt + " που δηλώσατε θα σας αποσταλεί με sms ο κωδικός πιστοποίησης εντός διαστήματος 20 δευτερολέπτων! Σε περίπτωση που θέλετε να αλλάξετε το κινητό νούμερο κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
                     $scope.smsg2 = true;
                 });
                 setTimeout(function () {
