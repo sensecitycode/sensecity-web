@@ -21,6 +21,15 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
         authorizedu();
         username();
         userole();
+        
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+        
+        $scope.tday = today;
 
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");

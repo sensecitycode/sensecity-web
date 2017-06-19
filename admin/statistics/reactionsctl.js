@@ -21,6 +21,15 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
         username();
         userole();
         
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+        
+        $scope.tday = today;
+        
         var local_icons = {
                         greenIcon: {
                             iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -51,7 +60,7 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
                     });
                     angular.extend($scope, {
                         center: {
-                            lat: 38.246639,
+                            lat: 20.246639,
                             lng: 21.734573,
                             zoom: 11
                         },
@@ -65,11 +74,6 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
                                 logic: 'emit'
                             }
                         },
-                        legend: {
-                            position: 'bottomright',
-                            colors: ['#90EE90', '#FF8C00', '#CD5C5C'],
-                            labels: ['Χαρούμενος ', 'Ουδέτερος ', 'Άσχημη ']
-                        },
                         layers: {
                             baselayers: {
                                 osm: {
@@ -81,7 +85,7 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
                             overlays: {
                                 realworld: {
                                     name: "Αντιδράσεις Πολιτών",
-                                    type: "markercluster",
+                                    type: "group",
                                     visible: true
                                 }
                             }
@@ -180,18 +184,22 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
         $q.all([$rootScope.mainInfo]).then(
                 function (data) {
                     $(document).resize();
-
+                    var icons = $rootScope.Variables.icons;
+                    $scope.center = {
+                        lat: $rootScope.Variables.lat_center,
+                        lng: $rootScope.Variables.long_center,
+                        zoom: 12
+                    };
                     $("#search_btn").click("on", function () {
                         $scope.markers = [];
                         $http.get($rootScope.Variables.APIADMIN + "/feelings?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val()).then(function (response) {
                             for (var i = 0; i < response.data.length; i++) {
                                 if (response.data[i].issue == 'happy') {
-
                                     $scope.markers.push({
                                         lat: response.data[i].loc.coordinates[1],
                                         lng: response.data[i].loc.coordinates[0],
                                         message: response.data[i].value_desc,
-                                        icon: local_icons.greenIcon,
+                                        icon: icons['happy'],
                                         layer: 'realworld'
                                     })
                                 } else if (response.data[i].issue == 'angry') {
@@ -199,7 +207,7 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
                                         lat: response.data[i].loc.coordinates[1],
                                         lng: response.data[i].loc.coordinates[0],
                                         message: response.data[i].value_desc,
-                                        icon: local_icons.redIcon,
+                                        icon: icons['angry'],
                                         layer: 'realworld'
                                     })
                                 } else {
@@ -207,7 +215,7 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
                                         lat: response.data[i].loc.coordinates[1],
                                         lng: response.data[i].loc.coordinates[0],
                                         message: response.data[i].value_desc,
-                                        icon: local_icons.orangeIcon,
+                                        icon: icons['neutral'],
                                         layer: 'realworld'
                                     });
                                 }

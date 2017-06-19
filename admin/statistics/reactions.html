@@ -29,7 +29,9 @@
         crossorigin=""></script>
         <script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
         <script src="https://unpkg.com/leaflet.markercluster@1.0.5/dist/leaflet.markercluster.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>        
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+        <script src="../js/leaflet.awesome-markers.js"></script>
+        <link rel="stylesheet" href="../css/leaflet.awesome-markers.css">        
         <script type="text/javascript" src="reactionsctl.js"></script>
     </head>
     <body ng-show="user_type != 'none'" class="page-container" data-ng-app="reactions" data-ng-controller="reactionsctl">
@@ -56,7 +58,7 @@
                     <li class="xn-title">SenseCity</li>
 
                     <ul>
-           <li><a href="statistics.html?user={{ut}}"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1η Ιανουαρίου</a></li>
+                        <li><a href="statistics.html?user={{ut}}"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1η Ιανουαρίου</a></li>
                         <li><a href="lifecycle.html?user={{ut}}"><span class="fa fa-check"></span> Ανάλυση διεκπεραιωμένων προβλημάτων</a></li>
                         <li><a href="performance.html?user={{ut}}"><span class="fa fa-bar-chart-o"></span> Στατιστικά κατηγοριών</a></li>
                         <li><a href="services.html?user={{ut}}"><span class="fa fa-pie-chart"></span> Στατιστικά τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
@@ -76,7 +78,7 @@
 
                 <!-- START X-NAVIGATION VERTICAL -->
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
-                     <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle" class="ng-binding"><i style="margin-right:10px" ng-class="tabs.activeIcon" class="fa ion-ios-analytics-outline"></i><span class="fa fa-map-o" style="margin-right:10px"></span> Ανάλυση διεκπεραιωμένων προβλημάτων</a></span></center></li>                  
+                    <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle" class="ng-binding"><i style="margin-right:10px" ng-class="tabs.activeIcon" class="fa ion-ios-analytics-outline"></i><span class="fa fa-map-o" style="margin-right:10px"></span> Ανάλυση διεκπεραιωμένων προβλημάτων</a></span></center></li>                  
 
                 </ul>
 
@@ -88,75 +90,39 @@
                     <div class="row">
                         <div class="panel panel-default" >
                             <div class="panel-heading" >
-                                <h5 class="panel-title"><strong>Χάρτης</strong></h5> 
+                                <h5 class="panel-title">Χάρτης</h5> 
 
                             </div>
 
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-
-                            <form class="form-horizontal" onsubmit="return false;">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Αναζήτηση επιθυμητού χρονικου διαστήματος</h3>
-
-                                    </div>
-
-                                    <div class="panel-body">                                                                        
-
-
-
-
-                                        <div class="form-group">                                        
-                                            <label class="col-md-3 col-xs-12 control-label">Από</label>
-                                            <div class="col-md-6 col-xs-12">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                                    <input type="text" id="startdate" class="form-control datepicker" value="2017-01-01">                                            
-                                                </div>
-                                                <span class="help-block">Εισαγωγή ημερομηνίας έναρξης</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">                                        
-                                            <label class="col-md-3 col-xs-12 control-label">Εώς</label>
-                                            <div class="col-md-6 col-xs-12">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                                    <input type="text" id="enddate" class="form-control datepicker" value="2017-03-30">                                            
-                                                </div>
-                                                <span class="help-block">Εισαγωγή ημερομηνίας λήξης</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="panel-footer">
-
-                                            <button id="search_btn" class="btn btn-primary pull-right">Αναζήτηση</button>
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <label class="col-md-1 col-xs-12 control-label" style="top:6px;margin-bottom:10px">Από:</label>
+                                    <div class="col-md-3 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                            <input type="text" id="startdate" class="form-control datepicker" value="2017-01-01">                                            
                                         </div>
                                     </div>
-
+                                    <label class="col-md-1 col-xs-12 control-label" style="top:6px;margin-bottom:10px">Εώς:</label>
+                                    <div class="col-md-3 col-xs-12"  style="margin-right:7%">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                            <input type="text" id="enddate" class="form-control datepicker" value="{{tday}}">                                            
+                                        </div>
+                                    </div>
+                                    <button id="search_btn" class="col-md-2 col-xs-12 btn btn-primary">Αναζήτηση</button>
                                 </div>
+                            </div>
                         </div>
 
 
                     </div>
-
-                    <div class="row">
-
-
-
-                    </div>
-
-
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="panel panel-default" >
                                 <div class="panel-heading" >
-                                    <h3 class="panel-title"><strong>Χάρτης Αντιδράσεων</strong></h3>                                
+                                    <h3 class="panel-title">Χάρτης Αντιδράσεων</h3>                                
                                 </div>
 
                                 <div class="col-md-12">
@@ -193,20 +159,20 @@
 
         <!-- Google Analytics -->
         <script>
-                    (function (i, s, o, g, r, a, m) {
-                        i['GoogleAnalyticsObject'] = r;
-                        i[r] = i[r] || function () {
-                            (i[r].q = i[r].q || []).push(arguments)
-                        }, i[r].l = 1 * new Date();
-                        a = s.createElement(o),
-                                m = s.getElementsByTagName(o)[0];
-                        a.async = 1;
-                        a.src = g;
-                        m.parentNode.insertBefore(a, m)
-                    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-                    ga('create', 'UA-XXXXX-Y', 'auto');
-                    ga('send', 'pageview');
+            ga('create', 'UA-XXXXX-Y', 'auto');
+            ga('send', 'pageview');
         </script>
         <!-- End Google Analytics -->
         <!-- START PRELOADS -->

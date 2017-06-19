@@ -21,6 +21,15 @@ app.controller('citizensctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
         username();
         userole();
 
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+
+        $scope.tday = today;
+
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         var url;
@@ -31,13 +40,13 @@ app.controller('citizensctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
         } else {
             url = '../../config/' + sub_domain[0] + '.json';
         }
-        
-        $scope.user_type="none";
+
+        $scope.user_type = "none";
         $scope.ut = -1;
-        if($location.absUrl().split("user=")[1] == 0){
+        if ($location.absUrl().split("user=")[1] == 0) {
             $scope.user_type = "admin";
             $scope.ut = 0;
-        }else if($location.absUrl().split("user=")[1] == 1){
+        } else if ($location.absUrl().split("user=")[1] == 1) {
             $scope.user_type = "user";
             $scope.ut = 1;
         }
@@ -79,8 +88,8 @@ app.controller('citizensctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                 google_buildings: response.google_buildings,
                 host: response.host
             };
-            
-            if($scope.user_type == "admin"){
+
+            if ($scope.user_type == "admin") {
                 $rootScope.Variables.APIADMIN += "/admin";
             }
 
@@ -92,7 +101,7 @@ app.controller('citizensctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                 function (data) {
                     $(document).resize();
                     $("#search_btn").click("on", function () {
-                        $http.get($rootScope.Variables.APIADMIN+"/issue?city="+$rootScope.Variables.city_name+"&startdate=" + $("#txt_issue1").val() + "&enddate=" + $("#txt_issue2").val() ,{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val(), {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             $scope.issues = response.data;
                             $scope.desktop = function () {
                                 var count = 0;

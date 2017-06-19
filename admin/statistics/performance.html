@@ -77,62 +77,28 @@
                                 <h5 class="panel-title">Ανάλυση προβλημάτων του επιλεγμένου διαστήματος</h5> 
 
                             </div>
-
-                        </div>
-                    </div>	
-
-                    <div class="row">
-                        <div class="col-md-6">
-
-                            <form class="form-horizontal" onsubmit="return false;">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Αναζήτηση επιθυμητού χρονικου διαστήματος</h3>
-
-                                    </div>
-
-                                    <div class="panel-body">                                                                        
-
-
-
-
-                                        <div class="form-group">                                        
-                                            <label class="col-md-3 col-xs-12 control-label">Από</label>
-                                            <div class="col-md-6 col-xs-12">
+                            
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <label class="col-md-1 col-xs-12 control-label" style="top:6px;margin-bottom:10px">Από:</label>
+                                            <div class="col-md-3 col-xs-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                                                     <input type="text" id="startdate" class="form-control datepicker" value="2017-01-01">                                            
                                                 </div>
-                                                <span class="help-block">Εισαγωγή ημερομηνίας έναρξης</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">                                        
-                                            <label class="col-md-3 col-xs-12 control-label">Εώς</label>
-                                            <div class="col-md-6 col-xs-12">
+                                    </div>
+                                    <label class="col-md-1 col-xs-12 control-label" style="top:6px;margin-bottom:10px">Εώς:</label>
+                                            <div class="col-md-3 col-xs-12"  style="margin-right:7%">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                                                     <input type="text" id="enddate" class="form-control datepicker" value="{{tday}}">                                            
                                                 </div>
-                                                <span class="help-block">Εισαγωγή ημερομηνίας λήξης</span>
                                             </div>
-                                        </div>
-
-                                        <div class="panel-footer">
-
-                                            <button id="search_btn" class="btn btn-primary pull-right">Αναζήτηση</button>
-                                        </div>
-                                    </div>
-
-
-
-
+                                    <button id="search_btn" class="col-md-2 col-xs-12 btn btn-primary">Αναζήτηση</button>
                                 </div>
+                            </div>
                         </div>
-
-
-                    </div>
-
+                    </div>                   
 
                     <div class="row">
                         <div ng-repeat="title in Variables.activeTitles.slice(1, Variables.activeTitles.length)" class="col-md-3">

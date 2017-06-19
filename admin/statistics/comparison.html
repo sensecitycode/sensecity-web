@@ -44,7 +44,7 @@
                     <li class="xn-title">SenseCity</li>
 
                     <ul>
-           <li><a href="statistics.html?user={{ut}}"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1η Ιανουαρίου</a></li>
+                        <li><a href="statistics.html?user={{ut}}"><span class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1η Ιανουαρίου</a></li>
                         <li><a href="lifecycle.html?user={{ut}}"><span class="fa fa-check"></span> Ανάλυση διεκπεραιωμένων προβλημάτων</a></li>
                         <li><a href="performance.html?user={{ut}}"><span class="fa fa-bar-chart-o"></span> Στατιστικά κατηγοριών</a></li>
                         <li><a href="services.html?user={{ut}}"><span class="fa fa-pie-chart"></span> Στατιστικά τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
@@ -75,319 +75,282 @@
                 <div class="page-content-wrap" align="center">
 
                     <div class="row">
-                        <div class="panel panel-default" >
+                        <div class="panel panel-default">
                             <div class="panel-heading" >
-                                <h5 class="panel-title"><strong>Σύγκριση Δήμων</strong></h5> 
+                                <h5 class="panel-title">Σύγκριση Δήμων</h5> 
 
                             </div>
 
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-
-                            <form class="form-horizontal">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title"><strong>Επιλέξτε 2 δήμους που θέλετε να συγκρίνετε</strong></h3>
-
+                            <div class="panel-heading" style="height:100px">
+                                <div class="row">
+                                    <label style="top:6px;margin-bottom:10px" class="col-md-1 col-xs-12 control-label">Δήμος 1:</label>
+                                    <div class="col-md-2 col-xs-12">                                                                                            
+                                        <select id="mun1" class="form-control select">
+                                            <option value="{{Variables.municipality_domain[$index]}}" ng-repeat="municipality in Variables.municipality_list">{{municipality}}</option>
+                                        </select>
                                     </div>
-
-                                    <div class="panel-body">                                                                        
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 col-xs-12 control-label">Δήμος 1</label>
-                                            <div class="col-md-6 col-xs-12">                                                                                            
-                                                <select id="mun1" class="form-control select">
-                                                    <option value="{{Variables.municipality_domain[$index]}}" ng-repeat="municipality in Variables.municipality_list">{{municipality}}</option>
-                                                </select>
-                                                <span class="help-block">Διάλεξε ένα δήμο απ'τη λίστα</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 col-xs-12 control-label">Δήμος 2</label>
-                                            <div class="col-md-6 col-xs-12">                                                                                            
-                                                <select id="mun2" class="form-control select">
-                                                    <option value="{{Variables.municipality_domain[$index]}}" ng-repeat="municipality in Variables.municipality_list">{{municipality}}</option>
-                                                </select>
-                                                <span class="help-block">Διάλεξε ένα δήμο απ'τη λίστα</span>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="form-group">                                        
-                                            <label class="col-md-3 col-xs-12 control-label">Από</label>
-                                            <div class="col-md-6 col-xs-12">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                                    <input type="text" id="startdate" class="form-control datepicker" value="2017-01-01">                                            
-                                                </div>
-                                                <span class="help-block">Εισαγωγή ημερομηνίας έναρξης</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">                                        
-                                            <label class="col-md-3 col-xs-12 control-label">Εώς</label>
-                                            <div class="col-md-6 col-xs-12">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                                    <input type="text" id="enddate" class="form-control datepicker" value="2017-03-30">                                            
-                                                </div>
-                                                <span class="help-block">Εισαγωγή ημερομηνίας λήξης</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="panel-footer">
-
-                                            <button id="search_btn" class="btn btn-primary pull-right">Αναζήτηση</button>
-                                        </div>
-
-
-
-
+                                    <label style="top:6px;margin-bottom:10px" class="col-md-1 col-xs-12 control-label">Δήμος 2:</label>
+                                    <div class="col-md-2 col-xs-12">                                                                                            
+                                        <select id="mun2" class="form-control select">
+                                            <option value="{{Variables.municipality_domain[$index]}}" ng-repeat="municipality in Variables.municipality_list">{{municipality}}</option>
+                                        </select>
                                     </div>
+                                    <label class="col-md-1 col-xs-12 control-label" style="top:6px;margin-bottom:10px">Από:</label>
+                                        <div class="col-md-2 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                                <input type="text" id="startdate" class="form-control datepicker" value="2017-01-01">                                            
+                                            </div>
+                                        </div>
+                                    <label class="col-md-1 col-xs-12 control-label" style="top:6px;margin-bottom:10px">Εώς:</label>
+                                        <div class="col-md-2 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                                <input type="text" id="enddate" class="form-control datepicker" value="{{tday}}">                                            
+                                            </div>
+                                        </div>
+                                    <button id="search_btn" class="col-md-1 col-xs-12 btn btn-primary pull-right" style="top:15px">Αναζήτηση</button>
                                 </div>
-
+                            </div>
 
                         </div>
                     </div>
-                    <div class="panel-heading" >
-                        <h3 class="panel-title"><strong>Προβλήματα</strong></h3>                                
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
 
-                            <!-- START REGULAR PIE CHART -->
-                            <div class="panel panel-default">
+                </div>
+                <div class="panel-heading" >
+                    <h3 class="panel-title"><strong>Προβλήματα</strong></h3>                                
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
 
-                                <div class="panel-body">
-                                    <div id="chart-{{municipality1}}11" style="height: 300px;"><svg></svg></div>
-                                </div>
-                            </div>
-                            <!-- END REGULAR PIE CHART -->
+                        <!-- START REGULAR PIE CHART -->
+                        <div class="panel panel-default">
 
-                        </div>
-                        <div class="col-md-6">
-
-                            <!-- START REGULAR PIE CHART -->
-                            <div class="panel panel-default">
-
-                                <div class="panel-body">
-                                    <div id="chart-{{municipality2}}21" style="height: 300px;"><svg></svg></div>
-                                </div>
-                            </div>
-                            <!-- END REGULAR PIE CHART -->
-
-                        </div>
-                    </div>	
-                    <div class="panel-heading" >
-                        <h3 class="panel-title"><strong>Λυμένα προβλήματα</strong></h3>                                
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">                        
-
-                            <!-- START DISCRETE CHART -->
-                            <div class="panel panel-default">
-
-                                <div class="panel-body">
-                                    <div id="chart-{{municipality1}}12" style="height: 300px;"><svg></svg></div>
-                                </div>
-                            </div>
-                            <!-- END DISCRETE CHART -->
-
-                        </div>
-                        <div class="col-md-6">                        
-
-                            <!-- START DISCRETE CHART -->
-                            <div class="panel panel-default">
-
-                                <div class="panel-body">
-                                    <div id="chart-{{municipality2}}22" style="height: 300px;"><svg></svg></div>
-                                </div>
-                            </div>
-                            <!-- END DISCRETE CHART -->
-
-                        </div>
-
-
-
-                    </div>
-                    <div class="panel-heading" >
-                        <h3 class="panel-title"><strong>Πιο συχνά λυμένο πρόβλημα</strong></h3>                                
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-6">
-                            <div class="widget widget-default widget-item-icon" >
-                                <div class="widget-item-left">
-                                    <span class="fa fa-image"></span>
-                                </div>
-                                <div class="widget-data">
-                                    <div class="widget-title">{{fr1}}</div>
-                                    <div class="widget-title">{{max1}}</div>
-
-
-                                </div>
+                            <div class="panel-body">
+                                <div id="chart-{{municipality1}}11" style="height: 300px;"><svg></svg></div>
                             </div>
                         </div>
+                        <!-- END REGULAR PIE CHART -->
 
-                        <div class="col-md-6">
-                            <div class="widget widget-default widget-item-icon" >
-                                <div class="widget-item-left">
-                                    <span class="fa fa-image"></span>
-                                </div>
-                                <div class="widget-data">
-                                    <div class="widget-title">{{fr2}}</div>
-                                    <div class="widget-title">{{max2}}</div>
+                    </div>
+                    <div class="col-md-6">
 
+                        <!-- START REGULAR PIE CHART -->
+                        <div class="panel panel-default">
 
-                                </div>
+                            <div class="panel-body">
+                                <div id="chart-{{municipality2}}21" style="height: 300px;"><svg></svg></div>
                             </div>
                         </div>
+                        <!-- END REGULAR PIE CHART -->
 
                     </div>
+                </div>	
+                <div class="panel-heading" >
+                    <h3 class="panel-title"><strong>Λυμένα προβλήματα</strong></h3>                                
+                </div>
+                <div class="row">
+                    <div class="col-md-6">                        
 
-                    <div class="panel-heading" >
-                        <h3 class="panel-title"><strong>Πιο σπάνια λυμένο πρόβλημα</strong></h3>                                
-                    </div>
-                    <div class="row">
+                        <!-- START DISCRETE CHART -->
+                        <div class="panel panel-default">
 
-                        <div class="col-md-6">
-                            <div class="widget widget-default widget-item-icon" >
-                                <div class="widget-item-left">
-                                    <span class="fa fa-image"></span>
-                                </div>
-                                <div class="widget-data">
-                                    <div class="widget-title">{{lfr1}}</div>
-                                    <div class="widget-title">{{min1}}</div>
-
-
-                                </div>
+                            <div class="panel-body">
+                                <div id="chart-{{municipality1}}12" style="height: 300px;"><svg></svg></div>
                             </div>
                         </div>
+                        <!-- END DISCRETE CHART -->
 
-                        <div class="col-md-6">
-                            <div class="widget widget-default widget-item-icon" >
-                                <div class="widget-item-left">
-                                    <span class="fa fa-image"></span>
-                                </div>
-                                <div class="widget-data">
-                                    <div class="widget-title">{{lfr2}}</div>
-                                    <div class="widget-title">{{min2}}</div>
+                    </div>
+                    <div class="col-md-6">                        
 
+                        <!-- START DISCRETE CHART -->
+                        <div class="panel panel-default">
 
-                                </div>
+                            <div class="panel-body">
+                                <div id="chart-{{municipality2}}22" style="height: 300px;"><svg></svg></div>
                             </div>
                         </div>
+                        <!-- END DISCRETE CHART -->
 
                     </div>
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Αντιδράσεις πολιτών</h3>
-                    </div>
-                    <div class="row" >
-                        <div class="col-md-6">                        
-
-                            <!-- START DOUNT CHART -->
-                            <div class="panel panel-default">
-
-                                <div class="panel-body">
-                                    <div id="chart-{{municipality1}}13" style="height: 300px;"><svg></svg></div>
-                                </div>
-                            </div>
-                            <!-- END DOUNT CHART -->
-
-                        </div> 
-
-                        <div class="col-md-6">                        
-
-                            <!-- START DOUNT CHART -->
-                            <div class="panel panel-default">
-
-                                <div class="panel-body">
-                                    <div id="chart-{{municipality2}}23" style="height: 300px;"><svg></svg></div>
-                                </div>
-                            </div>
-                            <!-- END DOUNT CHART -->
-
-                        </div>
-
-                    </div>
-
 
 
 
                 </div>
-                <!-- END PAGE CONTENT WRAPPER -->                
-            </div>            
-            <!-- END PAGE CONTENT -->
-        </div>
-        <!-- END PAGE CONTAINER -->
+                <div class="panel-heading" >
+                    <h3 class="panel-title"><strong>Πιο συχνά λυμένο πρόβλημα</strong></h3>                                
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="widget widget-default widget-item-icon" >
+                            <div class="widget-item-left">
+                                <span class="fa fa-image"></span>
+                            </div>
+                            <div class="widget-data">
+                                <div class="widget-title">{{fr1}}</div>
+                                <div class="widget-title">{{max1}}</div>
 
 
-        <!-- START PRELOADS -->
-        <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
-        <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
-        <!-- END PRELOADS -->                 
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="widget widget-default widget-item-icon" >
+                            <div class="widget-item-left">
+                                <span class="fa fa-image"></span>
+                            </div>
+                            <div class="widget-data">
+                                <div class="widget-title">{{fr2}}</div>
+                                <div class="widget-title">{{max2}}</div>
 
 
-        <!-- Google Analytics -->
-        <script>
-                    (function (i, s, o, g, r, a, m) {
-                        i['GoogleAnalyticsObject'] = r;
-                        i[r] = i[r] || function () {
-                            (i[r].q = i[r].q || []).push(arguments)
-                        }, i[r].l = 1 * new Date();
-                        a = s.createElement(o),
-                                m = s.getElementsByTagName(o)[0];
-                        a.async = 1;
-                        a.src = g;
-                        m.parentNode.insertBefore(a, m)
-                    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+                            </div>
+                        </div>
+                    </div>
 
-                    ga('create', 'UA-XXXXX-Y', 'auto');
-                    ga('send', 'pageview');
-        </script>
-        <!-- End Google Analytics -->
-        <!-- START SCRIPTS -->
-        <!-- START PLUGINS -->
-        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
-        <!-- END PLUGINS -->
+                </div>
 
-        <!-- THIS PAGE PLUGINS -->
-        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
-        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
-        <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
-        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
-        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
-        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>   
-        <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
-        <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>
-        <script type="text/javascript" src="js/plugins/knob/jquery.knob.min.js"></script>
-        <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>        
-        <script type="text/javascript" src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
-        <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
-        <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script> 
-        <script type="text/javascript" src="js/plugins/moment.min.js"></script>
-        <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
-        <script type="text/javascript" src="js/plugins/nvd3/lib/d3.v3.js"></script>        
-        <script type="text/javascript" src="js/plugins/nvd3/nv.d3.min.js"></script>
-        <!-- END PAGE PLUGINS -->         
+                <div class="panel-heading" >
+                    <h3 class="panel-title"><strong>Πιο σπάνια λυμένο πρόβλημα</strong></h3>                                
+                </div>
+                <div class="row">
 
-        <!-- START TEMPLATE -->
+                    <div class="col-md-6">
+                        <div class="widget widget-default widget-item-icon" >
+                            <div class="widget-item-left">
+                                <span class="fa fa-image"></span>
+                            </div>
+                            <div class="widget-data">
+                                <div class="widget-title">{{lfr1}}</div>
+                                <div class="widget-title">{{min1}}</div>
 
-        <script type="text/javascript" src="js/plugins.js"></script>        
-        <script type="text/javascript" src="js/actions.js"></script>    	
-        <script type="text/javascript" src="js/demo_dashboard.js"></script>
 
-        <!-- END TEMPLATE -->
-        <!-- END SCRIPTS -->         
-    </body>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="widget widget-default widget-item-icon" >
+                            <div class="widget-item-left">
+                                <span class="fa fa-image"></span>
+                            </div>
+                            <div class="widget-data">
+                                <div class="widget-title">{{lfr2}}</div>
+                                <div class="widget-title">{{min2}}</div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-heading">
+                    <h3 class="panel-title">Αντιδράσεις πολιτών</h3>
+                </div>
+                <div class="row" >
+                    <div class="col-md-6">                        
+
+                        <!-- START DOUNT CHART -->
+                        <div class="panel panel-default">
+
+                            <div class="panel-body">
+                                <div id="chart-{{municipality1}}13" style="height: 300px;"><svg></svg></div>
+                            </div>
+                        </div>
+                        <!-- END DOUNT CHART -->
+
+                    </div> 
+
+                    <div class="col-md-6">                        
+
+                        <!-- START DOUNT CHART -->
+                        <div class="panel panel-default">
+
+                            <div class="panel-body">
+                                <div id="chart-{{municipality2}}23" style="height: 300px;"><svg></svg></div>
+                            </div>
+                        </div>
+                        <!-- END DOUNT CHART -->
+
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+            <!-- END PAGE CONTENT WRAPPER -->                
+        </div>            
+        <!-- END PAGE CONTENT -->
+    </div>
+    <!-- END PAGE CONTAINER -->
+
+
+    <!-- START PRELOADS -->
+    <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
+    <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
+    <!-- END PRELOADS -->                 
+
+
+    <!-- Google Analytics -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+    <!-- START SCRIPTS -->
+    <!-- START PLUGINS -->
+    <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
+    <!-- END PLUGINS -->
+
+    <!-- THIS PAGE PLUGINS -->
+    <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+    <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+    <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+    <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+    <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
+    <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>   
+    <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
+    <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>
+    <script type="text/javascript" src="js/plugins/knob/jquery.knob.min.js"></script>
+    <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>        
+    <script type="text/javascript" src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+    <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
+    <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script> 
+    <script type="text/javascript" src="js/plugins/moment.min.js"></script>
+    <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="js/plugins/nvd3/lib/d3.v3.js"></script>        
+    <script type="text/javascript" src="js/plugins/nvd3/nv.d3.min.js"></script>
+    <!-- END PAGE PLUGINS -->         
+
+    <!-- START TEMPLATE -->
+
+    <script type="text/javascript" src="js/plugins.js"></script>        
+    <script type="text/javascript" src="js/actions.js"></script>    	
+    <script type="text/javascript" src="js/demo_dashboard.js"></script>
+
+    <!-- END TEMPLATE -->
+    <!-- END SCRIPTS -->         
+</body>
 </html>
 
 
