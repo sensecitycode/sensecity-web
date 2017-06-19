@@ -20,6 +20,8 @@ app.controller('statistics', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
         authorizedu();
         username();
         userole();
+        
+        $scope.nloaded = true;
 
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
@@ -131,7 +133,7 @@ app.controller('statistics', ['$scope', '$http', '$cookieStore', '$q', '$rootSco
                                     colors: ['#90EE90', '#CD5C5C']
                                 });
                             }
-
+                            $scope.nloaded = false;
                         });
 
 

@@ -100,6 +100,7 @@ app.controller('performance', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                     $(document).resize();
                     var morrisCharts = function () {
                         $("#search_btn").click("on", function () {
+                            $scope.nloaded = true;
                             $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&resolution=FIXED&image_field=0&sort=-1&limit=500", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                                 var issues_states = [];
                                 for (var i = 0; i < $rootScope.Variables.departments.length - 1; i++) {
@@ -117,7 +118,8 @@ app.controller('performance', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                     }
                                 }
                                 var total_issues = [];
-                                for (var i = 0; i < $rootScope.Variables.departments.length; i++) {
+                                
+                                for (var i = 0; i < $rootScope.Variables.departments.length - 1; i++) {
                                     total_issues[$rootScope.Variables.departments[i+1] + '_donut'] = issues_states[i][0] + issues_states[i][1];
                                     Morris.Donut({
                                         element: $rootScope.Variables.departments[i + 1] + '_donut',
@@ -129,6 +131,7 @@ app.controller('performance', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                         colors: ['#90EE90', '#CD5C5C']
                                     });
                                 }
+                                $scope.nloaded = false;
                             });
                         });
                     }();

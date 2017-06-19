@@ -101,6 +101,7 @@ app.controller('citizensctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                 function (data) {
                     $(document).resize();
                     $("#search_btn").click("on", function () {
+                        $scope.nloaded = true;
                         $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val(), {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             $scope.issues = response.data;
                             $scope.desktop = function () {
@@ -125,7 +126,7 @@ app.controller('citizensctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                 return count.toFixed(2);
                             }
 
-
+                            $scope.nloaded = false;
                         });
                     });
                 });

@@ -104,6 +104,7 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                     }
                     $(document).resize();
                     $("#search_btn").click("on", function () {
+//                        $scope.nloaded = true;
                         function dep_stats(department) {
                             $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED|WONTFIX&departments=" + encodeURIComponent(department), {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
 
@@ -269,12 +270,13 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                 }();
 
                                 nvd3Charts.init();
-
+                                
                             });
                         }
                         for (var i = 0; i < $rootScope.Variables.components.length; i++) {
                             dep_stats($rootScope.Variables.components[i]);
                         }
+//                        $scope.nloaded = false;
                     });
                 });
     }]);

@@ -31,11 +31,15 @@
         <script src="https://unpkg.com/leaflet.markercluster@1.0.5/dist/leaflet.markercluster.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
         <script src="../js/leaflet.awesome-markers.js"></script>
-        <link rel="stylesheet" href="../css/leaflet.awesome-markers.css">        
+        <link rel="stylesheet" href="../css/leaflet.awesome-markers.css">
+        <link rel="stylesheet" type="text/css" href="../css/loading_overlay.css" >        
         <script type="text/javascript" src="reactionsctl.js"></script>
     </head>
     <body ng-show="user_type != 'none'" class="page-container" data-ng-app="reactions" data-ng-controller="reactionsctl">
         <!-- START PAGE CONTAINER -->
+        <div ng-show="nloaded" class="loading_bar">
+            Loading&#8230;
+        </div>
         <div class="page-container">
 
             <!-- START PAGE SIDEBAR -->

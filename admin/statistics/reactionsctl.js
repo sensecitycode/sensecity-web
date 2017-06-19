@@ -192,6 +192,7 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
                     };
                     $("#search_btn").click("on", function () {
                         $scope.markers = [];
+                        $scope.nloaded = true;
                         $http.get($rootScope.Variables.APIADMIN + "/feelings?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val()).then(function (response) {
                             for (var i = 0; i < response.data.length; i++) {
                                 if (response.data[i].issue == 'happy') {
@@ -337,7 +338,7 @@ app.controller('reactionsctl', ['$scope', '$http', '$cookieStore', '$q', '$rootS
                             }();
 
                             nvd3Charts.init();
-
+                            $scope.nloaded = false;
                         });
                     });
                 });

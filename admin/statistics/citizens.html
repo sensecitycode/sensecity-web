@@ -16,9 +16,13 @@
         <!-- EOF CSS INCLUDE -->     
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/loading_overlay.css" >
         <script type="text/javascript" src="citizensctl.js"></script>
 
     </head>
+    <div ng-show="nloaded" class="loading_bar">
+        Loading&#8230;
+    </div>
     <body ng-show="user_type != 'none'" class="page-container"  data-ng-app="citizens" data-ng-controller="citizensctl">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
@@ -99,8 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
+                    </div>                   
                     <div class="row">
                         <div class="col-md-6">
 
@@ -165,7 +168,7 @@
         </div>
         <!-- END PAGE CONTAINER -->
 
-
+    </body>
         <!-- Google Analytics -->
         <script>
                     (function (i, s, o, g, r, a, m) {
@@ -226,7 +229,6 @@
 
         <!-- END TEMPLATE -->
         <!-- END SCRIPTS -->         
-    </body>
 </html>
 
 

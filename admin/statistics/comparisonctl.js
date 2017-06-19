@@ -109,7 +109,7 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                     $(document).resize();
 
                     function comparison(municipality, mun_index) {
-                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&includeAnonymous=1&resolution=FIXED|INVALID|DUPLICATED",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var count_resolved = 0;
                             var count_progress = 0;
                             var count_confirmed = 0;
@@ -267,10 +267,10 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                             }();
 
                             nvd3Charts.init();
-
+                            $scope.nloaded3[mun_index-1] = false;
                         });
 
-                        $http.get(nadminurl + "/feelings?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&includeAnonymous=1",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get(nadminurl + "/feelings?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val(),{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var count_happy = 0;
                             var count_angry = 0;
                             var count_neutral = 0;
@@ -386,9 +386,11 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                             }();
 
                             nvd3Charts.init();
+
+                            $scope.nloaded1[mun_index-1] = false;
                         });
 
-                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=RESOLVED&includeAnonymous=1",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=RESOLVED",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             $scope.issues = response.data;
 
                                 var count = [];
@@ -427,10 +429,20 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                     $scope.min2 = min;
                                 }
                         });
-
+                        
+                        $scope.nloaded2[mun_index-1] = false;
                     }
 
                     $("#search_btn").click("on", function () {
+                        $scope.nloaded1 = [];
+                        $scope.nloaded2 = [];
+                        $scope.nloaded3 = [];
+                        $scope.nloaded1[0] = true;
+                        $scope.nloaded1[1] = true;
+                        $scope.nloaded2[0] = true;
+                        $scope.nloaded2[1] = true;
+                        $scope.nloaded3[0] = true;
+                        $scope.nloaded3[1] = true;
                         $scope.municipality1 = $("#mun1").val();
                         $scope.municipality2 = $("#mun2").val();
                         comparison($scope.municipality1, 1);

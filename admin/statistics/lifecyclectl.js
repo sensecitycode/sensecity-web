@@ -163,6 +163,7 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
         var year1 = yyyy1.getFullYear();
         var yyyy1 = year1 + '-' + my1 + '-' + dy1;
         today = yyyy + '-' + mm + '-' + dd;
+        
 
         $q.all([$rootScope.mainInfo]).then(
                 function(data) {
@@ -271,6 +272,7 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
                         });
                     }
                     $("#search_btn").click("on", function () {
+                        //$scope.nloaded = true;
                         resolve_stats(week,today,"w");
                         resolve_stats(month1,today,"m");
                         resolve_stats(month3,today,"3m");

@@ -9,6 +9,8 @@
 
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <!-- END META SECTION -->
+        
+        <link rel="stylesheet" type="text/css" href="../css/loading_overlay.css" >
 
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="../css/theme-default.css"/>
@@ -20,6 +22,9 @@
         <script type="text/javascript" src="statisticsctl.js"></script>
 
     </head>
+    <div ng-show="nloaded" class="loading_bar">
+        Loading&#8230;
+    </div>
     <body ng-show="user_type != 'none'" class="page-container" data-ng-app="statistics" ng-controller="statistics">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
@@ -47,7 +52,7 @@
                     <li class="xn-title">Περιήγηση</li>
 
                     <ul>
-                       <li style="background-color:#121418; pointer-events: none;"><a style="color:white" href="statistics.html?user={{ut}}"><span style="background-color:#121418;color:white" class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1η Ιανουαρίου</a></li>
+                        <li style="background-color:#121418; pointer-events: none;"><a style="color:white" href="statistics.html?user={{ut}}"><span style="background-color:#121418;color:white" class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1η Ιανουαρίου</a></li>
                         <li><a href="lifecycle.html?user={{ut}}"><span class="fa fa-check"></span> Ανάλυση διεκπεραιωμένων προβλημάτων</a></li>
                         <li><a href="performance.html?user={{ut}}"><span class="fa fa-bar-chart-o"></span> Στατιστικά κατηγοριών</a></li>
                         <li><a href="services.html?user={{ut}}"><span class="fa fa-pie-chart"></span> Στατιστικά τμημάτων και ανάλυση διεκπεραιωμένων</a></li>

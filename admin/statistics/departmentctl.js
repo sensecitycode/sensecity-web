@@ -92,10 +92,10 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
         $q.all([$rootScope.mainInfo]).then(
                 function (data) {
                     $(document).resize();
-                    var start1 = $location.search().start;
-                    var end1 = $location.search().end;
+                    var start1 = $location.absUrl().split("start=")[1].split("&")[0];
+                    var end1 = $location.absUrl().split("end=")[1].split("&")[0];
                     $scope.array1D = [];
-                    var department = $location.search().department;
+                    var department = decodeURIComponent($location.absUrl().split("department=")[1].split("&start")[0]);
                     $scope.depart_title = department;
                     $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + start1 + "&enddate=" + end1 + "&status=RESOLVED&image_field=0&sort=-1&limit=500&departments=" + encodeURIComponent(department), {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                         var number = response.data.length;

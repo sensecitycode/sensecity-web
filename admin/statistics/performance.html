@@ -13,10 +13,14 @@
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="../css/theme-default.css"/>
         <link rel="stylesheet" type="text/css" id="theme" href="../css/font-awesome.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/loading_overlay.css" >
         <!-- EOF CSS INCLUDE -->     
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
 
     </head>
+    <div ng-show="nloaded" class="loading_bar">
+        Loading&#8230;
+    </div>
     <body ng-show="user_type != 'none'" class="page-container"  data-ng-app="performance" data-ng-controller="performance">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
