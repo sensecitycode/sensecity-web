@@ -106,8 +106,8 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                     $("#search_btn").click("on", function () {
 //                        $scope.nloaded = true;
                         function dep_stats(department) {
-                            $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED|WONTFIX&departments=" + encodeURIComponent(department), {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
-
+                            $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED|WONTFIX", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                                console.log(JSON.stringify(response));
                                 var count_resolved = 0;
                                 var count_progress = 0;
                                 var count_confirmed = 0;

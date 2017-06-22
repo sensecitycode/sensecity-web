@@ -301,13 +301,13 @@ $(function () {
 //                    },1000);
                     $(window).trigger("resize");
                     
-                        if(context.toStep != '4'){
+                        if(context.toStep != '5'){
                         angular.element($('#wscontrl')).scope().setStep(context.toStep - 1);
                     }
-                    
-                    if( context.toStep == '3'){
+                    if( context.toStep == '4'){
                         angular.element($('#wscontrl')).scope().last_step(false);
-                    }else if( context.toStep == '4'){
+                        angular.element($('#wscontrl')).scope().setStep(4);
+                    }else if( context.toStep == '5'){
                         angular.element($('#wscontrl')).scope().last_step(true);
                     }
                         var wizard = obj.parents(".wizard");
@@ -334,9 +334,10 @@ $(function () {
                     //This is important part of wizard init
                     onShowStep: function (obj,context) {
                         $(window).trigger("resize");
-                        if(context.toStep == '3' && ((angular.element($('#wscontrl')).scope().eisnotverify() && angular.element($('#wscontrl')).scope().chkSelected_1) || (angular.element($('#wscontrl')).scope().misnotverify() && angular.element($('#wscontrl')).scope().chkSelected_2))){
+                        if(context.toStep == '4' && ((angular.element($('#wscontrl')).scope().eisnotverify() && angular.element($('#wscontrl')).scope().chkSelected_1) || (angular.element($('#wscontrl')).scope().misnotverify() && angular.element($('#wscontrl')).scope().chkSelected_2))){
                             $("#next_button").attr("class","btn btn-default pull-right disabled");
-                        }else if(context.toStep == '4'){
+                        }else if(context.toStep == '5'){
+                            $("#finish_button").attr("class","btn btn-primary pull-right");
                             angular.element($('#wscontrl')).scope().is_finalsubmit = function () {
                             return true;
                         };
@@ -359,7 +360,7 @@ $(function () {
                         return true;
                     },
                     onFinish: function (obj,context) {
-                        angular.element($('#wscontrl')).scope().setStep(4);
+                        angular.element($('#wscontrl')).scope().setStep(5);
                         //window.location = "http://www.youtube.com";
                     },//End
                     labelNext: 'Επόμενο', // label for Next button

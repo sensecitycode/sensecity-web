@@ -21,14 +21,14 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
         authorizedu();
         username();
         userole();
-        
+
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth() + 1;
         var yyyy = today.getFullYear();
 
         today = yyyy + '-' + mm + '-' + dd;
-        
+
         $scope.tday = today;
 
         var url_path = $location.absUrl().split("//");
@@ -41,18 +41,18 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
         } else {
             url = '../../config/' + sub_domain[0] + '.json';
         }
-        
-        
-        $scope.user_type="none";
+
+
+        $scope.user_type = "none";
         $scope.ut = -1;
-        if($location.absUrl().split("user=")[1] == 0){
+        if ($location.absUrl().split("user=")[1] == 0) {
             $scope.user_type = "admin";
             $scope.ut = 0;
-        }else if($location.absUrl().split("user=")[1] == 1){
+        } else if ($location.absUrl().split("user=")[1] == 1) {
             $scope.user_type = "user";
             $scope.ut = 1;
         }
-        
+
         var nadminurl;
         var d = $q.defer();
 
@@ -94,12 +94,12 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                 issue_type_en_short: response.issue_type_en_short,
                 host: response.host
             };
-            
+
             nadminurl = response.APIADMIN;
-            if($scope.user_type == "admin"){
+            if ($scope.user_type == "admin") {
                 $rootScope.Variables.APIADMIN += "/admin";
             }
-            
+
             d.resolve(response);
             return d.promise;
         });
@@ -109,7 +109,7 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                     $(document).resize();
 
                     function comparison(municipality, mun_index) {
-                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var count_resolved = 0;
                             var count_progress = 0;
                             var count_confirmed = 0;
@@ -117,21 +117,63 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                             var cnt_invalid = 0;
                             var cnt_duplicated = 0;
                             var cnt = 0;
+
+                            $scope.issues = response.data;
+
+                            var count = [];
+                            for (var j = 0; j <= $rootScope.Variables.issue_type_en_short.length; j++) {
+                                count[j] = 0;
+                            }
+
+
                             for (var i = 0; i < response.data.length; i++) {
                                 if (response.data[i].resolution == "FIXED") {
                                     cnt_fixed++;
+                                    var data_index = $rootScope.Variables.issue_type_en_short.indexOf(response.data[i].issue);
+                                    count[data_index] = count[data_index] + 1;
+                                    count_resolved++;
                                 } else if (response.data[i].resolution == "INVALID") {
                                     cnt_invalid++;
+                                    var data_index = $rootScope.Variables.issue_type_en_short.indexOf(response.data[i].issue);
+                                    count[data_index] = count[data_index] + 1;
+                                    count_resolved++;
                                 } else if (response.data[i].resolution == "DUPLICATED") {
                                     cnt_duplicated++;
-                                } else
-                                    cnt++;
-                            }
-                            for (var i = 0; i < response.data.length; i++) {
-                                if (response.data[i].status == "IN_PROGRESS") {
-                                    count_progress++;
-                                } else
+                                    var data_index = $rootScope.Variables.issue_type_en_short.indexOf(response.data[i].issue);
+                                    count[data_index] = count[data_index] + 1;
                                     count_resolved++;
+                                } else {
+                                    cnt++;
+                                    count_progress++;
+                                }
+                            }
+
+                            var max = -1;
+                            var min = 1000000000;
+                            var value;
+                            var value1;
+
+                            for (var i = 0; i < $rootScope.Variables.issue_type_gr.length; i++) {
+                                if (max < count[i]) {
+                                    max = count[i];
+                                    value = $rootScope.Variables.issue_type_gr[i];
+                                }
+                                if (min > count[i]) {
+                                    min = count[i];
+                                    value1 = $rootScope.Variables.issue_type_gr[i];
+                                }
+                            }
+
+                            if (mun_index == 1) {
+                                $scope.fr1 = value;
+                                $scope.max1 = max;
+                                $scope.lfr1 = value1;
+                                $scope.min1 = min;
+                            } else {
+                                $scope.fr2 = value;
+                                $scope.max2 = max;
+                                $scope.lfr2 = value1;
+                                $scope.min2 = min;
                             }
 
                             var nvd3Charts = function () {
@@ -267,10 +309,10 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                             }();
 
                             nvd3Charts.init();
-                            $scope.nloaded3[mun_index-1] = false;
+                            $scope.nloaded3[mun_index - 1] = false;
                         });
 
-                        $http.get(nadminurl + "/feelings?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val(),{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get(nadminurl + "/feelings?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val(), {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var count_happy = 0;
                             var count_angry = 0;
                             var count_neutral = 0;
@@ -387,50 +429,10 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
 
                             nvd3Charts.init();
 
-                            $scope.nloaded1[mun_index-1] = false;
+                            $scope.nloaded1[mun_index - 1] = false;
                         });
 
-                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=RESOLVED",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
-                            $scope.issues = response.data;
-
-                                var count = [];
-                                for (var j = 0; j <= $rootScope.Variables.issue_type_en_short.length; j++) {
-                                    count[j] = 0;
-                                }
-                                for (var i = 0; i < response.data.length; i++) {
-                                    var data_index = $rootScope.Variables.issue_type_en_short.indexOf(response.data[i].issue);
-                                    count[data_index] = count[data_index] + 1;
-                                }
-                                var max = count[0];
-                                var min = count[0];
-                                var value = $rootScope.Variables.issue_type_gr[0];
-                                var value1 = $rootScope.Variables.issue_type_gr[0];
-                                
-                                for (var i = 1; i < $rootScope.Variables.issue_type_gr.length; i++) {
-                                    if (max < count[i]) {
-                                        max = count[i];
-                                        value = $rootScope.Variables.issue_type_gr[i];
-                                    }
-                                    if( min > count[i]){
-                                        min = count[i];
-                                        value1 = $rootScope.Variables.issue_type_gr[i];
-                                    }
-                                }
-
-                                if (mun_index == 1) {
-                                    $scope.fr1 = value;
-                                    $scope.max1 = max;
-                                    $scope.lfr1 = value1;
-                                    $scope.min1 = min;
-                                } else {
-                                    $scope.fr2 = value;
-                                    $scope.max2 = max;
-                                    $scope.lfr2 = value1;
-                                    $scope.min2 = min;
-                                }
-                        });
-                        
-                        $scope.nloaded2[mun_index-1] = false;
+                        $scope.nloaded2[mun_index - 1] = false;
                     }
 
                     $("#search_btn").click("on", function () {

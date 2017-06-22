@@ -17,9 +17,9 @@
         <!-- EOF CSS INCLUDE -->     
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
     </head>
-<!--    <div ng-show="nloaded" class="loading_bar">
+    <div ng-show="nloaded" class="loading_bar">
         Loading&#8230;
-    </div>-->
+    </div>
     <body ng-show="user_type != 'none'" class="page-container"  data-ng-app="lifecycle" data-ng-controller="lifecycle">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
@@ -103,7 +103,7 @@
                             <!-- START DISCRETE CHART -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Τελευταία βδομάδα</h3>
+                                    <h3 class="panel-title">Τελευταία εβδομάδα</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div id="chart-w" style="height: 300px;"><svg></svg></div>
@@ -191,24 +191,7 @@
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
         <!-- END PRELOADS -->                 
 
-
-        <!-- Google Analytics -->
-        <script>
-            (function (i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-            ga('create', 'UA-XXXXX-Y', 'auto');
-            ga('send', 'pageview');
-        </script>
+        <link rel="import" href="../analytics.html">
         <!-- End Google Analytics -->
         <!-- START SCRIPTS -->
         <!-- START PLUGINS -->

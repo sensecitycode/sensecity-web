@@ -65,6 +65,7 @@
                     <h1 class="cursive">&nbsp;</h1>
                     <a href="http://patras.sense.city" class="btn btn-success btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 200ms; animation-name: bounceInDown;" id="city_patra"></a>
                     <a href="http://zakynthos.sense.city" class="btn btn-success btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 1000ms; animation-name: bounceInDown;" id="city_zakynthos"></a>
+                    <a href="http://pyrgos.sense.city" class="btn btn-success btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 1500ms; animation-name: bounceInDown;" id="city_pyrgos">Πύργος</a>
                     <a href="." class="btn btn-primary btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 1500ms; animation-name: bounceInDown;" id="city_other_2">Η πόλη σου</a>
                     <a href="." class="btn btn-xl page-scroll animated bounceInDown" style="animation-duration: 500ms; animation-delay: 2000ms; animation-name: bounceInDown;" id="">...</a>
                 </div>
@@ -271,23 +272,7 @@
                 <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Theme by: Landing Zero by BootstrapZero</a> ©2015 Πανεπιστήμιο Πατρών</span>
             </div>
 
-            <!-- Google Analytics -->
-            <script>
-                (function (i, s, o, g, r, a, m) {
-                    i['GoogleAnalyticsObject'] = r;
-                    i[r] = i[r] || function () {
-                        (i[r].q = i[r].q || []).push(arguments)
-                    }, i[r].l = 1 * new Date();
-                    a = s.createElement(o),
-                            m = s.getElementsByTagName(o)[0];
-                    a.async = 1;
-                    a.src = g;
-                    m.parentNode.insertBefore(a, m)
-                })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-                ga('create', 'UA-XXXXX-Y', 'auto');
-                ga('send', 'pageview');
-            </script>
+            <link rel="import" href="admin/analytics.html">
             <!-- End Google Analytics -->
         </footer>
         <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -460,6 +445,7 @@
                     $('#msg_popup_text').html(lang.msg_popup_text);
                     $('#city_patra').html(lang.city_patra);
                     $('#city_zakynthos').html(lang.city_zakynthos);
+                    $('#city_pyrgos').html(lang.city_pyrgos);
                     $('#city_other_1').html(lang.city_other_1);
                     $('#city_other_2').html(lang.city_other_2);
                 }

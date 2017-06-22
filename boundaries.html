@@ -7,6 +7,7 @@
         <script src="ui-leaflet-1.0.3/logger.js"></script>
         <script src="ui-leaflet-1.0.3/dist/ui-leaflet.min.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+        <link rel="import" href="admin/analytics.html">
         <script>
             var app = angular.module("demoapp", ['ui-leaflet']);
             app.controller("GeoJSONController", ['$scope', '$rootScope', '$q', '$http', '$location', 'leafletData', function ($scope, $rootScope, $q, $http, $location, leafletData) {

@@ -1,5 +1,28 @@
 var appControllers = angular.module('scwebsubmit.controllers', []);
 
+function default_icon(this_img) {
+    var scope = angular.element("#wscontrl").scope();
+    for (var i = 0; i < scope.lastissues.length; i++) {
+        if (scope.rec_issues[i].id == this_img.dataset.bugid) {
+            scope.rec_issues[i].class = "fa fa-" + scope.Variables.icons[scope.lastissues1[i]].icon;
+            scope.rec_issues[i].width = "80%";
+            scope.rec_issues[i].image_name = '';
+            break;
+        }
+    }
+}
+
+function default_image(this_img) {
+    var scope = angular.element("#wscontrl").scope();
+    for (var i = 0; i < scope.rec_issues.length; i++) {
+        if (scope.rec_issues[i].id == this_img.dataset.bugid) {
+            scope.rec_issues[i].class = '';
+            scope.$apply();
+            break;
+        }
+    }
+}
+
 appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
     function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
         $scope.smsg1 = false;
@@ -9,6 +32,8 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         $scope.chkSelected = false;
         $scope.ecert = false;
         $scope.mcert = false;
+        $scope.recommend_issue = "";
+        $scope.rec_issues = [];
         var ecft = 1;
         var mcft = 1;
 
@@ -33,8 +58,15 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 $("#btntxt").text($translate.instant('CHOOSE_PHOTO'));
                 $("#finish_button").text($translate.instant('SUBMIT'));
                 $('#available_issues').selectpicker('refresh');
-                $('#issuetype_select').selectpicker('refresh')
+                $('#issuetype_select').selectpicker('refresh');
             }, 100);
+        };
+
+        $scope.last_stp = function (id) {
+            setTimeout(function () {
+                $("#psw").smartWizard('goToStep', 5);
+            }, 1);
+            $scope.recommend_issue = id;
         };
 
         var url_path = $location.absUrl().split("//");
@@ -129,6 +161,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 issue_type_gr: response.issue_type_gr,
                 availableIssues: response.availableIssues,
                 searchIssues: response.searchIssues,
+                issue_recommendation: response.issue_recommendation,
                 map_zoom: response.zoom,
                 overlay_functions: response.overlay_functions,
                 overlay_categories: response.overlay_categories,
@@ -662,7 +695,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
                 if (step == 1) {
                     console.log("Step 1");
-                    
+
                     setTimeout(function () {
                         if ($scope.chkSelected) {
                             if ($scope.NameTxt == "" || $scope.NameTxt == undefined) {
@@ -837,10 +870,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }, 30000);
                 } else if (step == 2) {
                     console.log("Step 2");
-                    
+
                     $scope.em_disabled = false;
                     $scope.m_disabled = false;
-                    
+
                     $scope.eisnotverify = function () {
                         return true;
                     };
@@ -897,7 +930,60 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.step4 = function () {
                             return false;
                         };
+                        var canactu = $q.defer();
+
+                        var rec_data = {"long": $scope.lnglabeltxt, "lat": $scope.latlabeltxt, "issue": $scope.issueTypeSelect.id};
+                        return $http({
+                            method: 'POST',
+                            url: $rootScope.Variables.issue_recommendation,
+                            timeout: canactu.promise,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            },
+                            data: rec_data
+                        }).success(function (resp) {
+                            for (var i = 0; i < resp.bugs.length; i++) {
+                                var status_num;
+                                if (resp.bugs[i].status == "CONFIRMED") {
+                                    status_num = 0;
+                                } else if (resp.bugs[i].status == "IN_PROGRESS") {
+                                    status_num = 1;
+                                } else {
+                                    status_num = 2;
+                                }
+                                $scope.rec_issues.push({"id": resp.bugs[i].id, "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp.bugs[i].id + "&resolution=small", "status": $translate.instant(resp.bugs[i].status), "address": resp.bugs[i].cf_city_address, "alias": resp.bugs[i].alias[0], "status_num": status_num, "counter": i, "icon": $scope.issueTypeSelect.id, "class": "fa fa-" + $rootScope.Variables.icons[rec_data.issue].icon});
+                            }
+                            canactu.resolve();
+                        });
                     } else {
+
+                        var canactu = $q.defer();
+
+                        var rec_data = {"long": $scope.lnglabeltxt, "lat": $scope.latlabeltxt, "issue": $scope.issueTypeSelect.id};
+
+//                        return $http({
+//                            method: 'POST',
+//                            url: $rootScope.Variables.issue_recommendation,
+//                            timeout: canactu.promise,
+//                            headers: {
+//                                'Content-Type': 'application/json; charset=utf-8'
+//                            },
+//                            data: rec_data
+//                        }).success(function (resp) {
+//                            for (var i = 0; i < resp.bugs.length; i++) {
+//                                var status_num;
+//                                if (resp.bugs[i].status == "CONFIRMED") {
+//                                    status_num = 0;
+//                                } else if (resp.bugs[i].status == "IN_PROGRESS") {
+//                                    status_num = 1;
+//                                } else {
+//                                    status_num = 2;
+//                                }
+//                                $scope.rec_issues.push({"id": resp.bugs[i].id, "status": $translate.instant(resp.bugs[i].status), "address": resp.bugs[i].cf_city_address, "alias": resp.bugs[i].alias[0], "status_num": status_num,"counter": i,"icon":$scope.issueTypeSelect.id});
+//                            }
+//                            canactu.resolve();
+//                        });
+
                         $scope.is_finalsubmit = function () {
                             return false;
                         };
@@ -1076,12 +1162,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             }
                         }, 30000);
                     }
-                }
-//                else if( step == 3){
-//                    
-//                }
-                else if (step == 3) {
-                    console.log("Step 3");
+                } else if (step == 4) {
+                    console.log("Step 4");
+                    $scope.recommend_issue = "";
 //                    if ($scope.isnotverify()) {
 //                        $scope.step1 = function () {
 //                            return false;
@@ -1140,60 +1223,121 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 //                        });
 //                    }
 
-                } else if (step == 4) {
-                    console.log("Step 4");
-                    $("#finish_button").attr("disabled", "disabled");
+                } else if (step == 5) {
+                    console.log("Step 5");
+                    $("#finish_button").attr("class", "btn btn-primary pull-right disabled");
                     var canissue = $q.defer();
-                    $http(
-                            {
-                                method: 'POST',
-                                url: $rootScope.Variables.APIURL,
-                                timeout: canissue.promise,
-                                headers: {
-                                    'Content-Type': 'application/json; charset=utf-8'
-                                },
-                                data: $scope.anon_post
-                            }).success(function (resp_an) {
-                        canissue.resolve();
-                        var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
+                    if ($scope.recommend_issue == "") {
+                        $http(
+                                {
+                                    method: 'POST',
+                                    url: $rootScope.Variables.APIURL,
+                                    timeout: canissue.promise,
+                                    headers: {
+                                        'Content-Type': 'application/json; charset=utf-8'
+                                    },
+                                    data: $scope.anon_post
+                                }).success(function (resp_an) {
+                            canissue.resolve();
+                            var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
 
-                        $scope.smsg1 = false;
-                        $scope.smsg2 = false;
+                            $scope.smsg1 = false;
+                            $scope.smsg2 = false;
 
-                        if ($scope.chkSelected) {
-                            var canissueid = $q.defer();
-                            return $http({
-                                method: 'POST',
-                                url: $rootScope.Variables.APIURL + resp_an._id,
-                                timeout: canissueid.promise,
-                                headers: {
-                                    'Content-Type': 'application/json; charset=utf-8'
-                                },
-                                data: jsonData
-                            }).success(function (resp) {
-                                canissueid.resolve();
-                                $scope.is_finalsubmit = function () {
-                                    return true;
-                                };
+                            if ($scope.chkSelected) {
+                                var canissueid = $q.defer();
+                                return $http({
+                                    method: 'POST',
+                                    url: $rootScope.Variables.APIURL + resp_an._id,
+                                    timeout: canissueid.promise,
+                                    headers: {
+                                        'Content-Type': 'application/json; charset=utf-8'
+                                    },
+                                    data: jsonData
+                                }).success(function (resp) {
+                                    canissueid.resolve();
+                                    $scope.is_finalsubmit = function () {
+                                        return true;
+                                    };
 
+                                    $window.location.reload();
+                                });
+                                setTimeout(function () {
+                                    if (canissueid.promise.$$state.status == 0) {
+                                        canissueid.resolve('cancelled');
+                                        alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                    }
+                                }, 30000);
+                            } else {
                                 $window.location.reload();
-                            });
-                            setTimeout(function () {
-                                if (canissueid.promise.$$state.status == 0) {
-                                    canissueid.resolve('cancelled');
-                                    alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                                }
-                            }, 30000);
-                        } else {
-                            $window.location.reload();
-                        }
-                    });
-                    setTimeout(function () {
-                        if (canissue.promise.$$state.status == 0) {
-                            canissue.resolve('cancelled');
-                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                        }
-                    }, 30000);
+                            }
+                        });
+                        setTimeout(function () {
+                            if (canissue.promise.$$state.status == 0) {
+                                canissue.resolve('cancelled');
+                                alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
+                    } else {
+                        alert($scope.recommend_issue);
+                        var canissue = $q.defer();
+//                if($scope.chkSelected_1 == false){
+//                   $scope.EmailTxt = ""; 
+//                }else if($scope.chkSelected_2 == false){
+//                   $scope.MobileTxt = ""; 
+//                }
+                        $http(
+                                {
+                                    method: 'POST',
+                                    url: $rootScope.variables.APIADMIN + "/issue_subscribe",
+                                    timeout: canissue.promise,
+                                    headers: {
+                                        'Content-Type': 'application/json; charset=utf-8'
+                                    },
+                                    data: {"name": $scope.NameTxt, "email": $scope.EmailTxt, "mobile_num": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.recommend_issue}
+                                }).success(function (resp_an) {
+                            canissue.resolve();
+                            var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
+
+                            $scope.smsg1 = false;
+                            $scope.smsg2 = false;
+
+                            if ($scope.chkSelected) {
+                                var canissueid = $q.defer();
+                                return $http({
+                                    method: 'POST',
+                                    url: $rootScope.variables.APIURL + resp_an._id,
+                                    timeout: canissueid.promise,
+                                    headers: {
+                                        'Content-Type': 'application/json; charset=utf-8'
+                                    },
+                                    data: jsonData
+                                }).success(function (resp) {
+                                    canissueid.resolve();
+                                    $scope.is_finalsubmit = function () {
+                                        return true;
+                                    };
+
+
+                                    $window.location.reload();
+                                });
+                                setTimeout(function () {
+                                    if (canissueid.promise.$$state.status == 0) {
+                                        canissueid.resolve('cancelled');
+                                        alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                    }
+                                }, 30000);
+                            } else {
+                                $window.location.reload();
+                            }
+                        });
+                        setTimeout(function () {
+                            if (canissue.promise.$$state.status == 0) {
+                                canissue.resolve('cancelled');
+                                alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
+                    }
                 }
             };
 
@@ -1209,7 +1353,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 }
                 $scope.$apply();
             };
-            
+
             $scope.em_disabled = false;
             $scope.activate_email = function () {
                 var canemail = $q.defer();
@@ -1235,7 +1379,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
                 }, 30000);
             };
-            
+
             $scope.m_disabled = false;
             $scope.activate_mobile = function () {
                 var canmobile = $q.defer();
@@ -1249,7 +1393,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 'Content-Type': 'application/json; charset=utf-8'
                             }
                         }).success(function (resp) {
-                    canmobile.resolve();        
+                    canmobile.resolve();
                     $scope.msg2 = "Στο κινητό νούμερο " + $scope.MobileTxt + " που δηλώσατε θα σας αποσταλεί με sms ο κωδικός πιστοποίησης εντός διαστήματος 20 δευτερολέπτων! Σε περίπτωση που θέλετε να αλλάξετε το κινητό νούμερο κλείστε το παράθυρο και ξεκινήστε την διαδικασία από την αρχή!";
                     $scope.smsg2 = true;
                 });

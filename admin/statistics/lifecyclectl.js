@@ -31,13 +31,13 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
         } else {
             url = '../../config/' + sub_domain[0] + '.json';
         }
-        
-        $scope.user_type="none";
+
+        $scope.user_type = "none";
         $scope.ut = -1;
-        if($location.absUrl().split("user=")[1] == 0){
+        if ($location.absUrl().split("user=")[1] == 0) {
             $scope.user_type = "admin";
             $scope.ut = 0;
-        }else if($location.absUrl().split("user=")[1] == 1){
+        } else if ($location.absUrl().split("user=")[1] == 1) {
             $scope.user_type = "user";
             $scope.ut = 1;
         }
@@ -79,11 +79,11 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
                 google_buildings: response.google_buildings,
                 host: response.host
             };
-            
-            if($scope.user_type == "admin"){
+
+            if ($scope.user_type == "admin") {
                 $rootScope.Variables.APIADMIN += "/admin";
             }
-            
+
             d.resolve(response);
             return d.promise;
         });
@@ -163,34 +163,54 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
         var year1 = yyyy1.getFullYear();
         var yyyy1 = year1 + '-' + my1 + '-' + dy1;
         today = yyyy + '-' + mm + '-' + dd;
-        
+
 
         $q.all([$rootScope.mainInfo]).then(
-                function(data) {
-                    
+                function (data) {
+
                     $scope.issues = [];
-                    for(var i = 0 ; i < $rootScope.Variables.issue_type_gr.length;i++){
-                        $scope.issues.push({value:$rootScope.Variables.issue_type_en_short[i],title:$rootScope.Variables.issue_type_gr[i]});
+                    for (var i = 0; i < $rootScope.Variables.issue_type_gr.length; i++) {
+                        $scope.issues.push({value: $rootScope.Variables.issue_type_en_short[i], title: $rootScope.Variables.issue_type_gr[i]});
                     }
 
-                    function resolve_stats(startdate, enddate,tag) {
-                        $http.get($rootScope.Variables.APIADMIN + "/issue?issue=" + $("#issue_val").val() + "&city="+$rootScope.Variables.city_name+"&startdate=" + startdate + "&enddate=" + enddate + "&status=RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED|WONTFIX",{headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
-                            var cnt_fixed = 0;
-                            var cnt_invalid = 0;
-                            var cnt_duplicated = 0;
-                            var cnt_wontfix = 0;
+                    function count_index(time) {
+                        if (time >= moment().subtract(7, "days").unix()) {
+                            return 0;
+                        } else if (time >= moment().subtract(1, "months").unix()) {
+                            return 1;
+                        } else if (time >= moment().subtract(3, "months").unix()) {
+                            return 2;
+                        } else if (time >= moment().subtract(6, "months").unix()) {
+                            return 3;
+                        } else {
+                            return 4;
+                        }
+                    }
+
+                    function resolve_stats(startdate, enddate) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?issue=" + $("#issue_val").val() + "&city=" + $rootScope.Variables.city_name + "&startdate=" + startdate + "&enddate=" + enddate + "&status=RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED|WONTFIX", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                            var cnt_fixed = [0,0,0,0,0];
+                            var cnt_invalid = [0,0,0,0,0];
+                            var cnt_duplicated = [0,0,0,0,0];
+                            var cnt_wontfix = [0,0,0,0,0];
                             var cnt = 0;
+                            var index;
                             for (var i = 0; i < response.data.length; i++) {
                                 if (response.data[i].resolution == "FIXED") {
-                                    cnt_fixed++;
+                                    index = count_index(moment(response.data[i].create_at).unix());
+                                    cnt_fixed[index]++;
                                 } else if (response.data[i].resolution == "INVALID") {
-                                    cnt_invalid++;
+                                    index = count_index(moment(response.data[i].create_at).unix());
+                                    cnt_invalid[index]++;
                                 } else if (response.data[i].resolution == "DUPLICATED") {
-                                    cnt_duplicated++;
-                                } else if(response.data[i].resolution == "WONTFIX"){
-                                    cnt_wontfix++;
-                                }else
+                                    index = count_index(moment(response.data[i].create_at).unix());
+                                    cnt_duplicated[index]++;
+                                } else if (response.data[i].resolution == "WONTFIX") {
+                                    index = count_index(moment(response.data[i].create_at).unix());
+                                    cnt_wontfix[index]++;
+                                } else{
                                     cnt++;
+                                }
                             }
                             var nvd3Charts = function () {
                                 var myColors = ['#90EE90', '#CD5C5C', "#00BFDD", "#FF702A", "#DA3610",
@@ -201,7 +221,7 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
                                 d3.scale.myColors = function () {
                                     return d3.scale.ordinal().range(myColors);
                                 };
-                                var startChart4 = function () {
+                                var startChart4 = function (it,tag) {
                                     nv.addGraph(function () {
                                         var chart = nv.models.discreteBarChart().x(function (d) {
                                             return d.label;
@@ -214,25 +234,25 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
                                                 .transitionDuration(350)
                                                 .color(d3.scale.myColors().range());
                                         ;
-                                        d3.select('#chart-'+tag+' svg').datum(exampleData()).call(chart);
+                                        d3.select('#chart-' + tag + ' svg').datum(exampleData(it)).call(chart);
                                         nv.utils.windowResize(chart.update);
                                         return chart;
                                     });
                                     //Each bar represents a single discrete quantity.
-                                    function exampleData() {
+                                    function exampleData(it) {
                                         return [{
                                                 key: "Cumulative Return",
                                                 values: [{
                                                         "label": "Αποκατεστημένα",
-                                                        "value": cnt_fixed
+                                                        "value": cnt_fixed[it]
                                                     }, {
                                                         "label": "Εσφαλμένες αναφορές",
-                                                        "value": cnt_invalid
+                                                        "value": cnt_invalid[it]
                                                     }, {
                                                         "label": "Αναφορά σε άλλο αίτημα",
-                                                        "value": cnt_duplicated
-                                                    },{"label": "Δεν αποκαταστάθηκαν",
-                                                        "value": cnt_wontfix
+                                                        "value": cnt_duplicated[it]
+                                                    }, {"label": "Δεν αποκαταστάθηκαν",
+                                                        "value": cnt_wontfix[it]
                                                     }]
                                             }];
                                     }
@@ -264,20 +284,21 @@ app.controller('lifecycle', ['$scope', '$http', '$cookieStore', '$q', '$rootScop
                                 }
                                 return {
                                     init: function () {
-                                        startChart4();
+                                        startChart4(0,"w");
+                                        startChart4(1,"m");
+                                        startChart4(2,"3m");
+                                        startChart4(3,"6m");
+                                        startChart4(4,"y");
                                     }
                                 };
                             }();
                             nvd3Charts.init();
+                            $scope.nloaded = false;
                         });
                     }
                     $("#search_btn").click("on", function () {
-                        //$scope.nloaded = true;
-                        resolve_stats(week,today,"w");
-                        resolve_stats(month1,today,"m");
-                        resolve_stats(month3,today,"3m");
-                        resolve_stats(month6,today,"6m");
-                        resolve_stats(yyyy1,today,"y");
+                        $scope.nloaded = true;
+                        resolve_stats(yyyy1, today);
                     });
 
 

@@ -62,6 +62,7 @@
 	msg_subtype_select:"Επιλέξτε προβλήματος",
 	city_patra:"Πάτρα",
         city_zakynthos:"Ζάκυνθος",
+        city_pyrgos:"Πύργος",
 	city_other_1:"Η πόλη σου",
 	city_other_2:"Η πόλη σου"
 };
