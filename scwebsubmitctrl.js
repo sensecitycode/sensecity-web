@@ -361,6 +361,27 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         }
         ;
 
+        $('#epon').on('ifClicked', function (event) {
+            setTimeout(function(){
+                    var name = $location.absUrl().split("name=")[1];
+                    var email = $location.absUrl().split("email=")[1];
+                    var mobile = $location.absUrl().split("mobile=")[1];
+
+                    if (name != undefined && mobile != undefined) {
+                        name = name.split("&")[0];
+                        mobile = mobile.split("&")[0];
+                        if (email != undefined) {
+                            email = email.split("&")[0];
+                            $scope.EmailTxt = email;
+                        }
+                        $scope.NameTxt = name;
+                        $scope.MobileTxt = mobile;
+                    }
+                    $scope.$apply();
+                    $("#next_button").attr("class", "btn btn-default pull-right");
+                },1);
+        });
+
         $q.all([$rootScope.mainInfo]).then(function (data) {
             $("#next_button").attr("class", "btn btn-default pull-right disabled");
             if ($scope.markers.length == 2 || mylocation_en == 0) {

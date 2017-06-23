@@ -1,6 +1,7 @@
 var appControllers = angular.module('sense.controllers', ['pascalprecht.translate']);
 
 var mood_activated = false;
+var sensors_activated = false;
 var garbage_activated = false;
 var light_activated = false;
 var fpnft = false;
@@ -10,27 +11,27 @@ var markersLightning;
 
 function default_icon(this_img) {
     var scope = angular.element("#mainctl").scope();
-    for(var i = 0;i < scope.lastissues.length; i++){
-      if(scope.lastissues[i].bug_id == this_img.dataset.bugid){
-           scope.lastissues[i].class = "fa fa-" + scope.Variables.icons[scope.lastissues1[i]].icon;
-           scope.lastissues[i].width = "80%";
-           scope.lastissues[i].image_name = '';
-           break;
-      }  
+    for (var i = 0; i < scope.lastissues.length; i++) {
+        if (scope.lastissues[i].bug_id == this_img.dataset.bugid) {
+            scope.lastissues[i].class = "fa fa-" + scope.Variables.icons[scope.lastissues1[i]].icon;
+            scope.lastissues[i].width = "80%";
+            scope.lastissues[i].image_name = '';
+            break;
+        }
     }
 }
 
-function default_image(this_img){
+function default_image(this_img) {
     var scope = angular.element("#mainctl").scope();
-    for(var i = 0;i < scope.lastissues.length; i++){
-      if(scope.lastissues[i].bug_id == this_img.dataset.bugid){
-           scope.lastissues[i].class = '';
-           break;
-      }  
+    for (var i = 0; i < scope.lastissues.length; i++) {
+        if (scope.lastissues[i].bug_id == this_img.dataset.bugid) {
+            scope.lastissues[i].class = '';
+            break;
+        }
     }
 }
 
-function marker_image(){
+function marker_image() {
     var scope = angular.element("#mainctl").scope();
     scope.icon_show = 0;
     scope.$apply();
@@ -89,7 +90,7 @@ appControllers.controller(
             '$compile',
             function ($scope, $window, $rootScope, $http, $q, $location, leafletData,
                     $interval,
-                    $translate, $resource,$compile) {
+                    $translate, $resource, $compile) {
 
                 var canceller = [];
                 var rcanceller = [null];
@@ -114,6 +115,7 @@ appControllers.controller(
                         $scope.layers.overlays.layer6 = {name: $translate.instant("ENVIRONMENT_ISSUE"), type: 'group', visible: true};
                         $scope.layers.overlays.layer7 = {name: $translate.instant("GREEN_ISSUE"), type: 'group', visible: true};
                         $scope.layers.overlays.layer8 = {name: $translate.instant("MOOD"), type: 'group', visible: mood_activated};
+                        $scope.layers.overlays.layer9 = {name: $translate.instant("SENSORS"), type: 'group', visible: sensors_activated};
                     }, 100);
                 };
 
@@ -389,7 +391,7 @@ appControllers.controller(
                                 }
                             }
                         }, overlays: {
-                            layer1: {name: '', type: 'group', visible: true}, layer2: {name: '', type: 'group', visible: true}, layer3: {name: '', type: 'group', visible: true}, layer4: {name: '', type: 'group', visible: true}, layer5: {name: '', type: 'group', visible: true}, layer6: {name: '', type: 'group', visible: true}, layer7: {name: '', type: 'group', visible: true}, layer8: {name: '', type: 'group', visible: false}, layer9: {name: '', type: 'group', visible: true}, layer10: {name: '', type: 'group', visible: true}}
+                            layer1: {name: '', type: 'group', visible: true}, layer2: {name: '', type: 'group', visible: true}, layer3: {name: '', type: 'group', visible: true}, layer4: {name: '', type: 'group', visible: true}, layer5: {name: '', type: 'group', visible: true}, layer6: {name: '', type: 'group', visible: true}, layer7: {name: '', type: 'group', visible: true}, layer8: {name: '', type: 'group', visible: false}, layer9: {name: '', type: 'group', visible: false}, layer10: {name: '', type: 'group', visible: true}}
                     },
                     addlayer: function (layer) {
                         if (layer == 1) {
@@ -450,13 +452,14 @@ appControllers.controller(
                             $.getScript("js/plugins.js");
                             $.getScript("js/actions.js");
                             $scope.$on("leafletDirectiveMarker.click", function (event, args) {
-
+                                if(args.model.issue_id != undefined){
+                                    
                                 var marker3 = args.leafletObject;
                                 var popup = marker3.getPopup();
-
+                                
                                 var issue_name;
                                 var issue_image;
-
+                                
                                 rcanceller[1] = $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
                                         {issueID: '@id'}, {'query': {method: 'GET', isArray: true, cancellable: true}}
                                 ).query({issueID: marker3.options.issue_id}, function (resp) {
@@ -465,16 +468,16 @@ appControllers.controller(
                                     if (resp_index != -1) {
                                         issue_name = $translate.instant($rootScope.Variables.categories_issue[resp_index]);
                                     }
-                                    
+
                                     resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
-                                    
+
                                     $scope.icon_show = 1;
-                                   
-                                    popup.setContent("<center style='width:210px' id='"+resp[0].bug_id+"_icon'></center>");
+
+                                    popup.setContent("<center style='width:210px' id='" + resp[0].bug_id + "_icon'></center>");
                                     popup.options.maxWidth = "auto";
                                     popup.update();
                                     $scope.icon_content = "<b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img ng-show=\"icon_show==0\" onload='marker_image()' src=\"" + $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp[0].bug_id + "&resolution=small \" style=\"height:200px\"><i ng-show=\"icon_show == 1\" class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a>";
-                                    $("#"+resp[0].bug_id+"_icon").html($compile($scope.icon_content)($scope));
+                                    $("#" + resp[0].bug_id + "_icon").html($compile($scope.icon_content)($scope));
                                 });
                                 setTimeout(function () {
                                     if (canceller[1].promise.$$state.status == 0) {
@@ -482,7 +485,8 @@ appControllers.controller(
                                         $scope.$apply();
                                         alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                                     }
-                                },30000);
+                                }, 30000);
+                            }
                             });
                             leafletData.getMap().then(function (map) {
                                 map.scrollWheelZoom.disable();
@@ -520,12 +524,16 @@ appControllers.controller(
                             $scope.$on('leafletDirectiveMap.overlayadd', function (event, o) {
                                 if ($translate.instant("MOOD") == o.leafletEvent.name) {
                                     mood_activated = true;
+                                } else if ($translate.instant("SENSORS") == o.leafletEvent.name) {
+                                    sensors_activated = true;
                                 }
                             });
 
                             $scope.$on('leafletDirectiveMap.overlayremove', function (event, o) {
                                 if ($translate.instant("MOOD") == o.leafletEvent.name) {
                                     mood_activated = false;
+                                } else if ($translate.instant("SENSORS") == o.leafletEvent.name) {
+                                    sensors_activated = false;
                                 }
                             });
 
@@ -615,6 +623,13 @@ appControllers.controller(
                                                     }
 
                                                     $scope.markers = [];
+                                                    if ($rootScope.Variables.city_name == "testcity1") {
+                                                        searchissues.push({"issue":"humidity","value_desc":"Humidity value","loc":{"type":"Point","coordinates":[21.7912763,38.2831043]}});
+                                                        searchissues.push({"issue":"temperature","value_desc":"Temperature value","loc":{"type":"Point","coordinates":[21.750683,38.237351]}});
+
+                                                    }else if ($rootScope.Variables.city_name == "london") {
+                                                        
+                                                    }
                                                     angular
                                                             .forEach(
                                                                     searchissues,
@@ -627,13 +642,19 @@ appControllers.controller(
                                                                         var positionlon = value.loc.coordinates[0];
                                                                         var issue = value.issue;
                                                                         var layer = '';
+                                                                        var type='';
 
                                                                         if (issue == "angry"
                                                                                 || issue == "neutral"
                                                                                 || issue == "happy") {
                                                                             layer = 'reaction';
+                                                                            type = 'reaction';
+                                                                        }else if(issue == "humidity" || issue == "temperature"){
+                                                                            layer = 'sensors';
+                                                                            type = 'sensors';
                                                                         } else {
                                                                             layer = issue;
+                                                                            type = 'other';
                                                                         }
 
                                                                         var message = '';
@@ -643,12 +664,16 @@ appControllers.controller(
                                                                         } else {
                                                                             message = 'Μη διαθέσιμη περιγραφή';
                                                                         }
-
-                                                                        if (layer != 'reaction') {
+                                                                        
+                                                                        if (layer != 'reaction' && layer != 'sensors') {
                                                                             var lindex = $rootScope.Variables.overlay_categories.indexOf(issue) + 1;
-                                                                        } else {
-                                                                            var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
+                                                                        } else if(layer == 'sensors') {
+                                                                            var lindex = $rootScope.Variables.overlay_categories.indexOf('sensors') + 1;
+                                                                        }else{
+                                                                          var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;  
                                                                         }
+                                                                        
+                                                                        
                                                                         layer = "layer" + lindex;
 
                                                                         var marker = {
@@ -663,11 +688,13 @@ appControllers.controller(
                                                                             // 		+ ">Δες με!</a>"
                                                                             "issue_id": issueid
                                                                         };
-
-
-                                                                        if (layer != 'reaction') {
+                                                                        
+                                                                        if (type != 'reaction' && type != 'sensors') {
                                                                             marker.message = "Loading...";
+                                                                        }else{
+                                                                            marker.message = "<div class=\"row\" style=\"width:420px\"><div class=\"col-md-6\"><iframe src='http://150.140.184.249:5601/goto/7f010d2029bdb26584ce8e461be3b4dd?embed=true' height='200' width='200'></iframe></div><div class=\"col-md-3\"><iframe src=\"http://150.140.184.249:5601/app/kibana#/visualize/edit/58322a90-1463-11e7-8c4f-6149d3eb55ab?embed=true&_g=(refreshInterval:('$$hashKey':'object:287',display:'5+minutes',pause:!f,section:2,value:300000),time:(from:now-24h,mode:quick,to:now))&_a=(filters:!(),linked:!t,query:(query_string:(query:'*')),uiState:(),vis:(aggs:!((enabled:!t,id:'1',params:(aggregate:average,customLabel:'',field:Value,size:1,sortField:metadata.time,sortOrder:desc),schema:metric,type:top_hits)),listeners:(),params:(fontSize:'62',handleNoResults:!t),title:'agrodu01stream+Last+Value',type:metric))\" height=\"200\" width=\"200\"></iframe></div></div>";
                                                                         }
+                                                                        
                                                                         $scope.markers.push(marker);
 
                                                                     },
@@ -728,11 +755,11 @@ appControllers.controller(
                                         counter = 0;
                                         for (var i = 0; i < theLastIssues.length; i++) {
                                             $scope.lastissues[i].value_desc = theLastIssues[i].value_desc;
-                                            
+
                                             $scope.lastissues[i].class = "fa fa-" + $rootScope.Variables.icons[theLastIssues[i].issue].icon;
-                                                $scope.lastissues[i].width = "80%";
+                                            $scope.lastissues[i].width = "80%";
                                             $scope.lastissues1[counter] = theLastIssues[i].issue;
-                                            
+
                                             $scope.lastissues[i].issue1 = theLastIssues[i].issue;
                                             var cat_index = $rootScope.Variables.categories.indexOf(theLastIssues[i].issue);
                                             if (cat_index != -1) {
@@ -740,9 +767,9 @@ appControllers.controller(
                                             } else {
                                                 $scope.lastissues[i].issue = '';
                                             }
-                                            
-                                            $("#image"+$scope.lastissues[i].counter).removeAttr("src");
-                                            $("#image"+$scope.lastissues[i].counter).attr("src",$rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + theLastIssues[i].bug_id + "&resolution=small");
+
+                                            $("#image" + $scope.lastissues[i].counter).removeAttr("src");
+                                            $("#image" + $scope.lastissues[i].counter).attr("src", $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + theLastIssues[i].bug_id + "&resolution=small");
 
                                             var today = new Date();
                                             var create_day = new Date(
@@ -773,7 +800,9 @@ appControllers.controller(
                                             $scope.lastissues[i].create_at_unit = datediffunit;
                                             counter++;
                                         }
-                                        setTimeout(function(){$scope.$apply();},1);
+                                        setTimeout(function () {
+                                            $scope.$apply();
+                                        }, 1);
                                     }
                                     if (lsissues == 0) {
                                         lsissues = 1;
@@ -785,9 +814,9 @@ appControllers.controller(
                                                         function (lastissue,
                                                                 key) {
 
-                                                                lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
-                                                                lastissue.width = "80%";
-                                                            
+                                                            lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
+                                                            lastissue.width = "80%";
+
                                                             $scope.lastissues1[counter] = lastissue.issue;
                                                             var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
                                                             if (cat_index != -1) {
@@ -795,7 +824,7 @@ appControllers.controller(
                                                             } else {
                                                                 lastissue.issue = '';
                                                             }
-                                                            
+
                                                             lastissue.counter = counter;
                                                             lastissue.image_name = $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + lastissue.bug_id + "&resolution=small";
 
@@ -829,7 +858,9 @@ appControllers.controller(
                                                             counter++;
                                                         });
                                         $scope.lastissues = theLastIssues;
-                                        setTimeout(function(){$scope.$apply();},1);
+                                        setTimeout(function () {
+                                            $scope.$apply();
+                                        }, 1);
                                         setTimeout(function () {
                                             if ($(".owl-carousel").length > 0 && oft == 0) {
                                                 oft = 1;
@@ -972,7 +1003,7 @@ appControllers.controller(
                             $scope.displayFixedPoints();
 
                             // set intervals to update
-                            var updtime =  5* 60 * 1000; // every 5 minutes
+                            var updtime = 5 * 60 * 1000; // every 5 minutes
                             $interval($scope.doCalcLast6Issues, updtime);
                             $interval($scope.submitSearchLast7days, updtime);
                         });
