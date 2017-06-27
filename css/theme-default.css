@@ -35,6 +35,12 @@
     }
 }*/
 
+@media(max-width:834px){
+    .wizard .anchor li a{
+        height:78px;
+    }
+}
+
 @media(min-width: 992px){
     #lcert{
         padding-left: 0px;

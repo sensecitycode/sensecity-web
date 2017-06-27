@@ -851,7 +851,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                         var tag_pos;
                         var dep_pos;
 
-                        for (var i = 1; i < response[1].bugs[$scope.resp_id].comments.length; i++) {
+                        for (var i = 1; i < response[0].bugs[$scope.resp_id].comments.length; i++) {
 
                             var day;
                             var month;
@@ -862,7 +862,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             var show = true;
 
 
-                            var time_parse = response[1].bugs[$scope.resp_id].comments[i].time.split("-");
+                            var time_parse = response[0].bugs[$scope.resp_id].comments[i].time.split("-");
                             day = time_parse[2].substring(0, 2);
                             month = time_parse[1];
 
@@ -871,14 +871,14 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             var user_comment;
                             var status_index = -1;
                             var department_index = -1;
-                            for (var l = 0; l < response[1].bugs[$scope.resp_id].comments[i].tags.length; l++) {
-                                if (response[1].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0] == "STATUS") {
+                            for (var l = 0; l < response[0].bugs[$scope.resp_id].comments[i].tags.length; l++) {
+                                if (response[0].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0] == "STATUS") {
                                     status_index = l;
                                     break;
                                 }
                             }
-                            for (var l = 0; l < response[1].bugs[$scope.resp_id].comments[i].tags.length; l++) {
-                                if (response[1].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0] == "DEPARTMENT") {
+                            for (var l = 0; l < response[0].bugs[$scope.resp_id].comments[i].tags.length; l++) {
+                                if (response[0].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0] == "DEPARTMENT") {
                                     department_index = l;
                                     break;
                                 }
@@ -902,10 +902,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 //                                        break;
 //                                }
 
-                                if (response[1].bugs[$scope.resp_id].comments[i].tags[status_index].split(":")[1] == "CONFIRMED") {
+                                if (response[0].bugs[$scope.resp_id].comments[i].tags[status_index].split(":")[1] == "CONFIRMED") {
                                     color = {"background-color": "#e74c3c"};
                                     type = "Ανοιχτο";
-                                } else if (response[1].bugs[$scope.resp_id].comments[i].tags[status_index].split(":")[1] == "IN_PROGRESS") {
+                                } else if (response[0].bugs[$scope.resp_id].comments[i].tags[status_index].split(":")[1] == "IN_PROGRESS") {
                                     color = {"background-color": "#e67e22"};
                                     type = "Σε εκτελεση";
                                 } else {
@@ -956,7 +956,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
                             year = time_parse[0];
 
-                            time = response[1].bugs[$scope.resp_id].comments[i].time.substring(11, 19);
+                            time = response[0].bugs[$scope.resp_id].comments[i].time.substring(11, 19);
                             var temp_time = time.substring(0, 2);
                             var ntime = parseInt(temp_time);
                             ntime += 2;
@@ -972,17 +972,17 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             } else {
                                 time = ntime + time.substring(2);
                             }
-                            if (response[1].bugs[$scope.resp_id].comments[i].text == 'undefined') {
+                            if (response[0].bugs[$scope.resp_id].comments[i].text == 'undefined') {
                                 show = false;
                             }
 
                             if (status_index != -1) {
-                                var dep_index = $rootScope.variables.components_en.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index].split(":")[1]);
-                                response[1].bugs[$scope.resp_id].comments[i].tags[department_index] = $rootScope.variables.components[dep_index];
+                                var dep_index = $rootScope.variables.components_en.indexOf(response[0].bugs[$scope.resp_id].comments[i].tags[department_index].split(":")[1]);
+                                response[0].bugs[$scope.resp_id].comments[i].tags[department_index] = $rootScope.variables.components[dep_index];
 
-                                var dindex = $rootScope.variables.components.indexOf(response[1].bugs[$scope.resp_id].comments[i].tags[department_index]);
+                                var dindex = $rootScope.variables.components.indexOf(response[0].bugs[$scope.resp_id].comments[i].tags[department_index]);
                                 var com = {
-                                    "content": response[1].bugs[$scope.resp_id].comments[i].text,
+                                    "content": response[0].bugs[$scope.resp_id].comments[i].text,
                                     "type": type,
                                     "day": day,
                                     "month": month,
@@ -997,7 +997,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                 };
                             } else {
                                 var com = {
-                                    "content": response[1].bugs[$scope.resp_id].comments[i].text,
+                                    "content": response[0].bugs[$scope.resp_id].comments[i].text,
                                     "type": type,
                                     "day": day,
                                     "month": month,
@@ -1010,7 +1010,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                 };
                             }
 
-                            if (response[1].bugs[$scope.resp_id].comments[i].text.substr(2, 3) != "***") {
+                            if (response[0].bugs[$scope.resp_id].comments[i].text.substr(2, 3) != "***") {
                                 if ($scope.comments.length == 0) {
                                     $scope.fcyear = com.year;
                                 }
@@ -1040,6 +1040,13 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                         glat = issue[0].loc.coordinates[1];
                         glng = issue[0].loc.coordinates[0];
 
+                        leafletData.getMap().then(function (map) {
+                            var pos = map.latLngToLayerPoint($scope.markers[0].getLatLng()).round();
+                            alert($scope.markers[0].getLatLng());
+                            alert(pos);
+                            $scope.markers[0].setZIndexOffset(100 - pos.y);
+                        });
+
                         issue_index = $rootScope.variables.categories.indexOf(issue[0].issue);
                         svissue = issue[0].issue;
                         svtitle = $rootScope.variables.departments_en[issue_index];
@@ -1053,7 +1060,6 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                 type = issue[0].issue;
                             }
 
-                            var canfi1 = $q.defer();
                             var rcanfi1 = $resource($rootScope.variables.host + '/fix_point/:long/:lat/50/data',
                                     {
                                         long: '@long',
@@ -1062,7 +1068,6 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                     }, {'query': {method: 'GET', isArray: true, cancellable: true}}
                             ).query({long: issue[0].loc.coordinates[0], lat: issue[0].loc.coordinates[1], type: type}, function (fix_points) {
                                 angular.forEach(fix_points, function (value, key) {
-                                    canfi1.resolve();
                                     var icon = {
                                         icon: function (fixPoint) {
                                             var icon;
@@ -1088,13 +1093,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                     $scope.markers.push({"lat": value.loc.coordinates[1], "lng": value.loc.coordinates[0], "icon": icons[icon]});
                                 });
                             });
-                            setTimeout(function () {
-                                if (canfi1.promise.$$state.status == 0) {
-                                    rcanfi1.$cancelRequest();
-                                    $scope.$apply();
-                                    alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                                }
-                            }, 30000);
+
                         }
 
                         var issue_name_new;

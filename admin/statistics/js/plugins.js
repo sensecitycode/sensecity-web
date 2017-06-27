@@ -149,7 +149,7 @@ $(function() {
                     feDatepicker();                    
                     feTimepicker();
                     feColorpicker();
-                    feSelect();
+                    //feSelect();
                     feValidation();
                     feMasked();
                     feTooltips();

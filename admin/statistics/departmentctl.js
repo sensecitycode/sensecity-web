@@ -111,25 +111,30 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                         var cnt = 0;
                         $scope.date1 = $("#startdate").val();
                         $scope.date2 = $("#enddate").val();
-                        for (var i = 0; i < response.data.length; i++) {
-                            $http.get(nadminurl + "/fullissue/" + response.data[i]._id).then(function (response) {
+                        var all_issues = "";
+                        for (var i = 0; i < response.data.length - 1; i++) {
+                            all_issues += response.data[i]._id + "|";
+                        }
+                        all_issues += response.data[response.data.length - 1]._id;
+                        $http.get(nadminurl + "/fullissue/" + all_issues).then(function (response) {
+                            for (var i = 0; i < response.data.length; i++) {
                                 var is = false;
-                                var issues = response.data;
+                                var issues = response.data[i];
                                 cnt++;
-                                var ln = issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments.length;
+                                var ln = issues.bugs[issues.bug_id].comments.length;
                                 var k1 = new Date();
                                 var k2 = new Date();
                                 for (var j = 1; j < ln; j++) {
                                     var tags_index = -1;
-                                    for (var depl = 0; depl < issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags.length; depl++) {
-                                        if (issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[depl].split(":")[0] == "STATUS") {
+                                    for (var depl = 0; depl < issues.bugs[issues.bug_id].comments[j].tags.length; depl++) {
+                                        if (issues.bugs[issues.bug_id].comments[j].tags[depl].split(":")[0] == "STATUS") {
                                             tags_index = depl;
                                             break;
                                         }
                                     }
-                                    if (tags_index != -1 && ((issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index].split(":")[1] == "RESOLVED") && (is == false))) {
-                                        k1 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[1].creation_time);
-                                        k2 = Date.parse(issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[ln - 1].creation_time);
+                                    if (tags_index != -1 && ((issues.bugs[issues.bug_id].comments[j].tags[tags_index].split(":")[1] == "RESOLVED") && (is == false))) {
+                                        k1 = Date.parse(issues.bugs[issues.bug_id].comments[1].creation_time);
+                                        k2 = Date.parse(issues.bugs[issues.bug_id].comments[ln - 1].creation_time);
                                         m2 = ((k2 - k1) / 86300000);
                                         meres2 = Math.floor(m2);
                                         w2 = ((k2 - k1) % 86300000) / 3600000;
@@ -138,17 +143,17 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                         lepta2 = Math.floor(l2);
                                         is = true;
                                         $scope.array1D.push({
-                                            status: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[j].tags[tags_index],
-                                            startdate: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[1].creation_time,
-                                            enddate: issues[1].bugs[Object.keys(issues[1].bugs)[0]].comments[ln - 1].creation_time,
+                                            status: issues.bugs[issues.bug_id].comments[j].tags[tags_index],
+                                            startdate: issues.bugs[issues.bug_id].comments[1].creation_time,
+                                            enddate: issues.bugs[issues.bug_id].comments[ln - 1].creation_time,
                                             diasthma: k2 - k1,
-                                            problima: issues[0].value_desc,
+                                            problima: issues.value_desc,
                                             meres: meres2,
                                             wres: wres2,
                                             lepta: lepta2,
-                                            eidos: issues[0].resolution,
-                                            link: issues[0]._id,
-                                            bug: issues[0].bug_id
+                                            eidos: issues.resolution,
+                                            link: issues._id,
+                                            bug: issues.bug_id
                                         }
                                         );
                                     }
@@ -323,8 +328,8 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                     nvd3Charts.init();
                                     $(document).resize();
                                 }
-                            });
-                        }
+                            }
+                        });
                     });
                 });
     }]);
