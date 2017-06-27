@@ -2,9 +2,9 @@ var appControllers = angular.module('scwebsubmit.controllers', []);
 
 function default_icon(this_img) {
     var scope = angular.element("#wscontrl").scope();
-    for (var i = 0; i < scope.lastissues.length; i++) {
+    for (var i = 0; i < scope.rec_issues.length; i++) {
         if (scope.rec_issues[i].id == this_img.dataset.bugid) {
-            scope.rec_issues[i].class = "fa fa-" + scope.Variables.icons[scope.lastissues1[i]].icon;
+            // scope.rec_issues[i].class = "fa fa-" + scope.Variables.icons[scope.lastissues1[i]].icon;
             scope.rec_issues[i].width = "80%";
             scope.rec_issues[i].image_name = '';
             break;
@@ -36,6 +36,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         $scope.rec_issues = [];
         var ecft = 1;
         var mcft = 1;
+        var cstep = 0;
 
         $scope.img_show = false;
 
@@ -362,24 +363,24 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         ;
 
         $('#epon').on('ifClicked', function (event) {
-            setTimeout(function(){
-                    var name = $location.absUrl().split("name=")[1];
-                    var email = $location.absUrl().split("email=")[1];
-                    var mobile = $location.absUrl().split("mobile=")[1];
+            setTimeout(function () {
+                var name = $location.absUrl().split("name=")[1];
+                var email = $location.absUrl().split("email=")[1];
+                var mobile = $location.absUrl().split("mobile=")[1];
 
-                    if (name != undefined && mobile != undefined) {
-                        name = name.split("&")[0];
-                        mobile = mobile.split("&")[0];
-                        if (email != undefined) {
-                            email = email.split("&")[0];
-                            $scope.EmailTxt = email;
-                        }
-                        $scope.NameTxt = name;
-                        $scope.MobileTxt = mobile;
+                if (name != undefined && mobile != undefined) {
+                    name = name.split("&")[0];
+                    mobile = mobile.split("&")[0];
+                    if (email != undefined) {
+                        email = email.split("&")[0];
+                        $scope.EmailTxt = email;
                     }
-                    $scope.$apply();
-                    $("#next_button").attr("class", "btn btn-default pull-right");
-                },1);
+                    $scope.NameTxt = name;
+                    $scope.MobileTxt = mobile;
+                }
+                $scope.$apply();
+                $("#next_button").attr("class", "btn btn-default pull-right");
+            }, 1);
         });
 
         $q.all([$rootScope.mainInfo]).then(function (data) {
@@ -715,7 +716,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             $scope.setStep = function (step) {
 
                 if (step == 1) {
-                    console.log("Step 1");
 
                     setTimeout(function () {
                         if ($scope.chkSelected) {
@@ -889,11 +889,15 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                         }
                     }, 30000);
+                    cstep = 1;
                 } else if (step == 2) {
-                    console.log("Step 2");
-
+                    $scope.evalidation = false;
+                    $scope.mvalidation = false;
                     $scope.em_disabled = false;
+                    $scope.smsg1 = false;
+                    $scope.smsg2 = false;
                     $scope.m_disabled = false;
+                    $scope.rec_issues = [];
 
                     $scope.eisnotverify = function () {
                         return true;
@@ -951,59 +955,15 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.step4 = function () {
                             return false;
                         };
-                        var canactu = $q.defer();
-
-                        var rec_data = {"long": $scope.lnglabeltxt, "lat": $scope.latlabeltxt, "issue": $scope.issueTypeSelect.id};
-                        return $http({
-                            method: 'POST',
-                            url: $rootScope.Variables.issue_recommendation,
-                            timeout: canactu.promise,
-                            headers: {
-                                'Content-Type': 'application/json; charset=utf-8'
-                            },
-                            data: rec_data
-                        }).success(function (resp) {
-                            for (var i = 0; i < resp.bugs.length; i++) {
-                                var status_num;
-                                if (resp.bugs[i].status == "CONFIRMED") {
-                                    status_num = 0;
-                                } else if (resp.bugs[i].status == "IN_PROGRESS") {
-                                    status_num = 1;
-                                } else {
-                                    status_num = 2;
-                                }
-                                $scope.rec_issues.push({"id": resp.bugs[i].id, "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp.bugs[i].id + "&resolution=small", "status": $translate.instant(resp.bugs[i].status), "address": resp.bugs[i].cf_city_address, "alias": resp.bugs[i].alias[0], "status_num": status_num, "counter": i, "icon": $scope.issueTypeSelect.id, "class": "fa fa-" + $rootScope.Variables.icons[rec_data.issue].icon});
+                        
+                        setTimeout(function () {
+                                    if (cstep == 1) {
+                                        $("#psw").smartWizard('goToStep', 4);
+                                    } else {
+                                $("#psw").smartWizard('goToStep', 2);
                             }
-                            canactu.resolve();
-                        });
+                                }, 1);
                     } else {
-
-                        var canactu = $q.defer();
-
-                        var rec_data = {"long": $scope.lnglabeltxt, "lat": $scope.latlabeltxt, "issue": $scope.issueTypeSelect.id};
-
-//                        return $http({
-//                            method: 'POST',
-//                            url: $rootScope.Variables.issue_recommendation,
-//                            timeout: canactu.promise,
-//                            headers: {
-//                                'Content-Type': 'application/json; charset=utf-8'
-//                            },
-//                            data: rec_data
-//                        }).success(function (resp) {
-//                            for (var i = 0; i < resp.bugs.length; i++) {
-//                                var status_num;
-//                                if (resp.bugs[i].status == "CONFIRMED") {
-//                                    status_num = 0;
-//                                } else if (resp.bugs[i].status == "IN_PROGRESS") {
-//                                    status_num = 1;
-//                                } else {
-//                                    status_num = 2;
-//                                }
-//                                $scope.rec_issues.push({"id": resp.bugs[i].id, "status": $translate.instant(resp.bugs[i].status), "address": resp.bugs[i].cf_city_address, "alias": resp.bugs[i].alias[0], "status_num": status_num,"counter": i,"icon":$scope.issueTypeSelect.id});
-//                            }
-//                            canactu.resolve();
-//                        });
 
                         $scope.is_finalsubmit = function () {
                             return false;
@@ -1066,7 +1026,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + '"}';
 
                         var canactu = $q.defer();
-
                         return $http({
                             method: 'POST',
                             url: $rootScope.Variables.activate_user_URL,
@@ -1076,7 +1035,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             },
                             data: txtpost1
                         }).success(function (resp) {
-                            canactu.resolve();
+                           // canactu.resolve();
                             //alert(JSON.stringify(resp));
 //                            $scope.myText = resp.policy_description;
 //                            if (resp.user_exist == "1") {
@@ -1174,6 +1133,43 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
 
                             //}
+                            
+                            var canactu = $q.defer();
+
+                        var rec_data = {"long": $scope.lnglabeltxt, "lat": $scope.latlabeltxt, "issue": $scope.issueTypeSelect.id};
+                        return $http({
+                            method: 'POST',
+                            url: $rootScope.Variables.issue_recommendation,
+                            timeout: canactu.promise,
+                            headers: {
+                                'Content-Type': 'application/json; charset=utf-8'
+                            },
+                            data: rec_data
+                        }).success(function (resp) {
+                            $scope.rec_issues = [];
+                            if (resp.length > 0) {
+                                for (var i = 0; i < resp[0].bugs.length; i++) {
+                                    var status_num;
+                                    if (resp[0].bugs[i].status == "CONFIRMED") {
+                                        status_num = 0;
+                                    } else if (resp[0].bugs[i].status == "IN_PROGRESS") {
+                                        status_num = 1;
+                                    } else {
+                                        status_num = 2;
+                                    }
+                                    $scope.rec_issues.push({"id": resp[0].bugs[i].id, "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp[0].bugs[i].id + "&resolution=small", "status": $translate.instant(resp[0].bugs[i].status), "address": resp[0].bugs[i].cf_city_address, "alias": resp[0].bugs[i].alias[0], "status_num": status_num, "counter": i, "icon": $scope.issueTypeSelect.id, "class": "fa fa-" + $rootScope.Variables.icons[rec_data.issue].icon});
+                                }
+                            } else {
+                                setTimeout(function () {
+                                    if (cstep == 1) {
+                                        $("#psw").smartWizard('goToStep', 4);
+                                    } else {
+                                        $("#psw").smartWizard('goToStep', 2);
+                                    }
+                                }, 1);
+                            }
+                            canactu.resolve();
+                        });
 
                         });
                         setTimeout(function () {
@@ -1184,8 +1180,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         }, 30000);
                     }
                 } else if (step == 4) {
-                    console.log("Step 4");
+                    $scope.rec_issues = [];
                     $scope.recommend_issue = "";
+                    cstep = 4;
 //                    if ($scope.isnotverify()) {
 //                        $scope.step1 = function () {
 //                            return false;
@@ -1245,7 +1242,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 //                    }
 
                 } else if (step == 5) {
-                    console.log("Step 5");
                     $("#finish_button").attr("class", "btn btn-primary pull-right disabled");
                     var canissue = $q.defer();
                     if ($scope.recommend_issue == "") {
@@ -1300,17 +1296,11 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             }
                         }, 30000);
                     } else {
-                        alert($scope.recommend_issue);
                         var canissue = $q.defer();
-//                if($scope.chkSelected_1 == false){
-//                   $scope.EmailTxt = ""; 
-//                }else if($scope.chkSelected_2 == false){
-//                   $scope.MobileTxt = ""; 
-//                }
                         $http(
                                 {
                                     method: 'POST',
-                                    url: $rootScope.variables.APIADMIN + "/issue_subscribe",
+                                    url: $rootScope.Variables.APIADMIN + "/issue_subscribe",
                                     timeout: canissue.promise,
                                     headers: {
                                         'Content-Type': 'application/json; charset=utf-8'
@@ -1327,7 +1317,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 var canissueid = $q.defer();
                                 return $http({
                                     method: 'POST',
-                                    url: $rootScope.variables.APIURL + resp_an._id,
+                                    url: $rootScope.Variables.APIURL + resp_an._id,
                                     timeout: canissueid.promise,
                                     headers: {
                                         'Content-Type': 'application/json; charset=utf-8'
@@ -1359,6 +1349,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             }
                         }, 30000);
                     }
+                    cstep = 5;
                 }
             };
 
