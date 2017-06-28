@@ -624,7 +624,7 @@ appControllers.controller(
 
                                                     $scope.markers = [];
                                                     if ($rootScope.Variables.city_name == "patras") {
-                                                        searchissues.push({"issue":"humidity","value_desc":"Humidity value","loc":{"type":"Point","coordinates":[21.7912763,38.2831043]}});
+                                                        searchissues.push({"issue":"temperature","value_desc":"Humidity value","loc":{"type":"Point","coordinates":[21.7912763,38.2831043]}});
                                                         searchissues.push({"issue":"temperature","value_desc":"Temperature value","loc":{"type":"Point","coordinates":[21.750683,38.237351]}});
 
                                                     }else if ($rootScope.Variables.city_name == "london") {
