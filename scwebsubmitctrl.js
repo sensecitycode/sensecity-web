@@ -65,7 +65,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
         $scope.last_stp = function (id) {
             setTimeout(function () {
-                $("#psw").smartWizard('goToStep', 5);
+                $("#psw").smartWizard('goToStep', 4);
             }, 1);
             $scope.recommend_issue = id;
         };
@@ -1157,7 +1157,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                     } else {
                                         status_num = 2;
                                     }
-                                    $scope.rec_issues.push({"id": resp[0].bugs[i].id, "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp[0].bugs[i].id + "&resolution=small", "status": $translate.instant(resp[0].bugs[i].status), "address": resp[0].bugs[i].cf_city_address, "alias": resp[0].bugs[i].alias[0], "status_num": status_num, "counter": i, "icon": $scope.issueTypeSelect.id, "class": "fa fa-" + $rootScope.Variables.icons[rec_data.issue].icon});
+                                    $scope.rec_issues.push({"id": resp[0].bugs[i].id, "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp[0].bugs[i].id + "&resolution=small", "status": $translate.instant(resp[0].bugs[i].status), "address": resp[0].bugs[i].cf_city_address, "alias": "scissuemap.html?issue="+resp[0].bugs[i].alias[0], "status_num": status_num, "counter": i, "icon": $scope.issueTypeSelect.id, "class": "fa fa-" + $rootScope.Variables.icons[rec_data.issue].icon});
                                 }
                             } else {
                                 setTimeout(function () {

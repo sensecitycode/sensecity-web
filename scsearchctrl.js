@@ -51,7 +51,7 @@ appControllers.directive('sidebarDirective', function () {
 });
 
 
-appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http', '$translate','$compile', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http, $translate,$compile) {
+appControllers.controller('searchIssueController', ['$scope', '$window', '$rootScope', '$q', '$location', 'leafletData', '$resource', '$http', '$translate', '$compile', function ($scope, $window, $rootScope, $q, $location, leafletData, $resource, $http, $translate, $compile) {
         $rootScope.overview_url = $location.path();
         $scope.categories = [{name: "", color: "", total: ""}];
         $scope.changeLanguage = function (langKey) {
@@ -65,6 +65,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                 $scope.layers.overlays.layer6 = {name: $translate.instant("ENVIRONMENT_ISSUE"), type: 'group', visible: true};
                 $scope.layers.overlays.layer7 = {name: $translate.instant("GREEN_ISSUE"), type: 'group', visible: true};
                 $scope.layers.overlays.layer8 = {name: $translate.instant("MOOD"), type: 'group', visible: true};
+                $scope.layers.overlays.layer9 = {name: $translate.instant("SENSORS"), type: 'group', visible: true};
                 for (var i = 0; i < $scope.issues.length; i++) {
                     $('#issue' + i).data('content', '<i class=\"' + $scope.issues[i].class + '"\"></i>' + $translate.instant($scope.issues[i].translatev));
                 }
@@ -414,6 +415,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         cat_info.total = 0;
                         $scope.categories.push(cat_info);
                     }
+
                     $scope.categories[$rootScope.Variables.categories_issue.length - 1].name = $translate.instant("TOTAL");
                     $scope.categories[$rootScope.Variables.categories_issue.length - 1].color = "badge badge-primary";
                     $scope.categories[$rootScope.Variables.categories_issue.length - 1].total = 0;
@@ -443,8 +445,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             } else {
                                 $("#confirmed").attr("selected", "selected");
                                 $("#inprogress").attr("selected", "selected");
-                                if(query == 3){
-                                 $("#resolved").attr("selected", "selected");   
+                                if (query == 3) {
+                                    $("#resolved").attr("selected", "selected");
                                 }
                             }
                             $('#states').selectpicker('refresh');
@@ -804,7 +806,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             }
                             i = 0;
                             angular.forEach($scope.searchFeeling, function (feeling) {
-                                if (feeling != "Διάθεση πολιτών" ) {
+                                if (feeling != "Διάθεση πολιτών") {
                                     if (i == 0) {
                                         feelings += feeling;
                                         i++;
@@ -823,7 +825,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             if (feelings != "") {
                                 feelingsObj = {startdate: $scope.startdate, enddate: $scope.enddate, city: $rootScope.Variables.city_name, feeling: feelings};
                                 promisesArray.push(feelingsQuery(feelingsObj));
-                            }                          
+                            }
                             for (var index = 0; index < paramsObj.length; index++) {
                                 if ((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined) || paramsObj[index].includeAnonymous == 1)
                                     promisesArray.push(doQuery(paramsObj[index]));
@@ -835,8 +837,8 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                     for (j = 0; j < data[i].length; j++) {
                                         searchissues.push(data[i][j]);
                                     }
-                                }                              
-                                
+                                }
+
                                 $scope.markers = [];
                                 var total_problems = [];
                                 for (var k = 0; k <= $rootScope.Variables.overlay_categories.length; k++) {
