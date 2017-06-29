@@ -4,6 +4,7 @@ app.controller('departmentctl', ['$scope', '$http', '$cookieStore', '$q', '$root
 
         var init = 0;
         $scope.nloaded = true;
+        $scope.activePage = 1;
 
         function authorizedu() {
             if ($cookieStore.get("uuid") !== undefined) {
