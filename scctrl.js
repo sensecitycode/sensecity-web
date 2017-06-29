@@ -88,7 +88,7 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
     $scope.startPage = 1;
     $scope.pageIndex = 1;
     $scope.lastissues = [];
-    var init = 0 ;
+    var init = 0;
 
     $scope.navClass = function (page) {
         var path = window.location.href.toString().split("/");

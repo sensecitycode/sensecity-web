@@ -16,8 +16,10 @@
 
         <!-- EOF CSS INCLUDE --> 
 
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+        <link href="../dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
+        <script src="../dist/angular-tooltips.min.js"></script>
         <script type="text/javascript" src="departmentctl.js"></script>
     </head>
     <body ng-show="user_type != 'none'" class="page-container"  data-ng-app="department" data-ng-controller="departmentctl">
@@ -143,11 +145,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
-
+                    </div>
+                    <div ng-hide="nloaded" style="margin-bottom: 50px;margin-right:30px" class="paging"></div>  
                 </div>
+
                 <!-- END PAGE CONTENT WRAPPER -->                
-            </div>            
+            </div>          
             <!-- END PAGE CONTENT -->
         </div>
         <!-- END PAGE CONTAINER -->

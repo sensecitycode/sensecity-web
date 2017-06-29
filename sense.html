@@ -53,8 +53,8 @@
         <script src="js/leaflet.markercluster.js"></script>
         <script src="js/leaflet.extra-markers.min.js"></script>
         <script src="js/angular-count-to.min.js"></script>
-        
-                <!-- Map dependancies -->
+
+        <!-- Map dependancies -->
         <link rel="stylesheet" href="css/leaflet.css" />
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
         <link rel="stylesheet" href="css/ionicons.min.css" />
@@ -94,192 +94,192 @@
 
         <!-- CSS INCLUDE -->        
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
-        
+
     </head>
     <body id="mainctl" ng-app="scApp" ng-controller="senseController" ng-cloak>
-<div class="page-container"> 
+        <div class="page-container"> 
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
                     <div style="width:100%">
-                    <li class="xn-logo" style="background-color: #1caf9a;
-    border-bottom: 1px solid #1caf9a;">
-                           <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>sense.city</div></a>
+                        <li class="xn-logo" style="background-color: #1caf9a;
+                            border-bottom: 1px solid #1caf9a;">
+                            <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>sense.city</div></a>
                             <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
                         </li> 
-<li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
-<li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
-<li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
-<li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH' | translate }}</a></li>
-<li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
-<li ng-hide="navClass('all_issues')" style="float:left"><a id="disabled_list" href="all_issues.html">{{'MENUMORE' | translate }}</a></li>
-<li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer;"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
-<li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer;"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>
+                        <li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+                        <li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
+                        <li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
+                        <li ng-hide="navClass('scsearchissues')"><a id="disabled_list"  href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
+                        <li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
+                        <li ng-hide="navClass('all_issues')" style="float:left"><a id="disabled_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer;"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer;"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>
                     </div>	
                 </ul>               
-<div class="page-content-wrap">
+                <div class="page-content-wrap">
                     <div class="row">
-                        
+
                         <div class="col-md-9" style="top:10px;z-index:20">
                             <!--<div class="col-md-12" style="top:10px;z-index:20">-->
-                             <a href="http://{{Variables.city_name}}.sense.city/scsearchissues.html?query=1" class="col-lg-3 col-md-6">
-                                 <div class="widget widget-default widget-item-icon">
-                                 <div class="widget-item-left">
-                                     <img width="50" height="60" src="./img/issues.png" />
-                                </div> 
-                            <div class="widget-data">
-                                    <div class="widget-title">{{'ISSUES' | translate}}</div>
-                                    <div class="widget-subtitle">{{'LAST7D' | translate}}</div>
-                                    <div class="widget-int calcValue" count-to="{{calcValue7daysIssues}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysIssues}}</div>
-                                    <span class="widget-subtitle">{{'ILAST_7' | translate}}</span>
-                                </div> 
-                                 </div>
-                        </a>
+                            <a href="http://{{Variables.city_name}}.sense.city/scsearchissues.html?query=1" class="col-lg-3 col-md-6">
+                                <div class="widget widget-default widget-item-icon">
+                                    <div class="widget-item-left">
+                                        <img width="50" height="60" src="./img/issues.png" />
+                                    </div> 
+                                    <div class="widget-data">
+                                        <div class="widget-title">{{'ISSUES'| translate}}</div>
+                                        <div class="widget-subtitle">{{'LAST7D'| translate}}</div>
+                                        <div class="widget-int calcValue" count-to="{{calcValue7daysIssues}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysIssues}}</div>
+                                        <span class="widget-subtitle">{{'ILAST_7'| translate}}</span>
+                                    </div> 
+                                </div>
+                            </a>
                             <a href="http://{{Variables.city_name}}.sense.city/scsearchissues.html?query=2" class="col-lg-3 col-md-6">
-                            <div class="widget widget-default widget-item-icon">
-                                 <div class="widget-item-left">
-                                    <img width="50" height="60" src="./img/events.png" />
-                                </div> 
-                            <div class="widget-data">
-                                <div class="widget-title">{{'EVENTS' | translate}}</div>
-                                <div class="widget-subtitle">{{'LAST7D' | translate}}</div>
-                                    <div class="widget-int calcValue" count-to="{{calcValue7daysEvents}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysEvents}}</div>
-                                    <span class="widget-subtitle">{{'ELAST_7' | translate}}</span>
-                                </div> 
-                                 </div>       
-                        </a>
+                                <div class="widget widget-default widget-item-icon">
+                                    <div class="widget-item-left">
+                                        <img width="50" height="60" src="./img/events.png" />
+                                    </div> 
+                                    <div class="widget-data">
+                                        <div class="widget-title">{{'EVENTS'| translate}}</div>
+                                        <div class="widget-subtitle">{{'LAST7D'| translate}}</div>
+                                        <div class="widget-int calcValue" count-to="{{calcValue7daysEvents}}" duration="2" count-from="0" style="text-shadow:none">{{calcValue7daysEvents}}</div>
+                                        <span class="widget-subtitle">{{'ELAST_7'| translate}}</span>
+                                    </div> 
+                                </div>       
+                            </a>
                             <a href="http://{{Variables.city_name}}.sense.city/scsearchissues.html?query=3" class="col-lg-3 col-md-6">
                                 <div class="widget widget-default widget-item-icon">
-                                 <div class="widget-item-left">
-                                    <img width="50" height="60" src="./img/issuecal.png" />
-                                </div> 
-                            <div class="widget-data">
-                                <div class="widget-title" >{{'ISSUES' | translate}}</div>
-                                <div class="widget-subtitle">{{'SINCE' | translate}}</div>
-                                <div class="widget-int calcValue" count-to="{{calcValueProblemsFrom2017}}" duration="2" count-from="0" style="text-shadow:none">{{calcValueProblemsFrom2017}}</div>
-                                <span class="widget-subtitle">{{'ISF' | translate}}</span>
-                                </div> 
-                                 </div>       
-                        </a>
+                                    <div class="widget-item-left">
+                                        <img width="50" height="60" src="./img/issuecal.png" />
+                                    </div> 
+                                    <div class="widget-data">
+                                        <div class="widget-title" >{{'ISSUES'| translate}}</div>
+                                        <div class="widget-subtitle">{{'SINCE'| translate}}</div>
+                                        <div class="widget-int calcValue" count-to="{{calcValueProblemsFrom2017}}" duration="2" count-from="0" style="text-shadow:none">{{calcValueProblemsFrom2017}}</div>
+                                        <span class="widget-subtitle">{{'ISF'| translate}}</span>
+                                    </div> 
+                                </div>       
+                            </a>
                             <a href="http://{{Variables.city_name}}.sense.city/scsearchissues.html?query=4" class="col-lg-3 col-md-6">
                                 <div class="widget widget-default widget-item-icon">
-                                 <div class="widget-item-left">
-                                    <img width="50" height="60" src="./img/solutions.png" />
-                                </div> 
-                            <div class="widget-data">
-                                    <div class="widget-title">{{'SOLUTIONS' | translate}}</div>                                                                        
-                                        <div class="widget-subtitle">{{'SINCE' | translate}}</div>
+                                    <div class="widget-item-left">
+                                        <img width="50" height="60" src="./img/solutions.png" />
+                                    </div> 
+                                    <div class="widget-data">
+                                        <div class="widget-title">{{'SOLUTIONS'| translate}}</div>                                                                        
+                                        <div class="widget-subtitle">{{'SINCE'| translate}}</div>
                                         <div class="widget-int calcValue" count-to="{{calcValueSolutionFrom2017}}" duration="2" count-from="0" style="text-shadow:none">{{calcValueSolutionFrom2017}}</div>
-                                        <span class="widget-subtitle">{{'SSF' | translate}}</span>
-                                </div> 
-                                 </div>       
-                        </a>
-                        <!--</div>-->
+                                        <span class="widget-subtitle">{{'SSF'| translate}}</span>
+                                    </div> 
+                                </div>       
+                            </a>
+                            <!--</div>-->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                        <div  class="panel-title-box" style="font-weight:600;font-size:14px;">
-                                            <h3> {{'EVENTS_MAP' | translate}}</h3>
-                                            <span>{{'EVENTS_MAP_SUB' | translate}}</span>
-                                        </div>
+                                    <div  class="panel-title-box" style="font-weight:600;font-size:14px;">
+                                        <h3> {{'EVENTS_MAP'| translate}}</h3>
+                                        <span>{{'EVENTS_MAP_SUB'| translate}}</span>
+                                    </div>
                                     <ul class="panel-controls">
-                                        <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="{{'FULL' | translate}}"><a ng-click="removeFixed($event)" href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
-                                        <li ng-show="full == 1"><span tooltip-side="bottom" tooltips tooltip-template="{{'MINIMIZE' | translate}}"><a ng-click="removeFixed($event)" href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>                 
+                                        <li ng-show="full == 0"><span tooltip-side="bottom" tooltips tooltip-template="{{'FULL'| translate}}"><a ng-click="removeFixed($event)" href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>
+                                        <li ng-show="full == 1"><span tooltip-side="bottom" tooltips tooltip-template="{{'MINIMIZE'| translate}}"><a ng-click="removeFixed($event)" href="#!/" class="panel-fullscreen"><span class="fa fa-expand"></span></a></span></li>                 
                                     </ul>
                                 </div>
                                 <div class="panel-body panel-body-map">                              
-                                            <leaflet style="z-index:3"  lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="637px" width="100%"">
-                                            </leaflet>
+                                    <leaflet style="z-index:3"  lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="637px" width="100%"">
+                                    </leaflet>
                                 </div>
                                 <style>
                                     .leaflet-popup-content{
                                         width:auto !important;
                                     }
-                                    </style>
+                                </style>
                             </div>
 
                         </div>
-                        
-                        
+
+
                         <div class="col-md-3" style="top:10px;">
                             <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div  class="panel-title-box" style="font-weight:600;font-size:14px;">
-                                            <h3> {{'LAST_ISSUES' | translate}}</h3>
-                                            <span>{{'LAST6_ISSUES' | translate}}</span>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div  class="panel-title-box" style="font-weight:600;font-size:14px;">
+                                            <h3> {{'LAST_ISSUES'| translate}}</h3>
+                                            <span>{{'LAST6_ISSUES'| translate}}</span>
                                         </div> 
-                                    <ul class="panel-controls">
-                                        <li><span tooltip-side="bottom" tooltips tooltip-template="{{'MORE_ISSUES' | translate}}"><a href="all_issues.html"><span class="fa fa-eye"></span></a></span></li>                    
-                                    </ul>
-                                </div>                                
-                                <div class="panel-body padding-0">
-                                    
-                            <div class="widget widget-default widget-carousel" style="box-shadow:none">
-                                <div class="owl-carousel" id="owl-example">
-                                    <div ng-repeat="lastissue in lastissues" class="col-md-3">
-                            <!-- CONTACT ITEM -->
-                            <div class="panel panel-default">
-                                <div class="panel-body profile">
-                                    <div class="profile-image">
-                                        <a ng-href="scissuemap.html?issue={{lastissue._id}}"><img onload="default_image(this)" onerror="default_icon(this)" id="image{{lastissue.counter}}" data-bugid="{{lastissue.bug_id}}" ng-show="lastissue.class == ''" ng-src={{lastissue.image_name}} alt="" width="144px" height="144px"></a>
-                                        <a ng-href="scissuemap.html?issue={{lastissue._id}}"><i ng-if="lastissue.class != ''" class={{lastissue.class}} style="font-size:12em;color:white"></i></a>
-                                    </div>
-                                    <div class="profile-data">
-                                        <div class="profile-data-name">{{lastissue.issue | translate}}</div>
-                                        <div class="profile-data-title">{{lastissue.value_desc}}</div>
-                                    </div>
-                                </div>                                
-                                <div class="panel-body">                                    
-                                    <div class="contact-info">
-                                        <p><small><span class="fa fa-cog"></span> {{'STATE' | translate}}</small><br>{{lastissue.status
-						| translate}}</p>
-                                        <p><small><span class="fa fa-clock-o"></span> {{'REPORT' | translate}}</small><br>{{ 'SINCE_TIME' |
-						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit |
-						translate }}</p>
-                                                                            <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">{{'DETAILS' | translate}}...</a></small><br></p>
-<!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
-                                        <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
-                                    </div>
-                                </div>                                
-                            </div>
-                            <!-- END CONTACT ITEM -->
-                        </div>
-                                </div>                            
-                            </div> 
-                                </div>                                    
-                            </div>
-                                            <a data-width="100%" data-height="360" class="twitter-timeline"  ng-href="twitter_link" data-widget-id={{widget_id}}>#{{widget_tag}} Tweets</a>
+                                        <ul class="panel-controls">
+                                            <li><span tooltip-side="bottom" tooltips tooltip-template="{{'MORE_ISSUES'| translate}}"><a href="all_issues.html"><span class="fa fa-eye"></span></a></span></li>                    
+                                        </ul>
+                                    </div>                                
+                                    <div class="panel-body padding-0">
 
+                                        <div class="widget widget-default widget-carousel" style="box-shadow:none">
+                                            <div class="owl-carousel" id="owl-example">
+                                                <div ng-repeat="lastissue in lastissues" class="col-md-3">
+                                                    <!-- CONTACT ITEM -->
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body profile">
+                                                            <div class="profile-image">
+                                                                <a ng-href="scissuemap.html?issue={{lastissue._id}}"><img onload="default_image(this)" onerror="default_icon(this)" id="image{{lastissue.counter}}" data-bugid="{{lastissue.bug_id}}" ng-show="lastissue.class == ''" ng-src={{lastissue.image_name}} alt="" width="144px" height="144px"></a>
+                                                                <a ng-href="scissuemap.html?issue={{lastissue._id}}"><i ng-if="lastissue.class != ''" class={{lastissue.class}} style="font-size:12em;color:white"></i></a>
+                                                            </div>
+                                                            <div class="profile-data">
+                                                                <div class="profile-data-name">{{lastissue.issue| translate}}</div>
+                                                                <div class="profile-data-title">{{lastissue.value_desc}}</div>
+                                                            </div>
+                                                        </div>                                
+                                                        <div class="panel-body">                                    
+                                                            <div class="contact-info">
+                                                                <p><small><span class="fa fa-cog"></span> {{'STATE'| translate}}</small><br>{{lastissue.status
+                                                                            | translate}}</p>
+                                                                <p><small><span class="fa fa-clock-o"></span> {{'REPORT'| translate}}</small><br>{{ 'SINCE_TIME' |
+						translate }} {{lastissue.create_at}} {{lastissue.create_at_unit|
+						translate }}</p>
+                                                                <p><small><span class="fa fa-info-circle"></span> <a ng-href="scissuemap.html?issue={{lastissue._id}}">{{'DETAILS'| translate}}...</a></small><br></p>
+                                                                <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
+                                                                                                        <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
+                                                            </div>
+                                                        </div>                                
+                                                    </div>
+                                                    <!-- END CONTACT ITEM -->
+                                                </div>
+                                            </div>                            
+                                        </div> 
+                                    </div>                                    
+                                </div>
+                                <a data-width="100%" data-height="360" class="twitter-timeline"  ng-href="twitter_link" data-widget-id={{widget_id}}>#{{widget_tag}} Tweets</a>
+
+                            </div>
                         </div>
-                        </div>
-                    
+
 
                     </div>
-    <div ng-include="'footer.html'"></div>
+                    <div ng-include="'footer.html'"></div>
                 </div>
             </div>
-</div>
+        </div>
 
-        </body>
-        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
-         <!--END PLUGINS--> 
+    </body>
+    <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
+    <!--END PLUGINS--> 
 
-         <!--START THIS PAGE PLUGINS-->        
-        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>        
-        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
-        <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
-        
-        <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
-        <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>       
-        <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
-        <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
-        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
-        <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
-        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>                
-        <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>                 
-        
-        <script type="text/javascript" src="js/plugins/moment.min.js"></script>
-        <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
-         <!--END THIS PAGE PLUGINS-->        
+    <!--START THIS PAGE PLUGINS-->        
+    <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>        
+    <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+    <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+
+    <script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
+    <script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>       
+    <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
+    <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
+    <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+    <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>                
+    <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>                
+    <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>                 
+
+    <script type="text/javascript" src="js/plugins/moment.min.js"></script>
+    <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
+    <!--END THIS PAGE PLUGINS-->        
 </html>
