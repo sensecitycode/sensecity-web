@@ -366,20 +366,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         var email = $location.absUrl().split("email=")[1];
         var mobile = $location.absUrl().split("mobile=")[1];
 
-        if (name != undefined && email != undefined && $rootScope.Variables.city_name == "london") {
-            name = name.split("&")[0];
-            email = email.split("&")[0];
-            if (mobile != undefined) {
-                mobile = mobile.split("&")[0];
-                $scope.MobileTxt = mobile;
-
-            }
-            $scope.NameTxt = name;
-            $scope.EmailTxt = email;
-        } else {
-            window.location = "https://callcntr.theansr.com/london_sense";
-        }
-
         $('#epon').on('ifClicked', function (event) {
             setTimeout(function () {
 
@@ -393,8 +379,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
                     $scope.NameTxt = name;
                     $scope.EmailTxt = email;
-                } else {
-                    window.location = "https://callcntr.theansr.com/london_sense";
                 }
                 $scope.$apply();
                 $("#next_button").attr("class", "btn btn-default pull-right");
@@ -403,6 +387,19 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
         $q.all([$rootScope.mainInfo]).then(function (data) {
             $("#next_button").attr("class", "btn btn-default pull-right disabled");
+            if (name != undefined && email != undefined && $rootScope.Variables.city_name == "london") {
+                name = name.split("&")[0];
+                email = email.split("&")[0];
+                if (mobile != undefined) {
+                    mobile = mobile.split("&")[0];
+                    $scope.MobileTxt = mobile;
+
+                }
+                $scope.NameTxt = name;
+                $scope.EmailTxt = email;
+            } else {
+                window.location = "https://callcntr.theansr.com/london_sense";
+            }
             if ($scope.markers.length == 2 || mylocation_en == 0) {
                 $scope.markers.pop();
             }
