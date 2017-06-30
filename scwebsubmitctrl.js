@@ -387,18 +387,20 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
         $q.all([$rootScope.mainInfo]).then(function (data) {
             $("#next_button").attr("class", "btn btn-default pull-right disabled");
-            if (name != undefined && email != undefined && $rootScope.Variables.city_name == "london") {
-                name = name.split("&")[0];
-                email = email.split("&")[0];
-                if (mobile != undefined) {
-                    mobile = mobile.split("&")[0];
-                    $scope.MobileTxt = mobile;
+            if ($rootScope.Variables.city_name == "london") {
+                if (name != undefined && email != undefined) {
+                    name = name.split("&")[0];
+                    email = email.split("&")[0];
+                    if (mobile != undefined) {
+                        mobile = mobile.split("&")[0];
+                        $scope.MobileTxt = mobile;
 
+                    }
+                    $scope.NameTxt = name;
+                    $scope.EmailTxt = email;
+                } else {
+                    window.location = "https://callcntr.theansr.com/london_sense";
                 }
-                $scope.NameTxt = name;
-                $scope.EmailTxt = email;
-            } else {
-                window.location = "https://callcntr.theansr.com/london_sense";
             }
             if ($scope.markers.length == 2 || mylocation_en == 0) {
                 $scope.markers.pop();
@@ -1044,7 +1046,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
 
 
-                        var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + '","city":"'+$rootScope.Variables.city_name+'"}';
+                        var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + '","city":"' + $rootScope.Variables.city_name + '"}';
 
                         var canactu = $q.defer();
                         return $http({
