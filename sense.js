@@ -698,7 +698,7 @@ appControllers.controller(
                                                                             if (type == 'reaction') {
                                                                                 marker.message = message;
                                                                             } else {
-                                                                                if ($rootScope.city_name == "patras") {
+                                                                                if ($rootScope.Variables.city_name == "patras") {                     
                                                                                     if (marker.lat == 38.2831043 && marker.lng == 21.7912763) {
                                                                                         marker.message = "<div class=\"row\" style=\"width:420px\"><div class=\"col-md-6\"><iframe src=\"http://150.140.184.249:5601/goto/9cde3cbac3e22a2a987fcdfcbb2cd040?embed=true\" height='200' width='200'></iframe></div><div class=\"col-md-3\"><iframe src=\"http://150.140.184.249:5601/goto/5ae1c2902571835f5fa24215cf2f8e7c?embed=true\" height=\"200\" width=\"200\"></iframe></div></div>";
                                                                                     } else {
