@@ -362,7 +362,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         }
         ;
 
-        var name = $location.absUrl().split("name=")[1];
+        var name = decodeURIComponent($location.absUrl().split("name=")[1]);
         var email = $location.absUrl().split("email=")[1];
         var mobile = $location.absUrl().split("mobile=")[1];
 
@@ -517,6 +517,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $translate.use("en");
                         $("#next_button").text($translate.instant('NEXT'));
                         $("#previous_button").text($translate.instant('PREVIOUS'));
+                        $("#finish_button").text($translate.instant('SUBMIT'));
                     }, 100);
                 }
                 $('#epon').on('ifToggled', function (event) {
