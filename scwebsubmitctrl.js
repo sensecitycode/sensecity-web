@@ -1044,7 +1044,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
 
 
-                        var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + ',"city":'+$rootScope.Variables.city_name+'}';
+                        var txtpost1 = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile":"' + $scope.MobileTxt + ',"city":"'+$rootScope.Variables.city_name+'"}';
 
                         var canactu = $q.defer();
                         return $http({
