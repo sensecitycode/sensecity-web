@@ -23,8 +23,8 @@ function default_image(this_img) {
     }
 }
 
-appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http',
-    function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http) {
+appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope', '$log', '$location', 'leafletData', '$translate', '$http', '$timeout',
+    function ($scope, $window, $q, $rootScope, $log, $location, leafletData, $translate, $http, $timeout) {
         $scope.smsg1 = false;
         $scope.smsg2 = false;
         $scope.chkSelected_1 = false;
@@ -40,6 +40,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
         $scope.img_show = false;
 
+
         $scope.navClass = function (page) {
             var path = window.location.href.toString().split("/");
             var currentRoute = path[path.length - 1];
@@ -49,7 +50,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 return true;
             }
         };
-
 
         $scope.changeLanguage = function (langKey) {
             $translate.use(langKey);
@@ -368,15 +368,16 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 var email = $location.absUrl().split("email=")[1];
                 var mobile = $location.absUrl().split("mobile=")[1];
 
-                if (name != undefined && mobile != undefined) {
+                if (name != undefined && email != undefined) {
                     name = name.split("&")[0];
-                    mobile = mobile.split("&")[0];
-                    if (email != undefined) {
-                        email = email.split("&")[0];
-                        $scope.EmailTxt = email;
+                    email = email.split("&")[0];
+                    if (mobile != undefined) {
+                        mobile = mobile.split("&")[0];
+                        $scope.MobileTxt = mobile;
+
                     }
                     $scope.NameTxt = name;
-                    $scope.MobileTxt = mobile;
+                    $scope.EmailTxt = email;
                 }
                 $scope.$apply();
                 $("#next_button").attr("class", "btn btn-default pull-right");
@@ -495,7 +496,13 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             });
 
             $(document).ready(function () {
-
+                if ($rootScope.Variables.city_name == "london") {
+                    $timeout(function () {
+                        $translate.use("en");
+                        $("#next_button").text($translate.instant('NEXT'));
+                        $("#previous_button").text($translate.instant('PREVIOUS'));
+                    }, 1);
+                }
                 $('#epon').on('ifToggled', function (event) {
                     if ($scope.chkSelected) {
                         $scope.showSuccessAlertName = false;
@@ -955,14 +962,14 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $scope.step4 = function () {
                             return false;
                         };
-                        
+
                         setTimeout(function () {
-                                    if (cstep == 1) {
-                                        $("#psw").smartWizard('goToStep', 4);
-                                    } else {
+                            if (cstep == 1) {
+                                $("#psw").smartWizard('goToStep', 4);
+                            } else {
                                 $("#psw").smartWizard('goToStep', 2);
                             }
-                                }, 1);
+                        }, 1);
                     } else {
 
                         $scope.is_finalsubmit = function () {
@@ -1035,7 +1042,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             },
                             data: txtpost1
                         }).success(function (resp) {
-                           // canactu.resolve();
+                            // canactu.resolve();
                             //alert(JSON.stringify(resp));
 //                            $scope.myText = resp.policy_description;
 //                            if (resp.user_exist == "1") {
@@ -1133,43 +1140,43 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
 
 
                             //}
-                            
+
                             var canactu = $q.defer();
 
-                        var rec_data = {"long": $scope.lnglabeltxt, "lat": $scope.latlabeltxt, "issue": $scope.issueTypeSelect.id};
-                        return $http({
-                            method: 'POST',
-                            url: $rootScope.Variables.issue_recommendation,
-                            timeout: canactu.promise,
-                            headers: {
-                                'Content-Type': 'application/json; charset=utf-8'
-                            },
-                            data: rec_data
-                        }).success(function (resp) {
-                            $scope.rec_issues = [];
-                            if (resp.length > 0) {
-                                for (var i = 0; i < resp[0].bugs.length; i++) {
-                                    var status_num;
-                                    if (resp[0].bugs[i].status == "CONFIRMED") {
-                                        status_num = 0;
-                                    } else if (resp[0].bugs[i].status == "IN_PROGRESS") {
-                                        status_num = 1;
-                                    } else {
-                                        status_num = 2;
+                            var rec_data = {"long": $scope.lnglabeltxt, "lat": $scope.latlabeltxt, "issue": $scope.issueTypeSelect.id};
+                            return $http({
+                                method: 'POST',
+                                url: $rootScope.Variables.issue_recommendation,
+                                timeout: canactu.promise,
+                                headers: {
+                                    'Content-Type': 'application/json; charset=utf-8'
+                                },
+                                data: rec_data
+                            }).success(function (resp) {
+                                $scope.rec_issues = [];
+                                if (resp.length > 0) {
+                                    for (var i = 0; i < resp[0].bugs.length; i++) {
+                                        var status_num;
+                                        if (resp[0].bugs[i].status == "CONFIRMED") {
+                                            status_num = 0;
+                                        } else if (resp[0].bugs[i].status == "IN_PROGRESS") {
+                                            status_num = 1;
+                                        } else {
+                                            status_num = 2;
+                                        }
+                                        $scope.rec_issues.push({"id": resp[0].bugs[i].id, "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp[0].bugs[i].id + "&resolution=small", "status": $translate.instant(resp[0].bugs[i].status), "address": resp[0].bugs[i].cf_city_address, "alias": "scissuemap.html?issue=" + resp[0].bugs[i].alias[0], "status_num": status_num, "counter": i, "icon": $scope.issueTypeSelect.id, "class": "fa fa-" + $rootScope.Variables.icons[rec_data.issue].icon});
                                     }
-                                    $scope.rec_issues.push({"id": resp[0].bugs[i].id, "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp[0].bugs[i].id + "&resolution=small", "status": $translate.instant(resp[0].bugs[i].status), "address": resp[0].bugs[i].cf_city_address, "alias": "scissuemap.html?issue="+resp[0].bugs[i].alias[0], "status_num": status_num, "counter": i, "icon": $scope.issueTypeSelect.id, "class": "fa fa-" + $rootScope.Variables.icons[rec_data.issue].icon});
+                                } else {
+                                    setTimeout(function () {
+                                        if (cstep == 1) {
+                                            $("#psw").smartWizard('goToStep', 4);
+                                        } else {
+                                            $("#psw").smartWizard('goToStep', 2);
+                                        }
+                                    }, 1);
                                 }
-                            } else {
-                                setTimeout(function () {
-                                    if (cstep == 1) {
-                                        $("#psw").smartWizard('goToStep', 4);
-                                    } else {
-                                        $("#psw").smartWizard('goToStep', 2);
-                                    }
-                                }, 1);
-                            }
-                            canactu.resolve();
-                        });
+                                canactu.resolve();
+                            });
 
                         });
                         setTimeout(function () {
