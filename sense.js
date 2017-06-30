@@ -452,41 +452,41 @@ appControllers.controller(
                             $.getScript("js/plugins.js");
                             $.getScript("js/actions.js");
                             $scope.$on("leafletDirectiveMarker.click", function (event, args) {
-                                if(args.model.issue_id != undefined){
-                                    
-                                var marker3 = args.leafletObject;
-                                var popup = marker3.getPopup();
-                                
-                                var issue_name;
-                                var issue_image;
-                                
-                                rcanceller[1] = $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
-                                        {issueID: '@id'}, {'query': {method: 'GET', isArray: true, cancellable: true}}
-                                ).query({issueID: marker3.options.issue_id}, function (resp) {
-                                    canceller[1].resolve();
-                                    var resp_index = $rootScope.Variables.categories.indexOf(resp[0].issue);
-                                    if (resp_index != -1) {
-                                        issue_name = $translate.instant($rootScope.Variables.categories_issue[resp_index]);
-                                    }
+                                if (args.model.issue_id != undefined) {
 
-                                    resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
+                                    var marker3 = args.leafletObject;
+                                    var popup = marker3.getPopup();
 
-                                    $scope.icon_show = 1;
+                                    var issue_name;
+                                    var issue_image;
 
-                                    popup.setContent("<center style='width:210px' id='" + resp[0].bug_id + "_icon'></center>");
-                                    popup.options.maxWidth = "auto";
-                                    popup.update();
-                                    $scope.icon_content = "<b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img ng-show=\"icon_show==0\" onload='marker_image()' src=\"" + $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp[0].bug_id + "&resolution=small \" style=\"height:200px\"><i ng-show=\"icon_show == 1\" class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a>";
-                                    $("#" + resp[0].bug_id + "_icon").html($compile($scope.icon_content)($scope));
-                                });
-                                setTimeout(function () {
-                                    if (canceller[1].promise.$$state.status == 0) {
-                                        rcanceller[1].$cancelRequest();
-                                        $scope.$apply();
-                                        alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                                    }
-                                }, 30000);
-                            }
+                                    rcanceller[1] = $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+                                            {issueID: '@id'}, {'query': {method: 'GET', isArray: true, cancellable: true}}
+                                    ).query({issueID: marker3.options.issue_id}, function (resp) {
+                                        canceller[1].resolve();
+                                        var resp_index = $rootScope.Variables.categories.indexOf(resp[0].issue);
+                                        if (resp_index != -1) {
+                                            issue_name = $translate.instant($rootScope.Variables.categories_issue[resp_index]);
+                                        }
+
+                                        resp[0].class = "fa fa-" + $rootScope.Variables.icons[resp[0].issue].icon;
+
+                                        $scope.icon_show = 1;
+
+                                        popup.setContent("<center style='width:210px' id='" + resp[0].bug_id + "_icon'></center>");
+                                        popup.options.maxWidth = "auto";
+                                        popup.update();
+                                        $scope.icon_content = "<b>" + issue_name + "</b><br>" + resp[0].value_desc + "<br><img ng-show=\"icon_show==0\" onload='marker_image()' src=\"" + $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + resp[0].bug_id + "&resolution=small \" style=\"height:200px\"><i ng-show=\"icon_show == 1\" class='" + resp[0].class + "' style='font-size:12em;color:black'></i><br><a href=\"http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + resp[0]._id + "\">" + $translate.instant("PROBLEM_PROGRESS") + "</a>";
+                                        $("#" + resp[0].bug_id + "_icon").html($compile($scope.icon_content)($scope));
+                                    });
+                                    setTimeout(function () {
+                                        if (canceller[1].promise.$$state.status == 0) {
+                                            rcanceller[1].$cancelRequest();
+                                            $scope.$apply();
+                                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                                        }
+                                    }, 30000);
+                                }
                             });
                             leafletData.getMap().then(function (map) {
                                 map.scrollWheelZoom.disable();
@@ -624,13 +624,13 @@ appControllers.controller(
 
                                                     $scope.markers = [];
                                                     if ($rootScope.Variables.city_name == "patras") {
-                                                        searchissues.push({"issue":"temperature","value_desc":"Humidity value","loc":{"type":"Point","coordinates":[21.7912763,38.2831043]}});
-                                                        searchissues.push({"issue":"temperature","value_desc":"Temperature value","loc":{"type":"Point","coordinates":[21.750683,38.237351]}});
+                                                        searchissues.push({"issue": "temperature", "value_desc": "Humidity value", "loc": {"type": "Point", "coordinates": [21.7912763, 38.2831043]}});
+                                                        searchissues.push({"issue": "temperature", "value_desc": "Temperature value", "loc": {"type": "Point", "coordinates": [21.750683, 38.237351]}});
 
-                                                    }else if ($rootScope.Variables.city_name == "london") {
-                                                        searchissues.push({"issue":"humidity","value_desc":"Humidity value","loc":{"type":"Point","coordinates":[-0.10797500610351562,51.51122644944369]}});
-                                                        searchissues.push({"issue":"temperature","value_desc":"Temperature value","loc":{"type":"Point","coordinates":[-0.1247549057006836,51.51610055355692]}});
-                                                        searchissues.push({"issue":"temperature","value_desc":"Temperature value","loc":{"type":"Point","coordinates":[-0.11132240295410155,51.51822363035807]}});
+                                                    } else if ($rootScope.Variables.city_name == "london") {
+                                                        searchissues.push({"issue": "humidity", "value_desc": "Humidity value", "loc": {"type": "Point", "coordinates": [-0.10797500610351562, 51.51122644944369]}});
+                                                        searchissues.push({"issue": "temperature", "value_desc": "Temperature value", "loc": {"type": "Point", "coordinates": [-0.1247549057006836, 51.51610055355692]}});
+                                                        searchissues.push({"issue": "temperature", "value_desc": "Temperature value", "loc": {"type": "Point", "coordinates": [-0.11132240295410155, 51.51822363035807]}});
                                                         $translate.use("en");
                                                     }
                                                     angular
@@ -645,14 +645,14 @@ appControllers.controller(
                                                                         var positionlon = value.loc.coordinates[0];
                                                                         var issue = value.issue;
                                                                         var layer = '';
-                                                                        var type='';
+                                                                        var type = '';
 
                                                                         if (issue == "angry"
                                                                                 || issue == "neutral"
                                                                                 || issue == "happy") {
                                                                             layer = 'reaction';
                                                                             type = 'reaction';
-                                                                        }else if(issue == "humidity" || issue == "temperature"){
+                                                                        } else if (issue == "humidity" || issue == "temperature") {
                                                                             layer = 'sensors';
                                                                             type = 'sensors';
                                                                         } else {
@@ -667,16 +667,16 @@ appControllers.controller(
                                                                         } else {
                                                                             message = 'Μη διαθέσιμη περιγραφή';
                                                                         }
-                                                                        
+
                                                                         if (layer != 'reaction' && layer != 'sensors') {
                                                                             var lindex = $rootScope.Variables.overlay_categories.indexOf(issue) + 1;
-                                                                        } else if(layer == 'sensors') {
+                                                                        } else if (layer == 'sensors') {
                                                                             var lindex = $rootScope.Variables.overlay_categories.indexOf('sensors') + 1;
-                                                                        }else{
-                                                                          var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;  
+                                                                        } else {
+                                                                            var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
                                                                         }
-                                                                        
-                                                                        
+
+
                                                                         layer = "layer" + lindex;
 
                                                                         var marker = {
@@ -691,13 +691,21 @@ appControllers.controller(
                                                                             // 		+ ">Δες με!</a>"
                                                                             "issue_id": issueid
                                                                         };
-                                                                        
+
                                                                         if (type != 'reaction' && type != 'sensors') {
                                                                             marker.message = "Loading...";
-                                                                        }else{
-                                                                            marker.message = "<div class=\"row\" style=\"width:420px\"><div class=\"col-md-6\"><iframe src='http://150.140.184.249:5601/goto/7f010d2029bdb26584ce8e461be3b4dd?embed=true' height='200' width='200'></iframe></div><div class=\"col-md-3\"><iframe src=\"http://150.140.184.249:5601/app/kibana#/visualize/edit/58322a90-1463-11e7-8c4f-6149d3eb55ab?embed=true&_g=(refreshInterval:('$$hashKey':'object:287',display:'5+minutes',pause:!f,section:2,value:300000),time:(from:now-24h,mode:quick,to:now))&_a=(filters:!(),linked:!t,query:(query_string:(query:'*')),uiState:(),vis:(aggs:!((enabled:!t,id:'1',params:(aggregate:average,customLabel:'',field:Value,size:1,sortField:metadata.time,sortOrder:desc),schema:metric,type:top_hits)),listeners:(),params:(fontSize:'62',handleNoResults:!t),title:'agrodu01stream+Last+Value',type:metric))\" height=\"200\" width=\"200\"></iframe></div></div>";
+                                                                        } else {
+                                                                            if (type == 'reaction') {
+                                                                                marker.message = message;
+                                                                            } else {
+                                                                                if(marker.lat == 21.7912763 && marker.lng == 38.2831043){
+                                                                                    marker.message = "<div class=\"row\" style=\"width:420px\"><div class=\"col-md-6\"><iframe src='http://150.140.184.249:5601/app/kibana#/visualize/edit/b2f11d20-13f9-11e7-b5f7-970566853c93?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-24h,mode:quick,to:now))&_a=(filters:!(),linked:!t,query:(query_string:(query:\"*\")),uiState:(),vis:(aggs:!((enabled:!t,id:\"1\",params:(field:Value),schema:metric,type:avg),(enabled:!t,id:\"2\",params:(customInterval:\"2h\",extended_bounds:(),field:metadata.time,interval:auto,min_doc_count:1),schema:segment,type:date_histogram)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,defaultYExtents:!f,drawLinesBetweenPoints:!t,interpolate:linear,legendPosition:right,radiusRatio:9,scale:linear,setYExtents:!f,showCircles:!t,times:!()),title:\"agrodu02stream+Line+graph\",type:line))' height='200' width='200'></iframe></div><div class=\"col-md-3\"><iframe src=\"http://150.140.184.249:5601/app/kibana#/visualize/edit/70088b30-1465-11e7-8e10-256ff2c3af7f?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-24h,mode:quick,to:now))&_a=(filters:!(),linked:!t,query:(query_string:(query:%27*%27)),uiState:(),vis:(aggs:!((enabled:!t,id:%271%27,params:(aggregate:max,field:Value,size:1,sortField:metadata.time,sortOrder:desc),schema:metric,type:top_hits)),listeners:(),params:(fontSize:60,handleNoResults:!t),title:%27agrodu02stream%20Last%20Value%27,type:metric))\" height=\"200\" width=\"200\"></iframe></div></div>";
+                                                                                }else{
+                                                                                    marker.message = "<div class=\"row\" style=\"width:420px\"><div class=\"col-md-6\"><iframe src='http://150.140.184.249:5601/app/kibana#/visualize/edit/866d3d60-13f9-11e7-b5f7-970566853c93?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:%272017-06-28T11:39:21.371Z%27,mode:absolute,to:%272017-06-30T11:39:21.371Z%27))&_a=(filters:!(),linked:!t,query:(query_string:(query:%27*%27)),uiState:(),vis:(aggs:!((enabled:!t,id:%271%27,params:(field:Value),schema:metric,type:avg),(enabled:!t,id:%272%27,params:(customInterval:%272h%27,extended_bounds:(),field:metadata.time,interval:auto,min_doc_count:1),schema:segment,type:date_histogram)),listeners:(),params:(addLegend:!t,addTimeMarker:!f,addTooltip:!t,defaultYExtents:!f,drawLinesBetweenPoints:!t,interpolate:linear,legendPosition:right,radiusRatio:9,scale:linear,setYExtents:!f,showCircles:!t,times:!()),title:%27agrodu01stream%20Line%20graph%27,type:line))' height='200' width='200'></iframe></div><div class=\"col-md-3\"><iframe src=\"http://150.140.184.249:5601/app/kibana#/visualize/edit/58322a90-1463-11e7-8c4f-6149d3eb55ab?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:%272017-06-28T11:39:53.743Z%27,mode:absolute,to:%272017-06-30T11:39:58.957Z%27))&_a=(filters:!(),linked:!t,query:(query_string:(query:%27*%27)),uiState:(),vis:(aggs:!((enabled:!t,id:%271%27,params:(aggregate:average,customLabel:%27%27,field:Value,size:1,sortField:metadata.time,sortOrder:desc),schema:metric,type:top_hits)),listeners:(),params:(fontSize:%2762%27,handleNoResults:!t),title:%27agrodu01stream%20Last%20Value%27,type:metric))\" height=\"200\" width=\"200\"></iframe></div></div>";
+                                                                                }                                                                               
+                                                                            }
                                                                         }
-                                                                        
+
                                                                         $scope.markers.push(marker);
 
                                                                     },
