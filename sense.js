@@ -631,6 +631,7 @@ appControllers.controller(
                                                         searchissues.push({"issue":"humidity","value_desc":"Humidity value","loc":{"type":"Point","coordinates":[-0.10797500610351562,51.51122644944369]}});
                                                         searchissues.push({"issue":"temperature","value_desc":"Temperature value","loc":{"type":"Point","coordinates":[-0.1247549057006836,51.51610055355692]}});
                                                         searchissues.push({"issue":"temperature","value_desc":"Temperature value","loc":{"type":"Point","coordinates":[-0.11132240295410155,51.51822363035807]}});
+                                                        $translate.use("en");
                                                     }
                                                     angular
                                                             .forEach(

@@ -2,24 +2,24 @@ var appControllers = angular.module('scapp.controllers', ['pascalprecht.translat
 
 function default_ic(this_img) {
     var scope = angular.element("#mctl").scope();
-    for(var i = 0;i < scope.allissues.length; i++){
-      if(scope.allissues[i].bug_id == this_img.dataset.bugid){
-           scope.allissues[i].class = "fa fa-" + scope.Variables.icons[scope.allissues1[i]].icon;
-           scope.allissues[i].width = "80%";
-           scope.allissues[i].image_name = '';
-           break;
-      }  
+    for (var i = 0; i < scope.allissues.length; i++) {
+        if (scope.allissues[i].bug_id == this_img.dataset.bugid) {
+            scope.allissues[i].class = "fa fa-" + scope.Variables.icons[scope.allissues1[i]].icon;
+            scope.allissues[i].width = "80%";
+            scope.allissues[i].image_name = '';
+            break;
+        }
     }
 }
 
-function default_im(this_img){
+function default_im(this_img) {
     var scope = angular.element("#mctl").scope();
-    for(var i = 0;i < scope.allissues.length; i++){
-      if(scope.allissues[i].bug_id == this_img.dataset.bugid){
-           scope.allissues[i].class = '';
-           scope.$apply();
-           break;
-      }  
+    for (var i = 0; i < scope.allissues.length; i++) {
+        if (scope.allissues[i].bug_id == this_img.dataset.bugid) {
+            scope.allissues[i].class = '';
+            scope.$apply();
+            break;
+        }
     }
 }
 
@@ -46,7 +46,7 @@ appControllers.controller('mobilelinkCtl', function ($scope, $window, $http, $q,
 
     var d = $q.defer();
 
-    var mainInfo = $http.get(url,{timeout: d.promise}).success(function (response) {
+    var mainInfo = $http.get(url, {timeout: d.promise}).success(function (response) {
 
         $scope.Variables = {
             APIADMIN: response.APIADMIN
@@ -55,13 +55,13 @@ appControllers.controller('mobilelinkCtl', function ($scope, $window, $http, $q,
         d.resolve(response);
         return d.promise;
     });
-    
+
     setTimeout(function () {
-            if (d.promise.$$state.status == 0) {
-                d.resolve('cancelled');
-                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-            }
-        }, 30000);
+        if (d.promise.$$state.status == 0) {
+            d.resolve('cancelled');
+            alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+        }
+    }, 30000);
 
     var b_id = $location.absUrl().split("=")[1];
 
@@ -98,7 +98,7 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
         } else {
             return true;
         }
-    }
+    };
 
     $scope.changeLanguage = function (langKey) {
         $translate.use(langKey);
@@ -160,7 +160,7 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
             d.resolve(response);
             return d.promise;
         });
-        
+
         setTimeout(function () {
             if (d.promise.$$state.status == 0) {
                 d.resolve('cancelled');
@@ -169,6 +169,10 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
         }, 30000);
 
         $q.all([$rootScope.mainInfo]).then(function (data) {
+
+            if ($rootScope.Variables.city_name == "london") {
+                $translate.use("en");
+            }
 
             $scope.refreshPages = function (startPage, arrow_type) {
                 if (startPage <= 0) {
@@ -217,22 +221,22 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
                     $scope.page_set.push(i);
                 }
             };
-            
-            $scope.loading = function(){
-                $scope.nloaded=true;
+
+            $scope.loading = function () {
+                $scope.nloaded = true;
             }
-            
-            function comp_pages(){
+
+            function comp_pages() {
                 $scope.pages = '<ul class="pagination pagination-sm pull-right"><li ng-click="loading();totalpages(1,1);"><span tooltip-side="top" tooltips tooltip-template="Πρώτη σελίδα"><a href="#">«</a></span></li>'
-                    + '<li ng-click="loading();totalpages(startPage - 5,2)"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#"><</a></span></li>';
-            if(init == 0){
-                init = 1;
-                $scope.refreshPages(1);
-            }
-            $scope.pages += '<li ng-repeat="page in page_set"  ng-click="loading();updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#">{{page}}</a></span></li>';
-            $scope.pages += '<li ng-click="loading();totalpages(startPage + 5,3)"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#">></a></span></li>'
-                    + '<li ng-click="loading();totalpages(total_pages - 4,4)"><span tooltip-side="top" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#">»</a></span></li></ul>';
-            $(".paging").html($compile($scope.pages)($scope));
+                        + '<li ng-click="loading();totalpages(startPage - 5,2)"><span tooltip-side="top" tooltips tooltip-template="Προηγούμενες σελίδες"><a  href="#"><</a></span></li>';
+                if (init == 0) {
+                    init = 1;
+                    $scope.refreshPages(1);
+                }
+                $scope.pages += '<li ng-repeat="page in page_set"  ng-click="loading();updatePage(page);refresh()" ng-class="( $index + 1 != pageIndex) ? \'\':\'active\'"><span tooltips tooltip-template><a href="#">{{page}}</a></span></li>';
+                $scope.pages += '<li ng-click="loading();totalpages(startPage + 5,3)"><span tooltip-side="top" tooltips tooltip-template="Επόμενες σελίδες"><a  href="#">></a></span></li>'
+                        + '<li ng-click="loading();totalpages(total_pages - 4,4)"><span tooltip-side="top" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#">»</a></span></li></ul>';
+                $(".paging").html($compile($scope.pages)($scope));
             }
 
             $scope.totalpages = function (newstart, arrow) {
@@ -248,156 +252,156 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
                     canissue.resolve();
                     $scope.total_pages = Math.ceil(response.length / 20);
                     if (init == 0) {
-                       $scope.refreshPages(1);
+                        $scope.refreshPages(1);
                     } else {
-                       $scope.refreshPages(newstart, arrow);
-                       $scope.refresh();
+                        $scope.refreshPages(newstart, arrow);
+                        $scope.refresh();
                     }
                     comp_pages();
                 });
-                
+
                 setTimeout(function () {
-            if (canissue.promise.$$state.status == 0) {
-                rcanissue.$cancelRequest();
-                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-            }
-        }, 30000);
+                    if (canissue.promise.$$state.status == 0) {
+                        rcanissue.$cancelRequest();
+                        alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
             };
-            
+
             $scope.updatePage = function (activePage) {
-                                        $scope.activePage = activePage;
-                                        if (($scope.startPage - 1) % 5 == 0) {
-                                            $scope.pageIndex = activePage % 5;
-                                        } else { //When totalpages are not divided by 5
-                                            $scope.pageIndex = 5 - ($scope.total_pages - activePage);
-                                        }
-                                        if ($scope.pageIndex == 0) {
-                                            $scope.pageIndex = 5;
-                                        }
-                                    };
-            
-            $scope.totalpages();
-            
-            $scope.page_set = [];
-            
-            $scope.refresh = function(){
-            
-            var offset = ($scope.activePage - 1) * 20;
-            
-            var canissue1 = $q.defer();
-            var rcanissue1;
-            var tmpIssues = rcanissue1 = $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&limit=20&offset='+offset+'&list_issue=1&image_field=1',
-                    {}, {
-                update: {
-                    method: 'GET',
-                    isArray: true,
-                    cancellable: true
+                $scope.activePage = activePage;
+                if (($scope.startPage - 1) % 5 == 0) {
+                    $scope.pageIndex = activePage % 5;
+                } else { //When totalpages are not divided by 5
+                    $scope.pageIndex = 5 - ($scope.total_pages - activePage);
                 }
-            }).update(function (response) {
-                canissue1.resolve();
-                var counter = 0;
-                $scope.allissues1 = [];
-                angular
-                        .forEach(
-                                tmpIssues,
-                                function (lastissue,
-                                        key) {
-                                    // console.log("key=
-                                    // " + key + ",
-                                    // lastissue.issue="
-                                    // +
-                                    // lastissue.issue);
-                                    
-                                    lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
-                                    lastissue.width = "80%";
-                                    
-                                    $scope.allissues1[counter] = lastissue.issue;
-                                    
-                                    var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
-                                    if (cat_index != -1) {
-                                        lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
-                                    } else {
-                                        lastissue.issue = '';
-                                    }
-                                                                      
-                                    lastissue.image_name = $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + lastissue.bug_id + "&resolution=small";
-                                    
-                                    var today = new Date();
-                                    var create_day = new Date(
-                                            lastissue.create_at);
+                if ($scope.pageIndex == 0) {
+                    $scope.pageIndex = 5;
+                }
+            };
 
-                                    var seconds = (today
-                                            .getTime() - create_day
-                                            .getTime()) / 1000;
-                                    var datediff = '';
-                                    var datediffunit = '';
+            $scope.totalpages();
 
-                                    if (seconds < 60) {
-                                        datediff = seconds;
-                                        datediffunit = "SECS";
-                                    } else if (seconds < 3600) {
-                                        datediff = Math
-                                                .floor(seconds / 60);
-                                        datediffunit = "MINUTES";
-                                    } else if (seconds < 86400) {
-                                        datediff = Math
-                                                .floor(seconds / 3600);
-                                        datediffunit = "HOURS";
-                                    } else {
-                                        datediff = Math
-                                                .floor(seconds / 86400);
-                                        datediffunit = "DAYS";
+            $scope.page_set = [];
 
-                                    }
-                                    lastissue.create_at = datediff;
-                                    lastissue.create_at_unit = datediffunit;
+            $scope.refresh = function () {
 
-                                    /*
-                                     var bugParams =
-                                     {
-                                     "method": "Bug.get",
-                                     "params": [{"ids":lastissue._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
-                                     "id": 1
-                                     };
-                                     BugService.search(bugParams, function(result) {
-                                     switch (result[0].status) {
-                                     case 'CONFIRMED':
-                                     result.status = 'CONFIRMED';
-                                     break;
-                                     case 'IN_PROGRESS':
-                                     result.status = 'IN_PROGRESS';
-                                     break;
-                                     case 'RESOLVED':
-                                     result.status = 'RESOLVED';
-                                     break;
-                                     }
-                                     lastissue.status = result.status;
-                                     });
-                                     
-                                     */
+                var offset = ($scope.activePage - 1) * 20;
 
-                                     counter++;
-                                });
-                                $scope.allissues = tmpIssues;
-                $(window).trigger("resize");
-                $scope.nloaded = false;
-            });
-            
-            setTimeout(function () {
-            if (canissue1.promise.$$state.status == 0) {
-                rcanissue1.$cancelRequest();
-                $scope.$apply();
-                alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-            }
-        }, 30000);
-            
-            //$scope.allissues = tmpIssues;
-        };
-        
-        $scope.refresh();
+                var canissue1 = $q.defer();
+                var rcanissue1;
+                var tmpIssues = rcanissue1 = $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&limit=20&offset=' + offset + '&list_issue=1&image_field=1',
+                        {}, {
+                    update: {
+                        method: 'GET',
+                        isArray: true,
+                        cancellable: true
+                    }
+                }).update(function (response) {
+                    canissue1.resolve();
+                    var counter = 0;
+                    $scope.allissues1 = [];
+                    angular
+                            .forEach(
+                                    tmpIssues,
+                                    function (lastissue,
+                                            key) {
+                                        // console.log("key=
+                                        // " + key + ",
+                                        // lastissue.issue="
+                                        // +
+                                        // lastissue.issue);
+
+                                        lastissue.class = "fa fa-" + $rootScope.Variables.icons[lastissue.issue].icon;
+                                        lastissue.width = "80%";
+
+                                        $scope.allissues1[counter] = lastissue.issue;
+
+                                        var cat_index = $rootScope.Variables.categories.indexOf(lastissue.issue);
+                                        if (cat_index != -1) {
+                                            lastissue.issue = $rootScope.Variables.categories_issue[cat_index];
+                                        } else {
+                                            lastissue.issue = '';
+                                        }
+
+                                        lastissue.image_name = $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + lastissue.bug_id + "&resolution=small";
+
+                                        var today = new Date();
+                                        var create_day = new Date(
+                                                lastissue.create_at);
+
+                                        var seconds = (today
+                                                .getTime() - create_day
+                                                .getTime()) / 1000;
+                                        var datediff = '';
+                                        var datediffunit = '';
+
+                                        if (seconds < 60) {
+                                            datediff = seconds;
+                                            datediffunit = "SECS";
+                                        } else if (seconds < 3600) {
+                                            datediff = Math
+                                                    .floor(seconds / 60);
+                                            datediffunit = "MINUTES";
+                                        } else if (seconds < 86400) {
+                                            datediff = Math
+                                                    .floor(seconds / 3600);
+                                            datediffunit = "HOURS";
+                                        } else {
+                                            datediff = Math
+                                                    .floor(seconds / 86400);
+                                            datediffunit = "DAYS";
+
+                                        }
+                                        lastissue.create_at = datediff;
+                                        lastissue.create_at_unit = datediffunit;
+
+                                        /*
+                                         var bugParams =
+                                         {
+                                         "method": "Bug.get",
+                                         "params": [{"ids":lastissue._id,"include_fields":["component","cf_sensecityissue","status","id","alias","summary","creation_time","whiteboard","resolution","last_change_time"]}],
+                                         "id": 1
+                                         };
+                                         BugService.search(bugParams, function(result) {
+                                         switch (result[0].status) {
+                                         case 'CONFIRMED':
+                                         result.status = 'CONFIRMED';
+                                         break;
+                                         case 'IN_PROGRESS':
+                                         result.status = 'IN_PROGRESS';
+                                         break;
+                                         case 'RESOLVED':
+                                         result.status = 'RESOLVED';
+                                         break;
+                                         }
+                                         lastissue.status = result.status;
+                                         });
+                                         
+                                         */
+
+                                        counter++;
+                                    });
+                    $scope.allissues = tmpIssues;
+                    $(window).trigger("resize");
+                    $scope.nloaded = false;
+                });
+
+                setTimeout(function () {
+                    if (canissue1.promise.$$state.status == 0) {
+                        rcanissue1.$cancelRequest();
+                        $scope.$apply();
+                        alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
+
+                //$scope.allissues = tmpIssues;
+            };
+
+            $scope.refresh();
         });
     };
-    
+
     $scope.doCalcAllIssues();
 
 });

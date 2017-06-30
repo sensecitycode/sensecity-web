@@ -407,6 +407,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
         $q.all([$rootScope.mainInfo]).then(
                 function (data) {
+                    if ($rootScope.Variables.city_name == "london") {
+                        $translate.use("en");
+                    }
                     $scope.issues = [];
                     for (var i = 0; i < $rootScope.Variables.categories_issue.length - 1; i++) {
                         var cat_info = {name: "", color: "", total: ""};

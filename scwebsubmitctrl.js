@@ -362,11 +362,26 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         }
         ;
 
+        var name = $location.absUrl().split("name=")[1];
+        var email = $location.absUrl().split("email=")[1];
+        var mobile = $location.absUrl().split("mobile=")[1];
+
+        if (name != undefined && email != undefined && $rootScope.Variables.city_name == "london") {
+            name = name.split("&")[0];
+            email = email.split("&")[0];
+            if (mobile != undefined) {
+                mobile = mobile.split("&")[0];
+                $scope.MobileTxt = mobile;
+
+            }
+            $scope.NameTxt = name;
+            $scope.EmailTxt = email;
+        } else {
+            window.location = "https://callcntr.theansr.com/london_sense";
+        }
+
         $('#epon').on('ifClicked', function (event) {
             setTimeout(function () {
-                var name = $location.absUrl().split("name=")[1];
-                var email = $location.absUrl().split("email=")[1];
-                var mobile = $location.absUrl().split("mobile=")[1];
 
                 if (name != undefined && email != undefined) {
                     name = name.split("&")[0];
@@ -378,6 +393,8 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }
                     $scope.NameTxt = name;
                     $scope.EmailTxt = email;
+                } else {
+                    window.location = "https://callcntr.theansr.com/london_sense";
                 }
                 $scope.$apply();
                 $("#next_button").attr("class", "btn btn-default pull-right");
@@ -501,7 +518,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $translate.use("en");
                         $("#next_button").text($translate.instant('NEXT'));
                         $("#previous_button").text($translate.instant('PREVIOUS'));
-                    }, 1);
+                    }, 100);
                 }
                 $('#epon').on('ifToggled', function (event) {
                     if ($scope.chkSelected) {

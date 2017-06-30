@@ -728,7 +728,9 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $q.all([$rootScope.maininfo]).then(
                 function (data) {
                     var canactp = $q.defer();
-
+                    if ($rootScope.variables.city_name == "london") {
+                        $translate.use("en");
+                    }
                     $http({
                         method: "POST",
                         url: $rootScope.variables.APIADMIN + "/activate_city_policy?lat=" + $rootScope.variables.lat_center + "&long=" + $rootScope.variables.long_center,
