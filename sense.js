@@ -698,13 +698,15 @@ appControllers.controller(
                                                                             if (type == 'reaction') {
                                                                                 marker.message = message;
                                                                             } else {
-                                                                                if(marker.lat == 21.7912763 && marker.lng == 38.2831043){
+                                                                                if ($rootScope.city_name == "patras") {
+                                                                                    if (marker.lat == 38.2831043 && marker.lng == 21.7912763) {
+                                                                                        marker.message = "<div class=\"row\" style=\"width:420px\"><div class=\"col-md-6\"><iframe src=\"http://150.140.184.249:5601/goto/9cde3cbac3e22a2a987fcdfcbb2cd040?embed=true\" height='200' width='200'></iframe></div><div class=\"col-md-3\"><iframe src=\"http://150.140.184.249:5601/goto/5ae1c2902571835f5fa24215cf2f8e7c?embed=true\" height=\"200\" width=\"200\"></iframe></div></div>";
+                                                                                    } else {
+                                                                                        marker.message = "<div class=\"row\" style=\"width:420px\"><div class=\"col-md-6\"><iframe src=\"http://150.140.184.249:5601/goto/ae63b2234d859fe3a806b2f361479c96?embed=true\" height='200' width='200'></iframe></div><div class=\"col-md-3\"><iframe src=\"http://150.140.184.249:5601/goto/36ef254660f471bb3dd21fde81a28d56?embed=true\" height=\"200\" width=\"200\"></iframe></div></div>";
+                                                                                    }
+                                                                                } else {
                                                                                     marker.message = "<div class=\"row\" style=\"width:420px\"><div class=\"col-md-6\"><iframe src=\"http://150.140.184.249:5601/goto/9cde3cbac3e22a2a987fcdfcbb2cd040?embed=true\" height='200' width='200'></iframe></div><div class=\"col-md-3\"><iframe src=\"http://150.140.184.249:5601/goto/5ae1c2902571835f5fa24215cf2f8e7c?embed=true\" height=\"200\" width=\"200\"></iframe></div></div>";
-                                                                                    console.log("ok");
-                                                                                }else{
-                                                                                    console.log("ok1");
-                                                                                    marker.message = "<div class=\"row\" style=\"width:420px\"><div class=\"col-md-6\"><iframe src=\"http://150.140.184.249:5601/goto/ae63b2234d859fe3a806b2f361479c96?embed=true\" height='200' width='200'></iframe></div><div class=\"col-md-3\"><iframe src=\"http://150.140.184.249:5601/goto/36ef254660f471bb3dd21fde81a28d56?embed=true\" height=\"200\" width=\"200\"></iframe></div></div>";
-                                                                                }                                                                               
+                                                                                }
                                                                             }
                                                                         }
 
