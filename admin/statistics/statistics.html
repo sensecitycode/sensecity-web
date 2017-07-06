@@ -19,6 +19,13 @@
 
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+        <script src="../../_js/angular-translate.min.js"></script>
+        <script
+        src="../../js/cdns/angular-translate-storage-cookie.js"></script>
+        <script
+        src="../../js/cdns/angular-translate-storage-local.js"></script>
+        
+        <script type="text/javascript" src="../../js/cdns/angular-translate-loader-static-files.min.js"></script>
         <script type="text/javascript" src="statisticsctl.js"></script>
 
     </head>
@@ -49,17 +56,17 @@
 
                         </div>                                                                        
                     </li>                                  
-                    <li class="xn-title">Περιήγηση</li>
+                    <li class="xn-title">{{'NAV' | translate}}</li>
 
                     <ul>
-                        <li style="background-color:#121418; pointer-events: none;"><a style="color:white" href="statistics.html?user={{ut}}"><span style="background-color:#121418;color:white" class="fa fa-area-chart"></span> Στατιστικά κατηγοριών από 1η Ιανουαρίου</a></li>
-                        <li><a href="lifecycle.html?user={{ut}}"><span class="fa fa-check"></span> Ανάλυση διεκπεραιωμένων προβλημάτων</a></li>
-                        <li><a href="performance.html?user={{ut}}"><span class="fa fa-bar-chart-o"></span> Στατιστικά κατηγοριών</a></li>
-                        <li><a href="services.html?user={{ut}}"><span class="fa fa-pie-chart"></span> Στατιστικά τμημάτων και ανάλυση διεκπεραιωμένων</a></li>
-                        <li><a href="average.html?user={{ut}}"><span class="fa fa-clock-o"></span> Μέσος χρόνος επίλυσης προβλημάτων ανά τμήμα</a></li>
-                        <li><a href="citizens.html?user={{ut}}"><span class="fa fa-users"></span> Στατιστικά χρήσης</a></li>  
-                        <li><a href="comparison.html?user={{ut}}"><span class="fa fa-arrows-h"></span> Σύγκριση Δήμων</a></li>
-                        <li><a href="reactions.html?user={{ut}}"><span class="fa fa-map-o"></span> Χάρτης Αντιδράσεων</a></li>                  
+                        <li style="background-color:#121418; pointer-events: none;"><a style="color:white" href="statistics.html?user={{ut}}"><span style="background-color:#121418;color:white" class="fa fa-area-chart"></span> {{'FIRST_JANUARY' | translate}}</a></li>
+                        <li><a href="lifecycle.html?user={{ut}}"><span class="fa fa-check"></span>{{'CATEGORIES_STATS' | translate}}</a></li>
+                        <li><a href="performance.html?user={{ut}}"><span class="fa fa-bar-chart-o"></span> {{'CATEGORIES_STATS' | translate}}</a></li>
+                        <li><a href="services.html?user={{ut}}"><span class="fa fa-pie-chart"></span> {{'DEPARTMENTS_STATS' | translate}}</a></li>
+                        <li><a href="average.html?user={{ut}}"><span class="fa fa-clock-o"></span> {{'AVERAGE_RESOLVED' | translate}}</a></li>
+                        <li><a href="citizens.html?user={{ut}}"><span class="fa fa-users"></span> {{'PLATFORM_USE' | translate}}</a></li>  
+                        <li><a href="comparison.html?user={{ut}}"><span class="fa fa-arrows-h"></span> {{'MUNICIPALITIES_COMP' | translate}}</a></li>
+                        <li><a href="reactions.html?user={{ut}}"><span class="fa fa-map-o"></span> {{'REACTIONS_MAP' | translate}}</a></li>                  
                     </ul>
 
                 </ul>
@@ -72,7 +79,9 @@
 
                 <!-- START X-NAVIGATION VERTICAL -->
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
-                    <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle" class="ng-binding"><i style="margin-right:10px" ng-class="tabs.activeIcon" class="fa ion-ios-analytics-outline"></i><span class="fa fa-area-chart" style="margin-right:10px"></span>Στατιστικά κατηγοριών από 1η Ιανουαρίου</span></center></li>                  
+                    <li style="position:absolute;width:100%;height:inherit"><center style="width:100%;font-size:20px;color:white;display:table;height:100%"><span style="display:table-cell;vertical-align:middle" class="ng-binding"><i style="margin-right:10px" ng-class="tabs.activeIcon" class="fa ion-ios-analytics-outline"></i><span class="fa fa-area-chart" style="margin-right:10px"></span>{{'FIRST_JANUARY' | translate}}</span></center></li>                  
+                    <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer;"><a ng-click="changeLanguage('en')"><img src="../../images/flags/en.png"></a></li>
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer;"><a ng-click="changeLanguage('el')"><img src="../../images/flags/el.png"></a></li>
                 </ul>
 
 
@@ -82,7 +91,7 @@
                     <div class="row">
                         <div class="panel panel-default" >
                             <div class="panel-heading" >
-                                <h3 class="panel-title">Ανάλυση προβλημάτων από 1/1/2017 μέχρι και σήμερα</h3>                                
+                                <h3 class="panel-title"></h3>                                
                             </div>
                         </div>
                     </div>
@@ -90,11 +99,11 @@
 
                     <div class="row">
 
-                        <div ng-repeat="title in Variables.activeTitles" class="col-md-3">
+                        <div ng-repeat="title in Variables.activeTitles_translation" class="col-md-3">
                             <!-- START DONUT CHART -->
                             <div class="panel panel-default" >
                                 <div style="height:80px" class="panel-heading" >
-                                    <h3 class="panel-title">{{title}}</h3>                                
+                                    <h3 class="panel-title">{{title | translate}}</h3>                                
                                 </div>
                                 <div class="panel-body"   >									
                                     <div id="{{Variables.departments[$index]}}_donut" style="height: 300px;"></div>
