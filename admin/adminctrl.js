@@ -17,6 +17,7 @@ appControllers.config(['$translateProvider', function ($translateProvider) {
     }]);
 
 var search_button = 0;
+var fadvanced_search = 0;
 var advanced_search = 0;
 
 function no_disposed(order) {
@@ -261,13 +262,17 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 }
             }, 100);
         });
-        
-        $("#importance").on('change',function(){
-            setTimeout(function(){$scope.simportance = $("button[data-id='importance']").attr("title"); },100);
+
+        $("#importance").on('change', function () {
+            setTimeout(function () {
+                $scope.simportance = $("button[data-id='importance']").attr("title");
+            }, 100);
         });
-        
-        $("#priority").on('change',function(){
-            setTimeout(function(){$scope.spriority = $("button[data-id='priority']").attr("title"); },100);
+
+        $("#priority").on('change', function () {
+            setTimeout(function () {
+                $scope.spriority = $("button[data-id='priority']").attr("title");
+            }, 100);
         });
 
         function maptonum(month) {
@@ -381,10 +386,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 });
                 var issue_counter = 0;
                 var tempissue = [];
-                alert(JSON.stringify($scope.searchIssue));
-                alert(JSON.stringify($scope.searchState));
-                alert($scope.simportance);
-                alert($scope.spriority);
+                var issues_list = "";
+                var i = 0;
 
                 angular.forEach($scope.searchIssue, function (issue) {
                     if (issue == "roadconstructor") {
@@ -393,8 +396,16 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     if (issue == "protectionpolicy") {
                         issue = "protection-policy";
                     }
-                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
+                    if (i == 0) {
+                        issues_list += issue;
+                        i++;
+                    } else {
+                        issues_list += " |" + issue;
+                    }
                 });
+                if (issues_list != "") {
+                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issues_list, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
+                }
                 if ($scope.searchIssue == "" || $scope.searchIssue == undefined) {
                     paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
                 }
@@ -407,12 +418,21 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 var promisesArray = [];
                 for (var index = 0; index < paramsObj.length; index++) {
                     if ((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined) || paramsObj[index].includeAnonymous == 1) {
+                        if (isNaN(paramsObj[index].status.charCodeAt(0)) == true) {
+                            delete paramsObj[index].status;
+                        }
+                        if ($scope.simportance != undefined && $scope.simportance != "Σπουδαιότητα") {
+                            paramsObj[index].severity = $scope.simportance;
+                        }
+                        if ($scope.spriority != undefined && $scope.spriority != "Προτεραιότητα") {
+                            paramsObj[index].priority = $scope.spriority;
+                        }
                         promisesArray.push(dosQuery(paramsObj[index]));
                     }
                 }
 
                 $q.all(promisesArray).then(function (data) {
-                    var searchissues = [];
+                    fadvanced_search = 1;
                     $("#issues").val('Προβλήματα');
                     $("#issues").selectpicker("refresh");
                     $scope.searchIssue = undefined;
@@ -425,7 +445,10 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     $("#priority").val('Προτεραιότητα');
                     $("#priority").selectpicker("refresh");
                     $scope.spriority = undefined;
-                    setTimeout(function(){$scope.$apply()},1);
+                    setTimeout(function () {
+                        $scope.$apply();
+                    }, 1);
+                    $scope.issue_search(paramsObj);
                 });
             }
         });
@@ -500,7 +523,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 advanced_search = 0;
                 $scope.vsbl = true;
                 setTimeout(function () {
-                    
+
                     $(window).trigger("resize");
                     leafletData.getMap().then(
                             function (map) {
@@ -626,14 +649,15 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             var csv_promises = [];
             var l = 0;
             var deferred = $q.defer();
+            issues_Array = [{id: "Κωδικός Προβλήματος", department: "Τμήμα Ανάθεσης Προβλήματος", description: "Περιγραφή Προβλήματος", address: "Διεύθυνση", state: "Κατάσταση Προβλήματος", date: "Καταγραφή Προβλήματος", priority: "Προτεραιότητα Προβλήματος", severity: "Σπουδαιότητα Προβλήματος", name: "Ονοματεπώνυμο Πολίτη", telephone: "Τηλέφωνο Πολίτη", email: "E-mail Πολίτη"}];
             angular.forEach($scope.panels, function (value, key) {
                 //var sparams = {"id": value.id, "include_fields": [ "component", "status", "resolution", "cf_mobile", "cf_email", "cf_creator", "severity", "priority", "severity"]};
                 var sparams = {"bug_id": value.id};
                 csv_promises.push(doQuery(sparams));
             });
-//            $q.all(csv_promises).then(function (data) {
-//                return deferred.resolve(issues_Array);
-//            });
+            $q.all(csv_promises).then(function (data) {
+                return deferred.resolve(issues_Array);
+            });
             return deferred.promise;
         };
 
@@ -769,7 +793,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //        }
 //        }
 
-        $scope.issue_search = function () {
+        $scope.issue_search = function (pobj) {
             search_button = 1;
             var searchparams = {};
             searchparams.bug_id = $scope.sbugid;
@@ -778,13 +802,16 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             $rootScope.sbugid = $scope.sbugid;
             $rootScope.semail = $scope.semail;
             $rootScope.smobile = $scope.smobile;
+            if (fadvanced_search == 1) {
+                searchparams = pobj[0];
+            }
             searchparams.city = $rootScope.Variables.city_name;
             var canissue2 = $q.defer();
             $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: searchparams, timeout: canissue2.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                 canissue2.resolve();
                 $scope.total_pages = Math.ceil(result.length / 20);
                 $scope.refreshPages(1);
-                $scope.refresh();
+                $scope.refresh(pobj);
             });
             setTimeout(function () {
                 if (canissue2.promise.$$state.status == 0) {
@@ -1043,6 +1070,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $scope.changeTab = function (index) {
             search_button = 0;
+            fadvanced_search = 0;
             $scope.refreshPages(1);
             if (tabchanged == 2) {
                 tabchanged = 0;
@@ -1869,6 +1897,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             $scope.reset_search = function () {
                 if (search_button == 1) {
                     search_button = 0;
+                    fadvanced_search = 0;
                     sreset = 1;
                 }
             }
@@ -1906,7 +1935,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //                $scope.activePanel = - 1;
 //                        $scope.currentactive = - 1;
             };
-            $scope.refresh = function () {
+            $scope.refresh = function (pobj) {
 
 //                for (var i = 0; i < $scope.street_view_markers.length; i++){
 //                if ($scope.street_view_markers[i] != "ncoords"){
@@ -2015,6 +2044,14 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             params.email = $scope.semail;
                             params.mobile = $scope.smobile;
                             params.city = $rootScope.Variables.city_name;
+                            if(fadvanced_search == 1){
+                                var off = params.offset;
+                                alert(off);
+                                params = pobj[0];
+                                params.sort = -1;
+                                params.limit = 20;
+                                params.offset = off;
+                            }
                         } else {
                             delete params['bug_id'];
                             delete params['email'];
