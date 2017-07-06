@@ -101,10 +101,10 @@ app.controller('performance', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                     var morrisCharts = function () {
                         $("#search_btn").click("on", function () {
                             $scope.nloaded = true;
-                            $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&resolution=FIXED&image_field=0&sort=-1&limit=500", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                            $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=CONFIRMED|IN_PROGRESS|RESOLVED&resolution=FIXED&image_field=0&sort=-1&limit=500", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                                 var issues_states = [];
                                 for (var i = 0; i < $rootScope.Variables.departments.length - 1; i++) {
-                                    issues_states.push([0, 0]);
+                                    issues_states.push([0,0, 0]);
                                 }
                                 var issue_index;
                                 for (var i = 0; i < response.data.length; i++) {
@@ -112,23 +112,26 @@ app.controller('performance', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                     if (issue_index > -1) {
                                         if (response.data[i].status == "RESOLVED") {
                                             issues_states[issue_index][1]++;
-                                        } else {
+                                        } else if(response.data[i].status == "IN_PROGRESS"){
                                             issues_states[issue_index][0]++;
+                                        }else{
+                                            issues_states[issue_index][2]++;
                                         }
                                     }
                                 }
                                 var total_issues = [];
                                 
                                 for (var i = 0; i < $rootScope.Variables.departments.length - 1; i++) {
-                                    total_issues[$rootScope.Variables.departments[i+1] + '_donut'] = issues_states[i][0] + issues_states[i][1];
+                                    total_issues[$rootScope.Variables.departments[i+1] + '_donut'] = issues_states[i][0] + issues_states[i][1] + issues_states[i][2];
                                     Morris.Donut({
                                         element: $rootScope.Variables.departments[i + 1] + '_donut',
                                         data: [
+                                            {label: "Ανοιχτά", value: issues_states[i][2]},
                                             {label: "Ολοκληρωμένα", value: issues_states[i][1]},
                                             {label: "Σε εξέλιξη", value: issues_states[i][0]}
                                         ],
                                         formatter: function (value, data) { return value + " / "+ total_issues[this.element] },
-                                        colors: ['#90EE90', '#CD5C5C']
+                                        colors: ['#db494f','#4fba57', '#e46a28']
                                     });
                                 }
                                 $scope.nloaded = false;

@@ -30,8 +30,11 @@ $(function () {
     }
     /* reportrange */
     if ($("#reportrange").length > 0) {
-        $("#reportrange").daterangepicker({
-            ranges: {
+        var range;
+        if(typeof admin_dropdown !== 'undefined'){
+            range = "";
+        }else{
+           range= {
                 'Σήμερα': [moment(), moment()],
                 'Χτές': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                 'Τελευταίες 7 Ημέρες': [moment().subtract(6, 'days'), moment()],
@@ -39,7 +42,10 @@ $(function () {
                 'Τελευταίες 3 Ημέρες': [moment().subtract(3, 'days'), moment()],
                 'Τελευταίος Μήνας': [moment().startOf('month'), moment().endOf('month')],
                 'Προηγούμενος Μήνας': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            },
+            }
+        }
+        $("#reportrange").daterangepicker({
+            ranges: range,
             opens: 'left',
             buttonClasses: ['btn btn-default'],
             applyClass: 'btn-small btn-primary',
@@ -58,7 +64,6 @@ $(function () {
             $('#reportrange span').html(start + ' - ' + end);
             $(window).trigger("resize");
         });
-        
 
         var start = moment().subtract('days', 3);
         var end = moment();

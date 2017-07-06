@@ -1,4 +1,4 @@
-var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanitize', 'ngCsv', '720kb.tooltips', 'adminapp', 'monospaced.qrcode'])
+var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanitize', 'ngCsv', '720kb.tooltips', 'adminapp', 'monospaced.qrcode', 'pascalprecht.translate'])
         .constant("config", {"host": "api.sense.city", "bugzilla_host": "nam.ece.upatras.gr", "port": "4000", "bugzilla_path": "/bugzilla"});
 //appControllers.config([
 //  '$httpProvider',
@@ -6,7 +6,18 @@ var appControllers = angular.module('adminapp.adminctrl', ['ngCookies', 'ngSanit
 //    $httpProvider.defaults.withCredentials = true;
 //  }]);
 
+appControllers.config(['$translateProvider', function ($translateProvider) {
+        $translateProvider.useStaticFilesLoader({
+            prefix: '../config/lang_',
+            suffix: '.json'
+        });
+
+        $translateProvider.preferredLanguage('el');
+        $translateProvider.useLocalStorage();
+    }]);
+
 var search_button = 0;
+var advanced_search = 0;
 
 function no_disposed(order) {
     var scope = angular.element("#mainctl").scope();
@@ -119,7 +130,7 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                         sparams.status = "CONFIRMED|IN_PROGRESS|RESOLVED";
                     }
                 }
-                
+
                 sparams.city = $cookieStore.get("city");
                 sparams.send_user = "1";
                 var canissue = $q.defer();
@@ -191,8 +202,15 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
         }
     }]);
 
-appControllers.controller('adminController', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', '$location', '$q', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $rootScope, $window, $http, $cookieStore, $templateCache, $compile, $location, $q, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
+appControllers.controller('adminController', ['$scope', '$rootScope', '$window', '$http', '$cookieStore', '$templateCache', '$compile', '$location', '$q', '$translate', '$resource', 'EndPointService', 'BugService', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'CommentService', 'Issue2MapService', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'leafletData', 'config', function ($scope, $rootScope, $window, $http, $cookieStore, $templateCache, $compile, $location, $q, $translate, $resource, EndPointService, BugService, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, CommentService, Issue2MapService, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, leafletData, config) {
         $("html").removeClass("body-full-height");
+
+        $scope.issue_id = "";
+        $scope.mobile_id = "";
+        $scope.email_id = "";
+        $scope.simportance = undefined;
+        $scope.spriority = undefined;
+        $scope.issues = [];
         $scope.$on('$routeChangeStart', function (next, last) {
             $(document).off("scroll");
             leafletData.getMap("issuesmap").then(
@@ -201,6 +219,217 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                         map.removeLayer(markersLightning);
                     });
         });
+        angular.copy($rootScope.Variables.searchIssues, $scope.issues);
+        $scope.allissues = [];
+        for (var i = 0; i < $rootScope.Variables.searchIssues.length; i++) {
+            $scope.allissues.push($scope.$eval($scope.issues[i].translate).replace(/ /g, ''));
+        }
+        for (i = 0; i < $rootScope.Variables.searchIssues.length; i++) {
+            $rootScope.Variables.searchIssues[i].translate = "'<i class=\"" + $rootScope.Variables.searchIssues[i].class + "\"></i>'+(" + $rootScope.Variables.searchIssues[i].translate + ");";
+        }
+
+        $('#issues').on('change', function () {
+            setTimeout(function () {
+                var wissues = $("button[data-id='issues']").attr("title").replace(/ /g, '').split(",");
+                $scope.searchIssue = [];
+                for (var i = 0; i < wissues.length; i++) {
+                    for (var j = 0; j < $scope.allissues.length; j++) {
+                        if (wissues[i] == $scope.allissues[j]) {
+                            $scope.searchIssue.push($rootScope.Variables.searchIssues[j].value);
+                        }
+                        ;
+                    }
+                }
+            }, 100);
+        });
+        $('#states').on('change', function () {
+            setTimeout(function () {
+                var wstate = $("button[data-id='states']").attr("title").replace(/ /g, '').split(",");
+                $scope.searchState = [];
+                for (var i = 0; i < wstate.length; i++) {
+                    if (wstate[i] == $translate.instant("OPEN")) {
+                        $scope.searchState.push("CONFIRMED");
+                    } else if (wstate[i] == $translate.instant("IN_PROGRESS").replace(/ /g, '').split(",")) {
+                        $scope.searchState.push("IN_PROGRESS");
+                    } else if (wstate[i] == $translate.instant("RESOLVED")) {
+                        $scope.searchState.push("RESOLVED");
+                    } else if (wstate[i] == $translate.instant("ANONYMOUS")) {
+                        $scope.searchState.push("Anonymous");
+                    } else {
+                        $scope.searchState.push("Καταστάσεις");
+                    }
+                }
+            }, 100);
+        });
+        
+        $("#importance").on('change',function(){
+            setTimeout(function(){$scope.simportance = $("button[data-id='importance']").attr("title"); },100);
+        });
+        
+        $("#priority").on('change',function(){
+            setTimeout(function(){$scope.spriority = $("button[data-id='priority']").attr("title"); },100);
+        });
+
+        function maptonum(month) {
+            switch (month) {
+                case $translate.instant("JANUARY"):
+                    return "01";
+                case $translate.instant("FEBRUARY"):
+                    return "02";
+                case $translate.instant("MARCH"):
+                    return "03";
+                case $translate.instant("APRIL"):
+                    return "04";
+                case $translate.instant("MAY"):
+                    return "05";
+                case $translate.instant("JUNE"):
+                    return "06";
+                case $translate.instant("JULY"):
+                    return "07";
+                case $translate.instant("AUGUST"):
+                    return "08";
+                case $translate.instant("SEPTEMBER"):
+                    return "09";
+                case $translate.instant("OCTOBER"):
+                    return "10";
+                case $translate.instant("NOVEMBER"):
+                    return "11";
+                case $translate.instant("DECEMBER"):
+                    return "12";
+            }
+        }
+
+        $("#sb").click(function () {
+            var date = $("#sdate").text();
+            if (date != "Διάστημα Αναζήτ.") {
+                var sdate = date.split("-")[0];
+                var edate = date.split("-")[1];
+                var csdate = sdate.split(" ");
+                var cedate = edate.split(" ");
+                $scope.startdate = csdate[2] + '-' + maptonum(csdate[0]) + '-' + ('0' + csdate[1].split(",")[0]).slice(-2);
+                $scope.enddate = cedate[3] + '-' + maptonum(cedate[1]) + '-' + ('0' + cedate[2].split(",")[0]).slice(-2);
+            }
+            var paramsObj = [];
+            var feelingsObj;
+            var states = "";
+            var feelings = "";
+            var includeAnonymous = 0;
+            var i = 0;
+            if ($scope.issue_id != "") {
+                var obj = {city: $rootScope.Variables.city_name, bug_id: $scope.issue_id};
+                var canissue = $q.defer();
+                var rcanissue = $resource($rootScope.Variables.APIURL,
+                        {}, {
+                    update: {
+                        method: 'GET',
+                        cancellable: true
+                    }
+                }).query(obj, function (result) {
+                    canissue.resolve();
+                    $scope.markers = [];
+                    var issueid = result[0]._id;
+                    var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + issueid;
+                    var positionlat = result[0].loc.coordinates[1];
+                    var positionlon = result[0].loc.coordinates[0];
+                    var issue = result[0].issue;
+                    var layer = issue;
+                    var message = '';
+                    if (result[0].value_desc) {
+                        message = result.value_desc;
+                    } else {
+                        message = 'Μη διαθέσιμη περιγραφή';
+                    }
+                    var marker;
+                    if (layer != 'reaction') {
+                        var lindex = $rootScope.Variables.overlay_categories.indexOf(issue) + 1;
+                    } else {
+                        var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
+                    }
+                    layer = "layer" + lindex;
+                    if (issue == "angry" || issue == "neutral" || issue == "happy") {
+                        marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br>"};
+                    } else {
+                        marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br><a href=" + issuelink + ">Δες με!</a>"};
+                    }
+                    if (layer != 'layer' + lindex) {
+                        marker.message = "Loading...";
+                    }
+                    $scope.markers.push(marker);
+                });
+                setTimeout(function () {
+                    if (canissue.promise.$$state.status == 0) {
+                        rcanissue.$cancelRequest();
+                        $scope.$apply();
+                        alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                    }
+                }, 30000);
+            } else {
+                i = 0;
+                angular.forEach($scope.searchState, function (state) {
+                    if (state != "Anonymous") {
+                        if (state != "Καταστάσεις") {
+                            if (i == 0) {
+                                states += state;
+                                i++;
+                            } else {
+                                states += " |" + state;
+                            }
+                        }
+                    } else {
+                        includeAnonymous = 1;
+                    }
+                });
+                var issue_counter = 0;
+                var tempissue = [];
+                alert(JSON.stringify($scope.searchIssue));
+                alert(JSON.stringify($scope.searchState));
+                alert($scope.simportance);
+                alert($scope.spriority);
+
+                angular.forEach($scope.searchIssue, function (issue) {
+                    if (issue == "roadconstructor") {
+                        issue = "road-constructor";
+                    }
+                    if (issue == "protectionpolicy") {
+                        issue = "protection-policy";
+                    }
+                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, issue: issue, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
+                });
+                if ($scope.searchIssue == "" || $scope.searchIssue == undefined) {
+                    paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
+                }
+                if (paramsObj.length == 0) {
+                    if (states != "") {
+                        paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
+                    }
+                }
+
+                var promisesArray = [];
+                for (var index = 0; index < paramsObj.length; index++) {
+                    if ((paramsObj[index].status != "" && paramsObj[index].status != undefined) || (paramsObj[index].issue != "" && paramsObj[index].issue != undefined) || paramsObj[index].includeAnonymous == 1) {
+                        promisesArray.push(dosQuery(paramsObj[index]));
+                    }
+                }
+
+                $q.all(promisesArray).then(function (data) {
+                    var searchissues = [];
+                    $("#issues").val('Προβλήματα');
+                    $("#issues").selectpicker("refresh");
+                    $scope.searchIssue = undefined;
+                    $("#states").val('Καταστάσεις');
+                    $("#states").selectpicker("refresh");
+                    $scope.searchState = undefined;
+                    $("#importance").val('Σπουδαιότητα');
+                    $("#importance").selectpicker("refresh");
+                    $scope.simportance = undefined;
+                    $("#priority").val('Προτεραιότητα');
+                    $("#priority").selectpicker("refresh");
+                    $scope.spriority = undefined;
+                    setTimeout(function(){$scope.$apply()},1);
+                });
+            }
+        });
+
         var summary;
         var params;
         var tabchanged = 2;
@@ -225,6 +454,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         $scope.semail = "";
         $scope.smobile = "";
         $scope.sbugid = "";
+        $scope.vsbl = true;
+
         var url_path = $location.absUrl().split("//");
         var sub_domain = url_path[1].split(".");
         $scope.logout = function ($event) {
@@ -246,6 +477,40 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
                 }
             }, 30000);
+        };
+
+        $scope.hide_menu = function () {
+            $("#nav_b").attr("class", "x-navigation");
+            nav_toggle = 0;
+        };
+
+        $scope.advanced_search = function () {
+            if (advanced_search == 0) {
+                advanced_search = 1;
+                $(".advanced_search").attr("class", "advanced_search active");
+                if ($(window).width() < 1024) {
+                    $("#advanced_search").css("top", "50px");
+                    $(".page-container").css("overflow-y", "hidden");
+                    $scope.vsbl = false;
+                } else {
+                    $("#advanced_search").css("top", "50px");
+                    $("html").css("overflow-y", "hidden");
+                }
+            } else {
+                advanced_search = 0;
+                $scope.vsbl = true;
+                setTimeout(function () {
+                    
+                    $(window).trigger("resize");
+                    leafletData.getMap().then(
+                            function (map) {
+                                map.invalidateSize(true);
+                            }
+                    );
+                }, 1);
+                $(".advanced_search.active").attr("class", "advanced_search");
+                $("html").css("overflow-y", "visible");
+            }
         };
 //        var parameter = {params: {"login": "tolistimon@gmail.com", "password": "12345678"}};
 //        $http.get('http://' + config.bugzilla_host + config.bugzilla_path + '/rest/login', parameter).success(
@@ -299,13 +564,33 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $scope.nav_toggle = function () {
             if (nav_toggle == 0) {
-                $(".x-navigation").first().attr("class", "x-navigation x-navigation-open");
                 nav_toggle = 1;
+                $(".page-container").css("overflow-y", "visible");
+                $("html").css("overflow-y", "visible");
+                $scope.vsbl = true;
+                $(".advanced_search").attr("class", "advanced_search");
+                advanced_search = 0;
             } else {
-                $(".x-navigation.x-navigation-open").attr("class", "x-navigation");
                 nav_toggle = 0;
+                if (advanced_search == 1) {
+                    $("#advanced_search").css("top", "50px");
+                }
             }
         }
+
+        $(window).resize(function () {
+            if (nav_toggle == 0) {
+                if (advanced_search == 1) {
+                    $("#advanced_search").css("top", "50px");
+                }
+            } else {
+                if (advanced_search == 1 && $(window).width() < 1024) {
+                    $("#advanced_search").css("top", "50px");
+                } else if (advanced_search == 1 && $(window).width() > 1024) {
+                    $("#advanced_search").css("top", "50px");
+                }
+            }
+        });
 
         $scope.geocode = function () {
             var geocoder = new google.maps.Geocoder();
@@ -346,9 +631,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 var sparams = {"bug_id": value.id};
                 csv_promises.push(doQuery(sparams));
             });
-            $q.all(csv_promises).then(function (data) {
-                return deferred.resolve(issues_Array);
-            });
+//            $q.all(csv_promises).then(function (data) {
+//                return deferred.resolve(issues_Array);
+//            });
             return deferred.promise;
         };
 
@@ -419,6 +704,14 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //        });
         // map.setStreetView(panorama);
         //   }
+
+        //$(window).resize(function(){
+//           if($(window).width() < 1024 && advanced_search == 1 && nav_toggle == 1){
+//               $("#advanced_search").css("top", "416px");
+//           }else{
+//               $("#advanced_search").css("top", "0px"); 
+//           } 
+        // });
 
         $("body").on("click", ".xn-openable", function (event) {
             if ($(event.target).attr('class') == undefined || $(event.target).attr('class') == 'xn-openable active' || $(event.target).attr('class') == 'xn-openable') {
@@ -693,17 +986,17 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 } else {
                     if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
                         if ($rootScope.allclosedissues == true) {
-                        params.status = "IN_PROGRESS|RESOLVED";
+                            params.status = "IN_PROGRESS|RESOLVED";
+                        } else {
+                            params.status = "IN_PROGRESS";
+                        }
                     } else {
-                        params.status = "IN_PROGRESS";
+                        if ($rootScope.allclosedissues == true) {
+                            params.status = "CONFIRMED|IN_PROGRESS|RESOLVED";
+                        } else {
+                            params.status = "CONFIRMED|IN_PROGRESS";
+                        }
                     }
-                    }else{
-                    if ($rootScope.allclosedissues == true) {
-                        params.status = "CONFIRMED|IN_PROGRESS|RESOLVED";
-                    } else {
-                        params.status = "CONFIRMED|IN_PROGRESS";
-                    }
-                }
                     if (summary == "all") {
                         parameter = {"city": $cookieStore.get("city"), "departments": $rootScope.Variables.components.join("|"), "status": params.status, "startdate": "2016-08-01"};
                     } else {
@@ -2067,5 +2360,27 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             $cookieStore.remove("department");
             $cookieStore.remove("email");
             $cookieStore.remove("username");
+        }
+
+        function dosQuery(obj) {
+            var d = $q.defer();
+            var rd = $resource($rootScope.Variables.APIURL,
+                    {}, {
+                update: {
+                    method: 'GET',
+                    isArray: true,
+                    cancellable: true
+                }
+            }).update(obj, function (result) {
+                d.resolve(result);
+            });
+            setTimeout(function () {
+                if (d.promise.$$state.status == 0) {
+                    rd.$cancelRequest();
+                    $scope.$apply();
+                    alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                }
+            }, 30000);
+            return d.promise;
         }
     }]);

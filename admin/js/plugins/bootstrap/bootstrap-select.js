@@ -56,7 +56,6 @@
       this.$menu = this.$newElement.find('> .dropdown-menu');
       this.$button = this.$newElement.find('> button');
       this.$searchbox = this.$newElement.find('input');
-
       if (id !== undefined) {
         this.$button.attr('data-id', id);
         $('label[for="' + id + '"]').click(function (e) {

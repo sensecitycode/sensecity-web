@@ -109,7 +109,7 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                     $(document).resize();
 
                     function comparison(municipality, mun_index) {
-                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $("#mun" + mun_index).val() + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=CONFIRMED|IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
                             var count_resolved = 0;
                             var count_progress = 0;
                             var count_confirmed = 0;
@@ -142,9 +142,11 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                     var data_index = $rootScope.Variables.issue_type_en_short.indexOf(response.data[i].issue);
                                     count[data_index] = count[data_index] + 1;
                                     count_resolved++;
-                                } else {
-                                    cnt++;
+                                } else if(response.data[i].status == "IN_PROGRESS"){
+//                                    cnt++;
                                     count_progress++;
+                                }else{
+                                    count_confirmed++;
                                 }
                             }
 
@@ -179,11 +181,15 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                             var nvd3Charts = function () {
 
                                 var myColors = ['#90EE90', '#CD5C5C', "#00BFDD", "#FF702A"];
+                                var myColors1 = ['#db494f','#4fba57', '#e46a28'];
+                                
                                 d3.scale.myColors = function () {
                                     return d3.scale.ordinal().range(myColors);
                                 };
 
-
+                                d3.scale.myColors1 = function () {
+                                    return d3.scale.ordinal().range(myColors1);
+                                };
 
                                 var startChart4 = function () {
                                     nv.addGraph(function () {
@@ -232,7 +238,7 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                             return d.label;
                                         }).y(function (d) {
                                             return d.value;
-                                        }).showLabels(true).color(d3.scale.myColors().range());
+                                        }).showLabels(true).color(d3.scale.myColors1().range());
                                         ;
 
                                         d3.select("#chart-" + municipality + mun_index + "1 svg").datum(exampleData()).transition().duration(350).call(chart);
@@ -251,10 +257,10 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                                 .labelType("percent")//Configure what type of data to show in the label. Can be "key", "value" or "percent"
                                                 .donut(true)//Turn on Donut mode. Makes pie chart look tasty!
                                                 .donutRatio(0.35)//Configure how big you want the donut hole size to be.
-                                                .color(d3.scale.myColors().range());
+                                                .color(d3.scale.myColors1().range());
                                         ;
 
-//                                        d3.select("#chart-" + municipality + mun_index + "3 svg").datum(exampleData()).transition().duration(350).call(chart);
+                                        d3.select("#chart-" + municipality + mun_index + "1 svg").datum(exampleData()).transition().duration(350).call(chart);
 //
 //                                        return chart;
                                     });
@@ -262,6 +268,9 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                     //Pie chart example data. Note how there is only a single array of key-value pairs.
                                     function exampleData() {
                                         return [{
+                                                "label": "Ανοιχτά",
+                                                "value": count_confirmed
+                                            },{
                                                 "label": "Ολοκληρωμένα",
                                                 "value": count_resolved
                                             }, {
@@ -378,7 +387,7 @@ app.controller('comparisonctl', ['$scope', '$http', '$cookieStore', '$q', '$root
                                                 "label": "Χαρούμενοι",
                                                 "value": count_happy
                                             }, {
-                                                "label": "Εκνευρισμένοι",
+                                                "label": "Δυσαρεστημένοι",
                                                 "value": count_angry
                                             }, {
                                                 "label": "Ουδέτεροι",

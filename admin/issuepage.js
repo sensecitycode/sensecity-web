@@ -243,10 +243,10 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
         $scope.nav_toggle = function () {
             if (nav_toggle == 0) {
-                $(".x-navigation").first().attr("class", "x-navigation x-navigation-open");
+//                $(".x-navigation").first().attr("class", "x-navigation x-navigation-open");
                 nav_toggle = 1;
             } else {
-                $(".x-navigation.x-navigation-open").attr("class", "x-navigation");
+//                $(".x-navigation.x-navigation-open").attr("class", "x-navigation");
                 nav_toggle = 0;
             }
         }

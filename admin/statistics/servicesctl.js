@@ -102,6 +102,7 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                     var fix = [];
                     var invalid = [];
                     var duplicate = [];
+                    var confirmed = [];
                     var progress = [];
                     var resolved = [];
                     var wontfix = [];
@@ -114,12 +115,13 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                             fix[i] = 0;
                             invalid[i] = 0;
                             duplicate[i] = 0;
+                            confirmed[i] = 0;
                             progress[i] = 0;
                             resolved[i] = 0;
                             wontfix[i] = 0;
                         }
                         $scope.nloaded = true;
-                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED|WONTFIX", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
+                        $http.get($rootScope.Variables.APIADMIN + "/issue?city=" + $rootScope.Variables.city_name + "&startdate=" + $("#startdate").val() + "&enddate=" + $("#enddate").val() + "&status=CONFIRMED|IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=500&resolution=FIXED|INVALID|DUPLICATED|WONTFIX", {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).then(function (response) {
 
                             for (var i = 0; i < response.data.length; i++) {
                                 if (response.data[i].resolution == "FIXED") {
@@ -133,18 +135,25 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                 }
                                 if (response.data[i].status == "IN_PROGRESS") {
                                     progress[$rootScope.Variables.components.indexOf(response.data[i].bug_component)]++;
-                                } else
+                                } else if(response.data[i].status == "RESOLVED"){
                                     resolved[$rootScope.Variables.components.indexOf(response.data[i].bug_component)]++;
+                                }else{
+                                    confirmed[$rootScope.Variables.components.indexOf(response.data[i].bug_component)]++;
+                                }
                             }
 
                             var nvd3Charts = function () {
 
                                 var myColors = ['#90EE90', '#CD5C5C', "#00BFDD", "#FF702A"];
+                                var myColors1 = ['#db494f','#4fba57', '#e46a28'];
+                                
                                 d3.scale.myColors = function () {
                                     return d3.scale.ordinal().range(myColors);
                                 };
 
-
+                                d3.scale.myColors1 = function () {
+                                    return d3.scale.ordinal().range(myColors1);
+                                };
 
                                 var startChart4 = function (index_4) {
                                     nv.addGraph(function () {
@@ -200,7 +209,7 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                                 .labelType("percent")//Configure what type of data to show in the label. Can be "key", "value" or "percent"
                                                 .donut(true)//Turn on Donut mode. Makes pie chart look tasty!
                                                 .donutRatio(0.35)//Configure how big you want the donut hole size to be.
-                                                .color(d3.scale.myColors().range());
+                                                .color(d3.scale.myColors1().range());
                                         ;
                                         d3.select("#chart_" + $rootScope.Variables.components_en[index_9] + "3 svg").datum(exampleData(index_9)).transition().duration(350).call(chart);
 
@@ -210,6 +219,9 @@ app.controller('servicesctl', ['$scope', '$http', '$cookieStore', '$q', '$rootSc
                                     //Pie chart example data. Note how there is only a single array of key-value pairs.
                                     function exampleData(index_9) {
                                         return [{
+                                                "label": "Ανοιχτά",
+                                                "value": confirmed[index_9]
+                                            },{
                                                 "label": "Ολοκληρωμένα",
                                                 "value": resolved[index_9]
                                             }, {

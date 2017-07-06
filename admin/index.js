@@ -54,6 +54,7 @@ app.controller('MainController',['$rootScope','$http','$window','$location',func
                 components_en : response.components_en,
                 icons: response.icons,
                 host: response.host,
+                searchIssues: response.searchIssues,
                 departments: response.departments,
                 departments_en : response.departments_en,
                 font_awesome_markers : response.font_awesome_markers,
