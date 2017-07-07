@@ -19,6 +19,7 @@ appControllers.config(['$translateProvider', function ($translateProvider) {
 var search_button = 0;
 var fadvanced_search = 0;
 var advanced_search = 0;
+var gpobj;
 
 function no_disposed(order) {
     var scope = angular.element("#mainctl").scope();
@@ -804,6 +805,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             $rootScope.smobile = $scope.smobile;
             if (fadvanced_search == 1) {
                 searchparams = pobj[0];
+                gpobj = pobj;
             }
             searchparams.city = $rootScope.Variables.city_name;
             var canissue2 = $q.defer();
@@ -811,7 +813,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 canissue2.resolve();
                 $scope.total_pages = Math.ceil(result.length / 20);
                 $scope.refreshPages(1);
-                $scope.refresh(pobj);
+                $scope.refresh();
             });
             setTimeout(function () {
                 if (canissue2.promise.$$state.status == 0) {
@@ -982,14 +984,20 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //                params.status = params.status.join("|");
 //                }
             if (search_button == 1) {
-
-                parameter = params;
-                delete parameter['departments'];
-                delete parameter['status'];
-                delete parameter['sort'];
-                delete parameter['limit'];
-                delete parameter['offset'];
-                delete parameter['image_field'];
+                if (fadvanced_search == 0) {
+                    parameter = params;
+                    delete parameter['departments'];
+                    delete parameter['status'];
+                    delete parameter['sort'];
+                    delete parameter['limit'];
+                    delete parameter['offset'];
+                    delete parameter['image_field'];
+                } else {
+                    parameter = gpobj[0];
+                    delete parameter['sort'];
+                    delete parameter['limit'];
+                    delete parameter['offset'];
+                }
             } else {
                 if (($rootScope.allclosedissues == false && $rootScope.assignissues == false) || $rootScope.closedissues == true) {
                     if ($cookieStore.get("role") == "departmentAdmin" || $cookieStore.get("role") == "departmentUser") {
@@ -1935,7 +1943,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //                $scope.activePanel = - 1;
 //                        $scope.currentactive = - 1;
             };
-            $scope.refresh = function (pobj) {
+            $scope.refresh = function () {
 
 //                for (var i = 0; i < $scope.street_view_markers.length; i++){
 //                if ($scope.street_view_markers[i] != "ncoords"){
@@ -2044,10 +2052,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             params.email = $scope.semail;
                             params.mobile = $scope.smobile;
                             params.city = $rootScope.Variables.city_name;
-                            if(fadvanced_search == 1){
+                            if (fadvanced_search == 1) {
                                 var off = params.offset;
-                                alert(off);
-                                params = pobj[0];
+                                params = gpobj[0];
                                 params.sort = -1;
                                 params.limit = 20;
                                 params.offset = off;
