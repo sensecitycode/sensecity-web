@@ -173,6 +173,9 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                 searchparams.image_field = "1";
                 searchparams.send_user = "1";
                 var canissue1 = $q.defer();
+                if (fadvanced_search == 1) {
+                    searchparams = gpobj[0];
+                }
                 $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: searchparams, timeout: canissue1.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                     canissue1.resolve();
                     $scope.printres = [];
@@ -321,54 +324,11 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             var feelings = "";
             var includeAnonymous = 0;
             var i = 0;
-            if ($scope.issue_id != "") {
-                var obj = {city: $rootScope.Variables.city_name, bug_id: $scope.issue_id};
-                var canissue = $q.defer();
-                var rcanissue = $resource($rootScope.Variables.APIURL,
-                        {}, {
-                    update: {
-                        method: 'GET',
-                        cancellable: true
-                    }
-                }).query(obj, function (result) {
-                    canissue.resolve();
-                    $scope.markers = [];
-                    var issueid = result[0]._id;
-                    var issuelink = "http://" + $rootScope.Variables.city_name + ".sense.city/scissuemap.html?issue=" + issueid;
-                    var positionlat = result[0].loc.coordinates[1];
-                    var positionlon = result[0].loc.coordinates[0];
-                    var issue = result[0].issue;
-                    var layer = issue;
-                    var message = '';
-                    if (result[0].value_desc) {
-                        message = result.value_desc;
-                    } else {
-                        message = 'Μη διαθέσιμη περιγραφή';
-                    }
-                    var marker;
-                    if (layer != 'reaction') {
-                        var lindex = $rootScope.Variables.overlay_categories.indexOf(issue) + 1;
-                    } else {
-                        var lindex = $rootScope.Variables.overlay_categories.indexOf('reaction') + 1;
-                    }
-                    layer = "layer" + lindex;
-                    if (issue == "angry" || issue == "neutral" || issue == "happy") {
-                        marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br>"};
-                    } else {
-                        marker = {"layer": "" + layer + "", "lat": +positionlat, "lng": +positionlon, "icon": icons[issue], "issue_id": issueid, "message": "" + message + "<br><a href=" + issuelink + ">Δες με!</a>"};
-                    }
-                    if (layer != 'layer' + lindex) {
-                        marker.message = "Loading...";
-                    }
-                    $scope.markers.push(marker);
-                });
-                setTimeout(function () {
-                    if (canissue.promise.$$state.status == 0) {
-                        rcanissue.$cancelRequest();
-                        $scope.$apply();
-                        alert("Η υπηρεσία δεν αναταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                    }
-                }, 30000);
+            if ($scope.issue_id != "" || $scope.mobile_id != "" || $scope.email_id != "") {
+                var obj = [{city: $rootScope.Variables.city_name, bug_id: $scope.issue_id}];
+                fadvanced_search = 1;
+                $scope.advanced_search();
+                $scope.issue_search(obj);
             } else {
                 i = 0;
                 angular.forEach($scope.searchState, function (state) {
@@ -449,6 +409,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     setTimeout(function () {
                         $scope.$apply();
                     }, 1);
+                    $scope.advanced_search();
                     $scope.issue_search(paramsObj);
                 });
             }
@@ -517,7 +478,11 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     $(".page-container").css("overflow-y", "hidden");
                     $scope.vsbl = false;
                 } else {
-                    $("#advanced_search").css("top", "50px");
+                    if ($("body").scrollTop() < 50) {
+                        $("#advanced_search").css("top", 50 - $("body").scrollTop());
+                    } else {
+                        $("#advanced_search").css("top", "0");
+                    }
                     $("html").css("overflow-y", "hidden");
                 }
             } else {
@@ -605,13 +570,25 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         $(window).resize(function () {
             if (nav_toggle == 0) {
                 if (advanced_search == 1) {
-                    $("#advanced_search").css("top", "50px");
+                    if ($("body").scrollTop() < 50) {
+                        $("#advanced_search").css("top", 50 - $("body").scrollTop());
+                    } else {
+                        $("#advanced_search").css("top", "0");
+                    }
+                    if ($(window).width() < 1024) {
+                        $("#advanced_search").css("top", "50px");
+                        $("body").scrollTop(0);
+                    }
                 }
             } else {
                 if (advanced_search == 1 && $(window).width() < 1024) {
                     $("#advanced_search").css("top", "50px");
                 } else if (advanced_search == 1 && $(window).width() > 1024) {
-                    $("#advanced_search").css("top", "50px");
+                    if ($("body").scrollTop() < 50) {
+                        $("#advanced_search").css("top", 50 - $("body").scrollTop());
+                    } else {
+                        $("#advanced_search").css("top", "0");
+                    }
                 }
             }
         });
