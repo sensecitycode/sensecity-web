@@ -136,6 +136,7 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                 sparams.city = $cookieStore.get("city");
                 sparams.send_user = "1";
                 var canissue = $q.defer();
+                alert(JSON.stringify(sparams));
                 $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, timeout: canissue.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                     canissue.resolve();
                     $scope.printres = [];
@@ -190,8 +191,10 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                             "email": result[i].email,
                             "phone": result[i].phone,
                             "address": result[i].bug_address,
-                            "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + result[i].bug_id + "&resolution=medium",
-                            "qr_link": result[i].municipality + ".sense.city/scissuemap.html?issue=" + result[i]._id
+                            "image_name": $rootScope.Variables.APIADMIN + "/image_issue?bug_id=" + result[i].bug_id + "&resolution=small",
+                            "qr_link": result[i].municipality + ".sense.city/scissuemap.html?issue=" + result[i]._id,
+                            "order": i,
+                            "class": true
                         };
                         $scope.printres.push(cprint);
                     }
@@ -269,13 +272,39 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $("#importance").on('change', function () {
             setTimeout(function () {
-                $scope.simportance = $("button[data-id='importance']").attr("title");
+                var wimportance = $("button[data-id='importance']").attr("title").replace(/ /g, '').split(",");
+                $scope.searchImportance = [];
+                for (var i = 0; i < wimportance.length; i++) {
+                    if (wimportance[i] == "Κρίσιμο") {
+                        $scope.searchImportance.push("critical");
+                    } else if (wimportance[i] == "Μείζον") {
+                        $scope.searchImportance.push("major");
+                    } else if (wimportance[i] == "Κανονικό") {
+                        $scope.searchImportance.push("normal");
+                    } else if (wimportance[i] == "Ελλάσον") {
+                        $scope.searchImportance.push("minor");
+                    } else if (wimportance[i] == "Μηδενικό") {
+                        $scope.searchImportance.push("trivial");
+                    } else {
+                        $scope.searchImportance.push("enhancement");
+                    }
+                }
             }, 100);
         });
 
         $("#priority").on('change', function () {
             setTimeout(function () {
-                $scope.spriority = $("button[data-id='priority']").attr("title");
+                var wpriority = $("button[data-id='priority']").attr("title").replace(/ /g, '').split(",");
+                $scope.searchPriority = [];
+                for (var i = 0; i < wpriority.length; i++) {
+                    if (wpriority[i] == "Υψηλή") {
+                        $scope.searchPriority.push("High");
+                    } else if (wpriority[i] == "Κανονική") {
+                        $scope.searchPriority.push("Normal");
+                    } else {
+                        $scope.searchPriority.push("Low");
+                    }
+                }
             }, 100);
         });
 
@@ -321,7 +350,8 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             var paramsObj = [];
             var feelingsObj;
             var states = "";
-            var feelings = "";
+            var importance = "";
+            var priority = "";
             var includeAnonymous = 0;
             var i = 0;
             if ($scope.issue_id != "" || $scope.mobile_id != "" || $scope.email_id != "") {
@@ -338,13 +368,38 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                                 states += state;
                                 i++;
                             } else {
-                                states += " |" + state;
+                                states += "|" + state;
                             }
                         }
                     } else {
                         includeAnonymous = 1;
                     }
                 });
+
+                i = 0;
+                angular.forEach($scope.searchImportance, function (imp) {
+                    if (imp != "Σπουδαιότητα") {
+                        if (i == 0) {
+                            importance += imp;
+                            i++;
+                        } else {
+                            importance += "|" + imp;
+                        }
+                    }
+                });
+
+                i = 0;
+                angular.forEach($scope.searchPriority, function (prio) {
+                    if (prio != "Προτεραιότητα") {
+                        if (i == 0) {
+                            priority += prio;
+                            i++;
+                        } else {
+                            priority += "|" + prio;
+                        }
+                    }
+                });
+
                 var issue_counter = 0;
                 var tempissue = [];
                 var issues_list = "";
@@ -361,7 +416,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                         issues_list += issue;
                         i++;
                     } else {
-                        issues_list += " |" + issue;
+                        issues_list += "|" + issue;
                     }
                 });
                 if (issues_list != "") {
@@ -382,11 +437,13 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                         if (isNaN(paramsObj[index].status.charCodeAt(0)) == true) {
                             delete paramsObj[index].status;
                         }
-                        if ($scope.simportance != undefined && $scope.simportance != "Σπουδαιότητα") {
-                            paramsObj[index].severity = $scope.simportance;
+                        if (importance != "") {
+                            paramsObj[index].severity = importance;
+                            $scope.simportance = importance;
                         }
-                        if ($scope.spriority != undefined && $scope.spriority != "Προτεραιότητα") {
-                            paramsObj[index].priority = $scope.spriority;
+                        if (priority != "") {
+                            paramsObj[index].priority = priority;
+                            $scope.spriority = priority;
                         }
                         promisesArray.push(dosQuery(paramsObj[index]));
                     }
@@ -402,9 +459,11 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                     $scope.searchState = undefined;
                     $("#importance").val('Σπουδαιότητα');
                     $("#importance").selectpicker("refresh");
-                    $scope.simportance = undefined;
+                    $scope.searchImportance = undefined;
                     $("#priority").val('Προτεραιότητα');
                     $("#priority").selectpicker("refresh");
+                    $scope.searchPriority = undefined;
+                    $scope.simportance = undefined;
                     $scope.spriority = undefined;
                     setTimeout(function () {
                         $scope.$apply();
@@ -773,6 +832,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         $scope.issue_search = function (pobj) {
             search_button = 1;
+            if (pobj == undefined) {
+                fadvanced_search = 0;
+            }
             var searchparams = {};
             searchparams.bug_id = $scope.sbugid;
             searchparams.email = $scope.semail;

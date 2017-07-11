@@ -32,7 +32,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         $scope.chkSelected = false;
         $scope.ecert = false;
         $scope.mcert = false;
-        $scope.recommend_issue = "";
+        $scope.recommend_issue = undefined;
         $scope.rec_issues = [];
         var ecft = 1;
         var mcft = 1;
@@ -740,6 +740,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
             $scope.setStep = function (step) {
 
                 if (step == 1) {
+                    $scope.recommend_issue = undefined;
 
                     setTimeout(function () {
                         if ($scope.chkSelected) {
@@ -915,6 +916,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                     }, 30000);
                     cstep = 1;
                 } else if (step == 2) {
+                    $scope.recommend_issue = undefined;
                     $scope.evalidation = false;
                     $scope.mvalidation = false;
                     $scope.em_disabled = false;
@@ -1203,9 +1205,9 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             }
                         }, 30000);
                     }
-                } else if (step == 4) {
+                }else if (step == 4) {
+                    alert($scope.recommend_issue);
                     $scope.rec_issues = [];
-                    $scope.recommend_issue = "";
                     cstep = 4;
 //                    if ($scope.isnotverify()) {
 //                        $scope.step1 = function () {
@@ -1268,7 +1270,8 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 } else if (step == 5) {
                     $("#finish_button").attr("class", "btn btn-primary pull-right disabled");
                     var canissue = $q.defer();
-                    if ($scope.recommend_issue == "") {
+                    alert($scope.recommend_issue);
+                    if ($scope.recommend_issue == undefined) {
                         $http(
                                 {
                                     method: 'POST',
