@@ -36,6 +36,7 @@ app.controller('MainController',['$rootScope','$http','$window','$location',func
         }else{
             url = '../config/'+sub_domain[0]+'.json';
         }
+        
         var mainInfo = $http.get(url).success(function (response) {
             
             $rootScope.Variables = {
@@ -67,7 +68,7 @@ app.controller('MainController',['$rootScope','$http','$window','$location',func
                 center: response.center,
                 map_zoom: 12
             };
-            
+            $rootScope.test = jQuery.extend(true, {},response.searchIssues);
             return $rootScope;
         });   
         

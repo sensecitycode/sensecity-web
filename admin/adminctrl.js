@@ -233,7 +233,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             $scope.allissues.push($scope.$eval($scope.issues[i].translate).replace(/ /g, ''));
         }
         for (i = 0; i < $rootScope.Variables.searchIssues.length; i++) {
-            $rootScope.Variables.searchIssues[i].translate = "'<i class=\"" + $rootScope.Variables.searchIssues[i].class + "\"></i>'+(" + $rootScope.Variables.searchIssues[i].translate + ");";
+            $rootScope.Variables.searchIssues[i].translate = "'<i class=\"" + $rootScope.Variables.searchIssues[i].class + "\"></i>'+(" + $rootScope.test[i].translate + ");";
         }
 
         $('#issues').on('change', function () {
