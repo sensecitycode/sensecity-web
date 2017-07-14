@@ -1391,11 +1391,13 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 $scope.fixedmarkersGarbage = [];
                 $scope.fixedmarkersLightning = [];
                 var i = 0;
-                leafletData.getMap().then(
+                setTimeout(function(){
+                    leafletData.getMap().then(
                                 function (map) {
                                     map.invalidateSize(true);
                                 }
                         );
+                },100);
                 var theFixedPoints = FixedPointsService.query(function () {
                     angular.forEach(theFixedPoints, function (fixedpoint, key) {
                         var positionlat = fixedpoint.loc.coordinates[1];
