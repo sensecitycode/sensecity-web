@@ -136,7 +136,7 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                 sparams.city = $cookieStore.get("city");
                 sparams.send_user = "1";
                 var canissue = $q.defer();
-                alert(JSON.stringify(sparams));
+
                 $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, timeout: canissue.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                     canissue.resolve();
                     $scope.printres = [];
@@ -1391,6 +1391,11 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 $scope.fixedmarkersGarbage = [];
                 $scope.fixedmarkersLightning = [];
                 var i = 0;
+                leafletData.getMap().then(
+                                function (map) {
+                                    map.invalidateSize(true);
+                                }
+                        );
                 var theFixedPoints = FixedPointsService.query(function () {
                     angular.forEach(theFixedPoints, function (fixedpoint, key) {
                         var positionlat = fixedpoint.loc.coordinates[1];
