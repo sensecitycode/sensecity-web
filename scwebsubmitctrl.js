@@ -1206,7 +1206,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         }, 30000);
                     }
                 }else if (step == 4) {
-                    alert($scope.recommend_issue);
                     $scope.rec_issues = [];
                     cstep = 4;
 //                    if ($scope.isnotverify()) {
@@ -1270,7 +1269,6 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                 } else if (step == 5) {
                     $("#finish_button").attr("class", "btn btn-primary pull-right disabled");
                     var canissue = $q.defer();
-                    alert($scope.recommend_issue);
                     if ($scope.recommend_issue == undefined) {
                         $http(
                                 {
