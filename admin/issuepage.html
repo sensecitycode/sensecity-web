@@ -118,6 +118,10 @@
                                                 <span class="title col-md-5">Διεύθυνση: </span>
                                                 <span class="text-left col-md-7"> {{panel.address}}</span>
                                             </div>
+                                            <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
+                                                <span class="title col-md-5">CC: </span>
+                                                <span class="text-left col-md-7"> {{panel.address}}</span>
+                                            </div>
                                         </div>    
                                         <div ng-show="panel.comment != '' && panel.comment != 'undefined';" style="margin-bottom:2%;margin-left:1%;">
                                             <div class="title">Σχόλια: </div>
@@ -170,6 +174,10 @@
                                             <div class="comment-head">Κατάσταση: {{progress.state}}</div>
                                             <br>
                                             <div class="comment-head">Αναφορά: {{progress.timestamp}}</div>
+                                            <br><br>
+                                            <div class="comment-head" ng-show="$first">{{progress.department}}</div>
+                                            <div class="comment-head" ng-show="!$first && progress.state != 'Ολοκληρωμένο'">Από: {{panel.history[$index-1].department}}<br/><br/> Σε: {{progress.department}}</div>
+                                            <div class="comment-head" ng-show="$last && progress.state == 'Ολοκληρωμένο'"> {{progress.department}}</div>
                                             <br><br>
                                             <p style="font-size: 14px;line-height: 25px">{{progress.text}}</p>
                                         </div>

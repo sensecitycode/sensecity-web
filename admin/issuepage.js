@@ -28,7 +28,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         var previous_address;
         var previous_lat;
         var previous_lng;
-        
+
         $scope.valid = true;
         $scope.panel;
         $scope.full = 0;
@@ -498,16 +498,24 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                         break;
                                     }
                                 }
+                                
+                                var dep_index;
+                                for (var l = 0; l < response.bugs[Object.keys(response.bugs)[0]].comments[i].tags.length; l++) {
+                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[0].toUpperCase() == "DEPARTMENT") {
+                                        dep_index = $rootScope.Variables.components_en.indexOf(response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[1]);
+                                        break;
+                                    }
+                                }
 
                                 if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
                                     var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
                                     if (status_index != -1) {
                                         if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[status_index ].split(":")[1] == "CONFIRMED") {
-                                            history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign'});
+                                            history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign',"department":$rootScope.Variables.components[dep_index]});
                                         } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[status_index].split(":")[1] == "IN_PROGRESS") {
-                                            history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign'});
+                                            history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign',"department":$rootScope.Variables.components[dep_index]});
                                         } else {
-                                            history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign'});
+                                            history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign',"department":$rootScope.Variables.components[dep_index]});
                                         }
                                     } else {
                                         history.push({"text": com, "timestamp": htime, "state": "Σχόλιο Πολίτη", "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o'});
@@ -564,6 +572,13 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
                     $scope.fixedmarkersGarbage = [];
                     $scope.fixedmarkersLightning = [];
+                    setTimeout(function () {
+                        leafletData.getMap().then(
+                                function (map) {
+                                    map.invalidateSize(true);
+                                }
+                        );
+                    }, 100);
                     var i = 0;
                     var theFixedPoints = FixedPointsService.query(function () {
                         angular.forEach(theFixedPoints, function (fixedpoint, key) {
@@ -702,37 +717,37 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
                 function onmapclick(event) {
                     //newMarker = new L.marker(event.latlng, {icon: redMarker}, {draggable: true});
-                    if($scope.panel.admin == true){
-                    var mainMarker = {
-                        lat: event.latlng.lat,
-                        lng: event.latlng.lng,
-                        icon: {
-                            type: 'awesomeMarker',
-                            prefix: 'fa',
-                            icon: $scope.ALLmarkers[0].icon.icon,
-                            markerColor: 'red'
-                        }
-                    };
+                    if ($scope.panel.admin == true) {
+                        var mainMarker = {
+                            lat: event.latlng.lat,
+                            lng: event.latlng.lng,
+                            icon: {
+                                type: 'awesomeMarker',
+                                prefix: 'fa',
+                                icon: $scope.ALLmarkers[0].icon.icon,
+                                markerColor: 'red'
+                            }
+                        };
 
-                    var cancg = $q.defer();
+                        var cancg = $q.defer();
 
-                    $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latlng.lat + "," + event.latlng.lng + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM", {timeout: cancg.promise}).success(function (result) {
+                        $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latlng.lat + "," + event.latlng.lng + "&language=el&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM", {timeout: cancg.promise}).success(function (result) {
 
-                        cancg.resolve();
-                        $scope.panel.address = result.results[0].formatted_address;
-                    });
+                            cancg.resolve();
+                            $scope.panel.address = result.results[0].formatted_address;
+                        });
 
-                    setTimeout(function () {
-                        if (cancg.promise.$$state.status == 0) {
-                            cancg.resolve('cancelled');
-                            alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                        }
-                    }, 30000);
+                        setTimeout(function () {
+                            if (cancg.promise.$$state.status == 0) {
+                                cancg.resolve('cancelled');
+                                alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                            }
+                        }, 30000);
 
-                    $scope.ALLmarkers.pop();
+                        $scope.ALLmarkers.pop();
 
-                    $scope.ALLmarkers.push(mainMarker);
-                }
+                        $scope.ALLmarkers.push(mainMarker);
+                    }
                 }
                 ;
 

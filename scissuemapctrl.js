@@ -61,6 +61,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $scope.chkSelected = false;
         $scope.ecert = false;
         $scope.mcert = false;
+        $scope.MobileTxt = "";
         var ecft = 1;
         var mcft = 1;
 
@@ -998,6 +999,13 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                     "user_comment": false
                                 };
                             } else {
+                                var name_index;
+                                for (var l = 0; l < response[0].bugs[$scope.resp_id].comments[i].tags.length; l++) {
+                                    if (response[0].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0].toUpperCase() == "NAME") {
+                                        name_index = l;
+                                        break;
+                                    }
+                                }
                                 var com = {
                                     "content": response[0].bugs[$scope.resp_id].comments[i].text,
                                     "type": type,
@@ -1008,6 +1016,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                     "time": time,
                                     "color": color,
                                     "show": show,
+                                    "citizen_name": response[0].bugs[$scope.resp_id].comments[i].tags[name_index].split(":")[1],
                                     "user_comment": true
                                 };
                             }
@@ -1037,7 +1046,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                         $scope.issue_image1 = $rootScope.variables.APIADMIN + "/image_issue?bug_id=" + issue[0].bug_id + "&resolution=full";
                         $scope.iclass = "fa fa-" + $rootScope.variables.icons[issue[0].issue].icon;
                         $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 18};
-                        $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[issue[0].issue],"zIndexOffset": 100}];
+                        $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[issue[0].issue], "zIndexOffset": 100}];
 
                         glat = issue[0].loc.coordinates[1];
                         glng = issue[0].loc.coordinates[0];

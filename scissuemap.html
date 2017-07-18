@@ -195,7 +195,7 @@
                                             {{'ADDRESS'| translate}}: <a style="text-decoration:none">{{bug_address}}</a>
                                         </div>
                                         <div ng-show="comment.user_comment == true" class="timeline-heading">
-                                            <a style="text-decoration:none">{{'CITIZEN_COMMENT'| translate}}</a>
+                                            <a style="text-decoration:none">{{'CITIZEN_COMMENT'| translate}} {{comment.citizen_name}}</a>
                                         </div>
                                         <div ng-hide="comment.user_comment" class="timeline-heading">
                                             {{'ASSIGN_TO'| translate}}: <a style="text-decoration:none">{{comment.component}}</a>
