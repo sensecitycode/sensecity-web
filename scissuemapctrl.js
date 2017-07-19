@@ -155,7 +155,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 var canactu = $q.defer();
                 return $http({
                     method: 'POST',
-                    url: $rootScope.variables.activate_user_URL,
+                    url: $rootScope.variables.APIADMIN + "/is_activate_user",
                     timeout: canactu.promise,
                     headers: {
                         'Content-Type': 'application/json; charset=utf-8'
@@ -295,7 +295,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                         var canissueid = $q.defer();
                         return $http({
                             method: 'POST',
-                            url: $rootScope.variables.APIURL + resp_an._id,
+                            url: $rootScope.variables.APIADMIN + "/issue/" + resp_an._id,
                             timeout: canissueid.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'

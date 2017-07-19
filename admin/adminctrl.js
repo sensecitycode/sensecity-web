@@ -137,7 +137,7 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                 sparams.send_user = "1";
                 var canissue = $q.defer();
 
-                $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, timeout: canissue.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                $http.get($rootScope.Variables.APIADMIN + '/admin/issue', {params: sparams, timeout: canissue.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                     canissue.resolve();
                     $scope.printres = [];
                     for (var i = 0; i < result.length; i++) {
@@ -177,7 +177,7 @@ appControllers.controller('printsearch', ['$scope', '$rootScope', '$window', '$h
                 if (fadvanced_search == 1) {
                     searchparams = gpobj[0];
                 }
-                $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: searchparams, timeout: canissue1.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                $http.get($rootScope.Variables.APIADMIN + '/admin/issue', {params: searchparams, timeout: canissue1.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                     canissue1.resolve();
                     $scope.printres = [];
                     for (var i = 0; i < result.length; i++) {
@@ -504,7 +504,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
         var sub_domain = url_path[1].split(".");
         $scope.logout = function ($event) {
             var canlog = $q.defer();
-            $http.get($rootScope.Variables.host + '/api/1.0/logout', {timeout: canlog.promise, headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
+            $http.get($rootScope.Variables.APIADMIN + '/logout', {timeout: canlog.promise, headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
                 canlog.resolve();
                 $cookieStore.remove("uuid");
                 $cookieStore.remove("city");
@@ -574,7 +574,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //                var checked_categories = [];
         function doQuery(sparams) {
             var d = $q.defer();
-            $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: sparams, timeout: d.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+            $http.get($rootScope.Variables.APIADMIN + '/admin/issue', {params: sparams, timeout: d.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                 for (var j = 0; j < $scope.panels.length; j++) {
                     if ($scope.panels[j].id == sparams.bug_id) {
                         var priority = PriorityTag.priority_type(result[0].bug_priority);
@@ -848,7 +848,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             }
             searchparams.city = $rootScope.Variables.city_name;
             var canissue2 = $q.defer();
-            $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: searchparams, timeout: canissue2.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+            $http.get($rootScope.Variables.APIADMIN + '/admin/issue', {params: searchparams, timeout: canissue2.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                 canissue2.resolve();
                 $scope.total_pages = Math.ceil(result.length / 20);
                 $scope.refreshPages(1);
@@ -1080,7 +1080,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             }
 
             var canissue3 = $q.defer();
-            $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: parameter, timeout: canissue3.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+            $http.get($rootScope.Variables.APIADMIN + '/admin/issue', {params: parameter, timeout: canissue3.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                     function (response, status, headers, conf) {
                         canissue3.resolve();
                         $scope.total_pages = Math.ceil(response.length / 20);
@@ -1214,7 +1214,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
             $scope.issue_data = function ($index, panel, event) {
                 var sparams = {"id": panel.id, "include_fields": ["component", "status", "resolution", "cf_mobile", "cf_email", "cf_creator", "severity", "priority", "severity"]};
                 var cansearch = $q.defer();
-                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/search', sparams, {timeout: cansearch.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                $http.post($rootScope.Variables.APIADMIN + '/admin/bugs/search', sparams, {timeout: cansearch.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                     cansearch.resolve();
                     var priority = PriorityTag.priority_type(result[0].priority);
                     var severity = SeverityTag.severity_type(result[0].severity);
@@ -1630,7 +1630,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             + '<li ng-click="totalpages(total_pages - 4,4)"><span tooltip-side="right" tooltips tooltip-template="Τελευταία σελίδα"><a  href="#/admin">»</a></span></li></ul>';
                     params.city = $rootScope.Variables.city_name;
                     var canissue4 = $q.defer();
-                    $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: params, timeout: canissue4.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                    $http.get($rootScope.Variables.APIADMIN + '/admin/issue', {params: params, timeout: canissue4.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                         canissue4.resolve();
                         total_counter = result.length;
                         var counter = 0;
@@ -1818,16 +1818,16 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
                         var canupdate = $q.defer();
 
-                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {timeout: canupdate.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                        $http.post($rootScope.Variables.APIADMIN + '/admin/bugs/update', obj, {timeout: canupdate.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             canupdate.resolve();
                             var canadd = $q.defer();
-                            $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {timeout: canadd.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                            $http.post($rootScope.Variables.APIADMIN + '/admin/bugs/comment/add', {"comment": $scope.comment, "id": obj.ids[0]}, {timeout: canadd.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                     function (response, status, headers, conf) {
                                         canadd.resolve();
                                         var panel_index = $rootScope.Variables.components.indexOf(panel.component);
                                         var comp = $rootScope.Variables.components_en[panel_index];
                                         var cantags = $q.defer();
-                                        $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                                        $http.post($rootScope.Variables.APIADMIN + '/admin/bugs/comment/tags', {"add": [panel.status.en, comp], "id": response.id}, {headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                 function (response, status, headers, config) {
                                                     cantags.resolve();
                                                 });
@@ -2007,7 +2007,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 $scope.padmin = true
                 mapnloaded = true;
                 var canget = $q.defer();
-                $http.get($rootScope.Variables.host + '/api/1.0/get', {timeout: canget.promise, headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
+                $http.get($rootScope.Variables.APIADMIN + '/get', {timeout: canget.promise, headers: {'x-uuid': $cookieStore.get("uuid")}}).success(
                         function (response) {
                             canget.resolve();
                             if (response == "failure") {
@@ -2116,7 +2116,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             }
                         }
                         var canissue5 = $q.defer();
-                        $http.get($rootScope.Variables.host + '/api/1.0/admin/issue', {params: params, timeout: canissue5.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                        $http.get($rootScope.Variables.APIADMIN + '/admin/issue', {params: params, timeout: canissue5.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                             canissue5.resolve();
                             if (result[0] != undefined && Object.keys(result[0]).length != 0) {
                                 total_counter = result.length;

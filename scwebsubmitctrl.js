@@ -1054,7 +1054,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         var canactu = $q.defer();
                         return $http({
                             method: 'POST',
-                            url: $rootScope.Variables.activate_user_URL,
+                            url: $rootScope.Variables.APIADMIN+"/is_activate_user",
                             timeout: canactu.promise,
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8'
@@ -1165,7 +1165,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                             var rec_data = {"long": $scope.lnglabeltxt, "lat": $scope.latlabeltxt, "issue": $scope.issueTypeSelect.id};
                             return $http({
                                 method: 'POST',
-                                url: $rootScope.Variables.issue_recommendation,
+                                url: $rootScope.Variables.APIADMIN+"/issue_recommendation",
                                 timeout: canactu.promise,
                                 headers: {
                                     'Content-Type': 'application/json; charset=utf-8'
@@ -1273,7 +1273,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                         $http(
                                 {
                                     method: 'POST',
-                                    url: $rootScope.Variables.APIURL,
+                                    url: $rootScope.Variables.APIADMIN+"/issue",
                                     timeout: canissue.promise,
                                     headers: {
                                         'Content-Type': 'application/json; charset=utf-8'
@@ -1290,7 +1290,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 var canissueid = $q.defer();
                                 return $http({
                                     method: 'POST',
-                                    url: $rootScope.Variables.APIURL + resp_an._id,
+                                    url: $rootScope.Variables.APIADMIN+"/issue/" + resp_an._id,
                                     timeout: canissueid.promise,
                                     headers: {
                                         'Content-Type': 'application/json; charset=utf-8'
@@ -1342,7 +1342,7 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
                                 var canissueid = $q.defer();
                                 return $http({
                                     method: 'POST',
-                                    url: $rootScope.Variables.APIURL + resp_an._id,
+                                    url: $rootScope.Variables.APIADMIN+"/issue/" + resp_an._id,
                                     timeout: canissueid.promise,
                                     headers: {
                                         'Content-Type': 'application/json; charset=utf-8'

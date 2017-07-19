@@ -62,7 +62,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
         $scope.logout = function ($event) {
             var canlogout = $q.defer();
-            $http.get($rootScope.Variables.host + '/api/1.0/logout', {timeout: canlogout.promise, headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
+            $http.get($rootScope.Variables.APIADMIN + '/logout', {timeout: canlogout.promise, headers: {'x-uuid': $cookieStore.get("uuid")}}).success(function (response) {
                 canlogout.resolve();
                 $cookieStore.remove("uuid");
                 $cookieStore.remove("city");
@@ -476,7 +476,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 }, 1000);
 
                 var cancomment = $q.defer();
-                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment', {id: $scope.panel.id}, {timeout: cancomment.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                $http.post($rootScope.Variables.APIADMIN + '/admin/bugs/comment', {id: $scope.panel.id}, {timeout: cancomment.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                         function (response, status, headers, config) {
                             cancomment.resolve();
                             var history = [];
@@ -795,7 +795,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                             obj.lat = $scope.ALLmarkers[0].lat;
                             obj.lng = $scope.ALLmarkers[0].lng;
 
-                            $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/update', obj, {timeout: canupdate.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
+                            $http.post($rootScope.Variables.APIADMIN + '/admin/bugs/update', obj, {timeout: canupdate.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(function (result) {
                                 canupdate.resolve();
                                 if ($scope.panel.comment == undefined || $scope.panel.comment == "undefined") {
                                     if (new_address == false) {
@@ -809,13 +809,13 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                     }
                                 }
                                 var canadd = $q.defer();
-                                $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/add', {"comment": $scope.panel.comment, "id": obj.ids[0]}, {timeout: canadd.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                                $http.post($rootScope.Variables.APIADMIN + '/admin/bugs/comment/add', {"comment": $scope.panel.comment, "id": obj.ids[0]}, {timeout: canadd.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                         function (response, status, headers, conf) {
                                             canadd.resolve();
                                             var panel_index = $rootScope.Variables.components.indexOf($scope.panel.component);
                                             var comp = $rootScope.Variables.components_en[panel_index];
                                             var cantags = $q.defer();
-                                            $http.post($rootScope.Variables.host + '/api/1.0/admin/bugs/comment/tags', {"add": [$scope.panel.status.en, comp], "id": response.id}, {timeout: cantags.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                                            $http.post($rootScope.Variables.APIADMIN + '/admin/bugs/comment/tags', {"add": [$scope.panel.status.en, comp], "id": response.id}, {timeout: cantags.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
                                                     function (response, status, headers, config) {
                                                         cantags.resolve();
                                                         setTimeout(function () {
