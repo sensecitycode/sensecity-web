@@ -4461,7 +4461,7 @@ td.dataTables_empty {
 }
 .comments .comment-item span {
     width: 30px;
-    height: 30px;
+    height: 110px;
     font-size: 15px;
     margin: 0px 5px 5px 0px;
     -moz-border-radius: 20%;

@@ -498,7 +498,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                         break;
                                     }
                                 }
-                                
+
                                 var dep_index;
                                 for (var l = 0; l < response.bugs[Object.keys(response.bugs)[0]].comments[i].tags.length; l++) {
                                     if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[0].toUpperCase() == "DEPARTMENT") {
@@ -511,14 +511,23 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                     var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
                                     if (status_index != -1) {
                                         if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[status_index ].split(":")[1] == "CONFIRMED") {
-                                            history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign',"department":$rootScope.Variables.components[dep_index]});
+                                            history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign', "department": $rootScope.Variables.components[dep_index]});
                                         } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[status_index].split(":")[1] == "IN_PROGRESS") {
-                                            history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign',"department":$rootScope.Variables.components[dep_index]});
+                                            history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign', "department": $rootScope.Variables.components[dep_index]});
                                         } else {
-                                            history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign',"department":$rootScope.Variables.components[dep_index]});
+                                            history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign', "department": $rootScope.Variables.components[dep_index]});
                                         }
                                     } else {
-                                        history.push({"text": com, "timestamp": htime, "state": "Σχόλιο Πολίτη", "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o'});
+
+                                        var name;
+                                        for (var l = 0; l < response.bugs[Object.keys(response.bugs)[0]].comments[i].tags.length; l++) {
+                                            if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[0].toUpperCase() == "NAME") {
+                                                name = response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[1];
+                                                break;
+                                            }
+                                        }
+
+                                        history.push({"text": com, "timestamp": htime, "state": "Σχόλιο από "+ name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o'});
                                     }
                                 }
                             }

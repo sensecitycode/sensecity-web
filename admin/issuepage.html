@@ -174,11 +174,11 @@
                                             <div class="comment-head">Κατάσταση: {{progress.state}}</div>
                                             <br>
                                             <div class="comment-head">Αναφορά: {{progress.timestamp}}</div>
-                                            <br><br>
+                                            <br>
                                             <div class="comment-head" ng-show="$first">{{progress.department}}</div>
                                             <div class="comment-head" ng-show="!$first && progress.state != 'Ολοκληρωμένο'">Από: {{panel.history[$index-1].department}}<br/><br/> Σε: {{progress.department}}</div>
                                             <div class="comment-head" ng-show="$last && progress.state == 'Ολοκληρωμένο'"> {{progress.department}}</div>
-                                            <br><br>
+                                            <br>
                                             <p style="font-size: 14px;line-height: 25px">{{progress.text}}</p>
                                         </div>
                                     </div>
