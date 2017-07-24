@@ -722,7 +722,7 @@ appControllers.controller(
 
                             function doQuery(obj) {
                                 var d = $q.defer();
-                                rcanceller[2] = $resource($rootScope.Variables.APIURL,
+                                rcanceller[2] = $resource($rootScope.Variables.APIADMIN+"/issue",
                                         {}, {
                                     update: {
                                         method: 'GET',
@@ -739,7 +739,7 @@ appControllers.controller(
 
                             function dofQuery(obj) {
                                 var d = $q.defer();
-                                rcanceller[3] = $resource($rootScope.Variables.feelingsURL,
+                                rcanceller[3] = $resource($rootScope.Variables.APIADMIN+"/feelings",
                                         {}, {
                                     update: {
                                         method: 'GET',
@@ -756,7 +756,7 @@ appControllers.controller(
 
                             var lsissues = 0;
                             $scope.doCalcLast6Issues = function () {
-                                var theLastIssues = rcanceller[4] = $resource($rootScope.Variables.APIURL,
+                                var theLastIssues = rcanceller[4] = $resource($rootScope.Variables.APIADMIN+"/issue",
                                         {city: $rootScope.Variables.city_name, startdate: "2017-01-01", sort: "-1", limit: "6", list_issue: "1", image_field: "1"}, {
                                     query: {
                                         method: 'GET',
