@@ -1391,13 +1391,13 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 $scope.fixedmarkersGarbage = [];
                 $scope.fixedmarkersLightning = [];
                 var i = 0;
-                setTimeout(function(){
+                setTimeout(function () {
                     leafletData.getMap().then(
-                                function (map) {
-                                    map.invalidateSize(true);
-                                }
-                        );
-                },100);
+                            function (map) {
+                                map.invalidateSize(true);
+                            }
+                    );
+                }, 100);
                 var theFixedPoints = FixedPointsService.query(function () {
                     angular.forEach(theFixedPoints, function (fixedpoint, key) {
                         var positionlat = fixedpoint.loc.coordinates[1];
@@ -1714,7 +1714,9 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                 // displayFixedPoints();
                 $scope.panel_issue = panel.issuenameGR;
                 $scope.initial_desc = panel.initialdesc;
-                Issue2MapService.query({issueID: panel.mongoId}, function (issue) {
+                $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+                        {issueID: '@id'}, {'query': {method: 'GET', isArray: true}}
+                ).query({issueID: panel.mongoId}, function (issue) {
                     // $scope.panel_image = issue[0].image_name;
                     $scope.center = {lat: issue[0].loc.coordinates[1], lng: issue[0].loc.coordinates[0], zoom: 17};
                     $scope.markers = [{"lat": issue[0].loc.coordinates[1], "lng": issue[0].loc.coordinates[0], "icon": icons[panel.issue]}];
@@ -2454,7 +2456,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         function dosQuery(obj) {
             var d = $q.defer();
-            var rd = $resource($rootScope.Variables.APIADMIN+"/issue",
+            var rd = $resource($rootScope.Variables.APIADMIN + "/issue",
                     {}, {
                 update: {
                     method: 'GET',
