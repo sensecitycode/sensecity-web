@@ -8,7 +8,7 @@ appServices.factory('APIEndPointService', function() {
 
 appServices.factory('DisplayIssuesService', function ( $resource/*, APIEndPointService*/, $rootScope) {
     // console.log("DisplayIssues");
-    return $resource(/*APIEndPointService.APIURL*/$rootScope.Variables.APIURL,
+    return $resource(/*APIEndPointService.APIURL*/$rootScope.Variables.APIADMIN+"/issue",
         {}, {
         update: {
           method: 'GET'

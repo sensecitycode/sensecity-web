@@ -2454,7 +2454,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 
         function dosQuery(obj) {
             var d = $q.defer();
-            var rd = $resource($rootScope.Variables.APIURL,
+            var rd = $resource($rootScope.Variables.APIADMIN+"/issue",
                     {}, {
                 update: {
                     method: 'GET',

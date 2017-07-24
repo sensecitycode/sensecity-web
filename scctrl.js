@@ -241,7 +241,7 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
 
             $scope.totalpages = function (newstart, arrow) {
                 var canissue = $q.defer();
-                var rcanissue = $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&list_issue=1',
+                var rcanissue = $resource($rootScope.Variables.APIADMIN + '/issue?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&list_issue=1',
                         {}, {
                     update: {
                         method: 'GET',
@@ -290,7 +290,7 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
 
                 var canissue1 = $q.defer();
                 var rcanissue1;
-                var tmpIssues = rcanissue1 = $resource($rootScope.Variables.APIURL + '?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&limit=20&offset=' + offset + '&list_issue=1&image_field=1',
+                var tmpIssues = rcanissue1 = $resource($rootScope.Variables.APIADMIN + '/issue?city=' + $rootScope.Variables.city_name + '&startdate=2017-01-01&sort=-1&limit=20&offset=' + offset + '&list_issue=1&image_field=1',
                         {}, {
                     update: {
                         method: 'GET',

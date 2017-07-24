@@ -571,7 +571,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
 
                             function doQuery(obj) {
                                 var d = $q.defer();
-                                $resource($rootScope.Variables.APIURL,
+                                $resource($rootScope.Variables.APIADMIN+"/issue",
                                         {}, {
                                     update: {
                                         method: 'GET'
@@ -586,7 +586,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
 
                             function dofQuery(obj) {
                                 var d = $q.defer();
-                                $resource($rootScope.Variables.feelingsURL,
+                                $resource($rootScope.Variables.APIADMIN+"/feelings",
                                         {}, {
                                     update: {
                                         method: 'GET'
@@ -601,7 +601,7 @@ $scope.$on("leafletDirectiveMarker.click",function (event, args) {
 
                             var lsissues = 0;
                             $scope.doCalcLast6Issues = function () {
-                                var theLastIssues = $resource($rootScope.Variables.APIURL,
+                                var theLastIssues = $resource($rootScope.Variables.APIADMIN+"/issue",
                                         {city: $rootScope.Variables.city_name, startdate: "2017-01-01", sort: "-1", limit: "6", list_issue: "1", image_field: "1"}, {
                                     query: {
                                         method: 'GET',

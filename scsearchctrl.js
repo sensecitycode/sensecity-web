@@ -733,7 +733,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                         if ($scope.issue_id != "") {
                             var obj = {city: $rootScope.Variables.city_name, bug_id: $scope.issue_id};
                             var canissue = $q.defer();
-                            var rcanissue = $resource($rootScope.Variables.APIURL,
+                            var rcanissue = $resource($rootScope.Variables.APIADMIN+"/issue",
                                     {}, {
                                 update: {
                                     method: 'GET',
@@ -912,7 +912,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                     };
                     function doQuery(obj) {
                         var d = $q.defer();
-                        var rd = $resource($rootScope.Variables.APIURL,
+                        var rd = $resource($rootScope.Variables.APIADMIN+"/issue",
                                 {}, {
                             update: {
                                 method: 'GET',
@@ -934,7 +934,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
 
                     function feelingsQuery(obj) {
                         var d = $q.defer();
-                        var rd = $resource($rootScope.Variables.feelingsURL,
+                        var rd = $resource($rootScope.Variables.APIADMIN+"/feelings",
                                 {}, {
                             update: {
                                 method: 'GET',
