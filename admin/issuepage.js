@@ -214,7 +214,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
         function checkNearestStreetView(panoData) {
             if (panoData != null) {
-                $scope.link_street = "http://" + $rootScope.Variables.city_name + ".sense.city/admin/index.html#/issuecoords=" + panoData.location.latLng.lat() + "," + panoData.location.latLng.lng();
+                $scope.link_street = "https://" + $rootScope.Variables.city_name + ".sense.city/admin/index.html#/issuecoords=" + panoData.location.latLng.lat() + "," + panoData.location.latLng.lng();
 //                var issue_index = $rootScope.Variables.departments.indexOf($scope.panel.issue);
 //                var issueMarker = new google.maps.Marker({
 //                    position: panoData.location.latLng,

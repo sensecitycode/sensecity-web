@@ -1561,7 +1561,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
 //                if ($window.location.href.toString().indexOf(":") != - 1){
                     // $window.location.href = 'http://localhost:8383/sensecity-web/admin/index.html#/issuepage=' + $scope.panels[$index].id;
 //                } else{
-                    $window.location.href = 'http://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
+                    $window.location.href = 'https://' + $rootScope.Variables.city_name + '.sense.city/admin/index.html#/issuepage=' + $scope.panels[$index].id;
                     // }
                     //          if ($scope.currentactive != $index) {
 //                        if ($scope.currentactive != -1 && $scope.currentactive < $index) {
@@ -1662,7 +1662,7 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             var id = value.id;
                             var priority = PriorityTag.priority_type(value.priority);
                             var severity = SeverityTag.severity_type(value.severity);
-                            var issuelink = "http://sense.city/issuemap.php?issue_id=" + value.alias;
+                            var issuelink = "https://sense.city/issuemap.php?issue_id=" + value.alias;
                             var creation_time = value.create_at;
                             var local_time = moment(creation_time).format('LLLL');
                             local_time = timegr(local_time);
