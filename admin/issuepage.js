@@ -18,7 +18,7 @@ function default_aicon() {
     scope.$apply();
 }
 
-app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$q', '$location', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'FixPoints2MapService', 'FixedPointsService', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService', 'leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $q, $location, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, FixPoints2MapService, FixedPointsService, Tab2BugzillaService, FixPointsMarkerService, CommentService, leafletData) {
+app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$q', '$location', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService', 'leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $q, $location, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, Tab2BugzillaService, FixPointsMarkerService, CommentService, leafletData) {
 
         var panorama;
         var isfixed = 0;

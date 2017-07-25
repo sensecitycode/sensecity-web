@@ -27,37 +27,37 @@ appServices.factory('BugService', function ($resource, $cookieStore, EndPointSer
     );
 });
 
-appServices.factory('FixedPointsService', function ( $resource/*, APIEndPointService*/, $rootScope) {
-    return $resource(
-        'json/'+$rootScope.Variables.city_name+'.json',
-        null,
-        {
-          search: {
-            method: 'GET',
-            headers:{'Content-Type':'application/json'},
-            isArray: true
-          }
-        }
-    );
-});
+//appServices.factory('FixedPointsService', function ( $resource/*, APIEndPointService*/, $rootScope) {
+//    return $resource(
+//        'json/'+$rootScope.Variables.city_name+'.json',
+//        null,
+//        {
+//          search: {
+//            method: 'GET',
+//            headers:{'Content-Type':'application/json'},
+//            isArray: true
+//          }
+//        }
+//    );
+//});
 
-appServices.factory('Issue2MapService', function ($resource, $rootScope) {
-    // console.log("DisplayIssues");
-    return $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
-            {issueID: '@id'},{'query': {method: 'GET', isArray: true}}
-    );
-});
+//appServices.factory('Issue2MapService', function ($resource, $rootScope) {
+//    // console.log("DisplayIssues");
+//    return $resource($rootScope.Variables.APIADMIN + '/fullissue/:issueID',
+//            {issueID: '@id'},{'query': {method: 'GET', isArray: true}}
+//    );
+//});
 
-appServices.factory('FixPoints2MapService', function ($resource, $rootScope) {
-    // console.log("DisplayFixPoints");
-    return $resource($rootScope.Variables.APIADMIN + '/fixed-point/:long/:lat/50/:type',
-            {
-                long: '@long',
-                lat: '@lat',
-                type: "@type"
-            },{'query': {method: 'GET', isArray: true}}
-    );
-});
+//appServices.factory('FixPoints2MapService', function ($resource, $rootScope) {
+//    // console.log("DisplayFixPoints");
+//    return $resource($rootScope.Variables.APIADMIN + '/fixed-point/:long/:lat/50/:type',
+//            {
+//                long: '@long',
+//                lat: '@lat',
+//                type: "@type"
+//            },{'query': {method: 'GET', isArray: true}}
+//    );
+//});
 
 appServices.factory('FixPointsMarkerService', function () {
     return {
