@@ -1398,7 +1398,17 @@ appControllers.controller('adminController', ['$scope', '$rootScope', '$window',
                             }
                     );
                 }, 100);
-                var theFixedPoints = FixedPointsService.query(function () {
+                var theFixedPoints = $resource(
+                        'json/' + $rootScope.Variables.city_name + '.json',
+                        null,
+                        {
+                            search: {
+                                method: 'GET',
+                                headers: {'Content-Type': 'application/json'},
+                                isArray: true
+                            }
+                        }
+                ).query(function () {
                     angular.forEach(theFixedPoints, function (fixedpoint, key) {
                         var positionlat = fixedpoint.loc.coordinates[1];
                         var positionlon = fixedpoint.loc.coordinates[0];

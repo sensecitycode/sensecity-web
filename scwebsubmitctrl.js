@@ -236,10 +236,10 @@ appControllers.controller('scWebSubmit', ['$scope', '$window', '$q', '$rootScope
         $scope.openStreetMap = {
             name: 'OpenStreetMap',
             type: 'xyz',
-            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             layerOptions: {
                 showOnSelector: true,
-                attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
                 maxZoom: 19
             }
         };
