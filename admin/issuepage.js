@@ -18,7 +18,7 @@ function default_aicon() {
     scope.$apply();
 }
 
-app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$q', '$location', 'ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService', 'leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $q, $location, ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, Tab2BugzillaService, FixPointsMarkerService, CommentService, leafletData) {
+app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$q', '$location', '$resource','ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService', 'leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $q, $location, $resource,ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, Tab2BugzillaService, FixPointsMarkerService, CommentService, leafletData) {
 
         var panorama;
         var isfixed = 0;
@@ -527,7 +527,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                             }
                                         }
 
-                                        history.push({"text": com, "timestamp": htime, "state": "Σχόλιο από "+ name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o'});
+                                        history.push({"text": com, "timestamp": htime, "state": "Σχόλιο από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o'});
                                     }
                                 }
                             }
@@ -589,7 +589,17 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                         );
                     }, 100);
                     var i = 0;
-                    var theFixedPoints = FixedPointsService.query(function () {
+                    var theFixedPoints = $resource(
+                            'json/' + $rootScope.Variables.city_name + '.json',
+                            null,
+                            {
+                                search: {
+                                    method: 'GET',
+                                    headers: {'Content-Type': 'application/json'},
+                                    isArray: true
+                                }
+                            }
+                    ).query(function () {
                         angular.forEach(theFixedPoints, function (fixedpoint, key) {
                             var positionlat = fixedpoint.loc.coordinates[1];
                             var positionlon = fixedpoint.loc.coordinates[0];
