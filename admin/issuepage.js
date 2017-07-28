@@ -18,13 +18,62 @@ function default_aicon() {
     scope.$apply();
 }
 
+var mainInfo;
+
+app.run(['$rootScope', '$http', '$location', function ($rootScope, $http, $location) {
+        var url_path = $location.absUrl().split("//");
+        var sub_domain = url_path[1].split(".");
+        var url;
+
+        if (sub_domain[0].split(":").length > 1) {
+            url = "../config/testcity1.json";
+            sub_domain[0] = "testcity1";
+        } else {
+            url = '../config/' + sub_domain[0] + '.json';
+        }
+
+        mainInfo = $http.get(url).success(function (response) {
+
+            $rootScope.Variables = {
+                city_name: sub_domain[0],
+                city_address: response.city_address,
+                lat_center: response.lat_center,
+                long_center: response.long_center,
+                img_logo: "images/city_logos/" + response.city_name + ".jpg",
+                bugzilla_products: response.bugzilla_products,
+                APIURL: response.APIURL,
+                bugzilla: response.bugzilla,
+                ALLISSUESAPIURL: response.ALLISSUESAPIURL,
+                activate_user_URL: response.active_user_URL,
+                APIADMIN: response.APIADMIN,
+                components: response.components,
+                components_en: response.components_en,
+                icons: response.icons,
+                host: response.host,
+                searchIssues: response.searchIssues,
+                departments: response.departments,
+                departments_en: response.departments_en,
+                font_awesome_markers: response.font_awesome_markers,
+                activeTitles: response.activeTitles,
+                activeIcons: response.activeIcons,
+                depUserTitles: response.depUserTitles,
+                depUserContent: response.depUserContent,
+                depUserIcons: response.depUserIcons,
+                cityAdminTabs: response.cityAdminTabs,
+                center: response.center,
+                map_zoom: 12
+            };
+            $rootScope.test = jQuery.extend(true, {}, response.searchIssues);
+            return $rootScope;
+        });
+    }]);
+
 app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$cookieStore', '$http', '$q', '$location', '$resource','ToGrService', 'PriorityTag', 'SeverityTag', 'PriorityTagEn', 'SeverityTagEn', 'ResolutionTagEn', 'Tab2BugzillaService', 'FixPointsMarkerService', 'CommentService', 'leafletData', function ($scope, $rootScope, $window, $cookieStore, $http, $q, $location, $resource,ToGrService, PriorityTag, SeverityTag, PriorityTagEn, SeverityTagEn, ResolutionTagEn, Tab2BugzillaService, FixPointsMarkerService, CommentService, leafletData) {
 
         var panorama;
         var isfixed = 0;
         var small = 0;
         var nav_toggle = 0;
-        var icons = $rootScope.Variables.icons;
         var previous_address;
         var previous_lat;
         var previous_lng;
@@ -34,8 +83,16 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
         $scope.full = 0;
         $scope.street = 0;
         $scope.loaded = 0;
-        $scope.ALLcenter = $rootScope.Variables.center;
-        $scope.ALLmarkers = [];
+        $scope.ALLcenter = {
+            "lat": 38.248028,
+            "lng": 21.7583104,
+            "zoom": 12
+        };
+        $scope.center = {
+            "lat": 38.248028,
+            "lng": 21.7583104,
+            "zoom": 12
+        };
         $scope.pimage = "";
         $scope.layers = {
             baselayers: {
@@ -56,6 +113,11 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 function (map) {
                     console.log(map);
                 });
+        
+        var icons = $rootScope.Variables.icons;
+        
+        $q.all([mainInfo]).then(
+                function (data) {
 
         var issue_id = $location.$$url.replace('/issuepage=', '');
         $scope.link = $location.absUrl();
@@ -980,5 +1042,5 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
             }
         }, 30000);
         //$(window).resize("px");
-
+                });
     }]);
