@@ -807,7 +807,7 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                             if ($scope.searchIssue == "" || $scope.searchIssue == undefined) {
                                 paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
                             }
-                            //i = 0;
+                            i = 0;
                             if(states == ""){
                                    delete paramsObj[0]["status"];
                                 }
