@@ -808,6 +808,9 @@ appControllers.controller('searchIssueController', ['$scope', '$window', '$rootS
                                 paramsObj.push({city: $rootScope.Variables.city_name, startdate: $scope.startdate, enddate: $scope.enddate, image_field: 0, status: states, resolution: "FIXED", includeAnonymous: includeAnonymous});
                             }
                             i = 0;
+                            if(states == ""){
+                                   delete paramsObj[0]["status"];
+                                }
                             angular.forEach($scope.searchFeeling, function (feeling) {
                                 if (feeling != "Διάθεση πολιτών") {
                                     if (i == 0) {
