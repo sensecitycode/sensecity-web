@@ -588,8 +588,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                                 break;
                                             }
                                         }
-
-                                        history.push({"text": com, "timestamp": htime, "state": "Σχόλιο από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o'});
+                                        history.push({"text": com, "timestamp": htime, "state": "Σχόλιο από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o',"department":history[history.length-1].department});
                                     }
                                 }
                             }
