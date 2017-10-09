@@ -113,9 +113,9 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 function (map) {
                     console.log(map);
                 });
-        
+
         var icons = $rootScope.Variables.icons;
-        
+
         $q.all([mainInfo]).then(
                 function (data) {
 
@@ -155,7 +155,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
         $scope.initialize = function () {
 
-            // var fenway = {lat: 38.246453, lng: 21.735068};             
+            // var fenway = {lat: 38.246453, lng: 21.735068};
             var fenway = {lat: 38.27942654793131, lng: 21.76288604736328};
             var panoOptions = {
                 position: fenway,
@@ -459,7 +459,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
 
 //        $(".panel-fullscreen").click( function () {
 //
-//            
+//
 //        });
 
         var sparams = {"bug_id": issue_id, "image_field": 1};
@@ -580,15 +580,21 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                             history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign', "department": $rootScope.Variables.components[dep_index]});
                                         }
                                     } else {
-
                                         var name;
+                                        var new_user = false;
                                         for (var l = 0; l < response.bugs[Object.keys(response.bugs)[0]].comments[i].tags.length; l++) {
                                             if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[0].toUpperCase() == "NAME") {
                                                 name = response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[1];
-                                                break;
+                                            }
+                                            if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[0].toUpperCase() == "ACTION" && response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[1].toUpperCase() == "NEW-USER") {
+                                                new_user = true;
                                             }
                                         }
-                                        history.push({"text": com, "timestamp": htime, "state": "Σχόλιο από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o',"department":history[history.length-1].department});
+                                        if (!new_user) {
+                                            history.push({"text": com, "timestamp": htime, "state": "Σχόλιο από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o',"department":history[history.length-1].department});
+                                        } else {
+                                            history.push({"text": com, "timestamp": htime, "state": "Εγγραφή νέου χρήστη " + name + " στο πρόβλημα", "style": {'color': '#620887'}, "class": 'fa fa-feed',"department":history[history.length-1].department});
+                                        }
                                     }
                                 }
                             }
