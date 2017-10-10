@@ -186,7 +186,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 //                                    return false;
 //                                };
 //                            }
-//                            
+//
 //                            if(resp.emailverified == 1){
 //                                $scope.eisnotverify = function () {
 //                                    return true;
@@ -271,9 +271,9 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             } else if (step == 3) {
                 var canissue = $q.defer();
 //                if($scope.chkSelected_1 == false){
-//                   $scope.EmailTxt = ""; 
+//                   $scope.EmailTxt = "";
 //                }else if($scope.chkSelected_2 == false){
-//                   $scope.MobileTxt = ""; 
+//                   $scope.MobileTxt = "";
 //                }
                 $http(
                         {
@@ -1050,6 +1050,10 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
                         glat = issue[0].loc.coordinates[1];
                         glng = issue[0].loc.coordinates[0];
+
+                        // latlabeltxt - lnglabeltxt for mobile activation
+                        $scope.latlabeltxt = issue[0].loc.coordinates[1];
+                        $scope.lnglabeltxt = issue[0].loc.coordinates[0];
 
                         issue_index = $rootScope.variables.categories.indexOf(issue[0].issue);
                         svissue = issue[0].issue;
