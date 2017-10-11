@@ -532,6 +532,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                 previous_lng = angular.copy($scope.panel.lng);
                 $scope.panel.severity = {en: result[0].bug_severity, gr: severity};
                 $scope.panel.priority = {en: result[0].bug_priority, gr: priority};
+                $scope.panel.cc = result[0].cc.split(",");
 
                 setTimeout(function () {
                     $(window).trigger('resize');
