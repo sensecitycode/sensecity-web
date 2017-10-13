@@ -119,9 +119,9 @@
                                                 <span class="text-left col-md-7"> {{panel.address}}</span>
                                             </div>
                                             <div class="col-md-12" style="margin-bottom:2%;margin-left:1%;width:100%">
-                                                <span class="title col-md-5">CC: </span>
+                                                <span class="title col-md-5">Επίσης ενδιαφέρονται: </span>
                                                 <span class="text-left col-md-7" >
-                                                  <div ng-repeat="cc in panel.cc"> {{cc}} </div>
+                                                  <div ng-repeat="cc in panel.cc_list"> <a tooltips tooltip-show-trigger="click" tooltip-hide-trigger="mousedown" tooltip-template="{{cc.name}}<br />{{cc.mobile}}">{{cc.mail}}</a> </div>
                                                 </span>
                                             </div>
                                         </div>

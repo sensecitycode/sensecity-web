@@ -545,6 +545,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                             var history = [];
                             var com;
                             var tag_pos;
+                            var cc_list = [];
                             for (var i = 1; i < response.bugs[Object.keys(response.bugs)[0]].comments.length; i++) {
                                 com = response.bugs[Object.keys(response.bugs)[0]].comments[i].text;
                                 if (com == "undefined") {
@@ -589,17 +590,32 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                             }
                                             if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[0].toUpperCase() == "ACTION" && response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[1].toUpperCase() == "NEW-USER") {
                                                 new_user = true;
+                                                // this is for the cc_list (new user entry)
+                                                for (var j = 0; j < response.bugs[Object.keys(response.bugs)[0]].comments[i].tags.length; j++){
+                                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[j].split(":")[0].toUpperCase() == "NAME") {
+                                                        var cc_name = response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[j].split(":")[1];
+                                                    }
+                                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[j].split(":")[0].toUpperCase() == "MOBILE") {
+                                                        var cc_mobile = response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[j].split(":")[1];
+                                                    }
+                                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[j].split(":")[0].toUpperCase() == "EMAIL") {
+                                                        var cc_email = response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[j].split(":")[1];
+                                                    }
+                                                }
+                                                // end of cc_list code
                                             }
                                         }
                                         if (!new_user) {
                                             history.push({"text": com, "timestamp": htime, "state": "Σχόλιο από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o',"department":history[history.length-1].department});
                                         } else {
                                             history.push({"text": com, "timestamp": htime, "state": "Εγγραφή νέου χρήστη " + name + " στο πρόβλημα", "style": {'color': '#620887'}, "class": 'fa fa-feed',"department":history[history.length-1].department});
+                                            cc_list.push({"name": cc_name, "mobile": cc_mobile, "mail": cc_email});
                                         }
                                     }
                                 }
                             }
-
+                                                      
+                            $scope.panel.cc_list = cc_list;
                             if ($scope.panel.comment == undefined) {
                                 $scope.panel.comment = '';
                             }
