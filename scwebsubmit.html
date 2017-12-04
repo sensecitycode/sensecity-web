@@ -86,7 +86,7 @@
         <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
         <script src="admin/dist/angular-tooltips.min.js"></script>
 
-        <!-- new section -->          
+        <!-- new section -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -94,12 +94,12 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <!-- END META SECTION -->
 
-        <!-- CSS INCLUDE -->        
+        <!-- CSS INCLUDE -->
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
 
     </head>
     <body ng-app="scApp" ng-controller="scWebSubmit" ng-cloak id="wscontrl">
-        <div id="scfooter" class="page-container" style="background-color:#f5f5f5;"> 
+        <div id="scfooter" class="page-container" style="background-color:#f5f5f5;">
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
                     <div>
@@ -107,7 +107,7 @@
                             border-bottom: 1px solid #1caf9a;">
                             <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>sense.city</div></a>
                             <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
-                        </li> 
+                        </li>
                         <li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
                         <li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
                         <li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
@@ -115,9 +115,9 @@
                         <li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
                         <li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
                         <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
-                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>                    
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>
                     </div>
-                </ul>                         
+                </ul>
                 <div class="page-content-wrap">
                     <div class="row">
                         <h2 style="left:8px;margin-top:10px;position:relative">{{'ISSUE_REPORT'| translate}}</h2>
@@ -139,19 +139,19 @@
                                     <li>
                                         <a href="#step-3">
                                             <span class="stepNumber">3</span>
-                                            <span class="stepDesc">{{'STEP'| translate}} 3<br /><div>{{'RECOMMENDED'| translate}}</div></span>                   
+                                            <span class="stepDesc">{{'STEP'| translate}} 3<br /><div>{{'RECOMMENDED'| translate}}</div></span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#step-4">
                                             <span class="stepNumber">4</span>
-                                            <span class="stepDesc">{{'STEP'| translate}} 4<br /><div>{{'CERTIFICATION'| translate}}</div></span>                   
+                                            <span class="stepDesc">{{'STEP'| translate}} 4<br /><div>{{'CERTIFICATION'| translate}}</div></span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#step-5">
                                             <span class="stepNumber">5</span>
-                                            <span class="stepDesc">{{'STEP'| translate}} 5<br /><div>{{'SUBMIT_REPORT'| translate}}</div></span>                   
+                                            <span class="stepDesc">{{'STEP'| translate}} 5<br /><div>{{'SUBMIT_REPORT'| translate}}</div></span>
                                         </a>
                                     </li>
                                 </ul>
@@ -168,11 +168,11 @@
                                                     <div class="input-group push-down-10">
                                                         <input id="address" list="taddress" type="text" class="form-control" placeholder="{{'ADDRESS_SEARCH'| translate}}..." />
                                                         <span style="cursor:pointer" id="subt" class="input-group-addon"><span style="font-size: 13px; color: #FFF;line-height: 28px" class="fa fa-search"></span></span>
-                                                    </div> 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="panel-body panel-body-map">                              
+                                        <div class="panel-body panel-body-map">
                                             <leaflet geojson="geojson" id="issuesmap" lf-center="map_center" layers="layers" markers="markers" defaults="defaults" height="400px" width="100%">
                                             </leaflet>
                                         </div>
@@ -216,14 +216,14 @@
                                                         <form action="" role="form" class="form-horizontal">
                                                             <div class="form-group">
                                                                 <label class="col-md-5 control-label text-left">{{'PROBLEMTYPE'| translate}}</label>
-                                                                <div class="col-md-7">                                        
+                                                                <div class="col-md-7">
                                                                     <select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" id='available_issues' class="form-control select">
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="col-md-5 control-label text-left">{{ 'PROBLEM' | translate}}</label>
-                                                                <div class="col-md-7">                                        
+                                                                <div class="col-md-7">
                                                                     <select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" id='issuetype_select' ng-model="issueSubTypeSelect" class="form-control select">
                                                                     </select>
                                                                 </div>
@@ -231,7 +231,7 @@
                                                             <div  ng-show='isOtherSelected()' class="form-group">
                                                                 <label class="col-md-5 control-label text-left">{{'DESCRIPTION'| translate}}</label>
                                                                 <div class="col-md-7">
-                                                                    <input ng-model="otherDescriptionTxt"  type="text" class="form-control" placeholder="{{'DESCRIPTION'| translate}}"/>
+                                                                    <input ng-model="otherDescriptionTxt"  type="text" class="form-control" id='other_description' placeholder="{{'DESCRIPTION'| translate}}"/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -306,7 +306,7 @@
                                                     </div>
                                                 <div class="list-group list-group-contacts border-bottom push-down-10  col-md-12 col-xs-12">
                                                     <div style="overflow-y:auto;height:375px">
-                                                    <div ng-repeat="rec_issue in rec_issues" href="#" class="list-group-item">                                                      
+                                                    <div ng-repeat="rec_issue in rec_issues" href="#" class="list-group-item">
                                                         <div class="col-md-2 col-xs-12 col-sm-12">
                                                         <div ng-show="rec_issue.status_num == 0" class="list-group-status status-offline"></div>
                                                         <div ng-show="rec_issue.status_num == 1" class="list-group-status status-away"></div>
@@ -325,7 +325,7 @@
                                                             <p class="col-md-12 col-sm-12 col-xs-12">{{rec_issue.id}}</p>
                                                             <p class="col-md-12 col-sm-12 col-xs-12">{{rec_issue.status}}</p>
                                                             <p class="col-md-12 col-sm-12 col-xs-12">{{rec_issue.address}}</p>
-                                                            <p class="col-md-12 col-sm-12 col-xs-12">{{rec_issue.description}}</p> 
+                                                            <p class="col-md-12 col-sm-12 col-xs-12">{{rec_issue.description}}</p>
                                                             <a class="col-md-12 col-sm-12 col-xs-12" target="_blank" href="{{rec_issue.alias}}" style="margin-top:10px;font-weight:bold">Περισσότερα</a>
                                                         </div>
                                                         </div>
@@ -334,7 +334,7 @@
                                                             <button ng-click="last_stp(rec_issue.id)" class="btn btn-success btn-block"><span class="fa fa-plus"></span> Επιλογή</button>
                                                         </div>
                                                         </div>
-                                                    </div>                                                                
+                                                    </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -345,7 +345,7 @@
                                                             <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_EMAIL' | translate}}</label>
                                                             <!--                                                    <label control-label text-left>Πιστοποίηση email</label>-->
                                                             <div class="col-md-3">
-                                                                <input ng-model="ecodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
+                                                                <input ng-model="ecodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>
                                                             </div>
                                                             <div id="ccert" ng-show="evalid != null && evalid == true" class="col-md-1">
                                                                 <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
@@ -368,7 +368,7 @@
                                                         <div class="form-group">
                                                             <label class="col-md-2 control-label text-left">{{ 'VERIFY_CODE_MOBILE' | translate}}</label>
                                                             <div class="col-md-3">
-                                                                <input ng-model="scodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>                                      
+                                                                <input ng-model="scodeTxt" type="text" class="form-control" placeholder="{{ 'VERIFY_CODE' | translate}}"/>
                                                             </div>
                                                             <div id="ccert" ng-show="mvalid != null && mvalid == true" class="col-md-1">
                                                                 <span style="vertical-align: bottom;font-size: 19px;top: 5px;position: relative;" class="fa fa-check"></span>
@@ -417,20 +417,20 @@
 
         <datalist id="taddress">
 
-        </datalist>        
+        </datalist>
 
         <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
-        <!-- END PRELOADS -->                
+        <!-- END PRELOADS -->
 
         <!-- START SCRIPTS -->
         <!-- START PLUGINS -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>                
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
         <!-- END PLUGINS -->
 
-        <!-- THIS PAGE PLUGINS -->    
+        <!-- THIS PAGE PLUGINS -->
         <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
 
@@ -445,11 +445,11 @@
     </body>
 </html>
 <!--
-                
-                <div class="col-md-8"> 
+
+                <div class="col-md-8">
                         <div style="height: 800px">
                             <md-menu>
-  Trigger element is a md-button with an icon 
+  Trigger element is a md-button with an icon
  <md-button ng-click="$mdMenu.open($event)" class="md-icon-button" aria-label="Open sample menu">
    <md-icon md-svg-icon="call:phone"></md-icon>
  </md-button>
@@ -458,23 +458,23 @@
  </md-menu-content>
 </md-menu>
                           <div id="floating-panel">
-                              
+
       <input id="address" list="taddress" style="width:52%;padding-left:5px;padding-right:5px;font-size:14px;font-family: 'Questrial','Helvetica Neue','Arial','sans-serif'" type="textbox" placeholder="Εισάγετε τη διεύθυνση...">
       <div id="submit" style="font-size: 12px;line-height: 2" class="btn btn-info">Αναζήτηση Διεύθυνσης</div>
     </div>
 
 <datalist id="taddress">
-  
+
 </datalist>
-                        <leaflet lf-center="map_center" layers="layers" 
+                        <leaflet lf-center="map_center" layers="layers"
                             height="100%" markers="markers" style="color:black"  >
-                                     
+
                         </leaflet>
                         </div>
                         <div  after-render="invalidateTheMap"></div>
                 </div>
-                
-                <div class="col-md-4" > 
+
+                <div class="col-md-4" >
                         <br />
                         <div class="stepwizard" style="color:#000000;">
                                 <div class="stepwizard-row">
@@ -489,21 +489,21 @@
                                         <div class="stepwizard-step">
                                                 <button type="button" class="btn btn-default btn-circle" ng-disabled="step3()">3</button>
                                                 <p>Πιστοποίηση email</p>
-                                        </div> 
+                                        </div>
                                         <div class="stepwizard-step">
                                                 <button type="button" class="btn btn-default btn-circle" ng-disabled="step4()">4</button>
                                                 <p>Καταχώριση αναφοράς</p>
-                                        </div> 
+                                        </div>
                                 </div>
                         </div>
-                        
+
                         <style>
-                                
+
                                 .stepwizard-step p{
                                         color:#000000;
                                         font-size:12px;
                                 }
-                                
+
                                 .btn.btn-primary {
                                         background-color: rgb(16, 15, 150);
                                         border: 1px solid #f0f0f0;
@@ -514,7 +514,7 @@
                                 }
 
                                 .stepwizard-step p {
-                                        margin-top: 10px;    
+                                        margin-top: 10px;
                                 }
 
                                 .stepwizard-row {
@@ -522,7 +522,7 @@
                                 }
 
                                 .stepwizard {
-                                        display: table;     
+                                        display: table;
                                         width: 100%;
                                         position: relative;
                                 }
@@ -541,10 +541,10 @@
                                         height: 1px;
                                         background-color: #ccc;
                                         z-order: 0;
-                                        
+
                                 }
 
-                                .stepwizard-step {    
+                                .stepwizard-step {
                                         display: table-cell;
                                         text-align: center;
                                         position: relative;
@@ -563,7 +563,7 @@
                         </style>
 
                         <div class="eponymous" ng-show='issubmit_isseu_form()'>
-                                <div class="form-group" style="margin-bottom:12px"> 
+                                <div class="form-group" style="margin-bottom:12px">
                                         <label for="lng" style="color: #000000; font-weight: 300" id="msg_label_long">{{'LONGTITUDE' | translate}}</label>
                                         <input ng-model="latlabeltxt" style="background-color: #ccc !important;border-color:rgb(161, 164, 170) !important;color:#222 !important"  class="form-control" id="lng" placeholder="{{'LONGTITUDE' | translate}}" readonly >
                                 </div>
@@ -578,13 +578,13 @@
                                 <div class="form-group" style="margin-bottom:12px">
                                         <label for="type-issue" style="color: #000000; font-weight: 300;" id="msg_label_type">{{ 'PROBLEMTYPE' | translate}}</label>
                                         <select ng-options="item as item.name | translate for item in availableIssues track by item.id" ng-model="issueTypeSelect" class="form-control" ng-change="updateCompoType()"></select>
-                                        
+
                                 </div>
                                 <div class="form-group" style="margin-bottom:12px">
                                         <label for="exampleInputEmail1" style="color: #000000; font-weight: 300;" id="msg_problem_detail">{{ 'PROBLEM' | translate}}</label>
-                                        
+
                                         <select ng-options="item as item.name | translate for item in issueTypeSelect.types track by item.id" ng-model="issueSubTypeSelect" class="form-control" ng-change="issueSubTypeSelectChanged()"></select>
-                                
+
                                 </div>
                                 <div class="form-group" style="margin-bottom:12px" ng-show='isOtherSelected()'>
                                         <label for="other_description" style="color: #000000; font-weight: 300;" >{{ 'DESCRIPTION' | translate}}</label>
@@ -599,12 +599,12 @@
                                         <input type="file" id="input_file"   class="form-control" file-model="uploadedPhotoFile" placeholder=""   />
                                 </div>
                         </div>
-                        
+
                         <input id="btnsubmit" class="btn btn-info" type="submit" value="{{ 'CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null || coords_search == 1" ng-show='submit_button' ng-click="setStep(1)" />
-                        
+
                                 <div class="eponymous" ng-show='iseponymous()'>
                                         <p style="color:#000000;"><span ng-bind="myText"></span></p>
-                                        <div class="form-group" style="color:#000000;">					
+                                        <div class="form-group" style="color:#000000;">
                                                 <input ng-model="chkSelected" ng-change="stateChanged()" type="checkbox" class="" value="{{ 'EPONYMOUS_REPORT' | translate}}" style=" width: 25px; height: 25px;"> {{ 'EPONYMOUS_REPORT' | translate}}
                                         </div>
                                         <div class="write_user_data" ng-show='chkSelected'>
@@ -627,25 +627,25 @@
                                                         <input ng-model="MobileTxt" ng-readonly="!chkSelected" type="text" class="form-control" value="" placeholder="{{ 'EPONYMOUS_TYPE_MOBILE' | translate }}"   >
                                                 </div>
                                                 <p style="color:#000000;">{{ 'MESSAGE_USER' | translate }}</p>
-                                                <div class="form-group" style="color:#000000;">					
-                                                        <input ng-model="chkSelected_1" ng-disabled="true" ng-checked="true" ng-readonly="true" checked="checked" ng-change="stateChanged_email()" type="checkbox" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" style=" width: 25px; height: 25px;"> 
+                                                <div class="form-group" style="color:#000000;">
+                                                        <input ng-model="chkSelected_1" ng-disabled="true" ng-checked="true" ng-readonly="true" checked="checked" ng-change="stateChanged_email()" type="checkbox" id="chkSelected_1" value="{{ 'EMAIL_USER' | translate}}" style=" width: 25px; height: 25px;">
                                                         {{ 'EMAIL_USER' | translate}}
                                                 </div>
-                                                <div class="form-group" style="color:#000000;">					
-                                                        <input ng-model="chkSelected_2" ng-disabled="true" ng-checked="false" ng-readonly="true" ng-change="stateChanged_sms()" type="checkbox" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" style=" width: 25px; height: 25px;"> 
+                                                <div class="form-group" style="color:#000000;">
+                                                        <input ng-model="chkSelected_2" ng-disabled="true" ng-checked="false" ng-readonly="true" ng-change="stateChanged_sms()" type="checkbox" id="chkSelected_2" value="{{ 'SMS_USER' | translate}}" style=" width: 25px; height: 25px;">
                                                         {{ 'SMS_USER' | translate}}
                                                 </div>
                                         </div>
                                 </div>
-                                
-                                
-                                
+
+
+
                                 <input id="btnregister" class="btn btn-info" value="{{ 'CONTINUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='register_button'  ng-click="setStep(2)" />
-                                
-                                
+
+
                                 <div class="isnotverify" ng-show='isnotverify()'>
                                         <p style="color:#000000;"><span ng-bind="myText"></span></p>
-                                        <div class="form-group" style="color:#000000;">					
+                                        <div class="form-group" style="color:#000000;">
                                                 <label for="verify" style="color: #000000; font-weight: 300;" >{{ 'VERIFY_CODE' | translate}}</label>
                                                 <input ng-model="codeTxt" type="text" class="form-control" value="" placeholder="{{ 'VERIFY_CODE' | translate }}"   >
                                         </div>
@@ -655,6 +655,6 @@
                                         <label for="verify" style="color: #000000; font-weight: 300;" >Αποστολή αναφοράς προβλήματος!</label><br />
                                         <input id="btneponymous" class="btn btn-info" type="submit" value="{{ 'SAVE_NEW_ISSUE' | translate}}"  ng-disabled="latlabeltxt === null" ng-show='submit_eponymous_button' ng-click="setStep(4)" />
                                 </div>
-                                
+
                                 <div id="try_another_issue"></div>
                         </div>-->
