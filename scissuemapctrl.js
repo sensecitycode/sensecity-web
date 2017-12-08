@@ -958,6 +958,14 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                     color = {"background-color": "#2ecc71"};
                                     type = "Ολοκληρωμενο";
                                 }
+                                $scope.admin_image = false;
+                                for (var l = 0; l < response[0].bugs[$scope.resp_id].comments[i].tags.length; l++) {
+                                    if (response[0].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0].toUpperCase() == "FILENAME") {
+                                        $scope.admin_image = true;
+                                        break;
+                                    }
+                                }
+
                             }
                             var month_num = month;
 
@@ -1018,7 +1026,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             } else {
                                 time = ntime + time.substring(2);
                             }
-                            if (response[0].bugs[$scope.resp_id].comments[i].text == 'undefined' && type != 'Αρχείο') {
+                            if (response[0].bugs[$scope.resp_id].comments[i].text == 'undefined' && (type != 'Αρχείο' && $scope.admin_image == false)) {
                                 show = false;
                             }
 
@@ -1064,7 +1072,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                 };
                             }
 
-                            if (type == 'Αρχείο'){
+                            if (type == 'Αρχείο' || $scope.admin_image == true){
                                 com.fileURLs = [];
                                 com.file_types = [];
                                 for (var l = 0; l < response[0].bugs[$scope.resp_id].comments[i].tags.length; l++) {
