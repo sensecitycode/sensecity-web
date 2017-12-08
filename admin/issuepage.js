@@ -571,15 +571,31 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                     }
                                 }
 
+                                var filename =undefined;
+                                var fileURLs =[];
+                                var file_types =[];
+                                for (var l = 0; l < response.bugs[Object.keys(response.bugs)[0]].comments[i].tags.length; l++) {
+                                    if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[0].toUpperCase() == "FILENAME") {
+                                        filename = response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[l].split(":")[1];
+                                        fileURLs.push($rootScope.Variables.APIADMIN + "/get_comments_files?bug_id=" + $scope.panel.id + "&filename=" + filename);
+                                        if (filename.split(".")[1] == "jpeg" || filename.split(".")[1] == "png"){
+                                            file_types.push("image");
+                                        } else {
+                                            file_types.push("application");
+                                        }
+                                    }
+                                }
+
+
                                 if (response.bugs[Object.keys(response.bugs)[0]].comments[i] != []) {
                                     var htime = timegr(moment(response.bugs[Object.keys(response.bugs)[0]].comments[i].time).format('LLLL'));
                                     if (status_index != -1) {
                                         if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[status_index ].split(":")[1] == "CONFIRMED") {
-                                            history.push({"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign', "department": $rootScope.Variables.components[dep_index]});
+                                            history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com, "timestamp": htime, "state": "Ανοιχτό", "style": {'color': '#e42c2c'}, "class": 'glyphicon glyphicon-exclamation-sign', "department": $rootScope.Variables.components[dep_index]});
                                         } else if (response.bugs[Object.keys(response.bugs)[0]].comments[i].tags[status_index].split(":")[1] == "IN_PROGRESS") {
-                                            history.push({"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign', "department": $rootScope.Variables.components[dep_index]});
+                                            history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com, "timestamp": htime, "state": "Σε εκτέλεση", "style": {'color': 'orange'}, "class": 'glyphicon glyphicon-question-sign', "department": $rootScope.Variables.components[dep_index]});
                                         } else {
-                                            history.push({"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign', "department": $rootScope.Variables.components[dep_index]});
+                                            history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com, "timestamp": htime, "state": "Ολοκληρωμένο", "style": {'color': 'green'}, "class": 'glyphicon glyphicon-ok-sign', "department": $rootScope.Variables.components[dep_index]});
                                         }
                                     } else {
                                         var name;
@@ -606,15 +622,20 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                             }
                                         }
                                         if (!new_user) {
-                                            history.push({"text": com, "timestamp": htime, "state": "Σχόλιο από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o',"department":history[history.length-1].department});
+                                            if (fileURLs.length == 0){
+                                                history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com, "timestamp": htime, "state": "Σχόλιο από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o',"department":history[history.length-1].department});
+                                            }else{
+                                                history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com, "timestamp": htime, "state": "Αρχεία από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-file-o',"department":history[history.length-1].department});
+                                            }
+                                            history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com, "timestamp": htime, "state": "Σχόλιο από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o',"department":history[history.length-1].department});
                                         } else {
-                                            history.push({"text": com, "timestamp": htime, "state": "Εγγραφή νέου χρήστη " + name + " στο πρόβλημα", "style": {'color': '#620887'}, "class": 'fa fa-feed',"department":history[history.length-1].department});
-                                            cc_list.push({"name": cc_name, "mobile": cc_mobile, "mail": cc_email});
+                                            history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com, "timestamp": htime, "state": "Εγγραφή νέου χρήστη " + name + " στο πρόβλημα", "style": {'color': '#620887'}, "class": 'fa fa-feed',"department":history[history.length-1].department});
+                                            cc_list.push({"fileURLs": fileURLs, "file_types": file_types,"name": cc_name, "mobile": cc_mobile, "mail": cc_email});
                                         }
                                     }
                                 }
                             }
-                                                      
+
                             $scope.panel.cc_list = cc_list;
                             if ($scope.panel.comment == undefined) {
                                 $scope.panel.comment = '';
@@ -809,6 +830,7 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     $scope.selectedStatus = null;
                     $scope.selectedResolution = null;
                     $scope.comment = null;
+                    $scope.filesnamesStr = undefined;
                     $scope.panel.address = previous_address;
                     $scope.panel.lat = previous_lat;
                     $scope.panel.lng = previous_lng;
@@ -817,6 +839,19 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                     $scope.ALLcenter.lat = previous_lat;
                     $scope.ALLcenter.lng = previous_lng;
                 };
+
+                $scope.fileNameChanged = function (ele) {
+                    var files = ele.files;
+                    var l = files.length;
+                    var namesArr = [];
+                    $scope.uploadPayload = new FormData();
+                    for (var i = 0; i < l; i++) {
+                        namesArr.push(files[i].name);
+                        $scope.uploadPayload.append("file", files[i], files[i].name);
+                    }
+                    $scope.filesnamesStr = namesArr.join(', ');
+                    $scope.$apply();
+                }
 
                 function onmapclick(event) {
                     //newMarker = new L.marker(event.latlng, {icon: redMarker}, {draggable: true});
@@ -918,15 +953,35 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                             var panel_index = $rootScope.Variables.components.indexOf($scope.panel.component);
                                             var comp = $rootScope.Variables.components_en[panel_index];
                                             var cantags = $q.defer();
-                                            $http.post($rootScope.Variables.APIADMIN + '/admin/bugs/comment/tags', {"add": [$scope.panel.status.en, comp], "id": response.id}, {timeout: cantags.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
-                                                    function (response, status, headers, config) {
-                                                        cantags.resolve();
-                                                        setTimeout(function () {
-                                                            //google.maps.event.trigger(panorama, "resize");},1
-                                                            $window.location.href = "index.html#/admin";
-                                                        }, 2000);
-
-                                                    });
+                                            $http(
+                                                    {
+                                                        method: 'POST',
+                                                        url: $rootScope.Variables.APIADMIN + "/admin/bugs/comment/tags",
+                                                        params: {"status": $scope.panel.status.en, "component": comp, "comment_id": response.id, "bug_id": obj.ids[0]},
+                                                        timeout: cantags.promise,
+                                                        headers: {
+                                                            'Content-Type': undefined,
+                                                            'x-uuid': $cookieStore.get('uuid'),
+                                                            'x-role': $cookieStore.get('role')
+                                                        },
+                                                        data: $scope.uploadPayload,
+                                                        transformRequest: angular.identity
+                                                    }).success(function (resp_an) {
+                                                cantags.resolve();
+                                                setTimeout(function () {
+                                                    //google.maps.event.trigger(panorama, "resize");},1
+                                                    $window.location.href = "index.html#/admin";
+                                                }, 2000);
+                                            });
+                                            // $http.post($rootScope.Variables.APIADMIN + '/admin/bugs/comment/tags', {"add": [$scope.panel.status.en, comp], "id": response.id}, {timeout: cantags.promise, headers: {'Content-Type': 'application/json', 'x-uuid': $cookieStore.get('uuid'), 'x-role': $cookieStore.get('role')}}).success(
+                                            //         function (response, status, headers, config) {
+                                            //             cantags.resolve();
+                                            //             setTimeout(function () {
+                                            //                 //google.maps.event.trigger(panorama, "resize");},1
+                                            //                 $window.location.href = "index.html#/admin";
+                                            //             }, 2000);
+                                            //
+                                            //         });
                                             setTimeout(function () {
                                                 if (cantags.promise.$$state.status == 0) {
                                                     cantags.resolve('cancelled');

@@ -160,6 +160,13 @@
                                         <div style="position:relative;margin-top:3%;font-size:12px">
                                             <div class="title" >Σχόλια: </div>
                                             <textarea style="width: 95%;height:150px;margin-top:3%;resize:none" ng-disabled="selectedStatus.en == 'CONFIRMED'" type="text" class="form-control" ng-model="scomment" placeholder="περιγραφή ..."></textarea>
+                                            <div class="title" style="margin-top:3%" >Αρχεία: </div>
+                                            <div class="input-group" style="width: 95%;margin-top:3%;">
+                                                <label class="input-group-btn">
+                                                    <span class="btn btn-default">Αναζήτηση... <input type="file"  multiple onchange="angular.element(this).scope().fileNameChanged(this)" style="display: none;"></span>
+                                                </label>
+                                              <input type="text" ng-model="filesnamesStr" class="form-control" disabled style="color: #a5a5a5">
+                                            </div>
                                         </div>
                                         <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_green" ng-show="panel.admin" ng-click="submit(panel, selectedStatus, selectedResolution, scomment, selectedComponent, selectedPriority, selectedSeverity, $event)" ><center><span class="glyphicon glyphicon-ok"></span> Επιβεβαίωση</center></div>
                                         <div style="position:relative;margin-top:3%;display:inline-block" class="bton_prim_red" ng-show="panel.admin" ng-click="resetPanel(panel)" ><center><span class="glyphicon glyphicon-remove"></span> Ακύρωση</center></div>
@@ -181,7 +188,15 @@
                                             <div class="comment-head" ng-show="!$first && (progress.state == 'Ανοιχτό' || progress.state == 'Σε εκτέλεση')">Από: {{panel.history[$index-1].department}}<br/><br/> Σε: {{progress.department}}</div>
                                             <div class="comment-head" ng-show="$last && progress.state == 'Ολοκληρωμένο'"> {{progress.department}}</div>
                                             <br>
-                                            <p style="font-size: 14px;line-height: 25px">{{progress.text}}</p>
+                                            <p style="margin-left:35px; font-size: 14px;line-height: 25px">{{progress.text}}</p>
+                                            <div style="margin-left:35px" ng-if="progress.fileURLs != []" >
+                                                <div ng-repeat="fileURL in progress.fileURLs" style="height:60px; width:60px; float:left; margin-right:5px;">
+                                                    <a ng-if="progress.file_types[$index] != 'image'" href="{{fileURL}}" style="font-size:4em;width:100%;text-align:center;min-width:100%;box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.1);padding: 4px;background-color: #ffffff" class="fa fa-file-o"></a>
+                                                    <a ng-if="progress.file_types[$index] == 'image'" href="{{fileURL}}">
+                                                        <img  class="img-responsive img-text" src="{{fileURL}}&thumb=1" alt="" style="min-width:100%">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
