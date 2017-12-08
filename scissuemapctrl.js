@@ -278,48 +278,68 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 $http(
                         {
                             method: 'POST',
-                            url: $rootScope.variables.APIADMIN + "/issue_subscribe",
+                            url: $rootScope.variables.APIADMIN + "/issue_register",
+                            params: {"name": $scope.NameTxt, "email": $scope.EmailTxt, "mobile_num": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.bug_id},
                             timeout: canissue.promise,
                             headers: {
-                                'Content-Type': 'application/json; charset=utf-8'
+                                'Content-Type': undefined
                             },
-                            data: {"name": $scope.NameTxt, "email": $scope.EmailTxt, "mobile_num": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.bug_id}
+                            data: $scope.uploadPayload,
+                            transformRequest: angular.identity
                         }).success(function (resp_an) {
                     canissue.resolve();
-                    var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
+                    // var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
 
                     $scope.smsg1 = false;
                     $scope.smsg2 = false;
 
-                    if ($scope.chkSelected) {
-                        var canissueid = $q.defer();
-                        return $http({
-                            method: 'POST',
-                            url: $rootScope.variables.APIADMIN + "/issue/" + resp_an._id,
-                            timeout: canissueid.promise,
-                            headers: {
-                                'Content-Type': 'application/json; charset=utf-8'
-                            },
-                            data: jsonData
-                        }).success(function (resp) {
-                            canissueid.resolve();
-                            $scope.is_finalsubmit = function () {
-                                return true;
-                            };
-
-
-                            $window.location.reload();
-                        });
-                        setTimeout(function () {
-                            if (canissueid.promise.$$state.status == 0) {
-                                canissueid.resolve('cancelled');
-                                alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
-                            }
-                        }, 30000);
-                    } else {
-                        $window.location.reload();
-                    }
+                    // $window.location.reload();
                 });
+                // $http(
+                //         {
+                //             method: 'POST',
+                //             url: $rootScope.variables.APIADMIN + "/issue_subscribe",
+                //             timeout: canissue.promise,
+                //             headers: {
+                //                 'Content-Type': 'application/json; charset=utf-8'
+                //             },
+                //             data: {"name": $scope.NameTxt, "email": $scope.EmailTxt, "mobile_num": $scope.MobileTxt, "comment": $scope.commentstxt, "bug_id": $scope.bug_id}
+                //         }).success(function (resp_an) {
+                //     canissue.resolve();
+                //     var jsonData = '{ "uuid" : "web-site", "name": "' + $scope.NameTxt + '", "email": "' + $scope.EmailTxt + '", "mobile_num": "' + $scope.MobileTxt + '"}';
+                //
+                //     $scope.smsg1 = false;
+                //     $scope.smsg2 = false;
+                //
+                //     if ($scope.chkSelected) {
+                //         var canissueid = $q.defer();
+                //         return $http({
+                //             method: 'POST',
+                //             url: $rootScope.variables.APIADMIN + "/issue/" + resp_an._id,
+                //             timeout: canissueid.promise,
+                //             headers: {
+                //                 'Content-Type': 'application/json; charset=utf-8'
+                //             },
+                //             data: jsonData
+                //         }).success(function (resp) {
+                //             canissueid.resolve();
+                //             $scope.is_finalsubmit = function () {
+                //                 return true;
+                //             };
+                //
+                //
+                //             $window.location.reload();
+                //         });
+                //         setTimeout(function () {
+                //             if (canissueid.promise.$$state.status == 0) {
+                //                 canissueid.resolve('cancelled');
+                //                 alert("Η υπηρεσία δεν ανταποκρίνεται! Παρακαλώ δοκιμάστε αργότερα!");
+                //             }
+                //         }, 30000);
+                //     } else {
+                //         $window.location.reload();
+                //     }
+                // });
                 setTimeout(function () {
                     if (canissue.promise.$$state.status == 0) {
                         canissue.resolve('cancelled');
@@ -672,6 +692,19 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
             ;
         }
 
+        $scope.fileNameChanged = function (ele) {
+            var files = ele.files;
+            var l = files.length;
+            var namesArr = [];
+            $scope.uploadPayload = new FormData();
+            for (var i = 0; i < l; i++) {
+                namesArr.push(files[i].name);
+                $scope.uploadPayload.append("file", files[i], files[i].name);
+            }
+            $scope.filesnamesStr = namesArr.join(', ');
+            $scope.$apply();
+        }
+
         var p = $q.defer();
         $rootScope.maininfo = $http.get(url, {timeout: p.promise}).success(function (response) {
 
@@ -889,6 +922,16 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             if (status_index == -1) {
                                 color = {"background-color": "#226f81"};
                                 type = "Σχόλιο";
+                                for (var l = 0; l < response[0].bugs[$scope.resp_id].comments[i].tags.length; l++) {
+                                    if (response[0].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0].toUpperCase() == "FILENAME") {
+                                        color = {"background-color": "#226f81"};
+                                        type = "Αρχείο";
+                                        // var file_type;
+                                        // file_type = response[0].bugs[$scope.resp_id].comments[i].tags[l].split(":")[1].split("/")[0];
+                                        // console.log(file_type);
+                                        break;
+                                    }
+                                }
                             } else {
 //                                switch (response[1].bugs[$scope.resp_id].comments[i].tags[tag_index]) {
 //                                    case "CONFIRMED":
@@ -975,7 +1018,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                             } else {
                                 time = ntime + time.substring(2);
                             }
-                            if (response[0].bugs[$scope.resp_id].comments[i].text == 'undefined') {
+                            if (response[0].bugs[$scope.resp_id].comments[i].text == 'undefined' && type != 'Αρχείο') {
                                 show = false;
                             }
 
@@ -1020,6 +1063,24 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                                     "user_comment": true
                                 };
                             }
+
+                            if (type == 'Αρχείο'){
+                                com.fileURLs = [];
+                                com.file_types = [];
+                                for (var l = 0; l < response[0].bugs[$scope.resp_id].comments[i].tags.length; l++) {
+                                    var filename;
+                                    if (response[0].bugs[$scope.resp_id].comments[i].tags[l].split(":")[0].toUpperCase() == "FILENAME") {
+                                        filename = response[0].bugs[$scope.resp_id].comments[i].tags[l].split(":")[1];
+                                        com.fileURLs.push($rootScope.variables.APIADMIN + "/get_comments_files?bug_id=" + $scope.resp_id + "&filename=" + filename);
+                                        if (filename.split(".")[1] == "jpeg" || filename.split(".")[1] == "png"){
+                                            com.file_types.push("image");
+                                        } else {
+                                            com.file_types.push("application");
+                                        }
+                                    }
+                                }
+                            }
+
 
                             if (response[0].bugs[$scope.resp_id].comments[i].text.substr(2, 3) != "***") {
                                 if ($scope.comments.length == 0) {
