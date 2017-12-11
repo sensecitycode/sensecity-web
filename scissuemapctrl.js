@@ -293,7 +293,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                     $scope.smsg1 = false;
                     $scope.smsg2 = false;
 
-                    // $window.location.reload();
+                    $window.location.reload();
                 });
                 // $http(
                 //         {
@@ -670,6 +670,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
                 }
             }
         });
+
+        $("#finish_button").click(function () {
+            $(this).attr("class", "btn btn-default pull-right disabled");
+        });
+
 
         function checkNearestStreetView(panoData) {
             if (panoData != null) {
