@@ -627,7 +627,6 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                                             }else{
                                                 history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com, "timestamp": htime, "state": "Αρχεία από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-file-o',"department":history[history.length-1].department});
                                             }
-                                            history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com, "timestamp": htime, "state": "Σχόλιο από " + name, "style": {'color': '#086f87'}, "class": 'fa fa-commenting-o',"department":history[history.length-1].department});
                                         } else {
                                             history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com, "timestamp": htime, "state": "Εγγραφή νέου χρήστη " + name + " στο πρόβλημα", "style": {'color': '#620887'}, "class": 'fa fa-feed',"department":history[history.length-1].department});
                                             cc_list.push({"fileURLs": fileURLs, "file_types": file_types,"name": cc_name, "mobile": cc_mobile, "mail": cc_email});
@@ -642,7 +641,6 @@ app.controller('issuepage_controller', ['$scope', '$rootScope', '$window', '$coo
                             }
                             $scope.panel.history = history;
                             $scope.panel.comment = com;
-
                             if ($scope.panel.image_name != "" && $scope.panel.image_name != "no-image") {
                                 $scope.image_width = "100%";
                                 $scope.panel.image = "";
