@@ -209,9 +209,9 @@
                                                 <p ng-if="comment.content!='undefined'"> {{comment.content}}</p>
                                                 <div ng-if="comment.type =='Αρχείο' || admin_image" >
                                                     <div ng-repeat="fileURL in comment.fileURLs" style="height:60px; width:60px; float:left; margin-right:5px;">
-                                                        <a ng-if="comment.file_types[$index] != 'image'" href="{{fileURL}}" style="font-size:4em;width:100%;text-align:center;min-width:100%;box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.1);padding: 4px;background-color: #ffffff" class="fa fa-file-o"></a>
+                                                        <a ng-if="comment.file_types[$index] != 'image'" href="{{fileURL}}" style="font-size:4em;width:100%;text-align:center;min-width:100%;box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.1);border: 6px solid #FFF;;background-color: #ffffff" class="fa fa-file-o"></a>
                                                         <a ng-if="comment.file_types[$index] == 'image'" href="{{fileURL}}">
-                                                            <img  class="img-responsive img-text" src="{{fileURL}}&thumb=1" alt="" style="min-width:100%">
+                                                            <img  class="img-responsive img-text" src="{{fileURL}}&thumb=1" alt="" style="height: 60px; min-width:100%">
                                                         </a>
                                                     </div>
                                                 </div>
