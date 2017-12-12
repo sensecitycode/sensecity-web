@@ -43,7 +43,7 @@
         <link rel="stylesheet"
               href="css/font-awesome.min.css">
         <script src="js/cdns/moment-with-locales.js"></script>
-        <script src="js/dirdisqus.js"></script>
+        <!-- <script src="js/dirdisqus.js"></script> -->
 
 
         <script src="js/leaflet.js"></script>
@@ -85,7 +85,7 @@
         <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
         <script src="admin/dist/angular-tooltips.min.js"></script>
 
-        <!-- new section -->          
+        <!-- new section -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -93,7 +93,7 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <!-- END META SECTION -->
 
-        <!-- CSS INCLUDE -->        
+        <!-- CSS INCLUDE -->
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
 
     </head>
@@ -101,7 +101,7 @@
         <div ng-show="nloaded" class="loading_bar">
             Loading&#8230;
         </div>
-        <div class="page-container" style="background-color:#f5f5f5"> 
+        <div class="page-container" style="background-color:#f5f5f5">
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
                     <div>
@@ -109,7 +109,7 @@
                             border-bottom: 1px solid #1caf9a;">
                             <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>sense.city</div></a>
                             <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
-                        </li> 
+                        </li>
                         <li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
                         <li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
                         <li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
@@ -117,14 +117,14 @@
                         <li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
                         <li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
                         <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
-                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>                    
+                        <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>
                     </div>
-                </ul>               
+                </ul>
                 <div class="page-content-wrap" style="margin-top:5px">
                     <div class="col-md-12">
-                        <div class="page-title">                    
+                        <div class="page-title">
                             <h2>{{'MORE_ISSUES'| translate}}</h2>
-                        </div>                
+                        </div>
                     </div>
                     <div ng-hide="nloaded" class="col-md-12" style="margin-top:50px">
                         <div ng-repeat="lastissue in allissues" class="col-md-3">
@@ -139,8 +139,8 @@
                                         <div class="profile-data-name">{{lastissue.issue| translate}}</div>
                                         <div style="text-overflow: ellipsis !important;white-space: nowrap;overflow: hidden;" class="profile-data-title">{{lastissue.value_desc}}</div>
                                     </div>
-                                </div>                                
-                                <div class="panel-body" >                                    
+                                </div>
+                                <div class="panel-body" >
                                     <div class="contact-info">
                                         <p><small><span style="margin-right:3px" class="fa fa-cog"></span>{{'STATE'| translate}}</small><br>{{lastissue.status
                                                     | translate}}</p>
@@ -151,7 +151,7 @@
                                         <!--                                        <p><small>Email</small><br>nadiaali@domain.com</p>
                                                                                 <p><small>Address</small><br>123 45 Street San Francisco, CA, USA</p>                                   -->
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
                             <!-- END CONTACT ITEM -->
                         </div>
@@ -168,21 +168,21 @@
         <!-- START PRELOADS -->
         <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
-        <!-- END PRELOADS -->          
+        <!-- END PRELOADS -->
 
         <!-- START SCRIPTS -->
         <!-- START PLUGINS -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
         <!-- END PLUGINS -->
 
-        <!-- START THIS PAGE PLUGINS-->        
+        <!-- START THIS PAGE PLUGINS-->
         <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
-        <!-- END THIS PAGE PLUGINS-->        
+        <!-- END THIS PAGE PLUGINS-->
 
-        <script type="text/javascript" src="js/plugins.js"></script>        
+        <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>
     </body>
 </html>

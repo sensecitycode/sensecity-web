@@ -1,4 +1,4 @@
-var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource', 'ngCookies', 'ngAnimate', '720kb.tooltips', 'pascalprecht.translate', 'scissuemapapp.scissuemapsrvs', 'angularUtils.directives.dirDisqus'])
+var appControllers = angular.module('scissuemapapp.scissuemapctrl', ['ngResource', 'ngCookies', 'ngAnimate', '720kb.tooltips', 'pascalprecht.translate', 'scissuemapapp.scissuemapsrvs'/*, 'angularUtils.directives.dirDisqus'*/])
         .constant("config", {"host": "api.sense.city", "port": "3000"});
 
 function default_iimg() {
@@ -575,11 +575,11 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
         $scope.center = {};
         $scope.markers = {};
 
-        $scope.disqusConfig = {
-            disqus_shortname: 'sense-city',
-            disqus_identifier: issue_id,
-            disqus_url: window.location.href
-        };
+        // $scope.disqusConfig = {
+        //     disqus_shortname: 'sense-city',
+        //     disqus_identifier: issue_id,
+        //     disqus_url: window.location.href
+        // };
 
         $("#nametxt").blur(function () {
             if ($scope.NameTxt == "" || $scope.NameTxt == undefined) {
@@ -1107,7 +1107,7 @@ appControllers.controller('scissuemapctrl', ['$scope', '$rootScope', '$location'
 
 
                     //parse ?issue_id from URL
-                    $scope.disqus_id = issue_id;
+                    // $scope.disqus_id = issue_id;
                     var canfi = $q.defer();
                     var rcanfi = $resource($rootScope.variables.APIADMIN + '/fullissue/:issueID',
                             {issueID: '@id'}, {'query': {method: 'GET', isArray: true, cancellable: true}}

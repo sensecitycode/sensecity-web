@@ -42,7 +42,7 @@
         <link rel="stylesheet"
               href="css/font-awesome.min.css">
         <script src="js/cdns/moment-with-locales.js"></script>
-        <script src="js/dirdisqus.js"></script>
+        <!-- <script src="js/dirdisqus.js"></script> -->
 
 
         <script src="js/leaflet.js"></script>
@@ -83,7 +83,7 @@
         <link href="admin/dist/angular-tooltips.min.css" rel="stylesheet" type="text/css">
         <script src="admin/dist/angular-tooltips.min.js"></script>
 
-        <!-- new section -->          
+        <!-- new section -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -91,12 +91,12 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <!-- END META SECTION -->
 
-        <!-- CSS INCLUDE -->        
+        <!-- CSS INCLUDE -->
         <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
 
     </head>
     <body id="mainctl" ng-app="scApp" ng-controller="searchIssueController" ng-cloak>
-        <div class="page-container"> 
+        <div class="page-container">
             <div class="page-content">
                 <ul class="x-navigation  x-navigation-horizontal">
                     <div>
@@ -105,7 +105,7 @@
                                 border-bottom: 1px solid #1caf9a;">
                                 <a id="senselogo" href="sense.html" style="color:white"><div style="position:relative;font-size: 18px;text-align: center;"><i style="left:-8px;position:relative;" class="ion-ios-analytics-outline"></i>sense.city</div></a>
                                 <a  href="sense.html" style="color:white" id="nav_control" class="x-navigation-control"></a>
-                            </li> 
+                            </li>
                             <li ng-show="navClass('scwebsubmit')"><a id="active_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
                             <li ng-hide="navClass('scwebsubmit')"><a id="disabled_list" href="scwebsubmit.html">{{ 'MENUREPORT' | translate }}</a></li>
                             <li ng-show="navClass('scsearchissues')"><a id="active_list" href="scsearchissues.html">{{'MENUSEARCH'| translate }}</a></li>
@@ -113,20 +113,20 @@
                             <li ng-show="navClass('all_issues')"><a id="active_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
                             <li ng-hide="navClass('all_issues')"><a id="disabled_list" href="all_issues.html">{{'MENUMORE'| translate }}</a></li>
                             <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('en')"><img src="images/flags/en.png"></a></li>
-                            <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>                    
+                            <li style="float: right; padding-left: 0px; padding-right: 0px;cursor:pointer"><a ng-click="changeLanguage('el')"><img src="images/flags/el.png"></a></li>
                         </div>
                     </div>
                 </ul>
                 <div class="breadcrumb">
-                    <div class="col-md-2" id="scrit1">  
+                    <div class="col-md-2" id="scrit1">
                         <div class="form-group" style="margin-right:0px">
-                            <select id="issues" ng-model="issue" title="{{ 'SISSUES' | translate }}" multiple class="form-control select"> 
+                            <select id="issues" ng-model="issue" title="{{ 'SISSUES' | translate }}" multiple class="form-control select">
                                 <option id="issue{{$index}}" ng-repeat="issue in issues" data-value={{issue.value}} data-content={{$eval(issue.translate)}}></option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2" id="scrit">  
-                        <div class="form-group" style="margin-right:0px">                                      
+                    <div class="col-md-2" id="scrit">
+                        <div class="form-group" style="margin-right:0px">
                             <select id="states" title="{{ 'STATES' | translate }}" multiple class="form-control select">
                                 <option id='confirmed' data-content="<span style='margin-right:3px' class='glyphicon glyphicon-exclamation-sign'></span>{{ 'OPEN' | translate }}"></option>
                                 <option id='inprogress' data-content="<span style='margin-right:3px' class='glyphicon glyphicon-question-sign'></span>{{ 'IN_PROGRESS' | translate }}"></option>
@@ -135,8 +135,8 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2" id="scrit">   
-                        <div class="form-group" style="margin-right:0px;">                                     
+                    <div class="col-md-2" id="scrit">
+                        <div class="form-group" style="margin-right:0px;">
                             <select id="disposal"  title="{{ 'MOOD' | translate }}"  multiple class="form-control select">
                                 <option id='smile' data-content="<span class='fa fa-smile-o'></span>{{ 'MOODPOSITIVE' | translate }}"></option>
                                 <option id='neutral' data-content="<span class='fa fa-meh-o'></span>{{ 'MOODNEUTRAL' | translate }}"></option>
@@ -145,13 +145,13 @@
                         </div>
                     </div>
                     <div class="col-md-3" id="scrit" style="margin-right:0px;padding-left:0px;z-index:100;max-width:250px;margin-left:15px">
-                        <ul class="panel-controls panel-controls-title" style="margin-top:0px;float:none">                                        
+                        <ul class="panel-controls panel-controls-title" style="margin-top:0px;float:none">
                             <li>
-                                <div id="reportrange" class="dtrange">                                            
+                                <div id="reportrange" class="dtrange">
                                     <span id="sdate"></span><b class="caret"></b>
-                                </div>                                     
-                            </li>                                
-                        </ul>  
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                     <div class="col-md-2" id="issueid" style="padding-left:0px;margin-left:15px">
                         <input ng-model="issue_id" type="text" class="form-control" placeholder="{{'ISSUE_NUMBER'| translate}}">
@@ -176,7 +176,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel-body">                                    
+                                <div class="panel-body">
                                     <div class="row stacked">
                                         <div class="col-md-12">
                                             <div>
@@ -185,7 +185,7 @@
                                             </div>
                                             <div  after-render="invalidateTheMap"></div>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </div>
                             <!-- END SALES BLOCK -->
@@ -227,7 +227,7 @@
 
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>                
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
         <!-- END PLUGINS -->
 
         <!-- THIS PAGE PLUGINS -->
@@ -241,7 +241,7 @@
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
         <script type="text/javascript" src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
         <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
-        <script type="text/javascript" src="js/plugins.js"></script>        
+        <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>
 
         <script type="text/javascript" src="js/demo_dashboard.js"></script>
@@ -257,7 +257,7 @@
             <a href="http://sense.city"><i class="ion-ios-analytics-outline"></i> sense.city
             <sup style="font-size: 55%">beta</sup>
             </a>
-        </div> 
+        </div>
 
         <div class="navigation-items text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'ISSUES' | translate }}</div>
             <div ng-model="searchIssue" id="issue_list" class="text-center" bs-checkbox-group>
@@ -292,13 +292,13 @@
                 <label ng-click="activate_searchb()" class="btn btn-default"><i class="fa fa-frown-o"></i> <input type="checkbox" class="btn btn-default" value="angry"> {{ 'MOODNEGATIVE' | translate }}</label><br />
             </div>
         </div>
-        
+
         <div class="form-group col-md-12 text-center"> <div style="padding-bottom:10px; padding-top:10px;">{{ 'BUG_ID' | translate }}</div>
             <input ng-model="issue_id" ng-keyup="activate_text()" type="text" class="form-control text-center" id="address" placeholder="{{'BUG_ID' | translate}}">
         </div>
 
         <hr>
-        
+
         <div style="text-align: center;">
         <span>Επιλογή όλων των κριτηρίων:
             <input type="checkbox" ng-model="checkAll.value1" ng-click="check_criteria($event)">
