@@ -4407,7 +4407,7 @@ app.controller('tmhma213', ['$scope', '$http','$location', function ($scope, $ht
         
 var morrisCharts = function() {
 		
-	$http.get("http://api.sense.city:3000/api/1.0/issue?city=patras&startdate=2017-01-01&enddate="+today+"&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=1000&includeAnonymous=1").then(function(response){
+	$http.get("http://api.sense.city:3000/api/1.0/issue?city=patras&startdate=2018-01-01&enddate="+today+"&status=IN_PROGRESS|RESOLVED&image_field=0&sort=-1&limit=1000&includeAnonymous=1").then(function(response){
 					var res=0;
 					
 					var prog=0;

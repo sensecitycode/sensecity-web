@@ -537,7 +537,7 @@ appControllers.controller(
                                 }
                             });
 
-                            var startdate = new Date(2017, 0, 1);
+                            var startdate = new Date(2018, 0, 1);
                             var today = new Date();
 
                             today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -757,7 +757,7 @@ appControllers.controller(
                             var lsissues = 0;
                             $scope.doCalcLast6Issues = function () {
                                 var theLastIssues = rcanceller[4] = $resource($rootScope.Variables.APIADMIN+"/issue",
-                                        {city: $rootScope.Variables.city_name, startdate: "2017-01-01", sort: "-1", limit: "6", list_issue: "1", image_field: "1"}, {
+                                        {city: $rootScope.Variables.city_name, startdate: "2018-01-01", sort: "-1", limit: "6", list_issue: "1", image_field: "1"}, {
                                     query: {
                                         method: 'GET',
                                         isArray: true,
