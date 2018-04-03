@@ -241,7 +241,7 @@ appControllers.controller('allissuesCtrl', function ($scope, $rootScope, $log, $
 
             $scope.totalpages = function (newstart, arrow) {
                 var canissue = $q.defer();
-                var rcanissue = $resource($rootScope.Variables.APIADMIN + '/issue?city=' + $rootScope.Variables.city_name + '&startdate=2018-01-01&sort=-1&list_issue=1',
+                var rcanissue = $resource($rootScope.Variables.APIADMIN + '/issue?city=' + $rootScope.Variables.city_name + '&startdate=2018-03-01&sort=-1&list_issue=1',
                         {}, {
                     update: {
                         method: 'GET',

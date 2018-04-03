@@ -698,7 +698,7 @@ appControllers
 
                                     $scope.doCalcLast6Issues = function () {
                                         var theLastIssues = $resource($rootScope.Variables.APIURL,
-                                        {city: $rootScope.Variables.city_name,startdate:"2018-01-01",sort: "-1", limit: "6",list_issue: "1", image_field: "1"}, {
+                                        {city: $rootScope.Variables.city_name,startdate:"2018-03-01",sort: "-1", limit: "6",list_issue: "1", image_field: "1"}, {
                                         query: {
                                         method: 'GET',
                                         isArray: true
